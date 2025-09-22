@@ -1,0 +1,79 @@
+%%%%%%%% CREATE DOCUMENT STRUCTURE %%%%%%%%
+%% Language and font encodings
+\usepackage[english]{babel}
+% \usepackage[utf8x]{inputenc}
+% \usepackage[T1]{fontenc}
+%\usepackage{subfig}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+% \usepackage{sectsty}
+\usepackage{blkarray}  % Custom matrices
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+%\usepackage{caption}
+\usepackage[justification=centering]{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{tabularx}  % Tabular++
+\usepackage{titling} 
+\usepackage{blindtext}  % dummy text for testing
+\usepackage[square,sort,comma,numbers]{natbib}
+\setlength{\marginparwidth }{2cm}  % remove todonotes warning
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lipsum}
+\usepackage{fourier}  % math font
+\usepackage{aligned-overset}  % solve conflict between align and overset
+\usepackage[thinc]{esdiff} % derivative
+\usepackage{minted}  % Code listing
+
+%%%%%%% Page header %%%%%%
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{TP \TPid: \TPname}
+\lhead{\Firstname \; \Familyname}
+\rfoot{Page \thepage}
+
+%%%%%% Custom date format %%%%%%
+\def\monthyear{\ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space\number\year}
+
+
+%%%%%%% Custom section %%%%%%%
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section
+  Exercise \arabic{section}.
+  \else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+%%%%%%% Minted %%%%%%%
+\definecolor{bg}{HTML}{F0F0F0}
+\setminted{bgcolor=bg, frame=lines, linenos}
+% \setminted{mathescape, escapeinside=¬¬}
+\newminted[lstpython]{python3}{}
+\newmintinline[pythoninline]{python3}{}
+
+%%%%%%% Additional Macro %%%%%%%
+
+%% Paired Delimiter
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\paren{(}{)}           % (parentheses)
+\DeclarePairedDelimiter\ang{\langle}{\rangle} % <angle brackets>
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}   % |absolute value|
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}  % ||norm||
+\DeclarePairedDelimiter\bkt{[}{]}             % [brackets]
+\DeclarePairedDelimiter\set{\{}{\}}           % {braces}
