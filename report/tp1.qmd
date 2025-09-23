@@ -98,8 +98,7 @@ $$
 = \frac{1}{n} \sum_{i=1}^{n} (x_{i3} - \mu_3)^2
 = \frac{1}{5} \left( (6 - 4.8)^2 + (5 - 4.8)^2 + (6 - 4.8)^2 + (5 - 4.8)^2 + (2 - 4.8)^2 \right)
 = \frac{10.8}{5}
-= 2.16
-$$
+= 2.16$$
     So
 $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \end{pmatrix} \ \in \ \mathbb{R}^3$$
 
@@ -108,13 +107,26 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
 
    \hrulefill
 
-    _Write your answer here_
+    The scalar product is defined for two vectors $\mathbf{x}$ and $\mathbf{y}$ like the formula [-@eq-scalar]
+
+    $$\mathbf{x} \cdot \mathbf{y} = \sum_{i=1}^{d} x_i y_i
+    = |\mathbf{x}|\, |\mathbf{y}| \cos(\theta) \ \ \ \forall \mathbf{x}, \mathbf{y} \in S^d$$ {#eq-scalar}
+
+    with $S$ the vector space of dimension $d$.
+
+    So for vector $\mathbf{x} = \begin{pmatrix}3 & 9 & 6 \end{pmatrix}$
+    and $\mathbf{y} = \begin{pmatrix}8 & 4 & 5 \end{pmatrix}$,
+    the scalar product is given by the following calculs.
+
+    $$\mathbf{x} \cdot \mathbf{y} = \sum_{i=1}^{d} x_i y_i
+    = 3 \times 8 + 9 \times 4 + 6 \times 5
+    = 90 $$
 
 5. What is a basis of a vector space?
 
    \hrulefill
 
-    _Write your answer here_
+    A basis of a vector space is a set of vectors that can generate the entire vector space by basics operations, such as addition between vectors and multiplication by scalars.
 
 6. Explain the eigenvalue decomposition (EVD) and singular value decomposition (SVD). Why are they important in data science?
 
