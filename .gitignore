@@ -2,3 +2,4 @@
 *.log
 *.out
 **/_minted
+**/_tex

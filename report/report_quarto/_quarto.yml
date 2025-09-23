@@ -1,0 +1,18 @@
+project:
+  type: manuscript
+
+manuscript:
+  article: tp1.qmd
+
+format:
+  pdf:
+    template: unige-template.tex
+#    include-in-header: 
+#      - preambule.tex
+    papersize: a4
+    geometry: top=3cm,bottom=2cm,left=2cm,right=2cm
+    toc: false
+    colorlinks: true
+#    filters:
+#      - minted
+    latex-output-dir: _pdf
