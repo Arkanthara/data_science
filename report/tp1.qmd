@@ -11,11 +11,8 @@ Familyname: Michel Jean Joseph
 Email: Donnet.Michel Jean Joseph@etu.unige.ch
 format:
   pdf:
-    echo: true
     pdf-engine: lualatex
     latexmk-options: -shell-escape
-execute:
-  enabled: false
 ---
 
 # Theory questions
@@ -36,11 +33,76 @@ Use the slides and your notes to answer these questions. You do not need to writ
 
     The dimension of a dataset indicates the minimum number of vectors useful to generate the entire dataset by combinations between these vectors.
 
-3. Create two small datasets: one scalar dataset of 5 numbers, and one vector dataset of 5 vectors in $\mathbb{R}^3$. Compute their mean and variance. Then, write the formal mathematical definitions of mean and variance.
+3. Create two small datasets: one scalar dataset of 5 numbers, and one vector dataset of 5 vectors in $\mathbb{R}^3$.
+   Compute their mean and variance. Then, write the formal mathematical definitions of mean and variance.
 
    \hrulefill
 
-    _Write your answer here_
+    The dataset are the following:
+$$A = \left\{1, 2, 3, 4, 5 \right\} \in \mathbb{R}$$
+$$B = \left\{
+      \begin{pmatrix}
+      3 & 9 & 6 \\
+      8 & 4 & 5 \\
+      5 & 6 & 6 \\
+      0 & 8 & 5 \\
+      6 & 3 & 2
+      \end{pmatrix}
+      \right\} \in \mathbb{R}^3$$
+  - The mean is given by the formula [-@eq-mean]
+$$\boldsymbol{\mu} = \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \ \text{for} \ \mathbf{x}_i, \boldsymbol{\mu} \in \mathbb{R}^d$$ {#eq-mean}
+
+
+    So for the first dataset, we have the following computation:
+$$\mu = \frac{1}{n} \sum_{i=1}^{n} A_i = \frac{1 + 2 + 3 + 4 + 5}{5} = 3 \ \in \ \mathbb{R} $$
+    And for the second dataset, we have the following computation:
+$$\boldsymbol{\mu} 
+= \frac{1}{n} \sum_{i=1}^{n} B_i
+= \frac{1}{n} \begin{pmatrix} \sum_{i=1}^{n} B_{i1} &  \sum_{i=1}^{n} B_{i2} & \sum_{i=1}^{n} B_{i3} \end{pmatrix}
+= \frac{1}{5} \begin{pmatrix} 22 & 30 & 24\end{pmatrix}
+= \begin{pmatrix} 4,4 & 6 & 4,8\end{pmatrix} \ \in \ \mathbb{R}^3$$
+  - The variance $\boldsymbol{\sigma}$ is given by the formula [-@eq-var] by taking the square racin of the result
+$$
+\sigma_j^2 = \frac{1}{n} \sum_{i=1}^{n} (x_{ij} - \mu_j)^2 \ \text{for} \ \mathbf{x}_{i}, \boldsymbol{\sigma} \in \mathbb{R}^d
+$$ {#eq-var}
+    So we have for the first dataset
+$$
+\sigma^2 = \frac{1}{n} \sum_{i=1}^{n} (A_i - \mu)^2
+= \frac{1}{5} \left((1 - 3)^2 + (2 - 3)^2 + (3 - 3)^2 + (4 - 3)^2 + (5 - 3)^2 \right)
+= \frac{10}{5}
+= 2
+$$
+    So $\sigma = \sqrt{2} \ \in \ \mathbb{R}$.
+
+    And for the second dataset
+    - j = 1
+$$
+\sigma_1^2 
+= \frac{1}{n} \sum_{i=1}^{n} (x_{i1} - \mu_1)^2
+= \frac{1}{5} \left( (3 - 4.4)^2 + (8 - 4.4)^2 + (5 - 4.4)^2 + (0 - 4.4)^2 + (6 - 4.4)^2 \right)
+= \frac{37.2}{5}
+= 7.44
+$$
+    - j = 2
+$$
+\sigma_2^2 
+= \frac{1}{n} \sum_{i=1}^{n} (x_{i2} - \mu_2)^2
+= \frac{1}{5} \left( (9 - 6)^2 + (4 - 6)^2 + (6 - 6)^2 + (8 - 6)^2 + (3 - 6)^2 \right)
+= \frac{1}{5} \left( 9 + 4 + 0 + 4 + 9 \right)
+= \frac{26}{5}
+= 5.2
+$$
+    -  j = 3
+$$
+\sigma_3^2 
+= \frac{1}{n} \sum_{i=1}^{n} (x_{i3} - \mu_3)^2
+= \frac{1}{5} \left( (6 - 4.8)^2 + (5 - 4.8)^2 + (6 - 4.8)^2 + (5 - 4.8)^2 + (2 - 4.8)^2 \right)
+= \frac{10.8}{5}
+= 2.16
+$$
+    So
+$$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \end{pmatrix} \ \in \ \mathbb{R}^3$$
+
 
 4. Define the scalar product. Compute it for two vectors from your vector dataset above. How does the scalar product allow us to compute the projection of one vector onto another?
 
