@@ -132,7 +132,24 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
 
     \hrulefill
 
-    _Write your answer here_
+    $X \in \mathbb{R}^{n \times n}$ is a square matrix.
+    The eigen vector $\mathbf{u}$ is a vector that satisfies the equality [-@eq-eigen].
+
+    $$\left(\exists \sigma \ \text{such as} \ X\mathbf{u} = \sigma \mathbf{u} \ \text{with} \ \mathbf{u} \neq 0 \right) \ \Rightarrow \ \left( X - \sigma I \right)\mathbf{u} = 0$$ {#eq-eigen}
+
+    So if $X$ is diagonalisable, the matrix admits an Eigen Value Decomposition, given by the formula [-@eq-evd].
+    
+    $$\forall i, \  X\mathbf{u}_i = \sigma_i \mathbf{u}_i \ \text{and} \ \mathbf{u}_i \neq 0
+    \ \ \Rightarrow \ \ XU = U\Sigma \ \Leftrightarrow \ X = U\Sigma U^{-1}$${#eq-evd}
+
+    Where
+    - $U \in \mathbb{R}^{n \times n}$ is a matrix composed of linearly independant eigen vectors $\mathbf{u}$
+    - $\Sigma \in \mathbb{R}^{n \times n}$ is a diagonal matrix with on the diagonal the values of the corresponding eigenvalues $\sigma_i$ of the eigenvectors.
+    - $U^{-1}$ the inverse of $U$.
+
+    Similarly, $\forall X \ \in \ \mathbb{R}^{n*m}$, there exists a factorization $X = U S V^{T}$ which is called the Singular Value Decomposition (SVD).
+
+    This two notions are very important in data science because they allow us to uncorrelate data, which is very useful for data analysis and processing because it saves a lot of time and ressources.
 
 7. Give one concrete example of the curse of dimensionality, and one example of the blessing of dimensionality.
 
