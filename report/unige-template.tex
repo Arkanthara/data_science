@@ -22,7 +22,7 @@ $endfor$
 \usepackage{fourier} 
 \usepackage{amsmath, amssymb, blkarray}
 \usepackage[thinc]{esdiff}
-%\usepackage{minted}
+\usepackage{minted}
 \usepackage{xcolor}
 \usepackage{titling}
 \usepackage{hyperref}
@@ -37,6 +37,22 @@ $endfor$
 \rhead{TP $TPid$: $TPname$}
 \lhead{$Firstname$ $Familyname$}
 \rfoot{Page \thepage}
+
+%%%%%%% Minted %%%%%%%
+\definecolor{bg}{HTML}{F0F0F0}
+\setminted{bgcolor=bg, frame=lines, linenos}
+% \setminted{mathescape, escapeinside=¬¬}
+\newminted[lstpython]{python3}{}
+\newmintinline[pythoninline]{python3}{}
+
+% \usepackage{framed}
+% \newenvironment{Shaded}{\begin{framed}}{\end{framed}}
+% 
+% \usepackage{fancyvrb}
+% \newenvironment{Highlighting}[1][]
+%   {\begin{Verbatim}[commandchars=\\\{\}]}
+%   {\end{Verbatim}}
+
 
 % Custom title page
 \renewcommand{\maketitle}{

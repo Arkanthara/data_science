@@ -12,7 +12,12 @@ format:
     papersize: a4
     geometry: top=3cm,bottom=2cm,left=2cm,right=2cm
     toc: false
-    colorlinks: true
+#    colorlinks: true
+#    code-block-font-size: \footnotesize
+#    code-block-bg: true
+#    highlight-style: tango  # or pygments, kate, etc.
 #    filters:
 #      - minted
     latex-output-dir: _pdf
+    pdf-engine: lualatex
+    latexmk-options: -shell-escape

@@ -9,7 +9,11 @@ TPname: Linear Algebra
 Firstname: Donnet
 Familyname: Michel Jean Joseph
 Email: Donnet.Michel Jean Joseph@etu.unige.ch
-format: pdf
+format:
+  pdf:
+    echo: true
+    pdf-engine: lualatex
+    latexmk-options: -shell-escape
 execute:
   enabled: false
 ---
@@ -47,8 +51,6 @@ Use the slides and your notes to answer these questions. You do not need to writ
 5. What is a basis of a vector space?
 
    \hrulefill
-
-    \hrulefill
 
     _Write your answer here_
 
@@ -107,7 +109,6 @@ Use the slides and your notes to answer these questions. You do not need to writ
     _Write your answer here_
 
 
----
 
 # Matrix
 
@@ -154,11 +155,12 @@ Use the slides and your notes to answer these questions. You do not need to writ
 
     _Write your solution here_
 
----
 
 # The importance of the mathematical concept behind a code
 
-1. Download, open and run several times the PYTHON file "some\_script.py". Explain the function `def project_on_first(u, v)` in geometrical terms and then explain the results of this code with clear mathematical concepts (you have to talk about projections and scalar product).
+1. Download, open and run several times the PYTHON file "some\_script.py".
+
+   Explain the function \mintinline{python}{def project_on_first(u, v)} in geometrical terms and then explain the results of this code with clear mathematical concepts (you have to talk about projections and scalar product).
 
    \hrulefill
 
@@ -166,14 +168,15 @@ Use the slides and your notes to answer these questions. You do not need to writ
 
 2. Consider $u = (u_i)_{1 \le i \le 7}$ and $v = (v_i)_{1 \le i \le 7}$, two vectors of length 7. How would you clearly write the following part of the script using some mathematical notation?
 
-   ```{python}
-   import numpy as np
-   u = np.random.randn(7)
-   v = np.random.randn(7)
-   r = 0
-   for ui, vi in zip(u, v):
-       r += ui * vi
-   ```
+    \begin{minted}{python}
+    import numpy as np
+    u = np.random.randn(7)
+    v = np.random.randn(7)
+    r = 0
+    for ui, vi in zip(u, v):
+        r += ui * vi
+    \end{minted}
+
    Name the mathematics behind and rewrite the last 3 lines of code in one.
 
    \hrulefill
@@ -192,7 +195,6 @@ Use the slides and your notes to answer these questions. You do not need to writ
 
     _Write your solution here_
 
----
 
 # Computing Eigenvalues, Eigenvectors, and Determinants
 
@@ -255,7 +257,6 @@ Use the slides and your notes to answer these questions. You do not need to writ
 
     _Write your solution here_
 
----
 
 # Computing Projection Onto a Line
 
