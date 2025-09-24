@@ -155,19 +155,48 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
 
     \hrulefill
 
-    _Write your answer here_
+    - Curse of dimensionality.
+    A concrete example of this can be the data sparsity problem.
+    We have an hypercube $[a, b]^D$ with $D$ the dimensionality of the hypercube.
+    We want to create an histogram that represents an empiric estimation of the probability density function (pdf) for this hypercube.
+    For that, we quantize each dimension into $b$ bins.
+    Now, we hope an average of $n$ samples per bin since if the number of samples per bin is too small, we can't have a good estimation because the density can vary a lot between bins.
+    This generate noise for our estimation whereas with a great number of samples per bin, the variance will decrease and the empiric estimation will be closest to the real pdf, according to the Central Limit Theorem which says that when the number of samples increase, the empiric mean is closest to the real mean. 
+
+    - Blessing of dimensionality.
+    According to the lemma of Johnson-Lindenstrauss, we can find a linear projection that maps the datas in a space of smaller dimensionality that conserves the structure of our data with a distortion factor $\epsilon \in ]0, 1[$.
+    This lemma is a blessing of dimensionality because it says also that the projection depends only on the number of samples and not on the dimensionality of our data.
+    So for instace, we have $10 000$ samples $\in \mathbb{R}^{3000}$ and we choose a distortion factor $\epsilon$ of $50\%$
+    According to the lemma, we can project this datas with linear projection into a space of dimensionality given by the formula [-@eq-dim].
+    $$d = O\left( \frac{\log_2 N}{\epsilon^2} \right)
+    = O\left( \frac{\log_2 10000}{0.5^2} \right)
+    = O\left( \frac{13.28}{0.25} \right)
+    \approx 50$$ {#eq-dim}
+    So we can reduce the dimensionality from $3000$ to only $50$ !!!
+    This is an answer to the curse of dimensionality since it allows to work with big dimensionalities.
 
 8. If you divide a $D$-dimensional space into $b$ bins per dimension, and want $k$ samples per bin, how many samples are needed in total?
 
     \hrulefill
 
-    _Write your answer here_
+    If we divide each dimension into $b$ bins, we have for $D$ dimensions a number of bins:
+    $$\underbrace{b \times b \times \cdots \times b}_{D\ \text{times}}
+    =b^D$$
+    Now, if we want $k$ samples per bin, the total number of samples needed is:
+    $$N = k \times b^D$$
 
 9. Why does data become more sparse as $D$ grows? What happens if the number of samples stays fixed?
 
     \hrulefill
 
-    _Write your answer here_
+    We suppose that we have a fixed number of samples $N$.
+    The number of samples per bin is given by:
+    $$N = k \times b^D \Leftrightarrow k = \frac{N}{b^D}$$
+    So the expectation to have a sample $x_i$ in a bin $b_j$ is given by:
+    $$\mathbb{E}\left[P(x_i \in b_j)\right]
+    = \frac{1}{N}\cdot\frac{N}{b^D}
+    = \frac{1}{b^D}$$
+    When $D$ increase, this expectation will approach $0$, so it means that when $D$ increase, most bins are likely to be empty since expectation to have a sample inside a bin approach $0$.
 
 10. Compare a hypersphere of radius $r$ with its enclosing hypercube $[-r,r]^D$. As $D$ increases, what happens to their volume ratio? What does this imply for uniform sampling?
 
