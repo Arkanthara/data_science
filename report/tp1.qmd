@@ -202,7 +202,11 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
 
     \hrulefill
 
-    _Write your answer here_
+    We have the volum of the hypersphere of dimension $D$ and radius $r$ given by the formula [-@eq-sphere].
+    $$\text{vol}(B^D(r)) = \frac{2 r^D \pi^{D/2}}{D \, \Gamma(D/2)}$$
+    And the volum of the hypercube of $[-r, r]^D$ given by the formula [-@eq-cube].
+    $$\text{vol}(C^D(r)) = (2r)^D$$.
+    If we compute the ratio of this two volums
 
 11. In high dimensions, what is the typical angle between two random vectors? How does this angle change as $D$ increases?
 
