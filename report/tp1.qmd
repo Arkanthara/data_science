@@ -570,7 +570,7 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 # Computing Eigenvalues, Eigenvectors, and Determinants
 
 1. Find the determinant, eigenvectors, and eigenvalues of the matrix
-   $$
+   $$A = 
    \begin{bmatrix}
    5  & 6 & 3  \\
    -1 & 0 & 1  \\
@@ -581,7 +581,20 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 
    \hrulefill
 
-    _Write your solution here_
+    The determinant of a matrix can be computed by following the formula [-@eq-det].
+
+    <!-- $$
+    \begin{align}
+    \det(A) = \sum_{\sigma \in S_n} \text{sgn}(\sigma) \prod_{i=1}^{n} a_{i,\sigma(i)} \\ 
+    \text{sgn}(\sigma) =
+    \begin{cases} 
+        +1 & \text{if} \ \sigma \ \text{is pair} \\
+        -1 & \text{else} 
+    \end{cases}
+    \end{align}$$ -->
+     or by following the formula:
+     $$\det(A) = \sum_{j=1}^{n} (-1)^{1+j} a_{1j} \det(A_{1j})$$
+
 
 2. The covariance matrix for n samples $x_1, \dots, x_n$ , each represented by a $d \times 1$ column vector, is given by
    $$
