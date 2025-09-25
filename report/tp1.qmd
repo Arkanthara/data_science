@@ -203,16 +203,41 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
     \hrulefill
 
     We have the volum of the hypersphere of dimension $D$ and radius $r$ given by the formula [-@eq-sphere].
-    $$\text{vol}(B^D(r)) = \frac{2 r^D \pi^{D/2}}{D \, \Gamma(D/2)}$$
+    $$\text{vol}(B^D(r)) = \frac{2 r^D \pi^{D/2}}{D \, \Gamma(D/2)}$$ {#eq-sphere}
     And the volum of the hypercube of $[-r, r]^D$ given by the formula [-@eq-cube].
-    $$\text{vol}(C^D(r)) = (2r)^D$$.
-    If we compute the ratio of this two volums
+    $$\text{vol}(C^D(r)) = (2r)^D$$ {#eq-cube}
+    So the ratio of this two volums is given by the formula [-@eq-ratio].
+    $$\frac{\text{vol}(B^D(r))}{\text{vol}(C^D(r))}
+    = \frac{2 r^D \pi^{D/2}}{D \, \Gamma(D/2)} \cdot \frac{1}{(2r)^D}
+    = \frac{\pi^{D/2}}{D \, \Gamma(D/2)\cdot 2^{D - 1}}
+    $$ {#eq-ratio}
+    When $D$ increase, we have that:
+    $$\lim_{D \to \infty}\frac{\text{vol}(B^D(r))}{\text{vol}(C^D(r))}
+    = \lim_{D \to \infty} \frac{\pi^{D/2}}{D \, \Gamma(D/2)\cdot 2^{D - 1}} = 0$$
+    So when the dimension is big, the volum of the hypersphere is neglectible compared to the volum of the hypercube.
+    So this implies for uniform sampling that if we make uniform sampling in hypercube, there are no samples in hypersphere because the ratio of volums is $0$.
+    It means that all samples will be concentrated, like the volum, in the corners of the hypercube and not in the hypersphere.
 
 11. In high dimensions, what is the typical angle between two random vectors? How does this angle change as $D$ increases?
 
     \hrulefill
 
-    _Write your answer here_
+    We create two vectors by creating 4 random variables independant and identically distribued (iid) $W, X, Y, Z$ in the space $\Omega \subset \mathbb{R}^D$ of dimension $D$.
+    We define $u = X - Y$, and $v = Z - W$ two vectors.
+    Now, we are interested to compute the $\mathbb{E}(cos(\theta))$ between the two vectors.
+    We have:
+    $$\mathbb{E} \left[ \cos\left(\theta\right) \right]
+    = \mathbb{E} \left[ \frac{ \langle u,\; v \rangle }{ \|u\| \cdot \|v\| } \right]
+    = \mathbb{E} \left[ \frac{ \langle X - Y,\; Z - W \rangle }{ \|X - Y\| \cdot \|Z - W\| } \right]$$
+    As $W, X, Y, Z$ are iid, $X - Y$ and $Z - W$ are also iid and centered.
+    So $\mathbb{E}[X - Y] = \mathbb{E}[Z - W] = 0$ so we have $\mathbb{E}\left[\langle X - Y,\; Z - W \rangle\right] = 0$
+    
+    So $\mathbb{E}[\theta] = 0 \Rightarrow \theta = \frac{\pi}{2}$
+
+    So the two vectors seems to be quasi-orthogonal.
+
+    When $D$ 
+
 
 12. What is meant by a “concentration phenomenon”? Give one example where it is useful, and one where it is problematic.
 
