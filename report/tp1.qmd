@@ -470,7 +470,24 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 
    \hrulefill
 
-    _Write your solution here_
+    The execution of the script gives always "Result = 0.0".
+
+    The function \mintinline{python}{def project_on_first(u, v)} is composed by a single code line:
+    \begin{minted}{python}
+    return np.dot(u,v) / np.dot(u,u) * u
+    \end{minted}
+    It correspond for the vector $u$ and $v$ to the scalar product between $u$ and $v$ divided by the scalar product between $u$ and $u$ (which give us a scalar) multiplied by $u$.
+    If we write it in term of mathematic, we have:
+    $\dfrac{\langle u, v \rangle}{\langle u, u \rangle} u$.
+    This formula is the formula of the orthogonal projection of $v$ on $u$.
+    
+    In fact, in an orthogonal projection, we search a vector on $u$ (that we call $p$) such as the vector $v - p$ is perpendicular to the vector $u$. As $p$ is on $u$, we search a scalar $\lambda$ to find our vector $p$: $p = \lambda u$.
+
+    So as the scalar product of 2 ortogonal vectors is $0$, we have:
+    $$\langle v - \lambda u, u \rangle = 0 \
+    \Longrightarrow \ \langle v, u \rangle - \lambda \langle u, u \rangle = 0
+    \Longrightarrow \ \lambda = \frac{\langle v, u \rangle}{\langle u, u \rangle}$$
+    So the orthogonal projection is given by $p = \lambda u = \frac{\langle u, v \rangle}{\langle u, u \rangle} u$, which is what our function compute.
 
 2. Consider $u = (u_i)_{1 \le i \le 7}$ and $v = (v_i)_{1 \le i \le 7}$, two vectors of length 7. How would you clearly write the following part of the script using some mathematical notation?
 
@@ -487,19 +504,67 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 
    \hrulefill
 
-    _Write your solution here_
+    This code is simply the computation of the scalar product.
+    In mathematical notation, we can write it like this:
+    $\sum_{i = 1}^{n} u_i \cdot v_i$ with $n = 7$ in our case.
+
+    We can replace the last 3 lines of code by the numpy function np.dot that compute the scalar product.
+
+    So the updated code is like this:
+    \begin{minted}{python}
+    import numpy as np
+    u = np.random.randn(7)
+    v = np.random.randn(7)
+    np.dot(u, v)
+    \end{minted}
 
 3. Complete the code to construct a vector $v$ orthogonal to the vector $u$ and with the same norm as $u$. Comment each line of your code.
 
    \hrulefill
 
-    _Write your solution here_
+    \begin{minted}{python}
+    import numpy as np
+    u = np.random.randn(7)
+    v = np.random.randn(7)
+    # vector orthogonal to u obtained by the difference between v
+    # and a projection of v on u.
+    z = v - np.dot(u, v) / np.dot(u, u) * u
+    # normalize vector to have a norm of 1
+    z /= np.linalg.norm(z)
+    # multiply vector by norm of u to have same norm than u
+    z *= np.linalg.norm(u)
+    # print results
+    # As we work on discrete space, there is machine precision to consider.
+    print(f"Check orthogonality: {np.round(np.dot(z, u))}")
+    print(f"Norm of u: {np.linalg.norm(u)}")
+    print(f"Norm of created vector: {np.linalg.norm(z)}")
+    \end{minted}
 
 4. Given two vectors \( u \) and \( v \) in $\mathbb{R}^n$, write Python code to compute the cosine of the angle between them. Explain the mathematical concept behind this computation, and show how you would write it in one equation.
 
    \hrulefill
 
-    _Write your solution here_
+    \begin{minted}{python}
+    import numpy as np
+    u = np.random.randn(7)
+    v = np.random.randn(7)
+    # Get vector from orthogonal projection
+    p = np.dot(u, v) / np.dot(u, u) * u
+    # Get cosinus according to Thales theorem
+    cos_1 = np.linalg.norm(p) / np.linalg.norm(v)
+    # Same thing in one line because dot(..)/dot(..) is a scalar
+    cos_2 = np.dot(u, v) / (np.linalg.norm(u) * np.linalg.norm(v))
+    # Print result in degrees
+    print(f"theta: {np.degrees(np.arccos(cos_1))}")
+    print(f"theta in multiple lines: {np.degrees(np.arccos(cos_2))}")
+    \end{minted}
+
+    In the first way, we simply make an orthogonal projection, that create a rectangle triangle. Then we apply Thales theorem that indicate that $\cos(\theta) = \dfrac{\text{adjacent}}{\text{hypotenuse}}$ by taking the norm of our vectors (the norm used is euclidian norm that give us the euclidian distance from the vector).
+
+    In the second way, we use the fact that the scalar product can be written as $\langle u, v \rangle = \cos(\theta) \cdot ||u|| \cdot ||v||$ (with $||\cdot||$ the euclidian norm).
+    So it give us that $\cos(\theta) = \dfrac{\langle u, v \rangle}{||u|| \cdot ||v||}$.
+    This formula is simpler to code in 1 line, and it's easy to proove equivalence between the two formulas obtained by developping and simplify the computation of $\dfrac{||p||}{||v||}$
+
 
 
 # Computing Eigenvalues, Eigenvectors, and Determinants
