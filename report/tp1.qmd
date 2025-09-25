@@ -61,7 +61,7 @@ $$\boldsymbol{\mu}
 = \frac{1}{n} \begin{pmatrix} \sum_{i=1}^{n} B_{i1} &  \sum_{i=1}^{n} B_{i2} & \sum_{i=1}^{n} B_{i3} \end{pmatrix}
 = \frac{1}{5} \begin{pmatrix} 22 & 30 & 24\end{pmatrix}
 = \begin{pmatrix} 4,4 & 6 & 4,8\end{pmatrix} \ \in \ \mathbb{R}^3$$
-  - The variance $\boldsymbol{\sigma}$ is given by the formula [-@eq-var] by taking the square racin of the result
+  - The variance $\boldsymbol{\sigma^2}$ is given by the formula [-@eq-var] by taking the square racin of the result
 $$
 \sigma_j^2 = \frac{1}{n} \sum_{i=1}^{n} (x_{ij} - \mu_j)^2 \ \text{for} \ \mathbf{x}_{i}, \boldsymbol{\sigma} \in \mathbb{R}^d
 $$ {#eq-var}
@@ -72,8 +72,6 @@ $$
 = \frac{10}{5}
 = 2
 $$
-    So $\sigma = \sqrt{2} \ \in \ \mathbb{R}$.
-
     And for the second dataset
     - j = 1
 $$
@@ -100,7 +98,7 @@ $$
 = \frac{10.8}{5}
 = 2.16$$
     So
-$$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \end{pmatrix} \ \in \ \mathbb{R}^3$$
+$$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in \ \mathbb{R}^3$$
 
 
 4. Define the scalar product. Compute it for two vectors from your vector dataset above. How does the scalar product allow us to compute the projection of one vector onto another?
@@ -232,30 +230,37 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
     As $W, X, Y, Z$ are iid, $X - Y$ and $Z - W$ are also iid and centered.
     So $\mathbb{E}[X - Y] = \mathbb{E}[Z - W] = 0$ so we have $\mathbb{E}\left[\langle X - Y,\; Z - W \rangle\right] = 0$
     
-    So $\mathbb{E}[\theta] = 0 \Rightarrow \theta = \frac{\pi}{2}$
+    As the denominator is a normalizer, $\mathbb{E}[\theta] = 0 \Rightarrow \theta = \frac{\pi}{2}$
 
     So the two vectors seems to be quasi-orthogonal.
 
-    When $D$ 
+    So when $D$ increase, the vectors seems to be orthogonal.
 
 
 12. What is meant by a “concentration phenomenon”? Give one example where it is useful, and one where it is problematic.
 
     \hrulefill
 
-    _Write your answer here_
+    A concentration phenomenon is that in a high dimensional space, random variables tend to be concentrated around their mean value, with a variance that tend to be null, so with a probability of significant deviation that becomes small when $D$ increase.
 
 13. State one concentration inequality (e.g., Markov, Chebyshev, Hoeffding). Explain briefly what it tells us.
 
     \hrulefill
 
-    _Write your answer here_
+    The Chebyshev inequality say that for a random variable $X$, a finite variance $\sigma^2$ and a finite expected value $\mu$, it exists $\epsilon > 0$ such that:
+    $$\mathbb{P}(|X - \mu| > \epsilon) \leq \frac{\sigma^2}{\epsilon^2}$$
+    That means that when the variance decrease, the values are significant more close to the mean.
+    It allows to estimate the contentration of data when we only know the variance of the datas, so it is very useful in case we analyse data without a knowledge of the distribution of the datas.
+
 
 14. What is a PAC (Probably Approximately Correct) analysis in machine learning?
 
     \hrulefill
 
-    _Write your answer here_
+    A PAC analysis in machine learning is when we try to train a model to learn a function, and we want a model approximately correct, that means with a small deviation or a small error.
+    It means that we think that the function used to train the model is closest to the best function, based on a data sample.
+    And we speak about probably because we want a strong probability to have a small error according to the data sample.
+
 
 
 
@@ -280,7 +285,52 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
 
    \hrulefill
 
-    _Write your solution here_
+    $$
+    \begin{aligned}
+    \begin{cases}
+    x + ay = 2 \\
+    bx + 2y = 3
+    \end{cases}
+    &\;\;\Longrightarrow\;\;
+    \begin{cases}
+    x = 2 - ay \\
+    b(2 - ay) + 2y = 3
+    \end{cases} \\[1em]
+    &\;\;\Longrightarrow\;\;
+    \begin{cases}
+    x = 2 - ay \\
+    y(2 - ab) = 3 - 2b
+    \end{cases} \\[1em]
+    &\;\;\Longrightarrow\;\;
+    \begin{cases}
+    x = 2 - a\dfrac{3 - 2b}{2 - ab} \\
+    y = \dfrac{3 - 2b}{2 - ab}
+    \end{cases}
+    \end{aligned}
+    $$
+
+    <!-- $$
+   \begin{cases}
+   x + ay = 2 \\
+   bx + 2y = 3
+   \end{cases}
+   = \begin{cases}
+   x = 2 - ay \\
+   b(2 - ay) + 2y = 3
+   \end{cases}
+   = \begin{cases}
+   x = 2 - ay \\
+   y(2 - ba) = 3 - 2b
+   \end{cases}
+   = \begin{cases}
+   x = 2 - a\frac{3 - 2b}{2 - ba} \\
+   y = \frac{3 - 2b}{2 - ba}
+   \end{cases}
+   = \begin{cases}
+   x = 2 - \frac{a(3 - 2b)}{2 - ba} \\
+   y = \frac{3 - 2b}{2 - ba}
+   \end{cases}
+   $$ -->
 
 3. Find the inverse of the following matrix, if it exists:
    $$
@@ -293,7 +343,66 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
 
    \hrulefill
 
-    _Write your solution here_
+    The inverse of the matrix is given, according to pivot method:
+    $$
+    \begin{aligned}
+        \underbrace{\begin{pmatrix}
+        1 & 2 & 3 & \vline & 1 & 0 & 0\\
+        0 & 1 & 4 & \vline & 0 & 1 & 0\\
+        5 & 6 & 0 & \vline & 0 & 0 & 1
+        \end{pmatrix}}_{\;[A\mid I]} 
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        1 & 2 & 3 & \vline & 1 & 0 & 0\\
+        0 & 1 & 4 & \vline & 0 & 1 & 0\\
+        0 & -4 & -15 & \vline & -5 & 0 & 1
+        \end{pmatrix} \\
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        1 & 0 & -5 & \vline & 1 & -2 & 0\\
+        0 & 1 & 4  & \vline & 0 & 1  & 0\\
+        0 & 0 & 1  & \vline & -5 & 4 & 1
+        \end{pmatrix} \\
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        1 & 0 & 0 & \vline & -24 & 18 & 5\\
+        0 & 1 & 0 & \vline & 20  & -15 & -4\\
+        0 & 0 & 1 & \vline & -5  & 4   & 1
+        \end{pmatrix}
+    \end{aligned}
+    $$
+   Hence
+   $$
+   A^{-1} \;=\;
+   \begin{pmatrix}
+   -24 & 18 & 5\\
+   20  & -15 & -4\\
+   -5  & 4 & 1
+   \end{pmatrix}.
+   $$
+
+   <!-- $$
+   \begin{pmatrix}
+   1 & 2 & 3 & 1 & 0 & 0\\
+   0 & 1 & 4 & 0 & 1 & 0\\
+   5 & 6 & 0 & 0 & 0 & 1
+   \end{pmatrix}
+   = \begin{pmatrix}
+   1 & 2 & 3 & 1 & 0 & 0\\
+   0 & 1 & 4 & 0 & 1 & 0\\
+   0 & -4 & -15 & -5 & 0 & 1
+   \end{pmatrix}
+   = \begin{pmatrix}
+   1 & 0 & -5 & 1 & -2 & 0\\
+   0 & 1 & 4 & 0 & 1 & 0\\
+   0 & 0 & 1 & -5 & 4 & 1
+   \end{pmatrix}
+   = \begin{pmatrix}
+   1 & 0 & 0 & -24 & 18 & 5\\
+   0 & 1 & 0 & 20 & -15 & -4\\
+   0 & 0 & 1 & -5 & 4 & 1
+   \end{pmatrix}
+   $$ -->
 
 4. Solve the following matrix equation for \( X \):
    $$
@@ -302,7 +411,55 @@ $$\boldsymbol{\sigma} = \begin{pmatrix} \sqrt{7.44} & \sqrt{5.2} & \sqrt{2.16} \
 
    \hrulefill
 
-    _Write your solution here_
+    First, as $det(A) = 1 \times 5 - 2 \times 3 \neq 0$, $A$ is invertible.
+    So we want to find $A^{-1}$ with the same method than the precedent question:
+    $$
+    \begin{aligned}
+        \underbrace{\begin{pmatrix}
+        1 & 3 & \vline & 1 & 0 \\
+        2 & 5 & \vline & 0 & 1
+        \end{pmatrix}}_{\ [A|I]}
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        1 & 3 & \vline & 1 & 0 \\
+        0 & -1 & \vline & -2 & 1
+        \end{pmatrix} \\
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        1 & 0 & \vline & -5 & 3 \\
+        0 & 1 & \vline & 2 & -1
+        \end{pmatrix}
+    \end{aligned}
+    $$
+    So $A^{-1} = \begin{pmatrix} -5 & 3 \\ 2 & -1 \end{pmatrix}$.
+    Now, we can solve the equation:
+    $$
+    \begin{aligned}
+        AX = B
+        &\;\;\Longrightarrow\;\;
+        X = A^{-1}B \\
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        -5 & 3 \\
+        2 & -1
+        \end{pmatrix} \times
+        \begin{pmatrix}
+        7 & 8 \\
+        9 & 10
+        \end{pmatrix} \\
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        3 \times 9 - 5\times 7 &  3 \times 10 - 5 \times 8 \\
+        2 \times 7 - 1 \times 9 & 2 \times 8 - 1 \times 10
+        \end{pmatrix} \\
+        &\;\;\Longrightarrow\;\;
+        \begin{pmatrix}
+        -8 & -10 \\
+        5 & 6
+        \end{pmatrix}
+    \end{aligned}
+    $$
+
 
 
 # The importance of the mathematical concept behind a code

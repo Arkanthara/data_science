@@ -1,0 +1,203 @@
+---
+title: "Data Science — Reading Notes"
+author: "S. Marchand Mamet (cleaned)"
+date: "2025-09-25"
+format:
+  pdf:
+    documentclass: article
+    pdf-engine: pdflatex
+    mainfont: "Times New Roman"
+    sansfont: "Arial"
+    monofont: "Courier New"
+    toc: true
+    number-sections: true
+---
+
+<!--
+This Quarto document was produced by converting and cleaning the uploaded notes
+"Data science reading notes.pdf". The original file was used as source material. 
+Reference to the uploaded file: fileciteturn0file0
+-->
+
+# Preface
+
+These are cleaned and organized reading notes on core ideas used frequently in data science:
+linear algebra, probability & statistics, and principal component analysis (PCA).  
+I corrected typographical errors and organized the material into coherent sections.  
+This Quarto file is intended to render to a PDF (see README_RENDER.md for rendering instructions).
+
+---
+
+# Part I — Linear Algebra
+
+## 1. Vector spaces and vectors
+
+Let $K$ be a field (for example $\mathbb{R}$ or $\mathbb{Q}$). A **vector space** $V$ over $K$ is a set equipped with vector addition and scalar multiplication that satisfy the usual axioms (associativity, commutativity of addition, distributivity, existence of zero and additive inverses, and compatibility of scalar multiplication).
+
+A vector $v\in V$ can be expressed as a **linear combination** of vectors:
+$$
+v = \sum_{i=1}^n a_i v_i,\qquad a_i\in K,\ v_i\in V.
+$$
+
+A set of vectors $\{v_1,\dots,v_m\}$ is **linearly independent** if the only scalars $a_i$ satisfying $\sum_i a_i v_i = 0$ are $a_i=0$ for all $i$. A **basis** is a maximal linearly independent set; every vector in $V$ has a unique representation as a linear combination of basis vectors. The number of vectors in any basis is the **dimension** of $V$.
+
+When changing from one basis $B$ to another basis $B'$, the coordinates of vectors transform via a change-of-basis matrix.
+
+## 2. Inner (scalar) product and norms
+
+An **inner product** on a real vector space $V$ is a bilinear symmetric positive-definite form $\langle\cdot,\cdot\rangle: V\times V\to\mathbb{R}$. In $\mathbb{R}^n$ with the standard coordinates,
+$$
+\langle x,y\rangle = \sum_{i=1}^n x_i y_i.
+$$
+The induced **norm** is $\|x\|=\sqrt{\langle x,x\rangle}$.
+
+The inner product defines angles and orthogonality: two vectors $x$ and $y$ are orthogonal when $\langle x,y\rangle=0$. By the Pythagorean theorem, if $x\perp y$ then $\|x+y\|^2=\|x\|^2+\|y\|^2$.
+
+## 3. Orthogonal and orthonormal bases
+
+A set of vectors $\{e_1,\dots,e_n\}$ is **orthogonal** if $\langle e_i,e_j\rangle=0$ for $i\ne j$. It is **orthonormal** if in addition $\langle e_i,e_i\rangle=1$. When columns of a matrix $P$ are orthonormal, $P$ is an orthogonal matrix and $P^\top P = I$. Orthonormal bases are especially convenient because coordinates are computed by inner products:
+$$
+\text{if } v=\sum_i \alpha_i e_i \text{ with orthonormal } \{e_i\}, \quad \alpha_i=\langle v,e_i\rangle.
+$$
+
+## 4. Linear maps and matrix representation
+
+A map $f: V\to W$ between vector spaces is **linear** if
+$f(av+bw)=af(v)+bf(w)$ for all scalars $a,b$ and vectors $v,w$.  
+Given bases on $V$ and $W$, the linear map $f$ is represented by a matrix $A$ whose entries are the images of basis vectors expressed in the basis of $W$. Composition and coordinate transforms correspond to matrix multiplication and similarity transforms.
+
+## 5. Projection onto subspaces
+
+The **orthogonal projection** of a vector $u$ onto a subspace $F$ gives the closest point in $F$ to $u$ in Euclidean distance. If $F$ has an orthonormal basis $\{v_1,\dots,v_k\}$, then
+$$
+\operatorname{Proj}_F(u) = \sum_{i=1}^k \langle u, v_i\rangle v_i.
+$$
+In matrix form, if the columns of $V\in\mathbb{R}^{n\times k}$ are an orthonormal basis of $F$, then the projection matrix is $P = V V^\top$. For a non-orthonormal basis represented as columns of $X$, the orthogonal projector onto the column space of $X$ is
+$$
+P = X (X^\top X)^{-1} X^\top,
+$$
+provided $X^\top X$ is invertible.
+
+Projections are at the heart of least-squares regression and many estimation procedures: the least-squares solution finds the projection of observed responses onto the subspace spanned by predictors.
+
+## 6. Eigenvalues and eigenvectors
+
+For a linear map $A:\mathbb{R}^n\to\mathbb{R}^n$, an **eigenvector** $v\neq 0$ and corresponding **eigenvalue** $\lambda$ satisfy
+$$
+A v = \lambda v.
+$$
+If a matrix $A$ has a full set of linearly independent eigenvectors collected as columns of $U$, then $A$ is diagonalizable:
+$$
+A = U \Lambda U^{-1},
+$$
+where $\Lambda$ is diagonal with eigenvalues on the diagonal. For symmetric matrices (e.g., covariance matrices) there is an orthonormal eigen-decomposition
+$$
+A = U \Lambda U^\top,\qquad U^\top U = I.
+$$
+Powers and functions of matrices are particularly simple in an eigenbasis: $A^k = U \Lambda^k U^{-1}$. Eigen-decomposition is a central tool in dimensionality reduction (PCA), modal analysis, and many linear-algebra based algorithms.
+
+---
+
+# Part II — Probability & Statistics
+
+## 1. Basic probability
+
+A probability space $(\Omega,\mathcal{F},P)$ consists of a sample space $\Omega$, a sigma-algebra $\mathcal{F}$ of events, and a probability measure $P$ with $P(\Omega)=1$. For finite or countable $\Omega$, probabilities can be assigned directly to outcomes and summed over events.
+
+### Conditional probability and independence
+
+The conditional probability of $A$ given $B$ (with $P(B)>0$) is
+$$
+P(A\mid B) = \frac{P(A\cap B)}{P(B)}.
+$$
+Events $A$ and $B$ are **independent** if $P(A\cap B)=P(A)P(B)$.
+
+## 2. Random variables
+
+A **random variable** $X$ is a measurable function $X:\Omega\to\mathbb{R}$. It induces a distribution on $\mathbb{R}$ via the pushforward measure $P_X(B)=P(X\in B)$. For discrete variables we use probability mass functions; for continuous variables we use probability density functions (with respect to Lebesgue measure) and cumulative distribution functions $F_X(x)=P(X\le x)$.
+
+## 3. Expectation and variance
+
+The **expectation** (mean) of $X$ is
+$$
+\mathbb{E}[X] = \int X\,dP
+$$
+when the integral exists. The **variance** measures spread:
+$$
+\operatorname{Var}(X)=\mathbb{E}\big[(X-\mathbb{E}[X])^2\big]=\mathbb{E}[X^2]-\mathbb{E}[X]^2.
+$$
+
+The expectation is not necessarily the most likely value (mode), but it is the center of mass of the distribution and is central in many estimators. Under mild conditions the Central Limit Theorem ensures sums of many independent small random effects converge toward a Gaussian distribution.
+
+## 4. Simulating from a distribution
+
+If $F$ is a continuous cumulative distribution function (CDF) and $U\sim\mathrm{Uniform}(0,1)$, then $X=F^{-1}(U)$ has distribution $F$. This is the inverse CDF (quantile) method commonly used in simulation.
+
+---
+
+# Part III — High-dimensional data and PCA
+
+## 1. Curse of dimensionality (short discussion)
+
+In high-dimensional spaces distances and volumes behave counter-intuitively: many norms and measures concentrate, and nearest-neighbour intuition from low dimensions can fail. This affects learning algorithms, sampling requirements, and the interpretation of distances. When vector representations have very high dimension, one should be careful about scaling, normalization, and the sample size relative to dimension.
+
+## 2. PCA — Principal Component Analysis
+
+PCA is a linear dimensionality reduction technique that identifies orthogonal directions (principal components) capturing the greatest variance of the data.
+
+Given a centered data matrix $X\in\mathbb{R}^{m\times n}$ (rows = observations, columns = variables), the sample covariance matrix is
+$$
+C = \frac{1}{m-1} X^\top X.
+$$
+Compute the eigen-decomposition $C = V \Lambda V^\top$ with orthonormal eigenvectors (columns of $V$) and nonnegative eigenvalues in $\Lambda=\operatorname{diag}(\lambda_1,\dots,\lambda_n)$. The principal components (scores) are
+$$
+Y = X V,
+$$
+and the columns of $V$ are the principal directions (loadings). The variance explained by the $j$-th component equals $\lambda_j$, and the proportion explained is $\lambda_j/\sum_i \lambda_i$.
+
+### SVD view
+
+Equivalently, use the singular value decomposition of centered $X$:
+$$
+X = U \Sigma V^\top.
+$$
+Then the principal directions are the columns of $V$, singular values relate to the explained variance ($\lambda_j=\sigma_j^2/(m-1)$), and scores are $U\Sigma$.
+
+### Algorithmic recipe (brief)
+
+1. Center data: subtract column means.
+2. Compute SVD $X = U\Sigma V^\top$ or eigen-decomposition of covariance $C$.
+3. Choose the top $k$ components (largest eigenvalues).
+4. Project: $Y_k = X V_k$ where $V_k$ contains the top $k$ eigenvectors.
+
+### Practical notes
+
+- Use SVD for numerical stability, especially when $m<n$.
+- Decide $k$ using explained variance, scree plots, or downstream performance.
+- Standardize variables (to unit variance) before PCA when variables are on different scales and when variance scale is not meaningful for the problem.
+
+## 3. PCA properties (summary)
+
+- PCA produces orthogonal components.
+- It is optimal (in a least-squares sense) for low-rank approximation: projecting onto the top $k$ principal components minimizes reconstruction error in Frobenius norm.
+- Components are uncorrelated (their sample covariance is diagonal).
+
+## 4. Minimal illustrative Python code (for reproduction)
+
+```{python}
+import numpy as np
+
+def pca_numpy(X, k=None):
+    # X: observations x variables (rows = samples)
+    Xc = X - np.mean(X, axis=0)
+    U, S, Vt = np.linalg.svd(Xc, full_matrices=False)
+    # singular values S; eigenvalues of covariance are (S**2)/(m-1)
+    m = Xc.shape[0]
+    eigvals = (S**2) / (m - 1)
+    components = Vt.T
+    scores = Xc @ components
+    if k is not None:
+        components = components[:, :k]
+        scores = scores[:, :k]
+    return components, scores, eigvals
+```
