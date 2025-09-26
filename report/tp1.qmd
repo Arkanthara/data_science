@@ -793,7 +793,11 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 
    \hrulefill
 
-    _Write your solution here_
+    A symmetric matrix $C$ of size $d \times d$ is positive semidefinite if $v^T C v \geq 0 \ \forall v \in \mathbb{R}^d$.
+
+    In our case, $v^T C v$ give us:
+    $$
+    $$
 
 3. In this portion of the exercise, we will calculate the eigenvalues of the covariance matrices of six data sets listed as follows:
 
