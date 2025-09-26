@@ -795,9 +795,21 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 
     A symmetric matrix $C$ of size $d \times d$ is positive semidefinite if $v^T C v \geq 0 \ \forall v \in \mathbb{R}^d$.
 
-    In our case, $v^T C v$ give us:
+    We define $X$ the matrix $\begin{bmatrix}x_1 & x_2 & \cdots & x_n\end{bmatrix}$ with $x_i$ the column vectors, and $M$ the matrix $\underbrace{\begin{bmatrix} \mu & \cdots & \mu \end{bmatrix}}_{n \ \text{times}}$ such as $X, M \in \mathbb{R}^{d \times n}$
+    Then, we can write:
     $$
+    C = \frac{1}{n - 1} \sum^n_{i=1} (x_i - \mu)(x_i - \mu)^T = \frac{1}{n - 1}\underbrace{(X - M)}_{d \times n}\underbrace{(X - M)^T}_{n \times d}
     $$
+    Let $v \in \mathbb{R}^d$ a vector.
+    We have:
+    $$
+    v^TCv = v^T \frac{1}{n - 1} (X - M)(X - M)^Tv = \frac{1}{n - 1} \underbrace{\left(v^T(X - M)\right)}_{A \in \mathbb{R}^{1 \times n}}\left(v^T(X - M)\right)^T = \frac{1}{n - 1}AA^T
+    $$
+    As $n \geq 1$, $\frac{1}{n - 1} \geq 0$.
+    As the dimension of $A$ is $1 \times n$, $AA^T = \sum_{i = 1}^n (A_i)^2$ and as a sum of squared number is always greater or equal to $0$, we have that $\frac{1}{n - 1}AA^T \geq 0 \ \Longleftrightarrow \ v^T C v \geq 0$.
+
+    So the covariance matrix is always positive semidefinite.
+
 
 3. In this portion of the exercise, we will calculate the eigenvalues of the covariance matrices of six data sets listed as follows:
 
