@@ -581,7 +581,7 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 
    \hrulefill
 
-    The determinant of a matrix can be computed by following the formula [-@eq-det].
+    The determinant of a matrix can be computed by following the formula [-@eq-det], according to the Laplace expansion.
 
     <!-- $$
     \begin{align}
@@ -592,8 +592,195 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
         -1 & \text{else} 
     \end{cases}
     \end{align}$$ -->
-     or by following the formula:
-     $$\det(A) = \sum_{j=1}^{n} (-1)^{1+j} a_{1j} \det(A_{1j})$$
+    $$
+     \det(A) = \sum_{j=1}^{n} (-1)^{i+j} a_{ij} \det(M_{ij})
+    $$ {#eq-det}
+    With $M_{ij}$ the sumatrix obtained by removing the $i$-th row and the $j$-th column of $A$.
+    So we have for $i = 1$:
+    $$
+     \begin{aligned}
+        \det(A) & = \sum_{j=1}^{n} (-1)^{1+j} a_{1j} \det(A_{1j}) \\
+    &= + 5 \times (0 \times (-1) - (2 \times 1)) - 6 \times ((-1) \times (-1)- (1 \times 1)) + 3 \times ((-1) \times 2 - 1 \times 0)\\
+    &= -10 - 0 - 6 \\
+    &= -16
+    \end{aligned}
+    $$
+
+    The eigen values are the result of the equation $\det(A - \lambda I) = 0$ with $\det(A - \lambda I)$ the characteristic polynomial of $A$.
+    $$
+    \begin{aligned}
+        \det(A - \lambda I) &=
+        \begin{bmatrix}
+        5 - \lambda  & 6 & 3  \\
+        -1 & 0 - \lambda & 1  \\
+        1  & 2 & -1 - \lambda
+        \end{bmatrix} \\
+        &= (5 - \lambda)(\lambda^2 + \lambda - 2) - 3\lambda - 6 \\
+        &= 5 \lambda^2 + 5 \lambda - 10 - \lambda^3 - \lambda^2 + 2\lambda - 3 \lambda - 6 \\
+        &= -\lambda^3 + 4\lambda^2 + 4\lambda - 16 \\
+    \end{aligned}
+    $$
+    Now we search a first root of this polynom to factorize it.
+    According to the rational root theorem, we search root that can divide $16$.
+    - $\lambda = 1$:
+        $$-1^3 + 4\cdot 1^2 + 4 \cdot 1 - 16 = -9$$
+    - $\lambda = 2$:
+        $$-2^3 + 4 \cdot 2^2 + 4 \cdot 2 - 16 = 0$$
+    So $2$ is a root of the polynom.
+    So we can factorize the polynom by $\lambda - 2$. To achieve our goal, we use $x$ instead of $\lambda$ to use a latex package that compute details of the operation.
+    $$
+    \polylongdiv[style=D]{-x^{3} + 4x^{2} + 4x - 16}{x - 2}
+    $$
+    So we have the polynom $(\lambda - 2)(-\lambda^2 + 2 \lambda + 8) = (2 - \lambda)(\lambda^2 - 2 \lambda - 8)$
+    As eigen values are given by the roots of the polynom $\det(A - \lambda I)$, we have the following eigen values:
+    $$
+    \begin{aligned}
+        &(2 - \lambda)(\lambda^2 - 2\lambda - 8) = 0 \\
+        \ \Longleftrightarrow \ &
+        \begin{cases}
+            2 - \lambda = 0 \\
+            \lambda^2 - 2\lambda - 8 = 0
+        \end{cases} \\
+        \ \Longleftrightarrow \ &
+        \begin{cases}
+            \lambda = 2 \\
+            \lambda = \dfrac{2 \pm \sqrt{(-2)^2 - 4 \cdot 1 \cdot (-8)}}{2 \cdot 1} & \text{(quadratic formula)}
+        \end{cases} \\
+        \ \Longleftrightarrow \ &
+        \begin{cases}
+            \lambda_1 = 2 \\
+            \lambda = \dfrac{2 \pm \sqrt{36}}{2} = \dfrac{2 \pm 6}{2}
+        \end{cases} \\
+        \ \Longleftrightarrow \ & 
+        \begin{cases}
+            \lambda_1 = 2 \\
+            \lambda_2 = 4 \\
+            \lambda_3 = -2
+        \end{cases}
+    \end{aligned}
+    $$
+
+    Now, we will find a eigen vector $\mathbf{v}$ of the matrix $A$ such that $(A - \lambda I)\mathbf{v} = \mathbf{0}$.
+    We have:
+    - $\lambda_1 = 2$
+    $$
+    A - \lambda I = 
+    \begin{bmatrix}
+    5 - 2  & 6 & 3  \\
+    -1 & 0 - 2 & 1  \\
+    1  & 2 & -1 - 2
+    \end{bmatrix}
+    = \begin{bmatrix}
+    3  & 6 & 3  \\
+    -1 & - 2 & 1  \\
+    1  & 2 & -3
+    \end{bmatrix}
+    $$
+    So we can etablish the equation system as follow:
+    $$
+    \begin{aligned}
+    & (A - \lambda I)\mathbf{v}  = \mathbf{0} \\
+    \ \Longleftrightarrow \ &
+    \begin{cases}
+        3 v_1 + 6 v_2 + 3 v_3 = 0 \\
+        -v_1 - 2 v_2 + v_3 = 0 \\
+        v_1 + 2 v_2 - 3 v_3 = 0
+    \end{cases} \\
+    \ \Longleftrightarrow \ &
+    \begin{cases}
+        v_1 + 2 v_2 = 0 \\
+        v_3 = 0
+    \end{cases} \\
+    \ \Longleftrightarrow \ &
+    \begin{cases}
+        v_1 = -2 v_2 \\
+        v_3 = 0
+    \end{cases}
+    \end{aligned}
+    $$
+    So $v_1 = \begin{bmatrix} -2 t \\ t \\ 0 \end{bmatrix}$ for $t \in \mathbb{R}$
+
+    - $\lambda_2 = 4$
+    $$
+    A - \lambda I = 
+    \begin{bmatrix}
+    5 - 4  & 6 & 3  \\
+    -1 & 0 - 4 & 1  \\
+    1  & 2 & -1 - 4
+    \end{bmatrix}
+    = \begin{bmatrix}
+    1  & 6 & 3  \\
+    -1 & - 4 & 1  \\
+    1  & 2 & -5
+    \end{bmatrix}
+    $$
+    So we can etablish the equation system as follow:
+    $$
+    \begin{aligned}
+    & (A - \lambda I)\mathbf{v}  = \mathbf{0} \\
+    \ \Longleftrightarrow \ &
+    \begin{cases}
+        v_1 + 6 v_2 + 3 v_3 = 0 \\
+        -v_1 - 4 v_2 + v_3 = 0 \\
+        v_1 + 2 v_2 - 5 v_3 = 0
+    \end{cases} \\
+    \ \Longleftrightarrow \ &
+    \begin{cases}
+        v_1 = 9 v_3 \\
+        v_2 = - 2 v_3
+    \end{cases} \\
+    \end{aligned}
+    $$
+    So $v_2 = \begin{bmatrix} 9t \\ -2t \\ t \end{bmatrix}$ for $t \in \mathbb{R}$
+
+    - $\lambda_3 = -2$
+    $$
+    A - \lambda I = 
+    \begin{bmatrix}
+    5 + 2  & 6 & 3  \\
+    -1 & 0 + 2 & 1  \\
+    1  & 2 & -1 + 2
+    \end{bmatrix}
+    = \begin{bmatrix}
+    7  & 6 & 3  \\
+    -1 & 2 & 1  \\
+    1  & 2 & 1
+    \end{bmatrix}
+    $$
+    So we can etablish the equation system as follow:
+    $$
+    \begin{aligned}
+    & (A - \lambda I)\mathbf{v}  = \mathbf{0} \\
+    \ \Longleftrightarrow \ &
+    \begin{cases}
+        7 v_1 + 6 v_2 + 3 v_3 = 0 \\
+        -v_1 + 2 v_2 + v_3 = 0 \\
+        v_1 + 2 v_2 + v_3 = 0
+    \end{cases} \\
+    \ \Longleftrightarrow \ &
+    \begin{cases}
+        v_1 = 0 \\
+        v_3 = -2 v_2
+    \end{cases} \\
+    \end{aligned}
+    $$
+    So $v_3 = \begin{bmatrix} 0 \\ t \\ -2t \end{bmatrix}$ for $t \in \mathbb{R}$
+
+    This is the code used to verify the results. Note that we use sympy to have exact values instead of numpy which is better for computation.
+
+    \begin{minted}{python}
+    import sympy as sp
+
+    A = sp.Matrix([[5, 6, 3],
+                  [-1, 0, 1],
+                  [1, 2, -1]])
+    eigenvals = A.eigenvals()
+    eigenvects = A.eigenvects()
+    eigenvals = [i for i, _ in eigenvals.items()]
+    print(f"Eigen values: {eigenvals}")
+    print(f"Eigen vectors: {sp.pprint([(i, j) for i, _, j in eigenvects])}")
+    \end{minted}
+
 
 
 2. The covariance matrix for n samples $x_1, \dots, x_n$ , each represented by a $d \times 1$ column vector, is given by
