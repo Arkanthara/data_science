@@ -17,8 +17,6 @@ for i in range(6):
     print("\nCovariance matrix\n")
     print(cov)
     print("--------------------------------------------\n")
-    # u, s, _ = np.linalg.svd(cov, full_matrices=False)
-    # eigenvalues = (s ** 2) / cov.shape[1]
     eigenvalues, _ = np.linalg.eig(cov)
     print("\n--------------------------------------------")
     print("\nEigen values\n")
