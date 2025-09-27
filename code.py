@@ -17,6 +17,8 @@ for i in range(6):
     print("\nCovariance matrix\n")
     print(cov)
     print("--------------------------------------------\n")
+    # u, s, _ = np.linalg.svd(cov, full_matrices=False)
+    # eigenvalues = (s ** 2) / cov.shape[1]
     eigenvalues, _ = np.linalg.eig(cov)
     print("\n--------------------------------------------")
     print("\nEigen values\n")
@@ -34,6 +36,6 @@ for i in range(6):
     print("--------------------------------------------\n")
     plt.figure()
     plt.plot(range(len(eigenvalues)), np.real(eigenvalues))
-    plt.title(f"Eigenspectrum of data {i}")
+    plt.title(f"Eigenspectrum of data {i + 1}")
     plt.show()
 

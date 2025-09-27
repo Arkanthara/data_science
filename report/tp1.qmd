@@ -836,13 +836,41 @@ $$\boldsymbol{\sigma^2} = \begin{pmatrix} 7.44 & 5.2 & 2.16 \end{pmatrix} \ \in 
 
    \hrulefill
 
-    _Write your solution here_
+    We can see that the product of the eigenvalues is always 0, as the determinant for each covariance matrix.
+    It's due to the relation between the product of the eigenvalues and the determinant.
+    According to the eigen value decomposition, the covariance matrix (which is positive semidefinite) can be written as $A = U \Sigma U^{-1}$ with $\Sigma$ the matrix composed by the eigen values of $A$.
+
+    So we have
+    $$
+    \det(A) = \det(U\Sigma U^{-1}) = \det(U) \det(\Sigma) \det(U^{-1}) = \dfrac{\det(U)}{\det(U)} \det(\Sigma) = \det(\Sigma) = \prod_i \lambda_i
+    $$
+    So the product of the eigenvalues is equal to the determinant of the covariance matrix.
+    On top of that, we can see that the eigenspectrum has always the same form: a decrease curve that go around 0.
+    We can constate that this curve decrease like inverse of exponential, and it's more marked when the number of data increase.
+    As the eigen values represent the variance of the data in each dimension, it means that when the spectrum dercrease quickly until values near 0, the variance of each dimension decrease also quickly.
+    So the variance of a lot of dimensions is in the neighborhood of $0$.
+    It means that for this dataset, all the dimensions are not required because if the variance is near $0$, all the data have approximatively the same value in this dimension.
+    So looking at the spectre of the eigen value is very interesting to know the number of dimensions needed to represent our datas.
 
 4. Let $A \in \mathbb{R}^{n \times n}$ be a square matrix. Show that if \( A \) has an eigenvalue \( \lambda = 0 \), then the matrix \( A \)  is singular. Furthermore, prove that the determinant of \( A \) must be zero if any eigenvalue is zero.
 
    \hrulefill
 
-    _Write your solution here_
+    Let ${\lambda_1, \cdots, \lambda_n}$ the eigenvalues of $A$.
+    The caracteristic polynom $p$ can be written as [-@eq-poly].
+    $$
+    p(x) = \det(A - xI) = (\lambda_1 - x)(\lambda_2 - x)\cdots(\lambda_n - x) = \prod_i^n (\lambda_i - x)
+    $$ {#eq-poly}
+    If we evaluate this polynom in $x = 0$, we obtain the following result [-@eq-detpoly].
+    $$
+    p(0) = \det(A - 0I) = \det(A) = \prod_i^n \lambda_i
+    $$ {#eq-detpoly}
+    So if $A$ has an eigenvalue $\lambda_i = 0$, then we have
+    $$
+    \prod_i^n \lambda_i = 0 = \det(A)
+    $$
+    So $\det(A) = 0$ so the matrix is singular.
+    So if any eigenvalue is $0$, the determinant of the matrix is equal to $0$ and the matrix is singular.  
 
 
 # Computing Projection Onto a Line
