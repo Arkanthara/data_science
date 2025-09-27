@@ -882,4 +882,47 @@ There are given a line $\alpha : 3x + 4y = -6$ and a point $A$ with the coordina
 
 \hrulefill
 
-    _Write your solution here_
+1. First, we define a point on the line to create vector.
+    To achieve our goal, I choose $x = -2$.
+    So I have
+    $$
+    3x + 4y = -6 \ \Longleftrightarrow \ 4y = -6 + 6 \ \Longleftrightarrow \ y = 0
+    $$
+    So the point $B = (-2, 0)$ is on the line $\alpha$.
+    We can define a vector $\vec{n} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}$ which is the vector normal, perpendicular to the line.
+    We can define a vector from the point of the line to the point $A$: $\vec{u} = \begin{bmatrix} -1 + 2 \\ 3 - 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}$
+    Now, we want to find the orthogonal projection of the vector $\vec{u}$ on the vector $\vec{n}$.
+    The orthogonal projection $\vec{p}$ give us:
+    $$
+    \vec{p}
+    = \frac{\langle \vec{u}, \vec{n} \rangle}{\langle\vec{n}, \vec{n}\rangle}\vec{n}
+    = \frac{3 + 12}{9 + 16}\begin{bmatrix} 3 \\ 4 \end{bmatrix}
+    = \begin{bmatrix} \frac{9}{5} \\ \frac{12}{5} \end{bmatrix}
+    $$
+
+    If we calculate the norm of this vector, we obtain the shortest distance between the point and the line.
+    It give us:
+    $$
+    || \vec{n} ||_2
+    = \sqrt{\left(frac{9}{5}\right)^2 + \left(\frac{12}{5}\right)^2}
+    = \sqrt{\frac{81}{25} + \frac{144}{25}}
+    = \sqrt{\frac{225}{25}}
+    = \sqrt{9}
+    = 3
+    $$
+    So the distance from the point $B$ to the line $\alpha$ is of $3$.
+
+2. My code is basically what I have explained in the precedent question.
+
+    \begin{minted}{python}
+    import numpy as np
+
+    A = np.array([-1, 3])
+    B = np.array([-2, 0])
+    n = np.array([3, 4])
+    u = A - B
+
+    p = np.dot(n, u) / np.dot(n, n) * n
+    d = np.sqrt(sum(p**2))
+    print(f"Distance of the point to the line: {d}")
+    \end{minted}
