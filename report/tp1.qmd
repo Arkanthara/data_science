@@ -2,13 +2,13 @@
 title: "TP A : Linear Algebra"
 author:
   - name: "Donnet Michel Jean Joseph"
-    email: "Donnet.Michel Jean Joseph@etu.unige.ch"
+    email: "Donnet.Michel@etu.unige.ch"
 Monthyear: September 2025
 TPid: A
 TPname: Linear Algebra
 Firstname: Donnet
 Familyname: Michel Jean Joseph
-Email: Donnet.Michel Jean Joseph@etu.unige.ch
+Email: Michel.Donnet@etu.unige.ch
 format:
   pdf:
     pdf-engine: lualatex
