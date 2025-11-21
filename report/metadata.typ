@@ -1,0 +1,42 @@
+// Main report file
+#import "template.typ": create-report-template
+
+// Configure your report
+#let my-report = create-report-template(
+  // Required information
+  logo: "./img/unige.pdf",
+  logosize: 6cm,
+  university: "University of Geneva",
+  title: "TP D: PCA, k-NN classification",
+
+  // Structured authors
+  authors: (
+    (
+      name: "Michel Jean Joseph Donnet",
+    ),
+  ),
+
+  // Optional information
+  faculty: "Faculty of Science",
+  // subtitle: "Report Subtitle",
+  course-name: "Data Science",
+  course-id: "14X026",
+  // illustrations: (
+  //   (
+  //     path: "./img/full_msg.png",
+  //     width: 10cm,
+  //   ),
+  //   (
+  //     path: "./img/full_hist_R.png",
+  //     width: 10cm,
+  //   ),
+  // ),
+  project-name: "Data Science",
+  date: none,
+
+  // Document options
+  toc: true,
+  numbering: false,
+  bibliography: none,
+  appendix: false,
+)
