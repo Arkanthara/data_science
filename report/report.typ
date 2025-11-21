@@ -60,7 +60,22 @@ $ overline(X)_n = 1/n sum_(i=1)^n X_i , quad S_n^2 = 1/n sum_(i=1)^n (X_i - over
 
 be the empirical mean and (non-unbiased) variance. Set the theoretical moments equal to the empirical ones and solve this system to obtain the moment estimators $hat(a)_("MoM")$ and $hat(lambda)_("MoM")$.
 
-Write your solution here
+#align(
+  left,
+  $
+    cases(
+      EE[X] = overline(X_n),
+      EE[(X - EE[X])^2] = S_n^2
+    ) & =cases(
+          1 / lambda + a = overline(X_n),
+          1 / lambda (1 / lambda - 1) = S_n^2
+        ) \
+      & =cases(
+          1 / lambda + a = 1/n sum_(i=1)^n X_i,
+          1 / lambda (1 / lambda - 1) = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2
+        ) \
+  $,
+)
 
 === Maximum Likelihood Estimation
 
@@ -115,12 +130,6 @@ Write your solution here
 
 For each of the 3 following chains of information, give the joint probability using the chain rule:
 
-1.
-$ p(X, Y, Z) = dots ? $" Write your solution here" \
-$ p(X, Z) = dots ? $" Write your solution here" \
-$ p(X, Y) = dots ? $" Write your solution here" \
-$ p(Y, Z) = dots ? $" Write your solution here"
-
 #figure(
   // caption: "Graphical model for X, Y, Z",
   gap: 1.5em,
@@ -143,15 +152,13 @@ $ p(Y, Z) = dots ? $" Write your solution here"
   ],
 )
 
-2.
-$ p(X_1, X_2, dots, X_7) = dots ? $" Write your solution here" \
-$ p(X_1, X_3, X_5, X_7) = dots ? $" Write your solution here" \
-$ p(X_2, X_4, X_6, X_7) = dots ? $" Write your solution here" \
-$ p(X_3, X_6, X_7) = dots ? $" Write your solution here" \
-$ p(X_1, X_2, X_4, X_5) = dots ? $" Write your solution here"
+1.
+  - $p(X, Y, Z) = p(X) dot p(Y | X) dot p(Z | X, Y)$
+  - $p(X, Z) = p(X) dot p(Z)$
+  - $p(X, Y) = p(X) dot p(Y | X)$
+  - $p(Y, Z) = p(Y) dot p(Z | Y)$
 
 #figure(
-  caption: "Graphical model for X₁ to X₇",
   gap: 1.5em,
   [
     #let color = rgb(255, 160, 210, 20%)      // rose pastel
@@ -179,12 +186,12 @@ $ p(X_1, X_2, X_4, X_5) = dots ? $" Write your solution here"
   ],
 )
 
-3.
-$ p(X_1, X_2, dots, X_7) = dots ? $" Write your solution here" \
-$ p(X_1, X_3, X_5, X_7) = dots ? $" Write your solution here" \
-$ p(X_2, X_4, X_6, X_7) = dots ? $" Write your solution here" \
-$ p(X_3, X_6, X_7) = dots ? $" Write your solution here" \
-$ p(X_1, X_2, X_4, X_5) = dots ? $" Write your solution here"
+2.
+  - $p(X_1, X_2, X_3, X_4, X_5, X_6, X_7) = p(X_1) dot p(X_2) dot p(X_3 | X_1, X_2) dot p(X_4) dot p(X_5) dot p(X_6 | X_5, X_4, X_3) dot p(X_7 | X_6)$
+  - $p(X_1, X_3, X_5, X_7) = sum_(X_2) sum_(X_4) sum_(X_6) p(X_1, dots, X_7) = p(X_1) dot p(X_3 | X_1) dot p(X_5) dot p(X_7 | X_5, X_3)$
+  - $p(X_2, X_4, X_6, X_7) = p(X_2) dot p(X_4) dot p(X_6 | X_2, X_4) dot p(X_7 | X_6)$
+  - $p(X_3, X_6, X_7) = p(X_3) dot p(X_6 | X_3) dot p(X_7 | X_6)$
+  - $p(X_1, X_2, X_4, X_5) = p(X_1) dot p(X_2) dot p(X_4) dot p(X_5)$
 
 #figure(
   caption: "Complex graphical model for X₁ to X₇",
@@ -216,6 +223,13 @@ $ p(X_1, X_2, X_4, X_5) = dots ? $" Write your solution here"
     )
   ],
 )
+
+3.
+  - $p(X_1, X_2, X_3, X_4, X_5, X_6, X_7) = p(X_1) dot p(X_2) dot p(X_3 | X_1, X_2) dot p(X_4 | X_7) dot p(X_5 | X_2) dot p(X_6 | X_5, X_4, X_3) dot p(X_7 | X_6)$
+  - $p(X_1, X_3, X_5, X_7) = sum_(X_2) sum_(X_4) sum_(X_6) p(X_1, dots, X_7) = p(X_1) dot p(X_3 | X_1) dot p(X_5) dot p(X_7 | X_5, X_3)$
+  - $p(X_2, X_4, X_6, X_7) = p(X_2) dot p(X_4 | X_7) dot p(X_6 | X_4, X_2) dot p(X_7 | X_6)$
+  - $p(X_3, X_6, X_7) = p(X_3) dot p(X_6 | X_3) dot p(X_7 | X_6)$
+  - $p(X_1, X_2, X_4, X_5) = p(X_1) dot p(X_2) dot p(X_4 | X_1, X_2, X_5) dot p(X_5 | X_2)$
 
 = Problem: information quantifiers
 
