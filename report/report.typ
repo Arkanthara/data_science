@@ -71,8 +71,77 @@ be the empirical mean and (non-unbiased) variance. Set the theoretical moments e
           1 / lambda (1 / lambda - 1) = S_n^2
         ) \
       & =cases(
-          1 / lambda + a = 1/n sum_(i=1)^n X_i,
+          1 / lambda + a - overline(X_n) = 0,
+          1 / lambda^2 - 1 / lambda - S_n^2 = 0
+        ) \
+      & =cases(
+          1 / lambda + a - overline(X_n) = 0,
+          1 - lambda - lambda^2 S_n^2 = 0
+        ) \
+      & =cases(
+          1 / lambda + a - overline(X_n) = 0,
+          lambda = -(1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
+          or lambda = -(1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2)
+        ) \
+      & =cases(
+          a = overline(X_n) + (2S_n^2) / (1 - sqrt(1 - 4 S_n^2)),
+          a = overline(X_n) + (2S_n^2) / (1 + sqrt(1 - 4 S_n^2)),
+          lambda = (1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
+          lambda = (1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2)
+        ) \
+      & =cases(
+          a = overline(X_n) - (1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2),
+          a = overline(X_n) - (1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
+          lambda = (1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
+          lambda = (1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2)
+        ) \
+      & =cases(
+          1 / lambda + a = overline(X_n),
           1 / lambda (1 / lambda - 1) = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2
+        ) \
+      & =cases(
+          1 / lambda + a = overline(X_n),
+          1 / lambda (1 / lambda - 1) = 1/n sum_(i=1)^n X_i^2 - 2 X_i overline(X)_n + overline(X)_n^2
+        ) \
+      & =cases(
+          1 / lambda + a = overline(X_n),
+          1 / lambda (1 / lambda - 1) = 1/n sum_(i=1)^n X_i^2 - 2 X_i (1 / lambda + a) + 1/lambda^2 + 2 a 1 / lambda + a^2
+        ) \
+      & =cases(
+          1 / lambda + a = overline(X_n),
+          1 / lambda^2 - 1 / lambda - 1 / lambda^2 + 2 a 1 / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i (1 / lambda + a)
+        ) \
+      & =cases(
+          a = overline(X_n) - 1 / lambda,
+          a / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i (1 / lambda + a)
+        ) \
+      & =cases(
+          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
+          a / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i/ lambda - a 2X_i
+        ) \
+      & =cases(
+          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
+          a / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i/ lambda - 2 X_i^2 + X_i / lambda
+        ) \
+      & =cases(
+          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
+          a / lambda - a^2 = 1/n sum_(i=1)^n - X_i^2 - X_i / lambda
+        ) \
+      & =cases(
+          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
+          a - lambda a^2 = 1/n sum_(i=1)^n - lambda X_i^2 - X_i
+        ) \
+      & =cases(
+          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
+          a (1 - lambda a) = 1/n sum_(i=1)^n X_i (- 1 - lambda X_i)
+        ) \
+      & =cases(
+          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
+          a = (1/n sum_(i=1)^n X_i (- 1 - lambda X_i)) / (- 1 / n sum_(i = 1)^n lambda X_i)
+        ) \
+      & =cases(
+          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
+          a = (1/n sum_(i=1)^n X_i (- 1 - lambda X_i)) / (- 1 / n sum_(i = 1)^n lambda X_i)
         ) \
   $,
 )
