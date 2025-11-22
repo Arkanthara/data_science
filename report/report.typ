@@ -29,7 +29,7 @@ Let $X ~ f_(a, lambda)$. Throughout the section assume we observe an i.i.d. samp
       & = limits(integral)_(- infinity)^(+ infinity) x lambda e^(-lambda(x - a)) bold(1)_({x >= a}) d x \
       & = limits(integral)_(a)^(infinity) x lambda e^(-lambda(x - a)) d x \
       & = limits(integral)_(0)^(infinity) (y + a) lambda e^(-lambda y) d y \
-      & = limits(integral)_(0)^(infinity) y lambda e^(-lambda y) d y + a limits(integral)_(0)^(infinity) lambda e^(-lambda y) d y \
+      & = limits(integral)_(0)^(infinity) y lambda e^(-lambda y) d y^#report-footnote[$integral u d v = u v - integral d u v$] + a limits(integral)_(0)^(infinity) lambda e^(-lambda y) d y \
       & = [-y e^(-lambda y)]_0^infinity + limits(integral)_(0)^(infinity) e^(-lambda y) d y + a [-e^(-lambda y)]_0^infinity \
       & = (lim_(y -> infinity) -y e^(-lambda y) + 0) - [1 / lambda e^(-lambda y)]_0^infinity + a (lim_(y -> infinity) -e^(-lambda y) + e^0) \
       & = (lim_(y -> infinity) - 1 / lambda e^(-lambda y) + 1 / lambda e^0) + a \
@@ -45,10 +45,11 @@ Let $X ~ f_(a, lambda)$. Throughout the section assume we observe an i.i.d. samp
       & = limits(integral)_(- infinity)^(+ infinity) (x - a - 1 / lambda)^2 lambda e^(-lambda(x - a)) bold(1)_({x >= a}) d x \
       & = limits(integral)_(a)^(+ infinity) (x - a - 1 / lambda)^2 lambda e^(-lambda(x - a)) d x \
       & = limits(integral)_(0)^(+ infinity) (y - 1 / lambda)^2 lambda e^(-lambda y) d y \
-      & = limits(integral)_(0)^(+ infinity) y^2 lambda e^(-lambda y) d y - 2 limits(integral)_(0)^(+ infinity) y e^(-lambda y) d y + 1 / lambda limits(integral)_(0)^(+ infinity) e^(-lambda y) d y^#report-footnote[We know from previous computation that $integral_0^infinity e^(-lambda y) d y = 1 / lambda$]\
-      & = [-y^2 e^(- lambda y)]_0^infinity + limits(integral)_(0)^(+ infinity) e^(-lambda y) d y - 2 ([-y e^(-lambda y)]_0^infinity + limits(integral)_(0)^(+ infinity) e^(-lambda y) d y) + 1 / lambda^2 \
-      & = 1 / lambda - 2 / lambda + 1 / lambda^2 \
-      & = 1 / lambda (1 / lambda - 1)
+      & = limits(integral)_(0)^(+ infinity) y^2 lambda e^(-lambda y) d y - 2 limits(integral)_(0)^(+ infinity) y e^(-lambda y) d y + 1 / lambda limits(integral)_(0)^(+ infinity) e^(-lambda y) d y^#report-footnote[$limits(integral)_(0)^(infinity) e^(-lambda y) d y = [- 1 / lambda e^(-lambda y)]_0^infinity = (lim_(y -> infinity) - 1 / lambda e^(-lambda y) + 1 / lambda e^0) = 1 / lambda$]\
+      & = [-y^2 e^(- lambda y)]_0^infinity + limits(integral)_(0)^(+ infinity) 2 y e^(-lambda y) d y - 2 / lambda ([-y e^(-lambda y)]_0^infinity + limits(integral)_(0)^(+ infinity) e^(-lambda y) d y) + 1 / lambda^2 \
+      & = [-2y 1 / lambda e^(-lambda y)]_0^infinity + limits(integral)_(0)^(+ infinity) 2 / lambda e^(-lambda y) d y - 2 / lambda^2 + 1 / lambda^2 \
+      & = 2 / lambda^2 - 2 / lambda^2 + 1 / lambda^2 \
+      & = 1 / lambda^2
     $],
   )
 
@@ -68,93 +69,57 @@ be the empirical mean and (non-unbiased) variance. Set the theoretical moments e
       EE[(X - EE[X])^2] = S_n^2
     ) & =cases(
           1 / lambda + a = overline(X_n),
-          1 / lambda (1 / lambda - 1) = S_n^2
-        ) \
-      & =cases(
-          1 / lambda + a - overline(X_n) = 0,
-          1 / lambda^2 - 1 / lambda - S_n^2 = 0
-        ) \
-      & =cases(
-          1 / lambda + a - overline(X_n) = 0,
-          1 - lambda - lambda^2 S_n^2 = 0
-        ) \
-      & =cases(
-          1 / lambda + a - overline(X_n) = 0,
-          lambda = -(1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
-          or lambda = -(1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2)
-        ) \
-      & =cases(
-          a = overline(X_n) + (2S_n^2) / (1 - sqrt(1 - 4 S_n^2)),
-          a = overline(X_n) + (2S_n^2) / (1 + sqrt(1 - 4 S_n^2)),
-          lambda = (1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
-          lambda = (1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2)
-        ) \
-      & =cases(
-          a = overline(X_n) - (1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2),
-          a = overline(X_n) - (1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
-          lambda = (1 - sqrt(1 - 4 S_n^2)) / (2 S_n^2),
-          lambda = (1 + sqrt(1 - 4 S_n^2)) / (2 S_n^2)
-        ) \
-      & =cases(
-          1 / lambda + a = overline(X_n),
-          1 / lambda (1 / lambda - 1) = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2
-        ) \
-      & =cases(
-          1 / lambda + a = overline(X_n),
-          1 / lambda (1 / lambda - 1) = 1/n sum_(i=1)^n X_i^2 - 2 X_i overline(X)_n + overline(X)_n^2
-        ) \
-      & =cases(
-          1 / lambda + a = overline(X_n),
-          1 / lambda (1 / lambda - 1) = 1/n sum_(i=1)^n X_i^2 - 2 X_i (1 / lambda + a) + 1/lambda^2 + 2 a 1 / lambda + a^2
-        ) \
-      & =cases(
-          1 / lambda + a = overline(X_n),
-          1 / lambda^2 - 1 / lambda - 1 / lambda^2 + 2 a 1 / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i (1 / lambda + a)
+          1 / lambda^2 = S_n^2
         ) \
       & =cases(
           a = overline(X_n) - 1 / lambda,
-          a / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i (1 / lambda + a)
+          1 / lambda^2 - S_n^2 = 0
         ) \
       & =cases(
-          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
-          a / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i/ lambda - a 2X_i
+          a = overline(X_n) - 1 / lambda,
+          (1 / lambda - S_n) (1 / lambda + S_n) = 0
         ) \
       & =cases(
-          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
-          a / lambda - a^2 = 1/n sum_(i=1)^n X_i^2 - 2 X_i/ lambda - 2 X_i^2 + X_i / lambda
+          a = overline(X_n) - 1 / lambda,
+          lambda = 1 / S_n "or" lambda = - 1 / S_n
         ) \
       & =cases(
-          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
-          a / lambda - a^2 = 1/n sum_(i=1)^n - X_i^2 - X_i / lambda
-        ) \
-      & =cases(
-          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
-          a - lambda a^2 = 1/n sum_(i=1)^n - lambda X_i^2 - X_i
-        ) \
-      & =cases(
-          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
-          a (1 - lambda a) = 1/n sum_(i=1)^n X_i (- 1 - lambda X_i)
-        ) \
-      & =cases(
-          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
-          a = (1/n sum_(i=1)^n X_i (- 1 - lambda X_i)) / (- 1 / n sum_(i = 1)^n lambda X_i)
-        ) \
-      & =cases(
-          a = 1 / n sum_(i = 1)^n X_i - 1 / lambda,
-          a = (1/n sum_(i=1)^n X_i (- 1 - lambda X_i)) / (- 1 / n sum_(i = 1)^n lambda X_i)
+          a = overline(X_n) - S_n & " or " & a = overline(X_n) + S_n,
+          lambda = 1 / S_n & " or " & lambda = - 1 / S_n
         ) \
   $,
 )
 
+So we have $(hat(a)_("MoM"), hat(lambda)_("MoM")) = (overline(X_n) - S_n, 1 / S_n)$ or $(overline(X_n) + S_n, - 1 / S_n)$
+
 === Maximum Likelihood Estimation
 
-3. Write the log-likelihood $ℓ(a, lambda)$ of the sample.
+3. Write the log-likelihood $cal(l)(a, lambda)$ of the sample.
 
-Write your solution here
+#align(
+  left,
+  $
+    cal(l)(a, lambda) & = log(product_(i = 0)^n f(X_i; a, lambda)) \
+    & = sum_(i = 0)^n log(lambda e^(-lambda(X_i - a)) bold(1)_({X_i >= a})) \
+    &= n log(lambda) + sum_(i = 0)^n -lambda(X_i - a) underbrace(bold(1)_({X_i >= a}), "condition on "X_i) \
+  $,
+)
 
 4. Show that the MLE of $a$ is $hat(a)_("MLE") = min_i X_i$.
 
-Write your solution here
+First of all, the log-likelihood is only defined when $X_i >= a$.
+
+So $a$ must be less or equal to all $X_i$.
+
+On top of that, we try to maximise the log-likelihood, and the only place where $a$ appears is inside the term $-lambda(X_i - a)$ which has a negative sign.
+
+So we must minimize the term $-lambda(X_i - a)$.
+To do that, $a$ must be maximum.
+However, $a$ must be less or equal to all $X_i$.
+So if we take $a = min X_i$, the condition is respected and $a$ is maximum since all the $X_i$ are greater or equal to $0$.
+Effectively, they are all probabilities, so between $0$ and $1$.
+
+So to maximise the log-likelihood, we must take $hat(a)_("MLE") = min_i X_i$.
 
 5. Derive the corresponding MLE $hat(lambda)_("MLE")$ by maximizing the log-likelihood w.r.t. $lambda$.
 
