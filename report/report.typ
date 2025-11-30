@@ -375,9 +375,69 @@ $ X ~ N(mu, sigma^2) , quad M_X(t) = exp(mu t + 1/2 sigma^2 t^2) . $
 
 9. Using this MGF, compute $EE[X]$ and $EE[X^2]$ by differentiating $M_X(t)$ at $t = 0$, and verify that the variance of $X$ is $sigma^2$. (You may attempt the integrals directly to see why the MGF method is much simpler, but this is not required.)
 
-Write your solution here
+  First, we will evaluate the first derivate of $M_X(t)$ according $t$ and evaluate it when $t = 0$ to obtain $EE[X]$.
+
+  We have:
+
+  #align(
+    left,
+    $
+      (partial M_X(t)) / (partial t) & = partial / (partial t) exp(mu t + 1/2 sigma^2 t^2) \
+                                     & = (mu + sigma^2t)exp(mu t + 1/2 sigma^2 t^2)
+    $,
+  )
+
+  So when $t = 0$, we have:
+  #align(
+    left,
+    $
+      EE[X] & = (mu + sigma^2 dot 0)exp(mu dot 0 + 1/2 sigma^2 0^2) \
+            & = mu exp(0) \
+            & = mu
+    $,
+  )
+
+  Now, to find the second moment of the function, we need to take the second derivate of $M_X(t)$ and evaluate it when $t = 0$.
+
+  We have:
+
+  #align(
+    left,
+    $
+      (partial^2 M_X(t)) / (partial t^2) &= partial / (partial t) (mu + sigma^2t)exp(mu t + 1/2 sigma^2 t^2) \
+      &= partial / (partial t) mu exp(mu t + 1/2 sigma^2 t^2) + partial / (partial t) sigma^2 t exp(mu t + 1/2 sigma^2 t^2) \
+      &= mu (mu + sigma^2 t)exp(mu t + 1/2 sigma^2 t^2) + sigma^2 exp(mu t + 1/2 sigma^2 t^2) + sigma^2 t (mu + sigma^2 t) exp(mu t + 1/2 sigma^2 t^2) \
+      &= ((mu + sigma^2 t)^2 + sigma^2)exp(mu t + 1/2 sigma^2 t^2) \
+    $,
+  )
+
+  So when $t = 0$, we have:
+  #align(
+    left,
+    $
+      EE[X^2] & = ((mu + 0)^2 + sigma^2)exp(0) \
+              & = mu^2 + sigma^2 \
+    $,
+  )
+
+  So the variance give us:
+  #align(
+    left,
+    $
+      EE[(X - EE[X])^2] & = EE[X^2 - 2EE[X]X + EE[X]^2] \
+                        & = EE[X^2] - 2EE[X]EE[X] + EE[X]^2 \
+                        & = EE[X^2] - EE[X]^2 \
+                        & = mu^2 + sigma^2 - mu^2 \
+                        & = sigma^2
+    $,
+  )
+
 
 10. Explain when MGFs can be useful.
+
+As we can see, the MGFs is very useful to easily compute the moments of a function.
+So it allows to easily extract each moments of the function and modelise the function with only a few moments.
+So MGFs is very useful to simplify the real function and theoretical proof by simplifying a lot the computations, avoiding complex integrations.
 
 #pagebreak()
 
@@ -514,9 +574,18 @@ U, V and W are three binary random variables. Their joint probability mass funct
 Calculate the information measures below:
 
 1. $H(U)$, $H(V)$ and $H(W)$
+  - $p_U(u = 0) = sum_(v in V) sum_(w in W) p_(U, V, W)(u = 0, v, w) = 1/4 + 0 + 1/ 4 + 1/8 = 5/8$
+  - $p_U(u = 1) = 1 - p_U(u = 0) = 1 - 5/8 = 3/8$
+  - $p_V(v = 0) = sum_(u in U) sum_(w in W) p_(U, V, W)(u, v = 0, w) = 1/4 + 0 + 0 + 1/8 = 3/8$
+  - $p_V(v = 1) = 1 - p_V(v = 0) = 1 - 3/8 = 5/8$
+  - $p_W(w = 0) = sum_(u in U) sum_(v in V) p_(U, V, W)(u, v, w = 0) = 1/4 + 1/4 + 0 + 0 = 1/2$
+  - $p_W(w = 1) = 1 - p_W(w = 0) = 1 - 1/2 = 1/2$
 
+  So we have:
 
-Write your solution here
+  - $H(U) = - sum_(u in U)p_U(u)log_2(p_U(u)) = -5/8 log_2(5/8) - 3/8 log_2(3/8) approx 0.95$
+  - $H(V) = - sum_(v in V)p_V(v)log_2(p_V(v)) = -5/8 log_2(5/8) - 3/8 log_2(3/8) approx 0.95$
+  - $H(W) = - sum_(w in W)p_W(w)log_2(p_W(w)) = -1/2 log_2(1/2) - 1/2 log_2(1/2) = 1$
 
 2. $H(U | V)$, $H(V | U)$ and $H(W | U)$
 
