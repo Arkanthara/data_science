@@ -590,19 +590,51 @@ Calculate the information measures below:
 2. $H(U | V)$, $H(V | U)$ and $H(W | U)$
 
 
-Write your solution here
+  - $H(U | V) &= H(U, V) - H(V) \
+    &= -sum_(u in U) sum_(v in V) p_(U, V)(u, v) log_2(p_(U, V)(u, v)) - H(V) \
+    &= - 1/4 log_2(1/4) - 3/8 log_2(3/8) - 1/8 log_2(1/8) - 1/4 log_2(1/4) - H(V) \
+    &approx 1.9 - 0.95 \
+    &approx 0.95 \ $
+
+
+  - $H(V | U) & = H(U, V) - H(U) \
+    & = H(U | V) + H(V) - H(U) \
+    & approx 0.95 + 0.95 - 0.95 \
+    & approx 0.95 \ $
+
+
+  - $H(U | W) & = H(U, W) - H(W) \
+    & = -sum_(u in U) sum_(w in W)p_(U, W)(u, w) log_2(p_(U, W)(u, w)) - H(W) \
+    & = -1/2 log_2(1/2) - 1/8 log_2(1/8) - 0 - 3/8 log_2(3/8) - 1 \
+    & approx 1.4 - 1 \
+    & approx 0.4 \ $
 
 3. $I(U; V)$, $I(U; W)$ and $I(V; W)$
 
-
-Write your solution here
+  - $I(U; V) &= H(U) - H(U | V) \
+    &approx 0.95 - 0.95 \
+    &approx 0 \ $
+  - $I(U; W) &= H(U) - H(U | W) \
+    &approx 0.95 - 0.4 \
+    &approx 0.55 \ $
+  - $I(V; W) &= H(V) + H(W) - H(V | W) \
+    &= H(V) + H(W) - (H(V, W) - H(W)) \
+    &= H(V) + 2H(W) - H(V, W) \
+    &= H(V) + 2H(W) + sum_(v in V) sum_(w in W) p_(V, W)(v, w) log_2(p_(V, W)(v, w)) \
+    &= H(V) + 2H(W) + 1/4 log_2(1/4) + 1/8 log_2(1/8) + 1/4 log_2(1/4) + 3/8 log_2(3/8)\
+    &approx 0.95 + 2 - 1.9 \
+    &approx 1.05$
 
 4. $H(U, V, W)$
 
+  As $I(U; V) = 0$, $H(U | V) = H(U)$ and $H(V | U) = H(V)$, it means that $U$ and $V$ are independent.
+  So we can write:
+  $
+    H(U, V, W) & = H(U | W) + H(V | W) + H(W) \
+               & = H(U | W) + H(V, W) -
+  $
 
-Write your solution here
-
-For each of the above items you could directly use the definition. However, because they are related to each other in many ways, you could calculate some of them and derive the rest by using their relations: chain rules for entropy and mutual information, the Venn diagrams.
+  For each of the above items you could directly use the definition. However, because they are related to each other in many ways, you could calculate some of them and derive the rest by using their relations: chain rules for entropy and mutual information, the Venn diagrams.
 
 = Problem: Source Coding
 
