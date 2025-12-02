@@ -630,8 +630,10 @@ Calculate the information measures below:
   As $I(U; V) = 0$, $H(U | V) = H(U)$ and $H(V | U) = H(V)$, it means that $U$ and $V$ are independent.
   So we can write:
   $
-    H(U, V, W) & = H(U | W) + H(V | W) + H(W) \
-               & = H(U | W) + H(V, W) -
+    H(U, V, W) & = -sum_(u in U) sum_(v in V) sum_(w in W) p_(U, V, W) (u, v, w) log_2(p_(U, V, W)(u, v, w)) \
+               & = - 3 dot 1/4 log_2(1/4) - 2 dot 1/8 log_2(1/8) \
+               & = 3/2 + 3/4 \
+               & = 2.25
   $
 
   For each of the above items you could directly use the definition. However, because they are related to each other in many ways, you could calculate some of them and derive the rest by using their relations: chain rules for entropy and mutual information, the Venn diagrams.
@@ -649,8 +651,16 @@ $ P(X=1) = theta = 0.1 , quad P(X=0) = 0.9 . $
 - Group them into symbols of length 5 (2000 total symbols).
 - Count the frequency of each symbol.
 
+  ```py
+  import numpy as np
 
-Write your solution here
+  samples = np.random.rand(2000, 5)
+  samples[samples >= 0.9] = 1
+  samples[samples < 0.9] = 0
+
+  symbol, frequency = np.unique(samples, axis=0, return_counts=True)
+  print(f"Frequency of each symbol: {frequency}")
+  ```
 
 2. Huffman Coding:
 - Build a Huffman code (e.g. with `dahuffman`) using the symbol frequencies.
