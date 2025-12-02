@@ -647,38 +647,54 @@ $ P(X=1) = theta = 0.1 , quad P(X=0) = 0.9 . $
 == Tasks
 
 1. Data Generation:
-- Generate $n = 10,000$ binary samples.
-- Group them into symbols of length 5 (2000 total symbols).
-- Count the frequency of each symbol.
+  - Generate $n = 10,000$ binary samples.
+  - Group them into symbols of length 5 (2000 total symbols).
+  - Count the frequency of each symbol.
 
-  ```py
-  import numpy as np
+    ```py
+    import numpy as np
+    from dahuffman import HuffmanCodec
 
-  samples = np.random.rand(2000, 5)
-  samples[samples >= 0.9] = 1
-  samples[samples < 0.9] = 0
+    samples = np.random.rand(2000, 5)
+    samples[samples >= 0.9] = 1
+    samples[samples < 0.9] = 0
+    samples = ["".join(str(int(elem)) for elem in row) for row in samples]
 
-  symbol, frequency = np.unique(samples, axis=0, return_counts=True)
-  print(f"Frequency of each symbol: {frequency}")
-  ```
+    symbols, frequencies = np.unique(samples, axis=0, return_counts=True)
+    print(f"Frequency of each symbol: {frequencies}")
+    ```
+    ```raw
+    Frequency of each symbol: [1185  140  113   13  137   18   13  130   16   11    2   11    3  133  18   17    1   17    2    2   13    1    1    3]
+    ```
 
 2. Huffman Coding:
-- Build a Huffman code (e.g. with `dahuffman`) using the symbol frequencies.
-- Encode the sequence and record its total length in bits.
-
-
-Write your solution here
+  - Build a Huffman code (e.g. with `dahuffman`) using the symbol frequencies.
+  - Encode the sequence and record its total length in bits.
+    ```py
+    codec = HuffmanCodec.from_frequencies(dict(zip(symbols, list(frequencies))))
+    encoded = codec.encode(samples)
+    print(f"Number of bits used for encoding: {len(encoded)}")
+    ```
+    ```raw
+    Number of bits used for encoding: 594
+    ```
 
 3. Entropy and Efficiency:
-- Compute the theoretical entropy $H(X)$.
-- Compute the average Huffman code length:
+  - Compute the theoretical entropy $H(X)$.
+    $H(X) = - sum_X P(X) log_2(P(X)) = - 0.1 log_2(0.1) - 0.9 log_2(0.9) approx 0.468995593$
+  - Compute the average Huffman code length:
 
-$ L = "encoded length (bits)"/"number of symbols" . $
+  $ L = "encoded length (bits)"/"number of symbols" = 594/2000 = 0.297 $
 
-- Compare $H(X)$ and $L$. Comment on compression efficiency.
+  - Compare $H(X)$ and $L$. Comment on compression efficiency.
 
+    Here the entropy indicate the number of bits needed to encode the variable created by the probability rule.
+    So it means that we need an average of 0.469 bits per binary sample to encode the most efficiently the binary sequence in a brute force way.
+    However, if we look at the Huffman coding, we can constate that only 0.297 bits are needed to encode a binary sample.
+    So it means that the Huffman coding, by switching the representation of the sequence in a more intelligent way using frequencies of each symbols, allows a compression of the sequence.
+    Indeed the efficiency of the Huffman coding with only 0.297 bits needed for a sample is better than the base entropy of 0.469 bits per sample.
 
-Write your solution here
+    So it is very important for compression to use a good representation of the data in such a way an intelligent encoding can be achieved to reduce number of bits needed to properly encode the data.
 
 = Problem: Communication System with Noise
 
