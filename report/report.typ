@@ -627,8 +627,7 @@ Calculate the information measures below:
 
 4. $H(U, V, W)$
 
-  As $I(U; V) = 0$, $H(U | V) = H(U)$ and $H(V | U) = H(V)$, it means that $U$ and $V$ are independent.
-  So we can write:
+  We have:
   $
     H(U, V, W) & = -sum_(u in U) sum_(v in V) sum_(w in W) p_(U, V, W) (u, v, w) log_2(p_(U, V, W)(u, v, w)) \
                & = - 3 dot 1/4 log_2(1/4) - 2 dot 1/8 log_2(1/8) \
@@ -696,7 +695,7 @@ $ P(X=1) = theta = 0.1 , quad P(X=0) = 0.9 . $
 
     So it is very important for compression to use a good representation of the data in such a way an intelligent encoding can be achieved to reduce number of bits needed to properly encode the data.
 
-= Problem: Communication System with Noise
+= (*optional*) Problem: Communication System with Noise
 
 We send a binary sequence through a channel with additive white Gaussian noise (AWGN).
 
@@ -710,16 +709,48 @@ We send a binary sequence through a channel with additive white Gaussian noise (
 
 1. Signal Generation: Generate $k = 10,000$ random bits, build the transmitted signal $x[n]$, and add AWGN to get $y[n]$.
 
+  ```py
+  import numpy as np
 
-Write your solution here
+  random_bits = np.random.randint(0, 2, size=(10000, 1))
+  signal = random_bits @ np.ones(10)
+  signal = signal.ravel()
+
+  noise = np.random.normal(loc=0, scale=np.sqrt(1.5), size=signal.shape[0])
+  transmitted_signal = (signal + noise).astype(int)
+  ```
 
 2. Detection Rules:
-- Derive the Neyman-Pearson rule with false alarm $P_("FA") = 0.01$.
-- Derive the Bayesian rule assuming $P(H_0) = P(H_1) = 0.5$.
-- Report both thresholds $gamma_("NP")$ and $gamma_("Bayes")$. Compare them.
+  - Derive the Neyman-Pearson rule with false alarm $P_("FA") = 0.01$.
 
+    We consider that $x[n]$ is the signal to transmit and $z[n]$ is the noise added to the signal, that give us $y[n] = x[n] + z[n]$.
 
-Write your solution here
+    If we consider $H_0$ as the hypothesis "bit 0 is transmitted" and $H_1$ as the hypothesis "bit 1 is transmitted", we have
+
+    $
+      P(y[n]; H_0) = underbrace(x[n], "=0 due to "H_0) + z[n] = z[n] = 1/(sqrt(2 pi sigma_z^2))exp^(-(y[n] - 0)^2/(2sigma_z^2))
+    $
+    and
+    $
+      P(y[n]; H_1) = underbrace(x[n], "=1 due to "H_1) + z[n] = 1/(sqrt(2 pi sigma_z^2))exp^(-(y[n] - 1)^(2^#report-footnote[Here we have $y[n] - 1$ because we add some gaussian noise $z[n] ~ N(0, sigma_z^2)$ to an amplitude of $1$ meaning that the mean of the resulting distribution is $1$]))/(2sigma_z^2))
+    $
+    According to the definition of Neyman-Pearson, to maximise $P_D$ for a given $P_(F A) = alpha$, decide $H_1$, if:
+    $ L(x) = p(x; H_1) / p(x; H_0) > gamma $
+    where the threshold $gamma$ is found from:
+    $ P_(F A) = integral_(x:L(x) > gamma) p(x; H_0) d x = alpha $
+    In our case, we have $P_(F A) = 0.01$ and $x = y[n]$.
+    So we have:
+    $
+      L(x) &= (P(y[n]; H_1)) / (P(y[n]; H_0)) > gamma \
+      &= (1/(sqrt(2 pi sigma_z^2))exp^(-(y[n] - 1)^2/(2sigma_z^2))) / (1/(sqrt(2 pi sigma_z^2))exp^(-y[n]^2/(2sigma_z^2))) > gamma \
+      &= exp^(y[n]^2/(2sigma_z^2) - (y[n] - 1)^2/(2sigma_z^2)) > gamma \
+      &= exp^(1/ (2sigma_z^2) (y[n]^2 - y[n]^2 + 2y[n] - 1)) > gamma \
+      &= exp^(1/ (2sigma_z^2) (2y[n] - 1)) > gamma \
+      &= exp^((2y[n] - 1)/ 3) > gamma \
+    $
+  - Derive the Bayesian rule assuming $P(H_0) = P(H_1) = 0.5$.
+  - Report both thresholds $gamma_("NP")$ and $gamma_("Bayes")$. Compare them.
+
 
 3. Apply Detection: Use both rules to estimate the received bits. Compare with the original sequence.
 

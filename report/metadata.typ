@@ -21,16 +21,16 @@
   // subtitle: "Report Subtitle",
   course-name: "Data Science",
   course-id: "14X026",
-  // illustrations: (
-  //   (
-  //     path: "./img/full_msg.png",
-  //     width: 10cm,
-  //   ),
-  //   (
-  //     path: "./img/full_hist_R.png",
-  //     width: 10cm,
-  //   ),
-  // ),
+  illustrations: (
+    (
+      path: "./img/hist.png",
+      width: 12cm,
+    ),
+    // (
+    //   path: "./img/full_hist_R.png",
+    //   width: 10cm,
+    // ),
+  ),
   project-name: "Data Science",
   date: none,
 
