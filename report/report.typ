@@ -469,7 +469,7 @@ For each of the 3 following chains of information, give the joint probability us
 
 1.
   - $p(X, Y, Z) = p(X) dot p(Y | X) dot p(Z | X, Y)$
-  - $p(X, Z) = p(X) dot p(Z)$
+  - $p(X, Z) = p(X) dot p(Z | X)$
   - $p(X, Y) = p(X) dot p(Y | X)$
   - $p(Y, Z) = p(Y) dot p(Z | Y)$
 
@@ -532,7 +532,7 @@ For each of the 3 following chains of information, give the joint probability us
       edge((0, 1), (4, 1), "->"),
       edge((2, 0), (6, 0), "->"),
       edge((4, -1), (6, 0), "->"),
-      edge((8, 0), (4, -1), "->"),
+      edge((4, -1), (8, 0), "->"),
       edge((4, 1), (6, 0), "->"),
       edge((6, 0), (8, 0), "->"),
     )
@@ -540,11 +540,11 @@ For each of the 3 following chains of information, give the joint probability us
 )
 
 3.
-  - $p(X_1, X_2, X_3, X_4, X_5, X_6, X_7) = p(X_1) dot p(X_2) dot p(X_3 | X_1, X_2) dot p(X_4 | X_7) dot p(X_5 | X_2) dot p(X_6 | X_5, X_4, X_3) dot p(X_7 | X_6)$
+  - $p(X_1, X_2, X_3, X_4, X_5, X_6, X_7) = p(X_1) dot p(X_2) dot p(X_3 | X_1, X_2) dot p(X_4) dot p(X_5 | X_2) dot p(X_6 | X_5, X_4, X_3) dot p(X_7 | X_6, X_4)$
   - $p(X_1, X_3, X_5, X_7) = sum_(X_2) sum_(X_4) sum_(X_6) p(X_1, dots, X_7) = p(X_1) dot p(X_3 | X_1) dot p(X_5) dot p(X_7 | X_5, X_3)$
-  - $p(X_2, X_4, X_6, X_7) = p(X_2) dot p(X_4 | X_7) dot p(X_6 | X_4, X_2) dot p(X_7 | X_6)$
+  - $p(X_2, X_4, X_6, X_7) = p(X_2) dot p(X_4) dot p(X_6 | X_4, X_2) dot p(X_7 | X_6, X_4)$
   - $p(X_3, X_6, X_7) = p(X_3) dot p(X_6 | X_3) dot p(X_7 | X_6)$
-  - $p(X_1, X_2, X_4, X_5) = p(X_1) dot p(X_2) dot p(X_4 | X_1, X_2, X_5) dot p(X_5 | X_2)$
+  - $p(X_1, X_2, X_4, X_5) = p(X_1) dot p(X_2) dot p(X_4) dot p(X_5 | X_2)$
 
 = Problem: information quantifiers
 
