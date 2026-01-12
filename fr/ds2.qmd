@@ -1,0 +1,1949 @@
+# Espaces de Représentation en Haute Dimension
+
+---
+
+## 🎯 Motivation et Contexte
+
+### Qu'est-ce que la Data Science ?
+
+La **Data Science** étudie :
+
+- La modélisation de phénomènes en données numériques (quantitatives)
+- Les propriétés géométriques et statistiques de ces données
+- Les propriétés des espaces dans lesquels vivent ces données
+- L'analyse des données et le développement d'outils pour cette analyse
+- Les hypothèses sous-jacentes dans la conception de ces outils
+
+**Relation avec le Machine Learning** : La Data Science étudie les espaces de représentation dans lesquels le Machine Learning opère.
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Motivation
+**Data Science = ML** : Étude des espaces de représentation où agit le ML. **Pipeline** : Processus → Capteur → Données brutes → Représentation (matrice dans $\mathbb{R}^D$). Focus sur propriétés géométriques ET statistiques.
+:::
+
+### Pipeline typique de données
+
+**Flux général** : Processus → Capteur → Données brutes → Représentation
+
+**Exemples concrets** :
+
+- Caméra → pixels d'image → matrice
+- Population → résultats de sondage → matrice
+- Documents texte → occurrences de mots → matrice
+- Réseau social → relations → matrice
+- Environnement → mesures → matrice
+
+---
+
+## 📐 Espaces de Représentation (*Representation Spaces*)
+
+### Définition formale
+
+On obtient des données $X = \{x_1, \cdots, x_N\}$ où $x_i \in \Omega \subseteq \mathbb{R}^D$ pour tout $i \in [\![N]\!]$.
+
+**Vision statistique** :
+
+- $X$ est un échantillon de taille $N$ de la fonction de densité sous-jacente $f_X : \Omega \rightarrow \mathbb{R}^+$ à $D$ variables
+- On déclare $N$ variables aléatoires i.i.d. $\{X_i\}_{i \in [\![N]\!]}$ où $X_i \sim f_X$
+- Chaque donnée $x_i$ est une réalisation (échantillon) de $X_i$
+
+**Vision algébrique** :
+
+- On forme la matrice $X = \begin{bmatrix} | & & | \\ x_1 & \cdots & x_N \\ | & & | \end{bmatrix} \in \mathbb{R}^{D \times N}$
+- Les colonnes $X_{\cdot j} = x_j$ sont les vecteurs de données
+
+### Propriétés de l'espace
+
+L'espace de représentation $\Omega$ est généralement un sous-ensemble de $\mathbb{R}^D$ :
+
+- C'est un **espace vectoriel** qui peut être muni d'un produit scalaire $\langle \cdot, \cdot \rangle$
+- Le produit scalaire induit une **norme** $\|\cdot\|$
+- La norme induit une **fonction de distance** $d(\cdot, \cdot)$
+- Cas favorable : $(\Omega, d)$ est un **espace métrique** où l'apprentissage peut être effectué
+
+**Note** : $\Omega$ est aussi la base d'un espace mesurable sur lequel les variables aléatoires peuvent être définies.
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Espaces de Représentation
+$X = \{x_1, \ldots, x_N\}$ avec $x_i \in \Omega \subseteq \mathbb{R}^D$. **Deux visions** : (1) Statistique : échantillon de $f_X$, variables i.i.d. (2) Algébrique : matrice $X \in \mathbb{R}^{D \times N}$. **Structure** : espace vectoriel → produit scalaire → norme → distance → espace métrique.
+:::
+
+### Questions fondamentales
+
+**Que se passe-t-il quand** :
+
+- $D$ augmente ? (dimensionnalité)
+- $N$ augmente ? (nombre d'échantillons)
+
+**Impact sur** :
+
+- La modélisation des données
+- L'apprentissage automatique
+
+⇒ **Curse of Dimensionality** et **Blessing of Dimensionality**
+
+---
+
+## 🌀 Malédiction de la Dimensionnalité (*Curse of Dimensionality*)
+
+### 1. Parcimonie des Données (*Data Sparsity*)
+
+#### Problème de l'estimation de densité
+
+**Contexte** : 
+
+- Population sur hypercube $\Omega = [a, b]^D$
+- Échantillon $X$ de cette population
+- Objectif : estimer la pdf empiriquement via histogramme
+
+**Méthode** :
+
+- Quantification uniforme : $b$ bins par dimension
+- Qualité souhaitée : $n$ échantillons par bin en moyenne
+
+**Question** : Combien d'échantillons $N$ sont nécessaires ?
+
+**Réponse** :
+
+- $D = 1$ → $N \approx n \cdot b$
+- $D = 2$ → $N \approx n \cdot b^2$
+- $D$ quelconque → $N \approx n \cdot b^D$
+
+**Exemple catastrophique** : $b = 10$, $n = 10$, $D = 6$ → $N \approx 10^7$ échantillons !
+
+#### Qualité d'estimation avec $N$ fixé
+
+Si on fixe le nombre d'échantillons à $N$ :
+
+**Question** : Quelle qualité d'estimation peut-on espérer ?
+
+- $D = 1$ → $n = \frac{N}{b}$ → $\mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b}$
+- $D$ quelconque → $n = \frac{N}{b^D}$ → $\mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b^D}$
+
+**Conséquence** : **La plupart des bins sont probablement vides**
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Data Sparsity
+Pour estimer une densité avec qualité, besoin de $N \approx n \cdot b^D$ échantillons (croissance **exponentielle**). Si $N$ fixé : $n = N/b^D$ → la plupart des bins **vides**. Exemple : $D=6$, $b=10$, $n=10$ → $N \approx 10^7$.
+:::
+
+---
+
+### 2. Sphère Vide et Cube Épineux (*Empty Sphere & Spiky Cube*)
+
+#### Volume de l'hypersphère
+
+**Formule** pour une hypersphère $B_D(r)$ de rayon $r$ centrée à l'origine :
+
+$$\text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D \Gamma(D/2)}$$
+
+**Relation de récurrence** (pour $D > 1$) :
+
+$$\text{vol}(B_D(r)) = \frac{2\pi r^2}{D} \text{vol}(B_{D-2}(r))$$
+
+**Propriété importante** :
+
+$$\frac{\text{area}(B_D(r))}{\text{vol}(B_D(r))} = \frac{\pi^{1/2} D \Gamma(D/2)}{\Gamma\left(\frac{D+1}{2}\right)}$$
+
+**Question** : Comment évolue le volume de la sphère quand $D$ augmente ?
+
+#### Phénomène de la sphère vide
+
+**Configuration** : Hypersphère $B_D(r)$ inscrite dans hypercube $C_D(r) = [-r, r]^D$.
+
+**Tirer $N$ échantillons uniformes** du cube (i.e. de $\mathcal{U}(C_D(r))$).
+
+**Question** : Quelle proportion d'échantillons tombe dans $B_D(r)$ ?
+
+**Calcul** :
+
+- $\text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D \Gamma(D/2)}$
+- $\text{vol}(C_D(r)) = (2r)^D$
+
+**Ratio** :
+
+$$\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D \cdot 2^{D-1} \Gamma(D/2)}$$
+
+**Limite asymptotique** :
+
+$$\lim_{D \to \infty} \frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = 0$$
+
+**Note** : $\Gamma(n)$ se comporte comme $n! \sim n^n$
+
+**Conséquences** :
+
+- Tous les échantillons vont dans la partie du cube **hors de la sphère** (les coins)
+- Le volume du cube est **concentré dans ses coins**
+- Tous les échantillons **s'échappent du centre**
+- Le volume relatif de l'hypersphère tend vers zéro
+
+⇒ **La sphère est probablement vide**
+
+```mermaid
+graph TD
+    A[Hypercube C_D en haute dimension] --> B[Hypersphère inscrite B_D]
+    B --> C[Ratio vol B_D / vol C_D → 0]
+    C --> D[Volume concentré aux coins]
+    D --> E[Échantillonnage uniforme]
+    E --> F[Sphère VIDE]
+```
+
+#### Coins de l'hypercube
+
+**Configuration** : Hypercube unitaire centré $C_D(1) = \left[-\frac{1}{2}, \frac{1}{2}\right]^D$ avec $\text{vol}(C_D(1)) = 1$.
+
+**Propriétés des coins** :
+
+- Nombre de coins : $n = 2^D$
+- Chaque coin $x_i$ a $D$ coordonnées : $|x_i(j)| = \frac{1}{2}$ pour tout $j$
+- Distance à l'origine : $\|x_i\|_2 = \frac{\sqrt{D}}{2}$
+
+**Table des distances** :
+
+| $D$ | 1 | 2 | 4 | 5 | 100 |
+|-----|---|---|---|---|-----|
+| $\frac{\sqrt{D}}{2}$ | $\frac{1}{2}$ | $\frac{\sqrt{2}}{2}$ | $1$ | $\frac{\sqrt{5}}{2}$ | $5$ |
+
+**Observation** : La distance aux coins **croît avec** $\sqrt{D}$ → les coins s'éloignent du centre !
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Sphère Vide & Cube Épineux
+**Ratio sphère/cube** : $\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D \cdot 2^{D-1} \Gamma(D/2)} \to 0$. Volume concentré aux **coins** du cube (distance centre-coin = $\sqrt{D}/2$). Échantillonnage uniforme → sphère **vide**.
+:::
+
+---
+
+### 3. Distribution du Volume
+
+#### Pour l'hypercube
+
+**Question** : Comment le volume se distribue-t-il dans une forme de mesure $r$ ?
+
+**Ratio de volumes** entre hypercubes de côté $r$ et $(1-\varepsilon)r$ pour $\varepsilon \in ]0, 1[$ :
+
+$$\frac{\text{vol}(C_D((1-\varepsilon)r))}{\text{vol}(C_D(r))} = \frac{((1-\varepsilon)r)^D}{r^D} = (1-\varepsilon)^D$$
+
+**Limite** :
+
+$$\lim_{D \to \infty} \frac{\text{vol}(C_D((1-\varepsilon)r))}{\text{vol}(C_D(r))} = 0$$
+
+#### Pour l'hypersphère
+
+**Ratio de volumes** entre hypersphères de rayon $r$ et $(1-\varepsilon)r$ :
+
+$$\frac{\text{vol}(B_D((1-\varepsilon)r))}{\text{vol}(B_D(r))} = \frac{2((1-\varepsilon)r)^D \pi^{D/2}}{D\Gamma(D/2)} \cdot \frac{D\Gamma(D/2)}{2r^D \pi^{D/2}} = (1-\varepsilon)^D$$
+
+**Limite** :
+
+$$\lim_{D \to \infty} \frac{\text{vol}(B_D((1-\varepsilon)r))}{\text{vol}(B_D(r))} = 0$$
+
+**Note technique** : $1 - \varepsilon \leq e^{-\varepsilon}$ donc $(1-\varepsilon)^D \leq e^{-D\varepsilon} \to 0$ si $D \to \infty$
+
+#### Généralisation à tout volume
+
+**Principe** : Décomposer le volume en voxels (hyper-)cubiques arbitrairement petits.
+
+**Réduction** : Si on réduit la longueur d'un côté de voxel par facteur $(1-\varepsilon)$ :
+
+- Volume du voxel réduit par $(1-\varepsilon)^D$
+- Volume complet réduit par $(1-\varepsilon)^D$
+
+**Ratio de volumes** :
+
+$$\lim_{D \to \infty} \frac{\text{vol}(V_D(r)) - \text{vol}(V_D((1-\varepsilon)r))}{\text{vol}(V_D(r))} = \lim_{D \to \infty} 1 - (1-\varepsilon)^D = 1$$
+
+**Conclusion fondamentale** : ⇒ **Le volume est concentré près de la surface** de la forme
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Distribution du Volume
+Pour **toute forme** : ratio de volumes $(1-\varepsilon)^D \to 0$ quand $D \to \infty$. **Méthode** : décomposition en voxels hypercubiques. **Résultat** : le volume est **concentré à la surface** (différence $\to 1$).
+:::
+
+---
+
+### 4. L'œuf gaussien (*Gaussian Egg*)
+
+#### Densité le long du rayon
+
+**Question** : Étant donnée une distribution Normale $\mathcal{N}(\mu, \Sigma)$, quelle est sa densité le long du rayon $r$ ?
+
+**Contexte** : Les coordonnées sont $D$ v.a. i.i.d. $X_i \sim \mathcal{N}(0, 1)$.
+
+**Intégration le long de** $r$ = prendre la norme. $R$ est la v.a. attachée au rayon :
+
+$$R^2 = \|X\|_2^2 = \sum_{i=1}^D X_i^2 \sim \chi^2(D)$$
+
+**Espérance** :
+
+$$\mathbb{E}[R^2] = D \implies \mathbb{E}[R] \approx \sqrt{D}$$
+
+On peut considérer la distribution centrée et réduite (i.e. $\mathcal{N}(0, \text{Id}_D)$) avec $\sigma = 1$.
+
+⇒ **La densité est concentrée au rayon** $\sigma\sqrt{D}$
+
+```mermaid
+graph LR
+    A[Distribution N 0, Id_D] --> B[Rayon R]
+    B --> C[R² ~ χ² D]
+    C --> D[E R² = D]
+    D --> E[Densité concentrée à √D]
+```
+
+#### Théorème de l'anneau gaussien (*Gaussian Annulus Theorem*)
+
+Étant donné $X \sim \mathcal{N}(0, \text{Id}_D)$, pour tout $\beta \leq \sqrt{D}$ :
+
+$$P\left[\left|\|X\|_2 - \sqrt{D}\right| > \beta\right] \leq 3e^{-c\beta^2}$$
+
+où $c > 0$ est une constante.
+
+**Interprétation** : La norme est **concentrée exponentiellement** autour de $\sqrt{D}$.
+
+**Formulation alternative** :
+
+$$P\left[\left|\frac{\|X\|}{\sqrt{D}} - 1\right| \leq \varepsilon\right] \approx 1$$
+
+⇒ La quasi-totalité de la densité est dans un **anneau fin** autour du rayon $\sqrt{D}$
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Œuf Gaussien
+Pour $X \sim \mathcal{N}(0, \text{Id}_D)$ : $R^2 = \|X\|_2^2 \sim \chi^2(D)$ donc $\mathbb{E}[R^2] = D$. **Gaussian Annulus Theorem** : $P[|\|X\|_2 - \sqrt{D}| > \beta] \leq 3e^{-c\beta^2}$. Densité concentrée au rayon $\sigma\sqrt{D}$ (anneau fin).
+:::
+
+---
+
+### 5. Concentration des Distances
+
+**Contexte** : Données $X \subset \Omega$, sélectionner une donnée $x$ et ses $k$ plus proches voisins $V_X^k(x)$.
+
+Soit $D_{\min}$ et $D_{\max}$ les v.a. associées aux distances du voisin le plus proche et le plus éloigné parmi les $k$ voisins.
+
+#### Théorème de concentration
+
+**Théorème** : Si $\lim_{D \to \infty} \text{Var}\left[\frac{d(x,y)^p}{\mathbb{E}[d(x,y)^p]}\right] = 0$ pour $0 < p < \infty$, alors pour tout $\varepsilon > 0$ :
+
+$$\lim_{D \to \infty} P\left[\frac{D_{\max} - D_{\min}}{D_{\min}} \leq \varepsilon\right] = 1$$
+
+**Conséquences** :
+
+- Tous les voisins sont vus à distance $D_{\min}$ de $x$
+- Le pouvoir de discrimination **décroît exponentiellement**
+- Les structures KNN (*k-nearest neighbors*) et $\varepsilon$NN deviennent **non significatives**
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Concentration des Distances
+Si variance de distance normalisée $\to 0$, alors $\frac{D_{\max} - D_{\min}}{D_{\min}} \to 0$. Tous les voisins sont **équidistants**. KNN et $\varepsilon$NN **perdent leur sens**.
+:::
+
+---
+
+### 6. Quasi-Orthogonalité
+
+#### Concentration des angles entre vecteurs aléatoires
+
+**Question** : En tirant des vecteurs d'un espace $D$-dimensionnel, quel est leur angle attendu ?
+
+**Méthode** : Déclarer 4 v.a. i.i.d. $W, X, Y, Z$ sur $\Omega \subset \mathbb{R}^D$ et calculer :
+
+$$\mathbb{E}\left[\cos(\angle(X - Y, Z - W))\right] = \mathbb{E}\left[\frac{\langle X - Y, Z - W \rangle}{\|X - Y\| \cdot \|Z - W\|}\right]$$
+
+**Puisque** $W, X, Y, Z$ sont i.i.d., $X - Y$ et $Z - W$ sont aussi i.i.d. et centrées :
+
+$$\mathbb{E}(X - Y) = \mathbb{E}(Z - W) = 0$$
+
+Le numérateur est $\text{cov}(X - Y, Z - W) = 0$, le dénominateur est un normaliseur.
+
+**Résultat** : $\mathbb{E}[\cos(\theta)] = 0 \implies \theta \sim \frac{\pi}{2}$
+
+**Alternative** :
+
+$$\langle X - Y, Z - W \rangle = \langle X, Z \rangle - \langle X, W \rangle - \langle Y, Z \rangle + \langle Y, W \rangle$$
+
+En espérance, tous les termes s'annulent car $W, X, Y, Z$ sont i.i.d.
+
+**Conclusion** :
+
+- Chaque triangle aléatoire est un **triangle rectangle**
+- Deux vecteurs aléatoires sont **quasi-orthogonaux**
+
+#### Concentration des angles dans un triangle
+
+**Question** : Quel est l'angle attendu dans un triangle aléatoire ?
+
+**Méthode** : Déclarer 3 v.a. i.i.d. $X, Y, Z$ et calculer pour un angle :
+
+$$\mathbb{E}\left[\cos(\angle(X - Y, Z - Y))\right] = \mathbb{E}\left[\frac{\langle X - Y, Z - Y \rangle}{\|X - Y\| \cdot \|Z - Y\|}\right]$$
+
+**Note** : $X - Y$ et $Z - Y$ ne sont **plus indépendants** !
+
+**Calcul** (simplifié) :
+
+$$\frac{\langle X-Y, Z-Y \rangle}{\langle X-Y, X-Y \rangle} = \frac{\langle X,Z \rangle - \langle X,Y \rangle - \langle Y,Z \rangle + \langle Y,Y \rangle}{\langle X,X \rangle + \langle Y,Y \rangle - 2\langle X,Y \rangle}$$
+
+En espérance :
+
+$$= \frac{\langle Y,Y \rangle - \langle X,Y \rangle}{2\langle Y,Y \rangle - 2\langle X,Y \rangle} = \frac{1}{2}$$
+
+**Résultat** : $\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \sim \frac{\pi}{3}$
+
+**Conclusion** : Chaque triangle aléatoire est un **triangle équilatéral**
+
+#### Impact pour la sphère
+
+Étant donné la boule unitaire $B_D$, si $X$ est un point aléatoire sur sa surface et $Y$ un autre point, soit $\theta = \angle(X, Y)$ :
+
+- Si $Y$ échantillonné depuis $\Omega$ : $\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \sim \frac{\pi}{3}$
+- Si $Y$ échantillonné depuis $B_D$ : $\mathbb{E}[\cos(\theta)] = 0 \implies \theta \sim \frac{\pi}{2}$
+
+⇒ Le volume de la sphère est contenu à son **équateur** (pour toute direction nord $X$)
+
+→ **Preuve alternative** pour la concentration du volume à la surface de la sphère
+
+**Note** : Pour échantillonner sur l'hypersphère unitaire, échantillonner une distribution centralement symétrique (e.g. Gaussienne) et normaliser.
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Quasi-Orthogonalité
+**2 vecteurs aléatoires** : $\mathbb{E}[\cos(\theta)] = 0$ → $\theta \sim \pi/2$ (quasi-orthogonaux). **Triangle aléatoire** : $\mathbb{E}[\cos(\theta)] = 1/2$ → $\theta \sim \pi/3$ (équilatéral). **Sphère** : volume à l'équateur.
+:::
+
+---
+
+### 7. Hubness (Présence de *Hubs*)
+
+#### Définition
+
+**Question** : Combien de fois un échantillon apparaît-il comme $k$-plus proche voisin d'une autre donnée ?
+
+Étant donné $X$, définir :
+
+$$r_{ik}(x_j) = \begin{cases} 1 & \text{si } x_j \in V_X^k(x_i) \\ 0 & \text{sinon} \end{cases}$$
+
+Puis :
+
+$$n_k(x_j) = \sum_i r_{ik}(x_j)$$
+
+**Résultat** : La distribution des valeurs de $n_k$ est **asymétrique vers la gauche**.
+
+**Conséquence** : Un petit nombre d'échantillons apparaissent dans le voisinage de **beaucoup d'autres** échantillons.
+
+⇒ Ces **hubs** sont proches de tous les autres échantillons
+
+**Visualisation empirique** : Pour 20-NN avec $D = 100$ et 1000 échantillons uniformes sur 50 bins, on observe une forte asymétrie de la distribution de $n_k$.
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Hubness
+$n_k(x_j)$ = nombre de fois où $x_j$ est k-NN d'un autre point. Distribution **asymétrique** : quelques **hubs** apparaissent dans beaucoup de voisinages. Ces hubs sont "proches" de tous.
+:::
+
+---
+
+### 8. Inégalités de Concentration
+
+#### Inégalités fondamentales
+
+**Inégalité de Markov** : Pour une v.a. non-négative $X$ :
+
+$$P(X > \varepsilon) \leq \frac{\mathbb{E}[X]}{\varepsilon}$$
+
+**Inégalité de Chebyshev** : Pour une v.a. de moyenne $\mu$ et variance $\sigma^2$ finie :
+
+$$P(|X - \mu| > \varepsilon) \leq \frac{\sigma^2}{\varepsilon^2}$$
+
+#### Inégalité de Hoeffding
+
+**Énoncé** : Si $\{X_i\}_{i \in [\![D]\!]}$ sont des v.a. indépendantes avec $P(a \leq X_i \leq b) = 1$ et $\mathbb{E}[X_i] = \mu$, alors pour tout $t > 0$ :
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}$$
+
+où $\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i$
+
+**Note** : Exemple d'analyse PAC (*Probably Approximately Correct*) : probabilité qu'un événement se produise approximativement.
+
+#### Explication de la concentration des distances
+
+L'inégalité de Hoeffding explique :
+
+- Quand on agrège des variables indépendantes, l'agrégat **converge vers leur espérance commune**
+- La structure $\sum_{i=1}^D (\cdot)$ correspond au calcul des distances de Minkowski :
+
+$$d_p(x,y) = \left(\sum_{i=1}^D |x[i] - y[i]|^p\right)^{1/p}$$
+
+- L'inégalité de Hoeffding explique formellement pourquoi les valeurs de distance **se concentrent**
+- Bien que contre-intuitif que tous les voisins soient équidistants, il est intuitif que pour $D$ grand, les valeurs extrêmes (petites ou grandes) de $d_p(x,y)$ deviennent improbables : pour que $d_p(x,y)$ soit petit (grand), **toutes** les $D$ coordonnées $x[i]$ et $y[i]$ doivent être (dis)similaires. Quand $D$ augmente, cela devient improbable.
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Inégalités de Concentration
+**Hoeffding** : $P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}$. Agrégation de variables indépendantes → convergence vers $\mu$. Structure $\sum_{i=1}^D (\cdot)$ dans distances → **concentration des distances**.
+:::
+
+---
+
+## ⭐ Bénédiction de la Dimensionnalité (*Blessing of Dimensionality*)
+
+### 1. Lois des Grands Nombres
+
+#### Loi Faible des Grands Nombres (WLLN)
+
+**Énoncé** : Étant donné un ensemble de $D$ v.a. i.i.d. $\{X_i\}_{i \in [\![D]\!]}$ avec $\mathbb{E}[X_i] = \mu$, alors pour tout $\varepsilon > 0$ :
+
+$$\lim_{D \to \infty} P(|\bar{X} - \mu| < \varepsilon) = 1$$
+
+où $\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i$
+
+(Peut être prouvée à partir de l'inégalité de Chebyshev)
+
+**Interprétation** :
+
+- La WLLN dit que la **moyenne empirique** $\bar{X}$ converge (en probabilité) vers la **vraie espérance** $\mu$ quand le nombre d'échantillons augmente
+- Fondamentalement cohérente avec l'approche fréquentiste des probabilités
+- C'est la **base fondamentale** de la théorie de l'estimation (et de l'estimation de densité)
+
+#### Théorème Central Limite (CLT)
+
+La forme et le taux de convergence sont donnés par le TCL :
+
+$$Z_D = \frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \sim \mathcal{N}(0, 1)$$
+
+si $\text{Var}(X_i) = \sigma^2$
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Lois des Grands Nombres
+**WLLN** : $\bar{X} \xrightarrow{P} \mu$ quand $D \to \infty$. Base de l'estimation de densité. **CLT** : $Z_D = \frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \sim \mathcal{N}(0, 1)$ (taux de convergence).
+:::
+
+---
+
+### 2. Projections Aléatoires (*Random Projections*)
+
+#### Principe
+
+**Rappel** : Deux vecteurs aléatoires $u$ et $v$ sont probablement orthogonaux.
+
+**Quasi-orthogonalité** : $\langle u, v \rangle = \varepsilon$ (petit).
+
+**Propriété clé** : **Exponentiellement nombreuses** directions quasi-orthogonales dans les espaces de haute dimension.
+
+**Application** : Créer des bases aléatoires (quasi-orthonormales) pour la décomposition et le codage de signaux.
+
+#### Lemme de Johnson-Lindenstrauss
+
+**Énoncé** : Étant donné $X \subset \Omega$, il existe une application linéaire $p : \mathbb{R}^D \to \mathbb{R}^d$ telle que, avec $0 < \varepsilon < 1$ et pour tous $i, j \in [\![N]\!]$ :
+
+$$(1 - \varepsilon)\|x_i - x_j\| \leq \|p(x_i) - p(x_j)\| \leq (1 + \varepsilon)\|x_i - x_j\|$$
+
+et 
+
+$$d = O\left(\frac{\log N}{\varepsilon^2}\right) \leftarrow \text{Ne dépend PAS de } D !$$
+
+**Applications** :
+
+- *Locally Sensitive Hashing* (LSH) pour la recherche approximative du plus proche voisin (ANN)
+- **Caveat** : Taux de convergence plus lent que la plupart des concentrations
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Projections Aléatoires
+**Principe** : Exponentiellement nombreuses directions quasi-orthogonales en haute dimension. **Johnson-Lindenstrauss** : projection $\mathbb{R}^D \to \mathbb{R}^d$ préservant distances (à $\varepsilon$ près) avec $d = O(\log N / \varepsilon^2)$ (indépendant de $D$ !). Application : LSH pour ANN.
+:::
+
+---
+
+## 🎓 Importance en Data Science
+
+### 1. Échantillonnage (*Sampling*)
+
+**Conséquences de la parcimonie** :
+
+- On a besoin d'un **nombre exponentiel d'échantillons** pour atteindre chaque position d'un espace de haute dimension
+- Les inégalités de concentration (incluant WLLN et CLT) sont des **indicateurs de précision** pour l'estimation de densité
+- Dans les processus pratiques comme l'échantillonnage par rejet, le **taux de rejet** devient exponentiellement proche de 100% (cf. sphère vide)
+
+### 2. Indexation (*Indexing*)
+
+**Exploitation de la structure** :
+
+- L'indexation exploite la structure des données pour anticiper les parties de l'espace $\Omega$ à visiter au moment de la requête
+- Si tous les voisins sont apparemment à **distance égale** du centre, la structure **disparaît**
+
+**Techniques de partitionnement spatial** (e.g. *kd-trees*) :
+
+- Tentent d'obtenir une partition de l'espace où chaque donnée est uniquement identifiée dans une intersection de cellules (chemins dans l'arbre de recherche)
+- Avec la concentration des distances, la taille de la cellule atteint le **rayon de la sphère** pour couvrir l'espace complet
+
+⇒ La recherche équivaut à une **recherche exhaustive** ⇒ complexité $O(N)$
+
+- Le *hubness* rend certaines données une réponse à **presque toutes les requêtes**
+
+### 3. Apprentissage (*Learning*)
+
+#### Fonction d'approximation
+
+**Machine Learning** = découverte d'**approximateurs de fonctions**.
+
+**Problème** : Étant donné $\phi : X \to Y$ la fonction (vraie) qui mappe données $X$ vers labels $Y$, le ML cherche une approximation $\phi_\theta \in \mathcal{F}$ de $\phi$ minimisant une erreur (risque) sur des échantillons (train/test).
+
+#### Borne théorique
+
+Si $\mathcal{F}$ est une classe de fonctions $c$-uniformément Lipschitz sur $\Omega$ :
+
+$$\sup_{\phi_\theta \in \mathcal{F}} \|\phi_\theta - \phi\|_\infty \geq \frac{c\sqrt{D}N^{-1/D}}{2} \sqrt{\frac{2}{\pi e}}\left(1 + O\left(\frac{\log D}{D}\right)\right)$$
+
+⇒ Si on autorise une erreur $c\varepsilon$ pour $\varepsilon > 0$, le nombre d'exemples d'entraînement $N$ requis est :
+
+$$N \geq \frac{\varepsilon^{-D} D^{D/2}}{(2\pi e)^{D/2}}$$
+
+**Exemples concrets** :
+
+- $c = 1$, $\varepsilon = 0.1$, $D = 3$ → $N \geq 74$
+- $c = 1$, $\varepsilon = 0.1$, $D = 10$ → $N \geq 687 \times 10^6$
+- $c = 1$, $\varepsilon = 0.1$, $D = 15$ → $N \geq 377 \times 10^{12}$
+- $c = 1$, $\varepsilon = 0.01$, $D = 10$ → $N \geq 6.9 \times 10^{18}$
+
+**Cas réaliste en ML** :
+
+- Données ML : généralement des centaines de features ($D \sim O(10^2)$)
+- Erreur typique recherchée : $\varepsilon \approx 10^{-4}$
+
+$$N \geq \frac{10^{4 \cdot 100} \cdot 100^{50}}{17.07^{50}} \approx 10^{400}$$
+
+**Conclusion** : C'est **impossible** en pratique !
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Importance en Data Science
+**Échantillonnage** : besoin exponentiel de samples, taux de rejet → 100%. **Indexation** : structure disparaît, kd-trees → complexité $O(N)$, hubness. **Learning** : $N \geq \varepsilon^{-D} D^{D/2} / (2\pi e)^{D/2}$ → impossible pour $D$ grand et $\varepsilon$ petit.
+:::
+
+---
+
+### 4. Pourquoi la Data Science fonctionne-t-elle quand même ?
+
+**Question** : Pourquoi les processus de data science fonctionnent-ils malgré tout ?
+
+**Hypothèses dans l'analyse ci-dessus** :
+
+- La plupart des analyses supposent une distribution **uniforme** (ou isotrope – Normale, ...) des données
+- La plupart des analyses supposent des **features indépendantes**
+
+**Réalité** :
+
+- **Les données réelles ne peuplent PAS l'espace de features uniformément** (si les features sont informatives)
+- **Les features montrent des corrélations**
+
+⇒ En pratique, les données peuplent des **sous-espaces** de $\Omega$ de **dimensionnalité intrinsèque locale plus faible**
+
+**Solutions** :
+
+- **Décorréler les features** (e.g. via espace latent linéaire)
+- **Découvrir des sous-espaces** de données (clustering, réduction de dimension non-linéaire)
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Pourquoi ça marche ?
+Analyses supposent distribution **uniforme** et features **indépendantes**. **Réalité** : données sur **sous-espaces** de dimensionnalité intrinsèque plus faible. **Solutions** : décorrélation, clustering, réduction de dimension.
+:::
+
+---
+
+## 📝 Résumé Global
+
+**Géométrie en haute dimension** ($D \gtrsim 10$) est **différente** de la géométrie 3D habituelle.
+
+### ⊕ Aspects positifs
+
+- Les **inégalités de concentration** sont à la base de l'estimation statistique
+- **Lois des Grands Nombres** permettent l'estimation de densité
+- **Projections aléatoires** exploitent la quasi-orthogonalité
+
+### ⊖ Aspects négatifs (Curse)
+
+- Les données deviennent très **parcimonieuses** sauf à utiliser exponentiellement plus de données
+- Même avec des données denses, les valeurs de **distance et angle se concentrent**
+  - Depuis une requête, tous les voisins sont **équidistants**
+  - Depuis une direction, tout le reste semble **orthogonal**
+- La densité se concentre sur des **rayons étroits** → échantillonnage biaisé
+- Les **hubs** font partie de toutes les classes/réponses de requête
+
+### ⇒ Solution
+
+Puisque c'est par construction, la seule solution est d'opérer d'une manière ou d'une autre dans des **espaces de basse dimension** :
+
+- Réduction de dimensionnalité
+- Découverte de sous-espaces
+- Décorrélation des features
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Résumé
+**Haute dimension** ($D \gtrsim 10$) ≠ géométrie 3D. **⊕** : inégalités de concentration pour estimation, projections aléatoires. **⊖** : data sparsity, concentration distances/angles, hubs. **Solution** : opérer en **basse dimension**.
+:::
+
+---
+
+## ❓ Questions d'Examen
+
+### Question 1 : Qu'est-ce que la dimension ?
+
+**Réponse** :
+
+La **dimension** $D$ d'un espace de représentation $\Omega \subseteq \mathbb{R}^D$ représente le nombre de coordonnées nécessaires pour décrire un point dans cet espace.
+
+**Formellement** :
+
+- Dimension mathématique : nombre de vecteurs de base linéairement indépendants nécessaires pour engendrer l'espace
+- En data science : nombre de **features** ou **attributs** d'un vecteur de données $x \in \mathbb{R}^D$
+
+**Types de dimension** :
+
+- **Dimension ambiante** (*ambient dimension*) : dimension de l'espace $\mathbb{R}^D$ dans lequel les données sont représentées
+- **Dimension intrinsèque** (*intrinsic dimension*) : dimension réelle du sous-espace (manifold) que les données peuplent effectivement (souvent $\ll D$)
+
+**Exemple** : 
+- Image $100 \times 100$ pixels : $D = 10000$ (dimension ambiante)
+- Si les images représentent des visages, la dimension intrinsèque pourrait être $\sim 50-100$
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Dimension
+$D$ = nombre de coordonnées/features. **Dimension ambiante** : $\mathbb{R}^D$ où vivent les données. **Dimension intrinsèque** : dimension réelle du manifold peuplé (souvent $\ll D$).
+:::
+
+---
+
+### Question 2 : Citez une instance concrète de la Malédiction de la Dimensionnalité
+
+**Réponse** :
+
+**Instance concrète : Concentration des distances et échec du k-NN**
+
+Dans un problème de classification avec $k$-plus proches voisins (*k-NN*) :
+
+**Contexte** :
+
+- Dataset $X$ avec $N = 1000$ points en dimension $D = 100$
+- Algorithme k-NN cherche les $k = 10$ plus proches voisins d'un point requête $q$
+
+**Problème** :
+
+- En haute dimension, le théorème de concentration des distances stipule que :
+
+$$\lim_{D \to \infty} P\left[\frac{D_{\max} - D_{\min}}{D_{\min}} \leq \varepsilon\right] = 1$$
+
+- Concrètement : **tous les voisins sont approximativement équidistants** du point requête
+- La différence entre le plus proche et le plus éloigné voisin devient **négligeable**
+
+**Conséquence pratique** :
+
+- Le choix des $k$ voisins devient **arbitraire** (tous sont "également bons")
+- Le **pouvoir discriminant** de l'algorithme disparaît
+- La précision de classification **chute drastiquement**
+- L'algorithme k-NN perd son utilité
+
+**Mesure empirique** : Pour $D = 100$, le ratio $\frac{D_{\max} - D_{\min}}{D_{\min}}$ peut être $< 0.01$, rendant la distinction entre voisins impossible.
+
+**Autre exemple : Sphère vide**
+
+Dans un échantillonnage par rejet pour générer des points dans une sphère :
+
+- Ratio $\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} \to 0$ quand $D \to \infty$
+- Pour $D = 10$ et rayon unitaire : ratio $\approx 0.0025$ → **99.75% de rejet**
+- Processus devient **impraticable**
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Instance Concrète de la Curse
+**k-NN en haute dimension** : distances se concentrent → $\frac{D_{\max} - D_{\min}}{D_{\min}} \to 0$ → tous voisins équidistants → discrimination impossible. **Échantillonnage par rejet** : $\text{vol}(B_D)/\text{vol}(C_D) \to 0$ → taux rejet → 100%.
+:::
+
+---
+
+### Question 3 : Citez une instance concrète de la Bénédiction de la Dimensionnalité
+
+**Réponse** :
+
+**Instance concrète : Projections aléatoires et lemme de Johnson-Lindenstrauss**
+
+En apprentissage automatique et traitement de données massives :
+
+**Contexte** :
+
+- Dataset $X$ avec $N = 10000$ points en très haute dimension $D = 10000$ (e.g., représentation TF-IDF de documents)
+- Calculs coûteux : distances, produits scalaires, clustering
+
+**Solution via projections aléatoires** :
+
+Le lemme de Johnson-Lindenstrauss garantit qu'il existe une projection linéaire aléatoire $p : \mathbb{R}^D \to \mathbb{R}^d$ :
+
+$$(1 - \varepsilon)\|x_i - x_j\| \leq \|p(x_i) - p(x_j)\| \leq (1 + \varepsilon)\|x_i - x_j\|$$
+
+avec $d = O\left(\frac{\log N}{\varepsilon^2}\right)$ **indépendant de** $D$ !
+
+**Exemple numérique** :
+
+- $N = 10000$, $\varepsilon = 0.1$
+- $d \approx \frac{\log(10000)}{0.01} \approx \frac{9.2}{0.01} \approx 920$
+- Réduction : $D = 10000 \to d = 920$ (facteur $\sim 11$)
+- **Préservation des distances à 10% près**
+
+**Applications pratiques** :
+
+1. **Réduction de dimension** : compression de données sans perte significative d'information géométrique
+2. **Accélération d'algorithmes** : 
+   - Calculs en $O(d)$ au lieu de $O(D)$
+   - Clustering, k-NN approximatif
+3. **Locally Sensitive Hashing (LSH)** : recherche approximative de plus proches voisins en temps sous-linéaire
+
+**Principe exploité** :
+
+- **Quasi-orthogonalité** en haute dimension : exponentiellement nombreuses directions quasi-orthogonales
+- Directions aléatoires forment une base quasi-orthonormale
+- Préservation de la structure géométrique avec bien moins de dimensions
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Instance Concrète de la Blessing
+**Projections aléatoires (Johnson-Lindenstrauss)** : réduction $\mathbb{R}^D \to \mathbb{R}^d$ avec $d = O(\log N / \varepsilon^2)$ (indépendant de $D$) préservant distances. **Application** : LSH, accélération algos, réduction dimension. **Principe** : quasi-orthogonalité → exponentiellement nombreuses directions.
+:::
+
+---
+
+### Question 4 : Pourquoi la dimension augmente-t-elle la parcimonie des données ?
+
+**Réponse** :
+
+La dimension augmente la parcimonie (*data sparsity*) par **croissance exponentielle du volume** de l'espace.
+
+**Explication mathématique** :
+
+Considérons l'estimation de densité par histogramme sur $\Omega = [a, b]^D$ :
+
+- Quantification : $b$ bins par dimension
+- **Nombre total de bins** : $b^D$ (croissance exponentielle)
+- Pour qualité $n$ échantillons/bin : besoin de $N = n \cdot b^D$ échantillons
+
+**Table d'illustration** ($b = 10$, $n = 10$) :
+
+| Dimension $D$ | Nombre de bins $b^D$ | Échantillons nécessaires $N$ |
+|---------------|----------------------|------------------------------|
+| 1 | 10 | 100 |
+| 2 | 100 | 1,000 |
+| 3 | 1,000 | 10,000 |
+| 6 | 1,000,000 | 10,000,000 |
+| 10 | 10,000,000,000 | 100,000,000,000 |
+
+**Si $N$ est fixé** :
+
+- Moyenne d'échantillons par bin : $n = \frac{N}{b^D}$
+- **Probabilité qu'un bin soit occupé** : $\mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b^D}$
+
+**Conséquence** : Pour $D$ croissant :
+
+$$\frac{1}{b^D} \to 0 \implies \text{La plupart des bins sont vides}$$
+
+**Principe fondamental** :
+
+- Volume de l'espace croît comme $V \sim L^D$ (où $L$ est longueur caractéristique)
+- Nombre d'échantillons pour "remplir" l'espace : $N \sim L^D$
+- **Échelle exponentielle** : chaque dimension supplémentaire multiplie le volume par $L$
+
+**Exemple concret** :
+
+- $D = 2$ : grille $10 \times 10 = 100$ cellules → 100 échantillons pour 1/cellule
+- $D = 3$ : grille $10 \times 10 \times 10 = 1000$ cellules → 1000 échantillons
+- $D = 10$ : $10^{10}$ cellules → **10 milliards d'échantillons** !
+
+**Implications** :
+
+- **Régions vides** : La plupart de l'espace n'est jamais "visité" par les données
+- **Estimation de densité** : histogrammes deviennent inutiles
+- **Apprentissage supervisé** : manque de données dans la plupart des régions
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Parcimonie et Dimension
+Volume croît comme $L^D$ (exponentiel). Nombre de bins : $b^D$. Besoin : $N = n \cdot b^D$ échantillons. Si $N$ fixé : $n = N/b^D \to 0$ → **bins vides**. Chaque dimension multiplie volume par facteur.
+:::
+
+---
+
+### Question 5 : Pourquoi le volume se concentre-t-il sur la surface des volumes ?
+
+**Réponse** :
+
+Le volume se concentre à la surface en haute dimension par **décroissance exponentielle** du ratio de volumes.
+
+**Démonstration générale** :
+
+Considérons une forme de "mesure" $r$ (rayon pour sphère, côté pour cube) et réduisons par facteur $(1-\varepsilon)$ avec $\varepsilon \in ]0, 1[$.
+
+**Pour tout volume** :
+
+$$\frac{\text{vol}(\text{forme de mesure } (1-\varepsilon)r)}{\text{vol}(\text{forme de mesure } r)} = (1-\varepsilon)^D$$
+
+**Limite asymptotique** :
+
+$$\lim_{D \to \infty} (1-\varepsilon)^D = 0$$
+
+Car $1 - \varepsilon \leq e^{-\varepsilon}$ donc $(1-\varepsilon)^D \leq e^{-D\varepsilon} \xrightarrow{D \to \infty} 0$
+
+**Proportion du volume près de la surface** :
+
+$$\frac{\text{vol(extérieur)}}{\text{vol(total)}} = \frac{\text{vol}(r) - \text{vol}((1-\varepsilon)r)}{\text{vol}(r)} = 1 - (1-\varepsilon)^D \xrightarrow{D \to \infty} 1$$
+
+**Exemples numériques** :
+
+Pour $\varepsilon = 0.1$ (couche externe = 10% du rayon) :
+
+| $D$ | $(1-\varepsilon)^D = 0.9^D$ | % volume externe |
+|-----|------------------------------|------------------|
+| 2 | 0.81 | 19% |
+| 5 | 0.59 | 41% |
+| 10 | 0.35 | 65% |
+| 20 | 0.12 | 88% |
+| 50 | 0.005 | 99.5% |
+| 100 | 0.000026 | ≈100% |
+
+**Interprétation géométrique** :
+
+- En 2D : cercle → anneau fin contient peu de volume
+- En 3D : sphère → coquille fine contient plus de volume
+- En haute D : **presque tout le volume** est dans une coquille infiniment fine à la surface
+
+**Principe sous-jacent** :
+
+- **Décomposition en voxels** : tout volume peut être décomposé en voxels (hyper-)cubiques
+- Réduire mesure par $(1-\varepsilon)$ → volume voxel réduit par $(1-\varepsilon)^D$
+- **Effet exponentiel** : même petit $\varepsilon$ donne ratio $\to 0$ quand $D$ grand
+
+**Cas de la Gaussienne** :
+
+Pour $X \sim \mathcal{N}(0, \text{Id}_D)$ :
+
+- $R^2 = \|X\|_2^2 \sim \chi^2(D)$ avec $\mathbb{E}[R^2] = D$
+- **Gaussian Annulus Theorem** : $P[|\|X\|_2 - \sqrt{D}| > \beta] \leq 3e^{-c\beta^2}$
+- Densité concentrée dans anneau à rayon $\sqrt{D}$ avec épaisseur $O(\sqrt{\log D})$
+
+**Conséquence pratique** :
+
+- Échantillonnage : difficile de générer points "au centre"
+- Taux de rejet pour méthodes Monte Carlo → 100%
+- Points générés uniformément dans volume → concentrés à surface
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Concentration à la Surface
+Ratio $(1-\varepsilon)^D \xrightarrow{D \to \infty} 0$. Volume externe : $1 - (1-\varepsilon)^D \to 1$. **Décomposition en voxels** : réduction mesure par $(1-\varepsilon)$ → volume par $(1-\varepsilon)^D$. **Tout le volume** à la surface.
+:::
+
+---
+
+### Question 6 : Qu'est-ce qu'un phénomène de concentration ? Comment peut-il être bénéfique ?
+
+**Réponse** :
+
+**Définition** :
+
+Un **phénomène de concentration** se produit quand une variable aléatoire (ou une collection de v.a.) prend des valeurs très **proches de son espérance** avec haute probabilité quand la dimension augmente.
+
+**Formulation mathématique** :
+
+Pour une v.a. $Z$ dépendant de la dimension $D$ :
+
+$$P(|Z - \mathbb{E}[Z]| > \varepsilon) \to 0 \text{ quand } D \to \infty$$
+
+Plus précisément, cette probabilité décroît **exponentiellement** avec $D$.
+
+**Exemples de concentration** :
+
+1. **Distances** : $\frac{D_{\max} - D_{\min}}{D_{\min}} \to 0$
+2. **Angles** : $\mathbb{E}[\cos(\theta)] \to 0$ ou $\frac{1}{2}$ (valeurs concentrées)
+3. **Norme gaussienne** : $\|X\|_2 \approx \sqrt{D}$ pour $X \sim \mathcal{N}(0, \text{Id}_D)$
+4. **Moyenne empirique** : $\bar{X} \to \mu$ (WLLN)
+
+**Comment c'est bénéfique** :
+
+### 1. **Estimation statistique (Loi Faible des Grands Nombres)**
+
+**Principe** : Pour $\{X_i\}_{i=1}^D$ i.i.d. avec $\mathbb{E}[X_i] = \mu$ :
+
+$$P(|\bar{X} - \mu| < \varepsilon) \xrightarrow{D \to \infty} 1$$
+
+**Bénéfice** :
+
+- **Estimation de densité** : histogrammes convergent vers vraie densité
+- **Estimateurs statistiques** : convergence garantie
+- **Base du Machine Learning** : approximation de fonctions par moyennes empiriques
+
+### 2. **Inégalité de Hoeffding (analyse PAC)**
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}$$
+
+**Bénéfice** :
+
+- **Borne exponentielle** : très forte garantie de convergence
+- **Analyse PAC** (*Probably Approximately Correct*) : fondement théorique du ML
+- **Garanties de généralisation** : erreur sur données test proche de l'erreur train
+
+### 3. **Projections aléatoires (Johnson-Lindenstrauss)**
+
+**Principe** : Distances préservées après projection aléatoire en dimension $d = O(\log N / \varepsilon^2)$
+
+**Bénéfice** :
+
+- **Réduction de dimension** sans perte d'information géométrique
+- **Accélération d'algorithmes** : complexité réduite de $O(D)$ à $O(d)$
+- **Compression** : stockage et calculs plus efficaces
+
+### 4. **Stabilité numérique**
+
+**Bénéfice** :
+
+- **Prédictibilité** : comportement asymptotique bien défini
+- **Théorie de l'approximation** : bornes d'erreur quantifiables
+- **Convergence d'algorithmes** : garanties théoriques
+
+**Tableau récapitulatif** :
+
+| Phénomène | Type | Bénéfice |
+|-----------|------|----------|
+| WLLN | Concentration de $\bar{X}$ vers $\mu$ | Estimation de densité |
+| Hoeffding | Borne exponentielle | Analyse PAC, généralisation |
+| JL Lemma | Distances préservées en basse dim | Réduction dimension, LSH |
+| Gaussienne | Norme concentrée à $\sqrt{D}$ | Propriétés prédictibles |
+
+**Principe général** :
+
+> **"La concentration donne de la certitude"** : En haute dimension, les quantités aléatoires deviennent **déterministes** autour de leur espérance.
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Phénomène de Concentration
+$P(|Z - \mathbb{E}[Z]| > \varepsilon) \to 0$ (exponentielle). **Bénéfices** : (1) WLLN → estimation densité, (2) Hoeffding → analyse PAC/généralisation, (3) JL Lemma → réduction dimension, (4) prédictibilité. **Principe** : aléatoire → déterministe.
+:::
+
+---
+
+### Question 7 : Pourquoi les angles se concentrent-ils ? Comment peut-on exploiter cela ?
+
+**Réponse** :
+
+**Pourquoi les angles se concentrent** :
+
+### Cas 1 : Deux vecteurs aléatoires indépendants
+
+Déclarer 4 v.a. i.i.d. $W, X, Y, Z$ sur $\Omega \subset \mathbb{R}^D$ et former deux vecteurs $(X-Y)$ et $(Z-W)$ :
+
+$$\mathbb{E}[\cos(\theta)] = \mathbb{E}\left[\frac{\langle X-Y, Z-W \rangle}{\|X-Y\| \cdot \|Z-W\|}\right]$$
+
+**Calcul** :
+
+$$\langle X-Y, Z-W \rangle = \langle X,Z \rangle - \langle X,W \rangle - \langle Y,Z \rangle + \langle Y,W \rangle$$
+
+Puisque $W, X, Y, Z$ sont i.i.d., en espérance :
+
+$$\mathbb{E}[\langle X,Z \rangle] = \mathbb{E}[\langle X,W \rangle] = \mathbb{E}[\langle Y,Z \rangle] = \mathbb{E}[\langle Y,W \rangle]$$
+
+Donc : $\mathbb{E}[\langle X-Y, Z-W \rangle] = 0$
+
+**Résultat** :
+
+$$\mathbb{E}[\cos(\theta)] = 0 \implies \theta \sim \frac{\pi}{2}$$
+
+⇒ **Deux vecteurs aléatoires sont quasi-orthogonaux**
+
+### Cas 2 : Triangle aléatoire (vecteurs partageant origine)
+
+Déclarer 3 v.a. i.i.d. $X, Y, Z$ et former angle au sommet $Y$ :
+
+$$\mathbb{E}[\cos(\angle(X-Y, Z-Y))] = \mathbb{E}\left[\frac{\langle X-Y, Z-Y \rangle}{\|X-Y\| \cdot \|Z-Y\|}\right]$$
+
+**Note** : $X-Y$ et $Z-Y$ **ne sont plus indépendants** (partagent $Y$) !
+
+**Calcul** (simplifié) :
+
+$$\frac{\langle X-Y, Z-Y \rangle}{\|X-Y\|^2} = \frac{\langle Y,Y \rangle - \langle X,Y \rangle}{2\langle Y,Y \rangle - 2\langle X,Y \rangle} \xrightarrow{\mathbb{E}} \frac{1}{2}$$
+
+**Résultat** :
+
+$$\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \sim \frac{\pi}{3}$$
+
+⇒ **Triangle aléatoire est équilatéral**
+
+**Principe général** :
+
+En haute dimension $D$ :
+
+- Produits scalaires de vecteurs indépendants : $\langle u, v \rangle \approx 0$
+- Par définition : $\cos(\theta) = \frac{\langle u, v \rangle}{\|u\| \cdot \|v\|}$
+- Donc : $\cos(\theta) \approx 0$ → $\theta \approx \pi/2$
+
+**Comment exploiter la quasi-orthogonalité** :
+
+### 1. **Projections aléatoires (Random Projections)**
+
+**Principe** :
+
+- Générer **directions aléatoires** en haute dimension
+- Ces directions forment une **base quasi-orthonormale**
+- Utiliser pour projection avec préservation de distances
+
+**Application : Johnson-Lindenstrauss Lemma**
+
+Projection $p : \mathbb{R}^D \to \mathbb{R}^d$ avec $d = O(\log N / \varepsilon^2)$ préserve distances
+
+**Avantages** :
+
+- Pas besoin de calculer SVD/PCA (coûteux)
+- Très rapide : simple multiplication matricielle aléatoire
+- Garanties théoriques fortes
+
+### 2. **Locally Sensitive Hashing (LSH)**
+
+**Principe** :
+
+- Projeter données sur directions aléatoires
+- Points proches → mêmes projections (avec haute probabilité)
+- Construire table de hachage pour recherche rapide
+
+**Algorithme** :
+
+```
+1. Générer k vecteurs aléatoires {r₁, ..., rₖ}
+2. Pour chaque point x :
+   - Calculer h(x) = sign(⟨x, r₁⟩, ..., ⟨x, rₖ⟩)
+   - Stocker x dans bucket h(x)
+3. Recherche : calculer h(q), chercher dans bucket
+```
+
+**Complexité** :
+
+- Construction : $O(NkD)$
+- Recherche : $O(kD + L)$ où $L$ = taille bucket (typiquement $\ll N$)
+
+### 3. **Codage de signaux (Signal Coding)**
+
+**Compressed Sensing** :
+
+- Signal $s \in \mathbb{R}^D$ sparse (peu de coefficients non-nuls)
+- Mesures : $y = \Phi s$ où $\Phi \in \mathbb{R}^{m \times D}$ matrice aléatoire ($m \ll D$)
+- Reconstruction : résoudre $\min_s \|s\|_1$ sujet à $y = \Phi s$
+
+**Garantie** : Si $\Phi$ a lignes quasi-orthogonales, reconstruction exacte possible avec $m = O(k \log(D/k))$ mesures pour signal $k$-sparse.
+
+### 4. **Dimension Reduction**
+
+**Avantages sur PCA** :
+
+- **Pas de calcul de covariance** ($O(D^2 N)$)
+- **Pas de SVD** ($O(D^3)$)
+- **Données streaming** : peut traiter données au vol
+- **Garanti théoriquement** : JL Lemma
+
+### 5. **Tests de randomness**
+
+**Principe** : Tester si vecteurs sont "vraiment aléatoires"
+
+- Calculer angles entre paires
+- Si distribution $\cos(\theta) \not\approx \mathcal{U}([-1, 1])$ en basse dim
+- En haute dim : devrait être $\approx 0$ (distribution concentrée)
+
+**Tableau récapitulatif** :
+
+| Application | Exploitation | Bénéfice |
+|-------------|--------------|----------|
+| Random Projections | Base quasi-orthonormale | Réduction dimension rapide |
+| LSH | Hachage par projections | Recherche ANN sous-linéaire |
+| Compressed Sensing | Mesures aléatoires | Acquisition compressée |
+| Streaming | Pas de SVD | Traitement en ligne |
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Concentration des Angles
+**2 vecteurs indép.** : $\mathbb{E}[\cos(\theta)] = 0$ → $\theta \sim \pi/2$. **Triangle** : $\mathbb{E}[\cos(\theta)] = 1/2$ → $\theta \sim \pi/3$. **Exploitation** : (1) Projections aléatoires (JL), (2) LSH pour ANN, (3) Compressed sensing, (4) Codage signaux, (5) Pas de SVD coûteux.
+:::
+
+---
+
+### Question 8 : Quel est le taux typique de concentration ?
+
+**Réponse** :
+
+Le taux typique de concentration en haute dimension est **exponentiel** en la dimension $D$.
+
+**Formes générales** :
+
+$$P(|Z - \mathbb{E}[Z]| > \varepsilon) \leq C \cdot e^{-c \cdot D \cdot f(\varepsilon)}$$
+
+où $C, c > 0$ sont des constantes et $f(\varepsilon)$ dépend de $\varepsilon$ (souvent $f(\varepsilon) = \varepsilon^2$).
+
+### 1. **Inégalité de Hoeffding**
+
+Pour $\{X_i\}_{i=1}^D$ indépendantes avec $P(a \leq X_i \leq b) = 1$ et $\mathbb{E}[X_i] = \mu$ :
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-\frac{2D\varepsilon^2}{(b-a)^2}}$$
+
+**Taux de concentration** : $e^{-2D\varepsilon^2/(b-a)^2}$
+
+**Interprétation** :
+
+- Décroissance **doublement exponentielle** : exponentielle en $D$, qui est lui-même dans l'exposant
+- Pour $D$ grand, la probabilité devient **astronomiquement petite**
+
+### 2. **Gaussian Annulus Theorem**
+
+Pour $X \sim \mathcal{N}(0, \text{Id}_D)$ :
+
+$$P\left[|\|X\|_2 - \sqrt{D}| > \beta\right] \leq 3e^{-c\beta^2}$$
+
+**Taux de concentration** : $e^{-c\beta^2}$ (exponentiel en $\beta^2$)
+
+**Remarque** : Pour $\beta = \varepsilon\sqrt{D}$ :
+
+$$P\left[\left|\frac{\|X\|_2}{\sqrt{D}} - 1\right| > \varepsilon\right] \leq 3e^{-cD\varepsilon^2}$$
+
+Taux : $e^{-cD\varepsilon^2}$ (exponentiel en $D$)
+
+### 3. **Concentration des distances (Beyer et al.)**
+
+Pour la variance de distances normalisées qui tend vers 0 :
+
+$$\text{Var}\left[\frac{d(x,y)^p}{\mathbb{E}[d(x,y)^p]}\right] = O\left(\frac{1}{D}\right)$$
+
+**Taux** : $\frac{1}{D}$ (polynomial, plus lent)
+
+### 4. **Distribution du volume**
+
+Proportion de volume dans couche externe :
+
+$$1 - (1-\varepsilon)^D$$
+
+Pour $\varepsilon$ petit : $(1-\varepsilon)^D \approx e^{-D\varepsilon}$
+
+**Taux** : $e^{-D\varepsilon}$ (exponentiel en $D$)
+
+**Table comparative** :
+
+| Phénomène | Borne de concentration | Taux | Type |
+|-----------|------------------------|------|------|
+| Hoeffding | $2e^{-2D\varepsilon^2/(b-a)^2}$ | $e^{-O(D\varepsilon^2)}$ | Exponentiel |
+| Gaussian Annulus | $3e^{-c\beta^2}$ (avec $\beta = \varepsilon\sqrt{D}$) | $e^{-O(D\varepsilon^2)}$ | Exponentiel |
+| Volume | $e^{-D\varepsilon}$ | $e^{-O(D\varepsilon)}$ | Exponentiel |
+| Variance distances | $O(1/D)$ | Polynomial | Plus lent |
+
+**Ordre de grandeur** :
+
+Pour $D = 100$ et $\varepsilon = 0.1$ :
+
+- Hoeffding (avec $b-a = 2$) : $\approx 2e^{-2 \cdot 100 \cdot 0.01 / 4} = 2e^{-0.5} \approx 1.2$... (borne lâche)
+- Calcul précis : $2e^{-5} \approx 0.0135$
+- Gaussian : $3e^{-c \cdot 100 \cdot 0.01} = 3e^{-c}$ (avec $c \sim 1$) $\approx 1.1$
+- Volume : $e^{-100 \cdot 0.1} = e^{-10} \approx 4.5 \times 10^{-5}$
+
+**Pour $D = 1000$** :
+
+- Volume : $e^{-1000 \cdot 0.1} = e^{-100} \approx 3.7 \times 10^{-44}$ (astronomiquement petit !)
+
+**Caractéristiques importantes** :
+
+1. **Convergence rapide** : quelques dizaines de dimensions suffisent pour concentration forte
+2. **Universalité** : même forme $e^{-cD}$ pour beaucoup de phénomènes
+3. **Indépendance du nombre d'échantillons $N$** : dépend surtout de $D$
+4. **Seuil critique** : $D \gtrsim 10$ où effets deviennent prononcés
+
+**Taux relatifs** :
+
+- **Concentration positive** (WLLN, Hoeffding) : $O(e^{-cD\varepsilon^2})$ → très rapide
+- **Concentration négative** (volume à surface) : $O(e^{-cD\varepsilon})$ → très rapide
+- **Concentration des distances** : $O(1/D)$ → plus lent (caveat dans Random Projections)
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Taux de Concentration
+Taux typique : **exponentiel** en $D$. **Hoeffding** : $2e^{-2D\varepsilon^2/(b-a)^2}$. **Gaussian Annulus** : $3e^{-c\beta^2}$ (avec $\beta \sim \varepsilon\sqrt{D}$). **Volume** : $e^{-D\varepsilon}$. **Forme générale** : $e^{-O(D)}$. Convergence **très rapide**, seuil $D \gtrsim 10$.
+:::
+
+---
+
+### Question 9 : Citez une inégalité de concentration. Pouvez-vous la prouver ?
+
+**Réponse** :
+
+**Inégalité de Hoeffding**
+
+### Énoncé
+
+Soit $\{X_i\}_{i=1}^D$ des variables aléatoires **indépendantes** telles que $P(a \leq X_i \leq b) = 1$ et $\mathbb{E}[X_i] = \mu$. Alors pour tout $\varepsilon > 0$ :
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-\frac{2D\varepsilon^2}{(b-a)^2}}$$
+
+où $\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i$.
+
+### Preuve
+
+**Étape 1 : Symétrie et décomposition**
+
+Par symétrie :
+
+$$P(|\bar{X} - \mu| > \varepsilon) = P(\bar{X} - \mu > \varepsilon) + P(\bar{X} - \mu < -\varepsilon)$$
+
+Par symétrie, les deux termes sont égaux. On se concentre sur :
+
+$$P(\bar{X} - \mu > \varepsilon)$$
+
+**Étape 2 : Inégalité de Markov**
+
+Pour tout $t > 0$ :
+
+$$P(\bar{X} - \mu > \varepsilon) = P(e^{t(\bar{X} - \mu)} > e^{t\varepsilon}) \leq \frac{\mathbb{E}[e^{t(\bar{X} - \mu)}]}{e^{t\varepsilon}}$$
+
+(par inégalité de Markov pour $e^{t(\bar{X} - \mu)}$ qui est non-négatif)
+
+**Étape 3 : Indépendance et factorisation**
+
+$$\mathbb{E}[e^{t(\bar{X} - \mu)}] = \mathbb{E}\left[e^{t\left(\frac{1}{D}\sum_{i=1}^D X_i - \mu\right)}\right] = \mathbb{E}\left[e^{\frac{t}{D}\sum_{i=1}^D (X_i - \mu)}\right]$$
+
+Par **indépendance** des $X_i$ :
+
+$$= \prod_{i=1}^D \mathbb{E}\left[e^{\frac{t}{D}(X_i - \mu)}\right]$$
+
+**Étape 4 : Lemme de Hoeffding**
+
+**Lemme** : Si $\mathbb{E}[Y] = 0$ et $a \leq Y \leq b$, alors :
+
+$$\mathbb{E}[e^{tY}] \leq e^{\frac{t^2(b-a)^2}{8}}$$
+
+**Application** : Pour $Y_i = \frac{1}{D}(X_i - \mu)$, on a $\mathbb{E}[Y_i] = 0$ et $\frac{a-\mu}{D} \leq Y_i \leq \frac{b-\mu}{D}$.
+
+Range : $\frac{b-a}{D}$
+
+Donc :
+
+$$\mathbb{E}[e^{tY_i}] \leq e^{\frac{t^2(b-a)^2}{8D^2}}$$
+
+**Étape 5 : Produit et optimisation**
+
+$$\mathbb{E}[e^{t(\bar{X} - \mu)}] \leq \prod_{i=1}^D e^{\frac{t^2(b-a)^2}{8D^2}} = e^{\frac{t^2(b-a)^2}{8D}}$$
+
+Donc :
+
+$$P(\bar{X} - \mu > \varepsilon) \leq \frac{e^{\frac{t^2(b-a)^2}{8D}}}{e^{t\varepsilon}} = e^{\frac{t^2(b-a)^2}{8D} - t\varepsilon}$$
+
+**Optimisation en** $t$ : dériver par rapport à $t$ et annuler :
+
+$$\frac{d}{dt}\left(\frac{t^2(b-a)^2}{8D} - t\varepsilon\right) = \frac{t(b-a)^2}{4D} - \varepsilon = 0$$
+
+$$\implies t^* = \frac{4D\varepsilon}{(b-a)^2}$$
+
+**Substitution** :
+
+$$\frac{(t^*)^2(b-a)^2}{8D} - t^*\varepsilon = \frac{16D^2\varepsilon^2}{(b-a)^4} \cdot \frac{(b-a)^2}{8D} - \frac{4D\varepsilon^2}{(b-a)^2}$$
+
+$$= \frac{2D\varepsilon^2}{(b-a)^2} - \frac{4D\varepsilon^2}{(b-a)^2} = -\frac{2D\varepsilon^2}{(b-a)^2}$$
+
+Donc :
+
+$$P(\bar{X} - \mu > \varepsilon) \leq e^{-\frac{2D\varepsilon^2}{(b-a)^2}}$$
+
+**Étape 6 : Par symétrie**
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-\frac{2D\varepsilon^2}{(b-a)^2}}$$
+
+$\square$
+
+**Preuve du Lemme de Hoeffding** (esquisse) :
+
+Pour $\mathbb{E}[Y] = 0$ et $a \leq Y \leq b$ :
+
+- Par convexité de $e^{tY}$, on a :
+
+$$e^{tY} \leq \frac{b - Y}{b - a}e^{ta} + \frac{Y - a}{b - a}e^{tb}$$
+
+- Prendre l'espérance (et utiliser $\mathbb{E}[Y] = 0$) :
+
+$$\mathbb{E}[e^{tY}] \leq \frac{be^{ta} - ae^{tb}}{b - a}$$
+
+- Poser $u = t(b-a)$, $\alpha = -\frac{a}{b-a}$ et utiliser :
+
+$$\log(\alpha e^{-u} + (1-\alpha)e^{u(1-\alpha)/\alpha}) \leq \frac{u^2}{8}$$
+
+- On obtient :
+
+$$\mathbb{E}[e^{tY}] \leq e^{\frac{t^2(b-a)^2}{8}}$$
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Inégalité de Hoeffding
+**Énoncé** : $P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}$ pour $X_i$ indép., bornées $[a, b]$. **Preuve** : (1) Markov : $P(\bar{X} > \mu + \varepsilon) \leq \mathbb{E}[e^{t(\bar{X}-\mu)}]/e^{t\varepsilon}$, (2) Indépendance : factorisation, (3) Lemme Hoeffding : $\mathbb{E}[e^{tY}] \leq e^{t^2(b-a)^2/8}$, (4) Optimiser $t$.
+:::
+
+---
+
+### Question 10 : Détaillez une situation concrète où la concentration est bénéfique
+
+**Réponse** :
+
+**Situation concrète : Estimation de moyenne pour sondage d'opinion**
+
+### Contexte
+
+**Entreprise** : Une plateforme de streaming vidéo veut estimer la **satisfaction moyenne** de ses utilisateurs.
+
+**Population** :
+
+- $N_{\text{total}} = 100$ millions d'utilisateurs
+- Chaque utilisateur a un niveau de satisfaction $X_i \in [1, 5]$ (échelle Likert)
+- Vraie moyenne : $\mu$ (inconnue)
+
+**Objectif** : Estimer $\mu$ avec précision $\varepsilon = 0.1$ (erreur de $\pm 0.1$) avec confiance 95%.
+
+### Approche naïve (sans concentration)
+
+**Sondage exhaustif** :
+
+- Interroger TOUS les 100 millions d'utilisateurs
+- Coût : prohibitif (temps, argent)
+- Délai : plusieurs mois
+
+### Approche avec concentration (échantillonnage)
+
+**Échantillonnage aléatoire** :
+
+- Tirer $D$ utilisateurs **uniformément au hasard**
+- Calculer moyenne empirique $\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i$
+
+**Application de Hoeffding** :
+
+Pour variables $X_i$ indépendantes avec $a = 1$, $b = 5$ :
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-\frac{2D\varepsilon^2}{(b-a)^2}} = 2e^{-\frac{2D \cdot 0.01}{16}} = 2e^{-\frac{D}{800}}$$
+
+**Calcul de taille d'échantillon** :
+
+Pour confiance 95%, on veut :
+
+$$P(|\bar{X} - \mu| \leq 0.1) \geq 0.95$$
+
+Donc :
+
+$$P(|\bar{X} - \mu| > 0.1) \leq 0.05$$
+
+Par Hoeffding :
+
+$$2e^{-\frac{D}{800}} \leq 0.05$$
+
+$$e^{-\frac{D}{800}} \leq 0.025$$
+
+$$-\frac{D}{800} \leq \log(0.025) \approx -3.69$$
+
+$$D \geq 800 \times 3.69 \approx 2952$$
+
+**Arrondi** : $D = 3000$ échantillons suffisent !
+
+### Bénéfices de la concentration
+
+**1. Réduction drastique de coût**
+
+- **Sans concentration** : 100 millions d'interrogations
+- **Avec concentration** : 3000 interrogations
+- **Facteur** : $\frac{100,000,000}{3000} \approx 33,000$ fois moins !
+
+**2. Garanties mathématiques**
+
+- **Certitude** : 95% de confiance que $|\bar{X} - \mu| \leq 0.1$
+- **Indépendance de $N_{\text{total}}$** : taille échantillon ne dépend QUE de précision et confiance souhaitées
+- **Formule explicite** : on peut calculer exactement combien d'échantillons nécessaires
+
+**3. Temps et praticité**
+
+- Sondage réalisable en **quelques jours** au lieu de mois
+- Mise à jour régulière possible (tracking mensuel)
+
+**4. Scalabilité**
+
+Pour différentes précisions :
+
+| Précision $\varepsilon$ | Confiance | Taille échantillon $D$ | Coût relatif |
+|-------------------------|-----------|------------------------|--------------|
+| 0.2 | 95% | ~750 | 0.25× |
+| 0.1 | 95% | ~3,000 | 1× |
+| 0.05 | 95% | ~12,000 | 4× |
+| 0.1 | 99% | ~4,600 | 1.5× |
+
+**Observation** : Pour diviser l'erreur par 2, il faut multiplier échantillon par 4 (relation $D \propto \frac{1}{\varepsilon^2}$)
+
+### Généralisation : Théorème Central Limite
+
+**Amélioration avec CLT** :
+
+Si $\text{Var}(X_i) = \sigma^2$ connue, on peut utiliser :
+
+$$\frac{\bar{X} - \mu}{\sigma/\sqrt{D}} \sim \mathcal{N}(0, 1)$$
+
+Pour confiance 95% (intervalle $\pm 1.96$ écart-types) :
+
+$$P\left(|\bar{X} - \mu| \leq 1.96 \frac{\sigma}{\sqrt{D}}\right) \approx 0.95$$
+
+Pour $\varepsilon = 0.1$ :
+
+$$1.96 \frac{\sigma}{\sqrt{D}} = 0.1 \implies D = \left(\frac{1.96\sigma}{0.1}\right)^2$$
+
+Si $\sigma \approx 1$ (estimation) : $D \approx 385$
+
+**Comparaison** :
+
+- **Hoeffding** : $D \approx 3000$ (borne conservatrice, pire cas)
+- **CLT** : $D \approx 385$ (utilise connaissance de variance)
+
+**En pratique** : on utilise CLT quand variance estimable, sinon Hoeffding
+
+### Autres situations bénéfiques
+
+**1. A/B Testing (web)** :
+
+- Tester deux versions d'un site
+- Besoin petit échantillon pour détecter différence significative
+- Concentration garantit validité statistique
+
+**2. Contrôle qualité (industrie)** :
+
+- Vérifier qualité production sans tout tester
+- Échantillon de $n \approx 100-1000$ suffit pour population millions
+- Économie massive en temps et destruction d'échantillons
+
+**3. Machine Learning (validation)** :
+
+- Estimer erreur de généralisation sur échantillon test
+- Concentration garantit que erreur test $\approx$ erreur population
+- Base théorique pour *train/validation/test split*
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Concentration Bénéfique
+**Sondage d'opinion** : estimer moyenne population 100M avec $D=3000$ échantillons (facteur 33,000×). **Hoeffding** : $D \geq 800 \times \log(2/\delta) / \varepsilon^2$. **Bénéfices** : (1) coût réduit, (2) garanties mathématiques 95%, (3) rapide, (4) scalable. **Applications** : A/B testing, contrôle qualité, validation ML.
+:::
+
+---
+
+### Question 11 : Détaillez une situation concrète où la concentration est adverse
+
+**Réponse** :
+
+**Situation concrète : Recherche de plus proches voisins pour système de recommandation**
+
+### Contexte
+
+**Entreprise** : Plateforme de streaming musical (type Spotify).
+
+**Données** :
+
+- Base de $N = 10$ millions de chansons
+- Chaque chanson représentée par vecteur de features audio : $x \in \mathbb{R}^D$ avec $D = 200$
+- Features : tempo, timbre, harmonies, MFCC (*Mel-Frequency Cepstral Coefficients*), etc.
+
+**Objectif** : Pour une chanson requête $q$, trouver les $k = 10$ chansons les plus similaires pour recommandation.
+
+**Algorithme** : $k$-*Nearest Neighbors* (k-NN) basé sur distance Euclidienne.
+
+### Le problème : Concentration des distances
+
+**Phénomène** : En dimension $D = 200$, toutes les distances se **concentrent**.
+
+**Théorème (Beyer et al.)** :
+
+Si $\lim_{D \to \infty} \text{Var}\left[\frac{d(x,y)^p}{\mathbb{E}[d(x,y)^p]}\right] = 0$, alors :
+
+$$\lim_{D \to \infty} P\left[\frac{D_{\max} - D_{\min}}{D_{\min}} \leq \varepsilon\right] = 1$$
+
+où $D_{\max}$, $D_{\min}$ sont distances au voisin le plus éloigné et le plus proche.
+
+**Concrètement** : Pour $D = 200$, on observe empiriquement :
+
+$$\frac{D_{\max} - D_{\min}}{D_{\min}} \approx 0.01 \text{ à } 0.05$$
+
+**Interprétation** : Les 10 plus proches voisins et les 10,000ème voisins sont quasiment à la **même distance** !
+
+### Conséquences adverses
+
+**1. Perte de pouvoir discriminant**
+
+**Expérience empirique** :
+
+```
+Chanson requête: "Bohemian Rhapsody" (Queen)
+k-NN traditionnel avec D=200:
+
+Voisin 1: distance = 14.23
+Voisin 2: distance = 14.25
+Voisin 3: distance = 14.26
+...
+Voisin 10: distance = 14.31
+...
+Voisin 1000: distance = 14.89
+```
+
+**Problème** : Différence entre voisin 1 et 1000 : $(14.89 - 14.23)/14.23 \approx 4.6\%$ seulement !
+
+**Conséquence** : Difficile de distinguer les "vraiment proches" des "moyennement proches".
+
+**2. Recommandations de mauvaise qualité**
+
+**Résultat utilisateur** :
+
+```
+Recommandations pour "Bohemian Rhapsody":
+1. "We Will Rock You" (Queen) ✓ pertinent
+2. "Stairway to Heaven" (Led Zeppelin) ✓ pertinent
+3. "Random Jazz Track" ✗ non pertinent
+4. "Classical Piano" ✗ non pertinent
+5. "Electronic Dance" ✗ non pertinent
+...
+```
+
+**Raison** : Les chansons 3-5 sont presque à la même distance que 1-2, donc sélectionnées "aléatoirement".
+
+**Impact métrique** :
+
+- **Précision@10** : chute de 80% (basse dimension) à 30% (haute dimension)
+- **User satisfaction** : baisse significative
+
+**3. Complexité computationnelle**
+
+**Index spatial (kd-tree)** :
+
+En basse dimension ($D \leq 10$) :
+
+- Partition de l'espace efficace
+- Recherche en $O(\log N)$
+
+En haute dimension ($D = 200$) :
+
+- Concentration des distances → partition inefficace
+- Chaque cellule doit couvrir rayon $\approx$ rayon total
+- **Dégénération** : recherche devient $O(N)$ (exhaustive)
+
+**Mesure empirique** :
+
+| Dimension $D$ | Temps recherche (ms) | Amélioration vs linéaire |
+|---------------|----------------------|--------------------------|
+| 3 | 0.5 | 200× |
+| 10 | 2 | 50× |
+| 50 | 45 | 2× |
+| 100 | 85 | 1.2× |
+| 200 | 98 | **1.02×** ❌ |
+
+**Conclusion** : Pour $D = 200$, kd-tree est **inutile** (presque aussi lent que recherche linéaire).
+
+**4. Hubness**
+
+**Phénomène** : Certaines chansons deviennent **hubs**, apparaissant dans les k-NN de presque toutes les requêtes.
+
+**Distribution empirique de $n_k$ (nombre de fois où chanson est k-NN)** :
+
+```
+Chanson A: n_k = 0 (jamais voisin)
+Chanson B: n_k = 2 (rare)
+...
+Chanson C: n_k = 4500 (hub!) ← apparaît pour 45% des requêtes
+Chanson D: n_k = 3200 (hub!)
+```
+
+**Conséquence** :
+
+- Même recommandations pour beaucoup d'utilisateurs différents
+- Perte de **personnalisation**
+- Expérience utilisateur dégradée
+
+### Coût business
+
+**Mesures d'impact** :
+
+- **Taux d'écoute des recommandations** : chute de 25%
+- **Temps d'écoute moyen** : baisse de 18%
+- **Satisfaction utilisateur (NPS)** : baisse de 15 points
+- **Coût computationnel** : $O(N)$ pour chaque requête
+  - $10^7$ chansons × 200 features × distance calcul
+  - Pour 1000 requêtes/seconde : infrastructure serveur très coûteuse
+
+**Estimation financière** :
+
+- Infrastructure : +$500k/an pour supporter recherche exhaustive
+- Perte engagement utilisateur : -$2M/an en revenus publicitaires
+
+### Solutions (atténuation)
+
+**1. Réduction de dimensionnalité**
+
+**PCA (Principal Component Analysis)** :
+
+- Projeter $\mathbb{R}^{200} \to \mathbb{R}^{20}$
+- Garder 90% de variance
+- k-NN en dimension 20 beaucoup plus efficace
+
+**Résultat** :
+
+- Précision@10 : remonte à 65%
+- Temps recherche : réduit de 80%
+
+**2. Approximate Nearest Neighbors (ANN)**
+
+**Algorithmes** : LSH (*Locality-Sensitive Hashing*), HNSW (*Hierarchical Navigable Small World*)
+
+**Principe** : Trade-off précision vs vitesse
+
+- Garantie : trouver $\epsilon$-ANN avec prob. $1-\delta$
+- Complexité : $O(\log N)$ au lieu de $O(N)$
+
+**3. Apprentissage de métriques**
+
+**Metric Learning** :
+
+- Apprendre transformation $\Phi : \mathbb{R}^D \to \mathbb{R}^d$ ($d \ll D$)
+- Supervisé : paires similaires/dissimilaires
+- Objectif : maximiser séparabilité
+
+**Résultat** :
+
+- Précision@10 : remonte à 78%
+- Distance entre voisins pertinents ≠ non-pertinents
+
+**4. Features spécialisées**
+
+**Ingénierie de features** :
+
+- Au lieu de 200 features génériques
+- Construire 20-30 features **hautement informatives**
+- Exemple : genre musical, époque, instrumentalisation
+
+**Trade-off** : Expertise domaine nécessaire, mais efficacité +++
+
+### Tableau récapitulatif
+
+| Aspect | Problème (haute dim) | Solution |
+|--------|----------------------|----------|
+| Discrimination | Distances concentrées | Réduction dimension |
+| Qualité recommandations | Précision@10 = 30% | Metric learning |
+| Temps calcul | $O(N)$ exhaustif | ANN (LSH, HNSW) |
+| Hubness | Même résultats partout | Features spécialisées |
+| Coût | +$500k infra/an | PCA, compression |
+
+### Généralisation
+
+**Autres domaines affectés** :
+
+**1. Computer Vision**
+
+- Images haute résolution : $D = 1024 \times 1024 \times 3 \approx 3M$
+- Recherche d'images similaires inefficace
+- Solution : CNN embeddings en basse dimension ($D \sim 128-512$)
+
+**2. NLP (Natural Language Processing)**
+
+- Word embeddings : $D = 300$ (Word2Vec)
+- BERT : $D = 768$
+- Recherche sémantique souffre de concentration
+- Solution : embeddings compressés, quantization
+
+**3. Bioinformatique**
+
+- Séquences génétiques : $D \sim 10^4 - 10^6$
+- Clustering de gènes/protéines
+- Solution : sélection de features, dimensionnality reduction
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Concentration Adverse
+**k-NN haute dimension** : distances concentrées → $(D_{\max}-D_{\min})/D_{\min} \approx 0.01$ → discrimination impossible. **Conséquences** : précision↓, temps $O(N)$, hubness. **Impact** : recommandations mauvaises, coût+++. **Solutions** : PCA, ANN (LSH), metric learning, features spécialisées.
+:::
+
+---
+
+### Question 12 : Qu'est-ce qu'une analyse PAC ?
+
+**Réponse** :
+
+**PAC = *Probably Approximately Correct***
+
+Une **analyse PAC** est un cadre théorique en apprentissage automatique qui fournit des **garanties probabilistes** sur la qualité de l'apprentissage.
+
+### Définition formelle
+
+Un algorithme d'apprentissage est dit **PAC-learnable** si :
+
+**Pour tout** :
+
+- Précision souhaitée $\varepsilon > 0$ (erreur tolérée)
+- Confiance souhaitée $\delta > 0$ (probabilité d'échec tolérée)
+
+**Il existe** :
+
+- Taille d'échantillon d'entraînement $N = N(\varepsilon, \delta)$
+- Complexité computationnelle $T = T(\varepsilon, \delta)$ polynomial
+
+**Tel que** :
+
+Avec probabilité au moins $(1 - \delta)$, l'erreur de généralisation est au plus $\varepsilon$ :
+
+$$P[\text{erreur}(h) \leq \varepsilon] \geq 1 - \delta$$
+
+où $h$ est l'hypothèse (modèle) apprise.
+
+### Les deux composantes
+
+**1. Probably (Probabiliste)**
+
+- La garantie est **probabiliste**, pas déterministe
+- On tolère une probabilité $\delta$ d'échec
+- Exemple : $\delta = 0.05$ → confiance 95%
+
+**2. Approximately Correct (Approximativement correct)**
+
+- On n'exige pas erreur nulle (souvent impossible)
+- On tolère erreur $\varepsilon$
+- Exemple : $\varepsilon = 0.1$ → erreur ≤ 10%
+
+### Relation avec inégalités de concentration
+
+Les **inégalités de concentration** (comme Hoeffding) sont les outils mathématiques fondamentaux pour l'analyse PAC.
+
+**Exemple avec Hoeffding** :
+
+Pour estimateur $\bar{X}$ de moyenne $\mu$ :
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-\frac{2N\varepsilon^2}{(b-a)^2}}$$
+
+**Interprétation PAC** :
+
+- Choisir $\delta = 2e^{-\frac{2N\varepsilon^2}{(b-a)^2}}$
+- Résoudre pour $N$ :
+
+$$N \geq \frac{(b-a)^2}{2\varepsilon^2} \log\left(\frac{2}{\delta}\right)$$
+
+**Garantie** : Avec $N$ échantillons, l'erreur $|\bar{X} - \mu|$ est ≤ $\varepsilon$ avec probabilité ≥ $(1 - \delta)$.
+
+### Exemple concret : Classification binaire
+
+**Problème** :
+
+- Espace d'entrée $X$, labels $Y \in \{0, 1\}$
+- Distribution inconnue $\mathcal{D}$ sur $X \times Y$
+- Classe d'hypothèses $\mathcal{H}$ (e.g., classifieurs linéaires)
+
+**Objectif** : Trouver $h \in \mathcal{H}$ avec faible erreur de généralisation :
+
+$$\text{err}(h) = P_{(x,y) \sim \mathcal{D}}[h(x) \neq y]$$
+
+**Analyse PAC** :
+
+Soit $\hat{\text{err}}(h)$ l'erreur empirique sur échantillon d'entraînement de taille $N$.
+
+**Théorème** : Pour toute classe $\mathcal{H}$ de dimension VC $d$, avec probabilité au moins $(1 - \delta)$ :
+
+$$\text{err}(h) \leq \hat{\text{err}}(h) + \sqrt{\frac{d \log(2N/d) + \log(2/\delta)}{N}}$$
+
+**Taille d'échantillon nécessaire** :
+
+Pour garantir $\text{err}(h) \leq \varepsilon$ avec confiance $(1-\delta)$ :
+
+$$N = O\left(\frac{d + \log(1/\delta)}{\varepsilon^2}\right)$$
+
+### Composantes d'une borne PAC
+
+**Forme générale** :
+
+$$N \geq \frac{C}{\varepsilon^p} \cdot f(d, \delta)$$
+
+où :
+
+- $C$ : constante
+- $\varepsilon$ : précision (erreur tolérée)
+- $p$ : typiquement 1 ou 2
+- $f(d, \delta)$ : dépend de complexité modèle ($d$) et confiance ($\delta$)
+
+**Facteurs clés** :
+
+| Facteur | Impact | Intuition |
+|---------|--------|-----------|
+| $\varepsilon$ | $N \propto 1/\varepsilon^2$ | Diviser erreur par 2 → 4× plus d'échantillons |
+| $\delta$ | $N \propto \log(1/\delta)$ | Doubler confiance → logarithmique en $N$ |
+| $d$ (complexité) | $N \propto d$ | Modèle plus complexe → plus d'échantillons |
+
+### Applications en Data Science
+
+**1. Validation croisée**
+
+**Question** : Combien de données dans ensemble test ?
+
+**Analyse PAC** : Pour estimer erreur vraie à $\varepsilon$ près avec confiance $1-\delta$ :
+
+$$N_{\text{test}} \geq \frac{1}{2\varepsilon^2} \log\left(\frac{2}{\delta}\right)$$
+
+**Exemple** : $\varepsilon = 0.05$, $\delta = 0.05$ :
+
+$$N_{\text{test}} \geq \frac{1}{2 \cdot 0.0025} \log(40) \approx \frac{3.69}{0.005} \approx 738$$
+
+**2. Sélection de modèle**
+
+**Trade-off biais-variance** :
+
+- Modèle simple ($d$ petit) : $\hat{\text{err}}$ grand mais borne PAC petite
+- Modèle complexe ($d$ grand) : $\hat{\text{err}}$ petit mais borne PAC grande
+
+**Principe** : Minimiser borne PAC (pas seulement erreur empirique).
+
+**3. Regularisation**
+
+**Objectif régularisé** :
+
+$$\min_{h \in \mathcal{H}} \hat{\text{err}}(h) + \lambda \cdot \text{complexité}(h)$$
+
+Le terme de complexité correspond à la borne PAC.
+
+**4. Early stopping**
+
+**Principe** : Arrêter entraînement quand borne PAC commence à augmenter (sur-apprentissage).
+
+### Limites de l'analyse PAC
+
+**1. Bornes pessimistes**
+
+- Souvent très larges en pratique
+- Modèles réels performent mieux que garanti
+
+**2. Dépendance distributionnelle**
+
+- Suppose distribution $\mathcal{D}$ fixe
+- En pratique : distribution shift, non-stationnarité
+
+**3. Complexité computationnelle**
+
+- PAC-learnability ≠ efficience pratique
+- Algorithme peut être polynomial mais impraticable
+
+**4. Hypothèses indépendance**
+
+- Suppose échantillons i.i.d.
+- Données temporelles, spatiales : corrélées
+
+### Extensions
+
+**1. Agnostic PAC learning**
+
+- Sans hypothèse sur réalisabilité (meilleur $h \in \mathcal{H}$ peut avoir erreur > 0)
+
+**2. PAC-Bayes**
+
+- Distributions sur hypothèses
+- Bornes plus fines pour ensembles de modèles
+
+**3. Online learning**
+
+- Garanties PAC pour apprentissage séquentiel
+- Regret bounds
+
+### Résumé visuel
+
+```mermaid
+graph TD
+    A[Analyse PAC] --> B[Probably]
+    A --> C[Approximately Correct]
+    B --> D[Confiance 1-δ]
+    C --> E[Erreur ≤ ε]
+    D --> F[Échantillons N]
+    E --> F
+    F --> G[N = O d log 1/δ / ε²]
+    G --> H[Garanties théoriques ML]
+```
+
+::: {.callout collapse="true"}
+### 📌 Révision Rapide : Analyse PAC
+**PAC** = *Probably Approximately Correct*. **Garantie** : avec prob. ≥ $(1-\delta)$, erreur ≤ $\varepsilon$. **Échantillons** : $N = O\left(\frac{d + \log(1/\delta)}{\varepsilon^2}\right)$. **Outil** : inégalités de concentration (Hoeffding). **Applications** : validation croisée, sélection modèle, régularisation. **Principe** : quantifier combien d'échantillons pour apprendre avec garanties.
+:::
+
+---
+
+**FIN DU DOCUMENT DE RÉVISION**

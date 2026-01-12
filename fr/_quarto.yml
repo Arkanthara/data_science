@@ -11,7 +11,7 @@ website:
     search: true
     left:
       - text: Cours
-        file: index.qmd
+        file: ds2.qmd
       - text: Exercices
         file: exercices.qmd
       - text: Présentations
@@ -26,6 +26,11 @@ website:
             href: ../index.html
           - text: "Français"
             href: index.html
+  sidebar:
+    - title: "Cours"
+      style: "docked"
+      contents:
+        - ds2.qmd
 
 
 
