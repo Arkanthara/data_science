@@ -1,0 +1,600 @@
+# The Essentials
+
+## Why Study High-Dimensional Spaces?
+
+**Data Science** studies how to represent the real world in the form of numerical data within mathematical spaces. It focuses on the **geometric** and **statistical** properties of these spaces.
+
+**Universal Pipeline:**
+
+- Real world → Sensors → Raw data → Numerical representation
+- Everything becomes a **matrix**: $N$ samples, $D$ features
+
+**Two Complementary Perspectives:**
+
+- **Statistical:** Sample from an underlying distribution
+- **Algebraic:** Matrix $X \in \mathbb{R}^{D \times N}$
+
+---
+
+## The Representation Space
+
+A $D$-dimensional space has a complete structure:
+
+- Inner product → Norm → Distance → Metric space
+
+**Central Question:** What happens when $D$ becomes large?
+
+- Negative effects: **Curse** of dimensionality
+- Positive effects: **Blessing** of dimensionality
+
+---
+
+## The Curse of Dimensionality
+
+### 1. Data Sparsity
+
+To accurately estimate a distribution in $D$ dimensions, an **exponential** number of samples is required:
+
+$$N \approx n \cdot b^D$$
+
+where $n$ = samples per bin, $b$ = number of bins per dimension.
+
+**Example:**
+
+- $D = 6$, $b = 10$, $n = 10$ → $N \approx 10^7$ samples needed
+- With fixed $N$: most bins remain **empty**
+
+::: {.callout collapse="true"}
+### 📌 Details: Estimation Quality
+
+If $N$ is fixed, the estimation quality becomes:
+
+$$n = \frac{N}{b^D} \implies \mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b^D}$$
+
+The probability that a bin is occupied decreases exponentially with $D$.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Data Sparsity
+
+Requires $N \approx n \cdot b^D$ samples (**exponential** growth).
+
+If $N$ is fixed: $n = N/b^D$ → most bins **empty**.
+:::
+
+---
+
+### 2. Empty Sphere and Spiky Cube
+
+In a high-dimensional cube, the volume of the inscribed sphere becomes **negligible**:
+
+$$\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D \cdot 2^{D-1} \Gamma(D/2)} \xrightarrow{D \to \infty} 0$$
+
+**Consequences:**
+
+- Volume concentrates in the **corners** of the cube
+- Center-corner distance = $\frac{\sqrt{D}}{2}$ (grows with $\sqrt{D}$)
+- Uniform sampling → **empty** sphere
+
+::: {.callout collapse="true"}
+### 📌 Details: Volume of the Hypersphere
+
+**General Formula:**
+
+$$\text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D \Gamma(D/2)}$$
+
+**Recurrence Relation** (for $D > 1$):
+
+$$\text{vol}(B_D(r)) = \frac{2\pi r^2}{D} \text{vol}(B_{D-2}(r))$$
+
+**Corners of the Unit Cube:**
+
+- Number of corners: $2^D$
+- Distance to origin: $\|x_i\|_2 = \frac{\sqrt{D}}{2}$
+
+| $D$ | 1 | 2 | 4 | 5 | 100 |
+|-----|---|---|---|---|-----|
+| $\frac{\sqrt{D}}{2}$ | $\frac{1}{2}$ | $\frac{\sqrt{2}}{2}$ | $1$ | $\frac{\sqrt{5}}{2}$ | $5$ |
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Empty Sphere & Spiky Cube
+
+Sphere/cube ratio → 0. Volume concentrated at **corners** (distance $\sqrt{D}/2$).
+
+Uniform sampling → **empty** sphere.
+:::
+
+---
+
+### 3. Volume Distribution
+
+For **any shape** (cube, sphere, or other), volume concentrates near the surface:
+
+$$\lim_{D \to \infty} \frac{\text{vol}(V_D(r)) - \text{vol}(V_D((1-\varepsilon)r))}{\text{vol}(V_D(r))} = 1$$
+
+**Principle:**
+
+- Reducing size by factor $(1-\varepsilon)$ → volume reduced by $(1-\varepsilon)^D \to 0$
+- Almost all volume is in a thin **shell** at the surface
+
+::: {.callout collapse="true"}
+### 📌 Details: Calculation for Hypercube and Hypersphere
+
+**For the Hypercube:**
+
+$$\frac{\text{vol}(C_D((1-\varepsilon)r))}{\text{vol}(C_D(r))} = (1-\varepsilon)^D \xrightarrow{D \to \infty} 0$$
+
+**For the Hypersphere:**
+
+$$\frac{\text{vol}(B_D((1-\varepsilon)r))}{\text{vol}(B_D(r))} = (1-\varepsilon)^D \xrightarrow{D \to \infty} 0$$
+
+**Technical Note:** $(1-\varepsilon)^D \leq e^{-D\varepsilon} \to 0$ as $D \to \infty$
+
+**Decomposition Method:** Divide the volume into arbitrarily small hypercubic voxels, then apply the same reasoning.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Volume Distribution
+
+For **any shape:** ratio $(1-\varepsilon)^D \to 0$.
+
+Volume **concentrated at the surface**.
+:::
+
+---
+
+### 4. The Gaussian Egg
+
+For a distribution $X \sim \mathcal{N}(0, \text{Id}_D)$, the radius $R = \|X\|_2$ follows:
+
+$$R^2 = \sum_{i=1}^D X_i^2 \sim \chi^2(D) \implies \mathbb{E}[R^2] = D \implies \mathbb{E}[R] \approx \sqrt{D}$$
+
+The density is **concentrated** around the radius $\sqrt{D}$.
+
+**Gaussian Annulus Theorem:**
+
+$$P\left[\left|\|X\|_2 - \sqrt{D}\right| > \beta\right] \leq 3e^{-c\beta^2}$$
+
+Almost all density is in a **thin ring** around $\sqrt{D}$.
+
+::: {.callout collapse="true"}
+### 📌 Details: Density Along the Radius
+
+**Context:** Coordinates $X_i \sim \mathcal{N}(0, 1)$ i.i.d.
+
+**Integration along $r$** = take the norm. $R$ is the random variable of the radius.
+
+**Alternative Formulation:**
+
+$$P\left[\left|\frac{\|X\|}{\sqrt{D}} - 1\right| \leq \varepsilon\right] \approx 1$$
+
+For a Gaussian $\mathcal{N}(0, \sigma^2 \text{Id}_D)$, the density is concentrated at radius $\sigma\sqrt{D}$.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Gaussian Egg
+
+For $X \sim \mathcal{N}(0, \text{Id}_D)$: $R^2 \sim \chi^2(D)$ so $\mathbb{E}[R^2] = D$.
+
+Density concentrated at radius $\sqrt{D}$ (**thin ring**).
+:::
+
+---
+
+### 5. Distance Concentration
+
+All neighbors become **equidistant** as $D$ increases.
+
+**Theorem:** If the variance of the normalized distance tends to 0, then:
+
+$$\lim_{D \to \infty} P\left[\frac{D_{\max} - D_{\min}}{D_{\min}} \leq \varepsilon\right] = 1$$
+
+where $D_{\min}$ and $D_{\max}$ are the distances to the nearest and farthest neighbors.
+
+**Consequences:**
+
+- All neighbors appear at distance $D_{\min}$
+- Discriminative power decreases exponentially
+- KNN and $\varepsilon$-NN become **non-significant**
+
+::: {.callout collapse="true"}
+### 📌 Details: Concentration Condition
+
+**Complete Theorem:** If $\lim_{D \to \infty} \text{Var}\left[\frac{d(x,y)^p}{\mathbb{E}[d(x,y)^p]}\right] = 0$ for $0 < p < \infty$, then concentration occurs.
+
+This condition means that the relative fluctuations of the distance become negligible.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Distance Concentration
+
+If normalized distance variance → 0, then $\frac{D_{\max} - D_{\min}}{D_{\min}} \to 0$.
+
+All neighbors **equidistant**. KNN loses meaning.
+:::
+
+---
+
+### 6. Quasi-Orthogonality
+
+In high dimensions, random vectors exhibit surprising geometric properties:
+
+**Two random vectors** are quasi-orthogonal:
+
+$$\mathbb{E}[\cos(\theta)] = 0 \implies \theta \approx \frac{\pi}{2}$$
+
+**Random triangle** is quasi-equilateral:
+
+$$\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \approx \frac{\pi}{3}$$
+
+**Consequence:** On a sphere, volume concentrates at the **equator** (regardless of direction).
+
+::: {.callout collapse="true"}
+### 📌 Details: Angle Calculation Between Vectors
+
+**For two random vectors:**
+
+Define 4 i.i.d. random variables $W, X, Y, Z$ on $\Omega \subset \mathbb{R}^D$:
+
+$$\mathbb{E}\left[\cos(\angle(X - Y, Z - W))\right] = \mathbb{E}\left[\frac{\langle X - Y, Z - W \rangle}{\|X - Y\| \cdot \|Z - W\|}\right]$$
+
+Since $W, X, Y, Z$ are i.i.d., $X - Y$ and $Z - W$ are also i.i.d. and centered: $\mathbb{E}(X - Y) = \mathbb{E}(Z - W) = 0$.
+
+The numerator is $\text{cov}(X - Y, Z - W) = 0$.
+
+**For a triangle:**
+
+With 3 i.i.d. random variables $X, Y, Z$, compute:
+
+$$\frac{\langle X-Y, Z-Y \rangle}{\langle X-Y, X-Y \rangle} = \frac{\langle X,Z \rangle - \langle X,Y \rangle - \langle Y,Z \rangle + \langle Y,Y \rangle}{\langle X,X \rangle + \langle Y,Y \rangle - 2\langle X,Y \rangle}$$
+
+In expectation: $= \frac{1}{2}$
+
+**Note:** To sample on the unit hypersphere, sample a centrally symmetric distribution (e.g., Gaussian) and normalize.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Quasi-Orthogonality
+
+**2 random vectors:** $\theta \approx \pi/2$ (quasi-orthogonal).
+
+**Random triangle:** $\theta \approx \pi/3$ (equilateral).
+
+**Sphere:** volume at the equator.
+:::
+
+---
+
+### 7. Hubness
+
+Some samples appear in the neighborhood of **many** others.
+
+**Definition:** $n_k(x_j)$ = number of times $x_j$ is a k-NN of another point.
+
+**Observation:** The distribution of $n_k$ is **asymmetric**:
+
+- A few points (**hubs**) have very high values
+- Most points have low values
+- These hubs are "close" to all other samples
+
+::: {.callout collapse="true"}
+### 📌 Details: Formal Definition of Hubness
+
+Given $X$, define:
+
+$$r_{ik}(x_j) = \begin{cases} 1 & \text{if } x_j \in V_X^k(x_i) \\ 0 & \text{otherwise} \end{cases}$$
+
+Then:
+
+$$n_k(x_j) = \sum_i r_{ik}(x_j)$$
+
+**Empirical Visualization:** For 20-NN with $D = 100$ and 1000 uniform samples on 50 bins, a strong asymmetry in the distribution of $n_k$ is observed.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Hubness
+
+$n_k(x_j)$ = number of times $x_j$ is a k-NN of another point.
+
+**Asymmetric** distribution: few **hubs** in many neighborhoods.
+:::
+
+---
+
+### 8. Concentration Inequalities
+
+Concentration inequalities mathematically explain these phenomena.
+
+**Fundamental Inequalities:**
+
+- **Markov:** $P(X > \varepsilon) \leq \frac{\mathbb{E}[X]}{\varepsilon}$
+- **Chebyshev:** $P(|X - \mu| > \varepsilon) \leq \frac{\sigma^2}{\varepsilon^2}$
+
+**Hoeffding's Inequality:** For $\{X_i\}_{i \in [\![D]\!]}$ independent with $P(a \leq X_i \leq b) = 1$ and $\mathbb{E}[X_i] = \mu$:
+
+$$P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}$$
+
+where $\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i$
+
+**Explanation:**
+
+- Aggregation of independent variables → convergence to $\mu$
+- Minkowski distances have structure $\sum_{i=1}^D (\cdot)$
+- For $d_p(x,y)$ to be small (large), **all** $D$ coordinates must be similar (dissimilar)
+- As $D$ increases, this becomes unlikely
+
+::: {.callout collapse="true"}
+### 📌 Details: Application to Distances
+
+Minkowski distances:
+
+$$d_p(x,y) = \left(\sum_{i=1}^D |x[i] - y[i]|^p\right)^{1/p}$$
+
+Hoeffding's inequality formally explains why distance values **concentrate**.
+
+**Intuition:** For large $D$, extreme values of $d_p(x,y)$ become unlikely because they require coordination across **all** dimensions.
+
+**Note:** Example of PAC (Probably Approximately Correct) analysis.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Concentration Inequalities
+
+**Hoeffding:** $P(|\bar{X} - \mu| > \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}$.
+
+Structure $\sum_{i=1}^D (\cdot)$ in distances → **concentration**.
+:::
+
+---
+
+## The Blessing of Dimensionality
+
+### 1. Laws of Large Numbers
+
+**Weak Law of Large Numbers (WLLN):**
+
+For $\{X_i\}_{i \in [\![D]\!]}$ i.i.d. with $\mathbb{E}[X_i] = \mu$:
+
+$$\lim_{D \to \infty} P(|\bar{X} - \mu| < \varepsilon) = 1$$
+
+where $\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i$
+
+**Interpretation:**
+
+- The empirical mean $\bar{X}$ converges to the true expectation $\mu$
+- Fundamental basis of estimation theory
+- Consistent with the frequentist approach to probabilities
+
+**Central Limit Theorem (CLT):**
+
+$$Z_D = \frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \sim \mathcal{N}(0, 1)$$
+
+if $\text{Var}(X_i) = \sigma^2$
+
+::: {.callout collapse="true"}
+### 📌 Details: Proof via Chebyshev
+
+The WLLN can be proven from Chebyshev's inequality:
+
+$$P(|\bar{X} - \mu| \geq \varepsilon) \leq \frac{\text{Var}(\bar{X})}{\varepsilon^2} = \frac{\sigma^2}{D\varepsilon^2} \xrightarrow{D \to \infty} 0$$
+
+The CLT gives the form (Gaussian) and the rate ($1/\sqrt{D}$) of convergence.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Laws of Large Numbers
+
+**WLLN:** $\bar{X} \xrightarrow{P} \mu$ as $D \to \infty$.
+
+Basis for density estimation.
+
+**CLT:** convergence rate $1/\sqrt{D}$.
+:::
+
+---
+
+### 2. Random Projections
+
+**Principle:** Exponentially many quasi-orthogonal directions in high dimensions.
+
+**Johnson-Lindenstrauss Lemma:**
+
+Given $X \subset \Omega$, there exists a linear projection $p : \mathbb{R}^D \to \mathbb{R}^d$ such that:
+
+$$(1 - \varepsilon)\|x_i - x_j\| \leq \|p(x_i) - p(x_j)\| \leq (1 + \varepsilon)\|x_i - x_j\|$$
+
+with
+
+$$d = O\left(\frac{\log N}{\varepsilon^2}\right)$$
+
+✅ **Important Note:** $d$ does **NOT** depend on $D$!
+
+**Applications:**
+
+- Locally Sensitive Hashing (LSH) for approximate nearest neighbor (ANN) search
+- Random bases for signal decomposition and coding
+
+⚠️ **Caveat:** Convergence rate slower than most concentrations
+
+::: {.callout collapse="true"}
+### 📌 Details: Why It Works
+
+**Recall:** Two random vectors $u$ and $v$ are likely orthogonal: $\langle u, v \rangle = \varepsilon$ (small).
+
+**Key Property:** There are exponentially many quasi-orthogonal directions in high-dimensional spaces.
+
+This allows creating random bases (quasi-orthonormal) that preserve essential metric properties while drastically reducing dimension.
+:::
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Random Projections
+
+**Johnson-Lindenstrauss:** projection $\mathbb{R}^D \to \mathbb{R}^d$ preserving distances with $d = O(\log N / \varepsilon^2)$ (independent of $D$).
+
+Application: LSH for ANN.
+:::
+
+---
+
+## Impact in Data Science
+
+### 1. Sampling
+
+**Consequences of Sparsity:**
+
+- Requires an **exponential** number of samples to cover the space
+- Concentration inequalities are **precision indicators** for estimation
+- Rejection rate in rejection sampling → close to 100%
+
+::: {.callout collapse="true"}
+### 📌 Details: Rejection Sampling
+
+In practical processes like rejection sampling, the rejection rate becomes exponentially close to 100% due to the empty sphere phenomenon.
+
+If sampling in a particular region (like a sphere inscribed in a cube), the acceptance probability decreases exponentially with $D$.
+:::
+
+---
+
+### 2. Indexing
+
+**Exploiting Structure:**
+
+- Indexing exploits data structure to anticipate which parts of the space to visit
+- If all neighbors are at equal distance, the structure **disappears**
+
+**Spatial Partitioning Techniques** (e.g., kd-trees):
+
+- Attempt to uniquely identify each data point in a cell
+- With distance concentration: cell size → full radius
+- Search becomes **exhaustive** → complexity $O(N)$
+- Hubness makes some data points answers to almost all queries
+
+::: {.callout collapse="true"}
+### 📌 Details: Search Trees
+
+kd-trees attempt to partition the space so that each data point is uniquely identified within a cell intersection (paths in the tree).
+
+With distance concentration:
+
+- The cell must be as large as the sphere's radius to cover the entire space
+- Pruning conditions become ineffective
+- The tree degenerates into a linear list
+:::
+
+---
+
+### 3. Learning
+
+**Machine Learning** = discovering function approximators.
+
+**Problem:** Find $\phi_\theta \in \mathcal{F}$ approximating $\phi : X \to Y$ by minimizing an error.
+
+**Catastrophic Theoretical Bound:**
+
+If $\mathcal{F}$ is a class of $c$-uniformly Lipschitz functions on $\Omega$:
+
+$$\sup_{\phi_\theta \in \mathcal{F}} \|\phi_\theta - \phi\|_\infty \geq \frac{c\sqrt{D}N^{-1/D}}{2} \sqrt{\frac{2}{\pi e}}\left(1 + O\left(\frac{\log D}{D}\right)\right)$$
+
+For an error $c\varepsilon$ with $\varepsilon > 0$, the required number of examples is:
+
+$$N \geq \frac{\varepsilon^{-D} D^{D/2}}{(2\pi e)^{D/2}}$$
+
+**Concrete Examples:**
+
+- $D = 3$, $\varepsilon = 0.1$ → $N \geq 74$
+- $D = 10$, $\varepsilon = 0.1$ → $N \geq 687 \times 10^6$
+- $D = 15$, $\varepsilon = 0.1$ → $N \geq 377 \times 10^{12}$
+- $D = 10$, $\varepsilon = 0.01$ → $N \geq 6.9 \times 10^{18}$
+
+**Realistic Case:** $D \sim 100$, $\varepsilon \sim 10^{-4}$ → $N \sim 10^{400}$ ❌ **IMPOSSIBLE**
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Importance in Data Science
+
+**Sampling:** Exponential need, rejection rate → 100%.
+
+**Indexing:** Structure disappears, kd-trees → $O(N)$, hubness.
+
+**Learning:** $N \geq \varepsilon^{-D} D^{D/2} / (2\pi e)^{D/2}$ → impossible for large $D$.
+:::
+
+---
+
+### 4. Why Does Data Science Still Work?
+
+**Assumptions in the Above Analyses:**
+
+- **Uniform** (or isotropic) data distribution
+- **Independent** features
+
+❌ **These assumptions are FALSE in practice!**
+
+**Reality:**
+
+- Real data **do NOT** populate the space uniformly
+- Features show **correlations**
+- Data occupy **subspaces** of lower intrinsic dimensionality
+
+✅ **Practical Solutions:**
+
+- Decorrelate features (linear latent space)
+- Discover subspaces (clustering, nonlinear dimensionality reduction)
+- PCA, autoencoders, neural networks
+- Exploit underlying geometric structure
+
+💡 **Key Insight:** If features are informative, they are not independent, and data concentrate on manifolds of much lower dimension than $D$.
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Why It Works
+
+Analyses assume **uniform** distribution and **independent** features.
+
+**Reality:** Data lie on **subspaces** of low intrinsic dimensionality.
+
+**Solutions:** Decorrelation, clustering, dimensionality reduction.
+:::
+
+---
+
+## Global Summary
+
+**High-dimensional geometry** ($D \gtrsim 10$) is **different** from familiar 3D geometry.
+
+### Positive Aspects (Blessing)
+
+- **Concentration inequalities:** Basis of statistical estimation
+- **Laws of Large Numbers:** Enable density estimation
+- **Random projections:** Exploit quasi-orthogonality
+
+### Negative Aspects (Curse)
+
+- Data highly **sparse** (exponential sample requirement)
+- **Concentration of distances and angles:**
+  - All neighbors equidistant
+  - Everything appears orthogonal
+- Density concentrated on **narrow radii** → biased sampling
+- **Hubs:** Part of all classes/responses
+
+### Unique Solution
+
+Since this is by construction, the only solution is to operate in **low-dimensional spaces:**
+
+- Dimensionality reduction
+- Subspace discovery
+- Feature decorrelation
+
+💡 **Key Message:** Data Science works because real data **are not uniform** and live on **low-dimensional submanifolds**.
+
+::: {.callout collapse="true"}
+### 📌 Quick Review: Summary
+
+**High dimension** ($D \gtrsim 10$) ≠ 3D geometry.
+
+**✅:** Concentration inequalities, WLLN, random projections.
+
+**❌:** Data sparsity, distance/angle concentration, hubs.
+
+**Solution:** Operate in **low dimension** (PCA, autoencoders, structure exploitation).
+:::

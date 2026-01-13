@@ -9,22 +9,23 @@ website:
     search: true
     left:
       - text: Course
-        file: index.qmd
-      - text: Exercises
-        file: exercices.qmd
-      - text: Presentations
-        file: presentations.qmd
+        file: ds2.qmd
     
     # Right side for language selector
     right:
-      - text: Language
+      - text: Langage
         icon: globe
         menu:
-          - text: "English"
+          - text: "Anglais"
+            href: ../index.html
+          - text: "Français"
             href: index.html
-          - text: "French"
-            href: fr/index.html
-
+  sidebar:
+      style: "docked"
+      search: true
+      contents:
+      - section: "High-dimensional representation spaces"
+        contents: "ds2*"
 
 
 format:

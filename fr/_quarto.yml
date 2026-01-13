@@ -12,10 +12,6 @@ website:
     left:
       - text: Cours
         file: ds2.qmd
-      - text: Exercices
-        file: exercices.qmd
-      - text: Présentations
-        file: presentations.qmd
     
     # Right side for language selector
     right:
@@ -27,10 +23,11 @@ website:
           - text: "Français"
             href: index.html
   sidebar:
-    - title: "Cours"
       style: "docked"
+      search: true
       contents:
-        - ds2.qmd
+      - section: "Espaces de Représentation en Haute Dimension"
+        contents: "ds2*"
 
 
 
