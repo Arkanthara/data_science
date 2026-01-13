@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds2s – ISS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0c6282e9eda64d97ea9e5255f7a37655.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d6f41e6f289ddcd3353223713284dc1e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-0c6282e9eda64d97ea9e5255f7a37655.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ISS</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./ds2.html" aria-current="page"> 
+<span class="menu-text">Cours</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./../index.html">
+ <span class="dropdown-text">Anglais</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Français</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds2s.html">L’Essentiel</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détailé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Questions d’Examen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2s.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">L’Essentiel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2s1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’Essentiel version Deepseek</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lessentiel" id="toc-lessentiel" class="nav-link active" data-scroll-target="#lessentiel">L’Essentiel</a>
+  <ul class="collapse">
+  <li><a href="#pourquoi-étudier-les-espaces-de-haute-dimension" id="toc-pourquoi-étudier-les-espaces-de-haute-dimension" class="nav-link" data-scroll-target="#pourquoi-étudier-les-espaces-de-haute-dimension">Pourquoi étudier les espaces de haute dimension ?</a></li>
+  <li><a href="#lespace-de-représentation" id="toc-lespace-de-représentation" class="nav-link" data-scroll-target="#lespace-de-représentation">L’Espace de Représentation</a></li>
+  <li><a href="#la-malédiction-de-la-dimensionnalité" id="toc-la-malédiction-de-la-dimensionnalité" class="nav-link" data-scroll-target="#la-malédiction-de-la-dimensionnalité">La malédiction de la dimensionnalité</a>
+  <ul class="collapse">
+  <li><a href="#parcimonie-des-données-data-sparsity" id="toc-parcimonie-des-données-data-sparsity" class="nav-link" data-scroll-target="#parcimonie-des-données-data-sparsity">1. Parcimonie des Données (Data Sparsity)</a></li>
+  <li><a href="#sphère-vide-et-cube-épineux" id="toc-sphère-vide-et-cube-épineux" class="nav-link" data-scroll-target="#sphère-vide-et-cube-épineux">2. Sphère Vide et Cube Épineux</a></li>
+  <li><a href="#distribution-du-volume" id="toc-distribution-du-volume" class="nav-link" data-scroll-target="#distribution-du-volume">3. Distribution du Volume</a></li>
+  <li><a href="#lœuf-gaussien" id="toc-lœuf-gaussien" class="nav-link" data-scroll-target="#lœuf-gaussien">4. L’Œuf Gaussien</a></li>
+  <li><a href="#concentration-des-distances" id="toc-concentration-des-distances" class="nav-link" data-scroll-target="#concentration-des-distances">5. Concentration des Distances</a></li>
+  <li><a href="#quasi-orthogonalité" id="toc-quasi-orthogonalité" class="nav-link" data-scroll-target="#quasi-orthogonalité">6. Quasi-Orthogonalité</a></li>
+  <li><a href="#hubness-présence-de-hubs" id="toc-hubness-présence-de-hubs" class="nav-link" data-scroll-target="#hubness-présence-de-hubs">7. Hubness (Présence de Hubs)</a></li>
+  <li><a href="#inégalités-de-concentration" id="toc-inégalités-de-concentration" class="nav-link" data-scroll-target="#inégalités-de-concentration">8. Inégalités de Concentration</a></li>
+  </ul></li>
+  <li><a href="#la-bénédiction-de-la-dimensionnalité" id="toc-la-bénédiction-de-la-dimensionnalité" class="nav-link" data-scroll-target="#la-bénédiction-de-la-dimensionnalité">La bénédiction de la dimensionnalité</a>
+  <ul class="collapse">
+  <li><a href="#lois-des-grands-nombres" id="toc-lois-des-grands-nombres" class="nav-link" data-scroll-target="#lois-des-grands-nombres">1. Lois des Grands Nombres</a></li>
+  <li><a href="#projections-aléatoires" id="toc-projections-aléatoires" class="nav-link" data-scroll-target="#projections-aléatoires">2. Projections Aléatoires</a></li>
+  </ul></li>
+  <li><a href="#impact-en-data-science" id="toc-impact-en-data-science" class="nav-link" data-scroll-target="#impact-en-data-science">Impact en data science</a>
+  <ul class="collapse">
+  <li><a href="#échantillonnage" id="toc-échantillonnage" class="nav-link" data-scroll-target="#échantillonnage">1. Échantillonnage</a></li>
+  <li><a href="#indexation" id="toc-indexation" class="nav-link" data-scroll-target="#indexation">2. Indexation</a></li>
+  <li><a href="#apprentissage" id="toc-apprentissage" class="nav-link" data-scroll-target="#apprentissage">3. Apprentissage</a></li>
+  <li><a href="#pourquoi-la-data-science-fonctionne-t-elle-quand-même" id="toc-pourquoi-la-data-science-fonctionne-t-elle-quand-même" class="nav-link" data-scroll-target="#pourquoi-la-data-science-fonctionne-t-elle-quand-même">4. Pourquoi la Data Science fonctionne-t-elle quand même ?</a></li>
+  </ul></li>
+  <li><a href="#résumé-global" id="toc-résumé-global" class="nav-link" data-scroll-target="#résumé-global">Résumé global</a>
+  <ul class="collapse">
+  <li><a href="#aspects-positifs-bénédiction" id="toc-aspects-positifs-bénédiction" class="nav-link" data-scroll-target="#aspects-positifs-bénédiction">Aspects positifs (Bénédiction)</a></li>
+  <li><a href="#aspects-négatifs-malédiction" id="toc-aspects-négatifs-malédiction" class="nav-link" data-scroll-target="#aspects-négatifs-malédiction">Aspects négatifs (Malédiction)</a></li>
+  <li><a href="#solution-unique" id="toc-solution-unique" class="nav-link" data-scroll-target="#solution-unique">Solution unique</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds2s.html">L’Essentiel</a></li></ol></nav></header>
+
+
+
+
+
+<section id="lessentiel" class="level1">
+<h1>L’Essentiel</h1>
+<section id="pourquoi-étudier-les-espaces-de-haute-dimension" class="level2">
+<h2 class="anchored" data-anchor-id="pourquoi-étudier-les-espaces-de-haute-dimension">Pourquoi étudier les espaces de haute dimension ?</h2>
+<p>La <strong>Data Science</strong> étudie comment représenter le monde réel sous forme de données numériques dans des espaces mathématiques. Elle se concentre sur les propriétés <strong>géométriques</strong> et <strong>statistiques</strong> de ces espaces.</p>
+<p><strong>Pipeline universel</strong> :</p>
+<ul>
+<li>Monde réel → Capteurs → Données brutes → Représentation numérique</li>
+<li>Tout devient une <strong>matrice</strong> : <span class="math inline">\(N\)</span> échantillons, <span class="math inline">\(D\)</span> caractéristiques</li>
+</ul>
+<p><strong>Deux visions complémentaires</strong> :</p>
+<ul>
+<li><strong>Statistique</strong> : échantillon d’une distribution sous-jacente</li>
+<li><strong>Algébrique</strong> : matrice <span class="math inline">\(X \in \mathbb{R}^{D \times N}\)</span></li>
+</ul>
+<hr>
+</section>
+<section id="lespace-de-représentation" class="level2">
+<h2 class="anchored" data-anchor-id="lespace-de-représentation">L’Espace de Représentation</h2>
+<p>Un espace de dimension <span class="math inline">\(D\)</span> a une structure complète :</p>
+<ul>
+<li>Produit scalaire → Norme → Distance → Espace métrique</li>
+</ul>
+<p><strong>Question centrale</strong> : Que se passe-t-il quand <span class="math inline">\(D\)</span> devient grand ?</p>
+<ul>
+<li>Effets négatifs : <strong>Malédiction</strong> de la dimensionnalité</li>
+<li>Effets positifs : <strong>Bénédiction</strong> de la dimensionnalité</li>
+</ul>
+<hr>
+</section>
+<section id="la-malédiction-de-la-dimensionnalité" class="level2">
+<h2 class="anchored" data-anchor-id="la-malédiction-de-la-dimensionnalité">La malédiction de la dimensionnalité</h2>
+<section id="parcimonie-des-données-data-sparsity" class="level3">
+<h3 class="anchored" data-anchor-id="parcimonie-des-données-data-sparsity">1. Parcimonie des Données (Data Sparsity)</h3>
+<p>Pour estimer précisément une distribution en dimension <span class="math inline">\(D\)</span>, il faut un nombre <strong>exponentiel</strong> d’échantillons :</p>
+<p><span class="math display">\[N \approx n \cdot b^D\]</span></p>
+<p>où <span class="math inline">\(n\)</span> = échantillons par bin, <span class="math inline">\(b\)</span> = nombre de bins par dimension.</p>
+<p><strong>Exemple</strong> :</p>
+<ul>
+<li><span class="math inline">\(D = 6\)</span>, <span class="math inline">\(b = 10\)</span>, <span class="math inline">\(n = 10\)</span> → <span class="math inline">\(N \approx 10^7\)</span> échantillons nécessaires</li>
+<li>Avec <span class="math inline">\(N\)</span> fixé : la plupart des bins restent <strong>vides</strong></li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Estimation de qualité
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Si on fixe <span class="math inline">\(N\)</span>, la qualité d’estimation devient :</p>
+<p><span class="math display">\[n = \frac{N}{b^D} \implies \mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b^D}\]</span></p>
+<p>La probabilité qu’un bin soit occupé décroît exponentiellement avec <span class="math inline">\(D\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Data Sparsity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Besoin de <span class="math inline">\(N \approx n \cdot b^D\)</span> échantillons (croissance <strong>exponentielle</strong>).</p>
+<p>Si <span class="math inline">\(N\)</span> fixé : <span class="math inline">\(n = N/b^D\)</span> → la plupart des bins <strong>vides</strong>.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="sphère-vide-et-cube-épineux" class="level3">
+<h3 class="anchored" data-anchor-id="sphère-vide-et-cube-épineux">2. Sphère Vide et Cube Épineux</h3>
+<p>Dans un cube en haute dimension, le volume de la sphère inscrite devient <strong>négligeable</strong> :</p>
+<p><span class="math display">\[\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D \cdot 2^{D-1} \Gamma(D/2)} \xrightarrow{D \to \infty} 0\]</span></p>
+<p><strong>Conséquences</strong> :</p>
+<ul>
+<li>Le volume se concentre dans les <strong>coins</strong> du cube</li>
+<li>Distance centre-coin = <span class="math inline">\(\frac{\sqrt{D}}{2}\)</span> (croît avec <span class="math inline">\(\sqrt{D}\)</span>)</li>
+<li>Échantillonnage uniforme → sphère <strong>vide</strong></li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Volume de l’hypersphère
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Formule générale</strong> :</p>
+<p><span class="math display">\[\text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D \Gamma(D/2)}\]</span></p>
+<p><strong>Relation de récurrence</strong> (pour <span class="math inline">\(D &gt; 1\)</span>) :</p>
+<p><span class="math display">\[\text{vol}(B_D(r)) = \frac{2\pi r^2}{D} \text{vol}(B_{D-2}(r))\]</span></p>
+<p><strong>Coins du cube unitaire</strong> :</p>
+<ul>
+<li>Nombre de coins : <span class="math inline">\(2^D\)</span></li>
+<li>Distance à l’origine : <span class="math inline">\(\|x_i\|_2 = \frac{\sqrt{D}}{2}\)</span></li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(D\)</span></th>
+<th>1</th>
+<th>2</th>
+<th>4</th>
+<th>5</th>
+<th>100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\frac{\sqrt{D}}{2}\)</span></td>
+<td><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td><span class="math inline">\(\frac{\sqrt{2}}{2}\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(\frac{\sqrt{5}}{2}\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Sphère Vide &amp; Cube Épineux
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Ratio sphère/cube <span class="math inline">\(\to 0\)</span>. Volume concentré aux <strong>coins</strong> (distance <span class="math inline">\(\sqrt{D}/2\)</span>).</p>
+<p>Échantillonnage uniforme → sphère <strong>vide</strong>.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="distribution-du-volume" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-du-volume">3. Distribution du Volume</h3>
+<p>Pour <strong>toute forme</strong> (cube, sphère, ou autre), le volume se concentre près de la surface :</p>
+<p><span class="math display">\[\lim_{D \to \infty} \frac{\text{vol}(V_D(r)) - \text{vol}(V_D((1-\varepsilon)r))}{\text{vol}(V_D(r))} = 1\]</span></p>
+<p><strong>Principe</strong> :</p>
+<ul>
+<li>Réduire la taille par facteur <span class="math inline">\((1-\varepsilon)\)</span> → volume réduit par <span class="math inline">\((1-\varepsilon)^D \to 0\)</span></li>
+<li>Presque tout le volume est dans une mince <strong>coquille</strong> à la surface</li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Calcul pour hypercube et hypersphère
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Pour l’hypercube</strong> :</p>
+<p><span class="math display">\[\frac{\text{vol}(C_D((1-\varepsilon)r))}{\text{vol}(C_D(r))} = (1-\varepsilon)^D \xrightarrow{D \to \infty} 0\]</span></p>
+<p><strong>Pour l’hypersphère</strong> :</p>
+<p><span class="math display">\[\frac{\text{vol}(B_D((1-\varepsilon)r))}{\text{vol}(B_D(r))} = (1-\varepsilon)^D \xrightarrow{D \to \infty} 0\]</span></p>
+<p><strong>Note technique</strong> : <span class="math inline">\((1-\varepsilon)^D \leq e^{-D\varepsilon} \to 0\)</span> si <span class="math inline">\(D \to \infty\)</span></p>
+<p><strong>Méthode de décomposition</strong> : Découper le volume en voxels hypercubiques arbitrairement petits, puis appliquer le même raisonnement.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Distribution du Volume
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour <strong>toute forme</strong> : ratio <span class="math inline">\((1-\varepsilon)^D \to 0\)</span>.</p>
+<p>Volume <strong>concentré à la surface</strong>.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="lœuf-gaussien" class="level3">
+<h3 class="anchored" data-anchor-id="lœuf-gaussien">4. L’Œuf Gaussien</h3>
+<p>Pour une distribution <span class="math inline">\(X \sim \mathcal{N}(0, \text{Id}_D)\)</span>, le rayon <span class="math inline">\(R = \|X\|_2\)</span> suit :</p>
+<p><span class="math display">\[R^2 = \sum_{i=1}^D X_i^2 \sim \chi^2(D) \implies \mathbb{E}[R^2] = D \implies \mathbb{E}[R] \approx \sqrt{D}\]</span></p>
+<p>La densité est <strong>concentrée</strong> autour du rayon <span class="math inline">\(\sqrt{D}\)</span>.</p>
+<p><strong>Théorème de l’Anneau Gaussien</strong> :</p>
+<p><span class="math display">\[P\left[\left|\|X\|_2 - \sqrt{D}\right| &gt; \beta\right] \leq 3e^{-c\beta^2}\]</span></p>
+<p>La quasi-totalité de la densité est dans un <strong>anneau fin</strong> autour de <span class="math inline">\(\sqrt{D}\)</span>.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Densité le long du rayon
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Contexte</strong> : Coordonnées <span class="math inline">\(X_i \sim \mathcal{N}(0, 1)\)</span> i.i.d.</p>
+<p><strong>Intégration le long de <span class="math inline">\(r\)</span></strong> = prendre la norme. <span class="math inline">\(R\)</span> est la v.a. du rayon.</p>
+<p><strong>Formulation alternative</strong> :</p>
+<p><span class="math display">\[P\left[\left|\frac{\|X\|}{\sqrt{D}} - 1\right| \leq \varepsilon\right] \approx 1\]</span></p>
+<p>Pour une Gaussienne <span class="math inline">\(\mathcal{N}(0, \sigma^2 \text{Id}_D)\)</span>, la densité est concentrée au rayon <span class="math inline">\(\sigma\sqrt{D}\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Œuf Gaussien
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour <span class="math inline">\(X \sim \mathcal{N}(0, \text{Id}_D)\)</span> : <span class="math inline">\(R^2 \sim \chi^2(D)\)</span> donc <span class="math inline">\(\mathbb{E}[R^2] = D\)</span>.</p>
+<p>Densité concentrée au rayon <span class="math inline">\(\sqrt{D}\)</span> (anneau fin).</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="concentration-des-distances" class="level3">
+<h3 class="anchored" data-anchor-id="concentration-des-distances">5. Concentration des Distances</h3>
+<p>Tous les voisins deviennent <strong>équidistants</strong> quand <span class="math inline">\(D\)</span> augmente.</p>
+<p><strong>Théorème</strong> : Si la variance de distance normalisée tend vers 0, alors :</p>
+<p><span class="math display">\[\lim_{D \to \infty} P\left[\frac{D_{\max} - D_{\min}}{D_{\min}} \leq \varepsilon\right] = 1\]</span></p>
+<p>où <span class="math inline">\(D_{\min}\)</span> et <span class="math inline">\(D_{\max}\)</span> sont les distances aux voisins les plus proche et plus éloigné.</p>
+<p><strong>Conséquences</strong> :</p>
+<ul>
+<li>Tous les voisins sont vus à distance <span class="math inline">\(D_{\min}\)</span></li>
+<li>Le pouvoir de discrimination décroît exponentiellement</li>
+<li>KNN et <span class="math inline">\(\varepsilon\)</span>-NN deviennent <strong>non significatifs</strong></li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Condition de concentration
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Théorème complet</strong> : Si <span class="math inline">\(\lim_{D \to \infty} \text{Var}\left[\frac{d(x,y)^p}{\mathbb{E}[d(x,y)^p]}\right] = 0\)</span> pour <span class="math inline">\(0 &lt; p &lt; \infty\)</span>, alors la concentration se produit.</p>
+<p>Cette condition signifie que les fluctuations relatives de la distance deviennent négligeables.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Concentration des Distances
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Si variance de distance normalisée <span class="math inline">\(\to 0\)</span>, alors <span class="math inline">\(\frac{D_{\max} - D_{\min}}{D_{\min}} \to 0\)</span>.</p>
+<p>Tous les voisins <strong>équidistants</strong>. KNN perd son sens.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="quasi-orthogonalité" class="level3">
+<h3 class="anchored" data-anchor-id="quasi-orthogonalité">6. Quasi-Orthogonalité</h3>
+<p>En haute dimension, les vecteurs aléatoires présentent des propriétés géométriques surprenantes :</p>
+<p><strong>Deux vecteurs aléatoires</strong> sont quasi-orthogonaux :</p>
+<p><span class="math display">\[\mathbb{E}[\cos(\theta)] = 0 \implies \theta \approx \frac{\pi}{2}\]</span></p>
+<p><strong>Triangle aléatoire</strong> est quasi-équilatéral :</p>
+<p><span class="math display">\[\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \approx \frac{\pi}{3}\]</span></p>
+<p><strong>Conséquence</strong> : Sur une sphère, le volume est concentré à l’<strong>équateur</strong> (quelle que soit la direction).</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Calcul des angles entre vecteurs
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Pour deux vecteurs aléatoires</strong> :</p>
+<p>Déclarer 4 v.a. i.i.d. <span class="math inline">\(W, X, Y, Z\)</span> sur <span class="math inline">\(\Omega \subset \mathbb{R}^D\)</span> :</p>
+<p><span class="math display">\[\mathbb{E}\left[\cos(\angle(X - Y, Z - W))\right] = \mathbb{E}\left[\frac{\langle X - Y, Z - W \rangle}{\|X - Y\| \cdot \|Z - W\|}\right]\]</span></p>
+<p>Puisque <span class="math inline">\(W, X, Y, Z\)</span> sont i.i.d., <span class="math inline">\(X - Y\)</span> et <span class="math inline">\(Z - W\)</span> sont aussi i.i.d. et centrées : <span class="math inline">\(\mathbb{E}(X - Y) = \mathbb{E}(Z - W) = 0\)</span>.</p>
+<p>Le numérateur est <span class="math inline">\(\text{cov}(X - Y, Z - W) = 0\)</span>.</p>
+<p><strong>Pour un triangle</strong> :</p>
+<p>Avec 3 v.a. i.i.d. <span class="math inline">\(X, Y, Z\)</span>, calculer :</p>
+<p><span class="math display">\[\frac{\langle X-Y, Z-Y \rangle}{\langle X-Y, X-Y \rangle} = \frac{\langle X,Z \rangle - \langle X,Y \rangle - \langle Y,Z \rangle + \langle Y,Y \rangle}{\langle X,X \rangle + \langle Y,Y \rangle - 2\langle X,Y \rangle}\]</span></p>
+<p>En espérance : <span class="math inline">\(= \frac{1}{2}\)</span></p>
+<p><strong>Note</strong> : Pour échantillonner sur l’hypersphère unitaire, échantillonner une distribution centralement symétrique (e.g.&nbsp;Gaussienne) et normaliser.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Quasi-Orthogonalité
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>2 vecteurs aléatoires</strong> : <span class="math inline">\(\theta \approx \pi/2\)</span> (quasi-orthogonaux).</p>
+<p><strong>Triangle aléatoire</strong> : <span class="math inline">\(\theta \approx \pi/3\)</span> (équilatéral).</p>
+<p><strong>Sphère</strong> : volume à l’équateur.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="hubness-présence-de-hubs" class="level3">
+<h3 class="anchored" data-anchor-id="hubness-présence-de-hubs">7. Hubness (Présence de Hubs)</h3>
+<p>Certains échantillons apparaissent dans le voisinage de <strong>beaucoup</strong> d’autres.</p>
+<p><strong>Définition</strong> : <span class="math inline">\(n_k(x_j)\)</span> = nombre de fois où <span class="math inline">\(x_j\)</span> est k-NN d’un autre point.</p>
+<p><strong>Observation</strong> : La distribution de <span class="math inline">\(n_k\)</span> est <strong>asymétrique</strong> :</p>
+<ul>
+<li>Quelques points (<strong>hubs</strong>) ont des valeurs très élevées</li>
+<li>La plupart des points ont des valeurs faibles</li>
+<li>Ces hubs sont “proches” de tous les autres échantillons</li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Définition formale du hubness
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Étant donné <span class="math inline">\(X\)</span>, définir :</p>
+<p><span class="math display">\[r_{ik}(x_j) = \begin{cases} 1 &amp; \text{si } x_j \in V_X^k(x_i) \\ 0 &amp; \text{sinon} \end{cases}\]</span></p>
+<p>Puis :</p>
+<p><span class="math display">\[n_k(x_j) = \sum_i r_{ik}(x_j)\]</span></p>
+<p><strong>Visualisation empirique</strong> : Pour 20-NN avec <span class="math inline">\(D = 100\)</span> et 1000 échantillons uniformes sur 50 bins, on observe une forte asymétrie de la distribution de <span class="math inline">\(n_k\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Hubness
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(n_k(x_j)\)</span> = nombre de fois où <span class="math inline">\(x_j\)</span> est k-NN d’un autre point.</p>
+<p>Distribution <strong>asymétrique</strong> : quelques <strong>hubs</strong> dans beaucoup de voisinages.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="inégalités-de-concentration" class="level3">
+<h3 class="anchored" data-anchor-id="inégalités-de-concentration">8. Inégalités de Concentration</h3>
+<p>Les inégalités de concentration expliquent mathématiquement ces phénomènes.</p>
+<p><strong>Inégalités fondamentales</strong> :</p>
+<ul>
+<li><strong>Markov</strong> : <span class="math inline">\(P(X &gt; \varepsilon) \leq \frac{\mathbb{E}[X]}{\varepsilon}\)</span></li>
+<li><strong>Chebyshev</strong> : <span class="math inline">\(P(|X - \mu| &gt; \varepsilon) \leq \frac{\sigma^2}{\varepsilon^2}\)</span></li>
+</ul>
+<p><strong>Inégalité de Hoeffding</strong> : Pour <span class="math inline">\(\{X_i\}_{i \in [\![D]\!]}\)</span> indépendantes avec <span class="math inline">\(P(a \leq X_i \leq b) = 1\)</span> et <span class="math inline">\(\mathbb{E}[X_i] = \mu\)</span> :</p>
+<p><span class="math display">\[P(|\bar{X} - \mu| &gt; \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}\]</span></p>
+<p>où <span class="math inline">\(\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i\)</span></p>
+<p><strong>Explication</strong> :</p>
+<ul>
+<li>Agrégation de variables indépendantes → convergence vers <span class="math inline">\(\mu\)</span></li>
+<li>Les distances de Minkowski ont structure <span class="math inline">\(\sum_{i=1}^D (\cdot)\)</span></li>
+<li>Pour que <span class="math inline">\(d_p(x,y)\)</span> soit petit (grand), <strong>toutes</strong> les <span class="math inline">\(D\)</span> coordonnées doivent être similaires (dissimilaires)</li>
+<li>Quand <span class="math inline">\(D\)</span> augmente, cela devient improbable</li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Application aux distances
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les distances de Minkowski :</p>
+<p><span class="math display">\[d_p(x,y) = \left(\sum_{i=1}^D |x[i] - y[i]|^p\right)^{1/p}\]</span></p>
+<p>L’inégalité de Hoeffding explique formellement pourquoi les valeurs de distance se <strong>concentrent</strong>.</p>
+<p><strong>Intuition</strong> : Pour <span class="math inline">\(D\)</span> grand, les valeurs extrêmes de <span class="math inline">\(d_p(x,y)\)</span> deviennent improbables car nécessitent une coordination sur <strong>toutes</strong> les dimensions.</p>
+<p><strong>Note</strong> : Exemple d’analyse PAC (Probably Approximately Correct).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Inégalités de Concentration
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Hoeffding</strong> : <span class="math inline">\(P(|\bar{X} - \mu| &gt; \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}\)</span>.</p>
+<p>Structure <span class="math inline">\(\sum_{i=1}^D (\cdot)\)</span> dans distances → <strong>concentration</strong>.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="la-bénédiction-de-la-dimensionnalité" class="level2">
+<h2 class="anchored" data-anchor-id="la-bénédiction-de-la-dimensionnalité">La bénédiction de la dimensionnalité</h2>
+<section id="lois-des-grands-nombres" class="level3">
+<h3 class="anchored" data-anchor-id="lois-des-grands-nombres">1. Lois des Grands Nombres</h3>
+<p><strong>Loi Faible des Grands Nombres (WLLN)</strong> :</p>
+<p>Pour <span class="math inline">\(\{X_i\}_{i \in [\![D]\!]}\)</span> i.i.d. avec <span class="math inline">\(\mathbb{E}[X_i] = \mu\)</span> :</p>
+<p><span class="math display">\[\lim_{D \to \infty} P(|\bar{X} - \mu| &lt; \varepsilon) = 1\]</span></p>
+<p>où <span class="math inline">\(\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i\)</span></p>
+<p><strong>Interprétation</strong> :</p>
+<ul>
+<li>La moyenne empirique <span class="math inline">\(\bar{X}\)</span> converge vers la vraie espérance <span class="math inline">\(\mu\)</span></li>
+<li>Base fondamentale de la théorie de l’estimation</li>
+<li>Cohérente avec l’approche fréquentiste des probabilités</li>
+</ul>
+<p><strong>Théorème Central Limite (CLT)</strong> :</p>
+<p><span class="math display">\[Z_D = \frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \sim \mathcal{N}(0, 1)\]</span></p>
+<p>si <span class="math inline">\(\text{Var}(X_i) = \sigma^2\)</span></p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Preuve via Chebyshev
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La WLLN peut être prouvée à partir de l’inégalité de Chebyshev :</p>
+<p><span class="math display">\[P(|\bar{X} - \mu| \geq \varepsilon) \leq \frac{\text{Var}(\bar{X})}{\varepsilon^2} = \frac{\sigma^2}{D\varepsilon^2} \xrightarrow{D \to \infty} 0\]</span></p>
+<p>Le TCL donne la forme (Gaussienne) et le taux (<span class="math inline">\(1/\sqrt{D}\)</span>) de convergence.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Lois des Grands Nombres
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>WLLN</strong> : <span class="math inline">\(\bar{X} \xrightarrow{P} \mu\)</span> quand <span class="math inline">\(D \to \infty\)</span>.</p>
+<p>Base de l’estimation de densité.</p>
+<p><strong>CLT</strong> : taux de convergence <span class="math inline">\(1/\sqrt{D}\)</span>.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="projections-aléatoires" class="level3">
+<h3 class="anchored" data-anchor-id="projections-aléatoires">2. Projections Aléatoires</h3>
+<p><strong>Principe</strong> : Exponentiellement nombreuses directions quasi-orthogonales en haute dimension.</p>
+<p><strong>Lemme de Johnson-Lindenstrauss</strong> :</p>
+<p>Étant donné <span class="math inline">\(X \subset \Omega\)</span>, il existe une projection linéaire <span class="math inline">\(p : \mathbb{R}^D \to \mathbb{R}^d\)</span> telle que :</p>
+<p><span class="math display">\[(1 - \varepsilon)\|x_i - x_j\| \leq \|p(x_i) - p(x_j)\| \leq (1 + \varepsilon)\|x_i - x_j\|\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[d = O\left(\frac{\log N}{\varepsilon^2}\right)\]</span></p>
+<p>✅ <strong>Remarque importante</strong> : <span class="math inline">\(d\)</span> ne dépend <strong>PAS</strong> de <span class="math inline">\(D\)</span> !</p>
+<p><strong>Applications</strong> :</p>
+<ul>
+<li>Locally Sensitive Hashing (LSH) pour recherche approximative du plus proche voisin (ANN)</li>
+<li>Bases aléatoires pour décomposition et codage de signaux</li>
+</ul>
+<p>⚠️ <strong>Caveat</strong> : Taux de convergence plus lent que la plupart des concentrations</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Pourquoi ça marche ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Rappel</strong> : Deux vecteurs aléatoires <span class="math inline">\(u\)</span> et <span class="math inline">\(v\)</span> sont probablement orthogonaux : <span class="math inline">\(\langle u, v \rangle = \varepsilon\)</span> (petit).</p>
+<p><strong>Propriété clé</strong> : Il existe exponentiellement nombreuses directions quasi-orthogonales dans les espaces de haute dimension.</p>
+<p>Cela permet de créer des bases aléatoires (quasi-orthonormales) qui préservent les propriétés métriques essentielles tout en réduisant drastiquement la dimension.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Projections Aléatoires
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Johnson-Lindenstrauss</strong> : projection <span class="math inline">\(\mathbb{R}^D \to \mathbb{R}^d\)</span> préservant distances avec <span class="math inline">\(d = O(\log N / \varepsilon^2)\)</span> (indépendant de <span class="math inline">\(D\)</span>).</p>
+<p>Application : LSH pour ANN.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="impact-en-data-science" class="level2">
+<h2 class="anchored" data-anchor-id="impact-en-data-science">Impact en data science</h2>
+<section id="échantillonnage" class="level3">
+<h3 class="anchored" data-anchor-id="échantillonnage">1. Échantillonnage</h3>
+<p><strong>Conséquences de la parcimonie</strong> :</p>
+<ul>
+<li>Besoin d’un nombre <strong>exponentiel</strong> d’échantillons pour couvrir l’espace</li>
+<li>Les inégalités de concentration sont des <strong>indicateurs de précision</strong> pour l’estimation</li>
+<li>Taux de rejet dans l’échantillonnage par rejet → proche de 100%</li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Échantillonnage par rejet
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Dans les processus pratiques comme l’échantillonnage par rejet, le taux de rejet devient exponentiellement proche de 100% en raison du phénomène de sphère vide.</p>
+<p>Si on veut échantillonner dans une région particulière (comme une sphère inscrite dans un cube), la probabilité d’acceptation décroît exponentiellement avec <span class="math inline">\(D\)</span>.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="indexation" class="level3">
+<h3 class="anchored" data-anchor-id="indexation">2. Indexation</h3>
+<p><strong>Exploitation de la structure</strong> :</p>
+<ul>
+<li>L’indexation exploite la structure des données pour anticiper les parties de l’espace à visiter</li>
+<li>Si tous les voisins sont à distance égale, la structure <strong>disparaît</strong></li>
+</ul>
+<p><strong>Techniques de partitionnement spatial</strong> (e.g.&nbsp;kd-trees) :</p>
+<ul>
+<li>Tentent d’identifier uniquement chaque donnée dans une cellule</li>
+<li>Avec concentration des distances : taille de cellule → rayon complet</li>
+<li>La recherche devient <strong>exhaustive</strong> → complexité <span class="math inline">\(O(N)\)</span></li>
+<li>Le hubness rend certaines données réponses à presque toutes les requêtes</li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Détails : Arbres de recherche
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les arbres k-d tentent d’obtenir une partition de l’espace où chaque donnée est uniquement identifiée dans une intersection de cellules (chemins dans l’arbre).</p>
+<p>Avec la concentration des distances :</p>
+<ul>
+<li>La cellule doit avoir une taille égale au rayon de la sphère pour couvrir l’espace complet</li>
+<li>Les conditions de prunage (élagage) de branches deviennent inefficaces</li>
+<li>L’arbre dégénère en liste linéaire</li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="apprentissage" class="level3">
+<h3 class="anchored" data-anchor-id="apprentissage">3. Apprentissage</h3>
+<p><strong>Machine Learning</strong> = découverte d’approximateurs de fonctions.</p>
+<p><strong>Problème</strong> : Trouver <span class="math inline">\(\phi_\theta \in \mathcal{F}\)</span> approximant <span class="math inline">\(\phi : X \to Y\)</span> en minimisant une erreur.</p>
+<p><strong>Borne théorique catastrophique</strong> :</p>
+<p>Si <span class="math inline">\(\mathcal{F}\)</span> est une classe de fonctions <span class="math inline">\(c\)</span>-uniformément Lipschitz sur <span class="math inline">\(\Omega\)</span> :</p>
+<p><span class="math display">\[\sup_{\phi_\theta \in \mathcal{F}} \|\phi_\theta - \phi\|_\infty \geq \frac{c\sqrt{D}N^{-1/D}}{2} \sqrt{\frac{2}{\pi e}}\left(1 + O\left(\frac{\log D}{D}\right)\right)\]</span></p>
+<p>Pour une erreur <span class="math inline">\(c\varepsilon\)</span> avec <span class="math inline">\(\varepsilon &gt; 0\)</span>, le nombre d’exemples requis est :</p>
+<p><span class="math display">\[N \geq \frac{\varepsilon^{-D} D^{D/2}}{(2\pi e)^{D/2}}\]</span></p>
+<p><strong>Exemples concrets</strong> :</p>
+<ul>
+<li><span class="math inline">\(D = 3\)</span>, <span class="math inline">\(\varepsilon = 0.1\)</span> → <span class="math inline">\(N \geq 74\)</span></li>
+<li><span class="math inline">\(D = 10\)</span>, <span class="math inline">\(\varepsilon = 0.1\)</span> → <span class="math inline">\(N \geq 687 \times 10^6\)</span></li>
+<li><span class="math inline">\(D = 15\)</span>, <span class="math inline">\(\varepsilon = 0.1\)</span> → <span class="math inline">\(N \geq 377 \times 10^{12}\)</span></li>
+<li><span class="math inline">\(D = 10\)</span>, <span class="math inline">\(\varepsilon = 0.01\)</span> → <span class="math inline">\(N \geq 6.9 \times 10^{18}\)</span></li>
+</ul>
+<p><strong>Cas réaliste</strong> : <span class="math inline">\(D \sim 100\)</span>, <span class="math inline">\(\varepsilon \sim 10^{-4}\)</span> → <span class="math inline">\(N \sim 10^{400}\)</span> ❌ <strong>IMPOSSIBLE</strong></p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Importance en Data Science
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Échantillonnage</strong> : besoin exponentiel, taux de rejet → 100%.</p>
+<p><strong>Indexation</strong> : structure disparaît, kd-trees → <span class="math inline">\(O(N)\)</span>, hubness.</p>
+<p><strong>Learning</strong> : <span class="math inline">\(N \geq \varepsilon^{-D} D^{D/2} / (2\pi e)^{D/2}\)</span> → impossible pour <span class="math inline">\(D\)</span> grand.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="pourquoi-la-data-science-fonctionne-t-elle-quand-même" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-la-data-science-fonctionne-t-elle-quand-même">4. Pourquoi la Data Science fonctionne-t-elle quand même ?</h3>
+<p><strong>Hypothèses dans les analyses ci-dessus</strong> :</p>
+<ul>
+<li>Distribution <strong>uniforme</strong> (ou isotrope) des données</li>
+<li>Features <strong>indépendantes</strong></li>
+</ul>
+<p>❌ <strong>Ces hypothèses sont FAUSSES en pratique !</strong></p>
+<p><strong>Réalité</strong> :</p>
+<ul>
+<li>Les données réelles <strong>ne peuplent PAS</strong> l’espace uniformément</li>
+<li>Les features montrent des <strong>corrélations</strong></li>
+<li>Les données occupent des <strong>sous-espaces</strong> de dimensionnalité intrinsèque plus faible</li>
+</ul>
+<p>✅ <strong>Solutions pratiques</strong> :</p>
+<ul>
+<li>Décorréler les features (espace latent linéaire)</li>
+<li>Découvrir des sous-espaces (clustering, réduction de dimension non-linéaire)</li>
+<li>PCA, autoencodeurs, réseaux de neurones</li>
+<li>Exploiter la structure géométrique sous-jacente</li>
+</ul>
+<p>💡 <strong>Intuition clé</strong> : Si les features sont informatives, elles ne sont pas indépendantes et les données se concentrent sur des variétés de dimension bien plus faible que <span class="math inline">\(D\)</span>.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Pourquoi ça marche ?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Analyses supposent distribution <strong>uniforme</strong> et features <strong>indépendantes</strong>.</p>
+<p><strong>Réalité</strong> : données sur <strong>sous-espaces</strong> de dimensionnalité intrinsèque faible.</p>
+<p><strong>Solutions</strong> : décorrélation, clustering, réduction de dimension.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="résumé-global" class="level2">
+<h2 class="anchored" data-anchor-id="résumé-global">Résumé global</h2>
+<p>La <strong>géométrie en haute dimension</strong> (<span class="math inline">\(D \gtrsim 10\)</span>) est <strong>différente</strong> de la géométrie 3D habituelle.</p>
+<section id="aspects-positifs-bénédiction" class="level3">
+<h3 class="anchored" data-anchor-id="aspects-positifs-bénédiction">Aspects positifs (Bénédiction)</h3>
+<ul>
+<li><strong>Inégalités de concentration</strong> : base de l’estimation statistique</li>
+<li><strong>Lois des Grands Nombres</strong> : permettent l’estimation de densité</li>
+<li><strong>Projections aléatoires</strong> : exploitent la quasi-orthogonalité</li>
+</ul>
+</section>
+<section id="aspects-négatifs-malédiction" class="level3">
+<h3 class="anchored" data-anchor-id="aspects-négatifs-malédiction">Aspects négatifs (Malédiction)</h3>
+<ul>
+<li>Données très <strong>parcimonieuses</strong> (besoin exponentiel d’échantillons)</li>
+<li><strong>Concentration des distances et angles</strong> :
+<ul>
+<li>Tous les voisins équidistants</li>
+<li>Tout semble orthogonal</li>
+</ul></li>
+<li>Densité concentrée sur <strong>rayons étroits</strong> → échantillonnage biaisé</li>
+<li><strong>Hubs</strong> : partie de toutes les classes/réponses</li>
+</ul>
+</section>
+<section id="solution-unique" class="level3">
+<h3 class="anchored" data-anchor-id="solution-unique">Solution unique</h3>
+<p>Puisque c’est par construction, la seule solution est d’opérer dans des <strong>espaces de basse dimension</strong> :</p>
+<ul>
+<li>Réduction de dimensionnalité</li>
+<li>Découverte de sous-espaces</li>
+<li>Décorrélation des features</li>
+</ul>
+<p>💡 <strong>Message clé</strong> : La Data Science fonctionne parce que les données réelles <strong>ne sont pas uniformes</strong> et vivent sur des <strong>sous-variétés de faible dimension</strong>.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>📌 Révision Rapide : Résumé
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Haute dimension</strong> (<span class="math inline">\(D \gtrsim 10\)</span>) ≠ géométrie 3D.</p>
+<p><strong>✅</strong> : inégalités de concentration, WLLN, projections aléatoires.</p>
+<p><strong>❌</strong> : data sparsity, concentration distances/angles, hubs.</p>
+<p><strong>Solution</strong> : opérer en <strong>basse dimension</strong> (PCA, autoencodeurs, exploitation de structure).</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -289,7 +289,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link active" href="./ds2.html" aria-current="page"> 
-<span class="menu-text">Cours</span></a>
+<span class="menu-text">Course</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -322,7 +322,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds2.html">Cours détailé</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">High-dimensional representation spaces</a></li><li class="breadcrumb-item"><a href="./ds2.html">Detailed Course</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -345,7 +345,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+ <span class="menu-text">High-dimensional representation spaces</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -354,25 +354,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Cours détailé</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds2q.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Questions d’Examen</span></a>
+ <span class="menu-text">Detailed Course</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds2s.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">L’Essentiel</span></a>
+ <span class="menu-text">The Essentials</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds2s1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">L’Essentiel version Deepseek</span></a>
+ <span class="menu-text"><strong>High-Dimensional Spaces: The Essentials</strong></span></a>
   </div>
 </li>
       </ul>
@@ -387,46 +381,46 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#cours-détailé" id="toc-cours-détailé" class="nav-link active" data-scroll-target="#cours-détailé">Cours détailé</a>
+  <li><a href="#detailed-course" id="toc-detailed-course" class="nav-link active" data-scroll-target="#detailed-course">Detailed Course</a>
   <ul class="collapse">
-  <li><a href="#motivation-et-contexte" id="toc-motivation-et-contexte" class="nav-link" data-scroll-target="#motivation-et-contexte">Motivation et Contexte</a>
+  <li><a href="#motivation-and-context" id="toc-motivation-and-context" class="nav-link" data-scroll-target="#motivation-and-context">Motivation and Context</a>
   <ul class="collapse">
-  <li><a href="#quest-ce-que-la-data-science" id="toc-quest-ce-que-la-data-science" class="nav-link" data-scroll-target="#quest-ce-que-la-data-science">Qu’est-ce que la Data Science ?</a></li>
-  <li><a href="#pipeline-typique-de-données" id="toc-pipeline-typique-de-données" class="nav-link" data-scroll-target="#pipeline-typique-de-données">Pipeline typique de données</a></li>
+  <li><a href="#what-is-data-science" id="toc-what-is-data-science" class="nav-link" data-scroll-target="#what-is-data-science">What is Data Science?</a></li>
+  <li><a href="#typical-data-pipeline" id="toc-typical-data-pipeline" class="nav-link" data-scroll-target="#typical-data-pipeline">Typical Data Pipeline</a></li>
   </ul></li>
-  <li><a href="#espaces-de-représentation-representation-spaces" id="toc-espaces-de-représentation-representation-spaces" class="nav-link" data-scroll-target="#espaces-de-représentation-representation-spaces">Espaces de Représentation (<em>Representation Spaces</em>)</a>
+  <li><a href="#representation-spaces" id="toc-representation-spaces" class="nav-link" data-scroll-target="#representation-spaces">Representation Spaces</a>
   <ul class="collapse">
-  <li><a href="#définition-formale" id="toc-définition-formale" class="nav-link" data-scroll-target="#définition-formale">Définition formale</a></li>
-  <li><a href="#propriétés-de-lespace" id="toc-propriétés-de-lespace" class="nav-link" data-scroll-target="#propriétés-de-lespace">Propriétés de l’espace</a></li>
-  <li><a href="#questions-fondamentales" id="toc-questions-fondamentales" class="nav-link" data-scroll-target="#questions-fondamentales">Questions fondamentales</a></li>
+  <li><a href="#formal-definition" id="toc-formal-definition" class="nav-link" data-scroll-target="#formal-definition">Formal Definition</a></li>
+  <li><a href="#space-properties" id="toc-space-properties" class="nav-link" data-scroll-target="#space-properties">Space Properties</a></li>
+  <li><a href="#fundamental-questions" id="toc-fundamental-questions" class="nav-link" data-scroll-target="#fundamental-questions">Fundamental Questions</a></li>
   </ul></li>
-  <li><a href="#malédiction-de-la-dimensionnalité-curse-of-dimensionality" id="toc-malédiction-de-la-dimensionnalité-curse-of-dimensionality" class="nav-link" data-scroll-target="#malédiction-de-la-dimensionnalité-curse-of-dimensionality">Malédiction de la Dimensionnalité (<em>Curse of Dimensionality</em>)</a>
+  <li><a href="#curse-of-dimensionality" id="toc-curse-of-dimensionality" class="nav-link" data-scroll-target="#curse-of-dimensionality">Curse of Dimensionality</a>
   <ul class="collapse">
-  <li><a href="#parcimonie-des-données-data-sparsity" id="toc-parcimonie-des-données-data-sparsity" class="nav-link" data-scroll-target="#parcimonie-des-données-data-sparsity">1. Parcimonie des Données (<em>Data Sparsity</em>)</a></li>
-  <li><a href="#sphère-vide-et-cube-épineux-empty-sphere-spiky-cube" id="toc-sphère-vide-et-cube-épineux-empty-sphere-spiky-cube" class="nav-link" data-scroll-target="#sphère-vide-et-cube-épineux-empty-sphere-spiky-cube">2. Sphère Vide et Cube Épineux (<em>Empty Sphere &amp; Spiky Cube</em>)</a></li>
-  <li><a href="#distribution-du-volume" id="toc-distribution-du-volume" class="nav-link" data-scroll-target="#distribution-du-volume">3. Distribution du Volume</a></li>
-  <li><a href="#lœuf-gaussien-gaussian-egg" id="toc-lœuf-gaussien-gaussian-egg" class="nav-link" data-scroll-target="#lœuf-gaussien-gaussian-egg">4. L’œuf gaussien (<em>Gaussian Egg</em>)</a></li>
-  <li><a href="#concentration-des-distances" id="toc-concentration-des-distances" class="nav-link" data-scroll-target="#concentration-des-distances">5. Concentration des Distances</a></li>
-  <li><a href="#quasi-orthogonalité" id="toc-quasi-orthogonalité" class="nav-link" data-scroll-target="#quasi-orthogonalité">6. Quasi-Orthogonalité</a></li>
-  <li><a href="#hubness-présence-de-hubs" id="toc-hubness-présence-de-hubs" class="nav-link" data-scroll-target="#hubness-présence-de-hubs">7. Hubness (Présence de <em>Hubs</em>)</a></li>
-  <li><a href="#inégalités-de-concentration" id="toc-inégalités-de-concentration" class="nav-link" data-scroll-target="#inégalités-de-concentration">8. Inégalités de Concentration</a></li>
+  <li><a href="#data-sparsity" id="toc-data-sparsity" class="nav-link" data-scroll-target="#data-sparsity">1. Data Sparsity</a></li>
+  <li><a href="#empty-sphere-and-spiky-cube" id="toc-empty-sphere-and-spiky-cube" class="nav-link" data-scroll-target="#empty-sphere-and-spiky-cube">2. Empty Sphere and Spiky Cube</a></li>
+  <li><a href="#volume-distribution" id="toc-volume-distribution" class="nav-link" data-scroll-target="#volume-distribution">3. Volume Distribution</a></li>
+  <li><a href="#the-gaussian-egg" id="toc-the-gaussian-egg" class="nav-link" data-scroll-target="#the-gaussian-egg">4. The Gaussian Egg</a></li>
+  <li><a href="#distance-concentration" id="toc-distance-concentration" class="nav-link" data-scroll-target="#distance-concentration">5. Distance Concentration</a></li>
+  <li><a href="#quasi-orthogonality" id="toc-quasi-orthogonality" class="nav-link" data-scroll-target="#quasi-orthogonality">6. Quasi-Orthogonality</a></li>
+  <li><a href="#hubness" id="toc-hubness" class="nav-link" data-scroll-target="#hubness">7. Hubness</a></li>
+  <li><a href="#concentration-inequalities" id="toc-concentration-inequalities" class="nav-link" data-scroll-target="#concentration-inequalities">8. Concentration Inequalities</a></li>
   </ul></li>
-  <li><a href="#bénédiction-de-la-dimensionnalité-blessing-of-dimensionality" id="toc-bénédiction-de-la-dimensionnalité-blessing-of-dimensionality" class="nav-link" data-scroll-target="#bénédiction-de-la-dimensionnalité-blessing-of-dimensionality">Bénédiction de la Dimensionnalité (<em>Blessing of Dimensionality</em>)</a>
+  <li><a href="#blessing-of-dimensionality" id="toc-blessing-of-dimensionality" class="nav-link" data-scroll-target="#blessing-of-dimensionality">Blessing of Dimensionality</a>
   <ul class="collapse">
-  <li><a href="#lois-des-grands-nombres" id="toc-lois-des-grands-nombres" class="nav-link" data-scroll-target="#lois-des-grands-nombres">1. Lois des Grands Nombres</a></li>
-  <li><a href="#projections-aléatoires-random-projections" id="toc-projections-aléatoires-random-projections" class="nav-link" data-scroll-target="#projections-aléatoires-random-projections">2. Projections Aléatoires (<em>Random Projections</em>)</a></li>
+  <li><a href="#laws-of-large-numbers" id="toc-laws-of-large-numbers" class="nav-link" data-scroll-target="#laws-of-large-numbers">1. Laws of Large Numbers</a></li>
+  <li><a href="#random-projections" id="toc-random-projections" class="nav-link" data-scroll-target="#random-projections">2. Random Projections</a></li>
   </ul></li>
-  <li><a href="#importance-en-data-science" id="toc-importance-en-data-science" class="nav-link" data-scroll-target="#importance-en-data-science">Importance en Data Science</a>
+  <li><a href="#importance-in-data-science" id="toc-importance-in-data-science" class="nav-link" data-scroll-target="#importance-in-data-science">Importance in Data Science</a>
   <ul class="collapse">
-  <li><a href="#échantillonnage-sampling" id="toc-échantillonnage-sampling" class="nav-link" data-scroll-target="#échantillonnage-sampling">1. Échantillonnage (<em>Sampling</em>)</a></li>
-  <li><a href="#indexation-indexing" id="toc-indexation-indexing" class="nav-link" data-scroll-target="#indexation-indexing">2. Indexation (<em>Indexing</em>)</a></li>
-  <li><a href="#apprentissage-learning" id="toc-apprentissage-learning" class="nav-link" data-scroll-target="#apprentissage-learning">3. Apprentissage (<em>Learning</em>)</a></li>
-  <li><a href="#pourquoi-la-data-science-fonctionne-t-elle-quand-même" id="toc-pourquoi-la-data-science-fonctionne-t-elle-quand-même" class="nav-link" data-scroll-target="#pourquoi-la-data-science-fonctionne-t-elle-quand-même">4. Pourquoi la Data Science fonctionne-t-elle quand même ?</a></li>
+  <li><a href="#sampling" id="toc-sampling" class="nav-link" data-scroll-target="#sampling">1. Sampling</a></li>
+  <li><a href="#indexing" id="toc-indexing" class="nav-link" data-scroll-target="#indexing">2. Indexing</a></li>
+  <li><a href="#learning" id="toc-learning" class="nav-link" data-scroll-target="#learning">3. Learning</a></li>
+  <li><a href="#why-does-data-science-still-work" id="toc-why-does-data-science-still-work" class="nav-link" data-scroll-target="#why-does-data-science-still-work">4. Why Does Data Science Still Work?</a></li>
   </ul></li>
-  <li><a href="#résumé-global" id="toc-résumé-global" class="nav-link" data-scroll-target="#résumé-global">Résumé Global</a>
+  <li><a href="#global-summary" id="toc-global-summary" class="nav-link" data-scroll-target="#global-summary">Global Summary</a>
   <ul class="collapse">
-  <li><a href="#aspects-positifs" id="toc-aspects-positifs" class="nav-link" data-scroll-target="#aspects-positifs">+ Aspects positifs</a></li>
-  <li><a href="#aspects-négatifs-curse" id="toc-aspects-négatifs-curse" class="nav-link" data-scroll-target="#aspects-négatifs-curse">- Aspects négatifs (Curse)</a></li>
+  <li><a href="#positive-aspects" id="toc-positive-aspects" class="nav-link" data-scroll-target="#positive-aspects">+ Positive Aspects</a></li>
+  <li><a href="#negative-aspects-curse" id="toc-negative-aspects-curse" class="nav-link" data-scroll-target="#negative-aspects-curse">- Negative Aspects (Curse)</a></li>
   <li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution">⇒ Solution</a></li>
   </ul></li>
   </ul></li>
@@ -434,229 +428,229 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds2.html">Cours détailé</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">High-dimensional representation spaces</a></li><li class="breadcrumb-item"><a href="./ds2.html">Detailed Course</a></li></ol></nav></header>
 
 
 
 
 
-<section id="cours-détailé" class="level1">
-<h1>Cours détailé</h1>
+<section id="detailed-course" class="level1">
+<h1>Detailed Course</h1>
 <hr>
-<section id="motivation-et-contexte" class="level2">
-<h2 class="anchored" data-anchor-id="motivation-et-contexte">Motivation et Contexte</h2>
-<section id="quest-ce-que-la-data-science" class="level3">
-<h3 class="anchored" data-anchor-id="quest-ce-que-la-data-science">Qu’est-ce que la Data Science ?</h3>
-<p>La <strong>Data Science</strong> étudie :</p>
+<section id="motivation-and-context" class="level2">
+<h2 class="anchored" data-anchor-id="motivation-and-context">Motivation and Context</h2>
+<section id="what-is-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-data-science">What is Data Science?</h3>
+<p><strong>Data Science</strong> studies:</p>
 <ul>
-<li>La modélisation de phénomènes en données numériques (quantitatives)</li>
-<li>Les propriétés géométriques et statistiques de ces données</li>
-<li>Les propriétés des espaces dans lesquels vivent ces données</li>
-<li>L’analyse des données et le développement d’outils pour cette analyse</li>
-<li>Les hypothèses sous-jacentes dans la conception de ces outils</li>
+<li>Modeling real-world phenomena as numerical (quantitative) data</li>
+<li>Geometric and statistical properties of this data</li>
+<li>Properties of the spaces in which this data resides</li>
+<li>Data analysis and the development of tools for this analysis</li>
+<li>Underlying assumptions in the design of these tools</li>
 </ul>
-<p><strong>Relation avec le Machine Learning</strong> : La Data Science étudie les espaces de représentation dans lesquels le Machine Learning opère.</p>
+<p><strong>Relation to Machine Learning</strong>: Data Science studies the representation spaces in which Machine Learning operates.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Motivation
+<span class="screen-reader-only">None</span>📌 Quick Review: Motivation
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Data Science = ML</strong> : Étude des espaces de représentation où agit le ML.</p>
-<p><strong>Pipeline</strong> : Processus → Capteur → Données brutes → Représentation (matrice dans <span class="math inline">\(\mathbb{R}^D\)</span>).</p>
-<p>Focus sur propriétés géométriques ET statistiques.</p>
+<p><strong>Data Science = ML</strong>: Study of representation spaces where ML operates.</p>
+<p><strong>Pipeline</strong>: Process → Sensor → Raw Data → Representation (matrix in <span class="math inline">\(\mathbb{R}^D\)</span>).</p>
+<p>Focus on <strong>geometric AND statistical</strong> properties.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="pipeline-typique-de-données" class="level3">
-<h3 class="anchored" data-anchor-id="pipeline-typique-de-données">Pipeline typique de données</h3>
-<p><strong>Flux général</strong> : Processus → Capteur → Données brutes → Représentation</p>
-<p><strong>Exemples concrets</strong> :</p>
+<section id="typical-data-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="typical-data-pipeline">Typical Data Pipeline</h3>
+<p><strong>General Flow</strong>: Process → Sensor → Raw Data → Representation</p>
+<p><strong>Concrete Examples</strong>:</p>
 <ul>
-<li>Caméra → pixels d’image → matrice</li>
-<li>Population → résultats de sondage → matrice</li>
-<li>Documents texte → occurrences de mots → matrice</li>
-<li>Réseau social → relations → matrice</li>
-<li>Environnement → mesures → matrice</li>
+<li>Camera → image pixels → matrix</li>
+<li>Population → survey results → matrix</li>
+<li>Text documents → word occurrences → matrix</li>
+<li>Social network → relationships → matrix</li>
+<li>Environment → measurements → matrix</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="espaces-de-représentation-representation-spaces" class="level2">
-<h2 class="anchored" data-anchor-id="espaces-de-représentation-representation-spaces">Espaces de Représentation (<em>Representation Spaces</em>)</h2>
-<section id="définition-formale" class="level3">
-<h3 class="anchored" data-anchor-id="définition-formale">Définition formale</h3>
-<p>On obtient des données <span class="math inline">\(X = \{x_1, \cdots, x_N\}\)</span> où <span class="math inline">\(x_i \in \Omega \subseteq \mathbb{R}^D\)</span> pour tout <span class="math inline">\(i \in [\![N]\!]\)</span>.</p>
-<p><strong>Vision statistique</strong> :</p>
+<section id="representation-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="representation-spaces">Representation Spaces</h2>
+<section id="formal-definition" class="level3">
+<h3 class="anchored" data-anchor-id="formal-definition">Formal Definition</h3>
+<p>We obtain data <span class="math inline">\(X = \{x_1, \cdots, x_N\}\)</span> where <span class="math inline">\(x_i \in \Omega \subseteq \mathbb{R}^D\)</span> for all <span class="math inline">\(i \in [\![N]\!]\)</span>.</p>
+<p><strong>Statistical Perspective</strong>:</p>
 <ul>
-<li><span class="math inline">\(X\)</span> est un échantillon de taille <span class="math inline">\(N\)</span> de la fonction de densité sous-jacente <span class="math inline">\(f_X : \Omega \rightarrow \mathbb{R}^+\)</span> à <span class="math inline">\(D\)</span> variables</li>
-<li>On déclare <span class="math inline">\(N\)</span> variables aléatoires i.i.d. <span class="math inline">\(\{X_i\}_{i \in [\![N]\!]}\)</span> où <span class="math inline">\(X_i \sim f_X\)</span></li>
-<li>Chaque donnée <span class="math inline">\(x_i\)</span> est une réalisation (échantillon) de <span class="math inline">\(X_i\)</span></li>
+<li><span class="math inline">\(X\)</span> is a sample of size <span class="math inline">\(N\)</span> from the underlying probability density function <span class="math inline">\(f_X : \Omega \rightarrow \mathbb{R}^+\)</span> with <span class="math inline">\(D\)</span> variables</li>
+<li>We declare <span class="math inline">\(N\)</span> i.i.d. random variables <span class="math inline">\(\{X_i\}_{i \in [\![N]\!]}\)</span> where <span class="math inline">\(X_i \sim f_X\)</span></li>
+<li>Each data point <span class="math inline">\(x_i\)</span> is a realization (sample) of <span class="math inline">\(X_i\)</span></li>
 </ul>
-<p><strong>Vision algébrique</strong> :</p>
+<p><strong>Algebraic Perspective</strong>:</p>
 <ul>
-<li>On forme la matrice <span class="math inline">\(X = \begin{bmatrix} | &amp; &amp; | \\ x_1 &amp; \cdots &amp; x_N \\ | &amp; &amp; | \end{bmatrix} \in \mathbb{R}^{D \times N}\)</span></li>
-<li>Les colonnes <span class="math inline">\(X_{\cdot j} = x_j\)</span> sont les vecteurs de données</li>
+<li>We form the matrix <span class="math inline">\(X = \begin{bmatrix} | &amp; &amp; | \\ x_1 &amp; \cdots &amp; x_N \\ | &amp; &amp; | \end{bmatrix} \in \mathbb{R}^{D \times N}\)</span></li>
+<li>The columns <span class="math inline">\(X_{\cdot j} = x_j\)</span> are the data vectors</li>
 </ul>
 </section>
-<section id="propriétés-de-lespace" class="level3">
-<h3 class="anchored" data-anchor-id="propriétés-de-lespace">Propriétés de l’espace</h3>
-<p>L’espace de représentation <span class="math inline">\(\Omega\)</span> est généralement un sous-ensemble de <span class="math inline">\(\mathbb{R}^D\)</span> :</p>
+<section id="space-properties" class="level3">
+<h3 class="anchored" data-anchor-id="space-properties">Space Properties</h3>
+<p>The representation space <span class="math inline">\(\Omega\)</span> is generally a subset of <span class="math inline">\(\mathbb{R}^D\)</span>:</p>
 <ul>
-<li>C’est un <strong>espace vectoriel</strong> qui peut être muni d’un produit scalaire <span class="math inline">\(\langle \cdot, \cdot \rangle\)</span></li>
-<li>Le produit scalaire induit une <strong>norme</strong> <span class="math inline">\(\|\cdot\|\)</span></li>
-<li>La norme induit une <strong>fonction de distance</strong> <span class="math inline">\(d(\cdot, \cdot)\)</span></li>
-<li>Cas favorable : <span class="math inline">\((\Omega, d)\)</span> est un <strong>espace métrique</strong> où l’apprentissage peut être effectué</li>
+<li>It is a <strong>vector space</strong> that can be equipped with an inner product <span class="math inline">\(\langle \cdot, \cdot \rangle\)</span></li>
+<li>The inner product induces a <strong>norm</strong> <span class="math inline">\(\|\cdot\|\)</span></li>
+<li>The norm induces a <strong>distance function</strong> <span class="math inline">\(d(\cdot, \cdot)\)</span></li>
+<li>Favorable case: <span class="math inline">\((\Omega, d)\)</span> is a <strong>metric space</strong> where learning can be performed</li>
 </ul>
-<p><strong>Note</strong> : <span class="math inline">\(\Omega\)</span> est aussi la base d’un espace mesurable sur lequel les variables aléatoires peuvent être définies.</p>
+<p><strong>Note</strong>: <span class="math inline">\(\Omega\)</span> is also the basis of a measurable space on which random variables can be defined.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Espaces de Représentation
+<span class="screen-reader-only">None</span>📌 Quick Review: Representation Spaces
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(X = \{x_1, \ldots, x_N\}\)</span> avec <span class="math inline">\(x_i \in \Omega \subseteq \mathbb{R}^D\)</span>.</p>
-<p><strong>Deux visions</strong> :</p>
+<p><span class="math inline">\(X = \{x_1, \ldots, x_N\}\)</span> with <span class="math inline">\(x_i \in \Omega \subseteq \mathbb{R}^D\)</span>.</p>
+<p><strong>Two perspectives</strong>:</p>
 <ul>
-<li>Statistique : échantillon de <span class="math inline">\(f_X\)</span>, variables i.i.d.</li>
-<li>Algébrique : matrice <span class="math inline">\(X \in \mathbb{R}^{D \times N}\)</span>.</li>
+<li><strong>Statistical</strong>: Sample from <span class="math inline">\(f_X\)</span>, i.i.d. variables</li>
+<li><strong>Algebraic</strong>: Matrix <span class="math inline">\(X \in \mathbb{R}^{D \times N}\)</span></li>
 </ul>
-<p><strong>Structure</strong> : espace vectoriel → produit scalaire → norme → distance → espace métrique.</p>
+<p><strong>Structure</strong>: Vector space → inner product → norm → distance → metric space.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="questions-fondamentales" class="level3">
-<h3 class="anchored" data-anchor-id="questions-fondamentales">Questions fondamentales</h3>
-<p><strong>Que se passe-t-il quand</strong> :</p>
+<section id="fundamental-questions" class="level3">
+<h3 class="anchored" data-anchor-id="fundamental-questions">Fundamental Questions</h3>
+<p><strong>What happens when</strong>:</p>
 <ul>
-<li><span class="math inline">\(D\)</span> augmente ? (dimensionnalité)</li>
-<li><span class="math inline">\(N\)</span> augmente ? (nombre d’échantillons)</li>
+<li><span class="math inline">\(D\)</span> increases? (dimensionality)</li>
+<li><span class="math inline">\(N\)</span> increases? (number of samples)</li>
 </ul>
-<p><strong>Impact sur</strong> :</p>
+<p><strong>Impact on</strong>:</p>
 <ul>
-<li>La modélisation des données</li>
-<li>L’apprentissage automatique</li>
+<li>Data modeling</li>
+<li>Machine learning</li>
 </ul>
-<p>⇒ <strong>Curse of Dimensionality</strong> et <strong>Blessing of Dimensionality</strong></p>
+<p>⇒ <strong>Curse of Dimensionality</strong> and <strong>Blessing of Dimensionality</strong></p>
 <hr>
 </section>
 </section>
-<section id="malédiction-de-la-dimensionnalité-curse-of-dimensionality" class="level2">
-<h2 class="anchored" data-anchor-id="malédiction-de-la-dimensionnalité-curse-of-dimensionality">Malédiction de la Dimensionnalité (<em>Curse of Dimensionality</em>)</h2>
-<section id="parcimonie-des-données-data-sparsity" class="level3">
-<h3 class="anchored" data-anchor-id="parcimonie-des-données-data-sparsity">1. Parcimonie des Données (<em>Data Sparsity</em>)</h3>
-<section id="problème-de-lestimation-de-densité" class="level4">
-<h4 class="anchored" data-anchor-id="problème-de-lestimation-de-densité">Problème de l’estimation de densité</h4>
-<p><strong>Contexte</strong> :</p>
+<section id="curse-of-dimensionality" class="level2">
+<h2 class="anchored" data-anchor-id="curse-of-dimensionality">Curse of Dimensionality</h2>
+<section id="data-sparsity" class="level3">
+<h3 class="anchored" data-anchor-id="data-sparsity">1. Data Sparsity</h3>
+<section id="density-estimation-problem" class="level4">
+<h4 class="anchored" data-anchor-id="density-estimation-problem">Density Estimation Problem</h4>
+<p><strong>Context</strong>:</p>
 <ul>
-<li>Population sur hypercube <span class="math inline">\(\Omega = [a, b]^D\)</span></li>
-<li>Échantillon <span class="math inline">\(X\)</span> de cette population</li>
-<li>Objectif : estimer la pdf empiriquement via histogramme</li>
+<li>Population on hypercube <span class="math inline">\(\Omega = [a, b]^D\)</span></li>
+<li>Sample <span class="math inline">\(X\)</span> from this population</li>
+<li>Objective: Estimate the empirical pdf via histogram</li>
 </ul>
-<p><strong>Méthode</strong> :</p>
+<p><strong>Method</strong>:</p>
 <ul>
-<li>Quantification uniforme : <span class="math inline">\(b\)</span> bins par dimension</li>
-<li>Qualité souhaitée : <span class="math inline">\(n\)</span> échantillons par bin en moyenne</li>
+<li>Uniform quantization: <span class="math inline">\(b\)</span> bins per dimension</li>
+<li>Desired quality: <span class="math inline">\(n\)</span> samples per bin on average</li>
 </ul>
-<p><strong>Question</strong> : Combien d’échantillons <span class="math inline">\(N\)</span> sont nécessaires ?</p>
-<p><strong>Réponse</strong> :</p>
+<p><strong>Question</strong>: How many samples <span class="math inline">\(N\)</span> are needed?</p>
+<p><strong>Answer</strong>:</p>
 <ul>
 <li><span class="math inline">\(D = 1\)</span> → <span class="math inline">\(N \approx n \cdot b\)</span></li>
 <li><span class="math inline">\(D = 2\)</span> → <span class="math inline">\(N \approx n \cdot b^2\)</span></li>
-<li><span class="math inline">\(D\)</span> quelconque → <span class="math inline">\(N \approx n \cdot b^D\)</span></li>
+<li>General <span class="math inline">\(D\)</span> → <span class="math inline">\(N \approx n \cdot b^D\)</span></li>
 </ul>
-<p><strong>Exemple catastrophique</strong> : <span class="math inline">\(b = 10\)</span>, <span class="math inline">\(n = 10\)</span>, <span class="math inline">\(D = 6\)</span> → <span class="math inline">\(N \approx 10^7\)</span> échantillons !</p>
+<p><strong>Catastrophic Example</strong>: <span class="math inline">\(b = 10\)</span>, <span class="math inline">\(n = 10\)</span>, <span class="math inline">\(D = 6\)</span> → <span class="math inline">\(N \approx 10^7\)</span> samples!</p>
 </section>
-<section id="qualité-destimation-avec-n-fixé" class="level4">
-<h4 class="anchored" data-anchor-id="qualité-destimation-avec-n-fixé">Qualité d’estimation avec <span class="math inline">\(N\)</span> fixé</h4>
-<p>Si on fixe le nombre d’échantillons à <span class="math inline">\(N\)</span> :</p>
-<p><strong>Question</strong> : Quelle qualité d’estimation peut-on espérer ?</p>
+<section id="estimation-quality-with-fixed-n" class="level4">
+<h4 class="anchored" data-anchor-id="estimation-quality-with-fixed-n">Estimation Quality with Fixed <span class="math inline">\(N\)</span></h4>
+<p>If we fix the number of samples at <span class="math inline">\(N\)</span>:</p>
+<p><strong>Question</strong>: What estimation quality can we expect?</p>
 <ul>
 <li><span class="math inline">\(D = 1\)</span> → <span class="math inline">\(n = \frac{N}{b}\)</span> → <span class="math inline">\(\mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b}\)</span></li>
-<li><span class="math inline">\(D\)</span> quelconque → <span class="math inline">\(n = \frac{N}{b^D}\)</span> → <span class="math inline">\(\mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b^D}\)</span></li>
+<li>General <span class="math inline">\(D\)</span> → <span class="math inline">\(n = \frac{N}{b^D}\)</span> → <span class="math inline">\(\mathbb{E}[P(x_i \in \text{bin}_j)] \approx \frac{1}{b^D}\)</span></li>
 </ul>
-<p><strong>Conséquence</strong> : <strong>La plupart des bins sont probablement vides</strong></p>
+<p><strong>Consequence</strong>: <strong>Most bins are likely empty</strong></p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Data Sparsity
+<span class="screen-reader-only">None</span>📌 Quick Review: Data Sparsity
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Pour estimer une densité avec qualité, besoin de <span class="math inline">\(N \approx n \cdot b^D\)</span> échantillons (croissance <strong>exponentielle</strong>).</p>
-<p>Si <span class="math inline">\(N\)</span> fixé : <span class="math inline">\(n = N/b^D\)</span> → la plupart des bins <strong>vides</strong>.</p>
-<p>Exemple : <span class="math inline">\(D=6\)</span>, <span class="math inline">\(b=10\)</span>, <span class="math inline">\(n=10\)</span> → <span class="math inline">\(N \approx 10^7\)</span>.</p>
+<p>To estimate density with quality, need <span class="math inline">\(N \approx n \cdot b^D\)</span> samples (<strong>exponential</strong> growth).</p>
+<p>If <span class="math inline">\(N\)</span> is fixed: <span class="math inline">\(n = N/b^D\)</span> → most bins <strong>empty</strong>.</p>
+<p>Example: <span class="math inline">\(D=6\)</span>, <span class="math inline">\(b=10\)</span>, <span class="math inline">\(n=10\)</span> → <span class="math inline">\(N \approx 10^7\)</span>.</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="sphère-vide-et-cube-épineux-empty-sphere-spiky-cube" class="level3">
-<h3 class="anchored" data-anchor-id="sphère-vide-et-cube-épineux-empty-sphere-spiky-cube">2. Sphère Vide et Cube Épineux (<em>Empty Sphere &amp; Spiky Cube</em>)</h3>
-<section id="volume-de-lhypersphère" class="level4">
-<h4 class="anchored" data-anchor-id="volume-de-lhypersphère">Volume de l’hypersphère</h4>
-<p><strong>Formule</strong> pour une hypersphère <span class="math inline">\(B_D(r)\)</span> de rayon <span class="math inline">\(r\)</span> centrée à l’origine :</p>
+<section id="empty-sphere-and-spiky-cube" class="level3">
+<h3 class="anchored" data-anchor-id="empty-sphere-and-spiky-cube">2. Empty Sphere and Spiky Cube</h3>
+<section id="volume-of-the-hypersphere" class="level4">
+<h4 class="anchored" data-anchor-id="volume-of-the-hypersphere">Volume of the Hypersphere</h4>
+<p><strong>Formula</strong> for a hypersphere <span class="math inline">\(B_D(r)\)</span> of radius <span class="math inline">\(r\)</span> centered at the origin:</p>
 <p><span class="math display">\[\text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D \Gamma(D/2)}\]</span></p>
-<p><strong>Relation de récurrence</strong> (pour <span class="math inline">\(D &gt; 1\)</span>) :</p>
+<p><strong>Recurrence Relation</strong> (for <span class="math inline">\(D &gt; 1\)</span>):</p>
 <p><span class="math display">\[\text{vol}(B_D(r)) = \frac{2\pi r^2}{D} \text{vol}(B_{D-2}(r))\]</span></p>
-<p><strong>Propriété importante</strong> :</p>
+<p><strong>Important Property</strong>:</p>
 <p><span class="math display">\[\frac{\text{area}(B_D(r))}{\text{vol}(B_D(r))} = \frac{\pi^{1/2} D \Gamma(D/2)}{\Gamma\left(\frac{D+1}{2}\right)}\]</span></p>
-<p><strong>Question</strong> : Comment évolue le volume de la sphère quand <span class="math inline">\(D\)</span> augmente ?</p>
+<p><strong>Question</strong>: How does the volume of the sphere evolve as <span class="math inline">\(D\)</span> increases?</p>
 </section>
-<section id="phénomène-de-la-sphère-vide" class="level4">
-<h4 class="anchored" data-anchor-id="phénomène-de-la-sphère-vide">Phénomène de la sphère vide</h4>
-<p><strong>Configuration</strong> : Hypersphère <span class="math inline">\(B_D(r)\)</span> inscrite dans hypercube <span class="math inline">\(C_D(r) = [-r, r]^D\)</span>.</p>
-<p><strong>Tirer <span class="math inline">\(N\)</span> échantillons uniformes</strong> du cube (i.e.&nbsp;de <span class="math inline">\(\mathcal{U}(C_D(r))\)</span>).</p>
-<p><strong>Question</strong> : Quelle proportion d’échantillons tombe dans <span class="math inline">\(B_D(r)\)</span> ?</p>
-<p><strong>Calcul</strong> :</p>
+<section id="empty-sphere-phenomenon" class="level4">
+<h4 class="anchored" data-anchor-id="empty-sphere-phenomenon">Empty Sphere Phenomenon</h4>
+<p><strong>Configuration</strong>: Hypersphere <span class="math inline">\(B_D(r)\)</span> inscribed in hypercube <span class="math inline">\(C_D(r) = [-r, r]^D\)</span>.</p>
+<p><strong>Draw <span class="math inline">\(N\)</span> uniform samples</strong> from the cube (i.e., from <span class="math inline">\(\mathcal{U}(C_D(r))\)</span>).</p>
+<p><strong>Question</strong>: What proportion of samples falls within <span class="math inline">\(B_D(r)\)</span>?</p>
+<p><strong>Calculation</strong>:</p>
 <ul>
 <li><span class="math inline">\(\text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D \Gamma(D/2)}\)</span></li>
 <li><span class="math inline">\(\text{vol}(C_D(r)) = (2r)^D\)</span></li>
 </ul>
-<p><strong>Ratio</strong> :</p>
+<p><strong>Ratio</strong>:</p>
 <p><span class="math display">\[\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D \cdot 2^{D-1} \Gamma(D/2)}\]</span></p>
-<p><strong>Limite asymptotique</strong> :</p>
+<p><strong>Asymptotic Limit</strong>:</p>
 <p><span class="math display">\[\lim_{D \to \infty} \frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = 0\]</span></p>
-<p><strong>Note</strong> : <span class="math inline">\(\Gamma(n)\)</span> se comporte comme <span class="math inline">\(n! \sim n^n\)</span></p>
-<p><strong>Conséquences</strong> :</p>
+<p><strong>Note</strong>: <span class="math inline">\(\Gamma(n)\)</span> behaves like <span class="math inline">\(n! \sim n^n\)</span></p>
+<p><strong>Consequences</strong>:</p>
 <ul>
-<li>Tous les échantillons vont dans la partie du cube <strong>hors de la sphère</strong> (les coins)</li>
-<li>Le volume du cube est <strong>concentré dans ses coins</strong></li>
-<li>Tous les échantillons <strong>s’échappent du centre</strong></li>
-<li>Le volume relatif de l’hypersphère tend vers zéro</li>
+<li>All samples go to the part of the cube <strong>outside the sphere</strong> (the corners)</li>
+<li>The volume of the cube is <strong>concentrated in its corners</strong></li>
+<li>All samples <strong>escape from the center</strong></li>
+<li>The relative volume of the hypersphere tends to zero</li>
 </ul>
-<p>⇒ <strong>La sphère est probablement vide</strong></p>
+<p>⇒ <strong>The sphere is likely empty</strong></p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph LR
-    A[Hypercube C_D en haute dimension] --&gt; B[Hypersphère inscrite B_D]
-    B --&gt; C[Ratio vol B_D / vol C_D → 0]
-    C --&gt; D[Volume concentré aux coins]
-    D --&gt; E[Échantillonnage uniforme]
-    E --&gt; F[Sphère VIDE]
+    A[High-dimensional hypercube C_D] --&gt; B[Inscribed hypersphere B_D]
+    B --&gt; C[Volume ratio B_D / C_D → 0]
+    C --&gt; D[Volume concentrated in corners]
+    D --&gt; E[Uniform sampling]
+    E --&gt; F[Empty sphere]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -664,16 +658,16 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="coins-de-lhypercube" class="level4">
-<h4 class="anchored" data-anchor-id="coins-de-lhypercube">Coins de l’hypercube</h4>
-<p><strong>Configuration</strong> : Hypercube unitaire centré <span class="math inline">\(C_D(1) = \left[-\frac{1}{2}, \frac{1}{2}\right]^D\)</span> avec <span class="math inline">\(\text{vol}(C_D(1)) = 1\)</span>.</p>
-<p><strong>Propriétés des coins</strong> :</p>
+<section id="corners-of-the-hypercube" class="level4">
+<h4 class="anchored" data-anchor-id="corners-of-the-hypercube">Corners of the Hypercube</h4>
+<p><strong>Configuration</strong>: Unit hypercube centered at <span class="math inline">\(C_D(1) = \left[-\frac{1}{2}, \frac{1}{2}\right]^D\)</span> with <span class="math inline">\(\text{vol}(C_D(1)) = 1\)</span>.</p>
+<p><strong>Corner Properties</strong>:</p>
 <ul>
-<li>Nombre de coins : <span class="math inline">\(n = 2^D\)</span></li>
-<li>Chaque coin <span class="math inline">\(x_i\)</span> a <span class="math inline">\(D\)</span> coordonnées : <span class="math inline">\(|x_i(j)| = \frac{1}{2}\)</span> pour tout <span class="math inline">\(j\)</span></li>
-<li>Distance à l’origine : <span class="math inline">\(\|x_i\|_2 = \frac{\sqrt{D}}{2}\)</span></li>
+<li>Number of corners: <span class="math inline">\(n = 2^D\)</span></li>
+<li>Each corner <span class="math inline">\(x_i\)</span> has <span class="math inline">\(D\)</span> coordinates: <span class="math inline">\(|x_i(j)| = \frac{1}{2}\)</span> for all <span class="math inline">\(j\)</span></li>
+<li>Distance to origin: <span class="math inline">\(\|x_i\|_2 = \frac{\sqrt{D}}{2}\)</span></li>
 </ul>
-<p><strong>Table des distances</strong> :</p>
+<p><strong>Distance Table</strong>:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 22%">
@@ -704,100 +698,100 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p><strong>Observation</strong> : La distance aux coins <strong>croît avec</strong> <span class="math inline">\(\sqrt{D}\)</span> → les coins s’éloignent du centre !</p>
+<p><strong>Observation</strong>: The distance to corners <strong>increases with</strong> <span class="math inline">\(\sqrt{D}\)</span> → corners move away from the center!</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Sphère Vide &amp; Cube Épineux
+<span class="screen-reader-only">None</span>📌 Quick Review: Empty Sphere &amp; Spiky Cube
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Ratio sphère/cube</strong> : <span class="math inline">\(\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D \cdot 2^{D-1} \Gamma(D/2)} \to 0\)</span>.</p>
-<p>Volume concentré aux <strong>coins</strong> du cube (distance centre-coin = <span class="math inline">\(\sqrt{D}/2\)</span>).</p>
-<p>Échantillonnage uniforme → sphère <strong>vide</strong>.</p>
+<p><strong>Sphere/cube ratio</strong>: <span class="math inline">\(\frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D \cdot 2^{D-1} \Gamma(D/2)} \to 0\)</span>.</p>
+<p>Volume concentrated at <strong>corners</strong> of the cube (center-corner distance = <span class="math inline">\(\sqrt{D}/2\)</span>).</p>
+<p>Uniform sampling → <strong>empty</strong> sphere.</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="distribution-du-volume" class="level3">
-<h3 class="anchored" data-anchor-id="distribution-du-volume">3. Distribution du Volume</h3>
-<section id="pour-lhypercube" class="level4">
-<h4 class="anchored" data-anchor-id="pour-lhypercube">Pour l’hypercube</h4>
-<p><strong>Question</strong> : Comment le volume se distribue-t-il dans une forme de mesure <span class="math inline">\(r\)</span> ?</p>
-<p><strong>Ratio de volumes</strong> entre hypercubes de côté <span class="math inline">\(r\)</span> et <span class="math inline">\((1-\varepsilon)r\)</span> pour <span class="math inline">\(\varepsilon \in ]0, 1[\)</span> :</p>
+<section id="volume-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="volume-distribution">3. Volume Distribution</h3>
+<section id="for-the-hypercube" class="level4">
+<h4 class="anchored" data-anchor-id="for-the-hypercube">For the Hypercube</h4>
+<p><strong>Question</strong>: How is volume distributed in a shape of size <span class="math inline">\(r\)</span>?</p>
+<p><strong>Volume ratio</strong> between hypercubes of side <span class="math inline">\(r\)</span> and <span class="math inline">\((1-\varepsilon)r\)</span> for <span class="math inline">\(\varepsilon \in ]0, 1[\)</span>:</p>
 <p><span class="math display">\[\frac{\text{vol}(C_D((1-\varepsilon)r))}{\text{vol}(C_D(r))} = \frac{((1-\varepsilon)r)^D}{r^D} = (1-\varepsilon)^D\]</span></p>
-<p><strong>Limite</strong> :</p>
+<p><strong>Limit</strong>:</p>
 <p><span class="math display">\[\lim_{D \to \infty} \frac{\text{vol}(C_D((1-\varepsilon)r))}{\text{vol}(C_D(r))} = 0\]</span></p>
 </section>
-<section id="pour-lhypersphère" class="level4">
-<h4 class="anchored" data-anchor-id="pour-lhypersphère">Pour l’hypersphère</h4>
-<p><strong>Ratio de volumes</strong> entre hypersphères de rayon <span class="math inline">\(r\)</span> et <span class="math inline">\((1-\varepsilon)r\)</span> :</p>
+<section id="for-the-hypersphere" class="level4">
+<h4 class="anchored" data-anchor-id="for-the-hypersphere">For the Hypersphere</h4>
+<p><strong>Volume ratio</strong> between hyperspheres of radius <span class="math inline">\(r\)</span> and <span class="math inline">\((1-\varepsilon)r\)</span>:</p>
 <p><span class="math display">\[\frac{\text{vol}(B_D((1-\varepsilon)r))}{\text{vol}(B_D(r))} = \frac{2((1-\varepsilon)r)^D \pi^{D/2}}{D\Gamma(D/2)} \cdot \frac{D\Gamma(D/2)}{2r^D \pi^{D/2}} = (1-\varepsilon)^D\]</span></p>
-<p><strong>Limite</strong> :</p>
+<p><strong>Limit</strong>:</p>
 <p><span class="math display">\[\lim_{D \to \infty} \frac{\text{vol}(B_D((1-\varepsilon)r))}{\text{vol}(B_D(r))} = 0\]</span></p>
-<p><strong>Note technique</strong> : <span class="math inline">\(1 - \varepsilon \leq e^{-\varepsilon}\)</span> donc <span class="math inline">\((1-\varepsilon)^D \leq e^{-D\varepsilon} \to 0\)</span> si <span class="math inline">\(D \to \infty\)</span></p>
+<p><strong>Technical Note</strong>: <span class="math inline">\(1 - \varepsilon \leq e^{-\varepsilon}\)</span> so <span class="math inline">\((1-\varepsilon)^D \leq e^{-D\varepsilon} \to 0\)</span> as <span class="math inline">\(D \to \infty\)</span></p>
 </section>
-<section id="généralisation-à-tout-volume" class="level4">
-<h4 class="anchored" data-anchor-id="généralisation-à-tout-volume">Généralisation à tout volume</h4>
-<p><strong>Principe</strong> : Décomposer le volume en voxels (hyper-)cubiques arbitrairement petits.</p>
-<p><strong>Réduction</strong> : Si on réduit la longueur d’un côté de voxel par facteur <span class="math inline">\((1-\varepsilon)\)</span> :</p>
+<section id="generalization-to-any-volume" class="level4">
+<h4 class="anchored" data-anchor-id="generalization-to-any-volume">Generalization to Any Volume</h4>
+<p><strong>Principle</strong>: Decompose the volume into arbitrarily small (hyper-)cubic voxels.</p>
+<p><strong>Reduction</strong>: If we reduce the length of a voxel side by factor <span class="math inline">\((1-\varepsilon)\)</span>:</p>
 <ul>
-<li>Volume du voxel réduit par <span class="math inline">\((1-\varepsilon)^D\)</span></li>
-<li>Volume complet réduit par <span class="math inline">\((1-\varepsilon)^D\)</span></li>
+<li>Voxel volume reduced by <span class="math inline">\((1-\varepsilon)^D\)</span></li>
+<li>Total volume reduced by <span class="math inline">\((1-\varepsilon)^D\)</span></li>
 </ul>
-<p><strong>Ratio de volumes</strong> :</p>
+<p><strong>Volume Ratio</strong>:</p>
 <p><span class="math display">\[\lim_{D \to \infty} \frac{\text{vol}(V_D(r)) - \text{vol}(V_D((1-\varepsilon)r))}{\text{vol}(V_D(r))} = \lim_{D \to \infty} 1 - (1-\varepsilon)^D = 1\]</span></p>
-<p><strong>Conclusion fondamentale</strong> : ⇒ <strong>Le volume est concentré près de la surface</strong> de la forme</p>
+<p><strong>Fundamental Conclusion</strong>: ⇒ <strong>Volume is concentrated near the surface</strong> of the shape</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Distribution du Volume
+<span class="screen-reader-only">None</span>📌 Quick Review: Volume Distribution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Pour <strong>toute forme</strong> : ratio de volumes <span class="math inline">\((1-\varepsilon)^D \to 0\)</span> quand <span class="math inline">\(D \to \infty\)</span>.</p>
-<p><strong>Méthode</strong> : décomposition en voxels hypercubiques.</p>
-<p><strong>Résultat</strong> : le volume est <strong>concentré à la surface</strong> (différence <span class="math inline">\(\to 1\)</span>).</p>
+<p>For <strong>any shape</strong>: Volume ratio <span class="math inline">\((1-\varepsilon)^D \to 0\)</span> as <span class="math inline">\(D \to \infty\)</span>.</p>
+<p><strong>Method</strong>: Decomposition into hypercubic voxels.</p>
+<p><strong>Result</strong>: Volume is <strong>concentrated at the surface</strong> (difference → 1).</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="lœuf-gaussien-gaussian-egg" class="level3">
-<h3 class="anchored" data-anchor-id="lœuf-gaussien-gaussian-egg">4. L’œuf gaussien (<em>Gaussian Egg</em>)</h3>
-<section id="densité-le-long-du-rayon" class="level4">
-<h4 class="anchored" data-anchor-id="densité-le-long-du-rayon">Densité le long du rayon</h4>
-<p><strong>Question</strong> : Étant donnée une distribution Normale <span class="math inline">\(\mathcal{N}(\mu, \Sigma)\)</span>, quelle est sa densité le long du rayon <span class="math inline">\(r\)</span> ?</p>
-<p><strong>Contexte</strong> : Les coordonnées sont <span class="math inline">\(D\)</span> v.a. i.i.d. <span class="math inline">\(X_i \sim \mathcal{N}(0, 1)\)</span>.</p>
-<p><strong>Intégration le long de</strong> <span class="math inline">\(r\)</span> = prendre la norme. <span class="math inline">\(R\)</span> est la v.a. attachée au rayon :</p>
+<section id="the-gaussian-egg" class="level3">
+<h3 class="anchored" data-anchor-id="the-gaussian-egg">4. The Gaussian Egg</h3>
+<section id="density-along-the-radius" class="level4">
+<h4 class="anchored" data-anchor-id="density-along-the-radius">Density Along the Radius</h4>
+<p><strong>Question</strong>: Given a Normal distribution <span class="math inline">\(\mathcal{N}(\mu, \Sigma)\)</span>, what is its density along the radius <span class="math inline">\(r\)</span>?</p>
+<p><strong>Context</strong>: The coordinates are <span class="math inline">\(D\)</span> i.i.d. random variables <span class="math inline">\(X_i \sim \mathcal{N}(0, 1)\)</span>.</p>
+<p><strong>Integration along</strong> <span class="math inline">\(r\)</span> = take the norm. <span class="math inline">\(R\)</span> is the random variable associated with the radius:</p>
 <p><span class="math display">\[R^2 = \|X\|_2^2 = \sum_{i=1}^D X_i^2 \sim \chi^2(D)\]</span></p>
-<p><strong>Espérance</strong> :</p>
+<p><strong>Expectation</strong>:</p>
 <p><span class="math display">\[\mathbb{E}[R^2] = D \implies \mathbb{E}[R] \approx \sqrt{D}\]</span></p>
-<p>On peut considérer la distribution centrée et réduite (i.e.&nbsp;<span class="math inline">\(\mathcal{N}(0, \text{Id}_D)\)</span>) avec <span class="math inline">\(\sigma = 1\)</span>.</p>
-<p>⇒ <strong>La densité est concentrée au rayon</strong> <span class="math inline">\(\sigma\sqrt{D}\)</span></p>
+<p>We can consider the centered and scaled distribution (i.e., <span class="math inline">\(\mathcal{N}(0, \text{Id}_D)\)</span>) with <span class="math inline">\(\sigma = 1\)</span>.</p>
+<p>⇒ <strong>Density is concentrated at radius</strong> <span class="math inline">\(\sigma\sqrt{D}\)</span></p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph LR
-    A[Distribution N 0, Id_D] --&gt; B[Rayon R]
-    B --&gt; C[R² ~ χ² D]
-    C --&gt; D[E R² = D]
-    D --&gt; E[Densité concentrée à √D]
+    A[Distribution N(0, Id_D)] --&gt; B[Radius R]
+    B --&gt; C[R² ~ χ²(D)]
+    C --&gt; D[E[R²] = D]
+    D --&gt; E[Density concentrated at √D]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -805,49 +799,49 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="théorème-de-lanneau-gaussien-gaussian-annulus-theorem" class="level4">
-<h4 class="anchored" data-anchor-id="théorème-de-lanneau-gaussien-gaussian-annulus-theorem">Théorème de l’anneau gaussien (<em>Gaussian Annulus Theorem</em>)</h4>
-<p>Étant donné <span class="math inline">\(X \sim \mathcal{N}(0, \text{Id}_D)\)</span>, pour tout <span class="math inline">\(\beta \leq \sqrt{D}\)</span> :</p>
+<section id="gaussian-annulus-theorem" class="level4">
+<h4 class="anchored" data-anchor-id="gaussian-annulus-theorem">Gaussian Annulus Theorem</h4>
+<p>Given <span class="math inline">\(X \sim \mathcal{N}(0, \text{Id}_D)\)</span>, for any <span class="math inline">\(\beta \leq \sqrt{D}\)</span>:</p>
 <p><span class="math display">\[P\left[\left|\|X\|_2 - \sqrt{D}\right| &gt; \beta\right] \leq 3e^{-c\beta^2}\]</span></p>
-<p>où <span class="math inline">\(c &gt; 0\)</span> est une constante.</p>
-<p><strong>Interprétation</strong> : La norme est <strong>concentrée exponentiellement</strong> autour de <span class="math inline">\(\sqrt{D}\)</span>.</p>
-<p><strong>Formulation alternative</strong> :</p>
+<p>where <span class="math inline">\(c &gt; 0\)</span> is a constant.</p>
+<p><strong>Interpretation</strong>: The norm is <strong>exponentially concentrated</strong> around <span class="math inline">\(\sqrt{D}\)</span>.</p>
+<p><strong>Alternative Formulation</strong>:</p>
 <p><span class="math display">\[P\left[\left|\frac{\|X\|}{\sqrt{D}} - 1\right| \leq \varepsilon\right] \approx 1\]</span></p>
-<p>⇒ La quasi-totalité de la densité est dans un <strong>anneau fin</strong> autour du rayon <span class="math inline">\(\sqrt{D}\)</span></p>
+<p>⇒ Almost all density is in a <strong>thin ring</strong> around radius <span class="math inline">\(\sqrt{D}\)</span></p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Œuf Gaussien
+<span class="screen-reader-only">None</span>📌 Quick Review: Gaussian Egg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Pour <span class="math inline">\(X \sim \mathcal{N}(0, \text{Id}_D)\)</span> : <span class="math inline">\(R^2 = \|X\|_2^2 \sim \chi^2(D)\)</span> donc <span class="math inline">\(\mathbb{E}[R^2] = D\)</span>.</p>
-<p><strong>Gaussian Annulus Theorem</strong> : <span class="math inline">\(P[|\|X\|_2 - \sqrt{D}| &gt; \beta] \leq 3e^{-c\beta^2}\)</span>.</p>
-<p>Densité concentrée au rayon <span class="math inline">\(\sigma\sqrt{D}\)</span> (anneau fin).</p>
+<p>For <span class="math inline">\(X \sim \mathcal{N}(0, \text{Id}_D)\)</span>: <span class="math inline">\(R^2 = \|X\|_2^2 \sim \chi^2(D)\)</span> so <span class="math inline">\(\mathbb{E}[R^2] = D\)</span>.</p>
+<p><strong>Gaussian Annulus Theorem</strong>: <span class="math inline">\(P[|\|X\|_2 - \sqrt{D}| &gt; \beta] \leq 3e^{-c\beta^2}\)</span>.</p>
+<p>Density concentrated at radius <span class="math inline">\(\sigma\sqrt{D}\)</span> (<strong>thin ring</strong>).</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="concentration-des-distances" class="level3">
-<h3 class="anchored" data-anchor-id="concentration-des-distances">5. Concentration des Distances</h3>
-<p><strong>Contexte</strong> : Données <span class="math inline">\(X \subset \Omega\)</span>, sélectionner une donnée <span class="math inline">\(x\)</span> et ses <span class="math inline">\(k\)</span> plus proches voisins <span class="math inline">\(V_X^k(x)\)</span>.</p>
-<p>Soit <span class="math inline">\(D_{\min}\)</span> et <span class="math inline">\(D_{\max}\)</span> les v.a. associées aux distances du voisin le plus proche et le plus éloigné parmi les <span class="math inline">\(k\)</span> voisins.</p>
-<section id="théorème-de-concentration" class="level4">
-<h4 class="anchored" data-anchor-id="théorème-de-concentration">Théorème de concentration</h4>
-<p><strong>Théorème</strong> : Si <span class="math inline">\(\lim_{D \to \infty} \text{Var}\left[\frac{d(x,y)^p}{\mathbb{E}[d(x,y)^p]}\right] = 0\)</span> pour <span class="math inline">\(0 &lt; p &lt; \infty\)</span>, alors pour tout <span class="math inline">\(\varepsilon &gt; 0\)</span> :</p>
+<section id="distance-concentration" class="level3">
+<h3 class="anchored" data-anchor-id="distance-concentration">5. Distance Concentration</h3>
+<p><strong>Context</strong>: Data <span class="math inline">\(X \subset \Omega\)</span>, select a data point <span class="math inline">\(x\)</span> and its <span class="math inline">\(k\)</span> nearest neighbors <span class="math inline">\(V_X^k(x)\)</span>.</p>
+<p>Let <span class="math inline">\(D_{\min}\)</span> and <span class="math inline">\(D_{\max}\)</span> be the random variables associated with the distances to the nearest and farthest neighbors among the <span class="math inline">\(k\)</span> neighbors.</p>
+<section id="concentration-theorem" class="level4">
+<h4 class="anchored" data-anchor-id="concentration-theorem">Concentration Theorem</h4>
+<p><strong>Theorem</strong>: If <span class="math inline">\(\lim_{D \to \infty} \text{Var}\left[\frac{d(x,y)^p}{\mathbb{E}[d(x,y)^p]}\right] = 0\)</span> for <span class="math inline">\(0 &lt; p &lt; \infty\)</span>, then for any <span class="math inline">\(\varepsilon &gt; 0\)</span>:</p>
 <p><span class="math display">\[\lim_{D \to \infty} P\left[\frac{D_{\max} - D_{\min}}{D_{\min}} \leq \varepsilon\right] = 1\]</span></p>
-<p><strong>Conséquences</strong> :</p>
+<p><strong>Consequences</strong>:</p>
 <ul>
-<li>Tous les voisins sont vus à distance <span class="math inline">\(D_{\min}\)</span> de <span class="math inline">\(x\)</span></li>
-<li>Le pouvoir de discrimination <strong>décroît exponentiellement</strong></li>
-<li>Les structures KNN (<em>k-nearest neighbors</em>) et <span class="math inline">\(\varepsilon\)</span>NN deviennent <strong>non significatives</strong></li>
+<li>All neighbors appear at distance <span class="math inline">\(D_{\min}\)</span> from <span class="math inline">\(x\)</span></li>
+<li>Discriminative power <strong>decreases exponentially</strong></li>
+<li>KNN (<em>k-nearest neighbors</em>) and <span class="math inline">\(\varepsilon\)</span>NN structures become <strong>non-significant</strong></li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
@@ -855,146 +849,146 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Concentration des Distances
+<span class="screen-reader-only">None</span>📌 Quick Review: Distance Concentration
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Si variance de distance normalisée <span class="math inline">\(\to 0\)</span>, alors <span class="math inline">\(\frac{D_{\max} - D_{\min}}{D_{\min}} \to 0\)</span>.</p>
-<p>Tous les voisins sont <strong>équidistants</strong>.</p>
-<p>KNN et <span class="math inline">\(\varepsilon\)</span>NN <strong>perdent leur sens</strong>.</p>
+<p>If normalized distance variance → 0, then <span class="math inline">\(\frac{D_{\max} - D_{\min}}{D_{\min}} \to 0\)</span>.</p>
+<p>All neighbors are <strong>equidistant</strong>.</p>
+<p>KNN and <span class="math inline">\(\varepsilon\)</span>NN <strong>lose their meaning</strong>.</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="quasi-orthogonalité" class="level3">
-<h3 class="anchored" data-anchor-id="quasi-orthogonalité">6. Quasi-Orthogonalité</h3>
-<section id="concentration-des-angles-entre-vecteurs-aléatoires" class="level4">
-<h4 class="anchored" data-anchor-id="concentration-des-angles-entre-vecteurs-aléatoires">Concentration des angles entre vecteurs aléatoires</h4>
-<p><strong>Question</strong> : En tirant des vecteurs d’un espace <span class="math inline">\(D\)</span>-dimensionnel, quel est leur angle attendu ?</p>
-<p><strong>Méthode</strong> : Déclarer 4 v.a. i.i.d. <span class="math inline">\(W, X, Y, Z\)</span> sur <span class="math inline">\(\Omega \subset \mathbb{R}^D\)</span> et calculer :</p>
+<section id="quasi-orthogonality" class="level3">
+<h3 class="anchored" data-anchor-id="quasi-orthogonality">6. Quasi-Orthogonality</h3>
+<section id="concentration-of-angles-between-random-vectors" class="level4">
+<h4 class="anchored" data-anchor-id="concentration-of-angles-between-random-vectors">Concentration of Angles Between Random Vectors</h4>
+<p><strong>Question</strong>: When drawing vectors from a <span class="math inline">\(D\)</span>-dimensional space, what is their expected angle?</p>
+<p><strong>Method</strong>: Declare 4 i.i.d. random variables <span class="math inline">\(W, X, Y, Z\)</span> on <span class="math inline">\(\Omega \subset \mathbb{R}^D\)</span> and compute:</p>
 <p><span class="math display">\[\mathbb{E}\left[\cos(\angle(X - Y, Z - W))\right] = \mathbb{E}\left[\frac{\langle X - Y, Z - W \rangle}{\|X - Y\| \cdot \|Z - W\|}\right]\]</span></p>
-<p><strong>Puisque</strong> <span class="math inline">\(W, X, Y, Z\)</span> sont i.i.d., <span class="math inline">\(X - Y\)</span> et <span class="math inline">\(Z - W\)</span> sont aussi i.i.d. et centrées :</p>
+<p><strong>Since</strong> <span class="math inline">\(W, X, Y, Z\)</span> are i.i.d., <span class="math inline">\(X - Y\)</span> and <span class="math inline">\(Z - W\)</span> are also i.i.d. and centered:</p>
 <p><span class="math display">\[\mathbb{E}(X - Y) = \mathbb{E}(Z - W) = 0\]</span></p>
-<p>Le numérateur est <span class="math inline">\(\text{cov}(X - Y, Z - W) = 0\)</span>, le dénominateur est un normaliseur.</p>
-<p><strong>Résultat</strong> : <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 0 \implies \theta \sim \frac{\pi}{2}\)</span></p>
-<p><strong>Alternative</strong> :</p>
+<p>The numerator is <span class="math inline">\(\text{cov}(X - Y, Z - W) = 0\)</span>, the denominator is a normalizer.</p>
+<p><strong>Result</strong>: <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 0 \implies \theta \sim \frac{\pi}{2}\)</span></p>
+<p><strong>Alternative</strong>:</p>
 <p><span class="math display">\[\langle X - Y, Z - W \rangle = \langle X, Z \rangle - \langle X, W \rangle - \langle Y, Z \rangle + \langle Y, W \rangle\]</span></p>
-<p>En espérance, tous les termes s’annulent car <span class="math inline">\(W, X, Y, Z\)</span> sont i.i.d.</p>
-<p><strong>Conclusion</strong> :</p>
+<p>In expectation, all terms cancel because <span class="math inline">\(W, X, Y, Z\)</span> are i.i.d.</p>
+<p><strong>Conclusion</strong>:</p>
 <ul>
-<li>Chaque triangle aléatoire est un <strong>triangle rectangle</strong></li>
-<li>Deux vecteurs aléatoires sont <strong>quasi-orthogonaux</strong></li>
+<li>Every random triangle is a <strong>right triangle</strong></li>
+<li>Two random vectors are <strong>quasi-orthogonal</strong></li>
 </ul>
 </section>
-<section id="concentration-des-angles-dans-un-triangle" class="level4">
-<h4 class="anchored" data-anchor-id="concentration-des-angles-dans-un-triangle">Concentration des angles dans un triangle</h4>
-<p><strong>Question</strong> : Quel est l’angle attendu dans un triangle aléatoire ?</p>
-<p><strong>Méthode</strong> : Déclarer 3 v.a. i.i.d. <span class="math inline">\(X, Y, Z\)</span> et calculer pour un angle :</p>
+<section id="concentration-of-angles-in-a-triangle" class="level4">
+<h4 class="anchored" data-anchor-id="concentration-of-angles-in-a-triangle">Concentration of Angles in a Triangle</h4>
+<p><strong>Question</strong>: What is the expected angle in a random triangle?</p>
+<p><strong>Method</strong>: Declare 3 i.i.d. random variables <span class="math inline">\(X, Y, Z\)</span> and compute for an angle:</p>
 <p><span class="math display">\[\mathbb{E}\left[\cos(\angle(X - Y, Z - Y))\right] = \mathbb{E}\left[\frac{\langle X - Y, Z - Y \rangle}{\|X - Y\| \cdot \|Z - Y\|}\right]\]</span></p>
-<p><strong>Note</strong> : <span class="math inline">\(X - Y\)</span> et <span class="math inline">\(Z - Y\)</span> ne sont <strong>plus indépendants</strong> !</p>
-<p><strong>Calcul</strong> (simplifié) :</p>
+<p><strong>Note</strong>: <span class="math inline">\(X - Y\)</span> and <span class="math inline">\(Z - Y\)</span> are <strong>no longer independent</strong>!</p>
+<p><strong>Calculation</strong> (simplified):</p>
 <p><span class="math display">\[\frac{\langle X-Y, Z-Y \rangle}{\langle X-Y, X-Y \rangle} = \frac{\langle X,Z \rangle - \langle X,Y \rangle - \langle Y,Z \rangle + \langle Y,Y \rangle}{\langle X,X \rangle + \langle Y,Y \rangle - 2\langle X,Y \rangle}\]</span></p>
-<p>En espérance :</p>
+<p>In expectation:</p>
 <p><span class="math display">\[= \frac{\langle Y,Y \rangle - \langle X,Y \rangle}{2\langle Y,Y \rangle - 2\langle X,Y \rangle} = \frac{1}{2}\]</span></p>
-<p><strong>Résultat</strong> : <span class="math inline">\(\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \sim \frac{\pi}{3}\)</span></p>
-<p><strong>Conclusion</strong> : Chaque triangle aléatoire est un <strong>triangle équilatéral</strong></p>
+<p><strong>Result</strong>: <span class="math inline">\(\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \sim \frac{\pi}{3}\)</span></p>
+<p><strong>Conclusion</strong>: Every random triangle is an <strong>equilateral triangle</strong></p>
 </section>
-<section id="impact-pour-la-sphère" class="level4">
-<h4 class="anchored" data-anchor-id="impact-pour-la-sphère">Impact pour la sphère</h4>
-<p>Étant donné la boule unitaire <span class="math inline">\(B_D\)</span>, si <span class="math inline">\(X\)</span> est un point aléatoire sur sa surface et <span class="math inline">\(Y\)</span> un autre point, soit <span class="math inline">\(\theta = \angle(X, Y)\)</span> :</p>
+<section id="impact-for-the-sphere" class="level4">
+<h4 class="anchored" data-anchor-id="impact-for-the-sphere">Impact for the Sphere</h4>
+<p>Given the unit ball <span class="math inline">\(B_D\)</span>, if <span class="math inline">\(X\)</span> is a random point on its surface and <span class="math inline">\(Y\)</span> another point, let <span class="math inline">\(\theta = \angle(X, Y)\)</span>:</p>
 <ul>
-<li>Si <span class="math inline">\(Y\)</span> échantillonné depuis <span class="math inline">\(\Omega\)</span> : <span class="math inline">\(\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \sim \frac{\pi}{3}\)</span></li>
-<li>Si <span class="math inline">\(Y\)</span> échantillonné depuis <span class="math inline">\(B_D\)</span> : <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 0 \implies \theta \sim \frac{\pi}{2}\)</span></li>
+<li>If <span class="math inline">\(Y\)</span> sampled from <span class="math inline">\(\Omega\)</span>: <span class="math inline">\(\mathbb{E}[\cos(\theta)] = \frac{1}{2} \implies \theta \sim \frac{\pi}{3}\)</span></li>
+<li>If <span class="math inline">\(Y\)</span> sampled from <span class="math inline">\(B_D\)</span>: <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 0 \implies \theta \sim \frac{\pi}{2}\)</span></li>
 </ul>
-<p>⇒ Le volume de la sphère est contenu à son <strong>équateur</strong> (pour toute direction nord <span class="math inline">\(X\)</span>)</p>
-<p>→ <strong>Preuve alternative</strong> pour la concentration du volume à la surface de la sphère</p>
-<p><strong>Note</strong> : Pour échantillonner sur l’hypersphère unitaire, échantillonner une distribution centralement symétrique (e.g.&nbsp;Gaussienne) et normaliser.</p>
+<p>⇒ The volume of the sphere is contained at its <strong>equator</strong> (for any north direction <span class="math inline">\(X\)</span>)</p>
+<p>→ <strong>Alternative proof</strong> for volume concentration at the sphere’s surface</p>
+<p><strong>Note</strong>: To sample on the unit hypersphere, sample from a centrally symmetric distribution (e.g., Gaussian) and normalize.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Quasi-Orthogonalité
+<span class="screen-reader-only">None</span>📌 Quick Review: Quasi-Orthogonality
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>2 vecteurs aléatoires</strong> : <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 0\)</span> → <span class="math inline">\(\theta \sim \pi/2\)</span> (quasi-orthogonaux).</p>
-<p><strong>Triangle aléatoire</strong> : <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 1/2\)</span> → <span class="math inline">\(\theta \sim \pi/3\)</span> (équilatéral).</p>
-<p><strong>Sphère</strong> : volume à l’équateur.</p>
+<p><strong>2 random vectors</strong>: <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 0\)</span> → <span class="math inline">\(\theta \sim \pi/2\)</span> (quasi-orthogonal).</p>
+<p><strong>Random triangle</strong>: <span class="math inline">\(\mathbb{E}[\cos(\theta)] = 1/2\)</span> → <span class="math inline">\(\theta \sim \pi/3\)</span> (equilateral).</p>
+<p><strong>Sphere</strong>: Volume at the equator.</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="hubness-présence-de-hubs" class="level3">
-<h3 class="anchored" data-anchor-id="hubness-présence-de-hubs">7. Hubness (Présence de <em>Hubs</em>)</h3>
-<section id="définition" class="level4">
-<h4 class="anchored" data-anchor-id="définition">Définition</h4>
-<p><strong>Question</strong> : Combien de fois un échantillon apparaît-il comme <span class="math inline">\(k\)</span>-plus proche voisin d’une autre donnée ?</p>
-<p>Étant donné <span class="math inline">\(X\)</span>, définir :</p>
-<p><span class="math display">\[r_{ik}(x_j) = \begin{cases} 1 &amp; \text{si } x_j \in V_X^k(x_i) \\ 0 &amp; \text{sinon} \end{cases}\]</span></p>
-<p>Puis :</p>
+<section id="hubness" class="level3">
+<h3 class="anchored" data-anchor-id="hubness">7. Hubness</h3>
+<section id="definition" class="level4">
+<h4 class="anchored" data-anchor-id="definition">Definition</h4>
+<p><strong>Question</strong>: How many times does a sample appear as a <span class="math inline">\(k\)</span>-nearest neighbor of another data point?</p>
+<p>Given <span class="math inline">\(X\)</span>, define:</p>
+<p><span class="math display">\[r_{ik}(x_j) = \begin{cases} 1 &amp; \text{if } x_j \in V_X^k(x_i) \\ 0 &amp; \text{otherwise} \end{cases}\]</span></p>
+<p>Then:</p>
 <p><span class="math display">\[n_k(x_j) = \sum_i r_{ik}(x_j)\]</span></p>
-<p><strong>Résultat</strong> : La distribution des valeurs de <span class="math inline">\(n_k\)</span> est <strong>asymétrique vers la gauche</strong>.</p>
-<p><strong>Conséquence</strong> : Un petit nombre d’échantillons apparaissent dans le voisinage de <strong>beaucoup d’autres</strong> échantillons.</p>
-<p>⇒ Ces <strong>hubs</strong> sont proches de tous les autres échantillons</p>
-<p><strong>Visualisation empirique</strong> : Pour 20-NN avec <span class="math inline">\(D = 100\)</span> et 1000 échantillons uniformes sur 50 bins, on observe une forte asymétrie de la distribution de <span class="math inline">\(n_k\)</span>.</p>
+<p><strong>Result</strong>: The distribution of <span class="math inline">\(n_k\)</span> values is <strong>left-skewed</strong>.</p>
+<p><strong>Consequence</strong>: A small number of samples appear in the neighborhood of <strong>many</strong> other samples.</p>
+<p>⇒ These <strong>hubs</strong> are close to all other samples</p>
+<p><strong>Empirical Visualization</strong>: For 20-NN with <span class="math inline">\(D = 100\)</span> and 1000 uniform samples on 50 bins, a strong asymmetry in the distribution of <span class="math inline">\(n_k\)</span> is observed.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Hubness
+<span class="screen-reader-only">None</span>📌 Quick Review: Hubness
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(n_k(x_j)\)</span> = nombre de fois où <span class="math inline">\(x_j\)</span> est k-NN d’un autre point.</p>
-<p>Distribution <strong>asymétrique</strong> : quelques <strong>hubs</strong> apparaissent dans beaucoup de voisinages.</p>
-<p>Ces hubs sont “proches” de tous.</p>
+<p><span class="math inline">\(n_k(x_j)\)</span> = number of times <span class="math inline">\(x_j\)</span> is a k-NN of another point.</p>
+<p><strong>Asymmetric</strong> distribution: few <strong>hubs</strong> appear in many neighborhoods.</p>
+<p>These hubs are “close” to all.</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="inégalités-de-concentration" class="level3">
-<h3 class="anchored" data-anchor-id="inégalités-de-concentration">8. Inégalités de Concentration</h3>
-<section id="inégalités-fondamentales" class="level4">
-<h4 class="anchored" data-anchor-id="inégalités-fondamentales">Inégalités fondamentales</h4>
-<p><strong>Inégalité de Markov</strong> : Pour une v.a. non-négative <span class="math inline">\(X\)</span> :</p>
+<section id="concentration-inequalities" class="level3">
+<h3 class="anchored" data-anchor-id="concentration-inequalities">8. Concentration Inequalities</h3>
+<section id="fundamental-inequalities" class="level4">
+<h4 class="anchored" data-anchor-id="fundamental-inequalities">Fundamental Inequalities</h4>
+<p><strong>Markov’s Inequality</strong>: For a non-negative random variable <span class="math inline">\(X\)</span>:</p>
 <p><span class="math display">\[P(X &gt; \varepsilon) \leq \frac{\mathbb{E}[X]}{\varepsilon}\]</span></p>
-<p><strong>Inégalité de Chebyshev</strong> : Pour une v.a. de moyenne <span class="math inline">\(\mu\)</span> et variance <span class="math inline">\(\sigma^2\)</span> finie :</p>
+<p><strong>Chebyshev’s Inequality</strong>: For a random variable with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>:</p>
 <p><span class="math display">\[P(|X - \mu| &gt; \varepsilon) \leq \frac{\sigma^2}{\varepsilon^2}\]</span></p>
 </section>
-<section id="inégalité-de-hoeffding" class="level4">
-<h4 class="anchored" data-anchor-id="inégalité-de-hoeffding">Inégalité de Hoeffding</h4>
-<p><strong>Énoncé</strong> : Si <span class="math inline">\(\{X_i\}_{i \in [\![D]\!]}\)</span> sont des v.a. indépendantes avec <span class="math inline">\(P(a \leq X_i \leq b) = 1\)</span> et <span class="math inline">\(\mathbb{E}[X_i] = \mu\)</span>, alors pour tout <span class="math inline">\(t &gt; 0\)</span> :</p>
+<section id="hoeffdings-inequality" class="level4">
+<h4 class="anchored" data-anchor-id="hoeffdings-inequality">Hoeffding’s Inequality</h4>
+<p><strong>Statement</strong>: If <span class="math inline">\(\{X_i\}_{i \in [\![D]\!]}\)</span> are independent random variables with <span class="math inline">\(P(a \leq X_i \leq b) = 1\)</span> and <span class="math inline">\(\mathbb{E}[X_i] = \mu\)</span>, then for any <span class="math inline">\(\varepsilon &gt; 0\)</span>:</p>
 <p><span class="math display">\[P(|\bar{X} - \mu| &gt; \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}\]</span></p>
-<p>où <span class="math inline">\(\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i\)</span></p>
-<p><strong>Note</strong> : Exemple d’analyse PAC (<em>Probably Approximately Correct</em>) : probabilité qu’un événement se produise approximativement.</p>
+<p>where <span class="math inline">\(\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i\)</span></p>
+<p><strong>Note</strong>: Example of PAC (<em>Probably Approximately Correct</em>) analysis: probability that an event occurs approximately.</p>
 </section>
-<section id="explication-de-la-concentration-des-distances" class="level4">
-<h4 class="anchored" data-anchor-id="explication-de-la-concentration-des-distances">Explication de la concentration des distances</h4>
-<p>L’inégalité de Hoeffding explique :</p>
+<section id="explanation-of-distance-concentration" class="level4">
+<h4 class="anchored" data-anchor-id="explanation-of-distance-concentration">Explanation of Distance Concentration</h4>
+<p>Hoeffding’s inequality explains:</p>
 <ul>
-<li>Quand on agrège des variables indépendantes, l’agrégat <strong>converge vers leur espérance commune</strong></li>
-<li>La structure <span class="math inline">\(\sum_{i=1}^D (\cdot)\)</span> correspond au calcul des distances de Minkowski :</li>
+<li>When aggregating independent variables, the aggregate <strong>converges to their common expectation</strong></li>
+<li>The structure <span class="math inline">\(\sum_{i=1}^D (\cdot)\)</span> corresponds to the calculation of Minkowski distances:</li>
 </ul>
 <p><span class="math display">\[d_p(x,y) = \left(\sum_{i=1}^D |x[i] - y[i]|^p\right)^{1/p}\]</span></p>
 <ul>
-<li>L’inégalité de Hoeffding explique formellement pourquoi les valeurs de distance <strong>se concentrent</strong></li>
-<li>Bien que contre-intuitif que tous les voisins soient équidistants, il est intuitif que pour <span class="math inline">\(D\)</span> grand, les valeurs extrêmes (petites ou grandes) de <span class="math inline">\(d_p(x,y)\)</span> deviennent improbables : pour que <span class="math inline">\(d_p(x,y)\)</span> soit petit (grand), <strong>toutes</strong> les <span class="math inline">\(D\)</span> coordonnées <span class="math inline">\(x[i]\)</span> et <span class="math inline">\(y[i]\)</span> doivent être (dis)similaires. Quand <span class="math inline">\(D\)</span> augmente, cela devient improbable.</li>
+<li>Hoeffding’s inequality formally explains why distance values <strong>concentrate</strong></li>
+<li>Although counterintuitive that all neighbors are equidistant, it is intuitive that for large <span class="math inline">\(D\)</span>, extreme values (small or large) of <span class="math inline">\(d_p(x,y)\)</span> become unlikely: for <span class="math inline">\(d_p(x,y)\)</span> to be small (large), <strong>all</strong> <span class="math inline">\(D\)</span> coordinates <span class="math inline">\(x[i]\)</span> and <span class="math inline">\(y[i]\)</span> must be (dis)similar. As <span class="math inline">\(D\)</span> increases, this becomes unlikely.</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
@@ -1002,15 +996,15 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Inégalités de Concentration
+<span class="screen-reader-only">None</span>📌 Quick Review: Concentration Inequalities
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Hoeffding</strong> : <span class="math inline">\(P(|\bar{X} - \mu| &gt; \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}\)</span>.</p>
-<p>Agrégation de variables indépendantes → convergence vers <span class="math inline">\(\mu\)</span>.</p>
-<p>Structure <span class="math inline">\(\sum_{i=1}^D (\cdot)\)</span> dans distances → <strong>concentration des distances</strong>.</p>
+<p><strong>Hoeffding</strong>: <span class="math inline">\(P(|\bar{X} - \mu| &gt; \varepsilon) \leq 2e^{-2D\varepsilon^2/(b-a)^2}\)</span>.</p>
+<p>Aggregation of independent variables → convergence to <span class="math inline">\(\mu\)</span>.</p>
+<p>Structure <span class="math inline">\(\sum_{i=1}^D (\cdot)\)</span> in distances → <strong>concentration of distances</strong>.</p>
 </div>
 </div>
 </div>
@@ -1018,68 +1012,68 @@ window.Quarto = {
 </section>
 </section>
 </section>
-<section id="bénédiction-de-la-dimensionnalité-blessing-of-dimensionality" class="level2">
-<h2 class="anchored" data-anchor-id="bénédiction-de-la-dimensionnalité-blessing-of-dimensionality">Bénédiction de la Dimensionnalité (<em>Blessing of Dimensionality</em>)</h2>
-<section id="lois-des-grands-nombres" class="level3">
-<h3 class="anchored" data-anchor-id="lois-des-grands-nombres">1. Lois des Grands Nombres</h3>
-<section id="loi-faible-des-grands-nombres-wlln" class="level4">
-<h4 class="anchored" data-anchor-id="loi-faible-des-grands-nombres-wlln">Loi Faible des Grands Nombres (WLLN)</h4>
-<p><strong>Énoncé</strong> : Étant donné un ensemble de <span class="math inline">\(D\)</span> v.a. i.i.d. <span class="math inline">\(\{X_i\}_{i \in [\![D]\!]}\)</span> avec <span class="math inline">\(\mathbb{E}[X_i] = \mu\)</span>, alors pour tout <span class="math inline">\(\varepsilon &gt; 0\)</span> :</p>
+<section id="blessing-of-dimensionality" class="level2">
+<h2 class="anchored" data-anchor-id="blessing-of-dimensionality">Blessing of Dimensionality</h2>
+<section id="laws-of-large-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="laws-of-large-numbers">1. Laws of Large Numbers</h3>
+<section id="weak-law-of-large-numbers-wlln" class="level4">
+<h4 class="anchored" data-anchor-id="weak-law-of-large-numbers-wlln">Weak Law of Large Numbers (WLLN)</h4>
+<p><strong>Statement</strong>: Given a set of <span class="math inline">\(D\)</span> i.i.d. random variables <span class="math inline">\(\{X_i\}_{i \in [\![D]\!]}\)</span> with <span class="math inline">\(\mathbb{E}[X_i] = \mu\)</span>, then for any <span class="math inline">\(\varepsilon &gt; 0\)</span>:</p>
 <p><span class="math display">\[\lim_{D \to \infty} P(|\bar{X} - \mu| &lt; \varepsilon) = 1\]</span></p>
-<p>où <span class="math inline">\(\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i\)</span></p>
-<p>(Peut être prouvée à partir de l’inégalité de Chebyshev)</p>
-<p><strong>Interprétation</strong> :</p>
+<p>where <span class="math inline">\(\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i\)</span></p>
+<p>(Can be proven from Chebyshev’s inequality)</p>
+<p><strong>Interpretation</strong>:</p>
 <ul>
-<li>La WLLN dit que la <strong>moyenne empirique</strong> <span class="math inline">\(\bar{X}\)</span> converge (en probabilité) vers la <strong>vraie espérance</strong> <span class="math inline">\(\mu\)</span> quand le nombre d’échantillons augmente</li>
-<li>Fondamentalement cohérente avec l’approche fréquentiste des probabilités</li>
-<li>C’est la <strong>base fondamentale</strong> de la théorie de l’estimation (et de l’estimation de densité)</li>
+<li>The WLLN states that the <strong>empirical mean</strong> <span class="math inline">\(\bar{X}\)</span> converges (in probability) to the <strong>true expectation</strong> <span class="math inline">\(\mu\)</span> as the number of samples increases</li>
+<li>Fundamentally consistent with the frequentist approach to probabilities</li>
+<li>It is the <strong>fundamental basis</strong> of estimation theory (and density estimation)</li>
 </ul>
 </section>
-<section id="théorème-central-limite-clt" class="level4">
-<h4 class="anchored" data-anchor-id="théorème-central-limite-clt">Théorème Central Limite (CLT)</h4>
-<p>La forme et le taux de convergence sont donnés par le TCL :</p>
+<section id="central-limit-theorem-clt" class="level4">
+<h4 class="anchored" data-anchor-id="central-limit-theorem-clt">Central Limit Theorem (CLT)</h4>
+<p>The form and rate of convergence are given by the CLT:</p>
 <p><span class="math display">\[Z_D = \frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \sim \mathcal{N}(0, 1)\]</span></p>
-<p>si <span class="math inline">\(\text{Var}(X_i) = \sigma^2\)</span></p>
+<p>if <span class="math inline">\(\text{Var}(X_i) = \sigma^2\)</span></p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Lois des Grands Nombres
+<span class="screen-reader-only">None</span>📌 Quick Review: Laws of Large Numbers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>WLLN</strong> : <span class="math inline">\(\bar{X} \xrightarrow{P} \mu\)</span> quand <span class="math inline">\(D \to \infty\)</span>.</p>
-<p>Base de l’estimation de densité.</p>
-<p><strong>CLT</strong> : <span class="math inline">\(Z_D = \frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \sim \mathcal{N}(0, 1)\)</span> (taux de convergence).</p>
+<p><strong>WLLN</strong>: <span class="math inline">\(\bar{X} \xrightarrow{P} \mu\)</span> as <span class="math inline">\(D \to \infty\)</span>.</p>
+<p>Basis for density estimation.</p>
+<p><strong>CLT</strong>: <span class="math inline">\(Z_D = \frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \sim \mathcal{N}(0, 1)\)</span> (convergence rate).</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="projections-aléatoires-random-projections" class="level3">
-<h3 class="anchored" data-anchor-id="projections-aléatoires-random-projections">2. Projections Aléatoires (<em>Random Projections</em>)</h3>
-<section id="principe" class="level4">
-<h4 class="anchored" data-anchor-id="principe">Principe</h4>
-<p><strong>Rappel</strong> : Deux vecteurs aléatoires <span class="math inline">\(u\)</span> et <span class="math inline">\(v\)</span> sont probablement orthogonaux.</p>
-<p><strong>Quasi-orthogonalité</strong> : <span class="math inline">\(\langle u, v \rangle = \varepsilon\)</span> (petit).</p>
-<p><strong>Propriété clé</strong> : <strong>Exponentiellement nombreuses</strong> directions quasi-orthogonales dans les espaces de haute dimension.</p>
-<p><strong>Application</strong> : Créer des bases aléatoires (quasi-orthonormales) pour la décomposition et le codage de signaux.</p>
+<section id="random-projections" class="level3">
+<h3 class="anchored" data-anchor-id="random-projections">2. Random Projections</h3>
+<section id="principle" class="level4">
+<h4 class="anchored" data-anchor-id="principle">Principle</h4>
+<p><strong>Recall</strong>: Two random vectors <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are likely orthogonal.</p>
+<p><strong>Quasi-orthogonality</strong>: <span class="math inline">\(\langle u, v \rangle = \varepsilon\)</span> (small).</p>
+<p><strong>Key Property</strong>: <strong>Exponentially many</strong> quasi-orthogonal directions in high-dimensional spaces.</p>
+<p><strong>Application</strong>: Create random bases (quasi-orthonormal) for signal decomposition and coding.</p>
 </section>
-<section id="lemme-de-johnson-lindenstrauss" class="level4">
-<h4 class="anchored" data-anchor-id="lemme-de-johnson-lindenstrauss">Lemme de Johnson-Lindenstrauss</h4>
-<p><strong>Énoncé</strong> : Étant donné <span class="math inline">\(X \subset \Omega\)</span>, il existe une application linéaire <span class="math inline">\(p : \mathbb{R}^D \to \mathbb{R}^d\)</span> telle que, avec <span class="math inline">\(0 &lt; \varepsilon &lt; 1\)</span> et pour tous <span class="math inline">\(i, j \in [\![N]\!]\)</span> :</p>
+<section id="johnson-lindenstrauss-lemma" class="level4">
+<h4 class="anchored" data-anchor-id="johnson-lindenstrauss-lemma">Johnson-Lindenstrauss Lemma</h4>
+<p><strong>Statement</strong>: Given <span class="math inline">\(X \subset \Omega\)</span>, there exists a linear map <span class="math inline">\(p : \mathbb{R}^D \to \mathbb{R}^d\)</span> such that, with <span class="math inline">\(0 &lt; \varepsilon &lt; 1\)</span> and for all <span class="math inline">\(i, j \in [\![N]\!]\)</span>:</p>
 <p><span class="math display">\[(1 - \varepsilon)\|x_i - x_j\| \leq \|p(x_i) - p(x_j)\| \leq (1 + \varepsilon)\|x_i - x_j\|\]</span></p>
-<p>et</p>
-<p><span class="math display">\[d = O\left(\frac{\log N}{\varepsilon^2}\right) \leftarrow \text{Ne dépend PAS de } D !\]</span></p>
-<p><strong>Applications</strong> :</p>
+<p>and</p>
+<p><span class="math display">\[d = O\left(\frac{\log N}{\varepsilon^2}\right) \leftarrow \text{Does NOT depend on } D !\]</span></p>
+<p><strong>Applications</strong>:</p>
 <ul>
-<li><em>Locally Sensitive Hashing</em> (LSH) pour la recherche approximative du plus proche voisin (ANN)</li>
-<li><strong>Caveat</strong> : Taux de convergence plus lent que la plupart des concentrations</li>
+<li><em>Locally Sensitive Hashing</em> (LSH) for approximate nearest neighbor (ANN) search</li>
+<li><strong>Caveat</strong>: Convergence rate slower than most concentrations</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
@@ -1087,15 +1081,15 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Projections Aléatoires
+<span class="screen-reader-only">None</span>📌 Quick Review: Random Projections
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Principe</strong> : Exponentiellement nombreuses directions quasi-orthogonales en haute dimension.</p>
-<p><strong>Johnson-Lindenstrauss</strong> : projection <span class="math inline">\(\mathbb{R}^D \to \mathbb{R}^d\)</span> préservant distances (à <span class="math inline">\(\varepsilon\)</span> près) avec <span class="math inline">\(d = O(\log N / \varepsilon^2)\)</span> (indépendant de <span class="math inline">\(D\)</span> !).</p>
-<p>Application : LSH pour ANN.</p>
+<p><strong>Principle</strong>: Exponentially many quasi-orthogonal directions in high dimensions.</p>
+<p><strong>Johnson-Lindenstrauss</strong>: Projection <span class="math inline">\(\mathbb{R}^D \to \mathbb{R}^d\)</span> preserving distances (up to <span class="math inline">\(\varepsilon\)</span>) with <span class="math inline">\(d = O(\log N / \varepsilon^2)\)</span> (independent of <span class="math inline">\(D\)</span>!).</p>
+<p>Application: LSH for ANN.</p>
 </div>
 </div>
 </div>
@@ -1103,100 +1097,100 @@ window.Quarto = {
 </section>
 </section>
 </section>
-<section id="importance-en-data-science" class="level2">
-<h2 class="anchored" data-anchor-id="importance-en-data-science">Importance en Data Science</h2>
-<section id="échantillonnage-sampling" class="level3">
-<h3 class="anchored" data-anchor-id="échantillonnage-sampling">1. Échantillonnage (<em>Sampling</em>)</h3>
-<p><strong>Conséquences de la parcimonie</strong> :</p>
+<section id="importance-in-data-science" class="level2">
+<h2 class="anchored" data-anchor-id="importance-in-data-science">Importance in Data Science</h2>
+<section id="sampling" class="level3">
+<h3 class="anchored" data-anchor-id="sampling">1. Sampling</h3>
+<p><strong>Consequences of Sparsity</strong>:</p>
 <ul>
-<li>On a besoin d’un <strong>nombre exponentiel d’échantillons</strong> pour atteindre chaque position d’un espace de haute dimension</li>
-<li>Les inégalités de concentration (incluant WLLN et CLT) sont des <strong>indicateurs de précision</strong> pour l’estimation de densité</li>
-<li>Dans les processus pratiques comme l’échantillonnage par rejet, le <strong>taux de rejet</strong> devient exponentiellement proche de 100% (cf.&nbsp;sphère vide)</li>
+<li>An <strong>exponential number of samples</strong> is needed to cover a high-dimensional space</li>
+<li>Concentration inequalities (including WLLN and CLT) are <strong>precision indicators</strong> for density estimation</li>
+<li>In practical processes like rejection sampling, the <strong>rejection rate</strong> becomes exponentially close to 100% (cf.&nbsp;empty sphere)</li>
 </ul>
 </section>
-<section id="indexation-indexing" class="level3">
-<h3 class="anchored" data-anchor-id="indexation-indexing">2. Indexation (<em>Indexing</em>)</h3>
-<p><strong>Exploitation de la structure</strong> :</p>
+<section id="indexing" class="level3">
+<h3 class="anchored" data-anchor-id="indexing">2. Indexing</h3>
+<p><strong>Exploiting Structure</strong>:</p>
 <ul>
-<li>L’indexation exploite la structure des données pour anticiper les parties de l’espace <span class="math inline">\(\Omega\)</span> à visiter au moment de la requête</li>
-<li>Si tous les voisins sont apparemment à <strong>distance égale</strong> du centre, la structure <strong>disparaît</strong></li>
+<li>Indexing exploits data structure to anticipate which parts of space <span class="math inline">\(\Omega\)</span> to visit at query time</li>
+<li>If all neighbors appear at <strong>equal distance</strong> from the center, the structure <strong>disappears</strong></li>
 </ul>
-<p><strong>Techniques de partitionnement spatial</strong> (e.g.&nbsp;<em>kd-trees</em>) :</p>
+<p><strong>Spatial Partitioning Techniques</strong> (e.g., <em>kd-trees</em>):</p>
 <ul>
-<li>Tentent d’obtenir une partition de l’espace où chaque donnée est uniquement identifiée dans une intersection de cellules (chemins dans l’arbre de recherche)</li>
-<li>Avec la concentration des distances, la taille de la cellule atteint le <strong>rayon de la sphère</strong> pour couvrir l’espace complet</li>
+<li>Attempt to partition space so that each data point is uniquely identified within a cell intersection (paths in the search tree)</li>
+<li>With distance concentration, cell size reaches the <strong>sphere’s radius</strong> to cover the entire space</li>
 </ul>
-<p>⇒ La recherche équivaut à une <strong>recherche exhaustive</strong> ⇒ complexité <span class="math inline">\(O(N)\)</span></p>
+<p>⇒ Search becomes <strong>exhaustive</strong> ⇒ complexity <span class="math inline">\(O(N)\)</span></p>
 <ul>
-<li>Le <em>hubness</em> rend certaines données une réponse à <strong>presque toutes les requêtes</strong></li>
+<li><em>Hubness</em> makes some data points answers to <strong>almost all queries</strong></li>
 </ul>
 </section>
-<section id="apprentissage-learning" class="level3">
-<h3 class="anchored" data-anchor-id="apprentissage-learning">3. Apprentissage (<em>Learning</em>)</h3>
-<section id="fonction-dapproximation" class="level4">
-<h4 class="anchored" data-anchor-id="fonction-dapproximation">Fonction d’approximation</h4>
-<p><strong>Machine Learning</strong> = découverte d’<strong>approximateurs de fonctions</strong>.</p>
-<p><strong>Problème</strong> : Étant donné <span class="math inline">\(\phi : X \to Y\)</span> la fonction (vraie) qui mappe données <span class="math inline">\(X\)</span> vers labels <span class="math inline">\(Y\)</span>, le ML cherche une approximation <span class="math inline">\(\phi_\theta \in \mathcal{F}\)</span> de <span class="math inline">\(\phi\)</span> minimisant une erreur (risque) sur des échantillons (train/test).</p>
+<section id="learning" class="level3">
+<h3 class="anchored" data-anchor-id="learning">3. Learning</h3>
+<section id="function-approximation" class="level4">
+<h4 class="anchored" data-anchor-id="function-approximation">Function Approximation</h4>
+<p><strong>Machine Learning</strong> = discovering <strong>function approximators</strong>.</p>
+<p><strong>Problem</strong>: Given <span class="math inline">\(\phi : X \to Y\)</span> the true function mapping data <span class="math inline">\(X\)</span> to labels <span class="math inline">\(Y\)</span>, ML seeks an approximation <span class="math inline">\(\phi_\theta \in \mathcal{F}\)</span> of <span class="math inline">\(\phi\)</span> minimizing error (risk) on samples (train/test).</p>
 </section>
-<section id="borne-théorique" class="level4">
-<h4 class="anchored" data-anchor-id="borne-théorique">Borne théorique</h4>
-<p>Si <span class="math inline">\(\mathcal{F}\)</span> est une classe de fonctions <span class="math inline">\(c\)</span>-uniformément Lipschitz sur <span class="math inline">\(\Omega\)</span> :</p>
+<section id="theoretical-bound" class="level4">
+<h4 class="anchored" data-anchor-id="theoretical-bound">Theoretical Bound</h4>
+<p>If <span class="math inline">\(\mathcal{F}\)</span> is a class of <span class="math inline">\(c\)</span>-uniformly Lipschitz functions on <span class="math inline">\(\Omega\)</span>:</p>
 <p><span class="math display">\[\sup_{\phi_\theta \in \mathcal{F}} \|\phi_\theta - \phi\|_\infty \geq \frac{c\sqrt{D}N^{-1/D}}{2} \sqrt{\frac{2}{\pi e}}\left(1 + O\left(\frac{\log D}{D}\right)\right)\]</span></p>
-<p>⇒ Si on autorise une erreur <span class="math inline">\(c\varepsilon\)</span> pour <span class="math inline">\(\varepsilon &gt; 0\)</span>, le nombre d’exemples d’entraînement <span class="math inline">\(N\)</span> requis est :</p>
+<p>⇒ If we allow an error <span class="math inline">\(c\varepsilon\)</span> for <span class="math inline">\(\varepsilon &gt; 0\)</span>, the required number of training examples <span class="math inline">\(N\)</span> is:</p>
 <p><span class="math display">\[N \geq \frac{\varepsilon^{-D} D^{D/2}}{(2\pi e)^{D/2}}\]</span></p>
-<p><strong>Exemples concrets</strong> :</p>
+<p><strong>Concrete Examples</strong>:</p>
 <ul>
 <li><span class="math inline">\(c = 1\)</span>, <span class="math inline">\(\varepsilon = 0.1\)</span>, <span class="math inline">\(D = 3\)</span> → <span class="math inline">\(N \geq 74\)</span></li>
 <li><span class="math inline">\(c = 1\)</span>, <span class="math inline">\(\varepsilon = 0.1\)</span>, <span class="math inline">\(D = 10\)</span> → <span class="math inline">\(N \geq 687 \times 10^6\)</span></li>
 <li><span class="math inline">\(c = 1\)</span>, <span class="math inline">\(\varepsilon = 0.1\)</span>, <span class="math inline">\(D = 15\)</span> → <span class="math inline">\(N \geq 377 \times 10^{12}\)</span></li>
 <li><span class="math inline">\(c = 1\)</span>, <span class="math inline">\(\varepsilon = 0.01\)</span>, <span class="math inline">\(D = 10\)</span> → <span class="math inline">\(N \geq 6.9 \times 10^{18}\)</span></li>
 </ul>
-<p><strong>Cas réaliste en ML</strong> :</p>
+<p><strong>Realistic Case in ML</strong>:</p>
 <ul>
-<li>Données ML : généralement des centaines de features (<span class="math inline">\(D \sim O(10^2)\)</span>)</li>
-<li>Erreur typique recherchée : <span class="math inline">\(\varepsilon \approx 10^{-4}\)</span></li>
+<li>ML data: typically hundreds of features (<span class="math inline">\(D \sim O(10^2)\)</span>)</li>
+<li>Typical desired error: <span class="math inline">\(\varepsilon \approx 10^{-4}\)</span></li>
 </ul>
 <p><span class="math display">\[N \geq \frac{10^{4 \cdot 100} \cdot 100^{50}}{17.07^{50}} \approx 10^{400}\]</span></p>
-<p><strong>Conclusion</strong> : C’est <strong>impossible</strong> en pratique !</p>
+<p><strong>Conclusion</strong>: This is <strong>impossible</strong> in practice!</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Importance en Data Science
+<span class="screen-reader-only">None</span>📌 Quick Review: Importance in Data Science
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Échantillonnage</strong> : besoin exponentiel de samples, taux de rejet → 100%.</p>
-<p><strong>Indexation</strong> : structure disparaît, kd-trees → complexité <span class="math inline">\(O(N)\)</span>, hubness.</p>
-<p><strong>Learning</strong> : <span class="math inline">\(N \geq \varepsilon^{-D} D^{D/2} / (2\pi e)^{D/2}\)</span> → impossible pour <span class="math inline">\(D\)</span> grand et <span class="math inline">\(\varepsilon\)</span> petit.</p>
+<p><strong>Sampling</strong>: Exponential sample requirement, rejection rate → 100%.</p>
+<p><strong>Indexing</strong>: Structure disappears, kd-trees → complexity <span class="math inline">\(O(N)\)</span>, hubness.</p>
+<p><strong>Learning</strong>: <span class="math inline">\(N \geq \varepsilon^{-D} D^{D/2} / (2\pi e)^{D/2}\)</span> → impossible for large <span class="math inline">\(D\)</span> and small <span class="math inline">\(\varepsilon\)</span>.</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="pourquoi-la-data-science-fonctionne-t-elle-quand-même" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-la-data-science-fonctionne-t-elle-quand-même">4. Pourquoi la Data Science fonctionne-t-elle quand même ?</h3>
-<p><strong>Question</strong> : Pourquoi les processus de data science fonctionnent-ils malgré tout ?</p>
-<p><strong>Hypothèses dans l’analyse ci-dessus</strong> :</p>
+<section id="why-does-data-science-still-work" class="level3">
+<h3 class="anchored" data-anchor-id="why-does-data-science-still-work">4. Why Does Data Science Still Work?</h3>
+<p><strong>Question</strong>: Why do data science processes work despite these theoretical barriers?</p>
+<p><strong>Assumptions in the Above Analysis</strong>:</p>
 <ul>
-<li>La plupart des analyses supposent une distribution <strong>uniforme</strong> (ou isotrope – Normale, …) des données</li>
-<li>La plupart des analyses supposent des <strong>features indépendantes</strong></li>
+<li>Most analyses assume a <strong>uniform</strong> (or isotropic – Normal, …) distribution of data</li>
+<li>Most analyses assume <strong>independent</strong> features</li>
 </ul>
-<p><strong>Réalité</strong> :</p>
+<p><strong>Reality</strong>:</p>
 <ul>
-<li><strong>Les données réelles ne peuplent PAS l’espace de features uniformément</strong> (si les features sont informatives)</li>
-<li><strong>Les features montrent des corrélations</strong></li>
+<li><strong>Real data does NOT populate the feature space uniformly</strong> (if features are informative)</li>
+<li><strong>Features show correlations</strong></li>
 </ul>
-<p>⇒ En pratique, les données peuplent des <strong>sous-espaces</strong> de <span class="math inline">\(\Omega\)</span> de <strong>dimensionnalité intrinsèque locale plus faible</strong></p>
-<p><strong>Solutions</strong> :</p>
+<p>⇒ In practice, data populates <strong>subspaces</strong> of <span class="math inline">\(\Omega\)</span> with <strong>lower local intrinsic dimensionality</strong></p>
+<p><strong>Solutions</strong>:</p>
 <ul>
-<li><strong>Décorréler les features</strong> (e.g.&nbsp;via espace latent linéaire)</li>
-<li><strong>Découvrir des sous-espaces</strong> de données (clustering, réduction de dimension non-linéaire)</li>
+<li><strong>Decorrelate features</strong> (e.g., via linear latent space)</li>
+<li><strong>Discover data subspaces</strong> (clustering, nonlinear dimensionality reduction)</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
@@ -1204,52 +1198,52 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Pourquoi ça marche ?
+<span class="screen-reader-only">None</span>📌 Quick Review: Why It Works
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Analyses supposent distribution <strong>uniforme</strong> et features <strong>indépendantes</strong>.</p>
-<p><strong>Réalité</strong> : données sur <strong>sous-espaces</strong> de dimensionnalité intrinsèque plus faible.</p>
-<p><strong>Solutions</strong> : décorrélation, clustering, réduction de dimension.</p>
+<p>Analyses assume <strong>uniform</strong> distribution and <strong>independent</strong> features.</p>
+<p><strong>Reality</strong>: Data lies on <strong>subspaces</strong> of lower intrinsic dimensionality.</p>
+<p><strong>Solutions</strong>: Decorrelation, clustering, dimensionality reduction.</p>
 </div>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="résumé-global" class="level2">
-<h2 class="anchored" data-anchor-id="résumé-global">Résumé Global</h2>
-<p><strong>Géométrie en haute dimension</strong> (<span class="math inline">\(D \gtrsim 10\)</span>) est <strong>différente</strong> de la géométrie 3D habituelle.</p>
-<section id="aspects-positifs" class="level3">
-<h3 class="anchored" data-anchor-id="aspects-positifs">+ Aspects positifs</h3>
+<section id="global-summary" class="level2">
+<h2 class="anchored" data-anchor-id="global-summary">Global Summary</h2>
+<p><strong>High-dimensional geometry</strong> (<span class="math inline">\(D \gtrsim 10\)</span>) is <strong>different</strong> from familiar 3D geometry.</p>
+<section id="positive-aspects" class="level3">
+<h3 class="anchored" data-anchor-id="positive-aspects">+ Positive Aspects</h3>
 <ul>
-<li>Les <strong>inégalités de concentration</strong> sont à la base de l’estimation statistique</li>
-<li><strong>Lois des Grands Nombres</strong> permettent l’estimation de densité</li>
-<li><strong>Projections aléatoires</strong> exploitent la quasi-orthogonalité</li>
+<li><strong>Concentration inequalities</strong> are the basis of statistical estimation</li>
+<li><strong>Laws of Large Numbers</strong> enable density estimation</li>
+<li><strong>Random projections</strong> exploit quasi-orthogonality</li>
 </ul>
 </section>
-<section id="aspects-négatifs-curse" class="level3">
-<h3 class="anchored" data-anchor-id="aspects-négatifs-curse">- Aspects négatifs (Curse)</h3>
+<section id="negative-aspects-curse" class="level3">
+<h3 class="anchored" data-anchor-id="negative-aspects-curse">- Negative Aspects (Curse)</h3>
 <ul>
-<li>Les données deviennent très <strong>parcimonieuses</strong> sauf à utiliser exponentiellement plus de données</li>
-<li>Même avec des données denses, les valeurs de <strong>distance et angle se concentrent</strong>
+<li>Data becomes very <strong>sparse</strong> unless using exponentially more data</li>
+<li>Even with dense data, <strong>distance and angle values concentrate</strong>
 <ul>
-<li>Depuis une requête, tous les voisins sont <strong>équidistants</strong></li>
-<li>Depuis une direction, tout le reste semble <strong>orthogonal</strong></li>
+<li>From a query, all neighbors are <strong>equidistant</strong></li>
+<li>From a direction, everything else appears <strong>orthogonal</strong></li>
 </ul></li>
-<li>La densité se concentre sur des <strong>rayons étroits</strong> → échantillonnage biaisé</li>
-<li>Les <strong>hubs</strong> font partie de toutes les classes/réponses de requête</li>
+<li>Density concentrates on <strong>narrow radii</strong> → biased sampling</li>
+<li><strong>Hubs</strong> are part of all class/query responses</li>
 </ul>
 </section>
 <section id="solution" class="level3">
 <h3 class="anchored" data-anchor-id="solution">⇒ Solution</h3>
-<p>Puisque c’est par construction, la seule solution est d’opérer d’une manière ou d’une autre dans des <strong>espaces de basse dimension</strong> :</p>
+<p>Since this is by construction, the only solution is to operate in <strong>low-dimensional spaces</strong> in some way:</p>
 <ul>
-<li>Réduction de dimensionnalité</li>
-<li>Découverte de sous-espaces</li>
-<li>Décorrélation des features</li>
+<li>Dimensionality reduction</li>
+<li>Subspace discovery</li>
+<li>Feature decorrelation</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
@@ -1257,16 +1251,16 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span>📌 Révision Rapide : Résumé
+<span class="screen-reader-only">None</span>📌 Quick Review: Summary
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Haute dimension</strong> (<span class="math inline">\(D \gtrsim 10\)</span>) ≠ géométrie 3D.</p>
-<p><strong>⊕</strong> : inégalités de concentration pour estimation, projections aléatoires.</p>
-<p><strong>⊖</strong> : data sparsity, concentration distances/angles, hubs.</p>
-<p><strong>Solution</strong> : opérer en <strong>basse dimension</strong>.</p>
+<p><strong>High dimension</strong> (<span class="math inline">\(D \gtrsim 10\)</span>) ≠ 3D geometry.</p>
+<p><strong>⊕</strong>: Concentration inequalities for estimation, random projections.</p>
+<p><strong>⊖</strong>: Data sparsity, distance/angle concentration, hubs.</p>
+<p><strong>Solution</strong>: Operate in <strong>low dimension</strong>.</p>
 </div>
 </div>
 </div>
