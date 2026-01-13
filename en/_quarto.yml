@@ -16,10 +16,10 @@ website:
       - text: Langage
         icon: globe
         menu:
-          - text: "Anglais"
-            href: ../index.html
-          - text: "Français"
+          - text: "English"
             href: index.html
+          - text: "French"
+            href: fr/index.html
   sidebar:
       style: "docked"
       search: true
