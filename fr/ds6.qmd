@@ -1,7 +1,5 @@
 # Document de Révision : Expectation-Maximization pour la modélisation de densité
 
----
-
 ## Introduction et Motivation
 
 ### Contexte général
@@ -698,7 +696,3 @@ est maximisée parmi toutes les classes
 - BIC (Bayesian Information Criterion)
 - Trade-off biais-variance
 - Parcimonie de modèle
-
----
-
-**Fin du document de révision**

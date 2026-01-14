@@ -1,0 +1,273 @@
+# Expectation-Maximization (EM) pour modèles de mélange - Support de révision oral
+
+## 1. Le problème fondamental : Démêler les sources mélangées
+
+Imaginez que vous êtes dans une salle avec plusieurs instruments de musique qui jouent en même temps. Vous enregistrez le son global (le mélange). Comment retrouver **les caractéristiques de chaque instrument** (hauteur, volume) sans savoir qui joue quoi à quel moment ?
+
+C'est exactement le problème que résout l'algorithme EM pour les modèles de mélange : **séparer un mélange en ses composantes sous-jacentes** quand on ne connaît pas l'origine de chaque observation.
+
+::: {.callout-important}
+**Concept Clé : Apprentissage non supervisé avec variables cachées**
+L'EM est utilisé quand certaines informations sont **manquantes** (ici, l'étiquette de quelle composante a généré chaque donnée). On appelle ces informations manquantes des **variables latentes**.
+:::
+
+```{mermaid}
+graph TD
+    A[Mélange de données<br/>origines inconnues] --> B{Comment séparer ?}
+    B --> C[Approche directe<br/>Impossible sans<br/>connaître les origines]
+    B --> D[Approche EM<br/>Alterner entre estimer<br/>origines et paramètres]
+    C --> E[Échec]
+    D --> F[Succès : retrouve<br/>les composantes]
+    
+    style E fill:#fbb,stroke:#333
+    style F fill:#bfb,stroke:#333
+```
+
+## 2. L'analogie du professeur et des élèves
+
+### Le scénario pédagogique
+Imaginez un professeur qui reçoit des copies anonymes de deux élèves (A et B). Il sait que :
+- Il y a deux élèves
+- Chaque élève a son niveau moyen (µ) et sa régularité (σ)
+- Mais il ne sait pas quelle copie vient de quel élève
+
+**Comment estimer le niveau de chaque élève ?**
+
+La stratégie EM :
+1. **Étape E (Expectation)** : Deviner l'auteur de chaque copie basé sur des niveaux estimés
+2. **Étape M (Maximization)** : Recalculer les niveaux moyens basés sur ces attributions
+3. **Répéter** jusqu'à convergence
+
+::: {.callout-tip}
+**Idée Essentielle : Le cercle vertueux de l'EM**
+Plus on estime bien les paramètres, mieux on peut deviner les origines. Plus on devine bien les origines, mieux on peut estimer les paramètres. L'EM exploite cette synergie.
+:::
+
+## 3. Les modèles de mélange gaussien : Des "bosses" dans le paysage des données
+
+### Visualisation géométrique
+Imaginez un paysage de montagnes avec plusieurs sommets. Chaque sommet représente un groupe dans vos données. Un modèle de mélange gaussien modélise ce paysage comme une **superposition de collines gaussiennes**.
+
+**Formule du mélange :**
+```
+f(x) = π₁·N(x|µ₁,σ₁) + π₂·N(x|µ₂,σ₂) + ... + πₖ·N(x|µₖ,σₖ)
+```
+
+Où :
+- **πⱼ** = proportion de la composante j (hauteur relative de la colline)
+- **N(x|µⱼ,σⱼ)** = colline gaussienne centrée en µⱼ avec écart σⱼ
+
+```{mermaid}
+graph LR
+    A[Données observées] --> B[Modèle = somme pondérée<br/>de gaussiennes]
+    B --> C[3 composantes : π₁N₁ + π₂N₂ + π₃N₃]
+    C --> D[Paysage de densité]
+    
+    style B fill:#e6f3ff
+    style D fill:#fff0e6
+```
+
+## 4. Le dilemme du poulet et de l'œuf
+
+### Pourquoi c'est difficile à estimer
+Pour estimer les paramètres (µⱼ, σⱼ), il faudrait connaître l'origine de chaque point.  
+Pour connaître l'origine de chaque point, il faudrait connaître les paramètres.
+
+**C'est le problème classique du "poulet et de l'œuf" !**
+
+::: {.callout-note}
+**La solution EM : Briser le cercle vicieux**
+Au lieu de chercher une solution parfaite d'un coup, l'EM procède par **approximations successives** :
+1. Partir d'une estimation initiale des paramètres
+2. Utiliser ces paramètres pour estimer les origines
+3. Utiliser ces origines estimées pour mettre à jour les paramètres
+4. Répéter jusqu'à ce que les estimations se stabilisent
+:::
+
+## 5. Les deux étapes magiques de l'EM
+
+### Étape E (Expectation) : L'attribution probabiliste
+**Question :** Sachant les paramètres actuels, quelle est la probabilité que chaque point vienne de chaque composante ?
+
+**Calcul des "responsabilités" :**
+```
+γᵢⱼ = P(point i vient de la composante j | paramètres actuels)
+```
+
+C'est une **attribution douce** (soft assignment) : chaque point appartient partiellement à toutes les composantes.
+
+### Étape M (Maximization) : La mise à jour des paramètres
+**Question :** Sachant les responsabilités, quelles sont les meilleures estimations des paramètres ?
+
+**Recalcul des paramètres :**
+- **µⱼ** = moyenne pondérée des points (pondérée par γᵢⱼ)
+- **σⱼ** = variance pondérée des points
+- **πⱼ** = proportion moyenne de la composante
+
+```{mermaid}
+graph TD
+    A[Initialisation aléatoire<br/>des paramètres] --> B[Étape E<br/>Calcul des responsabilités γᵢⱼ]
+    B --> C[Étape M<br/>Mise à jour des paramètres]
+    C --> D{Convergence ?}
+    D -->|Non| B
+    D -->|Oui| E[Solution finale]
+    
+    style B fill:#e6ffe6
+    style C fill:#ffe6e6
+    style E fill:#e6f3ff
+```
+
+## 6. L'initialisation : Le point de départ crucial
+
+### Pourquoi l'initialisation est importante
+L'EM est un algorithme **"hill-climbing"** : il gravit la colline de vraisemblance à partir de son point de départ. S'il part d'un mauvais endroit, il peut rester coincé dans un **maximum local** (petit sommet) au lieu d'atteindre le **maximum global** (plus haut sommet).
+
+::: {.callout-warning}
+**Piège à éviter : L'aléatoire pur**
+Initialiser complètement au hasard peut conduire à :
+- Des convergences lentes
+- Des solutions sous-optimales
+- Des résultats non reproductibles
+:::
+
+### Stratégies d'initialisation intelligentes
+1. **K-means d'abord** : Utiliser K-means pour une première attribution, puis convertir en probabilités
+2. **K-means++** : Version améliorée qui éloigne les centres initiaux
+3. **Multiples essais** : Lancer l'EM plusieurs fois avec différentes initialisations, garder la meilleure
+
+## 7. Le choix de K : Combien de composantes ?
+
+### Le dilemme de la complexité
+- **K trop petit** : Sous-ajustement (underfitting) → modèle trop simple, ne capture pas la structure
+- **K trop grand** : Sur-ajustement (overfitting) → modèle trop complexe, capture le bruit
+
+### Méthodes pour choisir K
+1. **Critère d'information (BIC/AIC)** : Pénalise la complexité
+   ```
+   BIC = -2·log(vraisemblance) + n_param·log(n_points)
+   ```
+   On choisit le K qui minimise le BIC.
+
+2. **Validation croisée** : Séparer les données, entraîner sur une partie, évaluer sur l'autre.
+
+3. **Analyse de la vraisemblance** : Observer quand l'augmentation de vraisemblance ralentit (méthode du "coude").
+
+```{mermaid}
+graph LR
+    A[K=1] --> B[Sous-ajustement<br/>Trop simple]
+    C[K optimal] --> D[Bon compromis]
+    E[K trop grand] --> F[Sur-ajustement<br/>Trop complexe]
+    
+    style B fill:#fbb,stroke:#333
+    style D fill:#bfb,stroke:#333
+    style F fill:#fbb,stroke:#333
+```
+
+## 8. EM vs K-means : Le duel des algorithmes
+
+### Les similitudes
+- Deux algorithmes itératifs
+- Deux algorithmes de clustering
+- Deux algorithmes sensibles à l'initialisation
+
+### Les différences fondamentales
+
+| Aspect | K-means | EM pour GMM |
+|--------|---------|-------------|
+| **Modèle** | Géométrique (distances) | Probabiliste (densités) |
+| **Appartenance** | Dure (un seul cluster) | Douce (probabiliste) |
+| **Forme clusters** | Sphères uniquement | Ellipses orientées |
+| **Bruit/tolérance** | Sensible aux outliers | Plus robuste |
+
+::: {.callout-tip}
+**K-means est un cas particulier de l'EM**
+Quand les covariances sont sphériques et identiques, et qu'on force les appartenances à être dures, l'EM se réduit à K-means.
+:::
+
+## 9. Les pièges courants et comment les éviter
+
+### Piège 1 : Les matrices de covariance singulières
+**Problème :** Quand une composante a très peu de points, sa matrice de covariance peut devenir singulière (non-inversible).
+
+**Solution :** Contraintes sur les covariances (diagonale, sphérique) ou ajout d'un terme de régularisation.
+
+### Piège 2 : La convergence lente
+**Problème :** L'EM peut prendre beaucoup d'itérations pour converger, surtout si les composantes sont mal séparées.
+
+**Solution :** Utiliser des critères d'arrêt adaptatifs, monitoring de la vraisemblance.
+
+### Piège 3 : L'interprétation des résultats
+**Problème :** Les composantes trouvées ne correspondent pas toujours à des "classes" réelles.
+
+**Solution :** Toujours valider avec des connaissances du domaine, visualiser les résultats.
+
+## 10. L'EM dans le monde réel : Exemple des séparations de sources
+
+### Séparation audio (Cocktail Party Problem)
+**Problème :** Plusieurs personnes parlent en même temps, plusieurs microphones enregistrent.
+
+**Solution EM :**
+1. Modéliser chaque source comme une gaussienne dans l'espace des caractéristiques audio
+2. Utiliser l'EM pour estimer les paramètres de chaque source
+3. Séparer les signaux en fonction des responsabilités
+
+### Segmentation d'images
+**Problème :** Une image contient plusieurs régions (ciel, terre, objets).
+
+**Solution EM :**
+1. Modéliser chaque région par une gaussienne dans l'espace des couleurs
+2. Utiliser l'EM pour trouver les paramètres de chaque région
+3. Attribuer chaque pixel à la région la plus probable
+
+## 11. Fiche de révision ultra-condensée
+
+::: {.callout-important}
+**En 30 secondes :**
+
+1. **EM** = algorithme pour estimer modèles avec variables cachées
+2. **Deux étapes** : E (calcul responsabilités), M (mise à jour paramètres)
+3. **Pour GMM** : modélise données comme mélange de gaussiennes
+4. **Avantage** : attribution douce, modèle probabiliste
+5. **Défis** : initialisation, choix de K, maxima locaux
+6. **Utilisations** : clustering, séparation sources, segmentation
+7. **Parenté** : généralise K-means, lié à d'autres modèles latents
+:::
+
+## 12. Pour l'oral : Les 3 histoires à raconter
+
+### Histoire 1 : Le professeur et les copies anonymes
+"Imaginez un professeur qui reçoit des copies anonymes de deux élèves. Comment estimer leur niveau moyen sans savoir qui a écrit quoi ? L'EM propose une solution..."
+
+### Histoire 2 : La séparation des voix au cocktail
+"À une fête bruyante, comment isoler la voix d'une personne ? L'EM modélise chaque voix comme une source et les sépare..."
+
+### Histoire 3 : Le paysage de montagnes
+"Vos données sont comme un paysage avec plusieurs sommets. L'EM identifie chaque sommet (composante) et mesure à quel sommet appartient chaque point..."
+
+## 13. Questions pièges et comment y répondre
+
+**Q : "Pourquoi l'EM converge-t-il ?"**
+R : "Parce qu'à chaque itération, la vraisemblance des données ne peut qu'augmenter (ou rester stable). C'est un algorithme 'hill-climbing'."
+
+**Q : "EM ou K-means ?"**
+R : "K-means si vous voulez une attribution claire et rapide. EM si vous voulez un modèle probabiliste et des formes de clusters flexibles."
+
+**Q : "Comment choisir K ?"**
+R : "Utilisez des critères comme le BIC qui pénalisent la complexité, ou validez sur des données de test. Parfois, le domaine d'application donne une indication."
+
+## 14. L'astuce mnémotechnique finale
+
+**EM = Estimation Maximisation**
+- **E** comme **Espérer** les appartenances (responsabilités)
+- **M** comme **Maximiser** la vraisemblance (paramètres)
+
+**GMM = Gaussiennes Multiples en Mélange**
+- Plusieurs cloches gaussiennes
+- Superposées avec des poids
+- Modélisent des groupes dans les données
+
+## 15. En résumé : L'EM, c'est...
+
+**L'art d'apprendre à partir de l'incomplétude.** Une méthode puissante qui transforme l'incertitude sur les origines des données en une estimation probabiliste raffinée.
+
+**Pour finir :** L'EM ne vous donne pas la vérité absolue, mais la **meilleure explication probabiliste** étant donné les observations et le modèle choisi.

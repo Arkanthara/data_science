@@ -1,0 +1,614 @@
+# L'essentiel
+
+## Introduction et Motivation
+
+L'algorithme **Expectation-Maximization (EM)** est une méthode d'**estimation de facteurs latents** dans un contexte **non supervisé** de modélisation conditionnelle.
+
+### Le problème fondamental
+
+Imaginez que vous êtes dans une salle avec plusieurs instruments de musique qui jouent en même temps. Vous enregistrez le son global (le mélange). Comment retrouver **les caractéristiques de chaque instrument** (hauteur, volume) sans savoir qui joue quoi à quel moment ?
+
+C'est exactement le problème que résout l'algorithme EM pour les modèles de mélange : **séparer un mélange en ses composantes sous-jacentes** quand on ne connaît pas l'origine de chaque observation.
+
+📌 **Concept clé :** L'EM est utilisé quand certaines informations sont **manquantes** (ici, l'étiquette de quelle composante a généré chaque donnée). On appelle ces informations manquantes des **variables latentes**.
+
+### Rappel : Modèles utilisés jusqu'à présent
+
+**Modèles à composantes (PCA) :**
+
+- Critère basé sur la **variance** de données centrées
+- Distribution implicite : **normale**
+
+**Modèles discriminants (LDA) :**
+
+- Variance des données projetées pour les modèles intra-classe (within) et inter-classe (between)
+
+📌 **Point commun :** La distribution est **fixée** (essentiellement normale) et on cherche ses paramètres $\theta$ (par exemple $\theta = [\mu, \Sigma]$).
+
+### Nouvelle approche : Modélisation de densité
+
+**Alternative :** Chercher un modèle pour la **densité des données**.
+
+Soit $f_\theta(x) : \Omega \to \mathbb{R}$ la **densité des données**.
+
+---
+
+## Méthodes d'estimation de densité
+
+### Vue d'ensemble des méthodes
+
+**Méthodes non-paramétriques :**
+
+- **k-Nearest Neighbors (kNN)** : estimation basée sur les $k$ plus proches voisins
+- **Fenêtres de Parzen** : estimation par noyaux
+- **Réseaux RBF** : fonctions à base radiale
+- **Histogrammes** : discrétisation de l'espace
+
+**Méthodes paramétriques :**
+
+- **Modèles de mélange** (Mixture models) : le focus de ce cours
+
+---
+
+## Modèles de mélange : Définition
+
+### Formulation générale
+
+La densité $f(x)$ est générée par $c$ fonctions de "base" $\phi$ (composantes), issues d'une famille $\mathcal{F}$ :
+
+$$f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j)$$
+
+**Composantes du modèle :**
+
+- $\pi_j \in \mathbb{R}$ : **paramètres du mélange** (mixture parameters)
+- $\phi(x, \theta_j) \in \mathcal{F}$ : **fonctions de base** contrôlées par les paramètres $\theta_j$
+
+### Hypothèses du modèle
+
+**Trois hypothèses fondamentales :**
+
+- Le **nombre de composantes** $c \in \mathbb{N}^*$ est **connu**
+- La **famille de fonctions** $\mathcal{F}$ est **connue**
+- Les **étiquettes** (class labels) sont **inconnues** (contexte non supervisé)
+
+---
+
+## Interprétation probabiliste
+
+### Les modèles de mélange comme "bosses" dans le paysage
+
+Imaginez un paysage de montagnes avec plusieurs sommets. Chaque sommet représente un groupe dans vos données. Un modèle de mélange gaussien modélise ce paysage comme une **superposition de collines gaussiennes**.
+
+La densité $f(x)$ représente un **processus aléatoire** où $x$ est tiré d'un ensemble d'états $\omega_j$ avec probabilité a priori $\mathbb{P}(\omega_j)$.
+
+$$f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j) = \mathbb{P}(x|\theta) = \sum_{j=1}^{c} \mathbb{P}(\omega_j) \mathbb{P}(x|\omega_j, \theta_j)$$
+
+**Par identification :**
+
+- $\pi_j = \mathbb{P}(\omega_j)$ avec la contrainte $\sum_j \pi_j = 1$
+- $\phi(x, \theta_j) = \mathbb{P}(x|\omega_j, \theta_j)$ est la **probabilité conditionnelle** que $x$ soit généré par l'état $\omega_j$
+
+---
+
+## Estimation par maximum de vraisemblance (MLE)
+
+### Rappel sur la vraisemblance
+
+Soit $X = \{x_1, \ldots, x_N\}$ des échantillons **non étiquetés** générés par le mélange $f(x) = \mathbb{P}(x|\theta)$.
+
+**Paramètres à inférer :**
+
+$$\theta = [\pi_j, \theta_j]_{j \in [[c]]}$$
+
+En supposant les données **indépendantes et identiquement distribuées** (i.i.d.) :
+
+$$\mathbb{P}(X|\theta) \stackrel{\text{i.i.d}}{=} \prod_{i=1}^{N} \mathbb{P}(x_i|\theta)$$
+
+**Estimateur de vraisemblance :**
+
+$$\hat{\theta} = \underset{\theta}{\arg\max} \, \mathbb{P}(X|\theta)$$
+
+### Log-vraisemblance
+
+**Transformation logarithmique :**
+
+$$LL(\theta, X) = \sum_{i=1}^{N} \log \mathbb{P}(x_i|\theta) = \sum_{i=1}^{N} \log \left[\sum_{j=1}^{c} \pi_j \phi(x_i, \theta_j)\right]$$
+
+**Estimateur du maximum de log-vraisemblance (MLE) :**
+
+$$\hat{\theta} = \underset{\theta}{\arg\max} \, LL(\theta, X)$$
+
+📌 **Avantage :** Transformation du produit en somme, numériquement plus stable.
+
+---
+
+## Mélange gaussien (GMM)
+
+### Choix de la famille gaussienne
+
+Puisque $\phi$ doit être une **fonction de densité de probabilité**, choisir la famille de densités **normales** comme base semble raisonnable (choix **agnostique**) :
+
+$$\phi \in \mathcal{F} = \{\mathcal{N}(\mu, \Sigma)\}$$
+
+**Modèle de mélange gaussien :**
+
+$$f(x) = \sum_{j=1}^{c} \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)$$
+
+où $\phi_j(x) := \phi(x, \theta_j) = \mathcal{N}(x|\mu_j, \Sigma_j)$.
+
+### Avantages du GMM
+
+✅ **Universalité :** Peut approximer **n'importe quelle densité** (théorème d'approximation universelle).
+
+✅ **Linéarité :** Permet un système **linéaire** des paramètres lors de la maximisation de la log-vraisemblance.
+
+---
+
+## Cas simple : 1 composante
+
+### Estimation directe
+
+**Paramètres :** $\theta = [\mu, \Sigma]$
+
+::: {.callout-note collapse="true"}
+## 📌 Détails mathématiques : Optimisation directe
+
+**Problème d'optimisation :**
+
+$$\hat{\theta} = \underset{\theta}{\arg\max} \sum_i \log e^{-(x_i - \mu)^T \Sigma^{-1} (x_i - \mu)} \Leftrightarrow \hat{\theta} = \underset{\theta}{\arg\min} \sum_i (x_i - \mu)^T \Sigma^{-1} (x_i - \mu)$$
+
+**Solutions analytiques :**
+
+$$\hat{\mu} = \frac{1}{N} \sum_i x_i$$
+
+$$\hat{\Sigma} = \frac{1}{N} \sum_i (x_i - \hat{\mu})(x_i - \hat{\mu})^T$$
+
+💡 **Remarque :** Solutions identiques à l'estimation empirique standard de moyenne et covariance.
+:::
+
+---
+
+## Le dilemme du poulet et de l'œuf
+
+### Problématique pour 2 composantes
+
+**Paramètres :**
+
+$$\theta = [\pi_1, \theta_1, \pi_2, \theta_2] = [\pi_1, [\mu_1, \Sigma_1], \pi_2, [\mu_2, \Sigma_2]]$$
+
+avec la contrainte $\pi_1 + \pi_2 = 1$.
+
+**Log-vraisemblance :**
+
+$$LL(\theta, X) = \sum_{i=1}^{N} \log[\pi_1 \phi(x_i, \theta_1) + \pi_2 \phi(x_i, \theta_2)]$$
+
+⚠️ **Difficulté :** Maximisation difficile à cause de la **somme à l'intérieur du logarithme** !
+
+### Le cercle vicieux
+
+Pour estimer les paramètres ($\mu_j$, $\Sigma_j$), il faudrait connaître l'origine de chaque point.
+Pour connaître l'origine de chaque point, il faudrait connaître les paramètres.
+
+**C'est le problème classique du "poulet et de l'œuf" !**
+
+💡 **La solution EM :** Au lieu de chercher une solution parfaite d'un coup, l'EM procède par **approximations successives**.
+
+---
+
+## Variables latentes et stratégie EM
+
+### Introduction des variables latentes
+
+**Problème fondamental :**
+
+Ce qui manque ici est l'**assignation** de $x_i$ à l'une des 2 composantes $\phi_j$.
+
+**Observation clé :**
+
+Si on **connaissait** cette assignation, on traiterait le problème comme **deux fois le cas à 1 composante**.
+
+### Variables d'assignation binaire
+
+On introduit des **variables latentes (non observées)** : l'assignation binaire $\delta_{ij} \in \{\text{true}, \text{false}\}$ de chaque $x_i$ à la composante $\phi_j$ :
+
+- $x_i \sim \phi_1 \Rightarrow \delta_{i1} = \text{true}, \delta_{i2} = \text{false}$
+- $x_i \sim \phi_2 \Rightarrow \delta_{i1} = \text{false}, \delta_{i2} = \text{true}$
+
+📌 **Mais** on peut seulement **estimer** $\delta_{ij}$ → **stratégie EM**.
+
+---
+
+## Les deux étapes magiques de l'EM
+
+### Étape E (Expectation) : Attribution probabiliste
+
+**Paramètres :**
+
+$$\theta = [\pi_1, \theta_1, \pi_2, \theta_2]$$
+
+**Initialisation :**
+
+On suppose connaître une valeur initiale $\theta^0 = [\pi_1^0, \theta_1^0, \pi_2^0, \theta_2^0]$.
+
+**Calcul de la responsabilité (Responsibility) :**
+
+On peut inférer la **contribution statistique** $\gamma_{ij}$ de chaque donnée $x_i$ à chaque composante $\phi_j$ :
+
+$$\gamma_{ij}(\theta^0) = \mathbb{P}[\delta_{ij} = \text{true} | \theta^0, X]$$
+
+::: {.callout-note collapse="true"}
+## 📌 Détails mathématiques : Formule de Bayes
+
+**Formule de Bayes :**
+
+$$\gamma_{i1}(\theta^0) = \frac{\pi_1^0 \phi(x_i, \theta_1^0)}{\pi_1^0 \phi(x_i, \theta_1^0) + \pi_2^0 \phi(x_i, \theta_2^0)}$$
+
+**Définition formelle :**
+
+$\gamma_{ij}$ est la **responsabilité** (responsibility) de la composante $j$ pour la donnée $i$.
+
+**Signification :**
+
+- C'est la **vraisemblance** que $x_i$ soit (purement) modélisée par la composante $\phi_j$
+- $\gamma_{ij}$ représente la **part de $x_i$** qui est modélisée (générée) par la composante $\phi_j$
+:::
+
+**Question :** Sachant les paramètres actuels, quelle est la probabilité que chaque point vienne de chaque composante ?
+
+C'est une **attribution douce** (soft assignment) : chaque point appartient partiellement à toutes les composantes.
+
+### Étape M (Maximization) : Mise à jour des paramètres
+
+**Note :** Pour 2 composantes, $\gamma_{i1} + \gamma_{i2} = 1$.
+
+Étant donné la **responsabilité** de chaque donnée ($\gamma_{ij}$), on peut estimer les paramètres de chaque composante par **maximum de vraisemblance pondéré**.
+
+::: {.callout-note collapse="true"}
+## 📌 Détails mathématiques : Estimation des paramètres
+
+**Moyennes :**
+
+$$\hat{\mu}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} x_i$$
+
+$$\hat{\mu}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} x_i$$
+
+**Covariances :**
+
+$$\hat{\Sigma}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} (x_i - \hat{\mu}_1)(x_i - \hat{\mu}_1)^T$$
+
+$$\hat{\Sigma}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} (x_i - \hat{\mu}_2)(x_i - \hat{\mu}_2)^T$$
+
+**Poids du mélange :**
+
+$$\pi_j = \frac{1}{N} \sum_{i=1}^{N} \gamma_{ij}$$
+
+Cette formule garantit que $\sum_j \pi_j = 1$.
+:::
+
+**Question :** Sachant les responsabilités, quelles sont les meilleures estimations des paramètres ?
+
+**Recalcul des paramètres :**
+
+- **$\mu_j$** = moyenne pondérée des points (pondérée par $\gamma_{ij}$)
+- **$\Sigma_j$** = variance pondérée des points
+- **$\pi_j$** = proportion moyenne de la composante
+
+---
+
+## Assignation dure vs douce
+
+### Assignation dure (Hard assignment)
+
+On peut utiliser $\gamma_{ij}$ pour déterminer $\delta_{ij}$ → $x_i$ peut être assigné soit à $\phi_1$ soit à $\phi_2$ (**vote maximum** → binarisation).
+
+→ Assignation de type **K-means** : chaque donnée est assignée à **une et une seule** composante (cluster).
+
+### Assignation douce (Soft assignment)
+
+**EM est "plus douce" :**
+
+Une donnée **contribue** (via $\gamma_{ij}$) à **plusieurs composantes** (modes de densité).
+
+EM calcule une **assignation douce** avec :
+
+$$\sum_j \gamma_{ij} = 1 \quad \forall i$$
+
+💡 **Avantage :** Plus robuste et reflète mieux l'incertitude dans l'assignation.
+
+---
+
+## Convergence de l'algorithme EM
+
+### Principe itératif
+
+Le cycle alterné **Expectation-Maximization** augmente la vraisemblance des données par rapport au modèle de mélange.
+
+**Critère de convergence :**
+
+Le processus est itéré jusqu'à **convergence**, c'est-à-dire quand la vraisemblance des données ne change (presque) plus :
+
+$$|LL(\theta^{t+1}, X) - LL(\theta^t, X)| < \epsilon$$
+
+où $\epsilon$ est un seuil de tolérance (par exemple $\epsilon = 10^{-6}$).
+
+### Propriété de monotonie
+
+✅ **Propriété garantie :** À chaque itération, $LL(\theta^{t+1}, X) \geq LL(\theta^t, X)$.
+
+La log-vraisemblance **ne diminue jamais** (propriété hill-climbing).
+
+---
+
+## Limitations de l'algorithme EM
+
+### Sensibilité à l'initialisation
+
+⚠️ **Hill-climbing :** L'algorithme dépend des **paramètres initiaux**.
+
+**Conséquences :**
+
+- **Sensible aux maxima locaux** : peut converger vers un optimum local plutôt que global
+- Différentes initialisations peuvent donner différents résultats
+
+💡 **L'initialisation est cruciale :** L'EM est un algorithme "hill-climbing" : il gravit la colline de vraisemblance à partir de son point de départ. S'il part d'un mauvais endroit, il peut rester coincé dans un **maximum local** (petit sommet) au lieu d'atteindre le **maximum global** (plus haut sommet).
+
+### Stratégies d'initialisation
+
+**Méthodes recommandées :**
+
+- **K-means** : utiliser le clustering K-means pour initialiser les centres $\mu_j$
+- **K-means++** : version améliorée de K-means avec initialisation intelligente
+- **Exécutions multiples** : lancer l'algorithme plusieurs fois avec différentes initialisations et garder la meilleure
+
+### Convergence lente
+
+⚠️ **Convergence potentiellement lente**, selon :
+
+- La séparation entre les composantes
+- La forme des distributions
+- Le nombre de composantes
+
+---
+
+## Généralisation à c composantes
+
+### Algorithme EM complet
+
+**Étape 1 : Initialisation**
+
+Initialisation des paramètres :
+
+$$\theta^0 = \{\pi_j^0, \mu_j^0, \Sigma_j^0\}_{j \in [[c]]}$$
+
+**Stratégies courantes :**
+
+- **Générale :** $\pi_j = 1/c$, $\mu_j$ choisi aléatoirement, $\Sigma_j = I_D$
+- **Alternative :** utiliser K-means comme initialisation
+
+**Étape 2 : E-step**
+
+Calcul des responsabilités pour chaque donnée $i \in [[N]]$ et chaque composante $j \in [[c]]$ :
+
+$$\gamma_{ij} = \frac{\pi_j \phi(x_i, \theta_j)}{\sum_{k=1}^{c} \pi_k \phi(x_i, \theta_k)}$$
+
+**Étape 3 : M-step**
+
+Estimation des paramètres du mélange :
+
+$$\mu_j = \frac{\sum_{i=1}^{N} \gamma_{ij} x_i}{\sum_i \gamma_{ij}}$$
+
+$$\Sigma_j = \frac{X_j \Gamma_j X_j^T}{\text{Tr}(\Gamma_j)}$$
+
+où $\Gamma_j = \text{diag}(\gamma_{1j}, \ldots, \gamma_{Nj})$ et $X_j$ est centré sur $\mu_j$.
+
+$$\pi_j = \frac{\sum_i \gamma_{ij}}{N}$$
+
+**Étape 4 : Itération**
+
+Itérer les étapes 2 et 3 jusqu'à convergence.
+
+---
+
+## Modélisation pratique
+
+### Forme de la matrice de covariance
+
+**Problème de sur-paramétrisation :**
+
+$\Sigma \in \mathbb{R}^{D \times D}$
+
+**Exemple critique :**
+
+Reconnaissance de caractères avec $x_i \in \mathbb{R}^{256}$ → Besoin d'estimer $256^2 \times c$ paramètres pour la covariance !
+
+### Stratégies de paramétrisation
+
+**Modèles sphériques :**
+
+$$\Sigma = \sigma I_D$$
+
+→ **1 paramètre** par composante
+
+**Modèles diagonaux :**
+
+$$\Sigma = \text{diag}(\sigma_1, \ldots, \sigma_D)$$
+
+→ **$D$ paramètres** par composante
+
+**Modèles complets :**
+
+$$\Sigma \in \mathbb{R}^{D \times D}$$
+
+→ **$O(D^2)$ paramètres** par composante
+
+💡 **Conseil pratique :** Commencer avec des modèles simples (sphériques) puis augmenter la complexité si nécessaire.
+
+---
+
+## Prétraitement : Réduction de dimension par PCA
+
+### Problématique en haute dimension
+
+Pour des données de haute dimension (par exemple $D = 256$), les modèles complexes ne convergent pas car le nombre de paramètres $p$ est trop grand.
+
+### Solution : PCA préalable
+
+**Stratégie recommandée :**
+
+- Appliquer **PCA** pour réduire la dimension de $D$ à $K$ dimensions
+- Appliquer **EM** dans l'espace des $K$ premières composantes principales
+
+**Exemple pratique :**
+
+- 50 composantes principales reconstruisent 90% du signal
+- EM dans l'espace des 50, 10 ou 2 premières composantes principales
+
+✅ **Avantages :**
+
+- Réduction drastique du nombre de paramètres
+- Élimination du bruit
+- Convergence plus rapide et stable
+
+---
+
+## Sélection du nombre de composantes
+
+### Le dilemme de la complexité
+
+**Problème :**
+
+Plus $c$ est grand, moins de points peuvent être assignés à chaque composante (en moyenne).
+
+**Objectif :**
+
+Chercher des modèles **parcimonieux**, c'est-à-dire avec un **petit nombre de paramètres** à estimer.
+
+- **K trop petit** : Sous-ajustement (underfitting) → modèle trop simple, ne capture pas la structure
+- **K trop grand** : Sur-ajustement (overfitting) → modèle trop complexe, capture le bruit
+
+### Critère d'Information Bayésien (BIC)
+
+**Trade-off vraisemblance-complexité :**
+
+- Plus $c$ est grand, meilleure est l'estimation de la vraisemblance $LL$
+- Mais plus le modèle est complexe (nombreux paramètres)
+
+**Formule du BIC :**
+
+$$BIC(\theta, X) = -2 \cdot LL(\theta, X) + |\theta| \log(N)$$
+
+où $|\theta|$ est le **nombre de paramètres** du modèle.
+
+**Critère de sélection :**
+
+$$\hat{\theta} = \underset{\theta}{\arg\min} \, BIC(\theta, X)$$
+
+**Composantes du BIC :**
+
+- $-2 \cdot LL(\theta, X)$ : pénalise les modèles avec mauvaise vraisemblance
+- $|\theta| \log(N)$ : pénalise la complexité du modèle
+
+💡 **Interprétation :** Le BIC favorise les modèles qui expliquent bien les données **sans sur-ajustement**.
+
+---
+
+## Relation entre GMM et K-means
+
+### Comparaison conceptuelle
+
+**K-means :**
+
+- **Assignation dure** (hard assignment)
+- Chaque point appartient à **un seul cluster**
+- Minimise la distance euclidienne aux centres
+
+**GMM avec EM :**
+
+- **Assignation douce** (soft assignment)
+- Chaque point a une **probabilité d'appartenance** à chaque composante
+- Maximise la vraisemblance selon un modèle probabiliste
+
+### GMM comme généralisation de K-means
+
+✅ **K-means est un cas particulier de GMM** quand :
+
+- Matrices de covariance $\Sigma_j = \sigma^2 I$ (sphériques et identiques)
+- $\sigma \to 0$ : les responsabilités $\gamma_{ij}$ deviennent binaires
+- Assignation douce → assignation dure
+
+---
+
+## Synthèse des concepts clés
+
+### Mélanges gaussiens (GMM)
+
+**Généralisation :**
+
+Le modèle de mélange gaussien **généralise** les hypothèses sous-jacentes à la PCA et à la LDA.
+
+**Modélisation et estimation explicites :**
+
+- **Modélisation explicite** de la densité
+- **Estimation** par maximum de vraisemblance
+
+**Classification non supervisée :**
+
+Si les composantes sont des classes, la donnée $x_i$ est associée à la classe $j$ pour laquelle :
+
+$$\mathbb{P}(C = j | x_i) \approx \pi_j \phi_j(x_i)$$
+
+est maximisée parmi toutes les classes.
+
+### Algorithme EM
+
+**Caractéristiques :**
+
+- Algorithme **itératif** pour maximiser la (log-)vraisemblance
+- Principe utilisé dans **de nombreux autres scénarios**
+- Basé sur la définition de **variables non observées (latentes)** $\delta_{ij}$
+
+**Applications :**
+
+- **Probabilistic Latent Semantic Analysis (pLSA)** : EM où les variables cachées sont les concepts latents
+- **Modèles de Markov cachés** (HMM)
+- **Factorisation matricielle**
+
+---
+
+::: {.callout-tip}
+## 💡 Fiche de révision condensée
+
+**En 30 secondes :**
+
+- EM = algorithme pour estimer modèles avec variables cachées
+- Deux étapes : E (calcul responsabilités), M (mise à jour paramètres)
+- Pour GMM : modélise données comme mélange de gaussiennes
+- Avantage : attribution douce, modèle probabiliste
+- Défis : initialisation, choix de K, maxima locaux
+- Utilisations : clustering, séparation sources, segmentation
+- Parenté : généralise K-means, lié à d'autres modèles latents
+:::
+
+::: {.callout-important}
+## 📌 Concepts mathématiques à maîtriser
+
+**Probabilités et statistiques :**
+
+- Distribution normale multivariée
+- Maximum de vraisemblance (MLE)
+- Log-vraisemblance
+- Règle de Bayes
+- Variables aléatoires latentes
+- Probabilités conditionnelles
+- Espérance conditionnelle
+
+**Optimisation :**
+
+- Optimisation itérative
+- Algorithmes hill-climbing
+- Critères de convergence
+- Maxima locaux vs globaux
+- BIC (Bayesian Information Criterion)
+- Trade-off biais-variance
+- Parcimonie de modèle
+:::
