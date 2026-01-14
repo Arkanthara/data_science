@@ -944,276 +944,276 @@
   {
     "objectID": "ds6.html",
     "href": "ds6.html",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "L’algorithme Expectation-Maximization (EM) est une méthode d’estimation de facteurs latents dans un contexte non supervisé de modélisation conditionnelle.\nObjectifs du cours :\n\nComprendre la modélisation conditionnelle non supervisée comme estimation de facteurs latents\nDévelopper l’exemple de l’estimation de densité par modèles de mélange gaussien (GMM - Gaussian Mixture Models)\nPratiquer l’estimation par maximum de vraisemblance (MLE - Maximum Likelihood Estimation)\nComprendre le principe alternatif de l’Expectation-Maximization pour la découverte de facteurs latents\n\n\n\n\nModèles à composantes (PCA) :\n\nCritère basé sur la variance de données centrées\nDistribution implicite : normale\n\nModèles discriminants (LDA) :\n\nVariance des données projetées pour les modèles intra-classe (within) et inter-classe (between)\n\n📌 Point commun : La distribution est fixée (essentiellement normale) et on cherche ses paramètres \\(\\theta\\) (par exemple \\(\\theta = [\\mu, \\Sigma]\\))\n\n\n\nAlternative : Chercher un modèle pour la densité des données\nSoit \\(f_\\theta(x) : \\Omega \\to \\mathbb{R}\\) la densité des données\n\n\n\n\n\n\n\nMéthodes non-paramétriques :\n\nk-Nearest Neighbors (kNN) : estimation basée sur les \\(k\\) plus proches voisins\nFenêtres de Parzen : estimation par noyaux\nRéseaux RBF : fonctions à base radiale\nHistogrammes : discrétisation de l’espace\n\nMéthodes paramétriques :\n\nModèles de mélange (Mixture models) : le focus de ce cours\n\n\n\n\n\n\n\n\nDéfinition :\nLa densité \\(f(x)\\) est générée par \\(c\\) fonctions de “base” \\(\\phi\\) (composantes), issues d’une famille \\(\\mathcal{F}\\) :\n\\[f(x) = \\sum_{j=1}^{c} \\pi_j \\phi(x, \\theta_j)\\]\nComposantes du modèle :\n\n\\(\\pi_j \\in \\mathbb{R}\\) : paramètres du mélange (mixture parameters)\n\\(\\phi(x, \\theta_j) \\in \\mathcal{F}\\) : fonctions de base contrôlées par les paramètres \\(\\theta_j\\)\n\n\n\n\nTrois hypothèses fondamentales :\n\nLe nombre de composantes \\(c \\in \\mathbb{N}^*\\) est connu\nLa famille de fonctions \\(\\mathcal{F}\\) est connue\nLes étiquettes (class labels) sont inconnues (contexte non supervisé)\n\n\n\n\n\n\n\n\nLa densité \\(f(x)\\) représente un processus aléatoire où \\(x\\) est tiré d’un ensemble d’états \\(\\omega_j\\) avec probabilité a priori \\(\\mathbb{P}(\\omega_j)\\).\nFormulation probabiliste :\n\\[f(x) = \\sum_{j=1}^{c} \\pi_j \\phi(x, \\theta_j) = \\mathbb{P}(x|\\theta) = \\sum_{j=1}^{c} \\mathbb{P}(\\omega_j) \\mathbb{P}(x|\\omega_j, \\theta_j)\\]\nPar identification :\n\n\\(\\pi_j = \\mathbb{P}(\\omega_j)\\) avec la contrainte \\(\\sum_j \\pi_j = 1\\)\n\\(\\phi(x, \\theta_j) = \\mathbb{P}(x|\\omega_j, \\theta_j)\\) est la probabilité conditionnelle que \\(x\\) soit généré par l’état \\(\\omega_j\\)\n\n\n\n\n\n\n\n\nDonnées :\nSoit \\(X = \\{x_1, \\ldots, x_N\\}\\) des échantillons non étiquetés générés par le mélange \\(f(x) = \\mathbb{P}(x|\\theta)\\)\nParamètres à inférer :\n\\[\\theta = [\\pi_j, \\theta_j]_{j \\in [[c]]}\\]\n\n\n\nVraisemblance :\nEn supposant les données indépendantes et identiquement distribuées (i.i.d.) :\n\\[\\mathbb{P}(X|\\theta) \\stackrel{\\text{i.i.d}}{=} \\prod_{i=1}^{N} \\mathbb{P}(x_i|\\theta)\\]\nEstimateur de vraisemblance :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\max} \\, \\mathbb{P}(X|\\theta)\\]\n\n\n\nTransformation logarithmique :\n\\[LL(\\theta, X) = \\sum_{i=1}^{N} \\log \\mathbb{P}(x_i|\\theta) = \\sum_{i=1}^{N} \\log \\left[\\sum_{j=1}^{c} \\pi_j \\phi(x_i, \\theta_j)\\right]\\]\nEstimateur du maximum de log-vraisemblance (MLE) :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\max} \\, LL(\\theta, X)\\]\n📌 Avantage : Transformation du produit en somme, numériquement plus stable\n\n\n\n\n\n\n\nPuisque \\(\\phi\\) doit être une fonction de densité de probabilité, choisir la famille de densités normales comme base semble raisonnable (choix agnostique) :\n\\[\\phi \\in \\mathcal{F} = \\{\\mathcal{N}(\\mu, \\Sigma)\\}\\]\nModèle de mélange gaussien :\n\\[f(x) = \\sum_{j=1}^{c} \\pi_j \\mathcal{N}(x|\\mu_j, \\Sigma_j)\\]\noù \\(\\phi_j(x) := \\phi(x, \\theta_j) = \\mathcal{N}(x|\\mu_j, \\Sigma_j)\\)\n\n\n\n✅ Universalité : Peut approximer n’importe quelle densité (théorème d’approximation universelle)\n✅ Linéarité : Permet un système linéaire des paramètres lors de la maximisation de la log-vraisemblance\n\n\n\n\n\n\n\nParamètres : \\(\\theta = [\\mu, \\Sigma]\\)\nProblème d’optimisation :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\max} \\sum_i \\log e^{-(x_i - \\mu)^T \\Sigma^{-1} (x_i - \\mu)} \\Leftrightarrow \\hat{\\theta} = \\underset{\\theta}{\\arg\\min} \\sum_i (x_i - \\mu)^T \\Sigma^{-1} (x_i - \\mu)\\]\nSolutions analytiques :\n\\[\\hat{\\mu} = \\frac{1}{N} \\sum_i x_i\\]\n\\[\\hat{\\Sigma} = \\frac{1}{N} \\sum_i (x_i - \\hat{\\mu})(x_i - \\hat{\\mu})^T\\]\n💡 Remarque : Solutions identiques à l’estimation empirique standard de moyenne et covariance\n\n\n\n\n\n\n\nParamètres :\n\\[\\theta = [\\pi_1, \\theta_1, \\pi_2, \\theta_2] = [\\pi_1, [\\mu_1, \\Sigma_1], \\pi_2, [\\mu_2, \\Sigma_2]]\\]\navec la contrainte \\(\\pi_1 + \\pi_2 = 1\\)\nLog-vraisemblance :\n\\[LL(\\theta, X) = \\sum_{i=1}^{N} \\log[\\pi_1 \\phi(x_i, \\theta_1) + \\pi_2 \\phi(x_i, \\theta_2)]\\]\n⚠️ Difficulté : Maximisation difficile à cause de la somme à l’intérieur du logarithme !\n\n\n\n✅ Solution : Algorithme itératif en 2 étapes (E-M) pour maximiser \\(LL\\)\n→ Expectation-Maximization (EM) algorithm\n\n\n\n\n\n\n\nProblème fondamental :\nCe qui manque ici est l’assignation de \\(x_i\\) à l’une des 2 composantes \\(\\phi_j\\)\nObservation clé :\nSi on connaissait cette assignation, on traiterait le problème comme deux fois le cas à 1 composante\n\n\n\nOn introduit des variables latentes (non observées) : l’assignation binaire \\(\\delta_{ij} \\in \\{\\text{true}, \\text{false}\\}\\) de chaque \\(x_i\\) à la composante \\(\\phi_j\\) :\n\n\\(x_i \\sim \\phi_1 \\Rightarrow \\delta_{i1} = \\text{true}, \\delta_{i2} = \\text{false}\\)\n\\(x_i \\sim \\phi_2 \\Rightarrow \\delta_{i1} = \\text{false}, \\delta_{i2} = \\text{true}\\)\n\n📌 Mais on peut seulement estimer \\(\\delta_{ij}\\) → stratégie EM\n\n\n\n\n\n\n\nParamètres :\n\\[\\theta = [\\pi_1, \\theta_1, \\pi_2, \\theta_2] = [\\pi_1, [\\mu_1, \\Sigma_1], \\pi_2, [\\mu_2, \\Sigma_2]]\\]\nInitialisation :\nOn suppose connaître une valeur initiale :\n\\[\\theta^0 = [\\pi_1^0, \\theta_1^0, \\pi_2^0, \\theta_2^0]\\]\n\n\n\nOn peut inférer la contribution statistique \\(\\gamma_{ij}\\) de chaque donnée \\(x_i\\) à chaque composante \\(\\phi_j\\) (paramétrisée par \\(\\theta_j^0\\)) :\n\\[\\gamma_{ij}(\\theta^0) = \\mathbb{P}[\\delta_{ij} = \\text{true} | \\theta^0, X]\\]\nFormule de Bayes :\n\\[\\gamma_{i1}(\\theta^0) = \\frac{\\pi_1^0 \\phi(x_i, \\theta_1^0)}{\\pi_1^0 \\phi(x_i, \\theta_1^0) + \\pi_2^0 \\phi(x_i, \\theta_2^0)}\\]\n\n\n\nDéfinition formelle :\n\\(\\gamma_{ij}\\) est la responsabilité (responsibility) de la composante \\(j\\) pour la donnée \\(i\\)\nSignification :\n\nC’est la vraisemblance que \\(x_i\\) soit (purement) modélisée par la composante \\(\\phi_j\\)\n\\(\\gamma_{ij}\\) représente la part de \\(x_i\\) qui est modélisée (générée) par la composante \\(\\phi_j\\)\n\n\n\n\n\n\n\n\nOn peut utiliser \\(\\gamma_{ij}\\) pour déterminer \\(\\delta_{ij}\\) → \\(x_i\\) peut être assigné soit à \\(\\phi_1\\) soit à \\(\\phi_2\\) (vote maximum → binarisation)\n→ Assignation de type K-means : chaque donnée est assignée à une et une seule composante (cluster)\n\n\n\nEM est “plus douce” :\nUne donnée contribue (via \\(\\gamma_{ij}\\)) à plusieurs composantes (modes de densité)\nEM calcule une assignation douce avec :\n\\[\\sum_j \\gamma_{ij} = 1 \\quad \\forall i\\]\n💡 Avantage : Plus robuste et reflète mieux l’incertitude dans l’assignation\n\n\n\n\n\n\n\nNote : Pour 2 composantes, \\(\\gamma_{i1} + \\gamma_{i2} = 1\\)\nÉtant donné la responsabilité de chaque donnée (\\(\\gamma_{ij}\\)), on peut estimer les paramètres de chaque composante par maximum de vraisemblance pondéré :\n\n\n\nMoyennes :\n\\[\\hat{\\mu}_1 = \\sum_{i=1}^{N} \\frac{\\gamma_{i1}}{\\sum_{k=1}^{N} \\gamma_{k1}} x_i\\]\n\\[\\hat{\\mu}_2 = \\sum_{i=1}^{N} \\frac{\\gamma_{i2}}{\\sum_{k=1}^{N} \\gamma_{k2}} x_i\\]\nCovariances :\n\\[\\hat{\\Sigma}_1 = \\sum_{i=1}^{N} \\frac{\\gamma_{i1}}{\\sum_{k=1}^{N} \\gamma_{k1}} (x_i - \\hat{\\mu}_1)(x_i - \\hat{\\mu}_1)^T\\]\n\\[\\hat{\\Sigma}_2 = \\sum_{i=1}^{N} \\frac{\\gamma_{i2}}{\\sum_{k=1}^{N} \\gamma_{k2}} (x_i - \\hat{\\mu}_2)(x_i - \\hat{\\mu}_2)^T\\]\nPoids du mélange :\n\\[\\pi_j = \\frac{1}{N} \\sum_{i=1}^{N} \\gamma_{ij}\\]\nCette formule garantit que \\(\\sum_j \\pi_j = 1\\)\n\n\n\n\n\n\n\nLe cycle alterné Expectation-Maximization augmente la vraisemblance des données par rapport au modèle de mélange.\nCritère de convergence :\nLe processus est itéré jusqu’à convergence, c’est-à-dire quand la vraisemblance des données ne change (presque) plus :\n\\[|LL(\\theta^{t+1}, X) - LL(\\theta^t, X)| &lt; \\epsilon\\]\noù \\(\\epsilon\\) est un seuil de tolérance (par exemple \\(\\epsilon = 10^{-6}\\))\n\n\n\n✅ Propriété garantie : À chaque itération, \\(LL(\\theta^{t+1}, X) \\geq LL(\\theta^t, X)\\)\nLa log-vraisemblance ne diminue jamais (propriété hill-climbing)\n\n\n\n\n\n\n\n⚠️ Hill-climbing : L’algorithme dépend des paramètres initiaux\nConséquences :\n\nSensible aux maxima locaux : peut converger vers un optimum local plutôt que global\nDifférentes initialisations peuvent donner différents résultats\n\n\n\n\nMéthodes recommandées :\n\nK-means : utiliser le clustering K-means pour initialiser les centres \\(\\mu_j\\)\nK-means++ : version améliorée de K-means avec initialisation intelligente\nExécutions multiples : lancer l’algorithme plusieurs fois avec différentes initialisations et garder la meilleure\n\n\n\n\n⚠️ Convergence potentiellement lente, selon :\n\nLa séparation entre les composantes\nLa forme des distributions\nLe nombre de composantes\n\n\n\n\n\n\n\n\nGénéralisation :\n\\[\\delta_{i1}, \\delta_{i2}, \\ldots, \\delta_{ij}, \\ldots, \\delta_{ic}\\]\noù \\(\\delta_{ij} = \\text{true}\\) si la donnée \\(x_i\\) est générée par la composante \\(\\phi_j\\) (\\(\\delta_{ij} = \\text{false}\\) sinon)\nResponsabilité :\n\\(\\gamma_{ij}\\) : espérance de \\(\\delta_{ij}\\) sur toutes les composantes\nParamètres à estimer :\n\\[\\theta = [\\pi_j, \\theta_j]_{j \\in [[c]]} = [\\pi_j, [\\mu_j, \\Sigma_j]]_j\\]\n\n\n\n\n\n\n\nInitialisation des paramètres :\n\\[\\theta^0 = \\{\\pi_j^0, \\mu_j^0, \\Sigma_j^0\\}_{j \\in [[c]]}\\]\nStratégies courantes :\n\nGénérale : \\(\\pi_j = 1/c\\), \\(\\mu_j\\) choisi aléatoirement, \\(\\Sigma_j = I_D\\)\nAlternative : utiliser K-means comme initialisation\n\n\n\n\nCalcul des responsabilités :\nPour chaque donnée \\(i \\in [[N]]\\) et chaque composante \\(j \\in [[c]]\\) :\n\\[\\gamma_{ij} = \\frac{\\pi_j \\phi(x_i, \\theta_j)}{\\sum_{k=1}^{c} \\pi_k \\phi(x_i, \\theta_k)}\\]\n\n\n\nEstimation des paramètres du mélange :\nMoyennes :\n\\[\\mu_j = \\frac{\\sum_{i=1}^{N} \\gamma_{ij} x_i}{\\sum_i \\gamma_{ij}}\\]\nCovariances :\n\\[\\Sigma_j = \\frac{X_j \\Gamma_j X_j^T}{\\text{Tr}(\\Gamma_j)}\\]\noù \\(\\Gamma_j = \\text{diag}(\\gamma_{1j}, \\ldots, \\gamma_{Nj})\\) et \\(X_j\\) est centré sur \\(\\mu_j\\)\nPoids :\n\\[\\pi_j = \\frac{\\sum_i \\gamma_{ij}}{N}\\]\n\n\n\nItérer les étapes 2 et 3 jusqu’à convergence\n\n\n\n\n\n\n\nLa paramétrisation a priori du mélange change la convergence :\nParamètres critiques :\n\n\\(c\\) : nombre de composantes\n\\(\\Sigma_j\\) : forme des matrices de covariance (diagonale, complète, paramétrée)\n\n⚠️ Risques :\n\nModèles trop flexibles ou trop rigides → mauvaise convergence ou absence de convergence\nSur-paramétrisation : \\(D \\times D \\times c + 2 \\times c\\) variables\n\nSi \\(N\\) est faible, \\(D\\) grand et \\(c\\) grand → sur-paramétrisation problématique\n\n\n\n\n\n\n\nDimension de \\(\\Sigma\\) :\n\\(\\Sigma \\in \\mathbb{R}^{D \\times D}\\)\nExemple critique :\nReconnaissance de caractères avec \\(x_i \\in \\mathbb{R}^{256}\\)\n→ Besoin d’estimer \\(256^2 \\times c\\) paramètres pour la covariance (avec environ 7000 points de données) !\n\n\n\nModèles sphériques :\n\\[\\Sigma = \\sigma I_D\\]\n→ 1 paramètre par composante\nModèles diagonaux :\n\\[\\Sigma = \\text{diag}(\\sigma_1, \\ldots, \\sigma_D)\\]\n→ \\(D\\) paramètres par composante\nModèles complets :\n\\[\\Sigma \\in \\mathbb{R}^{D \\times D}\\]\n→ \\(O(D^2)\\) paramètres par composante\n💡 Conseil pratique : Commencer avec des modèles simples (sphériques) puis augmenter la complexité si nécessaire\n\n\n\n\n\n\n\nPour des données de haute dimension (par exemple \\(D = 256\\)), les modèles complexes ne convergent pas car le nombre de paramètres \\(p\\) est trop grand.\n\n\n\nStratégie recommandée :\n\nAppliquer PCA pour réduire la dimension de \\(D\\) à \\(K\\) dimensions\nAppliquer EM dans l’espace des \\(K\\) premières composantes principales\n\nExemple pratique :\n\n50 composantes principales reconstruisent 90% du signal\nEM dans l’espace des 50, 10 ou 2 premières composantes principales\n\n✅ Avantages :\n\nRéduction drastique du nombre de paramètres\nÉlimination du bruit\nConvergence plus rapide et stable\n\n\n\n\n\n\n\n\nProblème :\nPlus \\(c\\) est grand, moins de points peuvent être assignés à chaque composante (en moyenne)\nObjectif :\nChercher des modèles parcimonieux, c’est-à-dire avec un petit nombre de paramètres à estimer\n\n\n\nTrade-off vraisemblance-complexité :\n\nPlus \\(c\\) est grand, meilleure est l’estimation de la vraisemblance \\(LL\\)\nMais plus le modèle est complexe (nombreux paramètres)\n\nFormule du BIC :\n\\[BIC(\\theta, X) = -2 \\cdot LL(\\theta, X) + |\\theta| \\log(N)\\]\noù \\(|\\theta|\\) est le nombre de paramètres du modèle\nCritère de sélection :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\min} \\, BIC(\\theta, X)\\]\nComposantes du BIC :\n\n\\(-2 \\cdot LL(\\theta, X)\\) : pénalise les modèles avec mauvaise vraisemblance\n\\(|\\theta| \\log(N)\\) : pénalise la complexité du modèle\n\n💡 Interprétation : Le BIC favorise les modèles qui expliquent bien les données sans sur-ajustement\n\n\n\n⚠️ Défis pratiques :\n\nBesoin de tester tous les modèles (différentes valeurs de \\(c\\))\nDépend de la convergence de chaque modèle\nNécessite souvent un ajustement manuel fin\n\n\n\n\n\n\n\n\nGénéralisation :\nLe modèle de mélange gaussien généralise les hypothèses sous-jacentes à la PCA et à la LDA\nModélisation et estimation explicites :\n\nModélisation explicite de la densité\nEstimation par maximum de vraisemblance\n\nClassification non supervisée :\nSi les composantes sont des classes, la donnée \\(x_i\\) est associée à la classe \\(j\\) pour laquelle :\n\\[\\mathbb{P}(C = j | x_i) \\approx \\pi_j \\phi_j(x_i)\\]\nest maximisée parmi toutes les classes\n\n\n\nCaractéristiques :\n\nAlgorithme itératif pour maximiser la (log-)vraisemblance\nPrincipe utilisé dans de nombreux autres scénarios\nBasé sur la définition de variables non observées (latentes) \\(\\delta_{ij}\\)\n\nApplications :\n\nProbabilistic Latent Semantic Analysis (pLSA) : EM où les variables cachées sont les concepts latents\nModèles de Markov cachés (HMM)\nFactorisation matricielle\n\n\n\n\n\n\n\n\nK-means :\n\nAssignation dure (hard assignment)\nChaque point appartient à un seul cluster\nMinimise la distance euclidienne aux centres\n\nGMM avec EM :\n\nAssignation douce (soft assignment)\nChaque point a une probabilité d’appartenance à chaque composante\nMaximise la vraisemblance selon un modèle probabiliste\n\n\n\n\n✅ K-means est un cas particulier de GMM quand :\n\nMatrices de covariance \\(\\Sigma_j = \\sigma^2 I\\) (sphériques et identiques)\n\\(\\sigma \\to 0\\) : les responsabilités \\(\\gamma_{ij}\\) deviennent binaires\nAssignation douce → assignation dure\n\n\n\n\n\n\n\n\nModèle de mélange gaussien :\n\nQu’est-ce qu’un modèle de mélange gaussien (GMM) ?\nPourquoi peut-il être vu comme une modélisation conditionnelle ?\nComment peut-on l’utiliser pour générer des données ?\n\nResponsabilité :\n\nQu’est-ce que la responsabilité (responsibility) ?\nComment l’interpréter ?\n\nAlgorithme EM :\n\nPourquoi l’EM pour GMM est-il une MLE ?\nComment interpréter l’étape E ?\nComment interpréter l’étape M ?\n\n\n\n\nRelation avec K-means :\n\nDiscuter la relation entre GMM et K-means\nQu’est-ce que les assignations dure et douce (hard- et soft-assignments) ?\n\nConvergence et optimisation :\n\nComment choisir le nombre de composantes ?\nQuelles sont les stratégies d’initialisation ?\nComment gérer la sur-paramétrisation ?\n\n\n\n\n📌 Conseil important : Il est fortement recommandé de développer l’algèbre contenue dans ce chapitre\nPoints à maîtriser :\n\nDérivation de la log-vraisemblance\nCalcul des responsabilités par la règle de Bayes\nDérivation des équations de mise à jour du M-step\nPreuve de la monotonie de \\(LL\\) dans l’algorithme EM\n\n\n\n\n\n\n\n\nFondamentaux :\n\nDistribution normale multivariée\nMaximum de vraisemblance (MLE)\nLog-vraisemblance\nRègle de Bayes\n\nModélisation :\n\nVariables aléatoires latentes\nProbabilités conditionnelles\nEspérance conditionnelle\n\n\n\n\nTechniques :\n\nOptimisation itérative\nAlgorithmes hill-climbing\nCritères de convergence\nMaxima locaux vs globaux\n\nCritères de sélection :\n\nBIC (Bayesian Information Criterion)\nTrade-off biais-variance\nParcimonie de modèle",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#introduction-et-motivation",
     "href": "ds6.html#introduction-et-motivation",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "L’algorithme Expectation-Maximization (EM) est une méthode d’estimation de facteurs latents dans un contexte non supervisé de modélisation conditionnelle.\nObjectifs du cours :\n\nComprendre la modélisation conditionnelle non supervisée comme estimation de facteurs latents\nDévelopper l’exemple de l’estimation de densité par modèles de mélange gaussien (GMM - Gaussian Mixture Models)\nPratiquer l’estimation par maximum de vraisemblance (MLE - Maximum Likelihood Estimation)\nComprendre le principe alternatif de l’Expectation-Maximization pour la découverte de facteurs latents\n\n\n\n\nModèles à composantes (PCA) :\n\nCritère basé sur la variance de données centrées\nDistribution implicite : normale\n\nModèles discriminants (LDA) :\n\nVariance des données projetées pour les modèles intra-classe (within) et inter-classe (between)\n\n📌 Point commun : La distribution est fixée (essentiellement normale) et on cherche ses paramètres \\(\\theta\\) (par exemple \\(\\theta = [\\mu, \\Sigma]\\))\n\n\n\nAlternative : Chercher un modèle pour la densité des données\nSoit \\(f_\\theta(x) : \\Omega \\to \\mathbb{R}\\) la densité des données",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#méthodes-destimation-de-densité",
     "href": "ds6.html#méthodes-destimation-de-densité",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Méthodes non-paramétriques :\n\nk-Nearest Neighbors (kNN) : estimation basée sur les \\(k\\) plus proches voisins\nFenêtres de Parzen : estimation par noyaux\nRéseaux RBF : fonctions à base radiale\nHistogrammes : discrétisation de l’espace\n\nMéthodes paramétriques :\n\nModèles de mélange (Mixture models) : le focus de ce cours",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#modèles-de-mélange-définition",
     "href": "ds6.html#modèles-de-mélange-définition",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Définition :\nLa densité \\(f(x)\\) est générée par \\(c\\) fonctions de “base” \\(\\phi\\) (composantes), issues d’une famille \\(\\mathcal{F}\\) :\n\\[f(x) = \\sum_{j=1}^{c} \\pi_j \\phi(x, \\theta_j)\\]\nComposantes du modèle :\n\n\\(\\pi_j \\in \\mathbb{R}\\) : paramètres du mélange (mixture parameters)\n\\(\\phi(x, \\theta_j) \\in \\mathcal{F}\\) : fonctions de base contrôlées par les paramètres \\(\\theta_j\\)\n\n\n\n\nTrois hypothèses fondamentales :\n\nLe nombre de composantes \\(c \\in \\mathbb{N}^*\\) est connu\nLa famille de fonctions \\(\\mathcal{F}\\) est connue\nLes étiquettes (class labels) sont inconnues (contexte non supervisé)",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#interprétation-probabiliste",
     "href": "ds6.html#interprétation-probabiliste",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "La densité \\(f(x)\\) représente un processus aléatoire où \\(x\\) est tiré d’un ensemble d’états \\(\\omega_j\\) avec probabilité a priori \\(\\mathbb{P}(\\omega_j)\\).\nFormulation probabiliste :\n\\[f(x) = \\sum_{j=1}^{c} \\pi_j \\phi(x, \\theta_j) = \\mathbb{P}(x|\\theta) = \\sum_{j=1}^{c} \\mathbb{P}(\\omega_j) \\mathbb{P}(x|\\omega_j, \\theta_j)\\]\nPar identification :\n\n\\(\\pi_j = \\mathbb{P}(\\omega_j)\\) avec la contrainte \\(\\sum_j \\pi_j = 1\\)\n\\(\\phi(x, \\theta_j) = \\mathbb{P}(x|\\omega_j, \\theta_j)\\) est la probabilité conditionnelle que \\(x\\) soit généré par l’état \\(\\omega_j\\)",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#estimation-par-maximum-de-vraisemblance-mle",
     "href": "ds6.html#estimation-par-maximum-de-vraisemblance-mle",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Données :\nSoit \\(X = \\{x_1, \\ldots, x_N\\}\\) des échantillons non étiquetés générés par le mélange \\(f(x) = \\mathbb{P}(x|\\theta)\\)\nParamètres à inférer :\n\\[\\theta = [\\pi_j, \\theta_j]_{j \\in [[c]]}\\]\n\n\n\nVraisemblance :\nEn supposant les données indépendantes et identiquement distribuées (i.i.d.) :\n\\[\\mathbb{P}(X|\\theta) \\stackrel{\\text{i.i.d}}{=} \\prod_{i=1}^{N} \\mathbb{P}(x_i|\\theta)\\]\nEstimateur de vraisemblance :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\max} \\, \\mathbb{P}(X|\\theta)\\]\n\n\n\nTransformation logarithmique :\n\\[LL(\\theta, X) = \\sum_{i=1}^{N} \\log \\mathbb{P}(x_i|\\theta) = \\sum_{i=1}^{N} \\log \\left[\\sum_{j=1}^{c} \\pi_j \\phi(x_i, \\theta_j)\\right]\\]\nEstimateur du maximum de log-vraisemblance (MLE) :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\max} \\, LL(\\theta, X)\\]\n📌 Avantage : Transformation du produit en somme, numériquement plus stable",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#mélange-gaussien-gaussian-mixture-model---gmm",
     "href": "ds6.html#mélange-gaussien-gaussian-mixture-model---gmm",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Puisque \\(\\phi\\) doit être une fonction de densité de probabilité, choisir la famille de densités normales comme base semble raisonnable (choix agnostique) :\n\\[\\phi \\in \\mathcal{F} = \\{\\mathcal{N}(\\mu, \\Sigma)\\}\\]\nModèle de mélange gaussien :\n\\[f(x) = \\sum_{j=1}^{c} \\pi_j \\mathcal{N}(x|\\mu_j, \\Sigma_j)\\]\noù \\(\\phi_j(x) := \\phi(x, \\theta_j) = \\mathcal{N}(x|\\mu_j, \\Sigma_j)\\)\n\n\n\n✅ Universalité : Peut approximer n’importe quelle densité (théorème d’approximation universelle)\n✅ Linéarité : Permet un système linéaire des paramètres lors de la maximisation de la log-vraisemblance",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#cas-simple-1-composante",
     "href": "ds6.html#cas-simple-1-composante",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Paramètres : \\(\\theta = [\\mu, \\Sigma]\\)\nProblème d’optimisation :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\max} \\sum_i \\log e^{-(x_i - \\mu)^T \\Sigma^{-1} (x_i - \\mu)} \\Leftrightarrow \\hat{\\theta} = \\underset{\\theta}{\\arg\\min} \\sum_i (x_i - \\mu)^T \\Sigma^{-1} (x_i - \\mu)\\]\nSolutions analytiques :\n\\[\\hat{\\mu} = \\frac{1}{N} \\sum_i x_i\\]\n\\[\\hat{\\Sigma} = \\frac{1}{N} \\sum_i (x_i - \\hat{\\mu})(x_i - \\hat{\\mu})^T\\]\n💡 Remarque : Solutions identiques à l’estimation empirique standard de moyenne et covariance",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#cas-complexe-2-composantes",
     "href": "ds6.html#cas-complexe-2-composantes",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Paramètres :\n\\[\\theta = [\\pi_1, \\theta_1, \\pi_2, \\theta_2] = [\\pi_1, [\\mu_1, \\Sigma_1], \\pi_2, [\\mu_2, \\Sigma_2]]\\]\navec la contrainte \\(\\pi_1 + \\pi_2 = 1\\)\nLog-vraisemblance :\n\\[LL(\\theta, X) = \\sum_{i=1}^{N} \\log[\\pi_1 \\phi(x_i, \\theta_1) + \\pi_2 \\phi(x_i, \\theta_2)]\\]\n⚠️ Difficulté : Maximisation difficile à cause de la somme à l’intérieur du logarithme !\n\n\n\n✅ Solution : Algorithme itératif en 2 étapes (E-M) pour maximiser \\(LL\\)\n→ Expectation-Maximization (EM) algorithm",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#variables-latentes-et-stratégie-em",
     "href": "ds6.html#variables-latentes-et-stratégie-em",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Problème fondamental :\nCe qui manque ici est l’assignation de \\(x_i\\) à l’une des 2 composantes \\(\\phi_j\\)\nObservation clé :\nSi on connaissait cette assignation, on traiterait le problème comme deux fois le cas à 1 composante\n\n\n\nOn introduit des variables latentes (non observées) : l’assignation binaire \\(\\delta_{ij} \\in \\{\\text{true}, \\text{false}\\}\\) de chaque \\(x_i\\) à la composante \\(\\phi_j\\) :\n\n\\(x_i \\sim \\phi_1 \\Rightarrow \\delta_{i1} = \\text{true}, \\delta_{i2} = \\text{false}\\)\n\\(x_i \\sim \\phi_2 \\Rightarrow \\delta_{i1} = \\text{false}, \\delta_{i2} = \\text{true}\\)\n\n📌 Mais on peut seulement estimer \\(\\delta_{ij}\\) → stratégie EM",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#étape-e-expectation",
     "href": "ds6.html#étape-e-expectation",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Paramètres :\n\\[\\theta = [\\pi_1, \\theta_1, \\pi_2, \\theta_2] = [\\pi_1, [\\mu_1, \\Sigma_1], \\pi_2, [\\mu_2, \\Sigma_2]]\\]\nInitialisation :\nOn suppose connaître une valeur initiale :\n\\[\\theta^0 = [\\pi_1^0, \\theta_1^0, \\pi_2^0, \\theta_2^0]\\]\n\n\n\nOn peut inférer la contribution statistique \\(\\gamma_{ij}\\) de chaque donnée \\(x_i\\) à chaque composante \\(\\phi_j\\) (paramétrisée par \\(\\theta_j^0\\)) :\n\\[\\gamma_{ij}(\\theta^0) = \\mathbb{P}[\\delta_{ij} = \\text{true} | \\theta^0, X]\\]\nFormule de Bayes :\n\\[\\gamma_{i1}(\\theta^0) = \\frac{\\pi_1^0 \\phi(x_i, \\theta_1^0)}{\\pi_1^0 \\phi(x_i, \\theta_1^0) + \\pi_2^0 \\phi(x_i, \\theta_2^0)}\\]\n\n\n\nDéfinition formelle :\n\\(\\gamma_{ij}\\) est la responsabilité (responsibility) de la composante \\(j\\) pour la donnée \\(i\\)\nSignification :\n\nC’est la vraisemblance que \\(x_i\\) soit (purement) modélisée par la composante \\(\\phi_j\\)\n\\(\\gamma_{ij}\\) représente la part de \\(x_i\\) qui est modélisée (générée) par la composante \\(\\phi_j\\)",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#assignation-dure-vs-douce",
     "href": "ds6.html#assignation-dure-vs-douce",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "On peut utiliser \\(\\gamma_{ij}\\) pour déterminer \\(\\delta_{ij}\\) → \\(x_i\\) peut être assigné soit à \\(\\phi_1\\) soit à \\(\\phi_2\\) (vote maximum → binarisation)\n→ Assignation de type K-means : chaque donnée est assignée à une et une seule composante (cluster)\n\n\n\nEM est “plus douce” :\nUne donnée contribue (via \\(\\gamma_{ij}\\)) à plusieurs composantes (modes de densité)\nEM calcule une assignation douce avec :\n\\[\\sum_j \\gamma_{ij} = 1 \\quad \\forall i\\]\n💡 Avantage : Plus robuste et reflète mieux l’incertitude dans l’assignation",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#étape-m-maximization",
     "href": "ds6.html#étape-m-maximization",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Note : Pour 2 composantes, \\(\\gamma_{i1} + \\gamma_{i2} = 1\\)\nÉtant donné la responsabilité de chaque donnée (\\(\\gamma_{ij}\\)), on peut estimer les paramètres de chaque composante par maximum de vraisemblance pondéré :\n\n\n\nMoyennes :\n\\[\\hat{\\mu}_1 = \\sum_{i=1}^{N} \\frac{\\gamma_{i1}}{\\sum_{k=1}^{N} \\gamma_{k1}} x_i\\]\n\\[\\hat{\\mu}_2 = \\sum_{i=1}^{N} \\frac{\\gamma_{i2}}{\\sum_{k=1}^{N} \\gamma_{k2}} x_i\\]\nCovariances :\n\\[\\hat{\\Sigma}_1 = \\sum_{i=1}^{N} \\frac{\\gamma_{i1}}{\\sum_{k=1}^{N} \\gamma_{k1}} (x_i - \\hat{\\mu}_1)(x_i - \\hat{\\mu}_1)^T\\]\n\\[\\hat{\\Sigma}_2 = \\sum_{i=1}^{N} \\frac{\\gamma_{i2}}{\\sum_{k=1}^{N} \\gamma_{k2}} (x_i - \\hat{\\mu}_2)(x_i - \\hat{\\mu}_2)^T\\]\nPoids du mélange :\n\\[\\pi_j = \\frac{1}{N} \\sum_{i=1}^{N} \\gamma_{ij}\\]\nCette formule garantit que \\(\\sum_j \\pi_j = 1\\)",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#convergence-de-lalgorithme-em",
     "href": "ds6.html#convergence-de-lalgorithme-em",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Le cycle alterné Expectation-Maximization augmente la vraisemblance des données par rapport au modèle de mélange.\nCritère de convergence :\nLe processus est itéré jusqu’à convergence, c’est-à-dire quand la vraisemblance des données ne change (presque) plus :\n\\[|LL(\\theta^{t+1}, X) - LL(\\theta^t, X)| &lt; \\epsilon\\]\noù \\(\\epsilon\\) est un seuil de tolérance (par exemple \\(\\epsilon = 10^{-6}\\))\n\n\n\n✅ Propriété garantie : À chaque itération, \\(LL(\\theta^{t+1}, X) \\geq LL(\\theta^t, X)\\)\nLa log-vraisemblance ne diminue jamais (propriété hill-climbing)",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#limitations-de-lalgorithme-em",
     "href": "ds6.html#limitations-de-lalgorithme-em",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "⚠️ Hill-climbing : L’algorithme dépend des paramètres initiaux\nConséquences :\n\nSensible aux maxima locaux : peut converger vers un optimum local plutôt que global\nDifférentes initialisations peuvent donner différents résultats\n\n\n\n\nMéthodes recommandées :\n\nK-means : utiliser le clustering K-means pour initialiser les centres \\(\\mu_j\\)\nK-means++ : version améliorée de K-means avec initialisation intelligente\nExécutions multiples : lancer l’algorithme plusieurs fois avec différentes initialisations et garder la meilleure\n\n\n\n\n⚠️ Convergence potentiellement lente, selon :\n\nLa séparation entre les composantes\nLa forme des distributions\nLe nombre de composantes",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#généralisation-à-c-composantes",
     "href": "ds6.html#généralisation-à-c-composantes",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Généralisation :\n\\[\\delta_{i1}, \\delta_{i2}, \\ldots, \\delta_{ij}, \\ldots, \\delta_{ic}\\]\noù \\(\\delta_{ij} = \\text{true}\\) si la donnée \\(x_i\\) est générée par la composante \\(\\phi_j\\) (\\(\\delta_{ij} = \\text{false}\\) sinon)\nResponsabilité :\n\\(\\gamma_{ij}\\) : espérance de \\(\\delta_{ij}\\) sur toutes les composantes\nParamètres à estimer :\n\\[\\theta = [\\pi_j, \\theta_j]_{j \\in [[c]]} = [\\pi_j, [\\mu_j, \\Sigma_j]]_j\\]",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#algorithme-em-complet-pour-c-composantes",
     "href": "ds6.html#algorithme-em-complet-pour-c-composantes",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Initialisation des paramètres :\n\\[\\theta^0 = \\{\\pi_j^0, \\mu_j^0, \\Sigma_j^0\\}_{j \\in [[c]]}\\]\nStratégies courantes :\n\nGénérale : \\(\\pi_j = 1/c\\), \\(\\mu_j\\) choisi aléatoirement, \\(\\Sigma_j = I_D\\)\nAlternative : utiliser K-means comme initialisation\n\n\n\n\nCalcul des responsabilités :\nPour chaque donnée \\(i \\in [[N]]\\) et chaque composante \\(j \\in [[c]]\\) :\n\\[\\gamma_{ij} = \\frac{\\pi_j \\phi(x_i, \\theta_j)}{\\sum_{k=1}^{c} \\pi_k \\phi(x_i, \\theta_k)}\\]\n\n\n\nEstimation des paramètres du mélange :\nMoyennes :\n\\[\\mu_j = \\frac{\\sum_{i=1}^{N} \\gamma_{ij} x_i}{\\sum_i \\gamma_{ij}}\\]\nCovariances :\n\\[\\Sigma_j = \\frac{X_j \\Gamma_j X_j^T}{\\text{Tr}(\\Gamma_j)}\\]\noù \\(\\Gamma_j = \\text{diag}(\\gamma_{1j}, \\ldots, \\gamma_{Nj})\\) et \\(X_j\\) est centré sur \\(\\mu_j\\)\nPoids :\n\\[\\pi_j = \\frac{\\sum_i \\gamma_{ij}}{N}\\]\n\n\n\nItérer les étapes 2 et 3 jusqu’à convergence",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#modélisation-pratique",
     "href": "ds6.html#modélisation-pratique",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "La paramétrisation a priori du mélange change la convergence :\nParamètres critiques :\n\n\\(c\\) : nombre de composantes\n\\(\\Sigma_j\\) : forme des matrices de covariance (diagonale, complète, paramétrée)\n\n⚠️ Risques :\n\nModèles trop flexibles ou trop rigides → mauvaise convergence ou absence de convergence\nSur-paramétrisation : \\(D \\times D \\times c + 2 \\times c\\) variables\n\nSi \\(N\\) est faible, \\(D\\) grand et \\(c\\) grand → sur-paramétrisation problématique",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#forme-de-la-matrice-de-covariance",
     "href": "ds6.html#forme-de-la-matrice-de-covariance",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Dimension de \\(\\Sigma\\) :\n\\(\\Sigma \\in \\mathbb{R}^{D \\times D}\\)\nExemple critique :\nReconnaissance de caractères avec \\(x_i \\in \\mathbb{R}^{256}\\)\n→ Besoin d’estimer \\(256^2 \\times c\\) paramètres pour la covariance (avec environ 7000 points de données) !\n\n\n\nModèles sphériques :\n\\[\\Sigma = \\sigma I_D\\]\n→ 1 paramètre par composante\nModèles diagonaux :\n\\[\\Sigma = \\text{diag}(\\sigma_1, \\ldots, \\sigma_D)\\]\n→ \\(D\\) paramètres par composante\nModèles complets :\n\\[\\Sigma \\in \\mathbb{R}^{D \\times D}\\]\n→ \\(O(D^2)\\) paramètres par composante\n💡 Conseil pratique : Commencer avec des modèles simples (sphériques) puis augmenter la complexité si nécessaire",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#prétraitement-réduction-de-dimension-par-pca",
     "href": "ds6.html#prétraitement-réduction-de-dimension-par-pca",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Pour des données de haute dimension (par exemple \\(D = 256\\)), les modèles complexes ne convergent pas car le nombre de paramètres \\(p\\) est trop grand.\n\n\n\nStratégie recommandée :\n\nAppliquer PCA pour réduire la dimension de \\(D\\) à \\(K\\) dimensions\nAppliquer EM dans l’espace des \\(K\\) premières composantes principales\n\nExemple pratique :\n\n50 composantes principales reconstruisent 90% du signal\nEM dans l’espace des 50, 10 ou 2 premières composantes principales\n\n✅ Avantages :\n\nRéduction drastique du nombre de paramètres\nÉlimination du bruit\nConvergence plus rapide et stable",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#sélection-du-nombre-de-composantes",
     "href": "ds6.html#sélection-du-nombre-de-composantes",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Problème :\nPlus \\(c\\) est grand, moins de points peuvent être assignés à chaque composante (en moyenne)\nObjectif :\nChercher des modèles parcimonieux, c’est-à-dire avec un petit nombre de paramètres à estimer\n\n\n\nTrade-off vraisemblance-complexité :\n\nPlus \\(c\\) est grand, meilleure est l’estimation de la vraisemblance \\(LL\\)\nMais plus le modèle est complexe (nombreux paramètres)\n\nFormule du BIC :\n\\[BIC(\\theta, X) = -2 \\cdot LL(\\theta, X) + |\\theta| \\log(N)\\]\noù \\(|\\theta|\\) est le nombre de paramètres du modèle\nCritère de sélection :\n\\[\\hat{\\theta} = \\underset{\\theta}{\\arg\\min} \\, BIC(\\theta, X)\\]\nComposantes du BIC :\n\n\\(-2 \\cdot LL(\\theta, X)\\) : pénalise les modèles avec mauvaise vraisemblance\n\\(|\\theta| \\log(N)\\) : pénalise la complexité du modèle\n\n💡 Interprétation : Le BIC favorise les modèles qui expliquent bien les données sans sur-ajustement\n\n\n\n⚠️ Défis pratiques :\n\nBesoin de tester tous les modèles (différentes valeurs de \\(c\\))\nDépend de la convergence de chaque modèle\nNécessite souvent un ajustement manuel fin",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#synthèse-des-concepts-clés",
     "href": "ds6.html#synthèse-des-concepts-clés",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Généralisation :\nLe modèle de mélange gaussien généralise les hypothèses sous-jacentes à la PCA et à la LDA\nModélisation et estimation explicites :\n\nModélisation explicite de la densité\nEstimation par maximum de vraisemblance\n\nClassification non supervisée :\nSi les composantes sont des classes, la donnée \\(x_i\\) est associée à la classe \\(j\\) pour laquelle :\n\\[\\mathbb{P}(C = j | x_i) \\approx \\pi_j \\phi_j(x_i)\\]\nest maximisée parmi toutes les classes\n\n\n\nCaractéristiques :\n\nAlgorithme itératif pour maximiser la (log-)vraisemblance\nPrincipe utilisé dans de nombreux autres scénarios\nBasé sur la définition de variables non observées (latentes) \\(\\delta_{ij}\\)\n\nApplications :\n\nProbabilistic Latent Semantic Analysis (pLSA) : EM où les variables cachées sont les concepts latents\nModèles de Markov cachés (HMM)\nFactorisation matricielle",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#relation-entre-gmm-et-k-means",
     "href": "ds6.html#relation-entre-gmm-et-k-means",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "K-means :\n\nAssignation dure (hard assignment)\nChaque point appartient à un seul cluster\nMinimise la distance euclidienne aux centres\n\nGMM avec EM :\n\nAssignation douce (soft assignment)\nChaque point a une probabilité d’appartenance à chaque composante\nMaximise la vraisemblance selon un modèle probabiliste\n\n\n\n\n✅ K-means est un cas particulier de GMM quand :\n\nMatrices de covariance \\(\\Sigma_j = \\sigma^2 I\\) (sphériques et identiques)\n\\(\\sigma \\to 0\\) : les responsabilités \\(\\gamma_{ij}\\) deviennent binaires\nAssignation douce → assignation dure",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#questions-dexamen-types",
     "href": "ds6.html#questions-dexamen-types",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Modèle de mélange gaussien :\n\nQu’est-ce qu’un modèle de mélange gaussien (GMM) ?\nPourquoi peut-il être vu comme une modélisation conditionnelle ?\nComment peut-on l’utiliser pour générer des données ?\n\nResponsabilité :\n\nQu’est-ce que la responsabilité (responsibility) ?\nComment l’interpréter ?\n\nAlgorithme EM :\n\nPourquoi l’EM pour GMM est-il une MLE ?\nComment interpréter l’étape E ?\nComment interpréter l’étape M ?\n\n\n\n\nRelation avec K-means :\n\nDiscuter la relation entre GMM et K-means\nQu’est-ce que les assignations dure et douce (hard- et soft-assignments) ?\n\nConvergence et optimisation :\n\nComment choisir le nombre de composantes ?\nQuelles sont les stratégies d’initialisation ?\nComment gérer la sur-paramétrisation ?\n\n\n\n\n📌 Conseil important : Il est fortement recommandé de développer l’algèbre contenue dans ce chapitre\nPoints à maîtriser :\n\nDérivation de la log-vraisemblance\nCalcul des responsabilités par la règle de Bayes\nDérivation des équations de mise à jour du M-step\nPreuve de la monotonie de \\(LL\\) dans l’algorithme EM",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
     "objectID": "ds6.html#concepts-mathématiques-à-maîtriser",
     "href": "ds6.html#concepts-mathématiques-à-maîtriser",
-    "title": "Document de Révision : Expectation-Maximization pour la modélisation de densité",
+    "title": "Cours détaillé",
     "section": "",
     "text": "Fondamentaux :\n\nDistribution normale multivariée\nMaximum de vraisemblance (MLE)\nLog-vraisemblance\nRègle de Bayes\n\nModélisation :\n\nVariables aléatoires latentes\nProbabilités conditionnelles\nEspérance conditionnelle\n\n\n\n\nTechniques :\n\nOptimisation itérative\nAlgorithmes hill-climbing\nCritères de convergence\nMaxima locaux vs globaux\n\nCritères de sélection :\n\nBIC (Bayesian Information Criterion)\nTrade-off biais-variance\nParcimonie de modèle",
     "crumbs": [
       "Expectation-Maximization",
-      "Document de Révision : Expectation-Maximization pour la modélisation de densité"
+      "Cours détaillé"
     ]
   },
   {
