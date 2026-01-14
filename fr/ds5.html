@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds5 – ISS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ISS</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./../index.html">
+ <span class="dropdown-text">Anglais</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Français</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Document de Révision : Linear Discriminant Analysis (LDA)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détailé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Questions d’Examen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Document de Révision : Linear Discriminant Analysis (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5s1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analyse Discriminante Linéaire (LDA) - Support de révision oral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Document de Révision : Expectation-Maximization pour la modélisation de densité</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#document-de-révision-linear-discriminant-analysis-lda" id="toc-document-de-révision-linear-discriminant-analysis-lda" class="nav-link active" data-scroll-target="#document-de-révision-linear-discriminant-analysis-lda">Document de Révision : Linear Discriminant Analysis (LDA)</a>
+  <ul class="collapse">
+  <li><a href="#introduction-et-motivation" id="toc-introduction-et-motivation" class="nav-link" data-scroll-target="#introduction-et-motivation">Introduction et Motivation</a>
+  <ul class="collapse">
+  <li><a href="#contexte-général" id="toc-contexte-général" class="nav-link" data-scroll-target="#contexte-général">Contexte général</a></li>
+  </ul></li>
+  <li><a href="#apprentissage-supervisé-fondements" id="toc-apprentissage-supervisé-fondements" class="nav-link" data-scroll-target="#apprentissage-supervisé-fondements">Apprentissage supervisé : Fondements</a>
+  <ul class="collapse">
+  <li><a href="#définition-générale" id="toc-définition-générale" class="nav-link" data-scroll-target="#définition-générale">Définition générale</a></li>
+  <li><a href="#exemples-de-learners" id="toc-exemples-de-learners" class="nav-link" data-scroll-target="#exemples-de-learners">Exemples de learners</a></li>
+  </ul></li>
+  <li><a href="#principe-de-la-lda-direction-discriminante" id="toc-principe-de-la-lda-direction-discriminante" class="nav-link" data-scroll-target="#principe-de-la-lda-direction-discriminante">Principe de la LDA : Direction discriminante</a>
+  <ul class="collapse">
+  <li><a href="#problématique" id="toc-problématique" class="nav-link" data-scroll-target="#problématique">Problématique</a></li>
+  <li><a href="#direction-discriminante-avec-2-classes" id="toc-direction-discriminante-avec-2-classes" class="nav-link" data-scroll-target="#direction-discriminante-avec-2-classes">Direction discriminante avec 2 classes</a></li>
+  </ul></li>
+  <li><a href="#critère-inter-classes-between-class" id="toc-critère-inter-classes-between-class" class="nav-link" data-scroll-target="#critère-inter-classes-between-class">Critère inter-classes (Between-class)</a>
+  <ul class="collapse">
+  <li><a href="#principe-de-séparation-maximale" id="toc-principe-de-séparation-maximale" class="nav-link" data-scroll-target="#principe-de-séparation-maximale">Principe de séparation maximale</a></li>
+  <li><a href="#formulation-mathématique" id="toc-formulation-mathématique" class="nav-link" data-scroll-target="#formulation-mathématique">Formulation mathématique</a></li>
+  </ul></li>
+  <li><a href="#critère-intra-classe-within-class" id="toc-critère-intra-classe-within-class" class="nav-link" data-scroll-target="#critère-intra-classe-within-class">Critère intra-classe (Within-class)</a>
+  <ul class="collapse">
+  <li><a href="#principe-de-variance-minimale" id="toc-principe-de-variance-minimale" class="nav-link" data-scroll-target="#principe-de-variance-minimale">Principe de variance minimale</a></li>
+  <li><a href="#variance-intra-classe" id="toc-variance-intra-classe" class="nav-link" data-scroll-target="#variance-intra-classe">Variance intra-classe</a></li>
+  <li><a href="#critère-de-fisher" id="toc-critère-de-fisher" class="nav-link" data-scroll-target="#critère-de-fisher">Critère de Fisher</a></li>
+  </ul></li>
+  <li><a href="#généralisation-à-m-classes" id="toc-généralisation-à-m-classes" class="nav-link" data-scroll-target="#généralisation-à-m-classes">Généralisation à M classes</a>
+  <ul class="collapse">
+  <li><a href="#critère-inter-classes-généralisé" id="toc-critère-inter-classes-généralisé" class="nav-link" data-scroll-target="#critère-inter-classes-généralisé">Critère inter-classes généralisé</a></li>
+  <li><a href="#critère-intra-classe-généralisé" id="toc-critère-intra-classe-généralisé" class="nav-link" data-scroll-target="#critère-intra-classe-généralisé">Critère intra-classe généralisé</a></li>
+  </ul></li>
+  <li><a href="#critère-de-fisher-combiné" id="toc-critère-de-fisher-combiné" class="nav-link" data-scroll-target="#critère-de-fisher-combiné">Critère de Fisher combiné</a>
+  <ul class="collapse">
+  <li><a href="#combinaison-des-deux-critères" id="toc-combinaison-des-deux-critères" class="nav-link" data-scroll-target="#combinaison-des-deux-critères">Combinaison des deux critères</a></li>
+  <li><a href="#résolution-par-dérivation" id="toc-résolution-par-dérivation" class="nav-link" data-scroll-target="#résolution-par-dérivation">Résolution par dérivation</a></li>
+  </ul></li>
+  <li><a href="#sous-espaces-discriminants" id="toc-sous-espaces-discriminants" class="nav-link" data-scroll-target="#sous-espaces-discriminants">Sous-espaces discriminants</a>
+  <ul class="collapse">
+  <li><a href="#dimensions-discriminantes-multiples" id="toc-dimensions-discriminantes-multiples" class="nav-link" data-scroll-target="#dimensions-discriminantes-multiples">Dimensions discriminantes multiples</a></li>
+  <li><a href="#limitation-dimensionnelle" id="toc-limitation-dimensionnelle" class="nav-link" data-scroll-target="#limitation-dimensionnelle">Limitation dimensionnelle</a></li>
+  <li><a href="#cas-particulier-m-2" id="toc-cas-particulier-m-2" class="nav-link" data-scroll-target="#cas-particulier-m-2">Cas particulier : M = 2</a></li>
+  </ul></li>
+  <li><a href="#exemple-pratique-reconnaissance-de-caractères" id="toc-exemple-pratique-reconnaissance-de-caractères" class="nav-link" data-scroll-target="#exemple-pratique-reconnaissance-de-caractères">Exemple pratique : Reconnaissance de caractères</a>
+  <ul class="collapse">
+  <li><a href="#description-du-dataset" id="toc-description-du-dataset" class="nav-link" data-scroll-target="#description-du-dataset">Description du dataset</a></li>
+  <li><a href="#résultat-de-la-projection-lda" id="toc-résultat-de-la-projection-lda" class="nav-link" data-scroll-target="#résultat-de-la-projection-lda">Résultat de la projection LDA</a></li>
+  </ul></li>
+  <li><a href="#inférence-et-prise-de-décision" id="toc-inférence-et-prise-de-décision" class="nav-link" data-scroll-target="#inférence-et-prise-de-décision">Inférence et prise de décision</a>
+  <ul class="collapse">
+  <li><a href="#modélisation-conditionnelle" id="toc-modélisation-conditionnelle" class="nav-link" data-scroll-target="#modélisation-conditionnelle">Modélisation conditionnelle</a></li>
+  <li><a href="#approche-probabiliste" id="toc-approche-probabiliste" class="nav-link" data-scroll-target="#approche-probabiliste">Approche probabiliste</a></li>
+  </ul></li>
+  <li><a href="#approximation-gaussienne" id="toc-approximation-gaussienne" class="nav-link" data-scroll-target="#approximation-gaussienne">Approximation gaussienne</a>
+  <ul class="collapse">
+  <li><a href="#modèle-gaussien-par-classe" id="toc-modèle-gaussien-par-classe" class="nav-link" data-scroll-target="#modèle-gaussien-par-classe">Modèle gaussien par classe</a></li>
+  <li><a href="#maximum-de-vraisemblance" id="toc-maximum-de-vraisemblance" class="nav-link" data-scroll-target="#maximum-de-vraisemblance">Maximum de vraisemblance</a></li>
+  <li><a href="#règle-de-décision" id="toc-règle-de-décision" class="nav-link" data-scroll-target="#règle-de-décision">Règle de décision</a></li>
+  </ul></li>
+  <li><a href="#optimalité-de-la-lda" id="toc-optimalité-de-la-lda" class="nav-link" data-scroll-target="#optimalité-de-la-lda">Optimalité de la LDA</a>
+  <ul class="collapse">
+  <li><a href="#conditions-doptimalité" id="toc-conditions-doptimalité" class="nav-link" data-scroll-target="#conditions-doptimalité">Conditions d’optimalité</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  </ul></li>
+  <li><a href="#synthèse-des-concepts-clés" id="toc-synthèse-des-concepts-clés" class="nav-link" data-scroll-target="#synthèse-des-concepts-clés">Synthèse des concepts clés</a>
+  <ul class="collapse">
+  <li><a href="#caractéristiques-essentielles-de-la-lda" id="toc-caractéristiques-essentielles-de-la-lda" class="nav-link" data-scroll-target="#caractéristiques-essentielles-de-la-lda">Caractéristiques essentielles de la LDA</a></li>
+  </ul></li>
+  <li><a href="#comparaison-lda-vs-pca" id="toc-comparaison-lda-vs-pca" class="nav-link" data-scroll-target="#comparaison-lda-vs-pca">Comparaison LDA vs PCA</a>
+  <ul class="collapse">
+  <li><a href="#différences-fondamentales" id="toc-différences-fondamentales" class="nav-link" data-scroll-target="#différences-fondamentales">Différences fondamentales</a></li>
+  <li><a href="#complémentarité" id="toc-complémentarité" class="nav-link" data-scroll-target="#complémentarité">Complémentarité</a></li>
+  </ul></li>
+  <li><a href="#questions-dexamen-types" id="toc-questions-dexamen-types" class="nav-link" data-scroll-target="#questions-dexamen-types">Questions d’examen types</a>
+  <ul class="collapse">
+  <li><a href="#questions-conceptuelles" id="toc-questions-conceptuelles" class="nav-link" data-scroll-target="#questions-conceptuelles">Questions conceptuelles</a></li>
+  <li><a href="#questions-techniques" id="toc-questions-techniques" class="nav-link" data-scroll-target="#questions-techniques">Questions techniques</a></li>
+  <li><a href="#démonstrations-mathématiques" id="toc-démonstrations-mathématiques" class="nav-link" data-scroll-target="#démonstrations-mathématiques">Démonstrations mathématiques</a></li>
+  </ul></li>
+  <li><a href="#concepts-mathématiques-à-maîtriser" id="toc-concepts-mathématiques-à-maîtriser" class="nav-link" data-scroll-target="#concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds5.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Document de Révision : Linear Discriminant Analysis (LDA)</a></li></ol></nav></header>
+
+
+
+
+
+<section id="document-de-révision-linear-discriminant-analysis-lda" class="level1">
+<h1>Document de Révision : Linear Discriminant Analysis (LDA)</h1>
+<section id="introduction-et-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-et-motivation">Introduction et Motivation</h2>
+<section id="contexte-général" class="level3">
+<h3 class="anchored" data-anchor-id="contexte-général">Contexte général</h3>
+<p>La <strong>LDA</strong> (Analyse Discriminante Linéaire) est une méthode d’<strong>analyse latente supervisée</strong> qui permet de trouver les facteurs latents optimaux pour la discrimination entre classes.</p>
+<p><strong>Objectifs de la LDA :</strong></p>
+<ul>
+<li>Introduire une définition <strong>supervisée</strong> des facteurs latents</li>
+<li>Proposer une <strong>modélisation conditionnelle</strong> des données</li>
+<li>Effectuer la <strong>classification</strong> d’items non étiquetés</li>
+</ul>
+<p>⚠️ <strong>Attention :</strong> Cette LDA ne doit pas être confondue avec <strong>Latent Dirichlet Allocation</strong> (utilisée en NLP)</p>
+<hr>
+</section>
+</section>
+<section id="apprentissage-supervisé-fondements" class="level2">
+<h2 class="anchored" data-anchor-id="apprentissage-supervisé-fondements">Apprentissage supervisé : Fondements</h2>
+<section id="définition-générale" class="level3">
+<h3 class="anchored" data-anchor-id="définition-générale">Définition générale</h3>
+<p>Soit des données <span class="math inline">\(X \subset \Omega \subseteq \mathbb{R}^D\)</span> associées à des catégories (étiquettes de classe) <span class="math inline">\(Y = [[M]] \subset \mathbb{N}\)</span>.</p>
+<p><strong>L’apprentissage supervisé</strong> consiste à trouver (apprendre) les paramètres <span class="math inline">\(\theta\)</span> d’un apprenant (fonction) <span class="math inline">\(\phi_\theta\)</span> de manière à minimiser la perte <span class="math inline">\(L_{X \times Y}(\theta)\)</span> encourue lors de la prédiction des étiquettes de classe.</p>
+<p><strong>Fonction de prédiction :</strong></p>
+<p><span class="math display">\[\phi_\theta : \Omega \to Y\]</span> <span class="math display">\[x_i \mapsto \phi_\theta(x_i) = \tilde{y}_i\]</span></p>
+</section>
+<section id="exemples-de-learners" class="level3">
+<h3 class="anchored" data-anchor-id="exemples-de-learners">Exemples de learners</h3>
+<p><strong>Régression logistique :</strong></p>
+<p><span class="math inline">\(\phi_\theta\)</span> est une régression logistique avec paramètres <span class="math inline">\(\theta\)</span></p>
+<p><strong>Réseau de neurones :</strong></p>
+<p><span class="math inline">\(\phi_\theta\)</span> est un réseau de neurones avec poids <span class="math inline">\(\theta\)</span></p>
+<p><strong>Fonction de perte exemple :</strong></p>
+<p><span class="math display">\[L_{X \times Y}(\theta) = \sum_X \|\phi_\theta(x_i) - y_i\|^2\]</span></p>
+<hr>
+</section>
+</section>
+<section id="principe-de-la-lda-direction-discriminante" class="level2">
+<h2 class="anchored" data-anchor-id="principe-de-la-lda-direction-discriminante">Principe de la LDA : Direction discriminante</h2>
+<section id="problématique" class="level3">
+<h3 class="anchored" data-anchor-id="problématique">Problématique</h3>
+<p><strong>Question fondamentale :</strong> Étant donné des données multivariées <span class="math inline">\(X\)</span> associées à des étiquettes <span class="math inline">\(Y\)</span>, on cherche un modèle pour ces données.</p>
+</section>
+<section id="direction-discriminante-avec-2-classes" class="level3">
+<h3 class="anchored" data-anchor-id="direction-discriminante-avec-2-classes">Direction discriminante avec 2 classes</h3>
+<p>On cherche une <strong>direction</strong> <span class="math inline">\(a \in \mathbb{R}^D\)</span> telle que la projection des données sur cette direction <span class="math inline">\(\hat{X} = \text{Proj}_a(X)\)</span> montre des <strong>propriétés optimales pour la discrimination</strong> entre classes.</p>
+<p><strong>Visualisation géométrique :</strong></p>
+<pre class="mermaid"><code>graph TD
+    A[Données originales en D dimensions] --&gt;|Projection sur a| B[Données projetées en 1D]
+    B --&gt; C[Classes bien séparées]</code></pre>
+<p>📌 <strong>Principe clé :</strong> Trouver la direction <span class="math inline">\(a\)</span> qui sépare au mieux les classes après projection</p>
+<hr>
+</section>
+</section>
+<section id="critère-inter-classes-between-class" class="level2">
+<h2 class="anchored" data-anchor-id="critère-inter-classes-between-class">Critère inter-classes (Between-class)</h2>
+<section id="principe-de-séparation-maximale" class="level3">
+<h3 class="anchored" data-anchor-id="principe-de-séparation-maximale">Principe de séparation maximale</h3>
+<p>Si les projections des classes sont <strong>bien séparées</strong>, alors elles peuvent être facilement discriminées.</p>
+<p>✅ <strong>Objectif :</strong> Chercher la direction <span class="math inline">\(a\)</span> où la discrimination inter-classes est <strong>maximale</strong></p>
+</section>
+<section id="formulation-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-mathématique">Formulation mathématique</h3>
+<p><strong>Intuition géométrique :</strong></p>
+<p>La direction <span class="math inline">\(a\)</span> doit être <strong>colinéaire</strong> à la ligne <span class="math inline">\(\mu_1 - \mu_2\)</span> qui relie les centres de masse des classes, car :</p>
+<p><span class="math display">\[\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \left\|\frac{a^T\mu_1}{\|a\|^2}a - \frac{a^T\mu_2}{\|a\|^2}a\right\|^2 = \frac{1}{\|a\|^2}(a^T(\mu_1 - \mu_2))^2\]</span></p>
+<p>Cette expression est <strong>maximale</strong> quand <span class="math inline">\(a = \lambda(\mu_1 - \mu_2)\)</span></p>
+<p>📌 <strong>Point important :</strong> Les données originales <span class="math inline">\((x_i \in X)\)</span> ne changent pas. Seules les <strong>données projetées</strong> <span class="math inline">\((\hat{x}_i \in \hat{X})\)</span> et les calculs subséquents changent lorsqu’on fait évoluer <span class="math inline">\(a\)</span>.</p>
+<p>💡 <strong>Propriété :</strong> Le centre de masse des données projetées est la projection du centre de masse des données originales</p>
+<hr>
+</section>
+</section>
+<section id="critère-intra-classe-within-class" class="level2">
+<h2 class="anchored" data-anchor-id="critère-intra-classe-within-class">Critère intra-classe (Within-class)</h2>
+<section id="principe-de-variance-minimale" class="level3">
+<h3 class="anchored" data-anchor-id="principe-de-variance-minimale">Principe de variance minimale</h3>
+<p>On cherche également à <strong>minimiser la variance</strong> de chaque classe projetée individuellement.</p>
+<p><strong>Objectif :</strong> Réduire la dispersion au sein de chaque classe après projection</p>
+</section>
+<section id="variance-intra-classe" class="level3">
+<h3 class="anchored" data-anchor-id="variance-intra-classe">Variance intra-classe</h3>
+<p>Pour chaque classe <span class="math inline">\(k\)</span>, la variance normalisée de la projection est :</p>
+<p><span class="math display">\[\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k)\]</span></p>
+</section>
+<section id="critère-de-fisher" class="level3">
+<h3 class="anchored" data-anchor-id="critère-de-fisher">Critère de Fisher</h3>
+<p>Le <strong>critère de Fisher</strong> maximise le ratio :</p>
+<p><span class="math display">\[\underset{a}{\arg\max} \frac{\|\hat{\mu}_1 - \hat{\mu}_2\|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}\]</span></p>
+<p><strong>Interprétation :</strong></p>
+<ul>
+<li><strong>Numérateur :</strong> Distance entre les moyennes projetées (inter-classe) → à <strong>maximiser</strong></li>
+<li><strong>Dénominateur :</strong> Somme des variances intra-classes → à <strong>minimiser</strong></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="généralisation-à-m-classes" class="level2">
+<h2 class="anchored" data-anchor-id="généralisation-à-m-classes">Généralisation à M classes</h2>
+<section id="critère-inter-classes-généralisé" class="level3">
+<h3 class="anchored" data-anchor-id="critère-inter-classes-généralisé">Critère inter-classes généralisé</h3>
+<p><strong>Définitions :</strong></p>
+<p>Soit <span class="math inline">\(B = [\mu_1 - \mu, \ldots, \mu_M - \mu]\)</span> la matrice des centres de classes centrés, où :</p>
+<ul>
+<li><span class="math inline">\(\mu = \frac{1}{N} \sum_i^N x_i\)</span> est la moyenne globale</li>
+<li><span class="math inline">\(N = \sum_k N_k\)</span> est le nombre total de points</li>
+</ul>
+<p><strong>Matrice de covariance inter-classes :</strong></p>
+<p><span class="math display">\[\Sigma_b = \frac{1}{M} BB^T\]</span></p>
+<p><strong>Critère à maximiser :</strong></p>
+<p><span class="math display">\[\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{\|a\|^2} a^T \Sigma_b a\]</span></p>
+</section>
+<section id="critère-intra-classe-généralisé" class="level3">
+<h3 class="anchored" data-anchor-id="critère-intra-classe-généralisé">Critère intra-classe généralisé</h3>
+<p><strong>Définitions :</strong></p>
+<p>Soit <span class="math inline">\(A_k = [x_1 - \mu_k, \ldots, x_{N_k} - \mu_k]\)</span> avec <span class="math inline">\(y_i = k\)</span>, la matrice des données centrées pour la classe <span class="math inline">\(k\)</span>.</p>
+<p><strong>Matrice de covariance intra-classe :</strong></p>
+<ul>
+<li>Pour la classe <span class="math inline">\(k\)</span> : <span class="math inline">\(\frac{1}{N_k} A_k A_k^T\)</span></li>
+<li><strong>Somme des matrices intra-classes :</strong> <span class="math inline">\(\Sigma_w = \sum_k \frac{1}{N_k} A_k A_k^T\)</span></li>
+</ul>
+<p><strong>Critère à minimiser :</strong></p>
+<p><span class="math display">\[\sum_k \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k) = \frac{1}{a^T a} a^T \Sigma_w a\]</span></p>
+<p><strong>Développement :</strong></p>
+<p><span class="math display">\[\sum_k \frac{1}{N_k} \sum_{y_i = k} \left[\frac{a^T(x_i - \mu_k)}{\|a\|^2}a\right]^T \left[\frac{a^T(x_i - \mu_k)}{\|a\|^2}a\right] = \frac{1}{a^T a} a^T \Sigma_w a\]</span></p>
+<hr>
+</section>
+</section>
+<section id="critère-de-fisher-combiné" class="level2">
+<h2 class="anchored" data-anchor-id="critère-de-fisher-combiné">Critère de Fisher combiné</h2>
+<section id="combinaison-des-deux-critères" class="level3">
+<h3 class="anchored" data-anchor-id="combinaison-des-deux-critères">Combinaison des deux critères</h3>
+<p>Le <strong>critère de Fisher généralisé</strong> combine les critères inter-classe et intra-classe :</p>
+<p><span class="math display">\[\underset{a}{\arg\max} \, L(a) = \underset{a}{\arg\max} \frac{a^T \Sigma_b a}{a^T \Sigma_w a}\]</span></p>
+</section>
+<section id="résolution-par-dérivation" class="level3">
+<h3 class="anchored" data-anchor-id="résolution-par-dérivation">Résolution par dérivation</h3>
+<p>Pour trouver le maximum, on calcule la dérivée :</p>
+<p><span class="math display">\[\frac{\partial L(a)}{\partial a} = \frac{\Sigma_b a (a^T \Sigma_w a) - \Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0\]</span></p>
+<p><strong>Équation résultante :</strong></p>
+<p><span class="math display">\[\Sigma_b a = L(a) \Sigma_w a\]</span></p>
+<p>✅ <strong>Solution :</strong> <span class="math inline">\(a\)</span> est solution du <strong>système aux valeurs propres généralisé</strong></p>
+<p>La direction optimale <span class="math inline">\(a\)</span> est le <strong>premier vecteur propre</strong> de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (avec valeur propre <span class="math inline">\(\lambda_1 = L(a)\)</span>)</p>
+<hr>
+</section>
+</section>
+<section id="sous-espaces-discriminants" class="level2">
+<h2 class="anchored" data-anchor-id="sous-espaces-discriminants">Sous-espaces discriminants</h2>
+<section id="dimensions-discriminantes-multiples" class="level3">
+<h3 class="anchored" data-anchor-id="dimensions-discriminantes-multiples">Dimensions discriminantes multiples</h3>
+<p><strong>Vecteurs propres ordonnés :</strong></p>
+<p>Les vecteurs propres correspondant aux <strong>plus grandes valeurs propres</strong> <span class="math inline">\(\lambda_i\)</span> sont les dimensions les plus discriminatives :</p>
+<p><span class="math display">\[a_1, a_2, \ldots, a_p \quad \text{avec} \quad \lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_p\]</span></p>
+</section>
+<section id="limitation-dimensionnelle" class="level3">
+<h3 class="anchored" data-anchor-id="limitation-dimensionnelle">Limitation dimensionnelle</h3>
+<p>📌 <strong>Propriété fondamentale :</strong> <span class="math inline">\(M\)</span> classes peuvent être discriminées dans un sous-espace de dimension <strong>au plus</strong> <span class="math inline">\((M-1)\)</span>.</p>
+<p><strong>Conséquence :</strong> Il y a seulement <span class="math inline">\(M - 1\)</span> valeurs propres <strong>non nulles</strong></p>
+<p><strong>Explication :</strong> Avec <span class="math inline">\(M\)</span> classes, on a <span class="math inline">\(M\)</span> centres de classe. Une fois centrés globalement, ces centres sont contraints à vivre dans un espace de dimension <span class="math inline">\(M-1\)</span>.</p>
+</section>
+<section id="cas-particulier-m-2" class="level3">
+<h3 class="anchored" data-anchor-id="cas-particulier-m-2">Cas particulier : M = 2</h3>
+<p>Pour deux classes, on peut montrer que :</p>
+<p><span class="math display">\[BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T\]</span></p>
+<p><strong>Implications :</strong></p>
+<ul>
+<li><span class="math inline">\(BB^T a\)</span> est un vecteur selon la direction <span class="math inline">\((\mu_1 - \mu_2)\)</span></li>
+<li>La solution est <span class="math inline">\(a = \lambda \Sigma_w^{-1} (\mu_1 - \mu_2)\)</span></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="exemple-pratique-reconnaissance-de-caractères" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-pratique-reconnaissance-de-caractères">Exemple pratique : Reconnaissance de caractères</h2>
+<section id="description-du-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="description-du-dataset">Description du dataset</h3>
+<p><strong>Dataset MNIST partiel :</strong></p>
+<ul>
+<li>7291 images de taille <span class="math inline">\(16 \times 16\)</span> (8 bits)</li>
+<li>Chiffres de 0 à 9</li>
+<li>Représentation : <span class="math inline">\(\{x_i, y_i\}\)</span> avec <span class="math inline">\(x_i \in \mathbb{R}^{256}\)</span> et <span class="math inline">\(y_i \in [[10]]\)</span>, <span class="math inline">\(i \in [[7291]]\)</span></li>
+</ul>
+</section>
+<section id="résultat-de-la-projection-lda" class="level3">
+<h3 class="anchored" data-anchor-id="résultat-de-la-projection-lda">Résultat de la projection LDA</h3>
+<p>La LDA trouve le <strong>sous-espace optimal</strong> pour séparer <strong>linéairement</strong> les données selon leurs étiquettes <span class="math inline">\(y_i\)</span>.</p>
+<p><strong>Avantages de la projection LDA :</strong></p>
+<ul>
+<li>Réduction de dimension (de 256 à quelques dimensions)</li>
+<li>Visualisation en 2D ou 3D possible</li>
+<li>Séparation des classes maximisée</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="inférence-et-prise-de-décision" class="level2">
+<h2 class="anchored" data-anchor-id="inférence-et-prise-de-décision">Inférence et prise de décision</h2>
+<section id="modélisation-conditionnelle" class="level3">
+<h3 class="anchored" data-anchor-id="modélisation-conditionnelle">Modélisation conditionnelle</h3>
+<p><strong>Problème de classification :</strong></p>
+<p>Pour une nouvelle donnée <span class="math inline">\(j\)</span> :</p>
+<ul>
+<li><span class="math inline">\(x_j\)</span> est <strong>connu</strong></li>
+<li><span class="math inline">\(y_j\)</span> est <strong>inconnu</strong></li>
+</ul>
+<p><strong>Question :</strong> À quelle classe <span class="math inline">\(k\)</span> le point <span class="math inline">\(j\)</span> appartient-il ?</p>
+</section>
+<section id="approche-probabiliste" class="level3">
+<h3 class="anchored" data-anchor-id="approche-probabiliste">Approche probabiliste</h3>
+<p><strong>Déclaration d’une variable aléatoire catégorielle :</strong></p>
+<p>On déclare la variable aléatoire de classe <span class="math inline">\(C\)</span></p>
+<p><strong>Prédiction par la règle de Bayes :</strong></p>
+<p><span class="math display">\[\mathbb{P}(C = k | x_j) = \frac{\mathbb{P}(x_j | C = k) \mathbb{P}(C = k)}{\mathbb{P}(x_j)}\]</span></p>
+<p><strong>Composantes :</strong></p>
+<ul>
+<li><span class="math inline">\(\mathbb{P}(x_j | C = k)\)</span> : <strong>vraisemblance</strong> (likelihood)</li>
+<li><span class="math inline">\(\mathbb{P}(C = k)\)</span> : <strong>prior</strong> (probabilité a priori)</li>
+<li><span class="math inline">\(\mathbb{P}(x_j)\)</span> : <strong>évidence</strong> (normalisation)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="approximation-gaussienne" class="level2">
+<h2 class="anchored" data-anchor-id="approximation-gaussienne">Approximation gaussienne</h2>
+<section id="modèle-gaussien-par-classe" class="level3">
+<h3 class="anchored" data-anchor-id="modèle-gaussien-par-classe">Modèle gaussien par classe</h3>
+<p><strong>Hypothèse de distribution :</strong></p>
+<p>Chaque classe est modélisée par une distribution normale :</p>
+<p><span class="math display">\[\mathbb{P}(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)\]</span></p>
+<p><strong>Choix du prior :</strong></p>
+<p>Prior uniforme : <span class="math inline">\(\mathbb{P}(C = k) = \frac{1}{M}\)</span> (toutes les classes équiprobables)</p>
+<p><strong>Simplification :</strong></p>
+<p>L’évidence <span class="math inline">\(\mathbb{P}(x_j)\)</span> est <strong>ignorée</strong> car constante pour toutes les classes (normalisation)</p>
+</section>
+<section id="maximum-de-vraisemblance" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-de-vraisemblance">Maximum de vraisemblance</h3>
+<p><strong>Approximation :</strong></p>
+<p><span class="math display">\[\mathbb{P}(x | C = k) \propto \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)\]</span></p>
+</section>
+<section id="règle-de-décision" class="level3">
+<h3 class="anchored" data-anchor-id="règle-de-décision">Règle de décision</h3>
+<p><strong>Classification par maximum a posteriori :</strong></p>
+<p><span class="math display">\[\delta(x) = \underset{k}{\arg\max} \, \mathbb{P}(x | C = k)\]</span></p>
+<p><strong>Interprétation :</strong> On assigne <span class="math inline">\(x\)</span> à la classe <span class="math inline">\(k\)</span> qui maximise la vraisemblance (ou la probabilité a posteriori)</p>
+<hr>
+</section>
+</section>
+<section id="optimalité-de-la-lda" class="level2">
+<h2 class="anchored" data-anchor-id="optimalité-de-la-lda">Optimalité de la LDA</h2>
+<section id="conditions-doptimalité" class="level3">
+<h3 class="anchored" data-anchor-id="conditions-doptimalité">Conditions d’optimalité</h3>
+<p>✅ <strong>La LDA est optimale</strong> lorsque les <span class="math inline">\(M\)</span> classes suivent chacune une <strong>distribution gaussienne</strong></p>
+<p><strong>Justification :</strong></p>
+<p>Les critères de discrimination sont basés sur les matrices de covariance <span class="math inline">\(\Sigma_w\)</span> et <span class="math inline">\(\Sigma_b\)</span>, qui caractérisent pleinement les distributions gaussiennes.</p>
+</section>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<p>⚠️ <strong>Linear Discriminant Analysis</strong> : ne prend <strong>pas en compte</strong> les relations <strong>non-linéaires</strong> entre variables</p>
+<p><strong>Discrimination linéaire uniquement</strong></p>
+<p><strong>Alternative :</strong> Pour des relations non-linéaires, utiliser des méthodes de <strong>classification non-linéaire</strong> :</p>
+<ul>
+<li>Kernel LDA</li>
+<li>Quadratic Discriminant Analysis (QDA)</li>
+<li>Support Vector Machines (SVM)</li>
+<li>Réseaux de neurones</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="synthèse-des-concepts-clés" class="level2">
+<h2 class="anchored" data-anchor-id="synthèse-des-concepts-clés">Synthèse des concepts clés</h2>
+<section id="caractéristiques-essentielles-de-la-lda" class="level3">
+<h3 class="anchored" data-anchor-id="caractéristiques-essentielles-de-la-lda">Caractéristiques essentielles de la LDA</h3>
+<p><strong>Nature de la méthode :</strong></p>
+<ul>
+<li>La LDA est une technique <strong>supervisée</strong></li>
+<li>Utilise les <strong>étiquettes de classe</strong> pour guider la réduction de dimension</li>
+</ul>
+<p><strong>Objectif :</strong></p>
+<ul>
+<li>Trouver les <strong>facteurs latents linéaires optimaux</strong> qui expliquent la discrimination linéaire entre classes</li>
+</ul>
+<p><strong>Critère de Fisher :</strong></p>
+<ul>
+<li>Combine la dispersion <strong>intra-classe</strong> (within-scatter) et <strong>inter-classe</strong> (between-scatter)</li>
+<li>Maximise le ratio <span class="math inline">\(\frac{a^T \Sigma_b a}{a^T \Sigma_w a}\)</span></li>
+</ul>
+<p><strong>Résolution :</strong></p>
+<ul>
+<li>Résolu en trouvant les valeurs propres de la matrice <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span></li>
+<li>Les vecteurs propres forment les axes discriminants</li>
+</ul>
+<p><strong>Applications :</strong></p>
+<ul>
+<li><strong>Visualisation</strong> des données en tenant compte des étiquettes</li>
+<li><strong>Réduction de dimension</strong> supervisée</li>
+<li><strong>Classification</strong> via modélisation conditionnelle (chaque classe suit une distribution normale)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="comparaison-lda-vs-pca" class="level2">
+<h2 class="anchored" data-anchor-id="comparaison-lda-vs-pca">Comparaison LDA vs PCA</h2>
+<section id="différences-fondamentales" class="level3">
+<h3 class="anchored" data-anchor-id="différences-fondamentales">Différences fondamentales</h3>
+<p><strong>PCA (non supervisée) :</strong></p>
+<ul>
+<li>Maximise la <strong>variance</strong> globale</li>
+<li>Ignore les étiquettes de classe</li>
+<li>Trouve les directions de variance maximale</li>
+<li>Basée sur <span class="math inline">\(\Sigma\)</span> (covariance totale)</li>
+</ul>
+<p><strong>LDA (supervisée) :</strong></p>
+<ul>
+<li>Maximise la <strong>séparation entre classes</strong></li>
+<li>Utilise les étiquettes de classe</li>
+<li>Trouve les directions discriminantes</li>
+<li>Basée sur <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (ratio de covariances)</li>
+</ul>
+</section>
+<section id="complémentarité" class="level3">
+<h3 class="anchored" data-anchor-id="complémentarité">Complémentarité</h3>
+<p>💡 <strong>En pratique :</strong> On peut combiner PCA et LDA</p>
+<ol type="1">
+<li>PCA pour réduction initiale de dimension (éliminer le bruit)</li>
+<li>LDA pour maximiser la discrimination</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="questions-dexamen-types" class="level2">
+<h2 class="anchored" data-anchor-id="questions-dexamen-types">Questions d’examen types</h2>
+<section id="questions-conceptuelles" class="level3">
+<h3 class="anchored" data-anchor-id="questions-conceptuelles">Questions conceptuelles</h3>
+<p><strong>Setup de l’apprentissage supervisé :</strong></p>
+<ul>
+<li>Expliquer le contexte de l’apprentissage supervisé</li>
+<li>Différence entre supervisé et non-supervisé</li>
+</ul>
+<p><strong>Nature linéaire de la LDA :</strong></p>
+<ul>
+<li>Pourquoi la LDA est-elle une méthode linéaire ?</li>
+<li>Quelles sont ses limitations ?</li>
+</ul>
+<p><strong>Direction discriminante :</strong></p>
+<ul>
+<li>Qu’est-ce qui caractérise une direction discriminante ?</li>
+<li>Que représente le vecteur <span class="math inline">\(a\)</span> ?</li>
+</ul>
+</section>
+<section id="questions-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="questions-techniques">Questions techniques</h3>
+<p><strong>Critères de Fisher :</strong></p>
+<ul>
+<li>Qu’est-ce que le critère de Fisher ?</li>
+<li>Comment combine-t-il les critères inter et intra-classes ?</li>
+</ul>
+<p><strong>Critère inter-classes (between) :</strong></p>
+<ul>
+<li>Principe du critère inter-classes</li>
+<li>Comment calculer la matrice de covariance inter-classes <span class="math inline">\(\Sigma_b\)</span> ?</li>
+</ul>
+<p><strong>Critère intra-classe (within) :</strong></p>
+<ul>
+<li>Principe du critère intra-classe</li>
+<li>Comment calculer la matrice de covariance intra-classes <span class="math inline">\(\Sigma_w\)</span> ?</li>
+</ul>
+</section>
+<section id="démonstrations-mathématiques" class="level3">
+<h3 class="anchored" data-anchor-id="démonstrations-mathématiques">Démonstrations mathématiques</h3>
+<p><strong>Dérivation du maximum :</strong></p>
+<ul>
+<li>Justifier et expliquer la dérivation du maximum pour <span class="math inline">\(a\)</span></li>
+<li>Montrer que <span class="math inline">\(a\)</span> satisfait <span class="math inline">\(\Sigma_b a = \lambda \Sigma_w a\)</span></li>
+</ul>
+<p><strong>Situation multidimensionnelle :</strong></p>
+<ul>
+<li>Décrire la situation multidimensionnelle (<span class="math inline">\(D &gt; 2\)</span>)</li>
+<li>Expliquer pourquoi on a au plus <span class="math inline">\(M-1\)</span> dimensions discriminantes</li>
+</ul>
+<p><strong>Inférence :</strong></p>
+<ul>
+<li>Comment faire de l’inférence avec la LDA ?</li>
+<li>Fournir un exemple de modèle conditionnel utilisant la LDA</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="concepts-mathématiques-à-maîtriser" class="level2">
+<h2 class="anchored" data-anchor-id="concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</h2>
+<p>📌 <strong>Pour bien comprendre la LDA, il faut maîtriser :</strong></p>
+<p><strong>Algèbre linéaire :</strong></p>
+<ul>
+<li>Vecteurs propres et valeurs propres</li>
+<li>Système aux valeurs propres généralisé</li>
+<li>Matrices de covariance</li>
+<li>Projection orthogonale</li>
+</ul>
+<p><strong>Statistiques :</strong></p>
+<ul>
+<li>Moyenne et variance</li>
+<li>Covariance et corrélation</li>
+<li>Distribution normale multivariée</li>
+<li>Règle de Bayes</li>
+</ul>
+<p><strong>Optimisation :</strong></p>
+<ul>
+<li>Dérivation de fonctions matricielles</li>
+<li>Optimisation sous contrainte</li>
+<li>Méthode du ratio de Rayleigh</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds2s1 – ISS</title>
+<title>ds3s – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -42,9 +42,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0c6282e9eda64d97ea9e5255f7a37655.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-d6f41e6f289ddcd3353223713284dc1e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-0c6282e9eda64d97ea9e5255f7a37655.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -283,12 +283,6 @@ window.Quarto = {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./ds2.html" aria-current="page"> 
-<span class="menu-text">Course</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
@@ -319,7 +313,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">High-dimensional representation spaces</a></li><li class="breadcrumb-item"><a href="./ds2s1.html"><strong>High-Dimensional Spaces: The Essentials</strong></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -360,12 +354,6 @@ window.Quarto = {
  <span class="menu-text">The Essentials</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds2s1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><strong>High-Dimensional Spaces: The Essentials</strong></span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -378,316 +366,471 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#high-dimensional-spaces-the-essentials" id="toc-high-dimensional-spaces-the-essentials" class="nav-link active" data-scroll-target="#high-dimensional-spaces-the-essentials"><strong>High-Dimensional Spaces: The Essentials</strong></a>
+  <li><a href="#the-essentials" id="toc-the-essentials" class="nav-link active" data-scroll-target="#the-essentials">The Essentials</a>
   <ul class="collapse">
-  <li><a href="#why-study-high-dimensional-spaces" id="toc-why-study-high-dimensional-spaces" class="nav-link" data-scroll-target="#why-study-high-dimensional-spaces"><strong>🎯 Why Study High-Dimensional Spaces?</strong></a></li>
-  <li><a href="#the-representation-space" id="toc-the-representation-space" class="nav-link" data-scroll-target="#the-representation-space"><strong>📐 The Representation Space</strong></a></li>
-  <li><a href="#the-curse-of-dimensionality" id="toc-the-curse-of-dimensionality" class="nav-link" data-scroll-target="#the-curse-of-dimensionality"><strong>🌀 THE CURSE OF DIMENSIONALITY</strong></a>
+  <li><a href="#introduction-and-motivation" id="toc-introduction-and-motivation" class="nav-link" data-scroll-target="#introduction-and-motivation">Introduction and Motivation</a>
   <ul class="collapse">
-  <li><a href="#data-sparsity" id="toc-data-sparsity" class="nav-link" data-scroll-target="#data-sparsity"><strong>1️⃣ Data Sparsity</strong></a></li>
-  <li><a href="#empty-sphere-spiky-cube" id="toc-empty-sphere-spiky-cube" class="nav-link" data-scroll-target="#empty-sphere-spiky-cube"><strong>2️⃣ Empty Sphere &amp; Spiky Cube</strong></a></li>
-  <li><a href="#volume-concentration-at-surface" id="toc-volume-concentration-at-surface" class="nav-link" data-scroll-target="#volume-concentration-at-surface"><strong>3️⃣ Volume Concentration at Surface</strong></a></li>
-  <li><a href="#the-gaussian-egg" id="toc-the-gaussian-egg" class="nav-link" data-scroll-target="#the-gaussian-egg"><strong>4️⃣ The Gaussian Egg</strong></a></li>
-  <li><a href="#distance-concentration" id="toc-distance-concentration" class="nav-link" data-scroll-target="#distance-concentration"><strong>5️⃣ Distance Concentration</strong></a></li>
-  <li><a href="#quasi-orthogonality" id="toc-quasi-orthogonality" class="nav-link" data-scroll-target="#quasi-orthogonality"><strong>6️⃣ Quasi-Orthogonality</strong></a></li>
-  <li><a href="#hubness" id="toc-hubness" class="nav-link" data-scroll-target="#hubness"><strong>7️⃣ Hubness</strong></a></li>
-  <li><a href="#concentration-inequalities" id="toc-concentration-inequalities" class="nav-link" data-scroll-target="#concentration-inequalities"><strong>8️⃣ Concentration Inequalities</strong></a></li>
+  <li><a href="#the-fundamental-problem" id="toc-the-fundamental-problem" class="nav-link" data-scroll-target="#the-fundamental-problem">The Fundamental Problem</a></li>
+  <li><a href="#geometric-intuition-the-point-cloud" id="toc-geometric-intuition-the-point-cloud" class="nav-link" data-scroll-target="#geometric-intuition-the-point-cloud">Geometric Intuition: The Point Cloud</a></li>
   </ul></li>
-  <li><a href="#the-blessing-of-dimensionality" id="toc-the-blessing-of-dimensionality" class="nav-link" data-scroll-target="#the-blessing-of-dimensionality"><strong>⭐ THE BLESSING OF DIMENSIONALITY</strong></a>
+  <li><a href="#maximizing-variance" id="toc-maximizing-variance" class="nav-link" data-scroll-target="#maximizing-variance">Maximizing Variance</a>
   <ul class="collapse">
-  <li><a href="#laws-of-large-numbers" id="toc-laws-of-large-numbers" class="nav-link" data-scroll-target="#laws-of-large-numbers"><strong>1️⃣ Laws of Large Numbers</strong></a></li>
-  <li><a href="#random-projections-johnson-lindenstrauss" id="toc-random-projections-johnson-lindenstrauss" class="nav-link" data-scroll-target="#random-projections-johnson-lindenstrauss"><strong>2️⃣ Random Projections (Johnson-Lindenstrauss)</strong></a></li>
+  <li><a href="#mathematical-formalization" id="toc-mathematical-formalization" class="nav-link" data-scroll-target="#mathematical-formalization">Mathematical Formalization</a></li>
+  <li><a href="#complete-decomposition" id="toc-complete-decomposition" class="nav-link" data-scroll-target="#complete-decomposition">Complete Decomposition</a></li>
   </ul></li>
-  <li><a href="#impact-on-data-science" id="toc-impact-on-data-science" class="nav-link" data-scroll-target="#impact-on-data-science"><strong>🎓 IMPACT ON DATA SCIENCE</strong></a>
+  <li><a href="#minimizing-error" id="toc-minimizing-error" class="nav-link" data-scroll-target="#minimizing-error">Minimizing Error</a>
   <ul class="collapse">
-  <li><a href="#sampling-exponential-challenge" id="toc-sampling-exponential-challenge" class="nav-link" data-scroll-target="#sampling-exponential-challenge"><strong>1️⃣ Sampling: Exponential Challenge</strong></a></li>
-  <li><a href="#indexing-structure-collapse" id="toc-indexing-structure-collapse" class="nav-link" data-scroll-target="#indexing-structure-collapse"><strong>2️⃣ Indexing: Structure Collapse</strong></a></li>
-  <li><a href="#learning-theoretical-barrier" id="toc-learning-theoretical-barrier" class="nav-link" data-scroll-target="#learning-theoretical-barrier"><strong>3️⃣ Learning: Theoretical Barrier</strong></a></li>
-  <li><a href="#why-does-data-science-work" id="toc-why-does-data-science-work" class="nav-link" data-scroll-target="#why-does-data-science-work"><strong>4️⃣ Why Does Data Science Work?</strong></a></li>
+  <li><a href="#variance-error-equivalence" id="toc-variance-error-equivalence" class="nav-link" data-scroll-target="#variance-error-equivalence">Variance-Error Equivalence</a></li>
+  <li><a href="#interpretations" id="toc-interpretations" class="nav-link" data-scroll-target="#interpretations">Interpretations</a></li>
   </ul></li>
-  <li><a href="#quick-reference-summary" id="toc-quick-reference-summary" class="nav-link" data-scroll-target="#quick-reference-summary"><strong>📝 QUICK REFERENCE SUMMARY</strong></a></li>
-  <li><a href="#key-takeaways-for-examsinterviews" id="toc-key-takeaways-for-examsinterviews" class="nav-link" data-scroll-target="#key-takeaways-for-examsinterviews"><strong>💡 KEY TAKEAWAYS FOR EXAMS/INTERVIEWS</strong></a>
+  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction" class="nav-link" data-scroll-target="#dimensionality-reduction">Dimensionality Reduction</a>
   <ul class="collapse">
-  <li><a href="#the-3-counterintuitive-truths" id="toc-the-3-counterintuitive-truths" class="nav-link" data-scroll-target="#the-3-counterintuitive-truths"><strong>1. The 3 Counterintuitive Truths</strong></a></li>
-  <li><a href="#the-two-sides-of-the-coin" id="toc-the-two-sides-of-the-coin" class="nav-link" data-scroll-target="#the-two-sides-of-the-coin"><strong>2. The Two Sides of the Coin</strong></a></li>
-  <li><a href="#the-only-solution" id="toc-the-only-solution" class="nav-link" data-scroll-target="#the-only-solution"><strong>3. The Only Solution</strong></a></li>
+  <li><a href="#structure-of-the-latent-space" id="toc-structure-of-the-latent-space" class="nav-link" data-scroll-target="#structure-of-the-latent-space">Structure of the Latent Space</a></li>
+  <li><a href="#latent-coordinates" id="toc-latent-coordinates" class="nav-link" data-scroll-target="#latent-coordinates">Latent Coordinates</a></li>
   </ul></li>
-  <li><a href="#common-questions-answers" id="toc-common-questions-answers" class="nav-link" data-scroll-target="#common-questions-answers"><strong>🔍 COMMON QUESTIONS &amp; ANSWERS</strong></a>
+  <li><a href="#low-rank-approximation" id="toc-low-rank-approximation" class="nav-link" data-scroll-target="#low-rank-approximation">Low-Rank Approximation</a>
   <ul class="collapse">
-  <li><a href="#q1-why-cant-we-just-use-more-data" id="toc-q1-why-cant-we-just-use-more-data" class="nav-link" data-scroll-target="#q1-why-cant-we-just-use-more-data"><strong>Q1: Why can’t we just use more data?</strong></a></li>
-  <li><a href="#q2-how-do-neural-networks-avoid-the-curse" id="toc-q2-how-do-neural-networks-avoid-the-curse" class="nav-link" data-scroll-target="#q2-how-do-neural-networks-avoid-the-curse"><strong>Q2: How do neural networks avoid the curse?</strong></a></li>
-  <li><a href="#q3-whats-the-intuition-behind-random-projections" id="toc-q3-whats-the-intuition-behind-random-projections" class="nav-link" data-scroll-target="#q3-whats-the-intuition-behind-random-projections"><strong>Q3: What’s the intuition behind random projections?</strong></a></li>
-  <li><a href="#q4-why-do-distances-concentrate" id="toc-q4-why-do-distances-concentrate" class="nav-link" data-scroll-target="#q4-why-do-distances-concentrate"><strong>Q4: Why do distances concentrate?</strong></a></li>
-  <li><a href="#q5-whats-the-most-important-practical-implication" id="toc-q5-whats-the-most-important-practical-implication" class="nav-link" data-scroll-target="#q5-whats-the-most-important-practical-implication"><strong>Q5: What’s the most important practical implication?</strong></a></li>
+  <li><a href="#eckart-young-theorem" id="toc-eckart-young-theorem" class="nav-link" data-scroll-target="#eckart-young-theorem">Eckart-Young Theorem</a></li>
+  <li><a href="#practical-truncation" id="toc-practical-truncation" class="nav-link" data-scroll-target="#practical-truncation">Practical Truncation</a></li>
   </ul></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><strong>📚 FURTHER READING</strong></a></li>
+  <li><a href="#geometry-and-reconstruction-quality" id="toc-geometry-and-reconstruction-quality" class="nav-link" data-scroll-target="#geometry-and-reconstruction-quality">Geometry and Reconstruction Quality</a>
+  <ul class="collapse">
+  <li><a href="#relative-contribution-to-variance" id="toc-relative-contribution-to-variance" class="nav-link" data-scroll-target="#relative-contribution-to-variance">Relative Contribution to Variance</a></li>
+  <li><a href="#projection-ratio" id="toc-projection-ratio" class="nav-link" data-scroll-target="#projection-ratio">Projection Ratio</a></li>
+  <li><a href="#normalization-and-scaling" id="toc-normalization-and-scaling" class="nav-link" data-scroll-target="#normalization-and-scaling">Normalization and Scaling</a></li>
+  </ul></li>
+  <li><a href="#practical-application-of-pca" id="toc-practical-application-of-pca" class="nav-link" data-scroll-target="#practical-application-of-pca">Practical Application of PCA</a>
+  <ul class="collapse">
+  <li><a href="#complete-pca-algorithm" id="toc-complete-pca-algorithm" class="nav-link" data-scroll-target="#complete-pca-algorithm">Complete PCA Algorithm</a></li>
+  <li><a href="#choosing-the-number-of-components-k" id="toc-choosing-the-number-of-components-k" class="nav-link" data-scroll-target="#choosing-the-number-of-components-k">Choosing the Number of Components <span class="math inline">\(K\)</span></a></li>
+  </ul></li>
+  <li><a href="#linear-autoencoders" id="toc-linear-autoencoders" class="nav-link" data-scroll-target="#linear-autoencoders">Linear Autoencoders</a>
+  <ul class="collapse">
+  <li><a href="#structure-of-a-linear-autoencoder" id="toc-structure-of-a-linear-autoencoder" class="nav-link" data-scroll-target="#structure-of-a-linear-autoencoder">Structure of a Linear Autoencoder</a></li>
+  </ul></li>
+  <li><a href="#extensions-of-pca" id="toc-extensions-of-pca" class="nav-link" data-scroll-target="#extensions-of-pca">Extensions of PCA</a>
+  <ul class="collapse">
+  <li><a href="#probabilistic-pca" id="toc-probabilistic-pca" class="nav-link" data-scroll-target="#probabilistic-pca">Probabilistic PCA</a></li>
+  <li><a href="#kernel-pca" id="toc-kernel-pca" class="nav-link" data-scroll-target="#kernel-pca">Kernel PCA</a></li>
+  <li><a href="#local-pca" id="toc-local-pca" class="nav-link" data-scroll-target="#local-pca">Local PCA</a></li>
+  </ul></li>
+  <li><a href="#what-pca-tells-you-and-what-it-doesnt" id="toc-what-pca-tells-you-and-what-it-doesnt" class="nav-link" data-scroll-target="#what-pca-tells-you-and-what-it-doesnt">What PCA Tells You (and What It Doesn’t)</a>
+  <ul class="collapse">
+  <li><a href="#what-it-tells-you" id="toc-what-it-tells-you" class="nav-link" data-scroll-target="#what-it-tells-you">What It Tells You ✅</a></li>
+  <li><a href="#what-it-doesnt-tell-you" id="toc-what-it-doesnt-tell-you" class="nav-link" data-scroll-target="#what-it-doesnt-tell-you">What It Doesn’t Tell You ❌</a></li>
+  </ul></li>
+  <li><a href="#when-to-use-pca" id="toc-when-to-use-pca" class="nav-link" data-scroll-target="#when-to-use-pca">When to Use PCA?</a>
+  <ul class="collapse">
+  <li><a href="#suitable-for" id="toc-suitable-for" class="nav-link" data-scroll-target="#suitable-for">Suitable For ✅</a></li>
+  <li><a href="#not-suitable-for" id="toc-not-suitable-for" class="nav-link" data-scroll-target="#not-suitable-for">Not Suitable For ❌</a></li>
+  </ul></li>
   </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds3s.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">High-dimensional representation spaces</a></li><li class="breadcrumb-item"><a href="./ds2s1.html"><strong>High-Dimensional Spaces: The Essentials</strong></a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
 
-<section id="high-dimensional-spaces-the-essentials" class="level1">
-<h1><strong>High-Dimensional Spaces: The Essentials</strong></h1>
-<section id="why-study-high-dimensional-spaces" class="level2">
-<h2 class="anchored" data-anchor-id="why-study-high-dimensional-spaces"><strong>🎯 Why Study High-Dimensional Spaces?</strong></h2>
-<p><strong>Data Science</strong> = Representing real-world phenomena as numerical data in mathematical spaces. <strong>Core Challenge</strong>: Understanding geometric and statistical properties when dimensionality (<span class="math inline">\(D\)</span>) is large.</p>
-<p><strong>Universal Pipeline</strong>:</p>
-<pre><code>Real World → Sensors → Raw Data → Numerical Matrix (N samples × D features)</code></pre>
-<p><strong>Dual Perspectives</strong>: 1. <strong>Statistical</strong>: Data as samples from an underlying distribution 2. <strong>Algebraic</strong>: Data as a matrix <span class="math inline">\(X \in \mathbb{R}^{D \times N}\)</span></p>
-<hr>
-</section>
-<section id="the-representation-space" class="level2">
-<h2 class="anchored" data-anchor-id="the-representation-space"><strong>📐 The Representation Space</strong></h2>
-<p><strong>Structure</strong>: Inner Product → Norm → Distance → Metric Space</p>
-<p><strong>Key Question</strong>: What happens when <span class="math inline">\(D\)</span> becomes large? - <strong>Negative</strong>: Curse of dimensionality - <strong>Positive</strong>: Blessing of dimensionality</p>
-<hr>
-</section>
-<section id="the-curse-of-dimensionality" class="level2">
-<h2 class="anchored" data-anchor-id="the-curse-of-dimensionality"><strong>🌀 THE CURSE OF DIMENSIONALITY</strong></h2>
-<section id="data-sparsity" class="level3">
-<h3 class="anchored" data-anchor-id="data-sparsity"><strong>1️⃣ Data Sparsity</strong></h3>
-<p><strong>Problem</strong>: Exponential sample requirement for accurate density estimation. <span class="math display">\[N \approx n \cdot b^D\]</span> - <span class="math inline">\(n\)</span> = samples per bin - <span class="math inline">\(b\)</span> = bins per dimension</p>
-<p><strong>Consequence</strong>: With fixed <span class="math inline">\(N\)</span>, most bins remain <strong>empty</strong>.</p>
-<p><strong>Example</strong>: - <span class="math inline">\(D=6\)</span>, <span class="math inline">\(b=10\)</span>, <span class="math inline">\(n=10\)</span> → <span class="math inline">\(N \approx 10^7\)</span> samples needed!</p>
-<hr>
-</section>
-<section id="empty-sphere-spiky-cube" class="level3">
-<h3 class="anchored" data-anchor-id="empty-sphere-spiky-cube"><strong>2️⃣ Empty Sphere &amp; Spiky Cube</strong></h3>
-<p><strong>Phenomenon</strong>: <span class="math display">\[\frac{\text{Volume of inscribed sphere}}{\text{Volume of cube}} \xrightarrow{D \to \infty} 0\]</span></p>
-<p><strong>Implications</strong>: - Volume concentrates in <strong>corners</strong> (distance <span class="math inline">\(\sqrt{D}/2\)</span> from center) - Uniform sampling → <strong>empty sphere</strong></p>
-<hr>
-</section>
-<section id="volume-concentration-at-surface" class="level3">
-<h3 class="anchored" data-anchor-id="volume-concentration-at-surface"><strong>3️⃣ Volume Concentration at Surface</strong></h3>
-<p><strong>Universal Principle</strong>: For <strong>any shape</strong>, almost all volume is in a thin <strong>shell</strong> at the surface. <span class="math display">\[\frac{\text{Inner volume}}{\text{Total volume}} \xrightarrow{D \to \infty} 0\]</span></p>
-<hr>
-</section>
-<section id="the-gaussian-egg" class="level3">
-<h3 class="anchored" data-anchor-id="the-gaussian-egg"><strong>4️⃣ The Gaussian Egg</strong></h3>
-<p><strong>For <span class="math inline">\(X \sim \mathcal{N}(0, I_D)\)</span></strong>: - Radius <span class="math inline">\(R = \|X\|_2\)</span> follows <span class="math inline">\(\chi^2(D)\)</span> - <span class="math inline">\(\mathbb{E}[R^2] = D \implies R \approx \sqrt{D}\)</span> - Density concentrates in a <strong>thin ring</strong> at radius <span class="math inline">\(\sqrt{D}\)</span></p>
-<p><strong>Gaussian Annulus Theorem</strong>: <span class="math display">\[P\left[|\|X\| - \sqrt{D}| &gt; \beta\right] \leq 3e^{-c\beta^2}\]</span></p>
-<hr>
-</section>
-<section id="distance-concentration" class="level3">
-<h3 class="anchored" data-anchor-id="distance-concentration"><strong>5️⃣ Distance Concentration</strong></h3>
-<p><strong>Effect</strong>: All neighbors become <strong>equidistant</strong>. <span class="math display">\[\frac{D_{\text{max}} - D_{\text{min}}}{D_{\text{min}}} \xrightarrow{D \to \infty} 0\]</span></p>
-<p><strong>Consequences</strong>: - <strong>KNN fails</strong>: No meaningful “nearest neighbors” - <strong>Indexing collapses</strong>: Spatial partitioning becomes ineffective</p>
-<hr>
-</section>
-<section id="quasi-orthogonality" class="level3">
-<h3 class="anchored" data-anchor-id="quasi-orthogonality"><strong>6️⃣ Quasi-Orthogonality</strong></h3>
-<p><strong>High-Dimensional Geometry</strong>: 1. <strong>Two random vectors</strong> → nearly orthogonal (angle ≈ 90°) 2. <strong>Random triangle</strong> → nearly equilateral (angles ≈ 60°) 3. <strong>Sphere volume</strong> → concentrates at the <strong>equator</strong></p>
-<hr>
-</section>
-<section id="hubness" class="level3">
-<h3 class="anchored" data-anchor-id="hubness"><strong>7️⃣ Hubness</strong></h3>
-<p><strong>Phenomenon</strong>: Asymmetric distribution of “neighborhood appearances”: - A few <strong>hubs</strong> appear in <strong>many</strong> neighborhoods - Most points appear in <strong>few</strong> neighborhoods</p>
-<p><strong>Impact</strong>: Hubs dominate nearest-neighbor queries.</p>
-<hr>
-</section>
-<section id="concentration-inequalities" class="level3">
-<h3 class="anchored" data-anchor-id="concentration-inequalities"><strong>8️⃣ Concentration Inequalities</strong></h3>
-<p><strong>Mathematical Explanation</strong>: - <strong>Hoeffding’s Inequality</strong>: <span class="math display">\[P(|\bar{X} - \mu| &gt; \epsilon) \leq 2e^{-2D\epsilon^2/(b-a)^2}\]</span> - <strong>Key Insight</strong>: Aggregating <span class="math inline">\(D\)</span> independent variables → concentration around mean.</p>
-<p><strong>Application to Distances</strong>: Minkowski distance <span class="math inline">\(d_p(x,y) = \left(\sum_{i=1}^D |x_i - y_i|^p\right)^{1/p}\)</span> concentrates because it’s a sum of <span class="math inline">\(D\)</span> terms.</p>
-<hr>
-</section>
-</section>
-<section id="the-blessing-of-dimensionality" class="level2">
-<h2 class="anchored" data-anchor-id="the-blessing-of-dimensionality"><strong>⭐ THE BLESSING OF DIMENSIONALITY</strong></h2>
-<section id="laws-of-large-numbers" class="level3">
-<h3 class="anchored" data-anchor-id="laws-of-large-numbers"><strong>1️⃣ Laws of Large Numbers</strong></h3>
-<p><strong>Weak Law (WLLN)</strong>: <span class="math display">\[\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i \xrightarrow{P} \mu \quad \text{as} \quad D \to \infty\]</span></p>
-<p><strong>Central Limit Theorem (CLT)</strong>: <span class="math display">\[\frac{\sqrt{D}}{\sigma}(\bar{X} - \mu) \xrightarrow{D} \mathcal{N}(0,1)\]</span></p>
-<p><strong>Implication</strong>: Enables reliable statistical estimation.</p>
-<hr>
-</section>
-<section id="random-projections-johnson-lindenstrauss" class="level3">
-<h3 class="anchored" data-anchor-id="random-projections-johnson-lindenstrauss"><strong>2️⃣ Random Projections (Johnson-Lindenstrauss)</strong></h3>
-<p><strong>Miracle Lemma</strong>: For any dataset, there exists a projection <span class="math inline">\(\mathbb{R}^D \to \mathbb{R}^d\)</span> with: <span class="math display">\[(1-\epsilon)\|x_i - x_j\| \leq \|p(x_i) - p(x_j)\| \leq (1+\epsilon)\|x_i - x_j\|\]</span> where: <span class="math display">\[d = O\left(\frac{\log N}{\epsilon^2}\right)\]</span></p>
-<p><strong>Key Point</strong>: <span class="math inline">\(d\)</span> is <strong>independent of <span class="math inline">\(D\)</span></strong>!</p>
-<p><strong>Applications</strong>: - <strong>LSH (Locality-Sensitive Hashing)</strong>: Approximate nearest-neighbor search - <strong>Dimensionality reduction</strong>: Preserve distances with exponentially fewer dimensions</p>
-<hr>
-</section>
-</section>
-<section id="impact-on-data-science" class="level2">
-<h2 class="anchored" data-anchor-id="impact-on-data-science"><strong>🎓 IMPACT ON DATA SCIENCE</strong></h2>
-<section id="sampling-exponential-challenge" class="level3">
-<h3 class="anchored" data-anchor-id="sampling-exponential-challenge"><strong>1️⃣ Sampling: Exponential Challenge</strong></h3>
+<section id="the-essentials" class="level1">
+<h1>The Essentials</h1>
+<section id="introduction-and-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-and-motivation">Introduction and Motivation</h2>
+<p><strong>PCA (Principal Component Analysis)</strong> is a <strong>linear latent decomposition</strong> method that identifies the <strong>underlying latent factors</strong> structuring data.</p>
+<section id="the-fundamental-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-fundamental-problem">The Fundamental Problem</h3>
+<p>Base representations of data are not always optimal. PCA seeks to find a new representation that:</p>
 <ul>
-<li><strong>Rejection sampling</strong> becomes impractical (acceptance rate → 0)</li>
-<li><strong>Monte Carlo methods</strong> suffer from high variance</li>
+<li>Reveals the <strong>latent factors</strong> (hidden) governing the process</li>
+<li>Uses <strong>statistical correlation</strong> to identify these factors</li>
+<li>Enables <strong>simplification</strong> of data through justified decimation</li>
+</ul>
+<p>📌 <strong>Key Point:</strong> PCA belongs to the family of <strong>linear latent models</strong></p>
+</section>
+<section id="geometric-intuition-the-point-cloud" class="level3">
+<h3 class="anchored" data-anchor-id="geometric-intuition-the-point-cloud">Geometric Intuition: The Point Cloud</h3>
+<p>Imagine a 3D point cloud (like midges in a room). If you had to squash them onto a wall:</p>
+<ul>
+<li>Which wall would you choose so that the midges are <strong>most spread out</strong>?</li>
+<li>That wall is the <strong>principal plane</strong></li>
+<li>The line in this wall where they are most aligned is the <strong>first component</strong></li>
+</ul>
+<p>💡 <strong>Essential Idea:</strong> PCA finds the <strong>skeletal structure</strong> of the data, like a radiologist seeing bones through skin.</p>
+<hr>
+</section>
+</section>
+<section id="maximizing-variance" class="level2">
+<h2 class="anchored" data-anchor-id="maximizing-variance">Maximizing Variance</h2>
+<section id="mathematical-formalization" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-formalization">Mathematical Formalization</h3>
+<p><strong>Idea:</strong> We seek a line passing through the center where the projections are <strong>as dispersed as possible</strong>.</p>
+<p>Let <span class="math inline">\(X\)</span> be the dataset, <span class="math inline">\(\{u_i\}_{i \in [\![D]\!]}\)</span> a new <strong>orthonormal basis</strong> of <span class="math inline">\(\mathbb{R}^D\)</span>.</p>
+<p>The <strong>first principal component</strong> <span class="math inline">\(u_1\)</span> is chosen such that the <strong>variance of the projected data</strong> on <span class="math inline">\(u_1\)</span> is maximized.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical Details: Optimization Problem
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The empirical mean and projected variance are:</p>
+<p><span class="math display">\[x = \frac{1}{N} \sum_{i=1}^{N} x_i\]</span></p>
+<p><span class="math display">\[v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T x_i - u_1^T x)^2 = u_1^T \Sigma u_1\]</span></p>
+<p>where <span class="math inline">\(\Sigma = \frac{1}{N} \sum_{i=1}^{N} (x_i - x)(x_i - x)^T\)</span> is the <strong>covariance matrix</strong> of the data.</p>
+<p>The problem becomes:</p>
+<p><span class="math display">\[u_1 = \underset{u^T u = 1}{\arg\max} \, u^T \Sigma u\]</span></p>
+<p>Using <strong>Lagrange multipliers</strong>:</p>
+<p><span class="math display">\[J(u) = u^T \Sigma u + \lambda(1 - u^T u)\]</span></p>
+<p>The optimality conditions give:</p>
+<p><span class="math display">\[\Sigma u_1 = \lambda_1 u_1 \quad \Rightarrow \quad v_{u_1} = \lambda_1\]</span></p>
+<p>✅ <strong>Conclusion:</strong> <span class="math inline">\((u_1, \lambda_1)\)</span> is an <strong>eigenpair</strong> of the covariance matrix <span class="math inline">\(\Sigma\)</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="complete-decomposition" class="level3">
+<h3 class="anchored" data-anchor-id="complete-decomposition">Complete Decomposition</h3>
+<p>Continuing this process, we obtain the set of <strong>principal components</strong> as the eigenpairs <span class="math inline">\(\{(u_i, \lambda_i)\}_{i \in [\![D]\!]}\)</span> of <span class="math inline">\(\Sigma\)</span>.</p>
+<p><strong>Matrix Decomposition:</strong></p>
+<p><span class="math display">\[\Lambda = U^T \Sigma U\]</span></p>
+<p>where <span class="math inline">\(U\)</span> contains the eigenvectors in columns and <span class="math inline">\(\Lambda\)</span> is diagonal with the eigenvalues.</p>
+<hr>
+</section>
+</section>
+<section id="minimizing-error" class="level2">
+<h2 class="anchored" data-anchor-id="minimizing-error">Minimizing Error</h2>
+<p><strong>Idea:</strong> Represent each point by its projection on a line with <strong>minimal reconstruction error</strong> (perpendicular distance).</p>
+<section id="variance-error-equivalence" class="level3">
+<h3 class="anchored" data-anchor-id="variance-error-equivalence">Variance-Error Equivalence</h3>
+<p>The variance <span class="math inline">\(v_{u_1}\)</span> is expressed as a sum of squares:</p>
+<p><span class="math display">\[v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T (x_i - x))^2\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical Details: Pythagorean Theorem
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To maximize <span class="math inline">\(v_{u_1}\)</span>, the terms <span class="math inline">\(u_1^T(x_i - x)\)</span> must be collectively maximized.</p>
+<p>Since <span class="math inline">\((x_i - x)\)</span> is fixed, this is equivalent to <strong>minimizing the distance to the projection axis</strong> (approximation error).</p>
+<p><strong>Alternative Formulation:</strong></p>
+<p><span class="math display">\[u_1 = \underset{u^T u = 1}{\arg\min} \sum_{i=1}^{N} \|(x_i - x) - [u^T(x_i - x)]u\|_2^2\]</span></p>
+<p>This formulation also gives: <span class="math inline">\(\Sigma u_1 = \lambda_1 u_1\)</span></p>
+</div>
+</div>
+</div>
+<p>✅ <strong>Fundamental Equivalence:</strong></p>
+<p><strong>Maximizing projection variance ⇔ Minimizing approximation error</strong></p>
+</section>
+<section id="interpretations" class="level3">
+<h3 class="anchored" data-anchor-id="interpretations">Interpretations</h3>
+<ul>
+<li><strong>Regression:</strong> A principal component is a <strong>quadratic regression</strong> on the data</li>
+<li><strong>Physics:</strong> A principal component is a <strong>subspace of minimal inertia</strong> with respect to <span class="math inline">\(X\)</span></li>
 </ul>
 <hr>
 </section>
-<section id="indexing-structure-collapse" class="level3">
-<h3 class="anchored" data-anchor-id="indexing-structure-collapse"><strong>2️⃣ Indexing: Structure Collapse</strong></h3>
-<p><strong>Problem</strong>: Spatial partitioning (kd-trees, R-trees) degenerates to <strong>linear search</strong> (<span class="math inline">\(O(N)\)</span>). <strong>Why?</strong> - All points become equidistant → no natural “regions” - Hubs dominate queries → no need to search far</p>
-<hr>
 </section>
-<section id="learning-theoretical-barrier" class="level3">
-<h3 class="anchored" data-anchor-id="learning-theoretical-barrier"><strong>3️⃣ Learning: Theoretical Barrier</strong></h3>
-<p><strong>Catastrophic Bound</strong>: To approximate a Lipschitz function with error <span class="math inline">\(\epsilon\)</span> in <span class="math inline">\(D\)</span> dimensions: <span class="math display">\[N \geq \frac{\epsilon^{-D} D^{D/2}}{(2\pi e)^{D/2}}\]</span></p>
-<p><strong>Examples</strong>: - <span class="math inline">\(D=10\)</span>, <span class="math inline">\(\epsilon=0.1\)</span> → <span class="math inline">\(N \geq 687 \times 10^6\)</span> - <span class="math inline">\(D=10\)</span>, <span class="math inline">\(\epsilon=0.01\)</span> → <span class="math inline">\(N \geq 6.9 \times 10^{18}\)</span> - <span class="math inline">\(D=100\)</span>, <span class="math inline">\(\epsilon=10^{-4}\)</span> → <span class="math inline">\(N \approx 10^{400}\)</span> (<strong>impossible</strong>)</p>
-<hr>
-</section>
-<section id="why-does-data-science-work" class="level3">
-<h3 class="anchored" data-anchor-id="why-does-data-science-work"><strong>4️⃣ Why Does Data Science Work?</strong></h3>
-<p><strong>Reality Saves the Day</strong>: ❌ <strong>False Assumptions</strong> in theoretical analyses: 1. Data is <strong>uniformly distributed</strong> 2. Features are <strong>independent</strong></p>
-<p>✅ <strong>True Properties</strong> of real data: 1. Data lies on <strong>low-dimensional submanifolds</strong> 2. Features are <strong>correlated</strong></p>
-<p><strong>Practical Solutions</strong>: - <strong>Dimensionality reduction</strong> (PCA, t-SNE, UMAP) - <strong>Representation learning</strong> (autoencoders, neural networks) - <strong>Exploit structure</strong> (clustering, manifold learning)</p>
-<hr>
-</section>
-</section>
-<section id="quick-reference-summary" class="level2">
-<h2 class="anchored" data-anchor-id="quick-reference-summary"><strong>📝 QUICK REFERENCE SUMMARY</strong></h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 49%">
-<col style="width: 32%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>Concept</strong></th>
-<th><strong>Effect</strong></th>
-<th><strong>Key Formula/Insight</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Data Sparsity</strong></td>
-<td>Exponential sample requirement</td>
-<td><span class="math inline">\(N \approx n \cdot b^D\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Empty Sphere</strong></td>
-<td>Volume concentrates in corners</td>
-<td><span class="math inline">\(\text{vol}(B_D)/\text{vol}(C_D) \to 0\)</span></td>
-</tr>
-<tr class="odd">
-<td><strong>Volume at Surface</strong></td>
-<td>All volume in thin shell</td>
-<td><span class="math inline">\((1-\epsilon)^D \to 0\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Gaussian Egg</strong></td>
-<td>Density concentrates at radius <span class="math inline">\(\sqrt{D}\)</span></td>
-<td><span class="math inline">\(P[|\|X\| - \sqrt{D}| &gt; \beta] \leq 3e^{-c\beta^2}\)</span></td>
-</tr>
-<tr class="odd">
-<td><strong>Distance Concentration</strong></td>
-<td>All neighbors equidistant</td>
-<td><span class="math inline">\(\frac{D_{\text{max}} - D_{\text{min}}}{D_{\text{min}}} \to 0\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Quasi-Orthogonality</strong></td>
-<td>Random vectors nearly orthogonal</td>
-<td><span class="math inline">\(\mathbb{E}[\cos(\theta)] = 0\)</span></td>
-</tr>
-<tr class="odd">
-<td><strong>Hubness</strong></td>
-<td>Few points dominate neighborhoods</td>
-<td>Asymmetric <span class="math inline">\(n_k\)</span> distribution</td>
-</tr>
-<tr class="even">
-<td><strong>Concentration Ineq.</strong></td>
-<td>Distances concentrate around mean</td>
-<td>Hoeffding: <span class="math inline">\(2e^{-2D\epsilon^2/(b-a)^2}\)</span></td>
-</tr>
-<tr class="odd">
-<td><strong>WLLN</strong></td>
-<td>Empirical mean converges to true mean</td>
-<td><span class="math inline">\(\bar{X} \xrightarrow{P} \mu\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Random Projections</strong></td>
-<td>Preserve distances with <span class="math inline">\(d = O(\log N)\)</span> dimensions</td>
-<td>JL Lemma: <span class="math inline">\(d = O(\log N / \epsilon^2)\)</span></td>
-</tr>
-<tr class="odd">
-<td><strong>Learning Bound</strong></td>
-<td>Exponential sample requirement for function approximation</td>
-<td><span class="math inline">\(N \geq \epsilon^{-D} D^{D/2} / (2\pi e)^{D/2}\)</span></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="key-takeaways-for-examsinterviews" class="level2">
-<h2 class="anchored" data-anchor-id="key-takeaways-for-examsinterviews"><strong>💡 KEY TAKEAWAYS FOR EXAMS/INTERVIEWS</strong></h2>
-<section id="the-3-counterintuitive-truths" class="level3">
-<h3 class="anchored" data-anchor-id="the-3-counterintuitive-truths"><strong>1. The 3 Counterintuitive Truths</strong></h3>
-<ol type="1">
-<li><strong>Geometry is weird</strong>: Spheres are empty, volumes are at surfaces, all distances are equal.</li>
-<li><strong>Cost is exponential</strong>: Need exponentially more data to cover the space.</li>
-<li><strong>Reality is our savior</strong>: Real data isn’t uniform and has low intrinsic dimension.</li>
-</ol>
-</section>
-<section id="the-two-sides-of-the-coin" class="level3">
-<h3 class="anchored" data-anchor-id="the-two-sides-of-the-coin"><strong>2. The Two Sides of the Coin</strong></h3>
+<section id="dimensionality-reduction" class="level2">
+<h2 class="anchored" data-anchor-id="dimensionality-reduction">Dimensionality Reduction</h2>
+<section id="structure-of-the-latent-space" class="level3">
+<h3 class="anchored" data-anchor-id="structure-of-the-latent-space">Structure of the Latent Space</h3>
+<p>The latent space with basis <span class="math inline">\(\{u_1, \ldots, u_D\}\)</span> has the following properties:</p>
 <ul>
-<li><strong>⊖ Curse</strong>: Makes naive learning theoretically impossible.</li>
-<li><strong>⊕ Blessing</strong>: Enables statistical estimation and efficient projections.</li>
+<li><strong>Eigenvalue Order:</strong> By construction: <span class="math inline">\(\lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_D\)</span></li>
+<li><strong>Total Variance:</strong> <span class="math inline">\(\lambda = \sum_{d=1}^{D} \lambda_d = \text{Tr}(\Sigma)\)</span></li>
+<li><strong>Decorrelation:</strong> <span class="math inline">\(v_{u_d} = \lambda_d\)</span> and <span class="math inline">\(u_d^T u_{d'} = 0\)</span> for <span class="math inline">\(d \neq d'\)</span></li>
 </ul>
 </section>
-<section id="the-only-solution" class="level3">
-<h3 class="anchored" data-anchor-id="the-only-solution"><strong>3. The Only Solution</strong></h3>
-<p><strong>Reduce effective dimensionality</strong>: - <strong>Linear</strong>: PCA, factor analysis - <strong>Nonlinear</strong>: Autoencoders, t-SNE, UMAP - <strong>Structured</strong>: Neural networks, manifold learning</p>
-<p><strong>Why it works</strong>: Real data lives on <strong>low-dimensional submanifolds</strong> with correlated features.</p>
+<section id="latent-coordinates" class="level3">
+<h3 class="anchored" data-anchor-id="latent-coordinates">Latent Coordinates</h3>
+<p>The basis <span class="math inline">\(\{u_1, \ldots, u_D\}\)</span> induces <strong>latent coordinates</strong> <span class="math inline">\(y_i\)</span> for the data:</p>
+<p><span class="math display">\[y_i = U^T (x_i - x)\]</span></p>
+<p>✅ The PCA transformation is <strong>linear</strong> and consists of three steps:</p>
+<ul>
+<li><strong>Centering</strong> on <span class="math inline">\(x\)</span></li>
+<li><strong>Rotation</strong> using matrix <span class="math inline">\(U\)</span></li>
+<li><strong>Scaling</strong> (whitening) using <span class="math inline">\(\Lambda^{1/2}\)</span></li>
+</ul>
+<p>⚠️ <strong>Important Limitation:</strong> PCA assumes an approximately <strong>Gaussian distribution</strong> and will not be relevant for non-Gaussian data (e.g., clustered data).</p>
 <hr>
 </section>
 </section>
-<section id="common-questions-answers" class="level2">
-<h2 class="anchored" data-anchor-id="common-questions-answers"><strong>🔍 COMMON QUESTIONS &amp; ANSWERS</strong></h2>
-<section id="q1-why-cant-we-just-use-more-data" class="level3">
-<h3 class="anchored" data-anchor-id="q1-why-cant-we-just-use-more-data"><strong>Q1: Why can’t we just use more data?</strong></h3>
-<p><strong>A</strong>: The required number of samples grows <strong>exponentially</strong> with <span class="math inline">\(D\)</span>. For <span class="math inline">\(D=100\)</span>, even <span class="math inline">\(\epsilon=0.1\)</span> requires more samples than atoms in the universe.</p>
+<section id="low-rank-approximation" class="level2">
+<h2 class="anchored" data-anchor-id="low-rank-approximation">Low-Rank Approximation</h2>
+<section id="eckart-young-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="eckart-young-theorem">Eckart-Young Theorem</h3>
+<p>If <span class="math inline">\(\Sigma = U\Lambda U^T\)</span> and for <span class="math inline">\(K &lt; D\)</span>, we define:</p>
+<p><span class="math display">\[\Sigma_K = \sum_{d=1}^{K} \lambda_d u_d u_d^T\]</span></p>
+<p>Then <span class="math inline">\(\Sigma_K\)</span> is the <strong>closest rank-<span class="math inline">\(K\)</span> matrix</strong> to <span class="math inline">\(\Sigma\)</span> in the Frobenius norm.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical Details: Approximation Error
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The theorem states that:</p>
+<p><span class="math display">\[\underset{\text{rank}(S)=K}{\arg\min} \|\Sigma - S\|_F^2 = \Sigma_K\]</span></p>
+<p>where <span class="math inline">\(\|\cdot\|_F\)</span> is the <strong>Frobenius norm</strong>.</p>
+<p>The approximation error is:</p>
+<p><span class="math display">\[\|\Sigma - \Sigma_K\|_F^2 = \sum_{d=K+1}^{D} \lambda_d\]</span></p>
+<p>This error corresponds exactly to the variance lost during reduction.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="q2-how-do-neural-networks-avoid-the-curse" class="level3">
-<h3 class="anchored" data-anchor-id="q2-how-do-neural-networks-avoid-the-curse"><strong>Q2: How do neural networks avoid the curse?</strong></h3>
-<p><strong>A</strong>: They <strong>learn the low-dimensional structure</strong> of the data. By discovering correlations and manifolds, they operate in a space where the effective dimensionality is much lower than <span class="math inline">\(D\)</span>.</p>
-</section>
-<section id="q3-whats-the-intuition-behind-random-projections" class="level3">
-<h3 class="anchored" data-anchor-id="q3-whats-the-intuition-behind-random-projections"><strong>Q3: What’s the intuition behind random projections?</strong></h3>
-<p><strong>A</strong>: In high dimensions, there are <strong>exponentially many quasi-orthogonal directions</strong>. A random projection preserves distances because it’s unlikely to distort all directions simultaneously.</p>
-</section>
-<section id="q4-why-do-distances-concentrate" class="level3">
-<h3 class="anchored" data-anchor-id="q4-why-do-distances-concentrate"><strong>Q4: Why do distances concentrate?</strong></h3>
-<p><strong>A</strong>: A distance in <span class="math inline">\(D\)</span> dimensions is a sum of <span class="math inline">\(D\)</span> terms. By the <strong>law of large numbers</strong>, this sum concentrates around its mean, making all distances appear similar.</p>
-</section>
-<section id="q5-whats-the-most-important-practical-implication" class="level3">
-<h3 class="anchored" data-anchor-id="q5-whats-the-most-important-practical-implication"><strong>Q5: What’s the most important practical implication?</strong></h3>
-<p><strong>A</strong>: <strong>Always reduce dimensionality</strong> before applying machine learning algorithms. Techniques like PCA or autoencoders are not just optimizations—they’re <strong>necessary</strong> to make learning feasible.</p>
+<section id="practical-truncation" class="level3">
+<h3 class="anchored" data-anchor-id="practical-truncation">Practical Truncation</h3>
+<p><strong>Truncation of <span class="math inline">\(U\)</span> and <span class="math inline">\(\Lambda\)</span>:</strong></p>
+<p><span class="math display">\[\Sigma_K = U_K \Lambda_K U_K^T\]</span></p>
+<p><strong>Projection and Reconstruction:</strong></p>
+<ul>
+<li><strong>Projection</strong> (encoding): <span class="math inline">\(\tilde{y}_i = U_K^T x_i \in \mathbb{R}^K\)</span></li>
+<li><strong>Reconstruction</strong> (decoding): <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i + x\)</span></li>
+</ul>
+<p>📌 <strong>Important:</strong> We go from <span class="math inline">\(D\)</span> dimensions to <span class="math inline">\(K\)</span> dimensions with <span class="math inline">\(K &lt; D\)</span></p>
 <hr>
 </section>
 </section>
-<section id="further-reading" class="level2">
-<h2 class="anchored" data-anchor-id="further-reading"><strong>📚 FURTHER READING</strong></h2>
-<ol type="1">
-<li><strong>Theoretical Foundations</strong>:
+<section id="geometry-and-reconstruction-quality" class="level2">
+<h2 class="anchored" data-anchor-id="geometry-and-reconstruction-quality">Geometry and Reconstruction Quality</h2>
+<section id="relative-contribution-to-variance" class="level3">
+<h3 class="anchored" data-anchor-id="relative-contribution-to-variance">Relative Contribution to Variance</h3>
+<p>The contribution of each dimension:</p>
+<p><span class="math display">\[c_d = \frac{\lambda_d}{\sum_k \lambda_k}\]</span></p>
+<p>This metric depends on the <strong>spectrum distribution</strong> of eigenvalues.</p>
+</section>
+<section id="projection-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="projection-ratio">Projection Ratio</h3>
+<p>The projection ratio of a data point <span class="math inline">\(x_i\)</span> on a latent factor:</p>
+<p><span class="math display">\[\rho_d(x_i) = \frac{\langle u_d, x_i \rangle^2}{\|x_i\|^2} = \cos^2(\angle(u_d, x_i))\]</span></p>
+<p>The closer <span class="math inline">\(\rho_d(x_i)\)</span> is to 1, the more <span class="math inline">\(x_i\)</span> lies on the axis <span class="math inline">\(u_d\)</span>.</p>
+</section>
+<section id="normalization-and-scaling" class="level3">
+<h3 class="anchored" data-anchor-id="normalization-and-scaling">Normalization and Scaling</h3>
+<p>⚠️ PCA is more effective if <strong>all scales are similar</strong>.</p>
+<p><strong>Solution: Normalization</strong></p>
+<p>We create the <strong>scaling matrix</strong> <span class="math inline">\(S = \text{diag}[\sigma_1^2, \ldots, \sigma_D^2]\)</span> and use the <strong>Mahalanobis metric</strong>:</p>
+<p><span class="math display">\[d_S^2(x, y) = (x - y)^T S^{-1} (x - y)\]</span></p>
+<p>💡 <strong>Practical Tip:</strong> Normalizing data before PCA often improves results.</p>
+<hr>
+</section>
+</section>
+<section id="practical-application-of-pca" class="level2">
+<h2 class="anchored" data-anchor-id="practical-application-of-pca">Practical Application of PCA</h2>
+<section id="complete-pca-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="complete-pca-algorithm">Complete PCA Algorithm</h3>
+<p>Given dataset <span class="math inline">\(X \in \Omega\)</span>:</p>
 <ul>
-<li><em>Concentration Inequalities</em> (Boucheron et al.)</li>
-<li><em>High-Dimensional Probability</em> (Vershynin)</li>
-</ul></li>
-<li><strong>Practical Applications</strong>:
+<li>Compute the empirical mean <span class="math inline">\(x = \frac{1}{N} \sum_{i=1}^{N} x_i\)</span></li>
+<li>Center the data: <span class="math inline">\(x_i \leftarrow (x_i - x)\)</span> and form the centered matrix <span class="math inline">\(X\)</span></li>
+<li>Compute the covariance matrix: <span class="math inline">\(\Sigma = \frac{1}{N} XX^T\)</span></li>
+<li>Decompose into eigenvalues: <span class="math inline">\(\Sigma = U\Lambda U^T\)</span></li>
+</ul>
+<p>📌 So far: <strong>exact</strong> transformation</p>
 <ul>
-<li><em>Dimensionality Reduction</em> (van der Maaten et al., JMLR 2009)</li>
-<li><em>Johnson-Lindenstrauss Lemma</em> (Dasgupta &amp; Gupta, FOCS 1999)</li>
-</ul></li>
-<li><strong>Data Science Perspective</strong>:
+<li>Select the number of components <span class="math inline">\(K\)</span></li>
+<li>Define <span class="math inline">\(U_K\)</span>, <span class="math inline">\(\Lambda_K\)</span> and compute <span class="math inline">\(\{\tilde{y}_i\}_{i \in [\![N]\!]}\)</span> and/or <span class="math inline">\(\{\tilde{x}_i\}_{i \in [\![N]\!]}\)</span></li>
+</ul>
+</section>
+<section id="choosing-the-number-of-components-k" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-number-of-components-k">Choosing the Number of Components <span class="math inline">\(K\)</span></h3>
+<p><strong>Three Main Strategies:</strong></p>
+<p><strong>Strategy 1: Target Dimension</strong></p>
+<p><span class="math display">\[K = d\]</span></p>
+<p>where <span class="math inline">\(d\)</span> is the desired dimension.</p>
+<p><strong>Strategy 2: Variance Threshold</strong></p>
+<p>Require that the latent space retains a proportion <span class="math inline">\(\tau\)</span> of the total variance:</p>
+<p><span class="math display">\[\frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} &gt; \tau\]</span></p>
+<p>Example: <span class="math inline">\(\tau = 0.95\)</span> means retaining 95% of the variance.</p>
+<p><strong>Strategy 3: Reconstruction Error</strong></p>
+<p>Train <span class="math inline">\(K\)</span> such that <span class="math inline">\(L(X) \leq \epsilon\)</span>, where for example:</p>
+<p><span class="math display">\[L(X) = \sum_i \|x_i - \tilde{x}_i\|^2\]</span></p>
+<p>💡 <strong>Practical Advice:</strong> Visualizing the eigenvalue spectrum (scree plot) helps identify a natural “elbow”.</p>
+<hr>
+</section>
+</section>
+<section id="linear-autoencoders" class="level2">
+<h2 class="anchored" data-anchor-id="linear-autoencoders">Linear Autoencoders</h2>
+<section id="structure-of-a-linear-autoencoder" class="level3">
+<h3 class="anchored" data-anchor-id="structure-of-a-linear-autoencoder">Structure of a Linear Autoencoder</h3>
+<p>A linear autoencoder has:</p>
 <ul>
-<li><em>Understanding the Curse of Dimensionality</em> (Verleysen &amp; François, ESANN 2005)</li>
-<li><em>The Blessing of Dimensionality</em> (Donoho, AMS 2000)</li>
-</ul></li>
-</ol>
+<li><span class="math inline">\(W_{\text{enc}}\)</span> and <span class="math inline">\(W_{\text{dec}}\)</span>: weight matrices (encoder and decoder)</li>
+<li><span class="math inline">\(z(x_i) = W_{\text{enc}} x_i\)</span>: encoding</li>
+<li><span class="math inline">\(\tilde{x}_i = W_{\text{dec}} z(x_i)\)</span>: decoding</li>
+</ul>
+<p><strong>Optimization Problem:</strong></p>
+<p><span class="math display">\[\theta^* = \underset{\text{rank}(W)=K}{\arg\min} \|X - WZ\|_F^2\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical Details: Relationship Between PCA and Autoencoder
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Using the Eckart-Young theorem with SVD decomposition <span class="math inline">\(X = U\Psi V^T\)</span>, the solution is:</p>
+<p><span class="math display">\[W_{\text{dec}} Z = U_K \Psi_K V_K^T\]</span></p>
+<p>Setting <span class="math inline">\(W_{\text{dec}} = U_K \Psi_K\)</span>, then:</p>
+<p><span class="math display">\[W_{\text{enc}} = \Psi_K^{-1} U_K^T\]</span></p>
+<p>For <strong>centered</strong> data:</p>
+<ul>
+<li><strong>PCA:</strong> <span class="math inline">\(\Sigma = \frac{1}{N} XX^T = U\Lambda U^T\)</span> thus <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i\)</span></li>
+<li><strong>AE:</strong> <span class="math inline">\(X = U\Psi V^T\)</span> thus <span class="math inline">\(\Sigma = \frac{1}{N} U\Psi^2 U^T\)</span> and <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i\)</span></li>
+</ul>
+<p>Relationship between eigenvalues:</p>
+<p><span class="math display">\[\Lambda = \frac{1}{N} \Psi^2\]</span></p>
+</div>
+</div>
+</div>
+<p>✅ <strong>Fundamental Conclusion:</strong> A linear autoencoder performs PCA if the data is <strong>centered and normalized</strong>.</p>
+<p>⚠️ <strong>Note:</strong> <span class="math inline">\(W_{\text{enc}}\)</span> is <strong>not the inverse</strong> of <span class="math inline">\(W_{\text{dec}}\)</span> if <span class="math inline">\(K &lt; D\)</span>.</p>
+<hr>
+</section>
+</section>
+<section id="extensions-of-pca" class="level2">
+<h2 class="anchored" data-anchor-id="extensions-of-pca">Extensions of PCA</h2>
+<section id="probabilistic-pca" class="level3">
+<h3 class="anchored" data-anchor-id="probabilistic-pca">Probabilistic PCA</h3>
+<p>Reformulation with explicit latent distribution:</p>
+<ul>
+<li>Latent distribution: <span class="math inline">\(\mathbb{P}(z) = \mathcal{N}(0, I_{dK})\)</span></li>
+<li>Conditional model: <span class="math inline">\(\mathbb{P}(x|z) = \mathcal{N}(Wz + \mu, \sigma^2 I_{dD})\)</span></li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Accommodation of <strong>measurement noise</strong> (variance <span class="math inline">\(\sigma^2\)</span>)</li>
+<li><strong>Generative mode</strong>: possibility to generate new data</li>
+<li>Estimation by <strong>Maximum Likelihood</strong></li>
+<li><strong>EM algorithm</strong> to save computations</li>
+</ul>
+</section>
+<section id="kernel-pca" class="level3">
+<h3 class="anchored" data-anchor-id="kernel-pca">Kernel PCA</h3>
+<p>Use of a <strong>nonlinear mapping</strong> <span class="math inline">\(\phi(x_i)\)</span> via a kernel function:</p>
+<p><span class="math display">\[k(x_i, x_j) = \phi(x_i)^T \phi(x_j)\]</span></p>
+<p>Allows performing PCA in a <strong>more favorable space</strong> (possibly infinite-dimensional) without explicitly computing <span class="math inline">\(\phi\)</span>.</p>
+</section>
+<section id="local-pca" class="level3">
+<h3 class="anchored" data-anchor-id="local-pca">Local PCA</h3>
+<p>Performs PCA on <strong>local neighborhoods</strong> of the data to consider only the <strong>local intrinsic dimensionality</strong>.</p>
+<p>Useful for data with complex local structure (nonlinear manifolds).</p>
+<hr>
+</section>
+</section>
+<section id="what-pca-tells-you-and-what-it-doesnt" class="level2">
+<h2 class="anchored" data-anchor-id="what-pca-tells-you-and-what-it-doesnt">What PCA Tells You (and What It Doesn’t)</h2>
+<section id="what-it-tells-you" class="level3">
+<h3 class="anchored" data-anchor-id="what-it-tells-you">What It Tells You ✅</h3>
+<ul>
+<li>The <strong>linear structure</strong> of the data</li>
+<li>The <strong>principal directions</strong> of variation</li>
+<li>The <strong>intrinsic dimension</strong> (how many dimensions are truly useful)</li>
+<li>Which <strong>variables</strong> contribute to each axis</li>
+</ul>
+</section>
+<section id="what-it-doesnt-tell-you" class="level3">
+<h3 class="anchored" data-anchor-id="what-it-doesnt-tell-you">What It Doesn’t Tell You ❌</h3>
+<ul>
+<li><strong>Not clustering</strong>: It doesn’t find groups</li>
+<li><strong>Linear only</strong>: It misses curved relationships</li>
+<li><strong>Sensitive to outliers</strong>: An extreme point can shift everything</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="when-to-use-pca" class="level2">
+<h2 class="anchored" data-anchor-id="when-to-use-pca">When to Use PCA?</h2>
+<section id="suitable-for" class="level3">
+<h3 class="anchored" data-anchor-id="suitable-for">Suitable For ✅</h3>
+<ul>
+<li>Data approximately following a Gaussian distribution</li>
+<li>Dimensionality reduction with variance preservation</li>
+<li>Visualization of high-dimensional data</li>
+<li>Denoising data corrupted by Gaussian noise</li>
+<li>Data compression</li>
+</ul>
+</section>
+<section id="not-suitable-for" class="level3">
+<h3 class="anchored" data-anchor-id="not-suitable-for">Not Suitable For ❌</h3>
+<ul>
+<li>Strongly clustered data (non-Gaussian)</li>
+<li>Data with strongly nonlinear relationships</li>
+<li>Cases where variance is not a good information criterion</li>
+</ul>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>💡 Condensed Cheat Sheet
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>In 30 seconds:</strong></p>
+<ul>
+<li>PCA = smart basis change</li>
+<li>New axes = directions of maximum variance</li>
+<li>Eigenvalues = importance of each axis</li>
+<li>Always center first!</li>
+<li>Choose K with the scree plot</li>
+<li>Useful for: visualization, dimensionality reduction, denoising</li>
+<li>Not useful for: clustering, nonlinear relationships</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>📌 Key Mathematical Concepts to Master
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To understand PCA well:</p>
+<ul>
+<li><strong>Linear transformation</strong> and <strong>orthogonal matrix</strong></li>
+<li><strong>Coordinates</strong> and <strong>matrix rank</strong></li>
+<li><strong>Mean</strong> and <strong>variance</strong></li>
+<li><strong>Orthogonal projection</strong></li>
+<li><strong>Eigendecomposition</strong></li>
+<li><strong>Matrix trace</strong></li>
+<li><strong>Frobenius norm</strong></li>
+<li><strong>Lagrange multipliers</strong></li>
+</ul>
+</div>
+</div>
 
 
+</section>
 </section>
 </section>
 

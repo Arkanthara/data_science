@@ -1,0 +1,544 @@
+# Detailed Course
+
+---
+
+## Introduction and Motivation
+
+### General Context
+
+**PCA (Principal Component Analysis)** is a **linear latent decomposition** method that identifies the **underlying latent factors** structuring data.
+
+**Main Problem:**
+
+Base representations of data are not always optimal. PCA seeks to find a new representation that:
+
+- Reveals the **latent factors** (hidden) governing the process
+- Uses **statistical correlation** to identify these factors
+- Enables **simplification** of data through justified decimation
+
+### Fundamental Characteristics
+
+PCA exhibits **linear latent factors** and allows several complementary interpretations that we will study.
+
+📌 **Key Point:** PCA belongs to the family of **linear latent models**
+
+---
+
+## Formalization
+
+### Maximizing Variance
+
+#### Geometric Intuition
+
+**Fundamental Question:** What information should we preserve when projecting?
+
+**Illustrative Example:**
+
+Suppose data $X \subset \Omega$ is almost contained within a 2D plane in a 3D space. The relevant choice is to select a basis $\{u_1, u_2\}$ for this plane.
+
+**Characterization of the Optimal Basis $\{u_1, u_2, u_3\}$:**
+
+- Data **varies most** along directions $u_1$ and $u_2$
+- Data **varies least** orthogonally to these directions (along $u_3$)
+
+#### Mathematical Formalization
+
+**Definitions:**
+
+Let $X$ be the dataset, $\{u_i\}_{i \in [\![D]\!]}$ a new **orthonormal basis** of $\mathbb{R}^D$.
+
+The **first principal component** $u_1$ is chosen such that the **variance of the projected data** on $u_1$ is maximized.
+
+The component $u_2$ is then chosen using the projection on $\text{Proj}_{u_1^{\perp}}(X)$ (orthogonal to $u_1$).
+
+**Mathematical Model:**
+
+The empirical mean and projected variance are:
+
+$$x = \frac{1}{N} \sum_{i=1}^{N} x_i$$
+
+$$v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T x_i - u_1^T x)^2 = u_1^T \Sigma u_1$$
+
+where $\Sigma = \frac{1}{N} \sum_{i=1}^{N} (x_i - x)(x_i - x)^T$ is the **covariance matrix** of the data.
+
+**Optimization Problem:**
+
+$$u_1 = \underset{u^T u = 1}{\arg\max} \, u^T \Sigma u$$
+
+#### Solution via Lagrange Multipliers
+
+**Lagrangian Function:**
+
+$$J(u) = u^T \Sigma u + \lambda(1 - u^T u)$$
+
+**Optimality Conditions:**
+
+$$\frac{\partial J(u)}{\partial u}\bigg|_{u=u_1} = 0 \quad \text{and} \quad \frac{\partial J(u)}{\partial \lambda}\bigg|_{\lambda=\lambda_1} = 0$$
+
+**Fundamental Result:**
+
+$$\Sigma u_1 = \lambda_1 u_1 \quad \Rightarrow \quad v_{u_1} = u_1^T \Sigma u_1 = \lambda_1$$
+
+✅ **Conclusion:** $(u_1, \lambda_1)$ is an **eigenpair** of the covariance matrix $\Sigma$
+
+#### Complete Decomposition
+
+Continuing this decimation process, we obtain the set of **principal components** as the eigenpairs $\{(u_i, \lambda_i)\}_{i \in [\![D]\!]}$ of $\Sigma$.
+
+**Matrix Decomposition:**
+
+$$\Lambda = \begin{pmatrix} \lambda_1 & 0 & \cdots & 0 \\ 0 & \lambda_2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \lambda_D \end{pmatrix} = \begin{pmatrix} | & | & & | \\ u_1 & u_2 & \cdots & u_D \\ | & | & & | \end{pmatrix}^T \Sigma \begin{pmatrix} | & | & & | \\ u_1 & u_2 & \cdots & u_D \\ | & | & & | \end{pmatrix} = U^T \Sigma U$$
+
+---
+
+### Minimizing Error
+
+#### Variance-Error Equivalence
+
+The variance $v_{u_1}$ can be expressed as a sum of squares:
+
+$$v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T (x_i - x))^2$$
+
+**Reasoning via the Pythagorean Theorem:**
+
+- To maximize $v_{u_1}$, the terms $u_1^T(x_i - x)$ must be collectively maximized
+- Since $(x_i - x)$ is fixed, this is equivalent to **minimizing the distance to the projection axis** (approximation error)
+
+**Alternative Formulation:**
+
+$$u_1 = \underset{u^T u = 1}{\arg\min} \sum_{i=1}^{N} \|(x_i - x) - [u^T(x_i - x)]u\|_2^2 \quad \Rightarrow \quad \Sigma u_1 = \lambda_1 u_1$$
+
+📌 **Fundamental Equivalence:**
+
+**Maximizing projection variance ⇔ Minimizing approximation error**
+
+#### Interpretation: Quadratic Regression
+
+✅ A principal component is a **quadratic regression** on the data
+
+#### Physical Interpretation
+
+Consider a physical system $X$ with masses $m_i = 1$ at positions $x_i$.
+
+**System Inertia:**
+
+The inertia with respect to a point $a \in \Omega$ is:
+
+$$I_a(X) = \sum_{i=1}^{N} d^2(a, x_i)$$
+
+**Huygens' Theorem:**
+
+If $g = \frac{1}{N} \sum_{i=1}^{N} x_i$ (center of gravity), then:
+
+$$I_a(X) = d^2(a, g) + I_g(X)$$
+
+This relation is the physical analog of $\text{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$.
+
+**For a subspace $F$ passing through $g$:**
+
+$$I_F(X) = \sum_{i=1}^{N} d^2(F, x_i) \quad \text{where} \quad d(F, x_i) = \|x_i - \text{Proj}_F(x_i)\|$$
+
+✅ **Physical Conclusion:** A principal component is a **subspace of minimal inertia** with respect to $X$
+
+---
+
+## Dimensionality Reduction
+
+### Structure of the Latent Space
+
+#### Properties of the Latent Space
+
+The latent space with basis $\{u_1, \ldots, u_D\}$ has the following properties:
+
+**Eigenvalue Order:**
+
+By construction: $\lambda_1 > \lambda_2 > \cdots > \lambda_D$
+
+**Total Variance:**
+
+$$\lambda \stackrel{\text{def}}{=} \sum_{d=1}^{D} \lambda_d = \text{Tr}(\Sigma)$$
+
+$\lambda$ represents the **total variance** of the data.
+
+**Decorrelation of Latent Features:**
+
+$$v_{u_d} = \lambda_d \quad \text{and} \quad u_d^T u_{d'} = 0 \text{ for } d \neq d'$$
+
+$\Lambda$ is the **diagonal covariance matrix** in the latent space.
+
+#### Latent Coordinates
+
+The basis $\{u_1, \ldots, u_D\}$ induces **latent coordinates** $y_i$ for the data:
+
+$$y_i(d) = \langle u_d, x_i - x \rangle = u_d^T (x_i - x)$$
+
+In vector form:
+
+$$y_i = U^T (x_i - x)$$
+
+#### PCA Linear Transformation
+
+✅ The PCA transformation is **linear** and consists of three steps:
+
+1. **Centering** on $x$
+2. **Rotation** using matrix $U$
+3. **Scaling** (whitening) using $\Lambda^{1/2}$
+
+```mermaid
+graph LR
+    X[Data X] -->|Centering| C[Centered Data]
+    C -->|Rotation U| Y[Latent Space Y]
+    Y -->|Scaling Λ^1/2| W[Whitening]
+```
+
+#### Underlying Model
+
+**Variance Preservation:**
+
+The latent space preserves the variance of the centered data.
+
+**Distribution Assumption:**
+
+$$X_i \sim f_X = \mathcal{N}(x, \Sigma)$$
+
+⚠️ **Important Limitation:** PCA will **not be relevant for non-Gaussian data** (e.g., clustered data)
+
+#### Exact Transformation
+
+📌 **Crucial Point:** So far, PCA is an **exact transformation**
+
+$$y_i = U^T(x_i - x) \quad \text{thus} \quad U y_i = UU^T(x_i - x) = x_i - x$$
+
+Since $U$ is orthogonal: $UU^T = I_D$
+
+At this stage, the goal is to study the **spectrum** $\{\lambda_1 > \lambda_2 > \cdots > \lambda_D\}$ of the data to understand how variance is distributed.
+
+---
+
+### Low-Rank Approximation and Dimensionality Reduction
+
+#### Eckart-Young Theorem
+
+**Fundamental Theorem:**
+
+If $\Sigma = U\Lambda U^T$ and for $K < D$, we define:
+
+$$\Sigma_K \stackrel{\text{def}}{=} \sum_{d=1}^{K} \lambda_d u_d u_d^T$$
+
+Then:
+
+$$\underset{\text{rank}(S)=K}{\arg\min} \|\Sigma - S\|_F^2 = \Sigma_K$$
+
+where $\|\cdot\|_F$ is the **Frobenius norm**.
+
+**Approximation Error:**
+
+$$\|\Sigma - \Sigma_K\|_F^2 = \sum_{d=K+1}^{D} \lambda_d$$
+
+✅ $\Sigma_K$ is the **closest rank-$K$ matrix** to $\Sigma$
+
+#### Practical Truncation
+
+**Truncation of $U$ and $\Lambda$:**
+
+$$\Sigma_K = \begin{pmatrix} | & & | \\ u_1 & \cdots & u_K \\ | & & | \end{pmatrix} \begin{pmatrix} \lambda_1 & & 0 \\ & \ddots & \\ 0 & & \lambda_K \end{pmatrix} \begin{pmatrix} | & & | \\ u_1 & \cdots & u_K \\ | & & | \end{pmatrix}^T = U_K \Lambda_K U_K^T$$
+
+**Projection and Reconstruction:**
+
+- **Projection** (encoding): $\tilde{y}_i = U_K^T x_i \in \mathbb{R}^K$
+- **Reconstruction** (decoding): $\tilde{x}_i = U_K U_K^T x_i + x$
+
+📌 **Important:** We go from $D$ dimensions to $K$ dimensions with $K < D$
+
+---
+
+### Geometry and Reconstruction Quality
+
+#### Relative Contribution to Variance
+
+**Contribution of Each Dimension:**
+
+$$c_d = \frac{\lambda_d}{\sum_k \lambda_k}$$
+
+This metric depends on the **spectrum distribution** of eigenvalues.
+
+#### Projection Ratio
+
+**Projection ratio of a data point $x_i$ on a latent factor:**
+
+$$\rho_d(x_i) = \frac{\langle u_d, x_i \rangle^2}{\|x_i\|^2} = \cos^2(\angle(u_d, x_i))$$
+
+**Interpretation:**
+
+- The closer $\rho_d(x_i)$ is to 1, the more $x_i$ lies on the axis $u_d$
+- These metrics can be **grouped** (summed) to evaluate quality with respect to a subspace $\{u_1, u_2, \ldots\}$
+
+#### Normalization and Scaling
+
+**Problem of Different Scales:**
+
+Each original dimension has its own unit (scale), estimated by $\sigma_d^2$ (empirical variance along dimension $d$).
+
+⚠️ PCA is more effective if **all scales are similar**
+
+**Solution: Normalization**
+
+We create the **scaling matrix**:
+
+$$S = \text{diag}[\sigma_1^2, \ldots, \sigma_D^2]$$
+
+We define the **Mahalanobis metric**:
+
+$$d_S^2(x, y) = (x - y)^T S^{-1} (x - y)$$
+
+In this metric space, the covariance matrix $\Sigma_S$ is also normalized (it becomes the **correlation matrix**) and used as the basis for PCA.
+
+💡 **Practical Tip:** Normalizing data before PCA often improves results
+
+---
+
+## Practical Application of PCA
+
+### Complete PCA Algorithm
+
+**Application Steps:**
+
+Given dataset $X \in \Omega$:
+
+1. **Compute** the empirical mean $x = \frac{1}{N} \sum_{i=1}^{N} x_i$
+
+2. **Center** the data: $x_i \leftarrow (x_i - x)$ and form the centered matrix $X$
+
+3. **Compute** the covariance matrix: $\Sigma = \frac{1}{N} XX^T$
+
+4. **Decompose** into eigenvalues: $\Sigma = U\Lambda U^T$
+
+📌 So far: **exact** transformation
+
+5. **Select** the number of components $K$
+
+6. **Define** $U_K$, $\Lambda_K$ and compute $\{\tilde{y}_i\}_{i \in [\![N]\!]}$ and/or $\{\tilde{x}_i\}_{i \in [\![N]\!]}$
+
+### Choosing the Number of Components $K$
+
+**Three Main Strategies:**
+
+**Strategy 1: Target Dimension**
+
+$$K = d$$
+
+where $d$ is the desired dimension, giving $\tilde{y}_i \in \mathbb{R}^d$
+
+**Strategy 2: Variance Threshold**
+
+Require that the latent space retains a proportion $\tau$ of the total variance:
+
+$$\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ such that } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} > \tau$$
+
+**Example:** $\tau = 0.95$ means retaining 95% of the variance
+
+**Strategy 3: Reconstruction Error**
+
+Train $K$ such that $L(X) \leq \epsilon$, where for example:
+
+$$L(X) = \sum_i \|x_i - \tilde{x}_i\|^2$$
+
+💡 **Practical Advice:** Visualizing the eigenvalue spectrum (scree plot) helps identify a natural "elbow"
+
+---
+
+## Alternatives and Extensions
+
+### Linear Autoencoders (Linear AE)
+
+**Structure of a Linear Autoencoder:**
+
+```mermaid
+graph LR
+    X[xi] -->|Wenc| Z[z xi]
+    Z -->|Wdec| X2[x̃i]
+```
+
+- $W_{\text{enc}}$ and $W_{\text{dec}}$: weight matrices (encoder and decoder)
+- $z(x_i) = W_{\text{enc}} x_i$: encoding
+- $\tilde{x}_i = W_{\text{dec}} z(x_i)$: decoding
+
+**Optimization Problem:**
+
+$$\theta^* = \underset{W_1, W_2}{\arg\min} \sum_{i=1}^{N} \frac{1}{2} \sum_{d=1}^{D} (x_i[d] - \tilde{x}_i[d])^2 = \underset{\text{rank}(W)=K}{\arg\min} \|X - WZ\|_F^2$$
+
+### Relationship Between PCA and Linear Autoencoder
+
+**SVD Decomposition:**
+
+Using the Eckart-Young theorem with $X = U\Psi V^T$, the solution is:
+
+$$W_{\text{dec}} Z = U_K \Psi_K V_K^T$$
+
+**Optimal Solution:**
+
+Setting $W_{\text{dec}} = U_K \Psi_K$, then:
+
+$$W_{\text{enc}} = \Psi_K^{-1} U_K^T$$
+
+Reconstruction:
+
+$$\tilde{x}_i = U_K U_K^T x_i$$
+
+**Mathematical Relationship:**
+
+For **centered** data:
+
+- **PCA:** $\Sigma = \frac{1}{N} XX^T = U\Lambda U^T$ thus $\tilde{x}_i = U_K U_K^T x_i$
+
+- **AE:** $X = U\Psi V^T$ thus $\Sigma = \frac{1}{N} U\Psi^2 U^T$ and $\tilde{x}_i = U_K U_K^T x_i$
+
+Relationship between eigenvalues:
+
+$$\Lambda = \frac{1}{N} \Psi^2 \quad \Rightarrow \quad \text{PCA}(X) \leftrightarrow \text{AE}\left(\sqrt{\frac{1}{N}} X\right)$$
+
+✅ **Fundamental Conclusion:** A linear autoencoder performs PCA if the data is **centered and normalized**
+
+⚠️ **Note:** $W_{\text{enc}}$ is **not the inverse** of $W_{\text{dec}}$ if $K < D$
+
+### Extensions of Autoencoders
+
+**Nonlinear Autoencoders:**
+
+By adding hidden layers with nonlinear activation functions, the latent space becomes **nonlinear**.
+
+**Variational Autoencoders (VAE):**
+
+By changing the loss function (using ELBO - Evidence Lower BOund), we can impose **sparsity** in the latent space.
+
+---
+
+### Alternative Formulations of PCA
+
+#### Probabilistic PCA
+
+**Reformulation with Explicit Latent Distribution:**
+
+- Latent distribution: $\mathbb{P}(z) = \mathcal{N}(0, I_{dK})$
+- Conditional model: $\mathbb{P}(x|z) = \mathcal{N}(Wz + \mu, \sigma^2 I_{dD})$
+
+**Advantages:**
+
+- Accommodation of **measurement noise** (variance $\sigma^2$)
+- **Generative mode**: possibility to generate new data
+- Parameter estimation by **Maximum Likelihood**
+- **EM algorithm** (Expectation-Maximization) to save computations
+- **Bayesian PCA**: inversion of the conditional to find $K$ by training
+
+#### Kernel PCA
+
+**Principle:**
+
+Use a **nonlinear mapping** $\phi(x_i)$ via a kernel function:
+
+$$k(x_i, x_j) = \phi(x_i)^T \phi(x_j)$$
+
+Allows performing PCA in a **more favorable space** (possibly infinite-dimensional) without explicitly computing $\phi$.
+
+#### Local PCA
+
+Performs PCA on **local neighborhoods** of the data to consider only the **local intrinsic dimensionality**.
+
+Useful for data with complex local structure (nonlinear manifolds).
+
+#### Computational Limitation
+
+⚠️ **Complexity:** The main limitation of classical PCA is the **eigendecomposition** of $\Sigma$ in $O(D^3)$
+
+For very large dimensions, alternative or approximate methods may be necessary.
+
+---
+
+## Synthesis and Key Points
+
+### Essential Characteristics of PCA
+
+**Nature of the Model:**
+
+- PCA is part of **linear latent models**
+- Applies to **centered data**
+- Uses **variance** as a decomposition criterion
+
+**Mathematical Properties:**
+
+- **Exact and complete** decomposition into **decorrelated** components
+- Assumes a **normal distribution** of data
+- Can be formulated as a **regression**
+
+**Applications:**
+
+- **Justified decimation** strategy based on low-rank approximation
+- Useful for **denoising** via a Gaussian noise model
+
+**Equivalences:**
+
+- Equivalent to a **linear autoencoder**
+- Can receive a **stochastic formulation**
+- Generalizable to the **nonlinear case via kernels**
+
+### When to Use PCA?
+
+✅ **Suitable for:**
+
+- Data approximately following a Gaussian distribution
+- Dimensionality reduction with variance preservation
+- Visualization of high-dimensional data
+- Denoising data corrupted by Gaussian noise
+- Data compression
+
+❌ **Not Suitable for:**
+
+- Strongly clustered data (non-Gaussian)
+- Data with strongly nonlinear relationships
+- Cases where variance is not a good information criterion
+
+### Mathematical Concepts to Master
+
+📌 To understand PCA well, you need to master:
+
+- **Linear transformation** and **orthogonal matrix**
+- **Coordinates** and **matrix rank**
+- **Mean** and **variance**
+- **Orthogonal projection**
+- **Eigendecomposition**
+- **Matrix trace**
+- **Frobenius norm**
+- **Lagrange multipliers**
+
+---
+
+## Typical Exam Questions
+
+### Conceptual Questions
+
+1. Explain how PCA uses variance as a criterion.
+
+2. Show that maximizing variance is equivalent to minimizing error.
+
+3. Show how PCA uses the Eckart-Young theorem.
+
+4. Can PCA be applied to any data?
+
+5. Is it relevant to apply PCA to any data?
+
+6. How to apply PCA to clustered data?
+
+### Technical Questions
+
+**Given data:**
+
+- How do you apply PCA?
+- What information does PCA provide?
+- How to reconstruct data with $K < D$ components?
+- How to select the components to retain?
+
+### Mathematical Proofs
+
+- Show that PCA is equivalent to a linear autoencoder.
+- Demonstrate the equivalence between maximum variance and minimum error.
+- Prove that principal components are the eigenvectors of $\Sigma$.

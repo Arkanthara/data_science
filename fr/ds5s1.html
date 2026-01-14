@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds2s1 – ISS</title>
+<title>ds5s1 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -42,9 +42,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0c6282e9eda64d97ea9e5255f7a37655.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-d6f41e6f289ddcd3353223713284dc1e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-0c6282e9eda64d97ea9e5255f7a37655.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,39 +72,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -286,12 +254,6 @@ window.Quarto = {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./ds2.html" aria-current="page"> 
-<span class="menu-text">Cours</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
@@ -322,7 +284,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds2s1.html">L’Essentiel version Deepseek</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s1.html">Analyse Discriminante Linéaire (LDA) - Support de révision oral</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -366,13 +328,70 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds2s.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">L’Essentiel</span></a>
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds2s1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">L’Essentiel version Deepseek</span></a>
+  <a href="./ds3s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Document de Révision : Linear Discriminant Analysis (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5s1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Analyse Discriminante Linéaire (LDA) - Support de révision oral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Document de Révision : Expectation-Maximization pour la modélisation de densité</span></a>
   </div>
 </li>
       </ul>
@@ -387,483 +406,374 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#lessentiel-version-deepseek" id="toc-lessentiel-version-deepseek" class="nav-link active" data-scroll-target="#lessentiel-version-deepseek">L’Essentiel version Deepseek</a>
+  <li><a href="#analyse-discriminante-linéaire-lda---support-de-révision-oral" id="toc-analyse-discriminante-linéaire-lda---support-de-révision-oral" class="nav-link active" data-scroll-target="#analyse-discriminante-linéaire-lda---support-de-révision-oral">Analyse Discriminante Linéaire (LDA) - Support de révision oral</a>
   <ul class="collapse">
-  <li><a href="#pourquoi-étudier-les-espaces-de-haute-dimension" id="toc-pourquoi-étudier-les-espaces-de-haute-dimension" class="nav-link" data-scroll-target="#pourquoi-étudier-les-espaces-de-haute-dimension">🎯 Pourquoi étudier les espaces de haute dimension ?</a></li>
-  <li><a href="#lespace-de-représentation-structure-de-base" id="toc-lespace-de-représentation-structure-de-base" class="nav-link" data-scroll-target="#lespace-de-représentation-structure-de-base">📐 L’Espace de Représentation : Structure de Base</a></li>
-  <li><a href="#la-malédiction-de-la-dimensionalité" id="toc-la-malédiction-de-la-dimensionalité" class="nav-link" data-scroll-target="#la-malédiction-de-la-dimensionalité">🌀 LA MALÉDICTION DE LA DIMENSIONALITÉ</a>
+  <li><a href="#lhistoire-derrière-la-lda-le-problème-du-tri-intelligent" id="toc-lhistoire-derrière-la-lda-le-problème-du-tri-intelligent" class="nav-link" data-scroll-target="#lhistoire-derrière-la-lda-le-problème-du-tri-intelligent">1. L’histoire derrière la LDA : Le problème du tri intelligent</a></li>
+  <li><a href="#lintuition-géométrique-séparer-des-nuages-de-points-colorés" id="toc-lintuition-géométrique-séparer-des-nuages-de-points-colorés" class="nav-link" data-scroll-target="#lintuition-géométrique-séparer-des-nuages-de-points-colorés">2. L’intuition géométrique : Séparer des nuages de points colorés</a>
   <ul class="collapse">
-  <li><a href="#parcimonie-des-données-data-sparsity" id="toc-parcimonie-des-données-data-sparsity" class="nav-link" data-scroll-target="#parcimonie-des-données-data-sparsity">1️⃣ Parcimonie des Données (<em>Data Sparsity</em>)</a></li>
-  <li><a href="#sphère-vide-cube-épineux" id="toc-sphère-vide-cube-épineux" class="nav-link" data-scroll-target="#sphère-vide-cube-épineux">2️⃣ Sphère Vide &amp; Cube Épineux</a></li>
-  <li><a href="#tout-le-volume-est-en-surface" id="toc-tout-le-volume-est-en-surface" class="nav-link" data-scroll-target="#tout-le-volume-est-en-surface">3️⃣ Tout le Volume est en Surface</a></li>
-  <li><a href="#lœuf-gaussien" id="toc-lœuf-gaussien" class="nav-link" data-scroll-target="#lœuf-gaussien">4️⃣ L’Œuf Gaussien</a></li>
-  <li><a href="#toutes-les-distances-deviennent-égales" id="toc-toutes-les-distances-deviennent-égales" class="nav-link" data-scroll-target="#toutes-les-distances-deviennent-égales">5️⃣ Toutes les Distances Deviennent Égales</a></li>
-  <li><a href="#quasi-orthogonalité" id="toc-quasi-orthogonalité" class="nav-link" data-scroll-target="#quasi-orthogonalité">6️⃣ Quasi-Orthogonalité</a></li>
-  <li><a href="#les-hubs-quelques-points-populaires" id="toc-les-hubs-quelques-points-populaires" class="nav-link" data-scroll-target="#les-hubs-quelques-points-populaires">7️⃣ Les Hubs : Quelques Points “Populaires”</a></li>
-  <li><a href="#pourquoi-ces-phénomènes-les-inégalités-de-concentration" id="toc-pourquoi-ces-phénomènes-les-inégalités-de-concentration" class="nav-link" data-scroll-target="#pourquoi-ces-phénomènes-les-inégalités-de-concentration">8️⃣ Pourquoi Ces Phénomènes ? Les Inégalités de Concentration</a></li>
+  <li><a href="#la-vision-en-2d" id="toc-la-vision-en-2d" class="nav-link" data-scroll-target="#la-vision-en-2d">La vision en 2D</a></li>
   </ul></li>
+  <li><a href="#les-deux-objectifs-en-tension" id="toc-les-deux-objectifs-en-tension" class="nav-link" data-scroll-target="#les-deux-objectifs-en-tension">3. Les deux objectifs en tension</a>
+  <ul class="collapse">
+  <li><a href="#objectif-1-éloigner-les-centres-between-class" id="toc-objectif-1-éloigner-les-centres-between-class" class="nav-link" data-scroll-target="#objectif-1-éloigner-les-centres-between-class">Objectif 1 : Éloigner les centres (Between-class)</a></li>
+  <li><a href="#objectif-2-regrouper-chaque-classe-within-class" id="toc-objectif-2-regrouper-chaque-classe-within-class" class="nav-link" data-scroll-target="#objectif-2-regrouper-chaque-classe-within-class">Objectif 2 : Regrouper chaque classe (Within-class)</a></li>
+  </ul></li>
+  <li><a href="#le-critère-de-fisher-le-compromis-mathématique" id="toc-le-critère-de-fisher-le-compromis-mathématique" class="nav-link" data-scroll-target="#le-critère-de-fisher-le-compromis-mathématique">4. Le critère de Fisher : Le compromis mathématique</a>
+  <ul class="collapse">
+  <li><a href="#la-formule-magique" id="toc-la-formule-magique" class="nav-link" data-scroll-target="#la-formule-magique">La formule magique</a></li>
+  </ul></li>
+  <li><a href="#la-solution-élégante-un-problème-aux-valeurs-propres" id="toc-la-solution-élégante-un-problème-aux-valeurs-propres" class="nav-link" data-scroll-target="#la-solution-élégante-un-problème-aux-valeurs-propres">5. La solution élégante : Un problème aux valeurs propres</a>
+  <ul class="collapse">
+  <li><a href="#le-aha-moment" id="toc-le-aha-moment" class="nav-link" data-scroll-target="#le-aha-moment">Le “aha!” moment</a></li>
+  </ul></li>
+  <li><a href="#la-limitation-dimensionnelle-surprenante" id="toc-la-limitation-dimensionnelle-surprenante" class="nav-link" data-scroll-target="#la-limitation-dimensionnelle-surprenante">6. La limitation dimensionnelle surprenante</a>
+  <ul class="collapse">
+  <li><a href="#pourquoi-seulement-m-1-dimensions" id="toc-pourquoi-seulement-m-1-dimensions" class="nav-link" data-scroll-target="#pourquoi-seulement-m-1-dimensions">Pourquoi seulement M-1 dimensions ?</a></li>
+  </ul></li>
+  <li><a href="#en-pratique-la-recette-lda" id="toc-en-pratique-la-recette-lda" class="nav-link" data-scroll-target="#en-pratique-la-recette-lda">7. En pratique : La recette LDA</a>
+  <ul class="collapse">
+  <li><a href="#étape-1-préparer-les-données" id="toc-étape-1-préparer-les-données" class="nav-link" data-scroll-target="#étape-1-préparer-les-données">Étape 1 : Préparer les données</a></li>
+  <li><a href="#étape-2-calculer-les-matrices-clés" id="toc-étape-2-calculer-les-matrices-clés" class="nav-link" data-scroll-target="#étape-2-calculer-les-matrices-clés">Étape 2 : Calculer les matrices clés</a></li>
+  <li><a href="#étape-3-résoudre-le-problème-aux-valeurs-propres" id="toc-étape-3-résoudre-le-problème-aux-valeurs-propres" class="nav-link" data-scroll-target="#étape-3-résoudre-le-problème-aux-valeurs-propres">Étape 3 : Résoudre le problème aux valeurs propres</a></li>
+  <li><a href="#étape-4-garder-les-m-1-premières-directions" id="toc-étape-4-garder-les-m-1-premières-directions" class="nav-link" data-scroll-target="#étape-4-garder-les-m-1-premières-directions">Étape 4 : Garder les M-1 premières directions</a></li>
+  <li><a href="#étape-5-projeter-et-classifier" id="toc-étape-5-projeter-et-classifier" class="nav-link" data-scroll-target="#étape-5-projeter-et-classifier">Étape 5 : Projeter et classifier</a></li>
+  </ul></li>
+  <li><a href="#lda-comme-classifieur-lhypothèse-gaussienne" id="toc-lda-comme-classifieur-lhypothèse-gaussienne" class="nav-link" data-scroll-target="#lda-comme-classifieur-lhypothèse-gaussienne">8. LDA comme classifieur : L’hypothèse gaussienne</a>
+  <ul class="collapse">
+  <li><a href="#la-modélisation-probabiliste" id="toc-la-modélisation-probabiliste" class="nav-link" data-scroll-target="#la-modélisation-probabiliste">La modélisation probabiliste</a></li>
+  <li><a href="#la-frontière-de-décision" id="toc-la-frontière-de-décision" class="nav-link" data-scroll-target="#la-frontière-de-décision">La frontière de décision</a></li>
+  </ul></li>
+  <li><a href="#quand-la-lda-fonctionne-bien-et-moins-bien" id="toc-quand-la-lda-fonctionne-bien-et-moins-bien" class="nav-link" data-scroll-target="#quand-la-lda-fonctionne-bien-et-moins-bien">9. Quand la LDA fonctionne bien (et moins bien)</a>
+  <ul class="collapse">
+  <li><a href="#conditions-idéales" id="toc-conditions-idéales" class="nav-link" data-scroll-target="#conditions-idéales">Conditions idéales ✅</a></li>
+  <li><a href="#situations-problématiques" id="toc-situations-problématiques" class="nav-link" data-scroll-target="#situations-problématiques">Situations problématiques ❌</a></li>
+  </ul></li>
+  <li><a href="#lda-vs-qda-le-dilemme-linéaire-vs-quadratique" id="toc-lda-vs-qda-le-dilemme-linéaire-vs-quadratique" class="nav-link" data-scroll-target="#lda-vs-qda-le-dilemme-linéaire-vs-quadratique">10. LDA vs QDA : Le dilemme linéaire vs quadratique</a>
+  <ul class="collapse">
+  <li><a href="#la-différence-cruciale" id="toc-la-différence-cruciale" class="nav-link" data-scroll-target="#la-différence-cruciale">La différence cruciale</a></li>
+  </ul></li>
+  <li><a href="#lda-dans-le-monde-réel-lexemple-des-visages" id="toc-lda-dans-le-monde-réel-lexemple-des-visages" class="nav-link" data-scroll-target="#lda-dans-le-monde-réel-lexemple-des-visages">11. LDA dans le monde réel : L’exemple des visages</a>
+  <ul class="collapse">
+  <li><a href="#reconnaissance-faciale-avec-lda-fisherfaces" id="toc-reconnaissance-faciale-avec-lda-fisherfaces" class="nav-link" data-scroll-target="#reconnaissance-faciale-avec-lda-fisherfaces">Reconnaissance faciale avec LDA (Fisherfaces)</a></li>
+  </ul></li>
+  <li><a href="#fiche-de-révision-ultra-condensée" id="toc-fiche-de-révision-ultra-condensée" class="nav-link" data-scroll-target="#fiche-de-révision-ultra-condensée">12. Fiche de révision ultra-condensée</a></li>
+  <li><a href="#pour-loral-les-3-histoires-à-raconter" id="toc-pour-loral-les-3-histoires-à-raconter" class="nav-link" data-scroll-target="#pour-loral-les-3-histoires-à-raconter">13. Pour l’oral : Les 3 histoires à raconter</a>
+  <ul class="collapse">
+  <li><a href="#histoire-1-le-tri-postal" id="toc-histoire-1-le-tri-postal" class="nav-link" data-scroll-target="#histoire-1-le-tri-postal">Histoire 1 : Le tri postal</a></li>
+  <li><a href="#histoire-2-larbitre-sportif" id="toc-histoire-2-larbitre-sportif" class="nav-link" data-scroll-target="#histoire-2-larbitre-sportif">Histoire 2 : L’arbitre sportif</a></li>
+  <li><a href="#histoire-3-les-jumeaux-statistiques" id="toc-histoire-3-les-jumeaux-statistiques" class="nav-link" data-scroll-target="#histoire-3-les-jumeaux-statistiques">Histoire 3 : Les jumeaux statistiques</a></li>
+  </ul></li>
+  <li><a href="#questions-pièges-et-comment-y-répondre" id="toc-questions-pièges-et-comment-y-répondre" class="nav-link" data-scroll-target="#questions-pièges-et-comment-y-répondre">14. Questions pièges et comment y répondre</a></li>
+  <li><a href="#lastuce-mnémotechnique-finale" id="toc-lastuce-mnémotechnique-finale" class="nav-link" data-scroll-target="#lastuce-mnémotechnique-finale">15. L’astuce mnémotechnique finale</a></li>
+  <li><a href="#en-résumé-la-lda-cest" id="toc-en-résumé-la-lda-cest" class="nav-link" data-scroll-target="#en-résumé-la-lda-cest">16. En résumé : La LDA, c’est…</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds5s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds2s1.html">L’Essentiel version Deepseek</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s1.html">Analyse Discriminante Linéaire (LDA) - Support de révision oral</a></li></ol></nav></header>
 
 
 
 
 
-<section id="lessentiel-version-deepseek" class="level1">
-<h1>L’Essentiel version Deepseek</h1>
-<section id="pourquoi-étudier-les-espaces-de-haute-dimension" class="level2">
-<h2 class="anchored" data-anchor-id="pourquoi-étudier-les-espaces-de-haute-dimension">🎯 Pourquoi étudier les espaces de haute dimension ?</h2>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Concept Clé : La Data Science en bref
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La <strong>Data Science</strong> étudie comment représenter le monde réel sous forme de données numériques dans des <strong>espaces mathématiques</strong>, pour ensuite les analyser. Elle se concentre sur les <strong>propriétés géométriques</strong> et <strong>statistiques</strong> de ces espaces.</p>
-</div>
-</div>
-<p><strong>Pipeline universel</strong> :</p>
-<pre><code>Monde réel → Capteurs → Données brutes → Représentation numérique</code></pre>
-<p>Tout devient finalement une <strong>matrice</strong> de <span class="math inline">\(N\)</span> échantillons (colonnes) avec <span class="math inline">\(D\)</span> caractéristiques (lignes).</p>
-<p><strong>Deux visions complémentaires</strong> : 1. <strong>Statistique</strong> : Les données sont un échantillon d’une distribution sous-jacente 2. <strong>Algébrigue</strong> : Les données forment une matrice <span class="math inline">\(X \in \mathbb{R}^{D \times N}\)</span></p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Phénomène réel] --&gt; B[Capteurs/sondages]
-    B --&gt; C[Données brutes]
-    C --&gt; D[Représentation matricielle]
-    D --&gt; E[Analyse géométrique&lt;br&gt;et statistique]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<hr>
-</section>
-<section id="lespace-de-représentation-structure-de-base" class="level2">
-<h2 class="anchored" data-anchor-id="lespace-de-représentation-structure-de-base">📐 L’Espace de Représentation : Structure de Base</h2>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Structure Fondamentale
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Un espace de dimension <span class="math inline">\(D\)</span> est un <strong>espace vectoriel</strong> muni d’une structure complète :</p>
-<pre><code>Produit scalaire → Norme → Distance → Espace métrique</code></pre>
-<p>C’est dans cet espace que vivent nos données et que l’apprentissage automatique opère.</p>
-</div>
-</div>
-<p><strong>Question centrale</strong> : Que se passe-t-il quand <span class="math inline">\(D\)</span> (la dimension) devient grand ? - Effets négatifs : <strong>Malédiction</strong> de la dimensionalité - Effets positifs : <strong>Bénédiction</strong> de la dimensionalité</p>
-<hr>
-</section>
-<section id="la-malédiction-de-la-dimensionalité" class="level2">
-<h2 class="anchored" data-anchor-id="la-malédiction-de-la-dimensionalité">🌀 LA MALÉDICTION DE LA DIMENSIONALITÉ</h2>
-<section id="parcimonie-des-données-data-sparsity" class="level3">
-<h3 class="anchored" data-anchor-id="parcimonie-des-données-data-sparsity">1️⃣ Parcimonie des Données (<em>Data Sparsity</em>)</h3>
+<section id="analyse-discriminante-linéaire-lda---support-de-révision-oral" class="level1">
+<h1>Analyse Discriminante Linéaire (LDA) - Support de révision oral</h1>
+<section id="lhistoire-derrière-la-lda-le-problème-du-tri-intelligent" class="level2">
+<h2 class="anchored" data-anchor-id="lhistoire-derrière-la-lda-le-problème-du-tri-intelligent">1. L’histoire derrière la LDA : Le problème du tri intelligent</h2>
+<p>Imaginez que vous travaillez dans un centre de tri postal. Vous avez des lettres avec 100 mesures différentes (poids, taille, couleur, texture…). Vous devez les trier automatiquement par type (lettre, colis, magazine). Comment trouver <strong>la ou les dimensions qui séparent le mieux les catégories</strong> ?</p>
+<p>C’est exactement ce que résout la LDA : trouver <strong>les axes qui maximisent la séparation entre classes</strong> tout en minimisant la dispersion à l’intérieur de chaque classe.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Le Problème Fondamental
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Pour estimer précisément une distribution en dimension <span class="math inline">\(D\)</span>, il faut un nombre <strong>exponentiel</strong> d’échantillons : <span class="math inline">\(N \approx n \cdot b^D\)</span></p>
-<p>Avec <span class="math inline">\(N\)</span> fixé, la plupart des “cases” de l’espace (les bins) restent <strong>vides</strong>.</p>
+<p><strong>Concept Clé : La différence fondamentale avec la PCA</strong> La PCA regarde <strong>toutes</strong> les données et cherche les directions de variation maximale. La LDA regarde d’abord <strong>les étiquettes</strong> (les classes) et cherche les directions qui séparent le mieux ces classes.</p>
 </div>
 </div>
-<p><strong>Exemple frappant</strong> : - 6 dimensions, 10 bins par dimension, 10 échantillons par bin en moyenne - → Il faut environ <strong>10 millions</strong> d’échantillons !</p>
+<pre class="mermaid"><code>graph TD
+    A[Données étiquetées&lt;br/&gt;avec M classes] --&gt; B{Deux approches}
+    B --&gt; C[PCA&lt;br/&gt;Ignore les étiquettes&lt;br/&gt;Maximise la variance globale]
+    B --&gt; D[LDA&lt;br/&gt;Utilise les étiquettes&lt;br/&gt;Maximise la séparation entre classes]
+    C --&gt; E[Résultat : conserve&lt;br/&gt;la structure générale]
+    D --&gt; F[Résultat : optimise&lt;br/&gt;la discrimination]
+    
+    style E fill:#e6f3ff
+    style F fill:#e6ffe6</code></pre>
 </section>
-<section id="sphère-vide-cube-épineux" class="level3">
-<h3 class="anchored" data-anchor-id="sphère-vide-cube-épineux">2️⃣ Sphère Vide &amp; Cube Épineux</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    A[Cube en dimension D] --&gt; B[Sphère inscrite]
-    B --&gt; C[Ratio volume sphère/cube → 0]
-    C --&gt; D[Tout le volume va dans les coins]
-    D --&gt; E[Échantillonnage uniforme&lt;br&gt;→ Sphère VIDE]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Phénomène Contre-Intuitif
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Dans un cube en haute dimension : - Le volume de la sphère inscrite devient <strong>négligeable</strong> - Le volume se concentre dans les <strong>coins</strong> (qui sont à distance <span class="math inline">\(\sqrt{D}/2\)</span> du centre) - Un échantillonnage uniforme ne touchera <strong>jamais</strong> le centre</p>
-</div>
-</div>
-</section>
-<section id="tout-le-volume-est-en-surface" class="level3">
-<h3 class="anchored" data-anchor-id="tout-le-volume-est-en-surface">3️⃣ Tout le Volume est en Surface</h3>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Principe Universel
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Pour <strong>n’importe quelle forme</strong> en haute dimension, le ratio : <span class="math display">\[\frac{\text{Volume intérieur}}{\text{Volume total}} \rightarrow 0\]</span> Presque tout le volume est concentré dans une mince <strong>coquille</strong> à la surface.</p>
-</div>
-</div>
-<p><strong>Conséquence</strong> : Les données s’éloignent toujours du centre, quelle que soit la forme de l’espace.</p>
-</section>
-<section id="lœuf-gaussien" class="level3">
-<h3 class="anchored" data-anchor-id="lœuf-gaussien">4️⃣ L’Œuf Gaussien</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A[Distribution Gaussienne&lt;br&gt;en dimension D] --&gt; B[Rayon R = norme des données]
-    B --&gt; C[R² suit une loi du χ² à D degrés]
-    C --&gt; D[Espérance de R² = D]
-    D --&gt; E[Donc R ≈ √D]
-    E --&gt; F[Densité concentrée&lt;br&gt;dans un anneau à rayon √D]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Théorème de l’Anneau Gaussien
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Pour une Gaussienne en dimension <span class="math inline">\(D\)</span>, presque toute la masse de probabilité se trouve dans un <strong>anneau étroit</strong> de rayon <span class="math inline">\(\approx \sqrt{D}\)</span>.</p>
-<p>Formellement : <span class="math inline">\(P\left[|\|X\| - \sqrt{D}| &gt; \beta\right] \leq 3e^{-c\beta^2}\)</span></p>
-</div>
-</div>
-</section>
-<section id="toutes-les-distances-deviennent-égales" class="level3">
-<h3 class="anchored" data-anchor-id="toutes-les-distances-deviennent-égales">5️⃣ Toutes les Distances Deviennent Égales</h3>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Effet Dévastateur pour les Voisins
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Quand <span class="math inline">\(D\)</span> augmente : <span class="math display">\[\frac{D_{\max} - D_{\min}}{D_{\min}} \rightarrow 0\]</span> Tous les points deviennent <strong>équidistants</strong> les uns des autres.</p>
-</div>
-</div>
-<p><strong>Conséquence directe</strong> : - Les algorithmes de <strong>plus proches voisins (KNN)</strong> perdent leur sens - Impossible de discriminer “proche” de “loin”</p>
-</section>
-<section id="quasi-orthogonalité" class="level3">
-<h3 class="anchored" data-anchor-id="quasi-orthogonalité">6️⃣ Quasi-Orthogonalité</h3>
+<section id="lintuition-géométrique-séparer-des-nuages-de-points-colorés" class="level2">
+<h2 class="anchored" data-anchor-id="lintuition-géométrique-séparer-des-nuages-de-points-colorés">2. L’intuition géométrique : Séparer des nuages de points colorés</h2>
+<section id="la-vision-en-2d" class="level3">
+<h3 class="anchored" data-anchor-id="la-vision-en-2d">La vision en 2D</h3>
+<p>Imaginez des points de deux couleurs (rouge et bleu) dispersés sur un plan. Vous ne pouvez regarder que selon une seule direction (comme une lampe torche qui éclaire une ligne).</p>
+<p><strong>Question :</strong> Comment orienter la lampe pour que, sur cette ligne, les points rouges et bleus soient <strong>le plus séparés possible</strong> ?</p>
+<p>La LDA trouve cette direction optimale.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Géométrie en Haute Dimension
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><strong>Idée Essentielle : La LDA cherche la “ligne de démarcation”</strong> Comme un arbitre qui trace une ligne entre deux équipes, la LDA trouve la direction qui sépare le mieux les groupes, tout en s’assurant que chaque équipe est regroupée.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="les-deux-objectifs-en-tension" class="level2">
+<h2 class="anchored" data-anchor-id="les-deux-objectifs-en-tension">3. Les deux objectifs en tension</h2>
+<section id="objectif-1-éloigner-les-centres-between-class" class="level3">
+<h3 class="anchored" data-anchor-id="objectif-1-éloigner-les-centres-between-class">Objectif 1 : Éloigner les centres (Between-class)</h3>
+<p><strong>“Mettre les moyennes le plus loin possible”</strong><br>
+Si vous projetez les points sur une droite, vous voulez que les centres (moyennes) de chaque classe soient <strong>le plus éloignés possible</strong>.</p>
+</section>
+<section id="objectif-2-regrouper-chaque-classe-within-class" class="level3">
+<h3 class="anchored" data-anchor-id="objectif-2-regrouper-chaque-classe-within-class">Objectif 2 : Regrouper chaque classe (Within-class)</h3>
+<p><strong>“Garder chaque classe compacte”</strong><br>
+Vous voulez aussi que les points d’une même classe soient <strong>le plus regroupés possible</strong> après projection.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Le dilemme :</strong> Parfois, étirer les centres les éloigne, mais cela peut aussi étirer les classes. Il faut trouver le bon compromis. <strong>Solution de Fisher :</strong> Maximiser le ratio : (distance entre centres)² / (dispersion totale dans les classes)</p>
+</div>
+</div>
+</section>
+</section>
+<section id="le-critère-de-fisher-le-compromis-mathématique" class="level2">
+<h2 class="anchored" data-anchor-id="le-critère-de-fisher-le-compromis-mathématique">4. Le critère de Fisher : Le compromis mathématique</h2>
+<section id="la-formule-magique" class="level3">
+<h3 class="anchored" data-anchor-id="la-formule-magique">La formule magique</h3>
+<p>Pour une direction <strong>a</strong>, on calcule :</p>
+<pre><code>Score(a) = (Éloignement des centres)² / (Dispersion dans les classes)</code></pre>
+<p>Mathématiquement :</p>
+<pre><code>J(a) = (aᵀ·Σ_b·a) / (aᵀ·Σ_w·a)</code></pre>
+<p>Où : - <strong>Σ_b</strong> = matrice de covariance “entre classes” (between) → mesure l’éloignement des centres - <strong>Σ_w</strong> = matrice de covariance “dans les classes” (within) → mesure la dispersion interne</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Astuce mnémotechnique :</strong> - <strong>B</strong> comme <strong>Between</strong> = <strong>B</strong> pour “Bien séparer” (les centres) - <strong>W</strong> comme <strong>Within</strong> = <strong>W</strong> pour “Regrouper” (chaque classe)</p>
+</div>
+</div>
+</section>
+</section>
+<section id="la-solution-élégante-un-problème-aux-valeurs-propres" class="level2">
+<h2 class="anchored" data-anchor-id="la-solution-élégante-un-problème-aux-valeurs-propres">5. La solution élégante : Un problème aux valeurs propres</h2>
+<section id="le-aha-moment" class="level3">
+<h3 class="anchored" data-anchor-id="le-aha-moment">Le “aha!” moment</h3>
+<p>En cherchant le maximum du ratio, on tombe sur l’équation :</p>
+<pre><code>Σ_b·a = λ·Σ_w·a</code></pre>
+<p>C’est un <strong>problème aux valeurs propres généralisé</strong> !</p>
+<p><strong>Solution :</strong> La direction optimale <strong>a</strong> est le premier vecteur propre de <code>Σ_w⁻¹·Σ_b</code>.</p>
+<pre class="mermaid"><code>graph LR
+    A[Données étiquetées] --&gt; B[Calculer Σ_w et Σ_b]
+    B --&gt; C[Résoudre Σ_w⁻¹·Σ_b·a = λ·a]
+    C --&gt; D[Trier les vecteurs propres&lt;br/&gt;par valeurs propres décroissantes]
+    D --&gt; E[Garder les M-1 premiers&lt;br/&gt;vecteurs propres]
+    
+    style C fill:#fff0e6
+    style E fill:#e6ffe6</code></pre>
+</section>
+</section>
+<section id="la-limitation-dimensionnelle-surprenante" class="level2">
+<h2 class="anchored" data-anchor-id="la-limitation-dimensionnelle-surprenante">6. La limitation dimensionnelle surprenante</h2>
+<section id="pourquoi-seulement-m-1-dimensions" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-seulement-m-1-dimensions">Pourquoi seulement M-1 dimensions ?</h3>
+<p>Avec M classes, la LDA ne peut trouver que <strong>M-1</strong> directions discriminantes non nulles.</p>
+<p><strong>Analogie :</strong> Avec 3 points (3 classes), vous pouvez au plus les placer dans un plan (2D). Avec 2 points (2 classes), vous pouvez au plus les placer sur une ligne (1D).</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Piège à éviter :</strong> Si vous avez plus de dimensions que M-1, les directions supplémentaires auront une valeur propre nulle → pas discriminantes.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="en-pratique-la-recette-lda" class="level2">
+<h2 class="anchored" data-anchor-id="en-pratique-la-recette-lda">7. En pratique : La recette LDA</h2>
+<section id="étape-1-préparer-les-données" class="level3">
+<h3 class="anchored" data-anchor-id="étape-1-préparer-les-données">Étape 1 : Préparer les données</h3>
+<ul>
+<li>Vérifier que chaque classe a assez d’exemples (au moins D+1 pour éviter Σ_w singulière)</li>
+<li>Optionnel : standardiser si les échelles sont très différentes</li>
+</ul>
+</section>
+<section id="étape-2-calculer-les-matrices-clés" class="level3">
+<h3 class="anchored" data-anchor-id="étape-2-calculer-les-matrices-clés">Étape 2 : Calculer les matrices clés</h3>
 <ol type="1">
-<li><strong>Deux vecteurs aléatoires</strong> sont presque <strong>orthogonaux</strong> (angle ≈ 90°)</li>
-<li><strong>Un triangle aléatoire</strong> est presque <strong>équilatéral</strong> (angles ≈ 60°)</li>
-<li>Sur une sphère, tout le volume est à <strong>l’équateur</strong> (quelle que soit la direction choisie comme “nord”)</li>
+<li><strong>Σ_w</strong> (within) : moyenne des covariances de chaque classe</li>
+<li><strong>Σ_b</strong> (between) : covariance des centres de classes</li>
+</ol>
+</section>
+<section id="étape-3-résoudre-le-problème-aux-valeurs-propres" class="level3">
+<h3 class="anchored" data-anchor-id="étape-3-résoudre-le-problème-aux-valeurs-propres">Étape 3 : Résoudre le problème aux valeurs propres</h3>
+<p>Calculer les vecteurs propres de <code>Σ_w⁻¹·Σ_b</code></p>
+</section>
+<section id="étape-4-garder-les-m-1-premières-directions" class="level3">
+<h3 class="anchored" data-anchor-id="étape-4-garder-les-m-1-premières-directions">Étape 4 : Garder les M-1 premières directions</h3>
+<p>Trier par valeurs propres décroissantes, garder les plus importantes</p>
+</section>
+<section id="étape-5-projeter-et-classifier" class="level3">
+<h3 class="anchored" data-anchor-id="étape-5-projeter-et-classifier">Étape 5 : Projeter et classifier</h3>
+<ul>
+<li>Projeter les données sur le sous-espace discriminant</li>
+<li>Classifier (par exemple avec une règle du plus proche voisin)</li>
+</ul>
+</section>
+</section>
+<section id="lda-comme-classifieur-lhypothèse-gaussienne" class="level2">
+<h2 class="anchored" data-anchor-id="lda-comme-classifieur-lhypothèse-gaussienne">8. LDA comme classifieur : L’hypothèse gaussienne</h2>
+<section id="la-modélisation-probabiliste" class="level3">
+<h3 class="anchored" data-anchor-id="la-modélisation-probabiliste">La modélisation probabiliste</h3>
+<p>La LDA suppose que <strong>chaque classe suit une distribution gaussienne</strong> avec : - Moyenne différente pour chaque classe - <strong>Même matrice de covariance</strong> pour toutes les classes (c’est crucial !)</p>
+<pre class="mermaid"><code>graph TD
+    A[Hypothèse LDA] --&gt; B[Chaque classe = Gaussienne]
+    B --&gt; C[Moyennes différentes]
+    B --&gt; D[Même covariance Σ]
+    C --&gt; E[Séparation linéaire optimale]
+    D --&gt; E
+    
+    style E fill:#e6ffe6</code></pre>
+</section>
+<section id="la-frontière-de-décision" class="level3">
+<h3 class="anchored" data-anchor-id="la-frontière-de-décision">La frontière de décision</h3>
+<p>Avec cette hypothèse, la frontière entre deux classes est <strong>linéaire</strong> (d’où le “L” de LDA).</p>
+<p><strong>Pourquoi ?</strong> Les contours d’égal densité de deux gaussiennes avec même covariance sont des hyperplans.</p>
+</section>
+</section>
+<section id="quand-la-lda-fonctionne-bien-et-moins-bien" class="level2">
+<h2 class="anchored" data-anchor-id="quand-la-lda-fonctionne-bien-et-moins-bien">9. Quand la LDA fonctionne bien (et moins bien)</h2>
+<section id="conditions-idéales" class="level3">
+<h3 class="anchored" data-anchor-id="conditions-idéales">Conditions idéales ✅</h3>
+<ul>
+<li>Les classes sont <strong>approximativement gaussiennes</strong></li>
+<li>Les covariances des classes sont <strong>similaires</strong></li>
+<li>Assez d’exemples par classe (au moins 10× le nombre de dimensions)</li>
+<li>Relations <strong>linéaires</strong> entre variables</li>
+</ul>
+</section>
+<section id="situations-problématiques" class="level3">
+<h3 class="anchored" data-anchor-id="situations-problématiques">Situations problématiques ❌</h3>
+<ul>
+<li><strong>Covariances très différentes</strong> → utiliser QDA (Quadratic Discriminant Analysis)</li>
+<li><strong>Relations non-linéaires</strong> → Kernel LDA ou méthodes non-linéaires</li>
+<li><strong>Peu d’exemples</strong> par rapport aux dimensions → régulariser ou réduire dimension d’abord</li>
+<li><strong>Classes non-gaussiennes</strong> → autres classifieurs (forêts aléatoires, SVM…)</li>
+</ul>
+</section>
+</section>
+<section id="lda-vs-qda-le-dilemme-linéaire-vs-quadratique" class="level2">
+<h2 class="anchored" data-anchor-id="lda-vs-qda-le-dilemme-linéaire-vs-quadratique">10. LDA vs QDA : Le dilemme linéaire vs quadratique</h2>
+<section id="la-différence-cruciale" class="level3">
+<h3 class="anchored" data-anchor-id="la-différence-cruciale">La différence cruciale</h3>
+<ul>
+<li><strong>LDA</strong> : Suppose <strong>même covariance</strong> pour toutes classes → frontières linéaires</li>
+<li><strong>QDA</strong> : Suppose <strong>covariances différentes</strong> → frontières quadratiques</li>
+</ul>
+<pre class="mermaid"><code>graph LR
+    A[Données] --&gt; B{Comparer les covariances}
+    B --&gt;|Similaires| C[LDA&lt;br/&gt;Frontières linéaires]
+    B --&gt;|Différentes| D[QDA&lt;br/&gt;Frontières quadratiques]
+    
+    style C fill:#e6f3ff
+    style D fill:#ffe6e6</code></pre>
+<p><strong>Règle pratique :</strong> Si vous avez peu de données, LDA est plus robuste (moins de paramètres à estimer).</p>
+</section>
+</section>
+<section id="lda-dans-le-monde-réel-lexemple-des-visages" class="level2">
+<h2 class="anchored" data-anchor-id="lda-dans-le-monde-réel-lexemple-des-visages">11. LDA dans le monde réel : L’exemple des visages</h2>
+<section id="reconnaissance-faciale-avec-lda-fisherfaces" class="level3">
+<h3 class="anchored" data-anchor-id="reconnaissance-faciale-avec-lda-fisherfaces">Reconnaissance faciale avec LDA (Fisherfaces)</h3>
+<p>Contrairement aux Eigenfaces (PCA), les Fisherfaces (LDA) : 1. <strong>PCA d’abord</strong> : Réduire la dimension pour éviter les problèmes numériques 2. <strong>LDA ensuite</strong> : Trouver les directions qui séparent les personnes</p>
+<p><strong>Résultat :</strong> Meilleure performance pour distinguer différentes personnes, car on ignore les variations d’éclairage, pose, etc. (qui sont communes à toutes les classes).</p>
+</section>
+</section>
+<section id="fiche-de-révision-ultra-condensée" class="level2">
+<h2 class="anchored" data-anchor-id="fiche-de-révision-ultra-condensée">12. Fiche de révision ultra-condensée</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>En 30 secondes :</strong></p>
+<ol type="1">
+<li><strong>LDA = réduction supervisée</strong> (utilise les étiquettes)</li>
+<li><strong>Maximise</strong> (distance entre centres) / (dispersion dans classes)</li>
+<li><strong>Solution</strong> = vecteurs propres de Σ_w⁻¹·Σ_b</li>
+<li><strong>Au plus M-1</strong> dimensions discriminantes</li>
+<li><strong>Suppose</strong> : classes gaussiennes, mêmes covariances</li>
+<li><strong>Utile pour</strong> : classification, visualisation supervisée</li>
+<li><strong>Alternative</strong> : QDA si covariances différentes</li>
 </ol>
 </div>
 </div>
-<p><strong>Intuition</strong> : Il y a tellement de directions possibles que deux directions aléatoires sont presque toujours perpendiculaires.</p>
 </section>
-<section id="les-hubs-quelques-points-populaires" class="level3">
-<h3 class="anchored" data-anchor-id="les-hubs-quelques-points-populaires">7️⃣ Les Hubs : Quelques Points “Populaires”</h3>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Phénomène du Hubness
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La distribution du “nombre de fois où un point apparaît comme voisin” est très <strong>asymétrique</strong> : - Quelques points (<strong>hubs</strong>) apparaissent dans <strong>beaucoup</strong> de voisinages - La plupart des points n’apparaissent dans <strong>presque aucun</strong> voisinage</p>
-</div>
-</div>
-<p>Ces <strong>hubs</strong> deviennent les réponses à presque toutes les requêtes de plus proches voisins.</p>
+<section id="pour-loral-les-3-histoires-à-raconter" class="level2">
+<h2 class="anchored" data-anchor-id="pour-loral-les-3-histoires-à-raconter">13. Pour l’oral : Les 3 histoires à raconter</h2>
+<section id="histoire-1-le-tri-postal" class="level3">
+<h3 class="anchored" data-anchor-id="histoire-1-le-tri-postal">Histoire 1 : Le tri postal</h3>
+<p>“Imaginez trier automatiquement du courrier. La LDA trouve comment regarder les lettres pour mieux distinguer les types…”</p>
 </section>
-<section id="pourquoi-ces-phénomènes-les-inégalités-de-concentration" class="level3">
-<h3 class="anchored">8️⃣ Pourquoi Ces Phénomènes ? Les Inégalités de Concentration</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>L’Explication Mathématique
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Les inégalités de <strong>Hoeffding</strong>, <strong>Chebyshev</strong>, etc., expliquent pourquoi tout se concentre : - En agrégeant beaucoup de variables indépendantes, on obtient une valeur très stable autour de la moyenne - Les fluctuations deviennent exponentiellement improbables ::}</p>
-<p><strong>Application aux distances</strong> : Une distance en dimension <span class="math inline">\(D\)</span> est une somme de <span class="math inline">\(D\)</span> termes. Par la loi des grands nombres, cette somme se concentre autour de sa valeur moyenne.</p>
-<hr>
-<section id="la-bénédiction-de-la-dimensionalité" class="level2">
-<h2 class="anchored" data-anchor-id="la-bénédiction-de-la-dimensionalité">⭐ LA BÉNÉDICTION DE LA DIMENSIONALITÉ</h2>
-<section id="les-lois-des-grands-nombres" class="level3">
-<h3 class="anchored" data-anchor-id="les-lois-des-grands-nombres">1️⃣ Les Lois des Grands Nombres</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    A[Beaucoup de variables&lt;br&gt;indépendantes] --&gt; B[Moyenne empirique]
-    B --&gt; C[Convergence vers&lt;br&gt;l'espérance vraie]
-    C --&gt; D[Base de toute&lt;br&gt;l'estimation statistique]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Fondement de la Statistique
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Loi Faible des Grands Nombres</strong> : Avec beaucoup d’observations, la moyenne empirique converge vers la vraie moyenne.</p>
-<p><strong>Théorème Central Limite</strong> : La vitesse de convergence est en <span class="math inline">\(1/\sqrt{D}\)</span> avec une forme Gaussienne.</p>
-</div>
-</div>
-<p><strong>Sans haute dimension</strong>, pas de statistiques fiables !</p>
+<section id="histoire-2-larbitre-sportif" class="level3">
+<h3 class="anchored" data-anchor-id="histoire-2-larbitre-sportif">Histoire 2 : L’arbitre sportif</h3>
+<p>“Comme un arbitre qui trace une ligne au milieu du terrain, la LDA trace la frontière optimale entre équipes…”</p>
 </section>
-<section id="projections-aléatoires-johnson-lindenstrauss" class="level3">
-<h3 class="anchored" data-anchor-id="projections-aléatoires-johnson-lindenstrauss">2️⃣ Projections Aléatoires (Johnson-Lindenstrauss)</h3>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Le Miracle des Projections
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>On peut projeter des données de <span class="math inline">\(\mathbb{R}^D\)</span> vers <span class="math inline">\(\mathbb{R}^d\)</span> avec <span class="math inline">\(d\)</span> <strong>très petit</strong> (<span class="math inline">\(d = O(\log N)\)</span>) tout en <strong>préservant les distances</strong> (à un facteur près) !</p>
-<p>Le résultat <strong>ne dépend pas de <span class="math inline">\(D\)</span></strong> original !</p>
-</div>
-</div>
-<p><strong>Application</strong> : <em>Locality Sensitive Hashing</em> pour la recherche approximative de voisins en temps logarithmique.</p>
-<p><strong>Pourquoi ça marche</strong> ? Grâce à la quasi-orthogonalité en haute dimension, on peut choisir des directions de projection qui préservent les distances relatives.</p>
-<hr>
+<section id="histoire-3-les-jumeaux-statistiques" class="level3">
+<h3 class="anchored" data-anchor-id="histoire-3-les-jumeaux-statistiques">Histoire 3 : Les jumeaux statistiques</h3>
+<p>“La LDA suppose que toutes les classes sont comme des jumeaux : même forme (covariance), mais placés à des endroits différents (moyennes)…”</p>
 </section>
 </section>
-<section id="impact-en-data-science" class="level2">
-<h2 class="anchored" data-anchor-id="impact-en-data-science">🎓 IMPACT EN DATA SCIENCE</h2>
-<section id="échantillonnage-mission-impossible" class="level3">
-<h3 class="anchored" data-anchor-id="échantillonnage-mission-impossible">1️⃣ Échantillonnage : Mission Impossible ?</h3>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Le Paradoxe
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Pour couvrir un espace de dimension <span class="math inline">\(D\)</span>, il faut un nombre <strong>exponentiel</strong> d’échantillons.</p>
-<p>En pratique, les algorithmes d’échantillonnage (comme le rejet) ont un <strong>taux de rejet proche de 100%</strong>.</p>
-</div>
-</div>
+<section id="questions-pièges-et-comment-y-répondre" class="level2">
+<h2 class="anchored" data-anchor-id="questions-pièges-et-comment-y-répondre">14. Questions pièges et comment y répondre</h2>
+<p><strong>Q : “Pourquoi M-1 dimensions maximum ?”</strong> R : “Avec M points (les centres), vous pouvez au plus les placer dans un espace de dimension M-1. Plus de dimensions seraient redondantes.”</p>
+<p><strong>Q : “LDA vs PCA pour la visualisation ?”</strong> R : “PCA montre la structure globale, LDA montre la séparation entre classes. Pour explorer les données, PCA. Pour visualiser la discrimination, LDA.”</p>
+<p><strong>Q : “Quand LDA échoue-t-elle ?”</strong> R : “Quand les classes n’ont pas la même forme (covariance différente), ou quand leurs frontières sont courbes.”</p>
 </section>
-<section id="indexation-plus-de-structure" class="level3">
-<h3 class="anchored" data-anchor-id="indexation-plus-de-structure">2️⃣ Indexation : Plus de Structure</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A[Arbres k-d, R-trees, etc.] --&gt; B[Partitionnent l'espace&lt;br&gt;pour recherche rapide]
-    B --&gt; C[En haute dimension]
-    C --&gt; D[Toutes les cellules&lt;br&gt;deviennent énormes]
-    D --&gt; E[La recherche dégénère&lt;br&gt;en recherche exhaustive O(N)]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Effondrement des Structures d’Index
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Tous les points sont équidistants → pas de “régions” naturelles</li>
-<li>Les hubs répondent à tout → pas besoin de chercher loin</li>
-<li>Résultat : les index complexes deviennent <strong>inutiles</strong></li>
-</ul>
-</div>
-</div>
+<section id="lastuce-mnémotechnique-finale" class="level2">
+<h2 class="anchored" data-anchor-id="lastuce-mnémotechnique-finale">15. L’astuce mnémotechnique finale</h2>
+<p><strong>FLDR</strong> = <strong>F</strong>isher’s <strong>L</strong>inear <strong>D</strong>iscriminant <strong>R</strong>atio</p>
+<pre><code>J(a) = (distance entre centres)² / (dispersion dans classes)</code></pre>
+<p><strong>B</strong> et <strong>W</strong> : - <strong>B</strong> pour <strong>B</strong>etween = <strong>B</strong>ien séparer - <strong>W</strong> pour <strong>W</strong>ithin = <strong>W</strong>ell grouped (bien regroupé)</p>
 </section>
-<section id="apprentissage-le-mur-mathématique" class="level3">
-<h3 class="anchored" data-anchor-id="apprentissage-le-mur-mathématique">3️⃣ Apprentissage : Le Mur Mathématique</h3>
-</section>
-</section>
-<section id="la-borne-théorique-catastrophique" class="level2 callout-danger">
-<h2 class="anchored" data-anchor-id="la-borne-théorique-catastrophique">La Borne Théorique Catastrophique</h2>
-<p>Pour approximer une fonction Lipschitz avec erreur <span class="math inline">\(\varepsilon\)</span> en dimension <span class="math inline">\(D\)</span>, il faut au moins : <span class="math display">\[N \geq \frac{\varepsilon^{-D} D^{D/2}}{(2\pi e)^{D/2}}\]</span> échantillons d’entraînement.</p>
-</section>
-<p><strong>Exemples rédhibitoires</strong> : - <span class="math inline">\(D=10\)</span>, <span class="math inline">\(\varepsilon=0.1\)</span> → <span class="math inline">\(687\)</span> millions d’échantillons - <span class="math inline">\(D=10\)</span>, <span class="math inline">\(\varepsilon=0.01\)</span> → <span class="math inline">\(6.9 \times 10^{18}\)</span> échantillons - En réalité (<span class="math inline">\(D \sim 100\)</span>, <span class="math inline">\(\varepsilon \sim 10^{-4}\)</span>) : <strong>impossible</strong> (<span class="math inline">\(\sim 10^{400}\)</span> échantillons)</p>
-<section id="alors-pourquoi-la-data-science-marche-t-elle" class="level3">
-<h3 class="anchored" data-anchor-id="alors-pourquoi-la-data-science-marche-t-elle">4️⃣ Alors Pourquoi la Data Science Marche-T-Elle ?</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    A[Données réelles] --&gt; B[Sont-elles uniformes&lt;br&gt;dans l'espace ?]
-    B --&gt; C[❌ NON !]
-    C --&gt; D[Elles occupent des&lt;br&gt;SOUS-ESPACES de&lt;br&gt;dimension plus faible]
-    D --&gt; E[Les features sont&lt;br&gt;CORRÉLÉES]
-    E --&gt; F[La dimension intrinsèque&lt;br&gt;est bien plus petite que D]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>La Réalité Sauve Tout
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Les données réelles <strong>ne remplissent pas uniformément</strong> l’espace de grande dimension. Elles se concentrent sur des <strong>sous-variétés</strong> de dimension bien plus faible.</p>
-<p><strong>Solutions pratiques</strong> : 1. <strong>Réduction de dimension</strong> (PCA, t-SNE, UMAP) 2. <strong>Apprentissage de représentations</strong> (autoencodeurs) 3. <strong>Modèles qui exploitent la structure</strong> (réseaux de neurones)</p>
-</div>
-</div>
-<p><strong>Les deux hypothèses fausses des théorèmes catastrophiques</strong> : 1. ❌ Distribution uniforme des données 2. ❌ Indépendance des features</p>
-<p>La réalité viole ces deux hypothèses, ce qui sauve l’apprentissage automatique !</p>
-<hr>
-</section>
-<section id="synthèse-finale" class="level2">
-<h2 class="anchored" data-anchor-id="synthèse-finale">📝 SYNTHÈSE FINALE</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A[Données en dimension D élevée] --&gt; B{Effets dominants ?}
-    
-    B --&gt; C[Malédiction&lt;br&gt;si données uniformes]
-    B --&gt; D[Bénédiction&lt;br&gt;pour l'estimation]
-    
-    C --&gt; E[1. Parcimonie&lt;br&gt;exponentielle]
-    C --&gt; F[2. Distances concentrées]
-    C --&gt; G[3. Volumes en surface]
-    C --&gt; H[4. Hubs omniprésents]
-    
-    D --&gt; I[1. Lois des grands nombres]
-    D --&gt; J[2. Projections efficaces]
-    
-    E &amp; F &amp; G &amp; H --&gt; K[Problèmes pour :&lt;br&gt;- Échantillonnage&lt;br&gt;- Indexation&lt;br&gt;- Apprentissage]
-    
-    I &amp; J --&gt; L[Solutions pour :&lt;br&gt;- Estimation statistique&lt;br&gt;- Réduction de dimension]
-    
-    K &amp; L --&gt; M[RÉALITÉ : données sur&lt;br&gt;sous-espaces de faible dimension]
-    M --&gt; N[✔ Data Science fonctionne&lt;br&gt;en exploitant cette structure]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="à-retenir-pour-loral" class="level2 callout-summary">
-<h2 class="anchored" data-anchor-id="à-retenir-pour-loral">À Retenir pour l’Oral</h2>
-<section id="les-3-idées-forces" class="level3">
-<h3 class="anchored" data-anchor-id="les-3-idées-forces">📌 Les 3 Idées Forces</h3>
-<ol type="1">
-<li><strong>En haute dimension, la géométrie est contre-intuitive</strong> : sphères vides, volumes en surface, toutes distances égales</li>
-<li><strong>Le coût est exponentiel</strong> : besoin d’exponentiellement plus de données pour couvrir l’espace</li>
-<li><strong>La réalité nous sauve</strong> : les données réelles ne sont pas uniformes et ont une dimension intrinsèque faible</li>
-</ol>
-</section>
-<section id="les-2-faces-de-la-pièce" class="level3">
-<h3 class="anchored" data-anchor-id="les-2-faces-de-la-pièce">📌 Les 2 Faces de la Pièce</h3>
-<ul>
-<li><strong>⊖ Malédiction</strong> : Rend l’apprentissage naïf impossible théoriquement</li>
-<li><strong>⊕ Bénédiction</strong> : Permet l’estimation statistique et les projections efficaces</li>
-</ul>
-</section>
-<section id="la-solution-unique" class="level3">
-<h3 class="anchored" data-anchor-id="la-solution-unique">📌 La Solution Unique</h3>
-<p><strong>Réduire la dimension effective</strong> : - Soit en trouvant des représentations compactes - Soit en exploitant les corrélations entre features - Soit en découvrant la structure géométrique sous-jacente</p>
-<p><strong>En pratique</strong> : PCA, autoencodeurs, réseaux de neurones, etc., réussissent précisément parce qu’ils découvrent ces <strong>sous-espaces de dimension réduite</strong> où vivent réellement les données.</p>
-</section>
-</section>
+<section id="en-résumé-la-lda-cest" class="level2">
+<h2 class="anchored" data-anchor-id="en-résumé-la-lda-cest">16. En résumé : La LDA, c’est…</h2>
+<p><strong>L’art de trouver la perspective qui sépare le mieux les catégories.</strong> Une méthode élégante qui transforme un problème de classification en un problème géométrique d’optimisation de projection.</p>
+<p><strong>Pour finir :</strong> La LDA ne vous dit pas si vos classes sont séparables, elle vous donne <strong>la meilleure chance</strong> de les séparer linéairement.</p>
 
 
-</div>
-</div>
-</section>
 </section>
 </section>
 

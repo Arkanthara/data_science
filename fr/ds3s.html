@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds3s – ISS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ISS</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./../index.html">
+ <span class="dropdown-text">Anglais</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Français</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds3.html">Principal Component Analysis</a></li><li class="breadcrumb-item"><a href="./ds3s.html">L’essentiel</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détailé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Questions d’Examen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3s.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Document de Révision : Linear Discriminant Analysis (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5s1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analyse Discriminante Linéaire (LDA) - Support de révision oral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Document de Révision : Expectation-Maximization pour la modélisation de densité</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lessentiel" id="toc-lessentiel" class="nav-link active" data-scroll-target="#lessentiel">L’essentiel</a>
+  <ul class="collapse">
+  <li><a href="#introduction-et-motivation" id="toc-introduction-et-motivation" class="nav-link" data-scroll-target="#introduction-et-motivation">Introduction et Motivation</a>
+  <ul class="collapse">
+  <li><a href="#le-problème-fondamental" id="toc-le-problème-fondamental" class="nav-link" data-scroll-target="#le-problème-fondamental">Le problème fondamental</a></li>
+  <li><a href="#intuition-géométrique-le-nuage-de-points" id="toc-intuition-géométrique-le-nuage-de-points" class="nav-link" data-scroll-target="#intuition-géométrique-le-nuage-de-points">Intuition géométrique : le nuage de points</a></li>
+  </ul></li>
+  <li><a href="#maximisation-de-la-variance" id="toc-maximisation-de-la-variance" class="nav-link" data-scroll-target="#maximisation-de-la-variance">Maximisation de la variance</a>
+  <ul class="collapse">
+  <li><a href="#formalisation-mathématique" id="toc-formalisation-mathématique" class="nav-link" data-scroll-target="#formalisation-mathématique">Formalisation mathématique</a></li>
+  <li><a href="#décomposition-complète" id="toc-décomposition-complète" class="nav-link" data-scroll-target="#décomposition-complète">Décomposition complète</a></li>
+  </ul></li>
+  <li><a href="#minimisation-de-lerreur" id="toc-minimisation-de-lerreur" class="nav-link" data-scroll-target="#minimisation-de-lerreur">Minimisation de l’erreur</a>
+  <ul class="collapse">
+  <li><a href="#équivalence-variance-erreur" id="toc-équivalence-variance-erreur" class="nav-link" data-scroll-target="#équivalence-variance-erreur">Équivalence variance-erreur</a></li>
+  <li><a href="#interprétations" id="toc-interprétations" class="nav-link" data-scroll-target="#interprétations">Interprétations</a></li>
+  </ul></li>
+  <li><a href="#réduction-de-dimension" id="toc-réduction-de-dimension" class="nav-link" data-scroll-target="#réduction-de-dimension">Réduction de Dimension</a>
+  <ul class="collapse">
+  <li><a href="#structure-de-lespace-latent" id="toc-structure-de-lespace-latent" class="nav-link" data-scroll-target="#structure-de-lespace-latent">Structure de l’espace latent</a></li>
+  <li><a href="#coordonnées-latentes" id="toc-coordonnées-latentes" class="nav-link" data-scroll-target="#coordonnées-latentes">Coordonnées latentes</a></li>
+  </ul></li>
+  <li><a href="#approximation-de-rang-faible" id="toc-approximation-de-rang-faible" class="nav-link" data-scroll-target="#approximation-de-rang-faible">Approximation de rang faible</a>
+  <ul class="collapse">
+  <li><a href="#théorème-deckart-et-young" id="toc-théorème-deckart-et-young" class="nav-link" data-scroll-target="#théorème-deckart-et-young">Théorème d’Eckart et Young</a></li>
+  <li><a href="#troncation-pratique" id="toc-troncation-pratique" class="nav-link" data-scroll-target="#troncation-pratique">Troncation pratique</a></li>
+  </ul></li>
+  <li><a href="#géométrie-et-qualité-de-reconstruction" id="toc-géométrie-et-qualité-de-reconstruction" class="nav-link" data-scroll-target="#géométrie-et-qualité-de-reconstruction">Géométrie et qualité de reconstruction</a>
+  <ul class="collapse">
+  <li><a href="#contribution-relative-à-la-variance" id="toc-contribution-relative-à-la-variance" class="nav-link" data-scroll-target="#contribution-relative-à-la-variance">Contribution relative à la variance</a></li>
+  <li><a href="#ratio-de-projection" id="toc-ratio-de-projection" class="nav-link" data-scroll-target="#ratio-de-projection">Ratio de projection</a></li>
+  <li><a href="#normalisation-et-mise-à-léchelle" id="toc-normalisation-et-mise-à-léchelle" class="nav-link" data-scroll-target="#normalisation-et-mise-à-léchelle">Normalisation et mise à l’échelle</a></li>
+  </ul></li>
+  <li><a href="#application-pratique-de-la-pca" id="toc-application-pratique-de-la-pca" class="nav-link" data-scroll-target="#application-pratique-de-la-pca">Application pratique de la PCA</a>
+  <ul class="collapse">
+  <li><a href="#algorithme-pca-complet" id="toc-algorithme-pca-complet" class="nav-link" data-scroll-target="#algorithme-pca-complet">Algorithme PCA complet</a></li>
+  <li><a href="#choix-du-nombre-de-composantes-k" id="toc-choix-du-nombre-de-composantes-k" class="nav-link" data-scroll-target="#choix-du-nombre-de-composantes-k">Choix du nombre de composantes <span class="math inline">\(K\)</span></a></li>
+  </ul></li>
+  <li><a href="#autoencodeurs-linéaires" id="toc-autoencodeurs-linéaires" class="nav-link" data-scroll-target="#autoencodeurs-linéaires">AutoEncodeurs linéaires</a>
+  <ul class="collapse">
+  <li><a href="#structure-dun-autoencodeur-linéaire" id="toc-structure-dun-autoencodeur-linéaire" class="nav-link" data-scroll-target="#structure-dun-autoencodeur-linéaire">Structure d’un AutoEncodeur linéaire</a></li>
+  </ul></li>
+  <li><a href="#extensions-de-la-pca" id="toc-extensions-de-la-pca" class="nav-link" data-scroll-target="#extensions-de-la-pca">Extensions de la PCA</a>
+  <ul class="collapse">
+  <li><a href="#pca-probabiliste" id="toc-pca-probabiliste" class="nav-link" data-scroll-target="#pca-probabiliste">PCA Probabiliste</a></li>
+  <li><a href="#kernel-pca" id="toc-kernel-pca" class="nav-link" data-scroll-target="#kernel-pca">Kernel PCA</a></li>
+  <li><a href="#local-pca" id="toc-local-pca" class="nav-link" data-scroll-target="#local-pca">Local PCA</a></li>
+  </ul></li>
+  <li><a href="#ce-que-la-pca-vous-dit-et-ne-vous-dit-pas" id="toc-ce-que-la-pca-vous-dit-et-ne-vous-dit-pas" class="nav-link" data-scroll-target="#ce-que-la-pca-vous-dit-et-ne-vous-dit-pas">Ce que la PCA vous dit (et ne vous dit pas)</a>
+  <ul class="collapse">
+  <li><a href="#ce-quelle-vous-dit" id="toc-ce-quelle-vous-dit" class="nav-link" data-scroll-target="#ce-quelle-vous-dit">Ce qu’elle vous dit ✅</a></li>
+  <li><a href="#ce-quelle-ne-vous-dit-pas" id="toc-ce-quelle-ne-vous-dit-pas" class="nav-link" data-scroll-target="#ce-quelle-ne-vous-dit-pas">Ce qu’elle ne vous dit pas ❌</a></li>
+  </ul></li>
+  <li><a href="#quand-utiliser-la-pca" id="toc-quand-utiliser-la-pca" class="nav-link" data-scroll-target="#quand-utiliser-la-pca">Quand utiliser la PCA ?</a>
+  <ul class="collapse">
+  <li><a href="#adapté-pour" id="toc-adapté-pour" class="nav-link" data-scroll-target="#adapté-pour">Adapté pour ✅</a></li>
+  <li><a href="#non-adapté-pour" id="toc-non-adapté-pour" class="nav-link" data-scroll-target="#non-adapté-pour">Non adapté pour ❌</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds3s.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds3.html">Principal Component Analysis</a></li><li class="breadcrumb-item"><a href="./ds3s.html">L’essentiel</a></li></ol></nav></header>
+
+
+
+
+
+<section id="lessentiel" class="level1">
+<h1>L’essentiel</h1>
+<section id="introduction-et-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-et-motivation">Introduction et Motivation</h2>
+<p>La <strong>PCA</strong> (Analyse en Composantes Principales) est une méthode de <strong>décomposition latente linéaire</strong> qui permet d’identifier les <strong>facteurs latents sous-jacents</strong> structurant les données.</p>
+<section id="le-problème-fondamental" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-fondamental">Le problème fondamental</h3>
+<p>Les représentations de base des données ne sont pas toujours optimales. La PCA cherche à trouver une nouvelle représentation qui :</p>
+<ul>
+<li>Révèle les <strong>facteurs latents</strong> (cachés) qui gouvernent le processus</li>
+<li>Utilise la <strong>corrélation statistique</strong> pour identifier ces facteurs<br>
+</li>
+<li>Permet une <strong>simplification</strong> des données par décimation justifiée</li>
+</ul>
+<p>📌 <strong>Point clé :</strong> La PCA fait partie de la famille des <strong>modèles latents linéaires</strong></p>
+</section>
+<section id="intuition-géométrique-le-nuage-de-points" class="level3">
+<h3 class="anchored" data-anchor-id="intuition-géométrique-le-nuage-de-points">Intuition géométrique : le nuage de points</h3>
+<p>Imaginez un nuage de points en 3D (comme des moucherons dans une pièce). Si vous deviez les écraser sur un mur :</p>
+<ul>
+<li>Quel mur choisiriez-vous pour que les moucherons soient <strong>le plus étalés</strong> ?</li>
+<li>Ce mur, c’est le <strong>plan principal</strong></li>
+<li>La ligne dans ce mur où ils sont le plus alignés, c’est la <strong>première composante</strong></li>
+</ul>
+<p>💡 <strong>Idée essentielle :</strong> La PCA trouve la <strong>structure squelettique</strong> des données, comme un radiologue qui voit les os à travers la peau.</p>
+<hr>
+</section>
+</section>
+<section id="maximisation-de-la-variance" class="level2">
+<h2 class="anchored" data-anchor-id="maximisation-de-la-variance">Maximisation de la variance</h2>
+<section id="formalisation-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="formalisation-mathématique">Formalisation mathématique</h3>
+<p><strong>Idée :</strong> On cherche une droite passant par le centre où les projections sont <strong>le plus dispersées possible</strong>.</p>
+<p>Soit <span class="math inline">\(X\)</span> l’ensemble de données, <span class="math inline">\(\{u_i\}_{i \in [[D]]}\)</span> une nouvelle <strong>base orthonormale</strong> de <span class="math inline">\(\mathbb{R}^D\)</span>.</p>
+<p>La <strong>première composante principale</strong> <span class="math inline">\(u_1\)</span> est choisie telle que la <strong>variance des données projetées</strong> sur <span class="math inline">\(u_1\)</span> soit maximale.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Problème d’optimisation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La moyenne empirique et la variance projetée sont :</p>
+<p><span class="math display">\[x = \frac{1}{N} \sum_{i=1}^{N} x_i\]</span></p>
+<p><span class="math display">\[v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T x_i - u_1^T x)^2 = u_1^T \Sigma u_1\]</span></p>
+<p>où <span class="math inline">\(\Sigma = \frac{1}{N} \sum_{i=1}^{N} (x_i - x)(x_i - x)^T\)</span> est la <strong>matrice de covariance</strong> des données.</p>
+<p>Le problème devient :</p>
+<p><span class="math display">\[u_1 = \underset{u^T u = 1}{\arg\max} \, u^T \Sigma u\]</span></p>
+<p>En utilisant les <strong>multiplicateurs de Lagrange</strong> :</p>
+<p><span class="math display">\[J(u) = u^T \Sigma u + \lambda(1 - u^T u)\]</span></p>
+<p>Les conditions d’optimalité donnent :</p>
+<p><span class="math display">\[\Sigma u_1 = \lambda_1 u_1 \quad \Rightarrow \quad v_{u_1} = \lambda_1\]</span></p>
+<p>✅ <strong>Conclusion :</strong> <span class="math inline">\((u_1, \lambda_1)\)</span> est une <strong>paire propre</strong> (eigenpair) de la matrice de covariance <span class="math inline">\(\Sigma\)</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="décomposition-complète" class="level3">
+<h3 class="anchored" data-anchor-id="décomposition-complète">Décomposition complète</h3>
+<p>En continuant ce processus, on obtient l’ensemble des <strong>composantes principales</strong> comme les paires propres <span class="math inline">\(\{(u_i, \lambda_i)\}_{i \in [[D]]}\)</span> de <span class="math inline">\(\Sigma\)</span>.</p>
+<p><strong>Décomposition matricielle :</strong></p>
+<p><span class="math display">\[\Lambda = U^T \Sigma U\]</span></p>
+<p>où <span class="math inline">\(U\)</span> contient les vecteurs propres en colonnes et <span class="math inline">\(\Lambda\)</span> est diagonale avec les valeurs propres.</p>
+<hr>
+</section>
+</section>
+<section id="minimisation-de-lerreur" class="level2">
+<h2 class="anchored" data-anchor-id="minimisation-de-lerreur">Minimisation de l’erreur</h2>
+<p><strong>Idée :</strong> Représenter chaque point par sa projection sur une droite avec <strong>l’erreur de reconstruction minimale</strong> (distance perpendiculaire).</p>
+<section id="équivalence-variance-erreur" class="level3">
+<h3 class="anchored" data-anchor-id="équivalence-variance-erreur">Équivalence variance-erreur</h3>
+<p>La variance <span class="math inline">\(v_{u_1}\)</span> s’exprime comme une somme de carrés :</p>
+<p><span class="math display">\[v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T (x_i - x))^2\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Théorème de Pythagore
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour maximiser <span class="math inline">\(v_{u_1}\)</span>, les termes <span class="math inline">\(u_1^T(x_i - x)\)</span> doivent être collectivement maximisés.</p>
+<p>Puisque <span class="math inline">\((x_i - x)\)</span> est fixé, cela équivaut à <strong>minimiser la distance à l’axe de projection</strong> (erreur d’approximation).</p>
+<p><strong>Formulation alternative :</strong></p>
+<p><span class="math display">\[u_1 = \underset{u^T u = 1}{\arg\min} \sum_{i=1}^{N} \|(x_i - x) - [u^T(x_i - x)]u\|_2^2\]</span></p>
+<p>Cette formulation donne également : <span class="math inline">\(\Sigma u_1 = \lambda_1 u_1\)</span></p>
+</div>
+</div>
+</div>
+<p>✅ <strong>Équivalence fondamentale :</strong></p>
+<p><strong>Maximiser la variance de projection ⇔ Minimiser l’erreur d’approximation</strong></p>
+</section>
+<section id="interprétations" class="level3">
+<h3 class="anchored" data-anchor-id="interprétations">Interprétations</h3>
+<ul>
+<li><strong>Régression :</strong> Une composante principale est une <strong>régression quadratique</strong> sur les données</li>
+<li><strong>Physique :</strong> Une composante principale est un <strong>sous-espace d’inertie minimale</strong> par rapport à <span class="math inline">\(X\)</span></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="réduction-de-dimension" class="level2">
+<h2 class="anchored" data-anchor-id="réduction-de-dimension">Réduction de Dimension</h2>
+<section id="structure-de-lespace-latent" class="level3">
+<h3 class="anchored" data-anchor-id="structure-de-lespace-latent">Structure de l’espace latent</h3>
+<p>L’espace latent avec base <span class="math inline">\(\{u_1, \ldots, u_D\}\)</span> possède les propriétés suivantes :</p>
+<ul>
+<li><strong>Ordre des valeurs propres :</strong> Par construction : <span class="math inline">\(\lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_D\)</span></li>
+<li><strong>Variance totale :</strong> <span class="math inline">\(\lambda = \sum_{d=1}^{D} \lambda_d = \text{Tr}(\Sigma)\)</span></li>
+<li><strong>Décorrélation :</strong> <span class="math inline">\(v_{u_d} = \lambda_d\)</span> et <span class="math inline">\(u_d^T u_{d'} = 0\)</span> pour <span class="math inline">\(d \neq d'\)</span></li>
+</ul>
+</section>
+<section id="coordonnées-latentes" class="level3">
+<h3 class="anchored" data-anchor-id="coordonnées-latentes">Coordonnées latentes</h3>
+<p>La base <span class="math inline">\(\{u_1, \ldots, u_D\}\)</span> induit des <strong>coordonnées latentes</strong> <span class="math inline">\(y_i\)</span> pour les données :</p>
+<p><span class="math display">\[y_i = U^T (x_i - x)\]</span></p>
+<p>✅ La transformation PCA est <strong>linéaire</strong> et composée de trois étapes :</p>
+<ul>
+<li><strong>Centrage</strong> sur <span class="math inline">\(x\)</span></li>
+<li><strong>Rotation</strong> utilisant la matrice <span class="math inline">\(U\)</span></li>
+<li><strong>Mise à l’échelle</strong> (whitening) utilisant <span class="math inline">\(\Lambda^{1/2}\)</span></li>
+</ul>
+<p>⚠️ <strong>Limitation importante :</strong> La PCA suppose une distribution approximativement <strong>gaussienne</strong> et ne sera pas pertinente pour des données non-gaussiennes (par exemple, des données clusterisées).</p>
+<hr>
+</section>
+</section>
+<section id="approximation-de-rang-faible" class="level2">
+<h2 class="anchored" data-anchor-id="approximation-de-rang-faible">Approximation de rang faible</h2>
+<section id="théorème-deckart-et-young" class="level3">
+<h3 class="anchored" data-anchor-id="théorème-deckart-et-young">Théorème d’Eckart et Young</h3>
+<p>Si <span class="math inline">\(\Sigma = U\Lambda U^T\)</span> et pour <span class="math inline">\(K &lt; D\)</span>, on définit :</p>
+<p><span class="math display">\[\Sigma_K = \sum_{d=1}^{K} \lambda_d u_d u_d^T\]</span></p>
+<p>Alors <span class="math inline">\(\Sigma_K\)</span> est la <strong>matrice de rang <span class="math inline">\(K\)</span> la plus proche</strong> de <span class="math inline">\(\Sigma\)</span> au sens de la norme de Frobenius.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Erreur d’approximation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le théorème stipule que :</p>
+<p><span class="math display">\[\underset{\text{rang}(S)=K}{\arg\min} \|\Sigma - S\|_F^2 = \Sigma_K\]</span></p>
+<p>où <span class="math inline">\(\|\cdot\|_F\)</span> est la <strong>norme de Frobenius</strong>.</p>
+<p>L’erreur d’approximation est :</p>
+<p><span class="math display">\[\|\Sigma - \Sigma_K\|_F^2 = \sum_{d=K+1}^{D} \lambda_d\]</span></p>
+<p>Cette erreur correspond exactement à la variance perdue lors de la réduction.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="troncation-pratique" class="level3">
+<h3 class="anchored" data-anchor-id="troncation-pratique">Troncation pratique</h3>
+<p><strong>Troncation de <span class="math inline">\(U\)</span> et <span class="math inline">\(\Lambda\)</span> :</strong></p>
+<p><span class="math display">\[\Sigma_K = U_K \Lambda_K U_K^T\]</span></p>
+<p><strong>Projection et reconstruction :</strong></p>
+<ul>
+<li><strong>Projection</strong> (encodage) : <span class="math inline">\(\tilde{y}_i = U_K^T x_i \in \mathbb{R}^K\)</span></li>
+<li><strong>Reconstruction</strong> (décodage) : <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i + x\)</span></li>
+</ul>
+<p>📌 <strong>Important :</strong> On passe de <span class="math inline">\(D\)</span> dimensions à <span class="math inline">\(K\)</span> dimensions avec <span class="math inline">\(K &lt; D\)</span></p>
+<hr>
+</section>
+</section>
+<section id="géométrie-et-qualité-de-reconstruction" class="level2">
+<h2 class="anchored" data-anchor-id="géométrie-et-qualité-de-reconstruction">Géométrie et qualité de reconstruction</h2>
+<section id="contribution-relative-à-la-variance" class="level3">
+<h3 class="anchored" data-anchor-id="contribution-relative-à-la-variance">Contribution relative à la variance</h3>
+<p>La contribution de chaque dimension :</p>
+<p><span class="math display">\[c_d = \frac{\lambda_d}{\sum_k \lambda_k}\]</span></p>
+<p>Cette métrique dépend de la <strong>distribution du spectre</strong> des valeurs propres.</p>
+</section>
+<section id="ratio-de-projection" class="level3">
+<h3 class="anchored" data-anchor-id="ratio-de-projection">Ratio de projection</h3>
+<p>Le ratio de projection d’une donnée <span class="math inline">\(x_i\)</span> sur un facteur latent :</p>
+<p><span class="math display">\[\rho_d(x_i) = \frac{\langle u_d, x_i \rangle^2}{\|x_i\|^2} = \cos^2(\angle(u_d, x_i))\]</span></p>
+<p>Plus <span class="math inline">\(\rho_d(x_i)\)</span> est proche de 1, plus <span class="math inline">\(x_i\)</span> se situe sur l’axe <span class="math inline">\(u_d\)</span>.</p>
+</section>
+<section id="normalisation-et-mise-à-léchelle" class="level3">
+<h3 class="anchored" data-anchor-id="normalisation-et-mise-à-léchelle">Normalisation et mise à l’échelle</h3>
+<p>⚠️ La PCA est plus efficace si <strong>toutes les échelles sont similaires</strong>.</p>
+<p><strong>Solution : Normalisation</strong></p>
+<p>On crée la <strong>matrice de mise à l’échelle</strong> <span class="math inline">\(S = \text{diag}[\sigma_1^2, \ldots, \sigma_D^2]\)</span> et on utilise la <strong>métrique de Mahalanobis</strong> :</p>
+<p><span class="math display">\[d_S^2(x, y) = (x - y)^T S^{-1} (x - y)\]</span></p>
+<p>💡 <strong>Astuce pratique :</strong> Normaliser les données avant PCA améliore souvent les résultats.</p>
+<hr>
+</section>
+</section>
+<section id="application-pratique-de-la-pca" class="level2">
+<h2 class="anchored" data-anchor-id="application-pratique-de-la-pca">Application pratique de la PCA</h2>
+<section id="algorithme-pca-complet" class="level3">
+<h3 class="anchored" data-anchor-id="algorithme-pca-complet">Algorithme PCA complet</h3>
+<p>Soit <span class="math inline">\(X \in \Omega\)</span> l’ensemble de données :</p>
+<ul>
+<li>Calculer la moyenne empirique <span class="math inline">\(x = \frac{1}{N} \sum_{i=1}^{N} x_i\)</span></li>
+<li>Centrer les données : <span class="math inline">\(x_i \leftarrow (x_i - x)\)</span> et former la matrice centrée <span class="math inline">\(X\)</span></li>
+<li>Calculer la matrice de covariance : <span class="math inline">\(\Sigma = \frac{1}{N} XX^T\)</span></li>
+<li>Décomposer en valeurs propres : <span class="math inline">\(\Sigma = U\Lambda U^T\)</span></li>
+</ul>
+<p>📌 Jusqu’ici : transformation <strong>exacte</strong></p>
+<ul>
+<li>Sélectionner le nombre de composantes <span class="math inline">\(K\)</span></li>
+<li>Définir <span class="math inline">\(U_K\)</span>, <span class="math inline">\(\Lambda_K\)</span> et calculer <span class="math inline">\(\{\tilde{y}_i\}_{i \in [[N]]}\)</span> et/ou <span class="math inline">\(\{\tilde{x}_i\}_{i \in [[N]]}\)</span></li>
+</ul>
+</section>
+<section id="choix-du-nombre-de-composantes-k" class="level3">
+<h3 class="anchored" data-anchor-id="choix-du-nombre-de-composantes-k">Choix du nombre de composantes <span class="math inline">\(K\)</span></h3>
+<p><strong>Trois stratégies principales :</strong></p>
+<p><strong>Stratégie 1 : Dimension cible</strong></p>
+<p><span class="math display">\[K = d\]</span></p>
+<p>où <span class="math inline">\(d\)</span> est la dimension souhaitée.</p>
+<p><strong>Stratégie 2 : Seuil de variance</strong></p>
+<p>Exiger que l’espace latent conserve une proportion <span class="math inline">\(\tau\)</span> de la variance totale :</p>
+<p><span class="math display">\[\frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} &gt; \tau\]</span></p>
+<p>Exemple : <span class="math inline">\(\tau = 0.95\)</span> signifie conserver 95% de la variance.</p>
+<p><strong>Stratégie 3 : Erreur de reconstruction</strong></p>
+<p>Entraîner <span class="math inline">\(K\)</span> tel que <span class="math inline">\(L(X) \leq \epsilon\)</span>, où par exemple :</p>
+<p><span class="math display">\[L(X) = \sum_i \|x_i - \tilde{x}_i\|^2\]</span></p>
+<p>💡 <strong>Conseil pratique :</strong> Visualiser le spectre des valeurs propres (scree plot) aide à identifier un “coude” naturel.</p>
+<hr>
+</section>
+</section>
+<section id="autoencodeurs-linéaires" class="level2">
+<h2 class="anchored" data-anchor-id="autoencodeurs-linéaires">AutoEncodeurs linéaires</h2>
+<section id="structure-dun-autoencodeur-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="structure-dun-autoencodeur-linéaire">Structure d’un AutoEncodeur linéaire</h3>
+<p>Un AutoEncodeur linéaire possède :</p>
+<ul>
+<li><span class="math inline">\(W_{\text{enc}}\)</span> et <span class="math inline">\(W_{\text{dec}}\)</span> : matrices de poids (encoder et decoder)</li>
+<li><span class="math inline">\(z(x_i) = W_{\text{enc}} x_i\)</span> : encodage</li>
+<li><span class="math inline">\(\tilde{x}_i = W_{\text{dec}} z(x_i)\)</span> : décodage</li>
+</ul>
+<p><strong>Problème d’optimisation :</strong></p>
+<p><span class="math display">\[\theta^* = \underset{\text{rang}(W)=K}{\arg\min} \|X - WZ\|_F^2\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Relation PCA et AutoEncodeur
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En utilisant le théorème d’Eckart et Young avec la décomposition SVD <span class="math inline">\(X = U\Psi V^T\)</span>, la solution est :</p>
+<p><span class="math display">\[W_{\text{dec}} Z = U_K \Psi_K V_K^T\]</span></p>
+<p>En posant <span class="math inline">\(W_{\text{dec}} = U_K \Psi_K\)</span>, alors :</p>
+<p><span class="math display">\[W_{\text{enc}} = \Psi_K^{-1} U_K^T\]</span></p>
+<p>Pour des données <strong>centrées</strong> :</p>
+<ul>
+<li><strong>PCA :</strong> <span class="math inline">\(\Sigma = \frac{1}{N} XX^T = U\Lambda U^T\)</span> donc <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i\)</span></li>
+<li><strong>AE :</strong> <span class="math inline">\(X = U\Psi V^T\)</span> donc <span class="math inline">\(\Sigma = \frac{1}{N} U\Psi^2 U^T\)</span> et <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i\)</span></li>
+</ul>
+<p>Relation entre valeurs propres :</p>
+<p><span class="math display">\[\Lambda = \frac{1}{N} \Psi^2\]</span></p>
+</div>
+</div>
+</div>
+<p>✅ <strong>Conclusion fondamentale :</strong> Un AutoEncodeur linéaire effectue une PCA si les données sont <strong>centrées et normalisées</strong>.</p>
+<p>⚠️ <strong>Note :</strong> <span class="math inline">\(W_{\text{enc}}\)</span> n’est <strong>pas l’inverse</strong> de <span class="math inline">\(W_{\text{dec}}\)</span> si <span class="math inline">\(K &lt; D\)</span>.</p>
+<hr>
+</section>
+</section>
+<section id="extensions-de-la-pca" class="level2">
+<h2 class="anchored" data-anchor-id="extensions-de-la-pca">Extensions de la PCA</h2>
+<section id="pca-probabiliste" class="level3">
+<h3 class="anchored" data-anchor-id="pca-probabiliste">PCA Probabiliste</h3>
+<p>Reformulation avec distribution latente explicite :</p>
+<ul>
+<li>Distribution latente : <span class="math inline">\(\mathbb{P}(z) = \mathcal{N}(0, I_{dK})\)</span></li>
+<li>Modèle conditionnel : <span class="math inline">\(\mathbb{P}(x|z) = \mathcal{N}(Wz + \mu, \sigma^2 I_{dD})\)</span></li>
+</ul>
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Accommodation du <strong>bruit de mesure</strong> (variance <span class="math inline">\(\sigma^2\)</span>)</li>
+<li>Mode <strong>génératif</strong> : possibilité de générer de nouvelles données</li>
+<li>Estimation par <strong>Maximum de Vraisemblance</strong></li>
+<li>Algorithme <strong>EM</strong> pour économiser les calculs</li>
+</ul>
+</section>
+<section id="kernel-pca" class="level3">
+<h3 class="anchored" data-anchor-id="kernel-pca">Kernel PCA</h3>
+<p>Utilisation d’un <strong>mapping non-linéaire</strong> <span class="math inline">\(\phi(x_i)\)</span> via une fonction noyau :</p>
+<p><span class="math display">\[k(x_i, x_j) = \phi(x_i)^T \phi(x_j)\]</span></p>
+<p>Permet d’effectuer la PCA dans un <strong>espace plus favorable</strong> (possiblement de dimension infinie) sans calculer explicitement <span class="math inline">\(\phi\)</span>.</p>
+</section>
+<section id="local-pca" class="level3">
+<h3 class="anchored" data-anchor-id="local-pca">Local PCA</h3>
+<p>Effectue la PCA sur des <strong>voisinages locaux</strong> des données pour considérer uniquement la <strong>dimensionnalité intrinsèque locale</strong>.</p>
+<p>Utile pour des données avec structure locale complexe (variétés non-linéaires).</p>
+<hr>
+</section>
+</section>
+<section id="ce-que-la-pca-vous-dit-et-ne-vous-dit-pas" class="level2">
+<h2 class="anchored" data-anchor-id="ce-que-la-pca-vous-dit-et-ne-vous-dit-pas">Ce que la PCA vous dit (et ne vous dit pas)</h2>
+<section id="ce-quelle-vous-dit" class="level3">
+<h3 class="anchored" data-anchor-id="ce-quelle-vous-dit">Ce qu’elle vous dit ✅</h3>
+<ul>
+<li>La <strong>structure linéaire</strong> des données</li>
+<li>Les <strong>directions principales</strong> de variation</li>
+<li>La <strong>dimension intrinsèque</strong> (combien de dimensions vraiment utiles)</li>
+<li>Quelles <strong>variables</strong> contribuent à chaque axe</li>
+</ul>
+</section>
+<section id="ce-quelle-ne-vous-dit-pas" class="level3">
+<h3 class="anchored" data-anchor-id="ce-quelle-ne-vous-dit-pas">Ce qu’elle ne vous dit pas ❌</h3>
+<ul>
+<li><strong>Pas un clustering</strong> : Elle ne trouve pas des groupes</li>
+<li><strong>Linéaire uniquement</strong> : Elle rate les relations courbes</li>
+<li><strong>Sensible aux outliers</strong> : Un point extrême peut tout faire basculer</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="quand-utiliser-la-pca" class="level2">
+<h2 class="anchored" data-anchor-id="quand-utiliser-la-pca">Quand utiliser la PCA ?</h2>
+<section id="adapté-pour" class="level3">
+<h3 class="anchored" data-anchor-id="adapté-pour">Adapté pour ✅</h3>
+<ul>
+<li>Données suivant approximativement une distribution gaussienne</li>
+<li>Réduction de dimension avec préservation de variance</li>
+<li>Visualisation de données haute dimension</li>
+<li>Débruitage de données corrompues par bruit gaussien</li>
+<li>Compression de données</li>
+</ul>
+</section>
+<section id="non-adapté-pour" class="level3">
+<h3 class="anchored" data-anchor-id="non-adapté-pour">Non adapté pour ❌</h3>
+<ul>
+<li>Données fortement clusterisées (non-gaussiennes)</li>
+<li>Données où les relations sont fortement non-linéaires</li>
+<li>Cas où la variance n’est pas un bon critère d’information</li>
+</ul>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>💡 Fiche de révision condensée
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>En 30 secondes :</strong></p>
+<ul>
+<li>PCA = changement de base intelligent</li>
+<li>Nouveaux axes = directions de variance maximale</li>
+<li>Valeurs propres = importance de chaque axe</li>
+<li>Toujours centrer d’abord !</li>
+<li>Choisir K avec le scree plot</li>
+<li>Utile pour : visualisation, réduction dimension, débruitage</li>
+<li>Pas utile pour : clustering, relations non-linéaires</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>📌 Concepts mathématiques à maîtriser
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour bien comprendre la PCA :</p>
+<ul>
+<li><strong>Transformation linéaire</strong> et <strong>matrice orthogonale</strong></li>
+<li><strong>Coordonnées</strong> et <strong>rang</strong> matriciel</li>
+<li><strong>Moyenne</strong> et <strong>variance</strong></li>
+<li><strong>Projection</strong> orthogonale</li>
+<li><strong>Décomposition en valeurs propres</strong> (eigendecomposition)</li>
+<li><strong>Trace</strong> d’une matrice</li>
+<li><strong>Norme de Frobenius</strong></li>
+<li><strong>Multiplicateurs de Lagrange</strong></li>
+</ul>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
