@@ -1,4 +1,4 @@
-# Document de Révision : Linear Discriminant Analysis (LDA)
+# Cours détaillé
 
 ## Introduction et Motivation
 
@@ -57,7 +57,7 @@ On cherche une **direction** $a \in \mathbb{R}^D$ telle que la projection des do
 
 **Visualisation géométrique :**
 
-```mermaid
+```{mermaid}
 graph TD
     A[Données originales en D dimensions] -->|Projection sur a| B[Données projetées en 1D]
     B --> C[Classes bien séparées]

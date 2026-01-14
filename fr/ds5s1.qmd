@@ -11,7 +11,7 @@ C'est exactement ce que résout la LDA : trouver **les axes qui maximisent la s�
 La PCA regarde **toutes** les données et cherche les directions de variation maximale. La LDA regarde d'abord **les étiquettes** (les classes) et cherche les directions qui séparent le mieux ces classes.
 :::
 
-```mermaid
+```{mermaid}
 graph TD
     A[Données étiquetées<br/>avec M classes] --> B{Deux approches}
     B --> C[PCA<br/>Ignore les étiquettes<br/>Maximise la variance globale]
@@ -89,7 +89,7 @@ C'est un **problème aux valeurs propres généralisé** !
 
 **Solution :** La direction optimale **a** est le premier vecteur propre de `Σ_w⁻¹·Σ_b`.
 
-```mermaid
+```{mermaid}
 graph LR
     A[Données étiquetées] --> B[Calculer Σ_w et Σ_b]
     B --> C[Résoudre Σ_w⁻¹·Σ_b·a = λ·a]
@@ -138,7 +138,7 @@ La LDA suppose que **chaque classe suit une distribution gaussienne** avec :
 - Moyenne différente pour chaque classe
 - **Même matrice de covariance** pour toutes les classes (c'est crucial !)
 
-```mermaid
+```{mermaid}
 graph TD
     A[Hypothèse LDA] --> B[Chaque classe = Gaussienne]
     B --> C[Moyennes différentes]
@@ -174,7 +174,7 @@ Avec cette hypothèse, la frontière entre deux classes est **linéaire** (d'où
 - **LDA** : Suppose **même covariance** pour toutes classes → frontières linéaires
 - **QDA** : Suppose **covariances différentes** → frontières quadratiques
 
-```mermaid
+```{mermaid}
 graph LR
     A[Données] --> B{Comparer les covariances}
     B -->|Similaires| C[LDA<br/>Frontières linéaires]

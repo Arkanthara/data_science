@@ -182,7 +182,7 @@ $$y_i = U^T (x_i - x)$$
 2. **Rotation** utilisant la matrice $U$
 3. **Mise à l'échelle** (whitening) utilisant $\Lambda^{1/2}$
 
-```mermaid
+```{mermaid}
 graph LR
     X[Données X] -->|Centrage| C[Données centrées]
     C -->|Rotation U| Y[Espace latent Y]
@@ -351,7 +351,7 @@ $$L(X) = \sum_i \|x_i - \tilde{x}_i\|^2$$
 
 **Structure d'un AutoEncodeur linéaire :**
 
-```mermaid
+```{mermaid}
 graph LR
     X[xi] -->|Wenc| Z[z xi]
     Z -->|Wdec| X2[x̃i]
