@@ -9,9 +9,6 @@ website:
   navbar:
     # background: primary
     search: true
-    left:
-      - text: Cours
-        file: ds2.qmd
     
     # Right side for language selector
     right:
@@ -28,6 +25,12 @@ website:
       contents:
       - section: "Espaces de Représentation en Haute Dimension"
         contents: "ds2*"
+      - section: "Principal Component Analysis"
+        contents: "ds3*"
+      - section: "Linear Discriminant Analysis"
+        contents: "ds5*"
+      - section: "Expectation-Maximization"
+        contents: "ds6*"
 
 
 
@@ -36,4 +39,6 @@ format:
     theme:
       light: flatly
       dark: darkly
+    toc: true
+  pdf:
     toc: true

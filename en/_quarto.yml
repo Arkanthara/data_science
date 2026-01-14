@@ -2,14 +2,12 @@ project:
   type: website
   title: "ISS"
   output-dir: ../_site
+  resources: "*.qmd"
 
 website:
   navbar:
     # background: primary
     search: true
-    left:
-      - text: Course
-        file: ds2.qmd
     
     # Right side for language selector
     right:
@@ -33,4 +31,6 @@ format:
     theme:
       light: flatly
       dark: darkly
+    toc: true
+  pdf:
     toc: true
