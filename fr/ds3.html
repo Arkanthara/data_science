@@ -72,6 +72,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -397,13 +400,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Document de Révision : Linear Discriminant Analysis (LDA)</span></a>
+ <span class="menu-text">Cours détaillé</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds5s1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analyse Discriminante Linéaire (LDA) - Support de révision oral</span></a>
+  <a href="./ds5s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
   </div>
 </li>
       </ul>
@@ -625,10 +628,21 @@ window.Quarto = {
 <li><strong>Rotation</strong> utilisant la matrice <span class="math inline">\(U\)</span></li>
 <li><strong>Mise à l’échelle</strong> (whitening) utilisant <span class="math inline">\(\Lambda^{1/2}\)</span></li>
 </ol>
-<pre class="mermaid"><code>graph LR
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
     X[Données X] --&gt;|Centrage| C[Données centrées]
     C --&gt;|Rotation U| Y[Espace latent Y]
-    Y --&gt;|Scaling Λ^1/2| W[Whitening]</code></pre>
+    Y --&gt;|Scaling Λ^1/2| W[Whitening]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="modèle-sous-jacent" class="level4">
 <h4 class="anchored" data-anchor-id="modèle-sous-jacent">Modèle sous-jacent</h4>
@@ -748,9 +762,20 @@ window.Quarto = {
 <section id="autoencodeurs-linéaires-linear-ae" class="level3">
 <h3 class="anchored" data-anchor-id="autoencodeurs-linéaires-linear-ae">AutoEncodeurs linéaires (Linear AE)</h3>
 <p><strong>Structure d’un AutoEncodeur linéaire :</strong></p>
-<pre class="mermaid"><code>graph LR
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
     X[xi] --&gt;|Wenc| Z[z xi]
-    Z --&gt;|Wdec| X2[x̃i]</code></pre>
+    Z --&gt;|Wdec| X2[x̃i]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <ul>
 <li><span class="math inline">\(W_{\text{enc}}\)</span> et <span class="math inline">\(W_{\text{dec}}\)</span> : matrices de poids (encoder et decoder)</li>
 <li><span class="math inline">\(z(x_i) = W_{\text{enc}} x_i\)</span> : encodage</li>

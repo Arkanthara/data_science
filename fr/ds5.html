@@ -72,6 +72,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -313,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Document de Révision : Linear Discriminant Analysis (LDA)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Cours détaillé</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -397,13 +400,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds5.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Document de Révision : Linear Discriminant Analysis (LDA)</span></a>
+ <span class="menu-text">Cours détaillé</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds5s1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analyse Discriminante Linéaire (LDA) - Support de révision oral</span></a>
+  <a href="./ds5s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
   </div>
 </li>
       </ul>
@@ -435,7 +438,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#document-de-révision-linear-discriminant-analysis-lda" id="toc-document-de-révision-linear-discriminant-analysis-lda" class="nav-link active" data-scroll-target="#document-de-révision-linear-discriminant-analysis-lda">Document de Révision : Linear Discriminant Analysis (LDA)</a>
+  <li><a href="#cours-détaillé" id="toc-cours-détaillé" class="nav-link active" data-scroll-target="#cours-détaillé">Cours détaillé</a>
   <ul class="collapse">
   <li><a href="#introduction-et-motivation" id="toc-introduction-et-motivation" class="nav-link" data-scroll-target="#introduction-et-motivation">Introduction et Motivation</a>
   <ul class="collapse">
@@ -520,14 +523,14 @@ window.Quarto = {
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds5.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Document de Révision : Linear Discriminant Analysis (LDA)</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Cours détaillé</a></li></ol></nav></header>
 
 
 
 
 
-<section id="document-de-révision-linear-discriminant-analysis-lda" class="level1">
-<h1>Document de Révision : Linear Discriminant Analysis (LDA)</h1>
+<section id="cours-détaillé" class="level1">
+<h1>Cours détaillé</h1>
 <section id="introduction-et-motivation" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-et-motivation">Introduction et Motivation</h2>
 <section id="contexte-général" class="level3">
@@ -573,9 +576,20 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="direction-discriminante-avec-2-classes">Direction discriminante avec 2 classes</h3>
 <p>On cherche une <strong>direction</strong> <span class="math inline">\(a \in \mathbb{R}^D\)</span> telle que la projection des données sur cette direction <span class="math inline">\(\hat{X} = \text{Proj}_a(X)\)</span> montre des <strong>propriétés optimales pour la discrimination</strong> entre classes.</p>
 <p><strong>Visualisation géométrique :</strong></p>
-<pre class="mermaid"><code>graph TD
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
     A[Données originales en D dimensions] --&gt;|Projection sur a| B[Données projetées en 1D]
-    B --&gt; C[Classes bien séparées]</code></pre>
+    B --&gt; C[Classes bien séparées]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>📌 <strong>Principe clé :</strong> Trouver la direction <span class="math inline">\(a\)</span> qui sépare au mieux les classes après projection</p>
 <hr>
 </section>

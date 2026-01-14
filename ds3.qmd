@@ -184,7 +184,7 @@ $$y_i = U^T (x_i - x)$$
 2. **Rotation** using matrix $U$
 3. **Scaling** (whitening) using $\Lambda^{1/2}$
 
-```mermaid
+```{mermaid}
 graph LR
     X[Data X] -->|Centering| C[Centered Data]
     C -->|Rotation U| Y[Latent Space Y]
@@ -353,7 +353,7 @@ $$L(X) = \sum_i \|x_i - \tilde{x}_i\|^2$$
 
 **Structure of a Linear Autoencoder:**
 
-```mermaid
+```{mermaid}
 graph LR
     X[xi] -->|Wenc| Z[z xi]
     Z -->|Wdec| X2[x̃i]

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds5s1 – ISS</title>
+<title>ds5s – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,6 +73,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -263,12 +292,12 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
         <li>
-    <a class="dropdown-item" href="./../index.html">
- <span class="dropdown-text">Anglais</span></a>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./index.html">
- <span class="dropdown-text">Français</span></a>
+    <a class="dropdown-item" href="./fr/index.html">
+ <span class="dropdown-text">French</span></a>
   </li>  
     </ul>
   </li>
@@ -284,7 +313,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s1.html">Analyse Discriminante Linéaire (LDA) - Support de révision oral</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s.html">The essentials</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -307,7 +336,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+ <span class="menu-text">High-dimensional representation spaces</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -316,19 +345,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cours détailé</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds2q.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Questions d’Examen</span></a>
+ <span class="menu-text">Detailed Course</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds2s.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">L’essentiel</span></a>
+ <span class="menu-text">The Essentials</span></a>
   </div>
 </li>
       </ul>
@@ -345,13 +368,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cours détaillé</span></a>
+ <span class="menu-text">Detailed Course</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds3s.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">L’essentiel</span></a>
+ <span class="menu-text">The Essentials</span></a>
   </div>
 </li>
       </ul>
@@ -368,30 +391,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Document de Révision : Linear Discriminant Analysis (LDA)</span></a>
+ <span class="menu-text">Detailed Course</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds5s1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Analyse Discriminante Linéaire (LDA) - Support de révision oral</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Expectation-Maximization</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Document de Révision : Expectation-Maximization pour la modélisation de densité</span></a>
+  <a href="./ds5s.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">The essentials</span></a>
   </div>
 </li>
       </ul>
@@ -406,374 +412,465 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#analyse-discriminante-linéaire-lda---support-de-révision-oral" id="toc-analyse-discriminante-linéaire-lda---support-de-révision-oral" class="nav-link active" data-scroll-target="#analyse-discriminante-linéaire-lda---support-de-révision-oral">Analyse Discriminante Linéaire (LDA) - Support de révision oral</a>
+  <li><a href="#the-essentials" id="toc-the-essentials" class="nav-link active" data-scroll-target="#the-essentials">The essentials</a>
   <ul class="collapse">
-  <li><a href="#lhistoire-derrière-la-lda-le-problème-du-tri-intelligent" id="toc-lhistoire-derrière-la-lda-le-problème-du-tri-intelligent" class="nav-link" data-scroll-target="#lhistoire-derrière-la-lda-le-problème-du-tri-intelligent">1. L’histoire derrière la LDA : Le problème du tri intelligent</a></li>
-  <li><a href="#lintuition-géométrique-séparer-des-nuages-de-points-colorés" id="toc-lintuition-géométrique-séparer-des-nuages-de-points-colorés" class="nav-link" data-scroll-target="#lintuition-géométrique-séparer-des-nuages-de-points-colorés">2. L’intuition géométrique : Séparer des nuages de points colorés</a>
+  <li><a href="#introduction-and-motivation" id="toc-introduction-and-motivation" class="nav-link" data-scroll-target="#introduction-and-motivation">Introduction and Motivation</a>
   <ul class="collapse">
-  <li><a href="#la-vision-en-2d" id="toc-la-vision-en-2d" class="nav-link" data-scroll-target="#la-vision-en-2d">La vision en 2D</a></li>
+  <li><a href="#the-fundamental-problem" id="toc-the-fundamental-problem" class="nav-link" data-scroll-target="#the-fundamental-problem">The fundamental problem</a></li>
+  <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning">Supervised learning</a></li>
   </ul></li>
-  <li><a href="#les-deux-objectifs-en-tension" id="toc-les-deux-objectifs-en-tension" class="nav-link" data-scroll-target="#les-deux-objectifs-en-tension">3. Les deux objectifs en tension</a>
+  <li><a href="#geometric-intuition-separating-colored-point-clouds" id="toc-geometric-intuition-separating-colored-point-clouds" class="nav-link" data-scroll-target="#geometric-intuition-separating-colored-point-clouds">Geometric intuition: Separating colored point clouds</a></li>
+  <li><a href="#the-two-competing-objectives" id="toc-the-two-competing-objectives" class="nav-link" data-scroll-target="#the-two-competing-objectives">The two competing objectives</a>
   <ul class="collapse">
-  <li><a href="#objectif-1-éloigner-les-centres-between-class" id="toc-objectif-1-éloigner-les-centres-between-class" class="nav-link" data-scroll-target="#objectif-1-éloigner-les-centres-between-class">Objectif 1 : Éloigner les centres (Between-class)</a></li>
-  <li><a href="#objectif-2-regrouper-chaque-classe-within-class" id="toc-objectif-2-regrouper-chaque-classe-within-class" class="nav-link" data-scroll-target="#objectif-2-regrouper-chaque-classe-within-class">Objectif 2 : Regrouper chaque classe (Within-class)</a></li>
+  <li><a href="#objective-1-move-the-centers-apart-between-class" id="toc-objective-1-move-the-centers-apart-between-class" class="nav-link" data-scroll-target="#objective-1-move-the-centers-apart-between-class">Objective 1: Move the centers apart (Between-class)</a></li>
+  <li><a href="#objective-2-group-each-class-within-class" id="toc-objective-2-group-each-class-within-class" class="nav-link" data-scroll-target="#objective-2-group-each-class-within-class">Objective 2: Group each class (Within-class)</a></li>
   </ul></li>
-  <li><a href="#le-critère-de-fisher-le-compromis-mathématique" id="toc-le-critère-de-fisher-le-compromis-mathématique" class="nav-link" data-scroll-target="#le-critère-de-fisher-le-compromis-mathématique">4. Le critère de Fisher : Le compromis mathématique</a>
+  <li><a href="#fisher-criterion-the-mathematical-compromise" id="toc-fisher-criterion-the-mathematical-compromise" class="nav-link" data-scroll-target="#fisher-criterion-the-mathematical-compromise">Fisher criterion: The mathematical compromise</a>
   <ul class="collapse">
-  <li><a href="#la-formule-magique" id="toc-la-formule-magique" class="nav-link" data-scroll-target="#la-formule-magique">La formule magique</a></li>
+  <li><a href="#formulation-for-2-classes" id="toc-formulation-for-2-classes" class="nav-link" data-scroll-target="#formulation-for-2-classes">Formulation for 2 classes</a></li>
+  <li><a href="#generalization-to-m-classes" id="toc-generalization-to-m-classes" class="nav-link" data-scroll-target="#generalization-to-m-classes">Generalization to M classes</a></li>
   </ul></li>
-  <li><a href="#la-solution-élégante-un-problème-aux-valeurs-propres" id="toc-la-solution-élégante-un-problème-aux-valeurs-propres" class="nav-link" data-scroll-target="#la-solution-élégante-un-problème-aux-valeurs-propres">5. La solution élégante : Un problème aux valeurs propres</a>
+  <li><a href="#solution-eigenvalue-problem" id="toc-solution-eigenvalue-problem" class="nav-link" data-scroll-target="#solution-eigenvalue-problem">Solution: Eigenvalue problem</a>
   <ul class="collapse">
-  <li><a href="#le-aha-moment" id="toc-le-aha-moment" class="nav-link" data-scroll-target="#le-aha-moment">Le “aha!” moment</a></li>
+  <li><a href="#solution-by-differentiation" id="toc-solution-by-differentiation" class="nav-link" data-scroll-target="#solution-by-differentiation">Solution by differentiation</a></li>
   </ul></li>
-  <li><a href="#la-limitation-dimensionnelle-surprenante" id="toc-la-limitation-dimensionnelle-surprenante" class="nav-link" data-scroll-target="#la-limitation-dimensionnelle-surprenante">6. La limitation dimensionnelle surprenante</a>
+  <li><a href="#dimensional-limitation" id="toc-dimensional-limitation" class="nav-link" data-scroll-target="#dimensional-limitation">Dimensional limitation</a>
   <ul class="collapse">
-  <li><a href="#pourquoi-seulement-m-1-dimensions" id="toc-pourquoi-seulement-m-1-dimensions" class="nav-link" data-scroll-target="#pourquoi-seulement-m-1-dimensions">Pourquoi seulement M-1 dimensions ?</a></li>
+  <li><a href="#why-only-m-1-dimensions" id="toc-why-only-m-1-dimensions" class="nav-link" data-scroll-target="#why-only-m-1-dimensions">Why only M-1 dimensions?</a></li>
   </ul></li>
-  <li><a href="#en-pratique-la-recette-lda" id="toc-en-pratique-la-recette-lda" class="nav-link" data-scroll-target="#en-pratique-la-recette-lda">7. En pratique : La recette LDA</a>
+  <li><a href="#practical-application-of-lda" id="toc-practical-application-of-lda" class="nav-link" data-scroll-target="#practical-application-of-lda">Practical application of LDA</a>
   <ul class="collapse">
-  <li><a href="#étape-1-préparer-les-données" id="toc-étape-1-préparer-les-données" class="nav-link" data-scroll-target="#étape-1-préparer-les-données">Étape 1 : Préparer les données</a></li>
-  <li><a href="#étape-2-calculer-les-matrices-clés" id="toc-étape-2-calculer-les-matrices-clés" class="nav-link" data-scroll-target="#étape-2-calculer-les-matrices-clés">Étape 2 : Calculer les matrices clés</a></li>
-  <li><a href="#étape-3-résoudre-le-problème-aux-valeurs-propres" id="toc-étape-3-résoudre-le-problème-aux-valeurs-propres" class="nav-link" data-scroll-target="#étape-3-résoudre-le-problème-aux-valeurs-propres">Étape 3 : Résoudre le problème aux valeurs propres</a></li>
-  <li><a href="#étape-4-garder-les-m-1-premières-directions" id="toc-étape-4-garder-les-m-1-premières-directions" class="nav-link" data-scroll-target="#étape-4-garder-les-m-1-premières-directions">Étape 4 : Garder les M-1 premières directions</a></li>
-  <li><a href="#étape-5-projeter-et-classifier" id="toc-étape-5-projeter-et-classifier" class="nav-link" data-scroll-target="#étape-5-projeter-et-classifier">Étape 5 : Projeter et classifier</a></li>
+  <li><a href="#complete-lda-algorithm" id="toc-complete-lda-algorithm" class="nav-link" data-scroll-target="#complete-lda-algorithm">Complete LDA algorithm</a></li>
   </ul></li>
-  <li><a href="#lda-comme-classifieur-lhypothèse-gaussienne" id="toc-lda-comme-classifieur-lhypothèse-gaussienne" class="nav-link" data-scroll-target="#lda-comme-classifieur-lhypothèse-gaussienne">8. LDA comme classifieur : L’hypothèse gaussienne</a>
+  <li><a href="#lda-as-a-classifier-the-gaussian-hypothesis" id="toc-lda-as-a-classifier-the-gaussian-hypothesis" class="nav-link" data-scroll-target="#lda-as-a-classifier-the-gaussian-hypothesis">LDA as a classifier: The Gaussian hypothesis</a>
   <ul class="collapse">
-  <li><a href="#la-modélisation-probabiliste" id="toc-la-modélisation-probabiliste" class="nav-link" data-scroll-target="#la-modélisation-probabiliste">La modélisation probabiliste</a></li>
-  <li><a href="#la-frontière-de-décision" id="toc-la-frontière-de-décision" class="nav-link" data-scroll-target="#la-frontière-de-décision">La frontière de décision</a></li>
+  <li><a href="#probabilistic-modeling" id="toc-probabilistic-modeling" class="nav-link" data-scroll-target="#probabilistic-modeling">Probabilistic modeling</a></li>
+  <li><a href="#gaussian-approximation" id="toc-gaussian-approximation" class="nav-link" data-scroll-target="#gaussian-approximation">Gaussian approximation</a></li>
+  <li><a href="#why-is-the-boundary-linear" id="toc-why-is-the-boundary-linear" class="nav-link" data-scroll-target="#why-is-the-boundary-linear">Why is the boundary linear?</a></li>
   </ul></li>
-  <li><a href="#quand-la-lda-fonctionne-bien-et-moins-bien" id="toc-quand-la-lda-fonctionne-bien-et-moins-bien" class="nav-link" data-scroll-target="#quand-la-lda-fonctionne-bien-et-moins-bien">9. Quand la LDA fonctionne bien (et moins bien)</a>
+  <li><a href="#optimality-of-lda" id="toc-optimality-of-lda" class="nav-link" data-scroll-target="#optimality-of-lda">Optimality of LDA</a>
   <ul class="collapse">
-  <li><a href="#conditions-idéales" id="toc-conditions-idéales" class="nav-link" data-scroll-target="#conditions-idéales">Conditions idéales ✅</a></li>
-  <li><a href="#situations-problématiques" id="toc-situations-problématiques" class="nav-link" data-scroll-target="#situations-problématiques">Situations problématiques ❌</a></li>
+  <li><a href="#optimality-conditions" id="toc-optimality-conditions" class="nav-link" data-scroll-target="#optimality-conditions">Optimality conditions</a></li>
+  <li><a href="#when-lda-works-well-and-less-well" id="toc-when-lda-works-well-and-less-well" class="nav-link" data-scroll-target="#when-lda-works-well-and-less-well">When LDA works well (and less well)</a></li>
   </ul></li>
-  <li><a href="#lda-vs-qda-le-dilemme-linéaire-vs-quadratique" id="toc-lda-vs-qda-le-dilemme-linéaire-vs-quadratique" class="nav-link" data-scroll-target="#lda-vs-qda-le-dilemme-linéaire-vs-quadratique">10. LDA vs QDA : Le dilemme linéaire vs quadratique</a>
+  <li><a href="#lda-vs-qda-the-linear-vs-quadratic-dilemma" id="toc-lda-vs-qda-the-linear-vs-quadratic-dilemma" class="nav-link" data-scroll-target="#lda-vs-qda-the-linear-vs-quadratic-dilemma">LDA vs QDA: The linear vs quadratic dilemma</a>
   <ul class="collapse">
-  <li><a href="#la-différence-cruciale" id="toc-la-différence-cruciale" class="nav-link" data-scroll-target="#la-différence-cruciale">La différence cruciale</a></li>
+  <li><a href="#the-crucial-difference" id="toc-the-crucial-difference" class="nav-link" data-scroll-target="#the-crucial-difference">The crucial difference</a></li>
   </ul></li>
-  <li><a href="#lda-dans-le-monde-réel-lexemple-des-visages" id="toc-lda-dans-le-monde-réel-lexemple-des-visages" class="nav-link" data-scroll-target="#lda-dans-le-monde-réel-lexemple-des-visages">11. LDA dans le monde réel : L’exemple des visages</a>
+  <li><a href="#lda-vs-pca-comparison" id="toc-lda-vs-pca-comparison" class="nav-link" data-scroll-target="#lda-vs-pca-comparison">LDA vs PCA comparison</a>
   <ul class="collapse">
-  <li><a href="#reconnaissance-faciale-avec-lda-fisherfaces" id="toc-reconnaissance-faciale-avec-lda-fisherfaces" class="nav-link" data-scroll-target="#reconnaissance-faciale-avec-lda-fisherfaces">Reconnaissance faciale avec LDA (Fisherfaces)</a></li>
+  <li><a href="#fundamental-differences" id="toc-fundamental-differences" class="nav-link" data-scroll-target="#fundamental-differences">Fundamental differences</a></li>
+  <li><a href="#complementarity" id="toc-complementarity" class="nav-link" data-scroll-target="#complementarity">Complementarity</a></li>
   </ul></li>
-  <li><a href="#fiche-de-révision-ultra-condensée" id="toc-fiche-de-révision-ultra-condensée" class="nav-link" data-scroll-target="#fiche-de-révision-ultra-condensée">12. Fiche de révision ultra-condensée</a></li>
-  <li><a href="#pour-loral-les-3-histoires-à-raconter" id="toc-pour-loral-les-3-histoires-à-raconter" class="nav-link" data-scroll-target="#pour-loral-les-3-histoires-à-raconter">13. Pour l’oral : Les 3 histoires à raconter</a>
-  <ul class="collapse">
-  <li><a href="#histoire-1-le-tri-postal" id="toc-histoire-1-le-tri-postal" class="nav-link" data-scroll-target="#histoire-1-le-tri-postal">Histoire 1 : Le tri postal</a></li>
-  <li><a href="#histoire-2-larbitre-sportif" id="toc-histoire-2-larbitre-sportif" class="nav-link" data-scroll-target="#histoire-2-larbitre-sportif">Histoire 2 : L’arbitre sportif</a></li>
-  <li><a href="#histoire-3-les-jumeaux-statistiques" id="toc-histoire-3-les-jumeaux-statistiques" class="nav-link" data-scroll-target="#histoire-3-les-jumeaux-statistiques">Histoire 3 : Les jumeaux statistiques</a></li>
-  </ul></li>
-  <li><a href="#questions-pièges-et-comment-y-répondre" id="toc-questions-pièges-et-comment-y-répondre" class="nav-link" data-scroll-target="#questions-pièges-et-comment-y-répondre">14. Questions pièges et comment y répondre</a></li>
-  <li><a href="#lastuce-mnémotechnique-finale" id="toc-lastuce-mnémotechnique-finale" class="nav-link" data-scroll-target="#lastuce-mnémotechnique-finale">15. L’astuce mnémotechnique finale</a></li>
-  <li><a href="#en-résumé-la-lda-cest" id="toc-en-résumé-la-lda-cest" class="nav-link" data-scroll-target="#en-résumé-la-lda-cest">16. En résumé : La LDA, c’est…</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds5s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds5s.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s1.html">Analyse Discriminante Linéaire (LDA) - Support de révision oral</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s.html">The essentials</a></li></ol></nav></header>
 
 
 
 
 
-<section id="analyse-discriminante-linéaire-lda---support-de-révision-oral" class="level1">
-<h1>Analyse Discriminante Linéaire (LDA) - Support de révision oral</h1>
-<section id="lhistoire-derrière-la-lda-le-problème-du-tri-intelligent" class="level2">
-<h2 class="anchored" data-anchor-id="lhistoire-derrière-la-lda-le-problème-du-tri-intelligent">1. L’histoire derrière la LDA : Le problème du tri intelligent</h2>
-<p>Imaginez que vous travaillez dans un centre de tri postal. Vous avez des lettres avec 100 mesures différentes (poids, taille, couleur, texture…). Vous devez les trier automatiquement par type (lettre, colis, magazine). Comment trouver <strong>la ou les dimensions qui séparent le mieux les catégories</strong> ?</p>
-<p>C’est exactement ce que résout la LDA : trouver <strong>les axes qui maximisent la séparation entre classes</strong> tout en minimisant la dispersion à l’intérieur de chaque classe.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Concept Clé : La différence fondamentale avec la PCA</strong> La PCA regarde <strong>toutes</strong> les données et cherche les directions de variation maximale. La LDA regarde d’abord <strong>les étiquettes</strong> (les classes) et cherche les directions qui séparent le mieux ces classes.</p>
-</div>
-</div>
-<pre class="mermaid"><code>graph TD
-    A[Données étiquetées&lt;br/&gt;avec M classes] --&gt; B{Deux approches}
-    B --&gt; C[PCA&lt;br/&gt;Ignore les étiquettes&lt;br/&gt;Maximise la variance globale]
-    B --&gt; D[LDA&lt;br/&gt;Utilise les étiquettes&lt;br/&gt;Maximise la séparation entre classes]
-    C --&gt; E[Résultat : conserve&lt;br/&gt;la structure générale]
-    D --&gt; F[Résultat : optimise&lt;br/&gt;la discrimination]
-    
-    style E fill:#e6f3ff
-    style F fill:#e6ffe6</code></pre>
+<section id="the-essentials" class="level1">
+<h1>The essentials</h1>
+<section id="introduction-and-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-and-motivation">Introduction and Motivation</h2>
+<p><strong>LDA</strong> (Linear Discriminant Analysis) is a <strong>supervised latent analysis</strong> method that makes it possible to find optimal latent factors for discrimination between classes.</p>
+<section id="the-fundamental-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-fundamental-problem">The fundamental problem</h3>
+<p>Imagine that you work in a postal sorting center. You have letters with 100 different measurements (weight, size, color, texture…). You must sort them automatically by type (letter, parcel, magazine). How can you find <strong>the dimension or dimensions that best separate the categories</strong>?</p>
+<p>This is exactly what LDA solves: finding <strong>the axes that maximize separation between classes</strong> while minimizing dispersion within each class.</p>
+<p>📌 <strong>Fundamental difference with PCA:</strong></p>
+<p>PCA looks at <strong>all</strong> the data and searches for directions of maximum variation. LDA first looks at <strong>the labels</strong> (the classes) and searches for the directions that best separate these classes.</p>
+<p>⚠️ <strong>Warning:</strong> This LDA should not be confused with <strong>Latent Dirichlet Allocation</strong> (used in NLP).</p>
 </section>
-<section id="lintuition-géométrique-séparer-des-nuages-de-points-colorés" class="level2">
-<h2 class="anchored" data-anchor-id="lintuition-géométrique-séparer-des-nuages-de-points-colorés">2. L’intuition géométrique : Séparer des nuages de points colorés</h2>
-<section id="la-vision-en-2d" class="level3">
-<h3 class="anchored" data-anchor-id="la-vision-en-2d">La vision en 2D</h3>
-<p>Imaginez des points de deux couleurs (rouge et bleu) dispersés sur un plan. Vous ne pouvez regarder que selon une seule direction (comme une lampe torche qui éclaire une ligne).</p>
-<p><strong>Question :</strong> Comment orienter la lampe pour que, sur cette ligne, les points rouges et bleus soient <strong>le plus séparés possible</strong> ?</p>
-<p>La LDA trouve cette direction optimale.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Idée Essentielle : La LDA cherche la “ligne de démarcation”</strong> Comme un arbitre qui trace une ligne entre deux équipes, la LDA trouve la direction qui sépare le mieux les groupes, tout en s’assurant que chaque équipe est regroupée.</p>
-</div>
-</div>
+<section id="supervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="supervised-learning">Supervised learning</h3>
+<p>Let data <span class="math inline">\(X \subset \Omega \subseteq \mathbb{R}^D\)</span> be associated with categories (class labels) <span class="math inline">\(Y = [[M]] \subset \mathbb{N}\)</span>.</p>
+<p><strong>Supervised learning</strong> consists of finding (learning) the parameters <span class="math inline">\(\theta\)</span> of a learner (function) <span class="math inline">\(\phi_\theta\)</span> in order to minimize the loss <span class="math inline">\(L_{X \times Y}(\theta)\)</span> incurred when predicting class labels.</p>
+<p><span class="math display">\[\phi_\theta : \Omega \to Y\]</span> <span class="math display">\[x_i \mapsto \phi_\theta(x_i) = \tilde{y}_i\]</span></p>
+<hr>
 </section>
 </section>
-<section id="les-deux-objectifs-en-tension" class="level2">
-<h2 class="anchored" data-anchor-id="les-deux-objectifs-en-tension">3. Les deux objectifs en tension</h2>
-<section id="objectif-1-éloigner-les-centres-between-class" class="level3">
-<h3 class="anchored" data-anchor-id="objectif-1-éloigner-les-centres-between-class">Objectif 1 : Éloigner les centres (Between-class)</h3>
-<p><strong>“Mettre les moyennes le plus loin possible”</strong><br>
-Si vous projetez les points sur une droite, vous voulez que les centres (moyennes) de chaque classe soient <strong>le plus éloignés possible</strong>.</p>
+<section id="geometric-intuition-separating-colored-point-clouds" class="level2">
+<h2 class="anchored" data-anchor-id="geometric-intuition-separating-colored-point-clouds">Geometric intuition: Separating colored point clouds</h2>
+<p>Imagine points of two colors (red and blue) scattered on a plane. You can only look along a single direction (like a flashlight that illuminates a line).</p>
+<p><strong>Question:</strong> How should the flashlight be oriented so that, on this line, the red and blue points are <strong>as separated as possible</strong>?</p>
+<p>💡 <strong>Essential idea:</strong> LDA looks for the <strong>dividing line</strong>, like a referee drawing a line between two teams. It finds the direction that best separates the groups, while ensuring that each team remains clustered.</p>
+<p>We seek a <strong>direction</strong> <span class="math inline">\(a \in \mathbb{R}^D\)</span> such that the projection of the data onto this direction <span class="math inline">\(\hat{X} = \text{Proj}_a(X)\)</span> exhibits <strong>optimal properties for discrimination</strong> between classes.</p>
+<hr>
 </section>
-<section id="objectif-2-regrouper-chaque-classe-within-class" class="level3">
-<h3 class="anchored" data-anchor-id="objectif-2-regrouper-chaque-classe-within-class">Objectif 2 : Regrouper chaque classe (Within-class)</h3>
-<p><strong>“Garder chaque classe compacte”</strong><br>
-Vous voulez aussi que les points d’une même classe soient <strong>le plus regroupés possible</strong> après projection.</p>
+<section id="the-two-competing-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="the-two-competing-objectives">The two competing objectives</h2>
+<section id="objective-1-move-the-centers-apart-between-class" class="level3">
+<h3 class="anchored" data-anchor-id="objective-1-move-the-centers-apart-between-class">Objective 1: Move the centers apart (Between-class)</h3>
+<p><strong>“Push the means as far apart as possible”</strong></p>
+<p>If the class projections are <strong>well separated</strong>, then they can be easily discriminated.</p>
+<p>✅ <strong>Objective:</strong> Search for the direction <span class="math inline">\(a\)</span> where inter-class discrimination is <strong>maximal</strong>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+<span class="screen-reader-only">Note</span>📌 Mathematical details: Between-class formulation
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Le dilemme :</strong> Parfois, étirer les centres les éloigne, mais cela peut aussi étirer les classes. Il faut trouver le bon compromis. <strong>Solution de Fisher :</strong> Maximiser le ratio : (distance entre centres)² / (dispersion totale dans les classes)</p>
+<p>The direction <span class="math inline">\(a\)</span> must be <strong>collinear</strong> with the line <span class="math inline">\(\mu_1 - \mu_2\)</span> that connects the centers of mass of the classes, because:</p>
+<p><span class="math display">\[|\hat{\mu}_1 - \hat{\mu}_2|^2 = \left|\frac{a^T\mu_1}{|a|^2}a - \frac{a^T\mu_2}{|a|^2}a\right|^2 = \frac{1}{|a|^2}(a^T(\mu_1 - \mu_2))^2\]</span></p>
+<p>This expression is <strong>maximal</strong> when <span class="math inline">\(a = \lambda(\mu_1 - \mu_2)\)</span>.</p>
+<p>💡 <strong>Property:</strong> The center of mass of the projected data is the projection of the center of mass of the original data.</p>
+</div>
 </div>
 </div>
 </section>
+<section id="objective-2-group-each-class-within-class" class="level3">
+<h3 class="anchored" data-anchor-id="objective-2-group-each-class-within-class">Objective 2: Group each class (Within-class)</h3>
+<p><strong>“Keep each class compact”</strong></p>
+<p>We also seek to <strong>minimize the variance</strong> of each class when projected individually.</p>
+<p>For each class <span class="math inline">\(k\)</span>, the normalized variance of the projection is:</p>
+<p><span class="math display">\[\hat{\sigma}*k^2 = \frac{1}{N_k} \sum*{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k)\]</span></p>
+<p>📌 <strong>The dilemma:</strong> Sometimes, pulling the centers apart separates them, but it can also stretch the classes. The right compromise must be found.</p>
+<hr>
 </section>
-<section id="le-critère-de-fisher-le-compromis-mathématique" class="level2">
-<h2 class="anchored" data-anchor-id="le-critère-de-fisher-le-compromis-mathématique">4. Le critère de Fisher : Le compromis mathématique</h2>
-<section id="la-formule-magique" class="level3">
-<h3 class="anchored" data-anchor-id="la-formule-magique">La formule magique</h3>
-<p>Pour une direction <strong>a</strong>, on calcule :</p>
-<pre><code>Score(a) = (Éloignement des centres)² / (Dispersion dans les classes)</code></pre>
-<p>Mathématiquement :</p>
-<pre><code>J(a) = (aᵀ·Σ_b·a) / (aᵀ·Σ_w·a)</code></pre>
-<p>Où : - <strong>Σ_b</strong> = matrice de covariance “entre classes” (between) → mesure l’éloignement des centres - <strong>Σ_w</strong> = matrice de covariance “dans les classes” (within) → mesure la dispersion interne</p>
+</section>
+<section id="fisher-criterion-the-mathematical-compromise" class="level2">
+<h2 class="anchored" data-anchor-id="fisher-criterion-the-mathematical-compromise">Fisher criterion: The mathematical compromise</h2>
+<section id="formulation-for-2-classes" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-for-2-classes">Formulation for 2 classes</h3>
+<p>The <strong>Fisher criterion</strong> maximizes the ratio:</p>
+<p><span class="math display">\[\underset{a}{\arg\max} \frac{|\hat{\mu}_1 - \hat{\mu}_2|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}\]</span></p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li><strong>Numerator:</strong> Distance between projected means (between-class) → to <strong>maximize</strong></li>
+<li><strong>Denominator:</strong> Sum of within-class variances → to <strong>minimize</strong></li>
+</ul>
+<p>💡 <strong>Mnemonic trick:</strong></p>
+<ul>
+<li><strong>B</strong> as in <strong>Between</strong> = <strong>B</strong> for “Separate well” (the centers)</li>
+<li><strong>W</strong> as in <strong>Within</strong> = “Group together” (each class)</li>
+</ul>
+</section>
+<section id="generalization-to-m-classes" class="level3">
+<h3 class="anchored" data-anchor-id="generalization-to-m-classes">Generalization to M classes</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical details: Covariance matrices
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Between-class covariance matrix:</strong></p>
+<p>Let <span class="math inline">\(B = [\mu_1 - \mu, \ldots, \mu_M - \mu]\)</span> be the matrix of centered class means, where:</p>
+<ul>
+<li><span class="math inline">\(\mu = \frac{1}{N} \sum_i^N x_i\)</span> is the global mean</li>
+<li><span class="math inline">\(N = \sum_k N_k\)</span> is the total number of points</li>
+</ul>
+<p><span class="math display">\[\Sigma_b = \frac{1}{M} BB^T\]</span></p>
+<p><strong>Criterion to maximize:</strong></p>
+<p><span class="math display">\[\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{|a|^2} a^T \Sigma_b a\]</span></p>
+<p><strong>Within-class covariance matrix:</strong></p>
+<p>Let <span class="math inline">\(A_k = [x_1 - \mu_k, \ldots, x_{N_k} - \mu_k]\)</span> with <span class="math inline">\(y_i = k\)</span>, the matrix of centered data for class <span class="math inline">\(k\)</span>.</p>
+<p><span class="math display">\[\Sigma_w = \sum_k \frac{1}{N_k} A_k A_k^T\]</span></p>
+<p><strong>Criterion to minimize:</strong></p>
+<p><span class="math display">\[\sum_k \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k) = \frac{1}{a^T a} a^T \Sigma_w a\]</span></p>
+</div>
+</div>
+</div>
+<p>The <strong>generalized Fisher criterion</strong> combines the between-class and within-class criteria:</p>
+<p><span class="math display">\[\underset{a}{\arg\max} , J(a) = \underset{a}{\arg\max} \frac{a^T \Sigma_b a}{a^T \Sigma_w a}\]</span></p>
+<p>where:</p>
+<ul>
+<li><strong><span class="math inline">\(\Sigma_b\)</span></strong> = “between-class” covariance matrix → measures separation of centers</li>
+<li><strong><span class="math inline">\(\Sigma_w\)</span></strong> = “within-class” covariance matrix → measures internal dispersion</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="solution-eigenvalue-problem" class="level2">
+<h2 class="anchored" data-anchor-id="solution-eigenvalue-problem">Solution: Eigenvalue problem</h2>
+<section id="solution-by-differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="solution-by-differentiation">Solution by differentiation</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical details: Derivation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To find the maximum, we compute the derivative:</p>
+<p><span class="math display">\[\frac{\partial J(a)}{\partial a} = \frac{\Sigma_b a (a^T \Sigma_w a) - \Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0\]</span></p>
+<p><strong>Resulting equation:</strong></p>
+<p><span class="math display">\[\Sigma_b a = J(a) \Sigma_w a\]</span></p>
+<p>Which can be rewritten as:</p>
+<p><span class="math display">\[\Sigma_w^{-1} \Sigma_b a = J(a) a\]</span></p>
+</div>
+</div>
+</div>
+<p>✅ <strong>Solution:</strong> <span class="math inline">\(a\)</span> is a solution of the <strong>generalized eigenvalue system</strong>.</p>
+<p>The optimal direction <span class="math inline">\(a\)</span> is the <strong>first eigenvector</strong> of <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (with eigenvalue <span class="math inline">\(\lambda_1 = J(a)\)</span>).</p>
+<hr>
+</section>
+</section>
+<section id="dimensional-limitation" class="level2">
+<h2 class="anchored" data-anchor-id="dimensional-limitation">Dimensional limitation</h2>
+<section id="why-only-m-1-dimensions" class="level3">
+<h3 class="anchored" data-anchor-id="why-only-m-1-dimensions">Why only M-1 dimensions?</h3>
+<p>The eigenvectors corresponding to the <strong>largest eigenvalues</strong> <span class="math inline">\(\lambda_i\)</span> are the most discriminative dimensions:</p>
+<p><span class="math display">\[a_1, a_2, \ldots, a_p \quad \text{with} \quad \lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_p\]</span></p>
+<p>📌 <strong>Fundamental property:</strong> <span class="math inline">\(M\)</span> classes can be discriminated in a subspace of dimension <strong>at most</strong> <span class="math inline">\((M-1)\)</span>.</p>
+<p><strong>Consequence:</strong> There are only <span class="math inline">\(M - 1\)</span> <strong>non-zero</strong> eigenvalues.</p>
+<p>💡 <strong>Analogy:</strong> With 3 points (3 classes), you can at most place them in a plane (2D). With 2 points (2 classes), you can at most place them on a line (1D).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical details: Case M = 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For two classes, one can show that:</p>
+<p><span class="math display">\[BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T\]</span></p>
+<p><strong>Implications:</strong></p>
+<ul>
+<li><span class="math inline">\(BB^T a\)</span> is a vector in the direction <span class="math inline">\((\mu_1 - \mu_2)\)</span></li>
+<li>The solution is <span class="math inline">\(a = \lambda \Sigma_w^{-1} (\mu_1 - \mu_2)\)</span></li>
+</ul>
+</div>
+</div>
+</div>
+<p>⚠️ <strong>Pitfall to avoid:</strong> If you keep more than M-1 dimensions, the additional directions will have a zero eigenvalue → not discriminative.</p>
+<hr>
+</section>
+</section>
+<section id="practical-application-of-lda" class="level2">
+<h2 class="anchored" data-anchor-id="practical-application-of-lda">Practical application of LDA</h2>
+<section id="complete-lda-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="complete-lda-algorithm">Complete LDA algorithm</h3>
+<p><strong>Step 1: Prepare the data</strong></p>
+<ul>
+<li>Check that each class has enough examples (at least D+1 to avoid singular <span class="math inline">\(\Sigma_w\)</span>)</li>
+<li>Optional: standardize if the scales are very different</li>
+</ul>
+<p><strong>Step 2: Compute the key matrices</strong></p>
+<ul>
+<li><strong><span class="math inline">\(\Sigma_w\)</span></strong> (within): average of class covariances</li>
+<li><strong><span class="math inline">\(\Sigma_b\)</span></strong> (between): covariance of class centers</li>
+</ul>
+<p><strong>Step 3: Solve the eigenvalue problem</strong></p>
+<p>Compute the eigenvectors of <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span></p>
+<p><strong>Step 4: Keep the first M-1 directions</strong></p>
+<p>Sort by decreasing eigenvalues, keep the most important ones</p>
+<p><strong>Step 5: Project and classify</strong></p>
+<ul>
+<li>Project the data onto the discriminant subspace</li>
+<li>Classify (for example using a nearest-neighbor rule)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="lda-as-a-classifier-the-gaussian-hypothesis" class="level2">
+<h2 class="anchored" data-anchor-id="lda-as-a-classifier-the-gaussian-hypothesis">LDA as a classifier: The Gaussian hypothesis</h2>
+<section id="probabilistic-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="probabilistic-modeling">Probabilistic modeling</h3>
+<p>For a new data point <span class="math inline">\(j\)</span>:</p>
+<ul>
+<li><span class="math inline">\(x_j\)</span> is <strong>known</strong></li>
+<li><span class="math inline">\(y_j\)</span> is <strong>unknown</strong></li>
+</ul>
+<p><strong>Question:</strong> To which class <span class="math inline">\(k\)</span> does point <span class="math inline">\(j\)</span> belong?</p>
+<p>We define the class random variable <span class="math inline">\(C\)</span> and use <strong>Bayes’ rule</strong>:</p>
+<p><span class="math display">\[\mathbb{P}(C = k | x_j) = \frac{\mathbb{P}(x_j | C = k) \mathbb{P}(C = k)}{\mathbb{P}(x_j)}\]</span></p>
+<p><strong>Components:</strong></p>
+<ul>
+<li><span class="math inline">\(\mathbb{P}(x_j | C = k)\)</span> : <strong>likelihood</strong></li>
+<li><span class="math inline">\(\mathbb{P}(C = k)\)</span> : <strong>prior</strong></li>
+<li><span class="math inline">\(\mathbb{P}(x_j)\)</span> : <strong>evidence</strong> (normalization)</li>
+</ul>
+</section>
+<section id="gaussian-approximation" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-approximation">Gaussian approximation</h3>
+<p>LDA assumes that <strong>each class follows a Gaussian distribution</strong>:</p>
+<p><span class="math display">\[\mathbb{P}(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)\]</span></p>
+<p>with:</p>
+<ul>
+<li>Different means for each class</li>
+<li><strong>The same covariance matrix</strong> for all classes (crucial!)</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>📌 Mathematical details: Maximum likelihood
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Approximation:</strong></p>
+<p><span class="math display">\[\mathbb{P}(x | C = k) \propto \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)\]</span></p>
+<p><strong>Uniform prior:</strong> <span class="math inline">\(\mathbb{P}(C = k) = \frac{1}{M}\)</span> (all classes equally likely)</p>
+<p><strong>Simplification:</strong> The evidence <span class="math inline">\(\mathbb{P}(x_j)\)</span> is <strong>ignored</strong> because it is constant for all classes (normalization).</p>
+</div>
+</div>
+</div>
+<p><strong>Decision rule:</strong></p>
+<p><span class="math display">\[\delta(x) = \underset{k}{\arg\max} , \mathbb{P}(x | C = k)\]</span></p>
+<p><strong>Interpretation:</strong> <span class="math inline">\(x\)</span> is assigned to the class <span class="math inline">\(k\)</span> that maximizes the likelihood.</p>
+</section>
+<section id="why-is-the-boundary-linear" class="level3">
+<h3 class="anchored" data-anchor-id="why-is-the-boundary-linear">Why is the boundary linear?</h3>
+<p>With this assumption, the boundary between two classes is <strong>linear</strong> (hence the “L” in LDA).</p>
+<p>💡 <strong>Why?</strong> The equal-density contours of two Gaussians with the same covariance are hyperplanes.</p>
+<hr>
+</section>
+</section>
+<section id="optimality-of-lda" class="level2">
+<h2 class="anchored" data-anchor-id="optimality-of-lda">Optimality of LDA</h2>
+<section id="optimality-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="optimality-conditions">Optimality conditions</h3>
+<p>✅ <strong>LDA is optimal</strong> when the <span class="math inline">\(M\)</span> classes each follow a <strong>Gaussian distribution</strong> with the same covariance matrix.</p>
+<p><strong>Justification:</strong></p>
+<p>The discrimination criteria are based on the covariance matrices <span class="math inline">\(\Sigma_w\)</span> and <span class="math inline">\(\Sigma_b\)</span>, which fully characterize Gaussian distributions.</p>
+</section>
+<section id="when-lda-works-well-and-less-well" class="level3">
+<h3 class="anchored" data-anchor-id="when-lda-works-well-and-less-well">When LDA works well (and less well)</h3>
+<p><strong>Ideal conditions ✅</strong></p>
+<ul>
+<li>Classes are <strong>approximately Gaussian</strong></li>
+<li>Class covariances are <strong>similar</strong></li>
+<li>Enough samples per class (at least 10× the number of dimensions)</li>
+<li><strong>Linear</strong> relationships between variables</li>
+</ul>
+<p><strong>Problematic situations ❌</strong></p>
+<ul>
+<li><strong>Very different covariances</strong> → use QDA (Quadratic Discriminant Analysis)</li>
+<li><strong>Non-linear relationships</strong> → Kernel LDA or non-linear methods</li>
+<li><strong>Few samples</strong> relative to dimensions → regularize or reduce dimensionality first</li>
+<li><strong>Non-Gaussian classes</strong> → other classifiers (random forests, SVM…)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="lda-vs-qda-the-linear-vs-quadratic-dilemma" class="level2">
+<h2 class="anchored" data-anchor-id="lda-vs-qda-the-linear-vs-quadratic-dilemma">LDA vs QDA: The linear vs quadratic dilemma</h2>
+<section id="the-crucial-difference" class="level3">
+<h3 class="anchored" data-anchor-id="the-crucial-difference">The crucial difference</h3>
+<ul>
+<li><strong>LDA:</strong> Assumes <strong>the same covariance</strong> for all classes → linear boundaries</li>
+<li><strong>QDA:</strong> Assumes <strong>different covariances</strong> → quadratic boundaries</li>
+</ul>
+<p>💡 <strong>Practical rule:</strong> If you have little data, LDA is more robust (fewer parameters to estimate).</p>
+<hr>
+</section>
+</section>
+<section id="lda-vs-pca-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="lda-vs-pca-comparison">LDA vs PCA comparison</h2>
+<section id="fundamental-differences" class="level3">
+<h3 class="anchored" data-anchor-id="fundamental-differences">Fundamental differences</h3>
+<p><strong>PCA (unsupervised):</strong></p>
+<ul>
+<li>Maximizes <strong>global variance</strong></li>
+<li>Ignores class labels</li>
+<li>Finds directions of maximum variance</li>
+<li>Based on <span class="math inline">\(\Sigma\)</span> (total covariance)</li>
+</ul>
+<p><strong>LDA (supervised):</strong></p>
+<ul>
+<li>Maximizes <strong>class separation</strong></li>
+<li>Uses class labels</li>
+<li>Finds discriminative directions</li>
+<li>Based on <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (covariance ratio)</li>
+</ul>
+</section>
+<section id="complementarity" class="level3">
+<h3 class="anchored" data-anchor-id="complementarity">Complementarity</h3>
+<p>💡 <strong>In practice:</strong> PCA and LDA can be combined:</p>
+<ul>
+<li>PCA for initial dimensionality reduction (noise removal)</li>
+<li>LDA to maximize discrimination</li>
+</ul>
+<p><strong>Concrete example:</strong> Face recognition with Fisherfaces (LDA) as opposed to Eigenfaces (PCA).</p>
+<hr>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+<span class="screen-reader-only">Tip</span>💡 Condensed revision sheet
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Astuce mnémotechnique :</strong> - <strong>B</strong> comme <strong>Between</strong> = <strong>B</strong> pour “Bien séparer” (les centres) - <strong>W</strong> comme <strong>Within</strong> = <strong>W</strong> pour “Regrouper” (chaque classe)</p>
-</div>
-</div>
-</section>
-</section>
-<section id="la-solution-élégante-un-problème-aux-valeurs-propres" class="level2">
-<h2 class="anchored" data-anchor-id="la-solution-élégante-un-problème-aux-valeurs-propres">5. La solution élégante : Un problème aux valeurs propres</h2>
-<section id="le-aha-moment" class="level3">
-<h3 class="anchored" data-anchor-id="le-aha-moment">Le “aha!” moment</h3>
-<p>En cherchant le maximum du ratio, on tombe sur l’équation :</p>
-<pre><code>Σ_b·a = λ·Σ_w·a</code></pre>
-<p>C’est un <strong>problème aux valeurs propres généralisé</strong> !</p>
-<p><strong>Solution :</strong> La direction optimale <strong>a</strong> est le premier vecteur propre de <code>Σ_w⁻¹·Σ_b</code>.</p>
-<pre class="mermaid"><code>graph LR
-    A[Données étiquetées] --&gt; B[Calculer Σ_w et Σ_b]
-    B --&gt; C[Résoudre Σ_w⁻¹·Σ_b·a = λ·a]
-    C --&gt; D[Trier les vecteurs propres&lt;br/&gt;par valeurs propres décroissantes]
-    D --&gt; E[Garder les M-1 premiers&lt;br/&gt;vecteurs propres]
-    
-    style C fill:#fff0e6
-    style E fill:#e6ffe6</code></pre>
-</section>
-</section>
-<section id="la-limitation-dimensionnelle-surprenante" class="level2">
-<h2 class="anchored" data-anchor-id="la-limitation-dimensionnelle-surprenante">6. La limitation dimensionnelle surprenante</h2>
-<section id="pourquoi-seulement-m-1-dimensions" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-seulement-m-1-dimensions">Pourquoi seulement M-1 dimensions ?</h3>
-<p>Avec M classes, la LDA ne peut trouver que <strong>M-1</strong> directions discriminantes non nulles.</p>
-<p><strong>Analogie :</strong> Avec 3 points (3 classes), vous pouvez au plus les placer dans un plan (2D). Avec 2 points (2 classes), vous pouvez au plus les placer sur une ligne (1D).</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Piège à éviter :</strong> Si vous avez plus de dimensions que M-1, les directions supplémentaires auront une valeur propre nulle → pas discriminantes.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="en-pratique-la-recette-lda" class="level2">
-<h2 class="anchored" data-anchor-id="en-pratique-la-recette-lda">7. En pratique : La recette LDA</h2>
-<section id="étape-1-préparer-les-données" class="level3">
-<h3 class="anchored" data-anchor-id="étape-1-préparer-les-données">Étape 1 : Préparer les données</h3>
+<p><strong>In 30 seconds:</strong></p>
 <ul>
-<li>Vérifier que chaque classe a assez d’exemples (au moins D+1 pour éviter Σ_w singulière)</li>
-<li>Optionnel : standardiser si les échelles sont très différentes</li>
+<li>LDA = supervised dimensionality reduction (uses labels)</li>
+<li>Maximizes (distance between centers) / (dispersion within classes)</li>
+<li>Solution = eigenvectors of <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span></li>
+<li>At most M-1 discriminative dimensions</li>
+<li>Assumes: Gaussian classes, identical covariances</li>
+<li>Useful for: classification, supervised visualization</li>
+<li>Alternative: QDA if covariances differ</li>
 </ul>
-</section>
-<section id="étape-2-calculer-les-matrices-clés" class="level3">
-<h3 class="anchored" data-anchor-id="étape-2-calculer-les-matrices-clés">Étape 2 : Calculer les matrices clés</h3>
-<ol type="1">
-<li><strong>Σ_w</strong> (within) : moyenne des covariances de chaque classe</li>
-<li><strong>Σ_b</strong> (between) : covariance des centres de classes</li>
-</ol>
-</section>
-<section id="étape-3-résoudre-le-problème-aux-valeurs-propres" class="level3">
-<h3 class="anchored" data-anchor-id="étape-3-résoudre-le-problème-aux-valeurs-propres">Étape 3 : Résoudre le problème aux valeurs propres</h3>
-<p>Calculer les vecteurs propres de <code>Σ_w⁻¹·Σ_b</code></p>
-</section>
-<section id="étape-4-garder-les-m-1-premières-directions" class="level3">
-<h3 class="anchored" data-anchor-id="étape-4-garder-les-m-1-premières-directions">Étape 4 : Garder les M-1 premières directions</h3>
-<p>Trier par valeurs propres décroissantes, garder les plus importantes</p>
-</section>
-<section id="étape-5-projeter-et-classifier" class="level3">
-<h3 class="anchored" data-anchor-id="étape-5-projeter-et-classifier">Étape 5 : Projeter et classifier</h3>
-<ul>
-<li>Projeter les données sur le sous-espace discriminant</li>
-<li>Classifier (par exemple avec une règle du plus proche voisin)</li>
-</ul>
-</section>
-</section>
-<section id="lda-comme-classifieur-lhypothèse-gaussienne" class="level2">
-<h2 class="anchored" data-anchor-id="lda-comme-classifieur-lhypothèse-gaussienne">8. LDA comme classifieur : L’hypothèse gaussienne</h2>
-<section id="la-modélisation-probabiliste" class="level3">
-<h3 class="anchored" data-anchor-id="la-modélisation-probabiliste">La modélisation probabiliste</h3>
-<p>La LDA suppose que <strong>chaque classe suit une distribution gaussienne</strong> avec : - Moyenne différente pour chaque classe - <strong>Même matrice de covariance</strong> pour toutes les classes (c’est crucial !)</p>
-<pre class="mermaid"><code>graph TD
-    A[Hypothèse LDA] --&gt; B[Chaque classe = Gaussienne]
-    B --&gt; C[Moyennes différentes]
-    B --&gt; D[Même covariance Σ]
-    C --&gt; E[Séparation linéaire optimale]
-    D --&gt; E
-    
-    style E fill:#e6ffe6</code></pre>
-</section>
-<section id="la-frontière-de-décision" class="level3">
-<h3 class="anchored" data-anchor-id="la-frontière-de-décision">La frontière de décision</h3>
-<p>Avec cette hypothèse, la frontière entre deux classes est <strong>linéaire</strong> (d’où le “L” de LDA).</p>
-<p><strong>Pourquoi ?</strong> Les contours d’égal densité de deux gaussiennes avec même covariance sont des hyperplans.</p>
-</section>
-</section>
-<section id="quand-la-lda-fonctionne-bien-et-moins-bien" class="level2">
-<h2 class="anchored" data-anchor-id="quand-la-lda-fonctionne-bien-et-moins-bien">9. Quand la LDA fonctionne bien (et moins bien)</h2>
-<section id="conditions-idéales" class="level3">
-<h3 class="anchored" data-anchor-id="conditions-idéales">Conditions idéales ✅</h3>
-<ul>
-<li>Les classes sont <strong>approximativement gaussiennes</strong></li>
-<li>Les covariances des classes sont <strong>similaires</strong></li>
-<li>Assez d’exemples par classe (au moins 10× le nombre de dimensions)</li>
-<li>Relations <strong>linéaires</strong> entre variables</li>
-</ul>
-</section>
-<section id="situations-problématiques" class="level3">
-<h3 class="anchored" data-anchor-id="situations-problématiques">Situations problématiques ❌</h3>
-<ul>
-<li><strong>Covariances très différentes</strong> → utiliser QDA (Quadratic Discriminant Analysis)</li>
-<li><strong>Relations non-linéaires</strong> → Kernel LDA ou méthodes non-linéaires</li>
-<li><strong>Peu d’exemples</strong> par rapport aux dimensions → régulariser ou réduire dimension d’abord</li>
-<li><strong>Classes non-gaussiennes</strong> → autres classifieurs (forêts aléatoires, SVM…)</li>
-</ul>
-</section>
-</section>
-<section id="lda-vs-qda-le-dilemme-linéaire-vs-quadratique" class="level2">
-<h2 class="anchored" data-anchor-id="lda-vs-qda-le-dilemme-linéaire-vs-quadratique">10. LDA vs QDA : Le dilemme linéaire vs quadratique</h2>
-<section id="la-différence-cruciale" class="level3">
-<h3 class="anchored" data-anchor-id="la-différence-cruciale">La différence cruciale</h3>
-<ul>
-<li><strong>LDA</strong> : Suppose <strong>même covariance</strong> pour toutes classes → frontières linéaires</li>
-<li><strong>QDA</strong> : Suppose <strong>covariances différentes</strong> → frontières quadratiques</li>
-</ul>
-<pre class="mermaid"><code>graph LR
-    A[Données] --&gt; B{Comparer les covariances}
-    B --&gt;|Similaires| C[LDA&lt;br/&gt;Frontières linéaires]
-    B --&gt;|Différentes| D[QDA&lt;br/&gt;Frontières quadratiques]
-    
-    style C fill:#e6f3ff
-    style D fill:#ffe6e6</code></pre>
-<p><strong>Règle pratique :</strong> Si vous avez peu de données, LDA est plus robuste (moins de paramètres à estimer).</p>
-</section>
-</section>
-<section id="lda-dans-le-monde-réel-lexemple-des-visages" class="level2">
-<h2 class="anchored" data-anchor-id="lda-dans-le-monde-réel-lexemple-des-visages">11. LDA dans le monde réel : L’exemple des visages</h2>
-<section id="reconnaissance-faciale-avec-lda-fisherfaces" class="level3">
-<h3 class="anchored" data-anchor-id="reconnaissance-faciale-avec-lda-fisherfaces">Reconnaissance faciale avec LDA (Fisherfaces)</h3>
-<p>Contrairement aux Eigenfaces (PCA), les Fisherfaces (LDA) : 1. <strong>PCA d’abord</strong> : Réduire la dimension pour éviter les problèmes numériques 2. <strong>LDA ensuite</strong> : Trouver les directions qui séparent les personnes</p>
-<p><strong>Résultat :</strong> Meilleure performance pour distinguer différentes personnes, car on ignore les variations d’éclairage, pose, etc. (qui sont communes à toutes les classes).</p>
-</section>
-</section>
-<section id="fiche-de-révision-ultra-condensée" class="level2">
-<h2 class="anchored" data-anchor-id="fiche-de-révision-ultra-condensée">12. Fiche de révision ultra-condensée</h2>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+<span class="screen-reader-only">Important</span>📌 Mathematical concepts to master
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>En 30 secondes :</strong></p>
-<ol type="1">
-<li><strong>LDA = réduction supervisée</strong> (utilise les étiquettes)</li>
-<li><strong>Maximise</strong> (distance entre centres) / (dispersion dans classes)</li>
-<li><strong>Solution</strong> = vecteurs propres de Σ_w⁻¹·Σ_b</li>
-<li><strong>Au plus M-1</strong> dimensions discriminantes</li>
-<li><strong>Suppose</strong> : classes gaussiennes, mêmes covariances</li>
-<li><strong>Utile pour</strong> : classification, visualisation supervisée</li>
-<li><strong>Alternative</strong> : QDA si covariances différentes</li>
-</ol>
+<p>To fully understand LDA:</p>
+<p><strong>Linear algebra:</strong></p>
+<ul>
+<li>Eigenvectors and eigenvalues</li>
+<li>Generalized eigenvalue system</li>
+<li>Covariance matrices</li>
+<li>Orthogonal projection</li>
+</ul>
+<p><strong>Statistics:</strong></p>
+<ul>
+<li>Mean and variance</li>
+<li>Covariance and correlation</li>
+<li>Multivariate normal distribution</li>
+<li>Bayes’ rule</li>
+</ul>
+<p><strong>Optimization:</strong></p>
+<ul>
+<li>Matrix function differentiation</li>
+<li>Constrained optimization</li>
+<li>Rayleigh quotient method</li>
+</ul>
 </div>
 </div>
-</section>
-<section id="pour-loral-les-3-histoires-à-raconter" class="level2">
-<h2 class="anchored" data-anchor-id="pour-loral-les-3-histoires-à-raconter">13. Pour l’oral : Les 3 histoires à raconter</h2>
-<section id="histoire-1-le-tri-postal" class="level3">
-<h3 class="anchored" data-anchor-id="histoire-1-le-tri-postal">Histoire 1 : Le tri postal</h3>
-<p>“Imaginez trier automatiquement du courrier. La LDA trouve comment regarder les lettres pour mieux distinguer les types…”</p>
-</section>
-<section id="histoire-2-larbitre-sportif" class="level3">
-<h3 class="anchored" data-anchor-id="histoire-2-larbitre-sportif">Histoire 2 : L’arbitre sportif</h3>
-<p>“Comme un arbitre qui trace une ligne au milieu du terrain, la LDA trace la frontière optimale entre équipes…”</p>
-</section>
-<section id="histoire-3-les-jumeaux-statistiques" class="level3">
-<h3 class="anchored" data-anchor-id="histoire-3-les-jumeaux-statistiques">Histoire 3 : Les jumeaux statistiques</h3>
-<p>“La LDA suppose que toutes les classes sont comme des jumeaux : même forme (covariance), mais placés à des endroits différents (moyennes)…”</p>
-</section>
-</section>
-<section id="questions-pièges-et-comment-y-répondre" class="level2">
-<h2 class="anchored" data-anchor-id="questions-pièges-et-comment-y-répondre">14. Questions pièges et comment y répondre</h2>
-<p><strong>Q : “Pourquoi M-1 dimensions maximum ?”</strong> R : “Avec M points (les centres), vous pouvez au plus les placer dans un espace de dimension M-1. Plus de dimensions seraient redondantes.”</p>
-<p><strong>Q : “LDA vs PCA pour la visualisation ?”</strong> R : “PCA montre la structure globale, LDA montre la séparation entre classes. Pour explorer les données, PCA. Pour visualiser la discrimination, LDA.”</p>
-<p><strong>Q : “Quand LDA échoue-t-elle ?”</strong> R : “Quand les classes n’ont pas la même forme (covariance différente), ou quand leurs frontières sont courbes.”</p>
-</section>
-<section id="lastuce-mnémotechnique-finale" class="level2">
-<h2 class="anchored" data-anchor-id="lastuce-mnémotechnique-finale">15. L’astuce mnémotechnique finale</h2>
-<p><strong>FLDR</strong> = <strong>F</strong>isher’s <strong>L</strong>inear <strong>D</strong>iscriminant <strong>R</strong>atio</p>
-<pre><code>J(a) = (distance entre centres)² / (dispersion dans classes)</code></pre>
-<p><strong>B</strong> et <strong>W</strong> : - <strong>B</strong> pour <strong>B</strong>etween = <strong>B</strong>ien séparer - <strong>W</strong> pour <strong>W</strong>ithin = <strong>W</strong>ell grouped (bien regroupé)</p>
-</section>
-<section id="en-résumé-la-lda-cest" class="level2">
-<h2 class="anchored" data-anchor-id="en-résumé-la-lda-cest">16. En résumé : La LDA, c’est…</h2>
-<p><strong>L’art de trouver la perspective qui sépare le mieux les catégories.</strong> Une méthode élégante qui transforme un problème de classification en un problème géométrique d’optimisation de projection.</p>
-<p><strong>Pour finir :</strong> La LDA ne vous dit pas si vos classes sont séparables, elle vous donne <strong>la meilleure chance</strong> de les séparer linéairement.</p>
 
 
+</section>
 </section>
 </section>
 

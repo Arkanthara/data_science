@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds3 – ISS</title>
+<title>ds5 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -316,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds3.html">Principal Component Analysis</a></li><li class="breadcrumb-item"><a href="./ds3.html">Detailed Course</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Detailed Course</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -370,7 +370,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds3.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ds3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Detailed Course</span></a>
   </div>
 </li>
@@ -393,7 +393,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds5.html" class="sidebar-item-text sidebar-link">
+  <a href="./ds5.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Detailed Course</span></a>
   </div>
 </li>
@@ -420,36 +420,73 @@ window.Quarto = {
   <li><a href="#introduction-and-motivation" id="toc-introduction-and-motivation" class="nav-link" data-scroll-target="#introduction-and-motivation">Introduction and Motivation</a>
   <ul class="collapse">
   <li><a href="#general-context" id="toc-general-context" class="nav-link" data-scroll-target="#general-context">General Context</a></li>
-  <li><a href="#fundamental-characteristics" id="toc-fundamental-characteristics" class="nav-link" data-scroll-target="#fundamental-characteristics">Fundamental Characteristics</a></li>
   </ul></li>
-  <li><a href="#formalization" id="toc-formalization" class="nav-link" data-scroll-target="#formalization">Formalization</a>
+  <li><a href="#supervised-learning-foundations" id="toc-supervised-learning-foundations" class="nav-link" data-scroll-target="#supervised-learning-foundations">Supervised Learning: Foundations</a>
   <ul class="collapse">
-  <li><a href="#maximizing-variance" id="toc-maximizing-variance" class="nav-link" data-scroll-target="#maximizing-variance">Maximizing Variance</a></li>
-  <li><a href="#minimizing-error" id="toc-minimizing-error" class="nav-link" data-scroll-target="#minimizing-error">Minimizing Error</a></li>
+  <li><a href="#general-definition" id="toc-general-definition" class="nav-link" data-scroll-target="#general-definition">General Definition</a></li>
+  <li><a href="#examples-of-learners" id="toc-examples-of-learners" class="nav-link" data-scroll-target="#examples-of-learners">Examples of Learners</a></li>
   </ul></li>
-  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction" class="nav-link" data-scroll-target="#dimensionality-reduction">Dimensionality Reduction</a>
+  <li><a href="#principle-of-lda-discriminant-direction" id="toc-principle-of-lda-discriminant-direction" class="nav-link" data-scroll-target="#principle-of-lda-discriminant-direction">Principle of LDA: Discriminant Direction</a>
   <ul class="collapse">
-  <li><a href="#structure-of-the-latent-space" id="toc-structure-of-the-latent-space" class="nav-link" data-scroll-target="#structure-of-the-latent-space">Structure of the Latent Space</a></li>
-  <li><a href="#low-rank-approximation-and-dimensionality-reduction" id="toc-low-rank-approximation-and-dimensionality-reduction" class="nav-link" data-scroll-target="#low-rank-approximation-and-dimensionality-reduction">Low-Rank Approximation and Dimensionality Reduction</a></li>
-  <li><a href="#geometry-and-reconstruction-quality" id="toc-geometry-and-reconstruction-quality" class="nav-link" data-scroll-target="#geometry-and-reconstruction-quality">Geometry and Reconstruction Quality</a></li>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
+  <li><a href="#discriminant-direction-with-2-classes" id="toc-discriminant-direction-with-2-classes" class="nav-link" data-scroll-target="#discriminant-direction-with-2-classes">Discriminant Direction with 2 Classes</a></li>
   </ul></li>
-  <li><a href="#practical-application-of-pca" id="toc-practical-application-of-pca" class="nav-link" data-scroll-target="#practical-application-of-pca">Practical Application of PCA</a>
+  <li><a href="#between-class-criterion" id="toc-between-class-criterion" class="nav-link" data-scroll-target="#between-class-criterion">Between-Class Criterion</a>
   <ul class="collapse">
-  <li><a href="#complete-pca-algorithm" id="toc-complete-pca-algorithm" class="nav-link" data-scroll-target="#complete-pca-algorithm">Complete PCA Algorithm</a></li>
-  <li><a href="#choosing-the-number-of-components-k" id="toc-choosing-the-number-of-components-k" class="nav-link" data-scroll-target="#choosing-the-number-of-components-k">Choosing the Number of Components <span class="math inline">\(K\)</span></a></li>
+  <li><a href="#principle-of-maximum-separation" id="toc-principle-of-maximum-separation" class="nav-link" data-scroll-target="#principle-of-maximum-separation">Principle of Maximum Separation</a></li>
+  <li><a href="#mathematical-formulation" id="toc-mathematical-formulation" class="nav-link" data-scroll-target="#mathematical-formulation">Mathematical Formulation</a></li>
   </ul></li>
-  <li><a href="#alternatives-and-extensions" id="toc-alternatives-and-extensions" class="nav-link" data-scroll-target="#alternatives-and-extensions">Alternatives and Extensions</a>
+  <li><a href="#within-class-criterion" id="toc-within-class-criterion" class="nav-link" data-scroll-target="#within-class-criterion">Within-Class Criterion</a>
   <ul class="collapse">
-  <li><a href="#linear-autoencoders-linear-ae" id="toc-linear-autoencoders-linear-ae" class="nav-link" data-scroll-target="#linear-autoencoders-linear-ae">Linear Autoencoders (Linear AE)</a></li>
-  <li><a href="#relationship-between-pca-and-linear-autoencoder" id="toc-relationship-between-pca-and-linear-autoencoder" class="nav-link" data-scroll-target="#relationship-between-pca-and-linear-autoencoder">Relationship Between PCA and Linear Autoencoder</a></li>
-  <li><a href="#extensions-of-autoencoders" id="toc-extensions-of-autoencoders" class="nav-link" data-scroll-target="#extensions-of-autoencoders">Extensions of Autoencoders</a></li>
-  <li><a href="#alternative-formulations-of-pca" id="toc-alternative-formulations-of-pca" class="nav-link" data-scroll-target="#alternative-formulations-of-pca">Alternative Formulations of PCA</a></li>
+  <li><a href="#principle-of-minimum-variance" id="toc-principle-of-minimum-variance" class="nav-link" data-scroll-target="#principle-of-minimum-variance">Principle of Minimum Variance</a></li>
+  <li><a href="#within-class-variance" id="toc-within-class-variance" class="nav-link" data-scroll-target="#within-class-variance">Within-Class Variance</a></li>
+  <li><a href="#fishers-criterion" id="toc-fishers-criterion" class="nav-link" data-scroll-target="#fishers-criterion">Fisher’s Criterion</a></li>
   </ul></li>
-  <li><a href="#synthesis-and-key-points" id="toc-synthesis-and-key-points" class="nav-link" data-scroll-target="#synthesis-and-key-points">Synthesis and Key Points</a>
+  <li><a href="#generalization-to-m-classes" id="toc-generalization-to-m-classes" class="nav-link" data-scroll-target="#generalization-to-m-classes">Generalization to M Classes</a>
   <ul class="collapse">
-  <li><a href="#essential-characteristics-of-pca" id="toc-essential-characteristics-of-pca" class="nav-link" data-scroll-target="#essential-characteristics-of-pca">Essential Characteristics of PCA</a></li>
-  <li><a href="#when-to-use-pca" id="toc-when-to-use-pca" class="nav-link" data-scroll-target="#when-to-use-pca">When to Use PCA?</a></li>
-  <li><a href="#mathematical-concepts-to-master" id="toc-mathematical-concepts-to-master" class="nav-link" data-scroll-target="#mathematical-concepts-to-master">Mathematical Concepts to Master</a></li>
+  <li><a href="#generalized-between-class-criterion" id="toc-generalized-between-class-criterion" class="nav-link" data-scroll-target="#generalized-between-class-criterion">Generalized Between-Class Criterion</a></li>
+  <li><a href="#generalized-within-class-criterion" id="toc-generalized-within-class-criterion" class="nav-link" data-scroll-target="#generalized-within-class-criterion">Generalized Within-Class Criterion</a></li>
+  </ul></li>
+  <li><a href="#combined-fishers-criterion" id="toc-combined-fishers-criterion" class="nav-link" data-scroll-target="#combined-fishers-criterion">Combined Fisher’s Criterion</a>
+  <ul class="collapse">
+  <li><a href="#combining-both-criteria" id="toc-combining-both-criteria" class="nav-link" data-scroll-target="#combining-both-criteria">Combining Both Criteria</a></li>
+  <li><a href="#solution-by-differentiation" id="toc-solution-by-differentiation" class="nav-link" data-scroll-target="#solution-by-differentiation">Solution by Differentiation</a></li>
+  </ul></li>
+  <li><a href="#discriminant-subspaces" id="toc-discriminant-subspaces" class="nav-link" data-scroll-target="#discriminant-subspaces">Discriminant Subspaces</a>
+  <ul class="collapse">
+  <li><a href="#multiple-discriminant-dimensions" id="toc-multiple-discriminant-dimensions" class="nav-link" data-scroll-target="#multiple-discriminant-dimensions">Multiple Discriminant Dimensions</a></li>
+  <li><a href="#dimensional-limitation" id="toc-dimensional-limitation" class="nav-link" data-scroll-target="#dimensional-limitation">Dimensional Limitation</a></li>
+  <li><a href="#special-case-m-2" id="toc-special-case-m-2" class="nav-link" data-scroll-target="#special-case-m-2">Special Case: M = 2</a></li>
+  </ul></li>
+  <li><a href="#practical-example-character-recognition" id="toc-practical-example-character-recognition" class="nav-link" data-scroll-target="#practical-example-character-recognition">Practical Example: Character Recognition</a>
+  <ul class="collapse">
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset Description</a></li>
+  <li><a href="#result-of-lda-projection" id="toc-result-of-lda-projection" class="nav-link" data-scroll-target="#result-of-lda-projection">Result of LDA Projection</a></li>
+  </ul></li>
+  <li><a href="#inference-and-decision-making" id="toc-inference-and-decision-making" class="nav-link" data-scroll-target="#inference-and-decision-making">Inference and Decision Making</a>
+  <ul class="collapse">
+  <li><a href="#conditional-modeling" id="toc-conditional-modeling" class="nav-link" data-scroll-target="#conditional-modeling">Conditional Modeling</a></li>
+  <li><a href="#probabilistic-approach" id="toc-probabilistic-approach" class="nav-link" data-scroll-target="#probabilistic-approach">Probabilistic Approach</a></li>
+  </ul></li>
+  <li><a href="#gaussian-approximation" id="toc-gaussian-approximation" class="nav-link" data-scroll-target="#gaussian-approximation">Gaussian Approximation</a>
+  <ul class="collapse">
+  <li><a href="#class-specific-gaussian-model" id="toc-class-specific-gaussian-model" class="nav-link" data-scroll-target="#class-specific-gaussian-model">Class-Specific Gaussian Model</a></li>
+  <li><a href="#maximum-likelihood" id="toc-maximum-likelihood" class="nav-link" data-scroll-target="#maximum-likelihood">Maximum Likelihood</a></li>
+  <li><a href="#decision-rule" id="toc-decision-rule" class="nav-link" data-scroll-target="#decision-rule">Decision Rule</a></li>
+  </ul></li>
+  <li><a href="#optimality-of-lda" id="toc-optimality-of-lda" class="nav-link" data-scroll-target="#optimality-of-lda">Optimality of LDA</a>
+  <ul class="collapse">
+  <li><a href="#optimality-conditions" id="toc-optimality-conditions" class="nav-link" data-scroll-target="#optimality-conditions">Optimality Conditions</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  </ul></li>
+  <li><a href="#synthesis-of-key-concepts" id="toc-synthesis-of-key-concepts" class="nav-link" data-scroll-target="#synthesis-of-key-concepts">Synthesis of Key Concepts</a>
+  <ul class="collapse">
+  <li><a href="#essential-characteristics-of-lda" id="toc-essential-characteristics-of-lda" class="nav-link" data-scroll-target="#essential-characteristics-of-lda">Essential Characteristics of LDA</a></li>
+  </ul></li>
+  <li><a href="#comparison-lda-vs-pca" id="toc-comparison-lda-vs-pca" class="nav-link" data-scroll-target="#comparison-lda-vs-pca">Comparison: LDA vs PCA</a>
+  <ul class="collapse">
+  <li><a href="#fundamental-differences" id="toc-fundamental-differences" class="nav-link" data-scroll-target="#fundamental-differences">Fundamental Differences</a></li>
+  <li><a href="#complementarity" id="toc-complementarity" class="nav-link" data-scroll-target="#complementarity">Complementarity</a></li>
   </ul></li>
   <li><a href="#typical-exam-questions" id="toc-typical-exam-questions" class="nav-link" data-scroll-target="#typical-exam-questions">Typical Exam Questions</a>
   <ul class="collapse">
@@ -457,12 +494,13 @@ window.Quarto = {
   <li><a href="#technical-questions" id="toc-technical-questions" class="nav-link" data-scroll-target="#technical-questions">Technical Questions</a></li>
   <li><a href="#mathematical-proofs" id="toc-mathematical-proofs" class="nav-link" data-scroll-target="#mathematical-proofs">Mathematical Proofs</a></li>
   </ul></li>
+  <li><a href="#mathematical-concepts-to-master" id="toc-mathematical-concepts-to-master" class="nav-link" data-scroll-target="#mathematical-concepts-to-master">Mathematical Concepts to Master</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds3.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds5.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds3.html">Principal Component Analysis</a></li><li class="breadcrumb-item"><a href="./ds3.html">Detailed Course</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5.html">Detailed Course</a></li></ol></nav></header>
 
 
 
@@ -475,418 +513,337 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="introduction-and-motivation">Introduction and Motivation</h2>
 <section id="general-context" class="level3">
 <h3 class="anchored" data-anchor-id="general-context">General Context</h3>
-<p><strong>PCA (Principal Component Analysis)</strong> is a <strong>linear latent decomposition</strong> method that identifies the <strong>underlying latent factors</strong> structuring data.</p>
-<p><strong>Main Problem:</strong></p>
-<p>Base representations of data are not always optimal. PCA seeks to find a new representation that:</p>
+<p><strong>LDA (Linear Discriminant Analysis)</strong> is a <strong>supervised latent analysis</strong> method that finds the optimal latent factors for discrimination between classes.</p>
+<p><strong>Objectives of LDA:</strong></p>
 <ul>
-<li>Reveals the <strong>latent factors</strong> (hidden) governing the process</li>
-<li>Uses <strong>statistical correlation</strong> to identify these factors</li>
-<li>Enables <strong>simplification</strong> of data through justified decimation</li>
+<li>Introduce a <strong>supervised</strong> definition of latent factors</li>
+<li>Propose a <strong>conditional modeling</strong> of data</li>
+<li>Perform <strong>classification</strong> of unlabeled items</li>
 </ul>
-</section>
-<section id="fundamental-characteristics" class="level3">
-<h3 class="anchored" data-anchor-id="fundamental-characteristics">Fundamental Characteristics</h3>
-<p>PCA exhibits <strong>linear latent factors</strong> and allows several complementary interpretations that we will study.</p>
-<p>📌 <strong>Key Point:</strong> PCA belongs to the family of <strong>linear latent models</strong></p>
+<p>⚠️ <strong>Warning:</strong> This LDA should not be confused with <strong>Latent Dirichlet Allocation</strong> (used in NLP)</p>
 <hr>
 </section>
 </section>
-<section id="formalization" class="level2">
-<h2 class="anchored" data-anchor-id="formalization">Formalization</h2>
-<section id="maximizing-variance" class="level3">
-<h3 class="anchored" data-anchor-id="maximizing-variance">Maximizing Variance</h3>
-<section id="geometric-intuition" class="level4">
-<h4 class="anchored" data-anchor-id="geometric-intuition">Geometric Intuition</h4>
-<p><strong>Fundamental Question:</strong> What information should we preserve when projecting?</p>
-<p><strong>Illustrative Example:</strong></p>
-<p>Suppose data <span class="math inline">\(X \subset \Omega\)</span> is almost contained within a 2D plane in a 3D space. The relevant choice is to select a basis <span class="math inline">\(\{u_1, u_2\}\)</span> for this plane.</p>
-<p><strong>Characterization of the Optimal Basis <span class="math inline">\(\{u_1, u_2, u_3\}\)</span>:</strong></p>
-<ul>
-<li>Data <strong>varies most</strong> along directions <span class="math inline">\(u_1\)</span> and <span class="math inline">\(u_2\)</span></li>
-<li>Data <strong>varies least</strong> orthogonally to these directions (along <span class="math inline">\(u_3\)</span>)</li>
-</ul>
+<section id="supervised-learning-foundations" class="level2">
+<h2 class="anchored" data-anchor-id="supervised-learning-foundations">Supervised Learning: Foundations</h2>
+<section id="general-definition" class="level3">
+<h3 class="anchored" data-anchor-id="general-definition">General Definition</h3>
+<p>Given data <span class="math inline">\(X \subset \Omega \subseteq \mathbb{R}^D\)</span> associated with categories (class labels) <span class="math inline">\(Y = [[M]] \subset \mathbb{N}\)</span>.</p>
+<p><strong>Supervised learning</strong> consists of finding (learning) the parameters <span class="math inline">\(\theta\)</span> of a learner (function) <span class="math inline">\(\phi_\theta\)</span> to minimize the loss <span class="math inline">\(L_{X \times Y}(\theta)\)</span> incurred when predicting class labels.</p>
+<p><strong>Prediction Function:</strong></p>
+<p><span class="math display">\[\phi_\theta : \Omega \to Y\]</span> <span class="math display">\[x_i \mapsto \phi_\theta(x_i) = \tilde{y}_i\]</span></p>
 </section>
-<section id="mathematical-formalization" class="level4">
-<h4 class="anchored" data-anchor-id="mathematical-formalization">Mathematical Formalization</h4>
-<p><strong>Definitions:</strong></p>
-<p>Let <span class="math inline">\(X\)</span> be the dataset, <span class="math inline">\(\{u_i\}_{i \in [\![D]\!]}\)</span> a new <strong>orthonormal basis</strong> of <span class="math inline">\(\mathbb{R}^D\)</span>.</p>
-<p>The <strong>first principal component</strong> <span class="math inline">\(u_1\)</span> is chosen such that the <strong>variance of the projected data</strong> on <span class="math inline">\(u_1\)</span> is maximized.</p>
-<p>The component <span class="math inline">\(u_2\)</span> is then chosen using the projection on <span class="math inline">\(\text{Proj}_{u_1^{\perp}}(X)\)</span> (orthogonal to <span class="math inline">\(u_1\)</span>).</p>
-<p><strong>Mathematical Model:</strong></p>
-<p>The empirical mean and projected variance are:</p>
-<p><span class="math display">\[x = \frac{1}{N} \sum_{i=1}^{N} x_i\]</span></p>
-<p><span class="math display">\[v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T x_i - u_1^T x)^2 = u_1^T \Sigma u_1\]</span></p>
-<p>where <span class="math inline">\(\Sigma = \frac{1}{N} \sum_{i=1}^{N} (x_i - x)(x_i - x)^T\)</span> is the <strong>covariance matrix</strong> of the data.</p>
-<p><strong>Optimization Problem:</strong></p>
-<p><span class="math display">\[u_1 = \underset{u^T u = 1}{\arg\max} \, u^T \Sigma u\]</span></p>
-</section>
-<section id="solution-via-lagrange-multipliers" class="level4">
-<h4 class="anchored" data-anchor-id="solution-via-lagrange-multipliers">Solution via Lagrange Multipliers</h4>
-<p><strong>Lagrangian Function:</strong></p>
-<p><span class="math display">\[J(u) = u^T \Sigma u + \lambda(1 - u^T u)\]</span></p>
-<p><strong>Optimality Conditions:</strong></p>
-<p><span class="math display">\[\frac{\partial J(u)}{\partial u}\bigg|_{u=u_1} = 0 \quad \text{and} \quad \frac{\partial J(u)}{\partial \lambda}\bigg|_{\lambda=\lambda_1} = 0\]</span></p>
-<p><strong>Fundamental Result:</strong></p>
-<p><span class="math display">\[\Sigma u_1 = \lambda_1 u_1 \quad \Rightarrow \quad v_{u_1} = u_1^T \Sigma u_1 = \lambda_1\]</span></p>
-<p>✅ <strong>Conclusion:</strong> <span class="math inline">\((u_1, \lambda_1)\)</span> is an <strong>eigenpair</strong> of the covariance matrix <span class="math inline">\(\Sigma\)</span></p>
-</section>
-<section id="complete-decomposition" class="level4">
-<h4 class="anchored" data-anchor-id="complete-decomposition">Complete Decomposition</h4>
-<p>Continuing this decimation process, we obtain the set of <strong>principal components</strong> as the eigenpairs <span class="math inline">\(\{(u_i, \lambda_i)\}_{i \in [\![D]\!]}\)</span> of <span class="math inline">\(\Sigma\)</span>.</p>
-<p><strong>Matrix Decomposition:</strong></p>
-<p><span class="math display">\[\Lambda = \begin{pmatrix} \lambda_1 &amp; 0 &amp; \cdots &amp; 0 \\ 0 &amp; \lambda_2 &amp; \cdots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; \cdots &amp; \lambda_D \end{pmatrix} = \begin{pmatrix} | &amp; | &amp; &amp; | \\ u_1 &amp; u_2 &amp; \cdots &amp; u_D \\ | &amp; | &amp; &amp; | \end{pmatrix}^T \Sigma \begin{pmatrix} | &amp; | &amp; &amp; | \\ u_1 &amp; u_2 &amp; \cdots &amp; u_D \\ | &amp; | &amp; &amp; | \end{pmatrix} = U^T \Sigma U\]</span></p>
+<section id="examples-of-learners" class="level3">
+<h3 class="anchored" data-anchor-id="examples-of-learners">Examples of Learners</h3>
+<p><strong>Logistic Regression:</strong></p>
+<p><span class="math inline">\(\phi_\theta\)</span> is a logistic regression with parameters <span class="math inline">\(\theta\)</span></p>
+<p><strong>Neural Network:</strong></p>
+<p><span class="math inline">\(\phi_\theta\)</span> is a neural network with weights <span class="math inline">\(\theta\)</span></p>
+<p><strong>Example Loss Function:</strong></p>
+<p><span class="math display">\[L_{X \times Y}(\theta) = \sum_X \|\phi_\theta(x_i) - y_i\|^2\]</span></p>
 <hr>
 </section>
 </section>
-<section id="minimizing-error" class="level3">
-<h3 class="anchored" data-anchor-id="minimizing-error">Minimizing Error</h3>
-<section id="variance-error-equivalence" class="level4">
-<h4 class="anchored" data-anchor-id="variance-error-equivalence">Variance-Error Equivalence</h4>
-<p>The variance <span class="math inline">\(v_{u_1}\)</span> can be expressed as a sum of squares:</p>
-<p><span class="math display">\[v_{u_1} = \frac{1}{N} \sum_{i=1}^{N} (u_1^T (x_i - x))^2\]</span></p>
-<p><strong>Reasoning via the Pythagorean Theorem:</strong></p>
-<ul>
-<li>To maximize <span class="math inline">\(v_{u_1}\)</span>, the terms <span class="math inline">\(u_1^T(x_i - x)\)</span> must be collectively maximized</li>
-<li>Since <span class="math inline">\((x_i - x)\)</span> is fixed, this is equivalent to <strong>minimizing the distance to the projection axis</strong> (approximation error)</li>
-</ul>
-<p><strong>Alternative Formulation:</strong></p>
-<p><span class="math display">\[u_1 = \underset{u^T u = 1}{\arg\min} \sum_{i=1}^{N} \|(x_i - x) - [u^T(x_i - x)]u\|_2^2 \quad \Rightarrow \quad \Sigma u_1 = \lambda_1 u_1\]</span></p>
-<p>📌 <strong>Fundamental Equivalence:</strong></p>
-<p><strong>Maximizing projection variance ⇔ Minimizing approximation error</strong></p>
+<section id="principle-of-lda-discriminant-direction" class="level2">
+<h2 class="anchored" data-anchor-id="principle-of-lda-discriminant-direction">Principle of LDA: Discriminant Direction</h2>
+<section id="problem-statement" class="level3">
+<h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
+<p><strong>Fundamental Question:</strong> Given multivariate data <span class="math inline">\(X\)</span> associated with labels <span class="math inline">\(Y\)</span>, we seek a model for this data.</p>
 </section>
-<section id="interpretation-quadratic-regression" class="level4">
-<h4 class="anchored" data-anchor-id="interpretation-quadratic-regression">Interpretation: Quadratic Regression</h4>
-<p>✅ A principal component is a <strong>quadratic regression</strong> on the data</p>
-</section>
-<section id="physical-interpretation" class="level4">
-<h4 class="anchored" data-anchor-id="physical-interpretation">Physical Interpretation</h4>
-<p>Consider a physical system <span class="math inline">\(X\)</span> with masses <span class="math inline">\(m_i = 1\)</span> at positions <span class="math inline">\(x_i\)</span>.</p>
-<p><strong>System Inertia:</strong></p>
-<p>The inertia with respect to a point <span class="math inline">\(a \in \Omega\)</span> is:</p>
-<p><span class="math display">\[I_a(X) = \sum_{i=1}^{N} d^2(a, x_i)\]</span></p>
-<p><strong>Huygens’ Theorem:</strong></p>
-<p>If <span class="math inline">\(g = \frac{1}{N} \sum_{i=1}^{N} x_i\)</span> (center of gravity), then:</p>
-<p><span class="math display">\[I_a(X) = d^2(a, g) + I_g(X)\]</span></p>
-<p>This relation is the physical analog of <span class="math inline">\(\text{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2\)</span>.</p>
-<p><strong>For a subspace <span class="math inline">\(F\)</span> passing through <span class="math inline">\(g\)</span>:</strong></p>
-<p><span class="math display">\[I_F(X) = \sum_{i=1}^{N} d^2(F, x_i) \quad \text{where} \quad d(F, x_i) = \|x_i - \text{Proj}_F(x_i)\|\]</span></p>
-<p>✅ <strong>Physical Conclusion:</strong> A principal component is a <strong>subspace of minimal inertia</strong> with respect to <span class="math inline">\(X\)</span></p>
-<hr>
-</section>
-</section>
-</section>
-<section id="dimensionality-reduction" class="level2">
-<h2 class="anchored" data-anchor-id="dimensionality-reduction">Dimensionality Reduction</h2>
-<section id="structure-of-the-latent-space" class="level3">
-<h3 class="anchored" data-anchor-id="structure-of-the-latent-space">Structure of the Latent Space</h3>
-<section id="properties-of-the-latent-space" class="level4">
-<h4 class="anchored" data-anchor-id="properties-of-the-latent-space">Properties of the Latent Space</h4>
-<p>The latent space with basis <span class="math inline">\(\{u_1, \ldots, u_D\}\)</span> has the following properties:</p>
-<p><strong>Eigenvalue Order:</strong></p>
-<p>By construction: <span class="math inline">\(\lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_D\)</span></p>
-<p><strong>Total Variance:</strong></p>
-<p><span class="math display">\[\lambda \stackrel{\text{def}}{=} \sum_{d=1}^{D} \lambda_d = \text{Tr}(\Sigma)\]</span></p>
-<p><span class="math inline">\(\lambda\)</span> represents the <strong>total variance</strong> of the data.</p>
-<p><strong>Decorrelation of Latent Features:</strong></p>
-<p><span class="math display">\[v_{u_d} = \lambda_d \quad \text{and} \quad u_d^T u_{d'} = 0 \text{ for } d \neq d'\]</span></p>
-<p><span class="math inline">\(\Lambda\)</span> is the <strong>diagonal covariance matrix</strong> in the latent space.</p>
-</section>
-<section id="latent-coordinates" class="level4">
-<h4 class="anchored" data-anchor-id="latent-coordinates">Latent Coordinates</h4>
-<p>The basis <span class="math inline">\(\{u_1, \ldots, u_D\}\)</span> induces <strong>latent coordinates</strong> <span class="math inline">\(y_i\)</span> for the data:</p>
-<p><span class="math display">\[y_i(d) = \langle u_d, x_i - x \rangle = u_d^T (x_i - x)\]</span></p>
-<p>In vector form:</p>
-<p><span class="math display">\[y_i = U^T (x_i - x)\]</span></p>
-</section>
-<section id="pca-linear-transformation" class="level4">
-<h4 class="anchored" data-anchor-id="pca-linear-transformation">PCA Linear Transformation</h4>
-<p>✅ The PCA transformation is <strong>linear</strong> and consists of three steps:</p>
-<ol type="1">
-<li><strong>Centering</strong> on <span class="math inline">\(x\)</span></li>
-<li><strong>Rotation</strong> using matrix <span class="math inline">\(U\)</span></li>
-<li><strong>Scaling</strong> (whitening) using <span class="math inline">\(\Lambda^{1/2}\)</span></li>
-</ol>
+<section id="discriminant-direction-with-2-classes" class="level3">
+<h3 class="anchored" data-anchor-id="discriminant-direction-with-2-classes">Discriminant Direction with 2 Classes</h3>
+<p>We seek a <strong>direction</strong> <span class="math inline">\(a \in \mathbb{R}^D\)</span> such that the projection of the data onto this direction <span class="math inline">\(\hat{X} = \text{Proj}_a(X)\)</span> shows <strong>optimal properties for discrimination</strong> between classes.</p>
+<p><strong>Geometric Visualization:</strong></p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph LR
-    X[Data X] --&gt;|Centering| C[Centered Data]
-    C --&gt;|Rotation U| Y[Latent Space Y]
-    Y --&gt;|Scaling Λ^1/2| W[Whitening]
+<pre class="mermaid mermaid-js">graph TD
+    A[Original data in D dimensions] --&gt;|Projection onto a| B[Projected data in 1D]
+    B --&gt; C[Well-separated classes]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-</section>
-<section id="underlying-model" class="level4">
-<h4 class="anchored" data-anchor-id="underlying-model">Underlying Model</h4>
-<p><strong>Variance Preservation:</strong></p>
-<p>The latent space preserves the variance of the centered data.</p>
-<p><strong>Distribution Assumption:</strong></p>
-<p><span class="math display">\[X_i \sim f_X = \mathcal{N}(x, \Sigma)\]</span></p>
-<p>⚠️ <strong>Important Limitation:</strong> PCA will <strong>not be relevant for non-Gaussian data</strong> (e.g., clustered data)</p>
-</section>
-<section id="exact-transformation" class="level4">
-<h4 class="anchored" data-anchor-id="exact-transformation">Exact Transformation</h4>
-<p>📌 <strong>Crucial Point:</strong> So far, PCA is an <strong>exact transformation</strong></p>
-<p><span class="math display">\[y_i = U^T(x_i - x) \quad \text{thus} \quad U y_i = UU^T(x_i - x) = x_i - x\]</span></p>
-<p>Since <span class="math inline">\(U\)</span> is orthogonal: <span class="math inline">\(UU^T = I_D\)</span></p>
-<p>At this stage, the goal is to study the <strong>spectrum</strong> <span class="math inline">\(\{\lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_D\}\)</span> of the data to understand how variance is distributed.</p>
+<p>📌 <strong>Key Principle:</strong> Find the direction <span class="math inline">\(a\)</span> that best separates the classes after projection</p>
 <hr>
 </section>
 </section>
-<section id="low-rank-approximation-and-dimensionality-reduction" class="level3">
-<h3 class="anchored" data-anchor-id="low-rank-approximation-and-dimensionality-reduction">Low-Rank Approximation and Dimensionality Reduction</h3>
-<section id="eckart-young-theorem" class="level4">
-<h4 class="anchored" data-anchor-id="eckart-young-theorem">Eckart-Young Theorem</h4>
-<p><strong>Fundamental Theorem:</strong></p>
-<p>If <span class="math inline">\(\Sigma = U\Lambda U^T\)</span> and for <span class="math inline">\(K &lt; D\)</span>, we define:</p>
-<p><span class="math display">\[\Sigma_K \stackrel{\text{def}}{=} \sum_{d=1}^{K} \lambda_d u_d u_d^T\]</span></p>
-<p>Then:</p>
-<p><span class="math display">\[\underset{\text{rank}(S)=K}{\arg\min} \|\Sigma - S\|_F^2 = \Sigma_K\]</span></p>
-<p>where <span class="math inline">\(\|\cdot\|_F\)</span> is the <strong>Frobenius norm</strong>.</p>
-<p><strong>Approximation Error:</strong></p>
-<p><span class="math display">\[\|\Sigma - \Sigma_K\|_F^2 = \sum_{d=K+1}^{D} \lambda_d\]</span></p>
-<p>✅ <span class="math inline">\(\Sigma_K\)</span> is the <strong>closest rank-<span class="math inline">\(K\)</span> matrix</strong> to <span class="math inline">\(\Sigma\)</span></p>
+<section id="between-class-criterion" class="level2">
+<h2 class="anchored" data-anchor-id="between-class-criterion">Between-Class Criterion</h2>
+<section id="principle-of-maximum-separation" class="level3">
+<h3 class="anchored" data-anchor-id="principle-of-maximum-separation">Principle of Maximum Separation</h3>
+<p>If the projections of the classes are <strong>well separated</strong>, then they can be easily discriminated.</p>
+<p>✅ <strong>Objective:</strong> Seek the direction <span class="math inline">\(a\)</span> where between-class discrimination is <strong>maximized</strong></p>
 </section>
-<section id="practical-truncation" class="level4">
-<h4 class="anchored" data-anchor-id="practical-truncation">Practical Truncation</h4>
-<p><strong>Truncation of <span class="math inline">\(U\)</span> and <span class="math inline">\(\Lambda\)</span>:</strong></p>
-<p><span class="math display">\[\Sigma_K = \begin{pmatrix} | &amp; &amp; | \\ u_1 &amp; \cdots &amp; u_K \\ | &amp; &amp; | \end{pmatrix} \begin{pmatrix} \lambda_1 &amp; &amp; 0 \\ &amp; \ddots &amp; \\ 0 &amp; &amp; \lambda_K \end{pmatrix} \begin{pmatrix} | &amp; &amp; | \\ u_1 &amp; \cdots &amp; u_K \\ | &amp; &amp; | \end{pmatrix}^T = U_K \Lambda_K U_K^T\]</span></p>
-<p><strong>Projection and Reconstruction:</strong></p>
-<ul>
-<li><strong>Projection</strong> (encoding): <span class="math inline">\(\tilde{y}_i = U_K^T x_i \in \mathbb{R}^K\)</span></li>
-<li><strong>Reconstruction</strong> (decoding): <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i + x\)</span></li>
-</ul>
-<p>📌 <strong>Important:</strong> We go from <span class="math inline">\(D\)</span> dimensions to <span class="math inline">\(K\)</span> dimensions with <span class="math inline">\(K &lt; D\)</span></p>
+<section id="mathematical-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-formulation">Mathematical Formulation</h3>
+<p><strong>Geometric Intuition:</strong></p>
+<p>The direction <span class="math inline">\(a\)</span> should be <strong>collinear</strong> with the line <span class="math inline">\(\mu_1 - \mu_2\)</span> connecting the class centroids, because:</p>
+<p><span class="math display">\[\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \left\|\frac{a^T\mu_1}{\|a\|^2}a - \frac{a^T\mu_2}{\|a\|^2}a\right\|^2 = \frac{1}{\|a\|^2}(a^T(\mu_1 - \mu_2))^2\]</span></p>
+<p>This expression is <strong>maximized</strong> when <span class="math inline">\(a = \lambda(\mu_1 - \mu_2)\)</span></p>
+<p>📌 <strong>Important Point:</strong> The original data <span class="math inline">\((x_i \in X)\)</span> does not change. Only the <strong>projected data</strong> <span class="math inline">\((\hat{x}_i \in \hat{X})\)</span> and subsequent calculations change as <span class="math inline">\(a\)</span> evolves.</p>
+<p>💡 <strong>Property:</strong> The centroid of the projected data is the projection of the centroid of the original data</p>
 <hr>
 </section>
 </section>
-<section id="geometry-and-reconstruction-quality" class="level3">
-<h3 class="anchored" data-anchor-id="geometry-and-reconstruction-quality">Geometry and Reconstruction Quality</h3>
-<section id="relative-contribution-to-variance" class="level4">
-<h4 class="anchored" data-anchor-id="relative-contribution-to-variance">Relative Contribution to Variance</h4>
-<p><strong>Contribution of Each Dimension:</strong></p>
-<p><span class="math display">\[c_d = \frac{\lambda_d}{\sum_k \lambda_k}\]</span></p>
-<p>This metric depends on the <strong>spectrum distribution</strong> of eigenvalues.</p>
+<section id="within-class-criterion" class="level2">
+<h2 class="anchored" data-anchor-id="within-class-criterion">Within-Class Criterion</h2>
+<section id="principle-of-minimum-variance" class="level3">
+<h3 class="anchored" data-anchor-id="principle-of-minimum-variance">Principle of Minimum Variance</h3>
+<p>We also seek to <strong>minimize the variance</strong> of each projected class individually.</p>
+<p><strong>Objective:</strong> Reduce dispersion within each class after projection</p>
 </section>
-<section id="projection-ratio" class="level4">
-<h4 class="anchored" data-anchor-id="projection-ratio">Projection Ratio</h4>
-<p><strong>Projection ratio of a data point <span class="math inline">\(x_i\)</span> on a latent factor:</strong></p>
-<p><span class="math display">\[\rho_d(x_i) = \frac{\langle u_d, x_i \rangle^2}{\|x_i\|^2} = \cos^2(\angle(u_d, x_i))\]</span></p>
+<section id="within-class-variance" class="level3">
+<h3 class="anchored" data-anchor-id="within-class-variance">Within-Class Variance</h3>
+<p>For each class <span class="math inline">\(k\)</span>, the normalized variance of the projection is:</p>
+<p><span class="math display">\[\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k)\]</span></p>
+</section>
+<section id="fishers-criterion" class="level3">
+<h3 class="anchored" data-anchor-id="fishers-criterion">Fisher’s Criterion</h3>
+<p><strong>Fisher’s criterion</strong> maximizes the ratio:</p>
+<p><span class="math display">\[\underset{a}{\arg\max} \frac{\|\hat{\mu}_1 - \hat{\mu}_2\|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}\]</span></p>
 <p><strong>Interpretation:</strong></p>
 <ul>
-<li>The closer <span class="math inline">\(\rho_d(x_i)\)</span> is to 1, the more <span class="math inline">\(x_i\)</span> lies on the axis <span class="math inline">\(u_d\)</span></li>
-<li>These metrics can be <strong>grouped</strong> (summed) to evaluate quality with respect to a subspace <span class="math inline">\(\{u_1, u_2, \ldots\}\)</span></li>
+<li><strong>Numerator:</strong> Distance between projected means (between-class) → to <strong>maximize</strong></li>
+<li><strong>Denominator:</strong> Sum of within-class variances → to <strong>minimize</strong></li>
 </ul>
-</section>
-<section id="normalization-and-scaling" class="level4">
-<h4 class="anchored" data-anchor-id="normalization-and-scaling">Normalization and Scaling</h4>
-<p><strong>Problem of Different Scales:</strong></p>
-<p>Each original dimension has its own unit (scale), estimated by <span class="math inline">\(\sigma_d^2\)</span> (empirical variance along dimension <span class="math inline">\(d\)</span>).</p>
-<p>⚠️ PCA is more effective if <strong>all scales are similar</strong></p>
-<p><strong>Solution: Normalization</strong></p>
-<p>We create the <strong>scaling matrix</strong>:</p>
-<p><span class="math display">\[S = \text{diag}[\sigma_1^2, \ldots, \sigma_D^2]\]</span></p>
-<p>We define the <strong>Mahalanobis metric</strong>:</p>
-<p><span class="math display">\[d_S^2(x, y) = (x - y)^T S^{-1} (x - y)\]</span></p>
-<p>In this metric space, the covariance matrix <span class="math inline">\(\Sigma_S\)</span> is also normalized (it becomes the <strong>correlation matrix</strong>) and used as the basis for PCA.</p>
-<p>💡 <strong>Practical Tip:</strong> Normalizing data before PCA often improves results</p>
 <hr>
 </section>
 </section>
+<section id="generalization-to-m-classes" class="level2">
+<h2 class="anchored" data-anchor-id="generalization-to-m-classes">Generalization to M Classes</h2>
+<section id="generalized-between-class-criterion" class="level3">
+<h3 class="anchored" data-anchor-id="generalized-between-class-criterion">Generalized Between-Class Criterion</h3>
+<p><strong>Definitions:</strong></p>
+<p>Let <span class="math inline">\(B = [\mu_1 - \mu, \ldots, \mu_M - \mu]\)</span> be the matrix of centered class centroids, where:</p>
+<ul>
+<li><span class="math inline">\(\mu = \frac{1}{N} \sum_i^N x_i\)</span> is the global mean</li>
+<li><span class="math inline">\(N = \sum_k N_k\)</span> is the total number of points</li>
+</ul>
+<p><strong>Between-class covariance matrix:</strong></p>
+<p><span class="math display">\[\Sigma_b = \frac{1}{M} BB^T\]</span></p>
+<p><strong>Criterion to maximize:</strong></p>
+<p><span class="math display">\[\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{\|a\|^2} a^T \Sigma_b a\]</span></p>
 </section>
-<section id="practical-application-of-pca" class="level2">
-<h2 class="anchored" data-anchor-id="practical-application-of-pca">Practical Application of PCA</h2>
-<section id="complete-pca-algorithm" class="level3">
-<h3 class="anchored" data-anchor-id="complete-pca-algorithm">Complete PCA Algorithm</h3>
-<p><strong>Application Steps:</strong></p>
-<p>Given dataset <span class="math inline">\(X \in \Omega\)</span>:</p>
-<ol type="1">
-<li><p><strong>Compute</strong> the empirical mean <span class="math inline">\(x = \frac{1}{N} \sum_{i=1}^{N} x_i\)</span></p></li>
-<li><p><strong>Center</strong> the data: <span class="math inline">\(x_i \leftarrow (x_i - x)\)</span> and form the centered matrix <span class="math inline">\(X\)</span></p></li>
-<li><p><strong>Compute</strong> the covariance matrix: <span class="math inline">\(\Sigma = \frac{1}{N} XX^T\)</span></p></li>
-<li><p><strong>Decompose</strong> into eigenvalues: <span class="math inline">\(\Sigma = U\Lambda U^T\)</span></p></li>
-</ol>
-<p>📌 So far: <strong>exact</strong> transformation</p>
-<ol start="5" type="1">
-<li><p><strong>Select</strong> the number of components <span class="math inline">\(K\)</span></p></li>
-<li><p><strong>Define</strong> <span class="math inline">\(U_K\)</span>, <span class="math inline">\(\Lambda_K\)</span> and compute <span class="math inline">\(\{\tilde{y}_i\}_{i \in [\![N]\!]}\)</span> and/or <span class="math inline">\(\{\tilde{x}_i\}_{i \in [\![N]\!]}\)</span></p></li>
-</ol>
-</section>
-<section id="choosing-the-number-of-components-k" class="level3">
-<h3 class="anchored" data-anchor-id="choosing-the-number-of-components-k">Choosing the Number of Components <span class="math inline">\(K\)</span></h3>
-<p><strong>Three Main Strategies:</strong></p>
-<p><strong>Strategy 1: Target Dimension</strong></p>
-<p><span class="math display">\[K = d\]</span></p>
-<p>where <span class="math inline">\(d\)</span> is the desired dimension, giving <span class="math inline">\(\tilde{y}_i \in \mathbb{R}^d\)</span></p>
-<p><strong>Strategy 2: Variance Threshold</strong></p>
-<p>Require that the latent space retains a proportion <span class="math inline">\(\tau\)</span> of the total variance:</p>
-<p><span class="math display">\[\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ such that } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} &gt; \tau\]</span></p>
-<p><strong>Example:</strong> <span class="math inline">\(\tau = 0.95\)</span> means retaining 95% of the variance</p>
-<p><strong>Strategy 3: Reconstruction Error</strong></p>
-<p>Train <span class="math inline">\(K\)</span> such that <span class="math inline">\(L(X) \leq \epsilon\)</span>, where for example:</p>
-<p><span class="math display">\[L(X) = \sum_i \|x_i - \tilde{x}_i\|^2\]</span></p>
-<p>💡 <strong>Practical Advice:</strong> Visualizing the eigenvalue spectrum (scree plot) helps identify a natural “elbow”</p>
+<section id="generalized-within-class-criterion" class="level3">
+<h3 class="anchored" data-anchor-id="generalized-within-class-criterion">Generalized Within-Class Criterion</h3>
+<p><strong>Definitions:</strong></p>
+<p>Let <span class="math inline">\(A_k = [x_1 - \mu_k, \ldots, x_{N_k} - \mu_k]\)</span> with <span class="math inline">\(y_i = k\)</span>, be the matrix of centered data for class <span class="math inline">\(k\)</span>.</p>
+<p><strong>Within-class covariance matrix:</strong></p>
+<ul>
+<li>For class <span class="math inline">\(k\)</span>: <span class="math inline">\(\frac{1}{N_k} A_k A_k^T\)</span></li>
+<li><strong>Sum of within-class matrices:</strong> <span class="math inline">\(\Sigma_w = \sum_k \frac{1}{N_k} A_k A_k^T\)</span></li>
+</ul>
+<p><strong>Criterion to minimize:</strong></p>
+<p><span class="math display">\[\sum_k \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k) = \frac{1}{a^T a} a^T \Sigma_w a\]</span></p>
+<p><strong>Development:</strong></p>
+<p><span class="math display">\[\sum_k \frac{1}{N_k} \sum_{y_i = k} \left[\frac{a^T(x_i - \mu_k)}{\|a\|^2}a\right]^T \left[\frac{a^T(x_i - \mu_k)}{\|a\|^2}a\right] = \frac{1}{a^T a} a^T \Sigma_w a\]</span></p>
 <hr>
 </section>
 </section>
-<section id="alternatives-and-extensions" class="level2">
-<h2 class="anchored" data-anchor-id="alternatives-and-extensions">Alternatives and Extensions</h2>
-<section id="linear-autoencoders-linear-ae" class="level3">
-<h3 class="anchored" data-anchor-id="linear-autoencoders-linear-ae">Linear Autoencoders (Linear AE)</h3>
-<p><strong>Structure of a Linear Autoencoder:</strong></p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    X[xi] --&gt;|Wenc| Z[z xi]
-    Z --&gt;|Wdec| X2[x̃i]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<ul>
-<li><span class="math inline">\(W_{\text{enc}}\)</span> and <span class="math inline">\(W_{\text{dec}}\)</span>: weight matrices (encoder and decoder)</li>
-<li><span class="math inline">\(z(x_i) = W_{\text{enc}} x_i\)</span>: encoding</li>
-<li><span class="math inline">\(\tilde{x}_i = W_{\text{dec}} z(x_i)\)</span>: decoding</li>
-</ul>
-<p><strong>Optimization Problem:</strong></p>
-<p><span class="math display">\[\theta^* = \underset{W_1, W_2}{\arg\min} \sum_{i=1}^{N} \frac{1}{2} \sum_{d=1}^{D} (x_i[d] - \tilde{x}_i[d])^2 = \underset{\text{rank}(W)=K}{\arg\min} \|X - WZ\|_F^2\]</span></p>
+<section id="combined-fishers-criterion" class="level2">
+<h2 class="anchored" data-anchor-id="combined-fishers-criterion">Combined Fisher’s Criterion</h2>
+<section id="combining-both-criteria" class="level3">
+<h3 class="anchored" data-anchor-id="combining-both-criteria">Combining Both Criteria</h3>
+<p><strong>Generalized Fisher’s criterion</strong> combines the between-class and within-class criteria:</p>
+<p><span class="math display">\[\underset{a}{\arg\max} \, L(a) = \underset{a}{\arg\max} \frac{a^T \Sigma_b a}{a^T \Sigma_w a}\]</span></p>
 </section>
-<section id="relationship-between-pca-and-linear-autoencoder" class="level3">
-<h3 class="anchored" data-anchor-id="relationship-between-pca-and-linear-autoencoder">Relationship Between PCA and Linear Autoencoder</h3>
-<p><strong>SVD Decomposition:</strong></p>
-<p>Using the Eckart-Young theorem with <span class="math inline">\(X = U\Psi V^T\)</span>, the solution is:</p>
-<p><span class="math display">\[W_{\text{dec}} Z = U_K \Psi_K V_K^T\]</span></p>
-<p><strong>Optimal Solution:</strong></p>
-<p>Setting <span class="math inline">\(W_{\text{dec}} = U_K \Psi_K\)</span>, then:</p>
-<p><span class="math display">\[W_{\text{enc}} = \Psi_K^{-1} U_K^T\]</span></p>
-<p>Reconstruction:</p>
-<p><span class="math display">\[\tilde{x}_i = U_K U_K^T x_i\]</span></p>
-<p><strong>Mathematical Relationship:</strong></p>
-<p>For <strong>centered</strong> data:</p>
-<ul>
-<li><p><strong>PCA:</strong> <span class="math inline">\(\Sigma = \frac{1}{N} XX^T = U\Lambda U^T\)</span> thus <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i\)</span></p></li>
-<li><p><strong>AE:</strong> <span class="math inline">\(X = U\Psi V^T\)</span> thus <span class="math inline">\(\Sigma = \frac{1}{N} U\Psi^2 U^T\)</span> and <span class="math inline">\(\tilde{x}_i = U_K U_K^T x_i\)</span></p></li>
-</ul>
-<p>Relationship between eigenvalues:</p>
-<p><span class="math display">\[\Lambda = \frac{1}{N} \Psi^2 \quad \Rightarrow \quad \text{PCA}(X) \leftrightarrow \text{AE}\left(\sqrt{\frac{1}{N}} X\right)\]</span></p>
-<p>✅ <strong>Fundamental Conclusion:</strong> A linear autoencoder performs PCA if the data is <strong>centered and normalized</strong></p>
-<p>⚠️ <strong>Note:</strong> <span class="math inline">\(W_{\text{enc}}\)</span> is <strong>not the inverse</strong> of <span class="math inline">\(W_{\text{dec}}\)</span> if <span class="math inline">\(K &lt; D\)</span></p>
-</section>
-<section id="extensions-of-autoencoders" class="level3">
-<h3 class="anchored" data-anchor-id="extensions-of-autoencoders">Extensions of Autoencoders</h3>
-<p><strong>Nonlinear Autoencoders:</strong></p>
-<p>By adding hidden layers with nonlinear activation functions, the latent space becomes <strong>nonlinear</strong>.</p>
-<p><strong>Variational Autoencoders (VAE):</strong></p>
-<p>By changing the loss function (using ELBO - Evidence Lower BOund), we can impose <strong>sparsity</strong> in the latent space.</p>
-<hr>
-</section>
-<section id="alternative-formulations-of-pca" class="level3">
-<h3 class="anchored" data-anchor-id="alternative-formulations-of-pca">Alternative Formulations of PCA</h3>
-<section id="probabilistic-pca" class="level4">
-<h4 class="anchored" data-anchor-id="probabilistic-pca">Probabilistic PCA</h4>
-<p><strong>Reformulation with Explicit Latent Distribution:</strong></p>
-<ul>
-<li>Latent distribution: <span class="math inline">\(\mathbb{P}(z) = \mathcal{N}(0, I_{dK})\)</span></li>
-<li>Conditional model: <span class="math inline">\(\mathbb{P}(x|z) = \mathcal{N}(Wz + \mu, \sigma^2 I_{dD})\)</span></li>
-</ul>
-<p><strong>Advantages:</strong></p>
-<ul>
-<li>Accommodation of <strong>measurement noise</strong> (variance <span class="math inline">\(\sigma^2\)</span>)</li>
-<li><strong>Generative mode</strong>: possibility to generate new data</li>
-<li>Parameter estimation by <strong>Maximum Likelihood</strong></li>
-<li><strong>EM algorithm</strong> (Expectation-Maximization) to save computations</li>
-<li><strong>Bayesian PCA</strong>: inversion of the conditional to find <span class="math inline">\(K\)</span> by training</li>
-</ul>
-</section>
-<section id="kernel-pca" class="level4">
-<h4 class="anchored" data-anchor-id="kernel-pca">Kernel PCA</h4>
-<p><strong>Principle:</strong></p>
-<p>Use a <strong>nonlinear mapping</strong> <span class="math inline">\(\phi(x_i)\)</span> via a kernel function:</p>
-<p><span class="math display">\[k(x_i, x_j) = \phi(x_i)^T \phi(x_j)\]</span></p>
-<p>Allows performing PCA in a <strong>more favorable space</strong> (possibly infinite-dimensional) without explicitly computing <span class="math inline">\(\phi\)</span>.</p>
-</section>
-<section id="local-pca" class="level4">
-<h4 class="anchored" data-anchor-id="local-pca">Local PCA</h4>
-<p>Performs PCA on <strong>local neighborhoods</strong> of the data to consider only the <strong>local intrinsic dimensionality</strong>.</p>
-<p>Useful for data with complex local structure (nonlinear manifolds).</p>
-</section>
-<section id="computational-limitation" class="level4">
-<h4 class="anchored" data-anchor-id="computational-limitation">Computational Limitation</h4>
-<p>⚠️ <strong>Complexity:</strong> The main limitation of classical PCA is the <strong>eigendecomposition</strong> of <span class="math inline">\(\Sigma\)</span> in <span class="math inline">\(O(D^3)\)</span></p>
-<p>For very large dimensions, alternative or approximate methods may be necessary.</p>
+<section id="solution-by-differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="solution-by-differentiation">Solution by Differentiation</h3>
+<p>To find the maximum, we compute the derivative:</p>
+<p><span class="math display">\[\frac{\partial L(a)}{\partial a} = \frac{\Sigma_b a (a^T \Sigma_w a) - \Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0\]</span></p>
+<p><strong>Resulting Equation:</strong></p>
+<p><span class="math display">\[\Sigma_b a = L(a) \Sigma_w a\]</span></p>
+<p>✅ <strong>Solution:</strong> <span class="math inline">\(a\)</span> is a solution of the <strong>generalized eigenvalue problem</strong></p>
+<p>The optimal direction <span class="math inline">\(a\)</span> is the <strong>first eigenvector</strong> of <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (with eigenvalue <span class="math inline">\(\lambda_1 = L(a)\)</span>)</p>
 <hr>
 </section>
 </section>
+<section id="discriminant-subspaces" class="level2">
+<h2 class="anchored" data-anchor-id="discriminant-subspaces">Discriminant Subspaces</h2>
+<section id="multiple-discriminant-dimensions" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-discriminant-dimensions">Multiple Discriminant Dimensions</h3>
+<p><strong>Ordered Eigenvectors:</strong></p>
+<p>The eigenvectors corresponding to the <strong>largest eigenvalues</strong> <span class="math inline">\(\lambda_i\)</span> are the most discriminative dimensions:</p>
+<p><span class="math display">\[a_1, a_2, \ldots, a_p \quad \text{with} \quad \lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_p\]</span></p>
 </section>
-<section id="synthesis-and-key-points" class="level2">
-<h2 class="anchored" data-anchor-id="synthesis-and-key-points">Synthesis and Key Points</h2>
-<section id="essential-characteristics-of-pca" class="level3">
-<h3 class="anchored" data-anchor-id="essential-characteristics-of-pca">Essential Characteristics of PCA</h3>
-<p><strong>Nature of the Model:</strong></p>
+<section id="dimensional-limitation" class="level3">
+<h3 class="anchored" data-anchor-id="dimensional-limitation">Dimensional Limitation</h3>
+<p>📌 <strong>Fundamental Property:</strong> <span class="math inline">\(M\)</span> classes can be discriminated in a subspace of dimension <strong>at most</strong> <span class="math inline">\((M-1)\)</span>.</p>
+<p><strong>Consequence:</strong> There are only <span class="math inline">\(M - 1\)</span> <strong>non-zero</strong> eigenvalues</p>
+<p><strong>Explanation:</strong> With <span class="math inline">\(M\)</span> classes, we have <span class="math inline">\(M\)</span> class centroids. Once globally centered, these centroids are constrained to lie in a space of dimension <span class="math inline">\(M-1\)</span>.</p>
+</section>
+<section id="special-case-m-2" class="level3">
+<h3 class="anchored" data-anchor-id="special-case-m-2">Special Case: M = 2</h3>
+<p>For two classes, we can show that:</p>
+<p><span class="math display">\[BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T\]</span></p>
+<p><strong>Implications:</strong></p>
 <ul>
-<li>PCA is part of <strong>linear latent models</strong></li>
-<li>Applies to <strong>centered data</strong></li>
-<li>Uses <strong>variance</strong> as a decomposition criterion</li>
+<li><span class="math inline">\(BB^T a\)</span> is a vector in the direction of <span class="math inline">\((\mu_1 - \mu_2)\)</span></li>
+<li>The solution is <span class="math inline">\(a = \lambda \Sigma_w^{-1} (\mu_1 - \mu_2)\)</span></li>
 </ul>
-<p><strong>Mathematical Properties:</strong></p>
+<hr>
+</section>
+</section>
+<section id="practical-example-character-recognition" class="level2">
+<h2 class="anchored" data-anchor-id="practical-example-character-recognition">Practical Example: Character Recognition</h2>
+<section id="dataset-description" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-description">Dataset Description</h3>
+<p><strong>Partial MNIST Dataset:</strong></p>
 <ul>
-<li><strong>Exact and complete</strong> decomposition into <strong>decorrelated</strong> components</li>
-<li>Assumes a <strong>normal distribution</strong> of data</li>
-<li>Can be formulated as a <strong>regression</strong></li>
+<li>7291 images of size <span class="math inline">\(16 \times 16\)</span> (8 bits)</li>
+<li>Digits from 0 to 9</li>
+<li>Representation: <span class="math inline">\(\{x_i, y_i\}\)</span> with <span class="math inline">\(x_i \in \mathbb{R}^{256}\)</span> and <span class="math inline">\(y_i \in [[10]]\)</span>, <span class="math inline">\(i \in [[7291]]\)</span></li>
+</ul>
+</section>
+<section id="result-of-lda-projection" class="level3">
+<h3 class="anchored" data-anchor-id="result-of-lda-projection">Result of LDA Projection</h3>
+<p>LDA finds the <strong>optimal subspace</strong> for <strong>linearly</strong> separating the data according to their labels <span class="math inline">\(y_i\)</span>.</p>
+<p><strong>Advantages of LDA Projection:</strong></p>
+<ul>
+<li>Dimensionality reduction (from 256 to a few dimensions)</li>
+<li>Visualization in 2D or 3D possible</li>
+<li>Class separation maximized</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="inference-and-decision-making" class="level2">
+<h2 class="anchored" data-anchor-id="inference-and-decision-making">Inference and Decision Making</h2>
+<section id="conditional-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-modeling">Conditional Modeling</h3>
+<p><strong>Classification Problem:</strong></p>
+<p>For a new data point <span class="math inline">\(j\)</span>:</p>
+<ul>
+<li><span class="math inline">\(x_j\)</span> is <strong>known</strong></li>
+<li><span class="math inline">\(y_j\)</span> is <strong>unknown</strong></li>
+</ul>
+<p><strong>Question:</strong> To which class <span class="math inline">\(k\)</span> does point <span class="math inline">\(j\)</span> belong?</p>
+</section>
+<section id="probabilistic-approach" class="level3">
+<h3 class="anchored" data-anchor-id="probabilistic-approach">Probabilistic Approach</h3>
+<p><strong>Declaration of a Categorical Random Variable:</strong></p>
+<p>We declare the class random variable <span class="math inline">\(C\)</span></p>
+<p><strong>Prediction by Bayes’ Rule:</strong></p>
+<p><span class="math display">\[\mathbb{P}(C = k | x_j) = \frac{\mathbb{P}(x_j | C = k) \mathbb{P}(C = k)}{\mathbb{P}(x_j)}\]</span></p>
+<p><strong>Components:</strong></p>
+<ul>
+<li><span class="math inline">\(\mathbb{P}(x_j | C = k)\)</span>: <strong>likelihood</strong></li>
+<li><span class="math inline">\(\mathbb{P}(C = k)\)</span>: <strong>prior</strong> (a priori probability)</li>
+<li><span class="math inline">\(\mathbb{P}(x_j)\)</span>: <strong>evidence</strong> (normalization)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="gaussian-approximation" class="level2">
+<h2 class="anchored" data-anchor-id="gaussian-approximation">Gaussian Approximation</h2>
+<section id="class-specific-gaussian-model" class="level3">
+<h3 class="anchored" data-anchor-id="class-specific-gaussian-model">Class-Specific Gaussian Model</h3>
+<p><strong>Distribution Assumption:</strong></p>
+<p>Each class is modeled by a normal distribution:</p>
+<p><span class="math display">\[\mathbb{P}(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)\]</span></p>
+<p><strong>Prior Choice:</strong></p>
+<p>Uniform prior: <span class="math inline">\(\mathbb{P}(C = k) = \frac{1}{M}\)</span> (all classes equally probable)</p>
+<p><strong>Simplification:</strong></p>
+<p>The evidence <span class="math inline">\(\mathbb{P}(x_j)\)</span> is <strong>ignored</strong> as it is constant for all classes (normalization)</p>
+</section>
+<section id="maximum-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-likelihood">Maximum Likelihood</h3>
+<p><strong>Approximation:</strong></p>
+<p><span class="math display">\[\mathbb{P}(x | C = k) \propto \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)\]</span></p>
+</section>
+<section id="decision-rule" class="level3">
+<h3 class="anchored" data-anchor-id="decision-rule">Decision Rule</h3>
+<p><strong>Classification by Maximum A Posteriori:</strong></p>
+<p><span class="math display">\[\delta(x) = \underset{k}{\arg\max} \, \mathbb{P}(x | C = k)\]</span></p>
+<p><strong>Interpretation:</strong> We assign <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> that maximizes the likelihood (or posterior probability)</p>
+<hr>
+</section>
+</section>
+<section id="optimality-of-lda" class="level2">
+<h2 class="anchored" data-anchor-id="optimality-of-lda">Optimality of LDA</h2>
+<section id="optimality-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="optimality-conditions">Optimality Conditions</h3>
+<p>✅ <strong>LDA is optimal</strong> when the <span class="math inline">\(M\)</span> classes each follow a <strong>Gaussian distribution</strong></p>
+<p><strong>Justification:</strong></p>
+<p>The discrimination criteria are based on covariance matrices <span class="math inline">\(\Sigma_w\)</span> and <span class="math inline">\(\Sigma_b\)</span>, which fully characterize Gaussian distributions.</p>
+</section>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<p>⚠️ <strong>Linear Discriminant Analysis:</strong> does <strong>not account</strong> for <strong>nonlinear</strong> relationships between variables</p>
+<p><strong>Linear discrimination only</strong></p>
+<p><strong>Alternative:</strong> For nonlinear relationships, use <strong>nonlinear classification</strong> methods:</p>
+<ul>
+<li>Kernel LDA</li>
+<li>Quadratic Discriminant Analysis (QDA)</li>
+<li>Support Vector Machines (SVM)</li>
+<li>Neural networks</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="synthesis-of-key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="synthesis-of-key-concepts">Synthesis of Key Concepts</h2>
+<section id="essential-characteristics-of-lda" class="level3">
+<h3 class="anchored" data-anchor-id="essential-characteristics-of-lda">Essential Characteristics of LDA</h3>
+<p><strong>Nature of the Method:</strong></p>
+<ul>
+<li>LDA is a <strong>supervised</strong> technique</li>
+<li>Uses <strong>class labels</strong> to guide dimensionality reduction</li>
+</ul>
+<p><strong>Objective:</strong></p>
+<ul>
+<li>Find the <strong>optimal linear latent factors</strong> that explain linear discrimination between classes</li>
+</ul>
+<p><strong>Fisher’s Criterion:</strong></p>
+<ul>
+<li>Combines <strong>within-class</strong> (within-scatter) and <strong>between-class</strong> (between-scatter) dispersion</li>
+<li>Maximizes the ratio <span class="math inline">\(\frac{a^T \Sigma_b a}{a^T \Sigma_w a}\)</span></li>
+</ul>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Solved by finding the eigenvalues of the matrix <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span></li>
+<li>The eigenvectors form the discriminant axes</li>
 </ul>
 <p><strong>Applications:</strong></p>
 <ul>
-<li><strong>Justified decimation</strong> strategy based on low-rank approximation</li>
-<li>Useful for <strong>denoising</strong> via a Gaussian noise model</li>
+<li><strong>Visualization</strong> of data considering labels</li>
+<li><strong>Supervised dimensionality reduction</strong></li>
+<li><strong>Classification</strong> via conditional modeling (each class follows a normal distribution)</li>
 </ul>
-<p><strong>Equivalences:</strong></p>
+<hr>
+</section>
+</section>
+<section id="comparison-lda-vs-pca" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-lda-vs-pca">Comparison: LDA vs PCA</h2>
+<section id="fundamental-differences" class="level3">
+<h3 class="anchored" data-anchor-id="fundamental-differences">Fundamental Differences</h3>
+<p><strong>PCA (Unsupervised):</strong></p>
 <ul>
-<li>Equivalent to a <strong>linear autoencoder</strong></li>
-<li>Can receive a <strong>stochastic formulation</strong></li>
-<li>Generalizable to the <strong>nonlinear case via kernels</strong></li>
+<li>Maximizes <strong>global variance</strong></li>
+<li>Ignores class labels</li>
+<li>Finds directions of maximum variance</li>
+<li>Based on <span class="math inline">\(\Sigma\)</span> (total covariance)</li>
+</ul>
+<p><strong>LDA (Supervised):</strong></p>
+<ul>
+<li>Maximizes <strong>separation between classes</strong></li>
+<li>Uses class labels</li>
+<li>Finds discriminant directions</li>
+<li>Based on <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (ratio of covariances)</li>
 </ul>
 </section>
-<section id="when-to-use-pca" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-pca">When to Use PCA?</h3>
-<p>✅ <strong>Suitable for:</strong></p>
-<ul>
-<li>Data approximately following a Gaussian distribution</li>
-<li>Dimensionality reduction with variance preservation</li>
-<li>Visualization of high-dimensional data</li>
-<li>Denoising data corrupted by Gaussian noise</li>
-<li>Data compression</li>
-</ul>
-<p>❌ <strong>Not Suitable for:</strong></p>
-<ul>
-<li>Strongly clustered data (non-Gaussian)</li>
-<li>Data with strongly nonlinear relationships</li>
-<li>Cases where variance is not a good information criterion</li>
-</ul>
-</section>
-<section id="mathematical-concepts-to-master" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-concepts-to-master">Mathematical Concepts to Master</h3>
-<p>📌 To understand PCA well, you need to master:</p>
-<ul>
-<li><strong>Linear transformation</strong> and <strong>orthogonal matrix</strong></li>
-<li><strong>Coordinates</strong> and <strong>matrix rank</strong></li>
-<li><strong>Mean</strong> and <strong>variance</strong></li>
-<li><strong>Orthogonal projection</strong></li>
-<li><strong>Eigendecomposition</strong></li>
-<li><strong>Matrix trace</strong></li>
-<li><strong>Frobenius norm</strong></li>
-<li><strong>Lagrange multipliers</strong></li>
-</ul>
+<section id="complementarity" class="level3">
+<h3 class="anchored" data-anchor-id="complementarity">Complementarity</h3>
+<p>💡 <strong>In Practice:</strong> PCA and LDA can be combined</p>
+<ol type="1">
+<li>PCA for initial dimensionality reduction (eliminate noise)</li>
+<li>LDA to maximize discrimination</li>
+</ol>
 <hr>
 </section>
 </section>
@@ -894,35 +851,85 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="typical-exam-questions">Typical Exam Questions</h2>
 <section id="conceptual-questions" class="level3">
 <h3 class="anchored" data-anchor-id="conceptual-questions">Conceptual Questions</h3>
-<ol type="1">
-<li><p>Explain how PCA uses variance as a criterion.</p></li>
-<li><p>Show that maximizing variance is equivalent to minimizing error.</p></li>
-<li><p>Show how PCA uses the Eckart-Young theorem.</p></li>
-<li><p>Can PCA be applied to any data?</p></li>
-<li><p>Is it relevant to apply PCA to any data?</p></li>
-<li><p>How to apply PCA to clustered data?</p></li>
-</ol>
+<p><strong>Supervised Learning Setup:</strong></p>
+<ul>
+<li>Explain the context of supervised learning</li>
+<li>Difference between supervised and unsupervised learning</li>
+</ul>
+<p><strong>Linear Nature of LDA:</strong></p>
+<ul>
+<li>Why is LDA a linear method?</li>
+<li>What are its limitations?</li>
+</ul>
+<p><strong>Discriminant Direction:</strong></p>
+<ul>
+<li>What characterizes a discriminant direction?</li>
+<li>What does the vector <span class="math inline">\(a\)</span> represent?</li>
+</ul>
 </section>
 <section id="technical-questions" class="level3">
 <h3 class="anchored" data-anchor-id="technical-questions">Technical Questions</h3>
-<p><strong>Given data:</strong></p>
+<p><strong>Fisher’s Criteria:</strong></p>
 <ul>
-<li>How do you apply PCA?</li>
-<li>What information does PCA provide?</li>
-<li>How to reconstruct data with <span class="math inline">\(K &lt; D\)</span> components?</li>
-<li>How to select the components to retain?</li>
+<li>What is Fisher’s criterion?</li>
+<li>How does it combine between-class and within-class criteria?</li>
+</ul>
+<p><strong>Between-Class Criterion:</strong></p>
+<ul>
+<li>Principle of the between-class criterion</li>
+<li>How to compute the between-class covariance matrix <span class="math inline">\(\Sigma_b\)</span>?</li>
+</ul>
+<p><strong>Within-Class Criterion:</strong></p>
+<ul>
+<li>Principle of the within-class criterion</li>
+<li>How to compute the within-class covariance matrix <span class="math inline">\(\Sigma_w\)</span>?</li>
 </ul>
 </section>
 <section id="mathematical-proofs" class="level3">
 <h3 class="anchored" data-anchor-id="mathematical-proofs">Mathematical Proofs</h3>
+<p><strong>Derivation of the Maximum:</strong></p>
 <ul>
-<li>Show that PCA is equivalent to a linear autoencoder.</li>
-<li>Demonstrate the equivalence between maximum variance and minimum error.</li>
-<li>Prove that principal components are the eigenvectors of <span class="math inline">\(\Sigma\)</span>.</li>
+<li>Justify and explain the derivation of the maximum for <span class="math inline">\(a\)</span></li>
+<li>Show that <span class="math inline">\(a\)</span> satisfies <span class="math inline">\(\Sigma_b a = \lambda \Sigma_w a\)</span></li>
+</ul>
+<p><strong>Multidimensional Situation:</strong></p>
+<ul>
+<li>Describe the multidimensional situation (<span class="math inline">\(D &gt; 2\)</span>)</li>
+<li>Explain why there are at most <span class="math inline">\(M-1\)</span> discriminant dimensions</li>
+</ul>
+<p><strong>Inference:</strong></p>
+<ul>
+<li>How to perform inference with LDA?</li>
+<li>Provide an example of conditional modeling using LDA</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="mathematical-concepts-to-master" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-concepts-to-master">Mathematical Concepts to Master</h2>
+<p>📌 <strong>To understand LDA well, you need to master:</strong></p>
+<p><strong>Linear Algebra:</strong></p>
+<ul>
+<li>Eigenvectors and eigenvalues</li>
+<li>Generalized eigenvalue problem</li>
+<li>Covariance matrices</li>
+<li>Orthogonal projection</li>
+</ul>
+<p><strong>Statistics:</strong></p>
+<ul>
+<li>Mean and variance</li>
+<li>Covariance and correlation</li>
+<li>Multivariate normal distribution</li>
+<li>Bayes’ rule</li>
+</ul>
+<p><strong>Optimization:</strong></p>
+<ul>
+<li>Differentiation of matrix functions</li>
+<li>Constrained optimization</li>
+<li>Rayleigh quotient method</li>
 </ul>
 
 
-</section>
 </section>
 </section>
 

@@ -1,0 +1,395 @@
+# The essentials
+
+## Introduction and Motivation
+
+**LDA** (Linear Discriminant Analysis) is a **supervised latent analysis** method that makes it possible to find optimal latent factors for discrimination between classes.
+
+### The fundamental problem
+
+Imagine that you work in a postal sorting center. You have letters with 100 different measurements (weight, size, color, texture...). You must sort them automatically by type (letter, parcel, magazine). How can you find **the dimension or dimensions that best separate the categories**?
+
+This is exactly what LDA solves: finding **the axes that maximize separation between classes** while minimizing dispersion within each class.
+
+📌 **Fundamental difference with PCA:**
+
+PCA looks at **all** the data and searches for directions of maximum variation. LDA first looks at **the labels** (the classes) and searches for the directions that best separate these classes.
+
+⚠️ **Warning:** This LDA should not be confused with **Latent Dirichlet Allocation** (used in NLP).
+
+### Supervised learning
+
+Let data $X \subset \Omega \subseteq \mathbb{R}^D$ be associated with categories (class labels)
+$Y = [[M]] \subset \mathbb{N}$.
+
+**Supervised learning** consists of finding (learning) the parameters $\theta$ of a learner (function) $\phi_\theta$ in order to minimize the loss $L_{X \times Y}(\theta)$ incurred when predicting class labels.
+
+$$\phi_\theta : \Omega \to Y$$
+$$x_i \mapsto \phi_\theta(x_i) = \tilde{y}_i$$
+
+---
+
+## Geometric intuition: Separating colored point clouds
+
+Imagine points of two colors (red and blue) scattered on a plane. You can only look along a single direction (like a flashlight that illuminates a line).
+
+**Question:** How should the flashlight be oriented so that, on this line, the red and blue points are **as separated as possible**?
+
+💡 **Essential idea:** LDA looks for the **dividing line**, like a referee drawing a line between two teams. It finds the direction that best separates the groups, while ensuring that each team remains clustered.
+
+We seek a **direction** $a \in \mathbb{R}^D$ such that the projection of the data onto this direction
+$\hat{X} = \text{Proj}_a(X)$ exhibits **optimal properties for discrimination** between classes.
+
+---
+
+## The two competing objectives
+
+### Objective 1: Move the centers apart (Between-class)
+
+**"Push the means as far apart as possible"**
+
+If the class projections are **well separated**, then they can be easily discriminated.
+
+✅ **Objective:** Search for the direction $a$ where inter-class discrimination is **maximal**.
+
+::: {.callout-note collapse="true"}
+
+## 📌 Mathematical details: Between-class formulation
+
+The direction $a$ must be **collinear** with the line $\mu_1 - \mu_2$ that connects the centers of mass of the classes, because:
+
+$$|\hat{\mu}_1 - \hat{\mu}_2|^2 = \left|\frac{a^T\mu_1}{|a|^2}a - \frac{a^T\mu_2}{|a|^2}a\right|^2 = \frac{1}{|a|^2}(a^T(\mu_1 - \mu_2))^2$$
+
+This expression is **maximal** when $a = \lambda(\mu_1 - \mu_2)$.
+
+💡 **Property:** The center of mass of the projected data is the projection of the center of mass of the original data.
+:::
+
+### Objective 2: Group each class (Within-class)
+
+**"Keep each class compact"**
+
+We also seek to **minimize the variance** of each class when projected individually.
+
+For each class $k$, the normalized variance of the projection is:
+
+$$\hat{\sigma}*k^2 = \frac{1}{N_k} \sum*{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k)$$
+
+📌 **The dilemma:** Sometimes, pulling the centers apart separates them, but it can also stretch the classes. The right compromise must be found.
+
+---
+
+## Fisher criterion: The mathematical compromise
+
+### Formulation for 2 classes
+
+The **Fisher criterion** maximizes the ratio:
+
+$$\underset{a}{\arg\max} \frac{|\hat{\mu}_1 - \hat{\mu}_2|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}$$
+
+**Interpretation:**
+
+* **Numerator:** Distance between projected means (between-class) → to **maximize**
+* **Denominator:** Sum of within-class variances → to **minimize**
+
+💡 **Mnemonic trick:**
+
+* **B** as in **Between** = **B** for "Separate well" (the centers)
+* **W** as in **Within** = "Group together" (each class)
+
+### Generalization to M classes
+
+::: {.callout-note collapse="true"}
+
+## 📌 Mathematical details: Covariance matrices
+
+**Between-class covariance matrix:**
+
+Let $B = [\mu_1 - \mu, \ldots, \mu_M - \mu]$ be the matrix of centered class means, where:
+
+* $\mu = \frac{1}{N} \sum_i^N x_i$ is the global mean
+* $N = \sum_k N_k$ is the total number of points
+
+$$\Sigma_b = \frac{1}{M} BB^T$$
+
+**Criterion to maximize:**
+
+$$\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{|a|^2} a^T \Sigma_b a$$
+
+**Within-class covariance matrix:**
+
+Let $A_k = [x_1 - \mu_k, \ldots, x_{N_k} - \mu_k]$ with $y_i = k$, the matrix of centered data for class $k$.
+
+$$\Sigma_w = \sum_k \frac{1}{N_k} A_k A_k^T$$
+
+**Criterion to minimize:**
+
+$$\sum_k \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k) = \frac{1}{a^T a} a^T \Sigma_w a$$
+:::
+
+The **generalized Fisher criterion** combines the between-class and within-class criteria:
+
+$$\underset{a}{\arg\max} , J(a) = \underset{a}{\arg\max} \frac{a^T \Sigma_b a}{a^T \Sigma_w a}$$
+
+where:
+
+* **$\Sigma_b$** = “between-class” covariance matrix → measures separation of centers
+* **$\Sigma_w$** = “within-class” covariance matrix → measures internal dispersion
+
+---
+
+## Solution: Eigenvalue problem
+
+### Solution by differentiation
+
+::: {.callout-note collapse="true"}
+
+## 📌 Mathematical details: Derivation
+
+To find the maximum, we compute the derivative:
+
+$$\frac{\partial J(a)}{\partial a} = \frac{\Sigma_b a (a^T \Sigma_w a) - \Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0$$
+
+**Resulting equation:**
+
+$$\Sigma_b a = J(a) \Sigma_w a$$
+
+Which can be rewritten as:
+
+$$\Sigma_w^{-1} \Sigma_b a = J(a) a$$
+:::
+
+✅ **Solution:** $a$ is a solution of the **generalized eigenvalue system**.
+
+The optimal direction $a$ is the **first eigenvector** of $\Sigma_w^{-1} \Sigma_b$ (with eigenvalue $\lambda_1 = J(a)$).
+
+---
+
+## Dimensional limitation
+
+### Why only M-1 dimensions?
+
+The eigenvectors corresponding to the **largest eigenvalues** $\lambda_i$ are the most discriminative dimensions:
+
+$$a_1, a_2, \ldots, a_p \quad \text{with} \quad \lambda_1 > \lambda_2 > \cdots > \lambda_p$$
+
+📌 **Fundamental property:** $M$ classes can be discriminated in a subspace of dimension **at most** $(M-1)$.
+
+**Consequence:** There are only $M - 1$ **non-zero** eigenvalues.
+
+💡 **Analogy:** With 3 points (3 classes), you can at most place them in a plane (2D). With 2 points (2 classes), you can at most place them on a line (1D).
+
+::: {.callout-note collapse="true"}
+
+## 📌 Mathematical details: Case M = 2
+
+For two classes, one can show that:
+
+$$BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T$$
+
+**Implications:**
+
+* $BB^T a$ is a vector in the direction $(\mu_1 - \mu_2)$
+* The solution is $a = \lambda \Sigma_w^{-1} (\mu_1 - \mu_2)$
+:::
+
+⚠️ **Pitfall to avoid:** If you keep more than M-1 dimensions, the additional directions will have a zero eigenvalue → not discriminative.
+
+---
+
+## Practical application of LDA
+
+### Complete LDA algorithm
+
+**Step 1: Prepare the data**
+
+* Check that each class has enough examples (at least D+1 to avoid singular $\Sigma_w$)
+* Optional: standardize if the scales are very different
+
+**Step 2: Compute the key matrices**
+
+* **$\Sigma_w$** (within): average of class covariances
+* **$\Sigma_b$** (between): covariance of class centers
+
+**Step 3: Solve the eigenvalue problem**
+
+Compute the eigenvectors of $\Sigma_w^{-1} \Sigma_b$
+
+**Step 4: Keep the first M-1 directions**
+
+Sort by decreasing eigenvalues, keep the most important ones
+
+**Step 5: Project and classify**
+
+* Project the data onto the discriminant subspace
+* Classify (for example using a nearest-neighbor rule)
+
+---
+
+## LDA as a classifier: The Gaussian hypothesis
+
+### Probabilistic modeling
+
+For a new data point $j$:
+
+* $x_j$ is **known**
+* $y_j$ is **unknown**
+
+**Question:** To which class $k$ does point $j$ belong?
+
+We define the class random variable $C$ and use **Bayes’ rule**:
+
+$$\mathbb{P}(C = k | x_j) = \frac{\mathbb{P}(x_j | C = k) \mathbb{P}(C = k)}{\mathbb{P}(x_j)}$$
+
+**Components:**
+
+* $\mathbb{P}(x_j | C = k)$ : **likelihood**
+* $\mathbb{P}(C = k)$ : **prior**
+* $\mathbb{P}(x_j)$ : **evidence** (normalization)
+
+### Gaussian approximation
+
+LDA assumes that **each class follows a Gaussian distribution**:
+
+$$\mathbb{P}(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)$$
+
+with:
+
+* Different means for each class
+* **The same covariance matrix** for all classes (crucial!)
+
+::: {.callout-note collapse="true"}
+
+## 📌 Mathematical details: Maximum likelihood
+
+**Approximation:**
+
+$$\mathbb{P}(x | C = k) \propto \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)$$
+
+**Uniform prior:** $\mathbb{P}(C = k) = \frac{1}{M}$ (all classes equally likely)
+
+**Simplification:** The evidence $\mathbb{P}(x_j)$ is **ignored** because it is constant for all classes (normalization).
+:::
+
+**Decision rule:**
+
+$$\delta(x) = \underset{k}{\arg\max} , \mathbb{P}(x | C = k)$$
+
+**Interpretation:** $x$ is assigned to the class $k$ that maximizes the likelihood.
+
+### Why is the boundary linear?
+
+With this assumption, the boundary between two classes is **linear** (hence the “L” in LDA).
+
+💡 **Why?** The equal-density contours of two Gaussians with the same covariance are hyperplanes.
+
+---
+
+## Optimality of LDA
+
+### Optimality conditions
+
+✅ **LDA is optimal** when the $M$ classes each follow a **Gaussian distribution** with the same covariance matrix.
+
+**Justification:**
+
+The discrimination criteria are based on the covariance matrices $\Sigma_w$ and $\Sigma_b$, which fully characterize Gaussian distributions.
+
+### When LDA works well (and less well)
+
+**Ideal conditions ✅**
+
+* Classes are **approximately Gaussian**
+* Class covariances are **similar**
+* Enough samples per class (at least 10× the number of dimensions)
+* **Linear** relationships between variables
+
+**Problematic situations ❌**
+
+* **Very different covariances** → use QDA (Quadratic Discriminant Analysis)
+* **Non-linear relationships** → Kernel LDA or non-linear methods
+* **Few samples** relative to dimensions → regularize or reduce dimensionality first
+* **Non-Gaussian classes** → other classifiers (random forests, SVM...)
+
+---
+
+## LDA vs QDA: The linear vs quadratic dilemma
+
+### The crucial difference
+
+* **LDA:** Assumes **the same covariance** for all classes → linear boundaries
+* **QDA:** Assumes **different covariances** → quadratic boundaries
+
+💡 **Practical rule:** If you have little data, LDA is more robust (fewer parameters to estimate).
+
+---
+
+## LDA vs PCA comparison
+
+### Fundamental differences
+
+**PCA (unsupervised):**
+
+* Maximizes **global variance**
+* Ignores class labels
+* Finds directions of maximum variance
+* Based on $\Sigma$ (total covariance)
+
+**LDA (supervised):**
+
+* Maximizes **class separation**
+* Uses class labels
+* Finds discriminative directions
+* Based on $\Sigma_w^{-1} \Sigma_b$ (covariance ratio)
+
+### Complementarity
+
+💡 **In practice:** PCA and LDA can be combined:
+
+* PCA for initial dimensionality reduction (noise removal)
+* LDA to maximize discrimination
+
+**Concrete example:** Face recognition with Fisherfaces (LDA) as opposed to Eigenfaces (PCA).
+
+---
+
+::: {.callout-tip}
+
+## 💡 Condensed revision sheet
+
+**In 30 seconds:**
+
+* LDA = supervised dimensionality reduction (uses labels)
+* Maximizes (distance between centers) / (dispersion within classes)
+* Solution = eigenvectors of $\Sigma_w^{-1} \Sigma_b$
+* At most M-1 discriminative dimensions
+* Assumes: Gaussian classes, identical covariances
+* Useful for: classification, supervised visualization
+* Alternative: QDA if covariances differ
+:::
+
+::: {.callout-important}
+
+## 📌 Mathematical concepts to master
+
+To fully understand LDA:
+
+**Linear algebra:**
+
+* Eigenvectors and eigenvalues
+* Generalized eigenvalue system
+* Covariance matrices
+* Orthogonal projection
+
+**Statistics:**
+
+* Mean and variance
+* Covariance and correlation
+* Multivariate normal distribution
+* Bayes’ rule
+
+**Optimization:**
+
+* Matrix function differentiation
+* Constrained optimization
+* Rayleigh quotient method
+:::
