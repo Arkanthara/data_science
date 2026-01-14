@@ -1,4 +1,4 @@
-# Document de Révision : Expectation-Maximization pour la modélisation de densité
+# Cours détaillé
 
 ## Introduction et Motivation
 
