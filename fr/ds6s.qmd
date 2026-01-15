@@ -10,7 +10,14 @@ Imaginez que vous êtes dans une salle avec plusieurs instruments de musique qui
 
 C'est exactement le problème que résout l'algorithme EM pour les modèles de mélange : **séparer un mélange en ses composantes sous-jacentes** quand on ne connaît pas l'origine de chaque observation.
 
-📌 **Concept clé :** L'EM est utilisé quand certaines informations sont **manquantes** (ici, l'étiquette de quelle composante a généré chaque donnée). On appelle ces informations manquantes des **variables latentes**.
+📌 **Le cœur du problème :**
+
+Avec les modèles de mélange, nous avons **deux types d'inconnues** qui dépendent l'une de l'autre :
+
+- **Les paramètres** de chaque composante (moyenne, variance)
+- **L'origine** de chaque point (quelle composante l'a générée)
+
+C'est un **cercle vicieux** : pour connaître l'un, il faut connaître l'autre.
 
 ### Rappel : Modèles utilisés jusqu'à présent
 
@@ -77,7 +84,7 @@ $$f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j)$$
 
 ### Les modèles de mélange comme "bosses" dans le paysage
 
-Imaginez un paysage de montagnes avec plusieurs sommets. Chaque sommet représente un groupe dans vos données. Un modèle de mélange gaussien modélise ce paysage comme une **superposition de collines gaussiennes**.
+Imaginez que vos données forment un **paysage de montagnes**. Chaque montagne représente un groupe naturel dans vos données. Un modèle de mélange gaussien (GMM) représente ce paysage comme une **superposition de collines gaussiennes**.
 
 La densité $f(x)$ représente un **processus aléatoire** où $x$ est tiré d'un ensemble d'états $\omega_j$ avec probabilité a priori $\mathbb{P}(\omega_j)$.
 
@@ -87,6 +94,12 @@ $$f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j) = \mathbb{P}(x|\theta) = \sum_{j
 
 - $\pi_j = \mathbb{P}(\omega_j)$ avec la contrainte $\sum_j \pi_j = 1$
 - $\phi(x, \theta_j) = \mathbb{P}(x|\omega_j, \theta_j)$ est la **probabilité conditionnelle** que $x$ soit généré par l'état $\omega_j$
+
+💡 **Pourquoi des gaussiennes ?**
+
+- **Théorème central limite** : beaucoup de phénomènes naturels sont gaussiens
+- **Universalité** : un mélange de gaussiennes peut approximer n'importe quelle densité
+- **Calculabilité** : les formules sont mathématiquement maniables
 
 ---
 
@@ -191,7 +204,7 @@ Pour connaître l'origine de chaque point, il faudrait connaître les paramètre
 
 **C'est le problème classique du "poulet et de l'œuf" !**
 
-💡 **La solution EM :** Au lieu de chercher une solution parfaite d'un coup, l'EM procède par **approximations successives**.
+💡 **La solution EM :** Au lieu de chercher une solution parfaite d'un coup, l'EM procède par **approximations successives** en alternant deux questions.
 
 ---
 
@@ -251,11 +264,17 @@ $\gamma_{ij}$ est la **responsabilité** (responsibility) de la composante $j$ p
 
 - C'est la **vraisemblance** que $x_i$ soit (purement) modélisée par la composante $\phi_j$
 - $\gamma_{ij}$ représente la **part de $x_i$** qui est modélisée (générée) par la composante $\phi_j$
+
+**Interprétation générale :**
+
+Pour $c$ composantes :
+
+$$\gamma_{ij} = \frac{\pi_j \phi(x_i, \theta_j)}{\sum_{k=1}^{c} \pi_k \phi(x_i, \theta_k)}$$
 :::
 
 **Question :** Sachant les paramètres actuels, quelle est la probabilité que chaque point vienne de chaque composante ?
 
-C'est une **attribution douce** (soft assignment) : chaque point appartient partiellement à toutes les composantes.
+C'est une **attribution douce** (soft assignment). Contrairement au K-means qui dit "ce point est à 100% dans ce cluster", l'EM dit "ce point est à 60% dans le cluster A, 30% dans B, 10% dans C".
 
 ### Étape M (Maximization) : Mise à jour des paramètres
 
@@ -268,9 +287,9 @@ C'est une **attribution douce** (soft assignment) : chaque point appartient part
 
 **Moyennes :**
 
-$$\hat{\mu}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} x_i$$
+$$\hat{\mu}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} x_i = \frac{\sum_{i=1}^{N} \gamma_{i1} x_i}{\sum_{i=1}^{N} \gamma_{i1}}$$
 
-$$\hat{\mu}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} x_i$$
+$$\hat{\mu}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} x_i = \frac{\sum_{i=1}^{N} \gamma_{i2} x_i}{\sum_{i=1}^{N} \gamma_{i2}}$$
 
 **Covariances :**
 
@@ -283,6 +302,14 @@ $$\hat{\Sigma}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}}
 $$\pi_j = \frac{1}{N} \sum_{i=1}^{N} \gamma_{ij}$$
 
 Cette formule garantit que $\sum_j \pi_j = 1$.
+
+**Forme générale pour $c$ composantes :**
+
+$$\mu_j = \frac{\sum_{i=1}^{N} \gamma_{ij} x_i}{\sum_i \gamma_{ij}}$$
+
+$$\Sigma_j = \frac{X_j \Gamma_j X_j^T}{\text{Tr}(\Gamma_j)}$$
+
+où $\Gamma_j = \text{diag}(\gamma_{1j}, \ldots, \gamma_{Nj})$ et $X_j$ est centré sur $\mu_j$.
 :::
 
 **Question :** Sachant les responsabilités, quelles sont les meilleures estimations des paramètres ?
@@ -337,6 +364,8 @@ où $\epsilon$ est un seuil de tolérance (par exemple $\epsilon = 10^{-6}$).
 
 La log-vraisemblance **ne diminue jamais** (propriété hill-climbing).
 
+💡 **Pourquoi ça marche ?** Chaque étape améliore la **vraisemblance** des données (probabilité d'observer ces données avec le modèle courant). C'est un algorithme **"hill-climbing"** : à chaque itération, on monte la colline de vraisemblance.
+
 ---
 
 ## Limitations de l'algorithme EM
@@ -350,7 +379,7 @@ La log-vraisemblance **ne diminue jamais** (propriété hill-climbing).
 - **Sensible aux maxima locaux** : peut converger vers un optimum local plutôt que global
 - Différentes initialisations peuvent donner différents résultats
 
-💡 **L'initialisation est cruciale :** L'EM est un algorithme "hill-climbing" : il gravit la colline de vraisemblance à partir de son point de départ. S'il part d'un mauvais endroit, il peut rester coincé dans un **maximum local** (petit sommet) au lieu d'atteindre le **maximum global** (plus haut sommet).
+💡 **L'initialisation est cruciale :** L'EM peut converger vers des **maxima locaux** (petits sommets) au lieu du maximum global (plus haut sommet).
 
 ### Stratégies d'initialisation
 
@@ -370,13 +399,11 @@ La log-vraisemblance **ne diminue jamais** (propriété hill-climbing).
 
 ---
 
-## Généralisation à c composantes
+## Algorithme EM complet pour c composantes
 
-### Algorithme EM complet
+### Étape 1 : Initialisation
 
-**Étape 1 : Initialisation**
-
-Initialisation des paramètres :
+**Initialisation des paramètres :**
 
 $$\theta^0 = \{\pi_j^0, \mu_j^0, \Sigma_j^0\}_{j \in [[c]]}$$
 
@@ -385,15 +412,17 @@ $$\theta^0 = \{\pi_j^0, \mu_j^0, \Sigma_j^0\}_{j \in [[c]]}$$
 - **Générale :** $\pi_j = 1/c$, $\mu_j$ choisi aléatoirement, $\Sigma_j = I_D$
 - **Alternative :** utiliser K-means comme initialisation
 
-**Étape 2 : E-step**
+### Étape 2 : E-step
 
-Calcul des responsabilités pour chaque donnée $i \in [[N]]$ et chaque composante $j \in [[c]]$ :
+**Calcul des responsabilités :**
+
+Pour chaque donnée $i \in [[N]]$ et chaque composante $j \in [[c]]$ :
 
 $$\gamma_{ij} = \frac{\pi_j \phi(x_i, \theta_j)}{\sum_{k=1}^{c} \pi_k \phi(x_i, \theta_k)}$$
 
-**Étape 3 : M-step**
+### Étape 3 : M-step
 
-Estimation des paramètres du mélange :
+**Estimation des paramètres du mélange :**
 
 $$\mu_j = \frac{\sum_{i=1}^{N} \gamma_{ij} x_i}{\sum_i \gamma_{ij}}$$
 
@@ -403,7 +432,7 @@ où $\Gamma_j = \text{diag}(\gamma_{1j}, \ldots, \gamma_{Nj})$ et $X_j$ est cent
 
 $$\pi_j = \frac{\sum_i \gamma_{ij}}{N}$$
 
-**Étape 4 : Itération**
+### Étape 4 : Itération
 
 Itérer les étapes 2 et 3 jusqu'à convergence.
 
@@ -442,6 +471,8 @@ $$\Sigma \in \mathbb{R}^{D \times D}$$
 → **$O(D^2)$ paramètres** par composante
 
 💡 **Conseil pratique :** Commencer avec des modèles simples (sphériques) puis augmenter la complexité si nécessaire.
+
+⚠️ **Attention à la sur-paramétrisation !** Avec D=256 dimensions et K=10 composantes, une covariance complète nécessite ≈ 330,000 paramètres ! Souvent, on réduit d'abord la dimension avec PCA.
 
 ---
 
@@ -508,7 +539,7 @@ $$\hat{\theta} = \underset{\theta}{\arg\min} \, BIC(\theta, X)$$
 - $-2 \cdot LL(\theta, X)$ : pénalise les modèles avec mauvaise vraisemblance
 - $|\theta| \log(N)$ : pénalise la complexité du modèle
 
-💡 **Interprétation :** Le BIC favorise les modèles qui expliquent bien les données **sans sur-ajustement**.
+💡 **Interprétation :** Le BIC favorise les modèles qui expliquent bien les données **sans sur-ajustement** (équilibre entre qualité d'ajustement et complexité).
 
 ---
 
@@ -521,12 +552,14 @@ $$\hat{\theta} = \underset{\theta}{\arg\min} \, BIC(\theta, X)$$
 - **Assignation dure** (hard assignment)
 - Chaque point appartient à **un seul cluster**
 - Minimise la distance euclidienne aux centres
+- Modèle géométrique basé sur les distances
 
 **GMM avec EM :**
 
 - **Assignation douce** (soft assignment)
 - Chaque point a une **probabilité d'appartenance** à chaque composante
 - Maximise la vraisemblance selon un modèle probabiliste
+- Modèle probabiliste basé sur les densités
 
 ### GMM comme généralisation de K-means
 
@@ -535,6 +568,30 @@ $$\hat{\theta} = \underset{\theta}{\arg\min} \, BIC(\theta, X)$$
 - Matrices de covariance $\Sigma_j = \sigma^2 I$ (sphériques et identiques)
 - $\sigma \to 0$ : les responsabilités $\gamma_{ij}$ deviennent binaires
 - Assignation douce → assignation dure
+
+📌 **Point clé :** K-means si on veut un clustering simple et rapide avec des clusters sphériques. EM si on veut un modèle probabiliste, des formes flexibles, ou gérer l'incertitude.
+
+---
+
+## Pièges à éviter et bonnes pratiques
+
+### Piège 1 : Les "Composantes Fantômes"
+
+**Problème :** L'EM peut créer des composantes avec très peu de points ($\pi_j \approx 0$) qui capturent du bruit.
+
+**Solution :** Regarder les poids $\pi_j$ après convergence, fusionner ou éliminer les composantes trop petites.
+
+### Piège 2 : La Convergence Prématurée
+
+**Problème :** L'algorithme semble converger mais reste dans un maximum local médiocre.
+
+**Solution :** Multiples essais avec initialisations différentes, monitoring de la vraisemblance.
+
+### Piège 3 : L'Interprétation Abusive
+
+**Problème :** Penser que les composantes trouvées correspondent forcément à des "classes réelles".
+
+**Solution :** L'EM trouve des **groupes statistiques**, pas nécessairement des catégories sémantiques. Valider avec des connaissances du domaine.
 
 ---
 
@@ -572,21 +629,25 @@ est maximisée parmi toutes les classes.
 - **Probabilistic Latent Semantic Analysis (pLSA)** : EM où les variables cachées sont les concepts latents
 - **Modèles de Markov cachés** (HMM)
 - **Factorisation matricielle**
+- Segmentation d'images, séparation de sources audio
 
 ---
 
 ::: {.callout-tip}
 ## 💡 Fiche de révision condensée
 
-**En 30 secondes :**
+**À retenir absolument :**
 
-- EM = algorithme pour estimer modèles avec variables cachées
-- Deux étapes : E (calcul responsabilités), M (mise à jour paramètres)
-- Pour GMM : modélise données comme mélange de gaussiennes
-- Avantage : attribution douce, modèle probabiliste
-- Défis : initialisation, choix de K, maxima locaux
-- Utilisations : clustering, séparation sources, segmentation
-- Parenté : généralise K-means, lié à d'autres modèles latents
+- EM = algorithme pour modèles avec variables latentes
+- Deux étapes alternées : E (responsabilités) → M (paramètres)
+- GMM = mélange de gaussiennes, modélise densité des données
+- Initialisation cruciale → utiliser K-means ou K-means++
+- Choix de K avec BIC ou validation croisée
+- Forme covariance : commencer simple (sphérique), complexifier si besoin
+- Avantage principal : modèle probabiliste avec assignations douces
+- Parenté : généralise K-means (cas particulier)
+- Applications : segmentation, séparation de sources, clustering avancé
+- Vérification : toujours visualiser et valider les résultats
 :::
 
 ::: {.callout-important}
@@ -611,4 +672,11 @@ est maximisée parmi toutes les classes.
 - BIC (Bayesian Information Criterion)
 - Trade-off biais-variance
 - Parcimonie de modèle
+
+**Points à développer :**
+
+- Dérivation de la log-vraisemblance
+- Calcul des responsabilités par la règle de Bayes
+- Dérivation des équations de mise à jour du M-step
+- Preuve de la monotonie de $LL$ dans l'algorithme EM
 :::

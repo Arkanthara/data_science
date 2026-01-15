@@ -1,6 +1,6 @@
 project:
   type: website
-  title: "Data Science"
+  title: "ISS"
   output-dir: ../_site
   resources: "*.qmd"
 
@@ -28,8 +28,8 @@ website:
         contents: "ds3*"
       - section: "Linear Discriminant Analysis"
         contents: "ds5*"
-      # - section: "Expectation-Maximization"
-      #   contents: "ds6*"
+      - section: "Expectation-Maximization"
+        contents: "ds6*"
 
 
 format:

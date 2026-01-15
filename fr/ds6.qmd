@@ -34,9 +34,9 @@ Soit $f_\theta(x) : \Omega \to \mathbb{R}$ la **densité des données**
 
 ---
 
-## Méthodes d'estimation de densité
+### Méthodes d'estimation de densité
 
-### Vue d'ensemble des méthodes
+#### Vue d'ensemble des méthodes
 
 **Méthodes non-paramétriques :**
 
@@ -51,9 +51,11 @@ Soit $f_\theta(x) : \Omega \to \mathbb{R}$ la **densité des données**
 
 ---
 
-## Modèles de mélange : Définition
+## Modèles de mélange
 
-### Formulation générale
+### Définition
+
+#### Formulation générale
 
 **Définition :**
 
@@ -66,7 +68,7 @@ $$f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j)$$
 - $\pi_j \in \mathbb{R}$ : **paramètres du mélange** (mixture parameters)
 - $\phi(x, \theta_j) \in \mathcal{F}$ : **fonctions de base** contrôlées par les paramètres $\theta_j$
 
-### Hypothèses du modèle
+#### Hypothèses du modèle
 
 **Trois hypothèses fondamentales :**
 
@@ -76,9 +78,9 @@ $$f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j)$$
 
 ---
 
-## Interprétation probabiliste
+### Interprétation probabiliste
 
-### Lecture probabiliste du mélange
+#### Lecture probabiliste du mélange
 
 La densité $f(x)$ représente un **processus aléatoire** où $x$ est tiré d'un ensemble d'états $\omega_j$ avec probabilité a priori $\mathbb{P}(\omega_j)$.
 
@@ -93,9 +95,9 @@ $$f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j) = \mathbb{P}(x|\theta) = \sum_{j
 
 ---
 
-## Estimation par maximum de vraisemblance (MLE)
+### Estimation par maximum de vraisemblance (MLE)
 
-### Rappel sur la vraisemblance
+#### Rappel sur la vraisemblance
 
 **Données :**
 
@@ -105,7 +107,7 @@ Soit $X = \{x_1, \ldots, x_N\}$ des échantillons **non étiquetés** générés
 
 $$\theta = [\pi_j, \theta_j]_{j \in [[c]]}$$
 
-### Fonction de vraisemblance
+#### Fonction de vraisemblance
 
 **Vraisemblance :**
 
@@ -117,7 +119,7 @@ $$\mathbb{P}(X|\theta) \stackrel{\text{i.i.d}}{=} \prod_{i=1}^{N} \mathbb{P}(x_i
 
 $$\hat{\theta} = \underset{\theta}{\arg\max} \, \mathbb{P}(X|\theta)$$
 
-### Log-vraisemblance
+#### Log-vraisemblance
 
 **Transformation logarithmique :**
 
@@ -153,9 +155,9 @@ où $\phi_j(x) := \phi(x, \theta_j) = \mathcal{N}(x|\mu_j, \Sigma_j)$
 
 ---
 
-## Cas simple : 1 composante
+### Cas simple : 1 composante
 
-### Estimation directe
+#### Estimation directe
 
 **Paramètres :** $\theta = [\mu, \Sigma]$
 
@@ -173,9 +175,9 @@ $$\hat{\Sigma} = \frac{1}{N} \sum_i (x_i - \hat{\mu})(x_i - \hat{\mu})^T$$
 
 ---
 
-## Cas complexe : 2 composantes
+### Cas complexe : 2 composantes
 
-### Problématique
+#### Problématique
 
 **Paramètres :**
 
@@ -189,7 +191,7 @@ $$LL(\theta, X) = \sum_{i=1}^{N} \log[\pi_1 \phi(x_i, \theta_1) + \pi_2 \phi(x_i
 
 ⚠️ **Difficulté :** Maximisation difficile à cause de la **somme à l'intérieur du logarithme** !
 
-### Solution : Algorithme EM
+#### Solution : Algorithme EM
 
 ✅ **Solution :** Algorithme itératif en **2 étapes** (E-M) pour maximiser $LL$
 
@@ -197,9 +199,9 @@ $$LL(\theta, X) = \sum_{i=1}^{N} \log[\pi_1 \phi(x_i, \theta_1) + \pi_2 \phi(x_i
 
 ---
 
-## Variables latentes et stratégie EM
+### Variables latentes et stratégie EM
 
-### Introduction des variables latentes
+#### Introduction des variables latentes
 
 **Problème fondamental :**
 
@@ -209,7 +211,7 @@ Ce qui manque ici est l'**assignation** de $x_i$ à l'une des 2 composantes $\ph
 
 Si on **connaissait** cette assignation, on traiterait le problème comme **deux fois le cas à 1 composante**
 
-### Variables d'assignation binaire
+#### Variables d'assignation binaire
 
 On introduit des **variables latentes (non observées)** : l'assignation binaire $\delta_{ij} \in \{\text{true}, \text{false}\}$ de chaque $x_i$ à la composante $\phi_j$ :
 
@@ -220,9 +222,9 @@ On introduit des **variables latentes (non observées)** : l'assignation binaire
 
 ---
 
-## Étape E (Expectation)
+### Étape E (Expectation)
 
-### Principe de l'étape E
+#### Principe de l'étape E
 
 **Paramètres :**
 
@@ -234,7 +236,7 @@ On suppose connaître une valeur initiale :
 
 $$\theta^0 = [\pi_1^0, \theta_1^0, \pi_2^0, \theta_2^0]$$
 
-### Calcul de la responsabilité (Responsibility)
+#### Calcul de la responsabilité (Responsibility)
 
 On peut inférer la **contribution statistique** $\gamma_{ij}$ de chaque donnée $x_i$ à chaque composante $\phi_j$ (paramétrisée par $\theta_j^0$) :
 
@@ -244,7 +246,7 @@ $$\gamma_{ij}(\theta^0) = \mathbb{P}[\delta_{ij} = \text{true} | \theta^0, X]$$
 
 $$\gamma_{i1}(\theta^0) = \frac{\pi_1^0 \phi(x_i, \theta_1^0)}{\pi_1^0 \phi(x_i, \theta_1^0) + \pi_2^0 \phi(x_i, \theta_2^0)}$$
 
-### Interprétation de la responsabilité
+#### Interprétation de la responsabilité
 
 **Définition formelle :**
 
@@ -257,15 +259,15 @@ $\gamma_{ij}$ est la **responsabilité** (responsibility) de la composante $j$ p
 
 ---
 
-## Assignation dure vs douce
+### Assignation dure vs douce
 
-### Assignation dure (Hard assignment)
+#### Assignation dure (Hard assignment)
 
 On peut utiliser $\gamma_{ij}$ pour déterminer $\delta_{ij}$ → $x_i$ peut être assigné soit à $\phi_1$ soit à $\phi_2$ (**vote maximum** → binarisation)
 
 → Assignation de type **K-means** : chaque donnée est assignée à **une et une seule** composante (cluster)
 
-### Assignation douce (Soft assignment)
+#### Assignation douce (Soft assignment)
 
 **EM est "plus douce" :**
 
@@ -279,15 +281,15 @@ $$\sum_j \gamma_{ij} = 1 \quad \forall i$$
 
 ---
 
-## Étape M (Maximization)
+### Étape M (Maximization)
 
-### Principe de l'étape M
+#### Principe de l'étape M
 
 **Note :** Pour 2 composantes, $\gamma_{i1} + \gamma_{i2} = 1$
 
 Étant donné la **responsabilité** de chaque donnée ($\gamma_{ij}$), on peut estimer les paramètres de chaque composante par **maximum de vraisemblance pondéré** :
 
-### Estimation des paramètres
+#### Estimation des paramètres
 
 **Moyennes :**
 
@@ -309,9 +311,9 @@ Cette formule garantit que $\sum_j \pi_j = 1$
 
 ---
 
-## Convergence de l'algorithme EM
+### Convergence de l'algorithme EM
 
-### Principe itératif
+#### Principe itératif
 
 Le cycle alterné **Expectation-Maximization** augmente la vraisemblance des données par rapport au modèle de mélange.
 
@@ -323,7 +325,7 @@ $$|LL(\theta^{t+1}, X) - LL(\theta^t, X)| < \epsilon$$
 
 où $\epsilon$ est un seuil de tolérance (par exemple $\epsilon = 10^{-6}$)
 
-### Propriété de monotonie
+#### Propriété de monotonie
 
 ✅ **Propriété garantie :** À chaque itération, $LL(\theta^{t+1}, X) \geq LL(\theta^t, X)$
 
@@ -331,9 +333,9 @@ La log-vraisemblance **ne diminue jamais** (propriété hill-climbing)
 
 ---
 
-## Limitations de l'algorithme EM
+### Limitations de l'algorithme EM
 
-### Sensibilité à l'initialisation
+#### Sensibilité à l'initialisation
 
 ⚠️ **Hill-climbing :** L'algorithme dépend des **paramètres initiaux**
 
@@ -342,7 +344,7 @@ La log-vraisemblance **ne diminue jamais** (propriété hill-climbing)
 - **Sensible aux maxima locaux** : peut converger vers un optimum local plutôt que global
 - Différentes initialisations peuvent donner différents résultats
 
-### Stratégies d'initialisation
+#### Stratégies d'initialisation
 
 **Méthodes recommandées :**
 
@@ -350,7 +352,7 @@ La log-vraisemblance **ne diminue jamais** (propriété hill-climbing)
 - **K-means++** : version améliorée de K-means avec initialisation intelligente
 - **Exécutions multiples** : lancer l'algorithme plusieurs fois avec différentes initialisations et garder la meilleure
 
-### Convergence lente
+#### Convergence lente
 
 ⚠️ **Convergence potentiellement lente**, selon :
 
@@ -360,9 +362,9 @@ La log-vraisemblance **ne diminue jamais** (propriété hill-climbing)
 
 ---
 
-## Généralisation à c composantes
+### Généralisation à c composantes
 
-### Variables latentes générales
+#### Variables latentes générales
 
 **Généralisation :**
 
@@ -390,7 +392,10 @@ $$\theta^0 = \{\pi_j^0, \mu_j^0, \Sigma_j^0\}_{j \in [[c]]}$$
 
 **Stratégies courantes :**
 
-- **Générale :** $\pi_j = 1/c$, $\mu_j$ choisi aléatoirement, $\Sigma_j = I_D$
+- **Générale :**
+    - $\pi_j = 1/c$
+    - $\mu_j$ choisi aléatoirement
+    - $\Sigma_j = I_D$
 - **Alternative :** utiliser K-means comme initialisation
 
 ### Étape 2 : E-step
@@ -425,9 +430,9 @@ Itérer les étapes 2 et 3 jusqu'à convergence
 
 ---
 
-## Modélisation pratique
+### Modélisation pratique
 
-### Paramètres influençant la convergence
+#### Paramètres influençant la convergence
 
 La **paramétrisation a priori** du mélange change la convergence :
 
@@ -441,13 +446,13 @@ La **paramétrisation a priori** du mélange change la convergence :
 - Modèles **trop flexibles** ou **trop rigides** → mauvaise convergence ou absence de convergence
 - **Sur-paramétrisation** : $D \times D \times c + 2 \times c$ variables
 
-Si $N$ est faible, $D$ grand et $c$ grand → **sur-paramétrisation** problématique
+    Si $N$ est faible, $D$ grand et $c$ grand → **sur-paramétrisation** problématique
 
 ---
 
-## Forme de la matrice de covariance
+### Forme de la matrice de covariance
 
-### Problème de sur-paramétrisation
+#### Problème de sur-paramétrisation
 
 **Dimension de $\Sigma$ :**
 
@@ -459,37 +464,37 @@ Reconnaissance de caractères avec $x_i \in \mathbb{R}^{256}$
 
 → Besoin d'estimer $256^2 \times c$ paramètres pour la covariance (avec environ 7000 points de données) !
 
-### Stratégies de paramétrisation
+#### Stratégies de paramétrisation
 
 **Modèles sphériques :**
 
-$$\Sigma = \sigma I_D$$
+- $\Sigma = \sigma I_D$
 
-→ **1 paramètre** par composante
+- **1 paramètre** par composante
 
 **Modèles diagonaux :**
 
-$$\Sigma = \text{diag}(\sigma_1, \ldots, \sigma_D)$$
+- $\Sigma = \text{diag}(\sigma_1, \ldots, \sigma_D)$
 
-→ **$D$ paramètres** par composante
+- **$D$ paramètres** par composante
 
 **Modèles complets :**
 
-$$\Sigma \in \mathbb{R}^{D \times D}$$
+- $\Sigma \in \mathbb{R}^{D \times D}$
 
-→ **$O(D^2)$ paramètres** par composante
+- **$O(D^2)$ paramètres** par composante
 
 💡 **Conseil pratique :** Commencer avec des modèles simples (sphériques) puis augmenter la complexité si nécessaire
 
 ---
 
-## Prétraitement : Réduction de dimension par PCA
+### Prétraitement : Réduction de dimension par PCA
 
-### Problématique en haute dimension
+#### Problématique en haute dimension
 
 Pour des données de haute dimension (par exemple $D = 256$), les modèles complexes ne convergent pas car le nombre de paramètres $p$ est trop grand.
 
-### Solution : PCA préalable
+#### Solution : PCA préalable
 
 **Stratégie recommandée :**
 
@@ -509,9 +514,9 @@ Pour des données de haute dimension (par exemple $D = 256$), les modèles compl
 
 ---
 
-## Sélection du nombre de composantes
+### Sélection du nombre de composantes
 
-### Principe de parcimonie
+#### Principe de parcimonie
 
 **Problème :**
 
@@ -521,7 +526,7 @@ Plus $c$ est grand, moins de points peuvent être assignés à chaque composante
 
 Chercher des modèles **parcimonieux**, c'est-à-dire avec un **petit nombre de paramètres** à estimer
 
-### Critère d'Information Bayésien (BIC)
+#### Critère d'Information Bayésien (BIC)
 
 **Trade-off vraisemblance-complexité :**
 
@@ -545,7 +550,7 @@ $$\hat{\theta} = \underset{\theta}{\arg\min} \, BIC(\theta, X)$$
 
 💡 **Interprétation :** Le BIC favorise les modèles qui expliquent bien les données **sans sur-ajustement**
 
-### Limitations de la sélection de modèle
+#### Limitations de la sélection de modèle
 
 ⚠️ **Défis pratiques :**
 
