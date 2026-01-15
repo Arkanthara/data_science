@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds6 – Data Science</title>
+<title>ds6 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -275,7 +275,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Data Science</span>
+    <span class="navbar-title">ISS</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -432,7 +432,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds6s1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Expectation-Maximization (EM) pour modèles de mélange - Support de révision oral</span></a>
+ <span class="menu-text">Intuition</span></a>
   </div>
 </li>
       </ul>
@@ -454,75 +454,27 @@ window.Quarto = {
   <li><a href="#contexte-général" id="toc-contexte-général" class="nav-link" data-scroll-target="#contexte-général">Contexte général</a></li>
   <li><a href="#rappel-modèles-utilisés-jusquà-présent" id="toc-rappel-modèles-utilisés-jusquà-présent" class="nav-link" data-scroll-target="#rappel-modèles-utilisés-jusquà-présent">Rappel : Modèles utilisés jusqu’à présent</a></li>
   <li><a href="#nouvelle-approche-modélisation-de-densité" id="toc-nouvelle-approche-modélisation-de-densité" class="nav-link" data-scroll-target="#nouvelle-approche-modélisation-de-densité">Nouvelle approche : Modélisation de densité</a></li>
+  <li><a href="#méthodes-destimation-de-densité" id="toc-méthodes-destimation-de-densité" class="nav-link" data-scroll-target="#méthodes-destimation-de-densité">Méthodes d’estimation de densité</a></li>
   </ul></li>
-  <li><a href="#méthodes-destimation-de-densité" id="toc-méthodes-destimation-de-densité" class="nav-link" data-scroll-target="#méthodes-destimation-de-densité">Méthodes d’estimation de densité</a>
+  <li><a href="#modèles-de-mélange" id="toc-modèles-de-mélange" class="nav-link" data-scroll-target="#modèles-de-mélange">Modèles de mélange</a>
   <ul class="collapse">
-  <li><a href="#vue-densemble-des-méthodes" id="toc-vue-densemble-des-méthodes" class="nav-link" data-scroll-target="#vue-densemble-des-méthodes">Vue d’ensemble des méthodes</a></li>
-  </ul></li>
-  <li><a href="#modèles-de-mélange-définition" id="toc-modèles-de-mélange-définition" class="nav-link" data-scroll-target="#modèles-de-mélange-définition">Modèles de mélange : Définition</a>
-  <ul class="collapse">
-  <li><a href="#formulation-générale" id="toc-formulation-générale" class="nav-link" data-scroll-target="#formulation-générale">Formulation générale</a></li>
-  <li><a href="#hypothèses-du-modèle" id="toc-hypothèses-du-modèle" class="nav-link" data-scroll-target="#hypothèses-du-modèle">Hypothèses du modèle</a></li>
-  </ul></li>
-  <li><a href="#interprétation-probabiliste" id="toc-interprétation-probabiliste" class="nav-link" data-scroll-target="#interprétation-probabiliste">Interprétation probabiliste</a>
-  <ul class="collapse">
-  <li><a href="#lecture-probabiliste-du-mélange" id="toc-lecture-probabiliste-du-mélange" class="nav-link" data-scroll-target="#lecture-probabiliste-du-mélange">Lecture probabiliste du mélange</a></li>
-  </ul></li>
-  <li><a href="#estimation-par-maximum-de-vraisemblance-mle" id="toc-estimation-par-maximum-de-vraisemblance-mle" class="nav-link" data-scroll-target="#estimation-par-maximum-de-vraisemblance-mle">Estimation par maximum de vraisemblance (MLE)</a>
-  <ul class="collapse">
-  <li><a href="#rappel-sur-la-vraisemblance" id="toc-rappel-sur-la-vraisemblance" class="nav-link" data-scroll-target="#rappel-sur-la-vraisemblance">Rappel sur la vraisemblance</a></li>
-  <li><a href="#fonction-de-vraisemblance" id="toc-fonction-de-vraisemblance" class="nav-link" data-scroll-target="#fonction-de-vraisemblance">Fonction de vraisemblance</a></li>
-  <li><a href="#log-vraisemblance" id="toc-log-vraisemblance" class="nav-link" data-scroll-target="#log-vraisemblance">Log-vraisemblance</a></li>
+  <li><a href="#définition" id="toc-définition" class="nav-link" data-scroll-target="#définition">Définition</a></li>
+  <li><a href="#interprétation-probabiliste" id="toc-interprétation-probabiliste" class="nav-link" data-scroll-target="#interprétation-probabiliste">Interprétation probabiliste</a></li>
+  <li><a href="#estimation-par-maximum-de-vraisemblance-mle" id="toc-estimation-par-maximum-de-vraisemblance-mle" class="nav-link" data-scroll-target="#estimation-par-maximum-de-vraisemblance-mle">Estimation par maximum de vraisemblance (MLE)</a></li>
   </ul></li>
   <li><a href="#mélange-gaussien-gaussian-mixture-model---gmm" id="toc-mélange-gaussien-gaussian-mixture-model---gmm" class="nav-link" data-scroll-target="#mélange-gaussien-gaussian-mixture-model---gmm">Mélange gaussien (Gaussian Mixture Model - GMM)</a>
   <ul class="collapse">
   <li><a href="#choix-de-la-famille-gaussienne" id="toc-choix-de-la-famille-gaussienne" class="nav-link" data-scroll-target="#choix-de-la-famille-gaussienne">Choix de la famille gaussienne</a></li>
   <li><a href="#avantages-du-gmm" id="toc-avantages-du-gmm" class="nav-link" data-scroll-target="#avantages-du-gmm">Avantages du GMM</a></li>
-  </ul></li>
-  <li><a href="#cas-simple-1-composante" id="toc-cas-simple-1-composante" class="nav-link" data-scroll-target="#cas-simple-1-composante">Cas simple : 1 composante</a>
-  <ul class="collapse">
-  <li><a href="#estimation-directe" id="toc-estimation-directe" class="nav-link" data-scroll-target="#estimation-directe">Estimation directe</a></li>
-  </ul></li>
-  <li><a href="#cas-complexe-2-composantes" id="toc-cas-complexe-2-composantes" class="nav-link" data-scroll-target="#cas-complexe-2-composantes">Cas complexe : 2 composantes</a>
-  <ul class="collapse">
-  <li><a href="#problématique" id="toc-problématique" class="nav-link" data-scroll-target="#problématique">Problématique</a></li>
-  <li><a href="#solution-algorithme-em" id="toc-solution-algorithme-em" class="nav-link" data-scroll-target="#solution-algorithme-em">Solution : Algorithme EM</a></li>
-  </ul></li>
-  <li><a href="#variables-latentes-et-stratégie-em" id="toc-variables-latentes-et-stratégie-em" class="nav-link" data-scroll-target="#variables-latentes-et-stratégie-em">Variables latentes et stratégie EM</a>
-  <ul class="collapse">
-  <li><a href="#introduction-des-variables-latentes" id="toc-introduction-des-variables-latentes" class="nav-link" data-scroll-target="#introduction-des-variables-latentes">Introduction des variables latentes</a></li>
-  <li><a href="#variables-dassignation-binaire" id="toc-variables-dassignation-binaire" class="nav-link" data-scroll-target="#variables-dassignation-binaire">Variables d’assignation binaire</a></li>
-  </ul></li>
-  <li><a href="#étape-e-expectation" id="toc-étape-e-expectation" class="nav-link" data-scroll-target="#étape-e-expectation">Étape E (Expectation)</a>
-  <ul class="collapse">
-  <li><a href="#principe-de-létape-e" id="toc-principe-de-létape-e" class="nav-link" data-scroll-target="#principe-de-létape-e">Principe de l’étape E</a></li>
-  <li><a href="#calcul-de-la-responsabilité-responsibility" id="toc-calcul-de-la-responsabilité-responsibility" class="nav-link" data-scroll-target="#calcul-de-la-responsabilité-responsibility">Calcul de la responsabilité (Responsibility)</a></li>
-  <li><a href="#interprétation-de-la-responsabilité" id="toc-interprétation-de-la-responsabilité" class="nav-link" data-scroll-target="#interprétation-de-la-responsabilité">Interprétation de la responsabilité</a></li>
-  </ul></li>
-  <li><a href="#assignation-dure-vs-douce" id="toc-assignation-dure-vs-douce" class="nav-link" data-scroll-target="#assignation-dure-vs-douce">Assignation dure vs douce</a>
-  <ul class="collapse">
-  <li><a href="#assignation-dure-hard-assignment" id="toc-assignation-dure-hard-assignment" class="nav-link" data-scroll-target="#assignation-dure-hard-assignment">Assignation dure (Hard assignment)</a></li>
-  <li><a href="#assignation-douce-soft-assignment" id="toc-assignation-douce-soft-assignment" class="nav-link" data-scroll-target="#assignation-douce-soft-assignment">Assignation douce (Soft assignment)</a></li>
-  </ul></li>
-  <li><a href="#étape-m-maximization" id="toc-étape-m-maximization" class="nav-link" data-scroll-target="#étape-m-maximization">Étape M (Maximization)</a>
-  <ul class="collapse">
-  <li><a href="#principe-de-létape-m" id="toc-principe-de-létape-m" class="nav-link" data-scroll-target="#principe-de-létape-m">Principe de l’étape M</a></li>
-  <li><a href="#estimation-des-paramètres" id="toc-estimation-des-paramètres" class="nav-link" data-scroll-target="#estimation-des-paramètres">Estimation des paramètres</a></li>
-  </ul></li>
-  <li><a href="#convergence-de-lalgorithme-em" id="toc-convergence-de-lalgorithme-em" class="nav-link" data-scroll-target="#convergence-de-lalgorithme-em">Convergence de l’algorithme EM</a>
-  <ul class="collapse">
-  <li><a href="#principe-itératif" id="toc-principe-itératif" class="nav-link" data-scroll-target="#principe-itératif">Principe itératif</a></li>
-  <li><a href="#propriété-de-monotonie" id="toc-propriété-de-monotonie" class="nav-link" data-scroll-target="#propriété-de-monotonie">Propriété de monotonie</a></li>
-  </ul></li>
-  <li><a href="#limitations-de-lalgorithme-em" id="toc-limitations-de-lalgorithme-em" class="nav-link" data-scroll-target="#limitations-de-lalgorithme-em">Limitations de l’algorithme EM</a>
-  <ul class="collapse">
-  <li><a href="#sensibilité-à-linitialisation" id="toc-sensibilité-à-linitialisation" class="nav-link" data-scroll-target="#sensibilité-à-linitialisation">Sensibilité à l’initialisation</a></li>
-  <li><a href="#stratégies-dinitialisation" id="toc-stratégies-dinitialisation" class="nav-link" data-scroll-target="#stratégies-dinitialisation">Stratégies d’initialisation</a></li>
-  <li><a href="#convergence-lente" id="toc-convergence-lente" class="nav-link" data-scroll-target="#convergence-lente">Convergence lente</a></li>
-  </ul></li>
-  <li><a href="#généralisation-à-c-composantes" id="toc-généralisation-à-c-composantes" class="nav-link" data-scroll-target="#généralisation-à-c-composantes">Généralisation à c composantes</a>
-  <ul class="collapse">
-  <li><a href="#variables-latentes-générales" id="toc-variables-latentes-générales" class="nav-link" data-scroll-target="#variables-latentes-générales">Variables latentes générales</a></li>
+  <li><a href="#cas-simple-1-composante" id="toc-cas-simple-1-composante" class="nav-link" data-scroll-target="#cas-simple-1-composante">Cas simple : 1 composante</a></li>
+  <li><a href="#cas-complexe-2-composantes" id="toc-cas-complexe-2-composantes" class="nav-link" data-scroll-target="#cas-complexe-2-composantes">Cas complexe : 2 composantes</a></li>
+  <li><a href="#variables-latentes-et-stratégie-em" id="toc-variables-latentes-et-stratégie-em" class="nav-link" data-scroll-target="#variables-latentes-et-stratégie-em">Variables latentes et stratégie EM</a></li>
+  <li><a href="#étape-e-expectation" id="toc-étape-e-expectation" class="nav-link" data-scroll-target="#étape-e-expectation">Étape E (Expectation)</a></li>
+  <li><a href="#assignation-dure-vs-douce" id="toc-assignation-dure-vs-douce" class="nav-link" data-scroll-target="#assignation-dure-vs-douce">Assignation dure vs douce</a></li>
+  <li><a href="#étape-m-maximization" id="toc-étape-m-maximization" class="nav-link" data-scroll-target="#étape-m-maximization">Étape M (Maximization)</a></li>
+  <li><a href="#convergence-de-lalgorithme-em" id="toc-convergence-de-lalgorithme-em" class="nav-link" data-scroll-target="#convergence-de-lalgorithme-em">Convergence de l’algorithme EM</a></li>
+  <li><a href="#limitations-de-lalgorithme-em" id="toc-limitations-de-lalgorithme-em" class="nav-link" data-scroll-target="#limitations-de-lalgorithme-em">Limitations de l’algorithme EM</a></li>
+  <li><a href="#généralisation-à-c-composantes" id="toc-généralisation-à-c-composantes" class="nav-link" data-scroll-target="#généralisation-à-c-composantes">Généralisation à c composantes</a></li>
   </ul></li>
   <li><a href="#algorithme-em-complet-pour-c-composantes" id="toc-algorithme-em-complet-pour-c-composantes" class="nav-link" data-scroll-target="#algorithme-em-complet-pour-c-composantes">Algorithme EM complet pour c composantes</a>
   <ul class="collapse">
@@ -530,26 +482,10 @@ window.Quarto = {
   <li><a href="#étape-2-e-step" id="toc-étape-2-e-step" class="nav-link" data-scroll-target="#étape-2-e-step">Étape 2 : E-step</a></li>
   <li><a href="#étape-3-m-step" id="toc-étape-3-m-step" class="nav-link" data-scroll-target="#étape-3-m-step">Étape 3 : M-step</a></li>
   <li><a href="#étape-4-itération" id="toc-étape-4-itération" class="nav-link" data-scroll-target="#étape-4-itération">Étape 4 : Itération</a></li>
-  </ul></li>
-  <li><a href="#modélisation-pratique" id="toc-modélisation-pratique" class="nav-link" data-scroll-target="#modélisation-pratique">Modélisation pratique</a>
-  <ul class="collapse">
-  <li><a href="#paramètres-influençant-la-convergence" id="toc-paramètres-influençant-la-convergence" class="nav-link" data-scroll-target="#paramètres-influençant-la-convergence">Paramètres influençant la convergence</a></li>
-  </ul></li>
-  <li><a href="#forme-de-la-matrice-de-covariance" id="toc-forme-de-la-matrice-de-covariance" class="nav-link" data-scroll-target="#forme-de-la-matrice-de-covariance">Forme de la matrice de covariance</a>
-  <ul class="collapse">
-  <li><a href="#problème-de-sur-paramétrisation" id="toc-problème-de-sur-paramétrisation" class="nav-link" data-scroll-target="#problème-de-sur-paramétrisation">Problème de sur-paramétrisation</a></li>
-  <li><a href="#stratégies-de-paramétrisation" id="toc-stratégies-de-paramétrisation" class="nav-link" data-scroll-target="#stratégies-de-paramétrisation">Stratégies de paramétrisation</a></li>
-  </ul></li>
-  <li><a href="#prétraitement-réduction-de-dimension-par-pca" id="toc-prétraitement-réduction-de-dimension-par-pca" class="nav-link" data-scroll-target="#prétraitement-réduction-de-dimension-par-pca">Prétraitement : Réduction de dimension par PCA</a>
-  <ul class="collapse">
-  <li><a href="#problématique-en-haute-dimension" id="toc-problématique-en-haute-dimension" class="nav-link" data-scroll-target="#problématique-en-haute-dimension">Problématique en haute dimension</a></li>
-  <li><a href="#solution-pca-préalable" id="toc-solution-pca-préalable" class="nav-link" data-scroll-target="#solution-pca-préalable">Solution : PCA préalable</a></li>
-  </ul></li>
-  <li><a href="#sélection-du-nombre-de-composantes" id="toc-sélection-du-nombre-de-composantes" class="nav-link" data-scroll-target="#sélection-du-nombre-de-composantes">Sélection du nombre de composantes</a>
-  <ul class="collapse">
-  <li><a href="#principe-de-parcimonie" id="toc-principe-de-parcimonie" class="nav-link" data-scroll-target="#principe-de-parcimonie">Principe de parcimonie</a></li>
-  <li><a href="#critère-dinformation-bayésien-bic" id="toc-critère-dinformation-bayésien-bic" class="nav-link" data-scroll-target="#critère-dinformation-bayésien-bic">Critère d’Information Bayésien (BIC)</a></li>
-  <li><a href="#limitations-de-la-sélection-de-modèle" id="toc-limitations-de-la-sélection-de-modèle" class="nav-link" data-scroll-target="#limitations-de-la-sélection-de-modèle">Limitations de la sélection de modèle</a></li>
+  <li><a href="#modélisation-pratique" id="toc-modélisation-pratique" class="nav-link" data-scroll-target="#modélisation-pratique">Modélisation pratique</a></li>
+  <li><a href="#forme-de-la-matrice-de-covariance" id="toc-forme-de-la-matrice-de-covariance" class="nav-link" data-scroll-target="#forme-de-la-matrice-de-covariance">Forme de la matrice de covariance</a></li>
+  <li><a href="#prétraitement-réduction-de-dimension-par-pca" id="toc-prétraitement-réduction-de-dimension-par-pca" class="nav-link" data-scroll-target="#prétraitement-réduction-de-dimension-par-pca">Prétraitement : Réduction de dimension par PCA</a></li>
+  <li><a href="#sélection-du-nombre-de-composantes" id="toc-sélection-du-nombre-de-composantes" class="nav-link" data-scroll-target="#sélection-du-nombre-de-composantes">Sélection du nombre de composantes</a></li>
   </ul></li>
   <li><a href="#synthèse-des-concepts-clés" id="toc-synthèse-des-concepts-clés" class="nav-link" data-scroll-target="#synthèse-des-concepts-clés">Synthèse des concepts clés</a>
   <ul class="collapse">
@@ -617,11 +553,10 @@ window.Quarto = {
 <p>Soit <span class="math inline">\(f_\theta(x) : \Omega \to \mathbb{R}\)</span> la <strong>densité des données</strong></p>
 <hr>
 </section>
-</section>
-<section id="méthodes-destimation-de-densité" class="level2">
-<h2 class="anchored" data-anchor-id="méthodes-destimation-de-densité">Méthodes d’estimation de densité</h2>
-<section id="vue-densemble-des-méthodes" class="level3">
-<h3 class="anchored" data-anchor-id="vue-densemble-des-méthodes">Vue d’ensemble des méthodes</h3>
+<section id="méthodes-destimation-de-densité" class="level3">
+<h3 class="anchored" data-anchor-id="méthodes-destimation-de-densité">Méthodes d’estimation de densité</h3>
+<section id="vue-densemble-des-méthodes" class="level4">
+<h4 class="anchored" data-anchor-id="vue-densemble-des-méthodes">Vue d’ensemble des méthodes</h4>
 <p><strong>Méthodes non-paramétriques :</strong></p>
 <ul>
 <li><strong>k-Nearest Neighbors (kNN)</strong> : estimation basée sur les <span class="math inline">\(k\)</span> plus proches voisins</li>
@@ -636,10 +571,13 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="modèles-de-mélange-définition" class="level2">
-<h2 class="anchored" data-anchor-id="modèles-de-mélange-définition">Modèles de mélange : Définition</h2>
-<section id="formulation-générale" class="level3">
-<h3 class="anchored" data-anchor-id="formulation-générale">Formulation générale</h3>
+</section>
+<section id="modèles-de-mélange" class="level2">
+<h2 class="anchored" data-anchor-id="modèles-de-mélange">Modèles de mélange</h2>
+<section id="définition" class="level3">
+<h3 class="anchored" data-anchor-id="définition">Définition</h3>
+<section id="formulation-générale" class="level4">
+<h4 class="anchored" data-anchor-id="formulation-générale">Formulation générale</h4>
 <p><strong>Définition :</strong></p>
 <p>La densité <span class="math inline">\(f(x)\)</span> est générée par <span class="math inline">\(c\)</span> fonctions de “base” <span class="math inline">\(\phi\)</span> (composantes), issues d’une famille <span class="math inline">\(\mathcal{F}\)</span> :</p>
 <p><span class="math display">\[f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j)\]</span></p>
@@ -649,8 +587,8 @@ window.Quarto = {
 <li><span class="math inline">\(\phi(x, \theta_j) \in \mathcal{F}\)</span> : <strong>fonctions de base</strong> contrôlées par les paramètres <span class="math inline">\(\theta_j\)</span></li>
 </ul>
 </section>
-<section id="hypothèses-du-modèle" class="level3">
-<h3 class="anchored" data-anchor-id="hypothèses-du-modèle">Hypothèses du modèle</h3>
+<section id="hypothèses-du-modèle" class="level4">
+<h4 class="anchored" data-anchor-id="hypothèses-du-modèle">Hypothèses du modèle</h4>
 <p><strong>Trois hypothèses fondamentales :</strong></p>
 <ol type="1">
 <li>Le <strong>nombre de composantes</strong> <span class="math inline">\(c \in \mathbb{N}^*\)</span> est <strong>connu</strong></li>
@@ -660,10 +598,10 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="interprétation-probabiliste" class="level2">
-<h2 class="anchored" data-anchor-id="interprétation-probabiliste">Interprétation probabiliste</h2>
-<section id="lecture-probabiliste-du-mélange" class="level3">
-<h3 class="anchored" data-anchor-id="lecture-probabiliste-du-mélange">Lecture probabiliste du mélange</h3>
+<section id="interprétation-probabiliste" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-probabiliste">Interprétation probabiliste</h3>
+<section id="lecture-probabiliste-du-mélange" class="level4">
+<h4 class="anchored" data-anchor-id="lecture-probabiliste-du-mélange">Lecture probabiliste du mélange</h4>
 <p>La densité <span class="math inline">\(f(x)\)</span> représente un <strong>processus aléatoire</strong> où <span class="math inline">\(x\)</span> est tiré d’un ensemble d’états <span class="math inline">\(\omega_j\)</span> avec probabilité a priori <span class="math inline">\(\mathbb{P}(\omega_j)\)</span>.</p>
 <p><strong>Formulation probabiliste :</strong></p>
 <p><span class="math display">\[f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j) = \mathbb{P}(x|\theta) = \sum_{j=1}^{c} \mathbb{P}(\omega_j) \mathbb{P}(x|\omega_j, \theta_j)\]</span></p>
@@ -675,31 +613,32 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="estimation-par-maximum-de-vraisemblance-mle" class="level2">
-<h2 class="anchored" data-anchor-id="estimation-par-maximum-de-vraisemblance-mle">Estimation par maximum de vraisemblance (MLE)</h2>
-<section id="rappel-sur-la-vraisemblance" class="level3">
-<h3 class="anchored" data-anchor-id="rappel-sur-la-vraisemblance">Rappel sur la vraisemblance</h3>
+<section id="estimation-par-maximum-de-vraisemblance-mle" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-par-maximum-de-vraisemblance-mle">Estimation par maximum de vraisemblance (MLE)</h3>
+<section id="rappel-sur-la-vraisemblance" class="level4">
+<h4 class="anchored" data-anchor-id="rappel-sur-la-vraisemblance">Rappel sur la vraisemblance</h4>
 <p><strong>Données :</strong></p>
 <p>Soit <span class="math inline">\(X = \{x_1, \ldots, x_N\}\)</span> des échantillons <strong>non étiquetés</strong> générés par le mélange <span class="math inline">\(f(x) = \mathbb{P}(x|\theta)\)</span></p>
 <p><strong>Paramètres à inférer :</strong></p>
 <p><span class="math display">\[\theta = [\pi_j, \theta_j]_{j \in [[c]]}\]</span></p>
 </section>
-<section id="fonction-de-vraisemblance" class="level3">
-<h3 class="anchored" data-anchor-id="fonction-de-vraisemblance">Fonction de vraisemblance</h3>
+<section id="fonction-de-vraisemblance" class="level4">
+<h4 class="anchored" data-anchor-id="fonction-de-vraisemblance">Fonction de vraisemblance</h4>
 <p><strong>Vraisemblance :</strong></p>
 <p>En supposant les données <strong>indépendantes et identiquement distribuées</strong> (i.i.d.) :</p>
 <p><span class="math display">\[\mathbb{P}(X|\theta) \stackrel{\text{i.i.d}}{=} \prod_{i=1}^{N} \mathbb{P}(x_i|\theta)\]</span></p>
 <p><strong>Estimateur de vraisemblance :</strong></p>
 <p><span class="math display">\[\hat{\theta} = \underset{\theta}{\arg\max} \, \mathbb{P}(X|\theta)\]</span></p>
 </section>
-<section id="log-vraisemblance" class="level3">
-<h3 class="anchored" data-anchor-id="log-vraisemblance">Log-vraisemblance</h3>
+<section id="log-vraisemblance" class="level4">
+<h4 class="anchored" data-anchor-id="log-vraisemblance">Log-vraisemblance</h4>
 <p><strong>Transformation logarithmique :</strong></p>
 <p><span class="math display">\[LL(\theta, X) = \sum_{i=1}^{N} \log \mathbb{P}(x_i|\theta) = \sum_{i=1}^{N} \log \left[\sum_{j=1}^{c} \pi_j \phi(x_i, \theta_j)\right]\]</span></p>
 <p><strong>Estimateur du maximum de log-vraisemblance (MLE) :</strong></p>
 <p><span class="math display">\[\hat{\theta} = \underset{\theta}{\arg\max} \, LL(\theta, X)\]</span></p>
 <p>📌 <strong>Avantage :</strong> Transformation du produit en somme, numériquement plus stable</p>
 <hr>
+</section>
 </section>
 </section>
 <section id="mélange-gaussien-gaussian-mixture-model---gmm" class="level2">
@@ -718,11 +657,10 @@ window.Quarto = {
 <p>✅ <strong>Linéarité :</strong> Permet un système <strong>linéaire</strong> des paramètres lors de la maximisation de la log-vraisemblance</p>
 <hr>
 </section>
-</section>
-<section id="cas-simple-1-composante" class="level2">
-<h2 class="anchored" data-anchor-id="cas-simple-1-composante">Cas simple : 1 composante</h2>
-<section id="estimation-directe" class="level3">
-<h3 class="anchored" data-anchor-id="estimation-directe">Estimation directe</h3>
+<section id="cas-simple-1-composante" class="level3">
+<h3 class="anchored" data-anchor-id="cas-simple-1-composante">Cas simple : 1 composante</h3>
+<section id="estimation-directe" class="level4">
+<h4 class="anchored" data-anchor-id="estimation-directe">Estimation directe</h4>
 <p><strong>Paramètres :</strong> <span class="math inline">\(\theta = [\mu, \Sigma]\)</span></p>
 <p><strong>Problème d’optimisation :</strong></p>
 <p><span class="math display">\[\hat{\theta} = \underset{\theta}{\arg\max} \sum_i \log e^{-(x_i - \mu)^T \Sigma^{-1} (x_i - \mu)} \Leftrightarrow \hat{\theta} = \underset{\theta}{\arg\min} \sum_i (x_i - \mu)^T \Sigma^{-1} (x_i - \mu)\]</span></p>
@@ -733,10 +671,10 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="cas-complexe-2-composantes" class="level2">
-<h2 class="anchored" data-anchor-id="cas-complexe-2-composantes">Cas complexe : 2 composantes</h2>
-<section id="problématique" class="level3">
-<h3 class="anchored" data-anchor-id="problématique">Problématique</h3>
+<section id="cas-complexe-2-composantes" class="level3">
+<h3 class="anchored" data-anchor-id="cas-complexe-2-composantes">Cas complexe : 2 composantes</h3>
+<section id="problématique" class="level4">
+<h4 class="anchored" data-anchor-id="problématique">Problématique</h4>
 <p><strong>Paramètres :</strong></p>
 <p><span class="math display">\[\theta = [\pi_1, \theta_1, \pi_2, \theta_2] = [\pi_1, [\mu_1, \Sigma_1], \pi_2, [\mu_2, \Sigma_2]]\]</span></p>
 <p>avec la contrainte <span class="math inline">\(\pi_1 + \pi_2 = 1\)</span></p>
@@ -744,24 +682,24 @@ window.Quarto = {
 <p><span class="math display">\[LL(\theta, X) = \sum_{i=1}^{N} \log[\pi_1 \phi(x_i, \theta_1) + \pi_2 \phi(x_i, \theta_2)]\]</span></p>
 <p>⚠️ <strong>Difficulté :</strong> Maximisation difficile à cause de la <strong>somme à l’intérieur du logarithme</strong> !</p>
 </section>
-<section id="solution-algorithme-em" class="level3">
-<h3 class="anchored" data-anchor-id="solution-algorithme-em">Solution : Algorithme EM</h3>
+<section id="solution-algorithme-em" class="level4">
+<h4 class="anchored" data-anchor-id="solution-algorithme-em">Solution : Algorithme EM</h4>
 <p>✅ <strong>Solution :</strong> Algorithme itératif en <strong>2 étapes</strong> (E-M) pour maximiser <span class="math inline">\(LL\)</span></p>
 <p>→ <strong>Expectation-Maximization (EM) algorithm</strong></p>
 <hr>
 </section>
 </section>
-<section id="variables-latentes-et-stratégie-em" class="level2">
-<h2 class="anchored" data-anchor-id="variables-latentes-et-stratégie-em">Variables latentes et stratégie EM</h2>
-<section id="introduction-des-variables-latentes" class="level3">
-<h3 class="anchored" data-anchor-id="introduction-des-variables-latentes">Introduction des variables latentes</h3>
+<section id="variables-latentes-et-stratégie-em" class="level3">
+<h3 class="anchored" data-anchor-id="variables-latentes-et-stratégie-em">Variables latentes et stratégie EM</h3>
+<section id="introduction-des-variables-latentes" class="level4">
+<h4 class="anchored" data-anchor-id="introduction-des-variables-latentes">Introduction des variables latentes</h4>
 <p><strong>Problème fondamental :</strong></p>
 <p>Ce qui manque ici est l’<strong>assignation</strong> de <span class="math inline">\(x_i\)</span> à l’une des 2 composantes <span class="math inline">\(\phi_j\)</span></p>
 <p><strong>Observation clé :</strong></p>
 <p>Si on <strong>connaissait</strong> cette assignation, on traiterait le problème comme <strong>deux fois le cas à 1 composante</strong></p>
 </section>
-<section id="variables-dassignation-binaire" class="level3">
-<h3 class="anchored" data-anchor-id="variables-dassignation-binaire">Variables d’assignation binaire</h3>
+<section id="variables-dassignation-binaire" class="level4">
+<h4 class="anchored" data-anchor-id="variables-dassignation-binaire">Variables d’assignation binaire</h4>
 <p>On introduit des <strong>variables latentes (non observées)</strong> : l’assignation binaire <span class="math inline">\(\delta_{ij} \in \{\text{true}, \text{false}\}\)</span> de chaque <span class="math inline">\(x_i\)</span> à la composante <span class="math inline">\(\phi_j\)</span> :</p>
 <ul>
 <li><span class="math inline">\(x_i \sim \phi_1 \Rightarrow \delta_{i1} = \text{true}, \delta_{i2} = \text{false}\)</span></li>
@@ -771,25 +709,25 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="étape-e-expectation" class="level2">
-<h2 class="anchored" data-anchor-id="étape-e-expectation">Étape E (Expectation)</h2>
-<section id="principe-de-létape-e" class="level3">
-<h3 class="anchored" data-anchor-id="principe-de-létape-e">Principe de l’étape E</h3>
+<section id="étape-e-expectation" class="level3">
+<h3 class="anchored" data-anchor-id="étape-e-expectation">Étape E (Expectation)</h3>
+<section id="principe-de-létape-e" class="level4">
+<h4 class="anchored" data-anchor-id="principe-de-létape-e">Principe de l’étape E</h4>
 <p><strong>Paramètres :</strong></p>
 <p><span class="math display">\[\theta = [\pi_1, \theta_1, \pi_2, \theta_2] = [\pi_1, [\mu_1, \Sigma_1], \pi_2, [\mu_2, \Sigma_2]]\]</span></p>
 <p><strong>Initialisation :</strong></p>
 <p>On suppose connaître une valeur initiale :</p>
 <p><span class="math display">\[\theta^0 = [\pi_1^0, \theta_1^0, \pi_2^0, \theta_2^0]\]</span></p>
 </section>
-<section id="calcul-de-la-responsabilité-responsibility" class="level3">
-<h3 class="anchored" data-anchor-id="calcul-de-la-responsabilité-responsibility">Calcul de la responsabilité (Responsibility)</h3>
+<section id="calcul-de-la-responsabilité-responsibility" class="level4">
+<h4 class="anchored" data-anchor-id="calcul-de-la-responsabilité-responsibility">Calcul de la responsabilité (Responsibility)</h4>
 <p>On peut inférer la <strong>contribution statistique</strong> <span class="math inline">\(\gamma_{ij}\)</span> de chaque donnée <span class="math inline">\(x_i\)</span> à chaque composante <span class="math inline">\(\phi_j\)</span> (paramétrisée par <span class="math inline">\(\theta_j^0\)</span>) :</p>
 <p><span class="math display">\[\gamma_{ij}(\theta^0) = \mathbb{P}[\delta_{ij} = \text{true} | \theta^0, X]\]</span></p>
 <p><strong>Formule de Bayes :</strong></p>
 <p><span class="math display">\[\gamma_{i1}(\theta^0) = \frac{\pi_1^0 \phi(x_i, \theta_1^0)}{\pi_1^0 \phi(x_i, \theta_1^0) + \pi_2^0 \phi(x_i, \theta_2^0)}\]</span></p>
 </section>
-<section id="interprétation-de-la-responsabilité" class="level3">
-<h3 class="anchored" data-anchor-id="interprétation-de-la-responsabilité">Interprétation de la responsabilité</h3>
+<section id="interprétation-de-la-responsabilité" class="level4">
+<h4 class="anchored" data-anchor-id="interprétation-de-la-responsabilité">Interprétation de la responsabilité</h4>
 <p><strong>Définition formelle :</strong></p>
 <p><span class="math inline">\(\gamma_{ij}\)</span> est la <strong>responsabilité</strong> (responsibility) de la composante <span class="math inline">\(j\)</span> pour la donnée <span class="math inline">\(i\)</span></p>
 <p><strong>Signification :</strong></p>
@@ -800,15 +738,15 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="assignation-dure-vs-douce" class="level2">
-<h2 class="anchored" data-anchor-id="assignation-dure-vs-douce">Assignation dure vs douce</h2>
-<section id="assignation-dure-hard-assignment" class="level3">
-<h3 class="anchored" data-anchor-id="assignation-dure-hard-assignment">Assignation dure (Hard assignment)</h3>
+<section id="assignation-dure-vs-douce" class="level3">
+<h3 class="anchored" data-anchor-id="assignation-dure-vs-douce">Assignation dure vs douce</h3>
+<section id="assignation-dure-hard-assignment" class="level4">
+<h4 class="anchored" data-anchor-id="assignation-dure-hard-assignment">Assignation dure (Hard assignment)</h4>
 <p>On peut utiliser <span class="math inline">\(\gamma_{ij}\)</span> pour déterminer <span class="math inline">\(\delta_{ij}\)</span> → <span class="math inline">\(x_i\)</span> peut être assigné soit à <span class="math inline">\(\phi_1\)</span> soit à <span class="math inline">\(\phi_2\)</span> (<strong>vote maximum</strong> → binarisation)</p>
 <p>→ Assignation de type <strong>K-means</strong> : chaque donnée est assignée à <strong>une et une seule</strong> composante (cluster)</p>
 </section>
-<section id="assignation-douce-soft-assignment" class="level3">
-<h3 class="anchored" data-anchor-id="assignation-douce-soft-assignment">Assignation douce (Soft assignment)</h3>
+<section id="assignation-douce-soft-assignment" class="level4">
+<h4 class="anchored" data-anchor-id="assignation-douce-soft-assignment">Assignation douce (Soft assignment)</h4>
 <p><strong>EM est “plus douce” :</strong></p>
 <p>Une donnée <strong>contribue</strong> (via <span class="math inline">\(\gamma_{ij}\)</span>) à <strong>plusieurs composantes</strong> (modes de densité)</p>
 <p>EM calcule une <strong>assignation douce</strong> avec :</p>
@@ -817,15 +755,15 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="étape-m-maximization" class="level2">
-<h2 class="anchored" data-anchor-id="étape-m-maximization">Étape M (Maximization)</h2>
-<section id="principe-de-létape-m" class="level3">
-<h3 class="anchored" data-anchor-id="principe-de-létape-m">Principe de l’étape M</h3>
+<section id="étape-m-maximization" class="level3">
+<h3 class="anchored" data-anchor-id="étape-m-maximization">Étape M (Maximization)</h3>
+<section id="principe-de-létape-m" class="level4">
+<h4 class="anchored" data-anchor-id="principe-de-létape-m">Principe de l’étape M</h4>
 <p><strong>Note :</strong> Pour 2 composantes, <span class="math inline">\(\gamma_{i1} + \gamma_{i2} = 1\)</span></p>
 <p>Étant donné la <strong>responsabilité</strong> de chaque donnée (<span class="math inline">\(\gamma_{ij}\)</span>), on peut estimer les paramètres de chaque composante par <strong>maximum de vraisemblance pondéré</strong> :</p>
 </section>
-<section id="estimation-des-paramètres" class="level3">
-<h3 class="anchored" data-anchor-id="estimation-des-paramètres">Estimation des paramètres</h3>
+<section id="estimation-des-paramètres" class="level4">
+<h4 class="anchored" data-anchor-id="estimation-des-paramètres">Estimation des paramètres</h4>
 <p><strong>Moyennes :</strong></p>
 <p><span class="math display">\[\hat{\mu}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} x_i\]</span></p>
 <p><span class="math display">\[\hat{\mu}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} x_i\]</span></p>
@@ -838,27 +776,27 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="convergence-de-lalgorithme-em" class="level2">
-<h2 class="anchored" data-anchor-id="convergence-de-lalgorithme-em">Convergence de l’algorithme EM</h2>
-<section id="principe-itératif" class="level3">
-<h3 class="anchored" data-anchor-id="principe-itératif">Principe itératif</h3>
+<section id="convergence-de-lalgorithme-em" class="level3">
+<h3 class="anchored" data-anchor-id="convergence-de-lalgorithme-em">Convergence de l’algorithme EM</h3>
+<section id="principe-itératif" class="level4">
+<h4 class="anchored" data-anchor-id="principe-itératif">Principe itératif</h4>
 <p>Le cycle alterné <strong>Expectation-Maximization</strong> augmente la vraisemblance des données par rapport au modèle de mélange.</p>
 <p><strong>Critère de convergence :</strong></p>
 <p>Le processus est itéré jusqu’à <strong>convergence</strong>, c’est-à-dire quand la vraisemblance des données ne change (presque) plus :</p>
 <p><span class="math display">\[|LL(\theta^{t+1}, X) - LL(\theta^t, X)| &lt; \epsilon\]</span></p>
 <p>où <span class="math inline">\(\epsilon\)</span> est un seuil de tolérance (par exemple <span class="math inline">\(\epsilon = 10^{-6}\)</span>)</p>
 </section>
-<section id="propriété-de-monotonie" class="level3">
-<h3 class="anchored" data-anchor-id="propriété-de-monotonie">Propriété de monotonie</h3>
+<section id="propriété-de-monotonie" class="level4">
+<h4 class="anchored" data-anchor-id="propriété-de-monotonie">Propriété de monotonie</h4>
 <p>✅ <strong>Propriété garantie :</strong> À chaque itération, <span class="math inline">\(LL(\theta^{t+1}, X) \geq LL(\theta^t, X)\)</span></p>
 <p>La log-vraisemblance <strong>ne diminue jamais</strong> (propriété hill-climbing)</p>
 <hr>
 </section>
 </section>
-<section id="limitations-de-lalgorithme-em" class="level2">
-<h2 class="anchored" data-anchor-id="limitations-de-lalgorithme-em">Limitations de l’algorithme EM</h2>
-<section id="sensibilité-à-linitialisation" class="level3">
-<h3 class="anchored" data-anchor-id="sensibilité-à-linitialisation">Sensibilité à l’initialisation</h3>
+<section id="limitations-de-lalgorithme-em" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-de-lalgorithme-em">Limitations de l’algorithme EM</h3>
+<section id="sensibilité-à-linitialisation" class="level4">
+<h4 class="anchored" data-anchor-id="sensibilité-à-linitialisation">Sensibilité à l’initialisation</h4>
 <p>⚠️ <strong>Hill-climbing :</strong> L’algorithme dépend des <strong>paramètres initiaux</strong></p>
 <p><strong>Conséquences :</strong></p>
 <ul>
@@ -866,8 +804,8 @@ window.Quarto = {
 <li>Différentes initialisations peuvent donner différents résultats</li>
 </ul>
 </section>
-<section id="stratégies-dinitialisation" class="level3">
-<h3 class="anchored" data-anchor-id="stratégies-dinitialisation">Stratégies d’initialisation</h3>
+<section id="stratégies-dinitialisation" class="level4">
+<h4 class="anchored" data-anchor-id="stratégies-dinitialisation">Stratégies d’initialisation</h4>
 <p><strong>Méthodes recommandées :</strong></p>
 <ul>
 <li><strong>K-means</strong> : utiliser le clustering K-means pour initialiser les centres <span class="math inline">\(\mu_j\)</span></li>
@@ -875,8 +813,8 @@ window.Quarto = {
 <li><strong>Exécutions multiples</strong> : lancer l’algorithme plusieurs fois avec différentes initialisations et garder la meilleure</li>
 </ul>
 </section>
-<section id="convergence-lente" class="level3">
-<h3 class="anchored" data-anchor-id="convergence-lente">Convergence lente</h3>
+<section id="convergence-lente" class="level4">
+<h4 class="anchored" data-anchor-id="convergence-lente">Convergence lente</h4>
 <p>⚠️ <strong>Convergence potentiellement lente</strong>, selon :</p>
 <ul>
 <li>La séparation entre les composantes</li>
@@ -886,10 +824,10 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="généralisation-à-c-composantes" class="level2">
-<h2 class="anchored" data-anchor-id="généralisation-à-c-composantes">Généralisation à c composantes</h2>
-<section id="variables-latentes-générales" class="level3">
-<h3 class="anchored" data-anchor-id="variables-latentes-générales">Variables latentes générales</h3>
+<section id="généralisation-à-c-composantes" class="level3">
+<h3 class="anchored" data-anchor-id="généralisation-à-c-composantes">Généralisation à c composantes</h3>
+<section id="variables-latentes-générales" class="level4">
+<h4 class="anchored" data-anchor-id="variables-latentes-générales">Variables latentes générales</h4>
 <p><strong>Généralisation :</strong></p>
 <p><span class="math display">\[\delta_{i1}, \delta_{i2}, \ldots, \delta_{ij}, \ldots, \delta_{ic}\]</span></p>
 <p>où <span class="math inline">\(\delta_{ij} = \text{true}\)</span> si la donnée <span class="math inline">\(x_i\)</span> est générée par la composante <span class="math inline">\(\phi_j\)</span> (<span class="math inline">\(\delta_{ij} = \text{false}\)</span> sinon)</p>
@@ -900,6 +838,7 @@ window.Quarto = {
 <hr>
 </section>
 </section>
+</section>
 <section id="algorithme-em-complet-pour-c-composantes" class="level2">
 <h2 class="anchored" data-anchor-id="algorithme-em-complet-pour-c-composantes">Algorithme EM complet pour c composantes</h2>
 <section id="étape-1-initialisation" class="level3">
@@ -908,7 +847,12 @@ window.Quarto = {
 <p><span class="math display">\[\theta^0 = \{\pi_j^0, \mu_j^0, \Sigma_j^0\}_{j \in [[c]]}\]</span></p>
 <p><strong>Stratégies courantes :</strong></p>
 <ul>
-<li><strong>Générale :</strong> <span class="math inline">\(\pi_j = 1/c\)</span>, <span class="math inline">\(\mu_j\)</span> choisi aléatoirement, <span class="math inline">\(\Sigma_j = I_D\)</span></li>
+<li><strong>Générale :</strong>
+<ul>
+<li><span class="math inline">\(\pi_j = 1/c\)</span></li>
+<li><span class="math inline">\(\mu_j\)</span> choisi aléatoirement</li>
+<li><span class="math inline">\(\Sigma_j = I_D\)</span></li>
+</ul></li>
 <li><strong>Alternative :</strong> utiliser K-means comme initialisation</li>
 </ul>
 </section>
@@ -934,11 +878,10 @@ window.Quarto = {
 <p>Itérer les étapes 2 et 3 jusqu’à convergence</p>
 <hr>
 </section>
-</section>
-<section id="modélisation-pratique" class="level2">
-<h2 class="anchored" data-anchor-id="modélisation-pratique">Modélisation pratique</h2>
-<section id="paramètres-influençant-la-convergence" class="level3">
-<h3 class="anchored" data-anchor-id="paramètres-influençant-la-convergence">Paramètres influençant la convergence</h3>
+<section id="modélisation-pratique" class="level3">
+<h3 class="anchored" data-anchor-id="modélisation-pratique">Modélisation pratique</h3>
+<section id="paramètres-influençant-la-convergence" class="level4">
+<h4 class="anchored" data-anchor-id="paramètres-influençant-la-convergence">Paramètres influençant la convergence</h4>
 <p>La <strong>paramétrisation a priori</strong> du mélange change la convergence :</p>
 <p><strong>Paramètres critiques :</strong></p>
 <ol type="1">
@@ -947,46 +890,52 @@ window.Quarto = {
 </ol>
 <p>⚠️ <strong>Risques :</strong></p>
 <ul>
-<li>Modèles <strong>trop flexibles</strong> ou <strong>trop rigides</strong> → mauvaise convergence ou absence de convergence</li>
-<li><strong>Sur-paramétrisation</strong> : <span class="math inline">\(D \times D \times c + 2 \times c\)</span> variables</li>
+<li><p>Modèles <strong>trop flexibles</strong> ou <strong>trop rigides</strong> → mauvaise convergence ou absence de convergence</p></li>
+<li><p><strong>Sur-paramétrisation</strong> : <span class="math inline">\(D \times D \times c + 2 \times c\)</span> variables</p>
+<p>Si <span class="math inline">\(N\)</span> est faible, <span class="math inline">\(D\)</span> grand et <span class="math inline">\(c\)</span> grand → <strong>sur-paramétrisation</strong> problématique</p></li>
 </ul>
-<p>Si <span class="math inline">\(N\)</span> est faible, <span class="math inline">\(D\)</span> grand et <span class="math inline">\(c\)</span> grand → <strong>sur-paramétrisation</strong> problématique</p>
 <hr>
 </section>
 </section>
-<section id="forme-de-la-matrice-de-covariance" class="level2">
-<h2 class="anchored" data-anchor-id="forme-de-la-matrice-de-covariance">Forme de la matrice de covariance</h2>
-<section id="problème-de-sur-paramétrisation" class="level3">
-<h3 class="anchored" data-anchor-id="problème-de-sur-paramétrisation">Problème de sur-paramétrisation</h3>
+<section id="forme-de-la-matrice-de-covariance" class="level3">
+<h3 class="anchored" data-anchor-id="forme-de-la-matrice-de-covariance">Forme de la matrice de covariance</h3>
+<section id="problème-de-sur-paramétrisation" class="level4">
+<h4 class="anchored" data-anchor-id="problème-de-sur-paramétrisation">Problème de sur-paramétrisation</h4>
 <p><strong>Dimension de <span class="math inline">\(\Sigma\)</span> :</strong></p>
 <p><span class="math inline">\(\Sigma \in \mathbb{R}^{D \times D}\)</span></p>
 <p><strong>Exemple critique :</strong></p>
 <p>Reconnaissance de caractères avec <span class="math inline">\(x_i \in \mathbb{R}^{256}\)</span></p>
 <p>→ Besoin d’estimer <span class="math inline">\(256^2 \times c\)</span> paramètres pour la covariance (avec environ 7000 points de données) !</p>
 </section>
-<section id="stratégies-de-paramétrisation" class="level3">
-<h3 class="anchored" data-anchor-id="stratégies-de-paramétrisation">Stratégies de paramétrisation</h3>
+<section id="stratégies-de-paramétrisation" class="level4">
+<h4 class="anchored" data-anchor-id="stratégies-de-paramétrisation">Stratégies de paramétrisation</h4>
 <p><strong>Modèles sphériques :</strong></p>
-<p><span class="math display">\[\Sigma = \sigma I_D\]</span></p>
-<p>→ <strong>1 paramètre</strong> par composante</p>
+<ul>
+<li><p><span class="math inline">\(\Sigma = \sigma I_D\)</span></p></li>
+<li><p><strong>1 paramètre</strong> par composante</p></li>
+</ul>
 <p><strong>Modèles diagonaux :</strong></p>
-<p><span class="math display">\[\Sigma = \text{diag}(\sigma_1, \ldots, \sigma_D)\]</span></p>
-<p>→ <strong><span class="math inline">\(D\)</span> paramètres</strong> par composante</p>
+<ul>
+<li><p><span class="math inline">\(\Sigma = \text{diag}(\sigma_1, \ldots, \sigma_D)\)</span></p></li>
+<li><p><strong><span class="math inline">\(D\)</span> paramètres</strong> par composante</p></li>
+</ul>
 <p><strong>Modèles complets :</strong></p>
-<p><span class="math display">\[\Sigma \in \mathbb{R}^{D \times D}\]</span></p>
-<p>→ <strong><span class="math inline">\(O(D^2)\)</span> paramètres</strong> par composante</p>
+<ul>
+<li><p><span class="math inline">\(\Sigma \in \mathbb{R}^{D \times D}\)</span></p></li>
+<li><p><strong><span class="math inline">\(O(D^2)\)</span> paramètres</strong> par composante</p></li>
+</ul>
 <p>💡 <strong>Conseil pratique :</strong> Commencer avec des modèles simples (sphériques) puis augmenter la complexité si nécessaire</p>
 <hr>
 </section>
 </section>
-<section id="prétraitement-réduction-de-dimension-par-pca" class="level2">
-<h2 class="anchored" data-anchor-id="prétraitement-réduction-de-dimension-par-pca">Prétraitement : Réduction de dimension par PCA</h2>
-<section id="problématique-en-haute-dimension" class="level3">
-<h3 class="anchored" data-anchor-id="problématique-en-haute-dimension">Problématique en haute dimension</h3>
+<section id="prétraitement-réduction-de-dimension-par-pca" class="level3">
+<h3 class="anchored" data-anchor-id="prétraitement-réduction-de-dimension-par-pca">Prétraitement : Réduction de dimension par PCA</h3>
+<section id="problématique-en-haute-dimension" class="level4">
+<h4 class="anchored" data-anchor-id="problématique-en-haute-dimension">Problématique en haute dimension</h4>
 <p>Pour des données de haute dimension (par exemple <span class="math inline">\(D = 256\)</span>), les modèles complexes ne convergent pas car le nombre de paramètres <span class="math inline">\(p\)</span> est trop grand.</p>
 </section>
-<section id="solution-pca-préalable" class="level3">
-<h3 class="anchored" data-anchor-id="solution-pca-préalable">Solution : PCA préalable</h3>
+<section id="solution-pca-préalable" class="level4">
+<h4 class="anchored" data-anchor-id="solution-pca-préalable">Solution : PCA préalable</h4>
 <p><strong>Stratégie recommandée :</strong></p>
 <ol type="1">
 <li>Appliquer <strong>PCA</strong> pour réduire la dimension de <span class="math inline">\(D\)</span> à <span class="math inline">\(K\)</span> dimensions</li>
@@ -1006,17 +955,17 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="sélection-du-nombre-de-composantes" class="level2">
-<h2 class="anchored" data-anchor-id="sélection-du-nombre-de-composantes">Sélection du nombre de composantes</h2>
-<section id="principe-de-parcimonie" class="level3">
-<h3 class="anchored" data-anchor-id="principe-de-parcimonie">Principe de parcimonie</h3>
+<section id="sélection-du-nombre-de-composantes" class="level3">
+<h3 class="anchored" data-anchor-id="sélection-du-nombre-de-composantes">Sélection du nombre de composantes</h3>
+<section id="principe-de-parcimonie" class="level4">
+<h4 class="anchored" data-anchor-id="principe-de-parcimonie">Principe de parcimonie</h4>
 <p><strong>Problème :</strong></p>
 <p>Plus <span class="math inline">\(c\)</span> est grand, moins de points peuvent être assignés à chaque composante (en moyenne)</p>
 <p><strong>Objectif :</strong></p>
 <p>Chercher des modèles <strong>parcimonieux</strong>, c’est-à-dire avec un <strong>petit nombre de paramètres</strong> à estimer</p>
 </section>
-<section id="critère-dinformation-bayésien-bic" class="level3">
-<h3 class="anchored" data-anchor-id="critère-dinformation-bayésien-bic">Critère d’Information Bayésien (BIC)</h3>
+<section id="critère-dinformation-bayésien-bic" class="level4">
+<h4 class="anchored" data-anchor-id="critère-dinformation-bayésien-bic">Critère d’Information Bayésien (BIC)</h4>
 <p><strong>Trade-off vraisemblance-complexité :</strong></p>
 <ul>
 <li>Plus <span class="math inline">\(c\)</span> est grand, meilleure est l’estimation de la vraisemblance <span class="math inline">\(LL\)</span></li>
@@ -1034,8 +983,8 @@ window.Quarto = {
 </ul>
 <p>💡 <strong>Interprétation :</strong> Le BIC favorise les modèles qui expliquent bien les données <strong>sans sur-ajustement</strong></p>
 </section>
-<section id="limitations-de-la-sélection-de-modèle" class="level3">
-<h3 class="anchored" data-anchor-id="limitations-de-la-sélection-de-modèle">Limitations de la sélection de modèle</h3>
+<section id="limitations-de-la-sélection-de-modèle" class="level4">
+<h4 class="anchored" data-anchor-id="limitations-de-la-sélection-de-modèle">Limitations de la sélection de modèle</h4>
 <p>⚠️ <strong>Défis pratiques :</strong></p>
 <ul>
 <li>Besoin de <strong>tester tous les modèles</strong> (différentes valeurs de <span class="math inline">\(c\)</span>)</li>
@@ -1043,6 +992,7 @@ window.Quarto = {
 <li>Nécessite souvent un <strong>ajustement manuel</strong> fin</li>
 </ul>
 <hr>
+</section>
 </section>
 </section>
 <section id="synthèse-des-concepts-clés" class="level2">

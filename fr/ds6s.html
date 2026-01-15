@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds6s – Data Science</title>
+<title>ds6s – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -275,7 +275,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Data Science</span>
+    <span class="navbar-title">ISS</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -432,7 +432,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds6s1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Expectation-Maximization (EM) pour modèles de mélange - Support de révision oral</span></a>
+ <span class="menu-text">Intuition</span></a>
   </div>
 </li>
       </ul>
@@ -513,9 +513,12 @@ window.Quarto = {
   <li><a href="#stratégies-dinitialisation" id="toc-stratégies-dinitialisation" class="nav-link" data-scroll-target="#stratégies-dinitialisation">Stratégies d’initialisation</a></li>
   <li><a href="#convergence-lente" id="toc-convergence-lente" class="nav-link" data-scroll-target="#convergence-lente">Convergence lente</a></li>
   </ul></li>
-  <li><a href="#généralisation-à-c-composantes" id="toc-généralisation-à-c-composantes" class="nav-link" data-scroll-target="#généralisation-à-c-composantes">Généralisation à c composantes</a>
+  <li><a href="#algorithme-em-complet-pour-c-composantes" id="toc-algorithme-em-complet-pour-c-composantes" class="nav-link" data-scroll-target="#algorithme-em-complet-pour-c-composantes">Algorithme EM complet pour c composantes</a>
   <ul class="collapse">
-  <li><a href="#algorithme-em-complet" id="toc-algorithme-em-complet" class="nav-link" data-scroll-target="#algorithme-em-complet">Algorithme EM complet</a></li>
+  <li><a href="#étape-1-initialisation" id="toc-étape-1-initialisation" class="nav-link" data-scroll-target="#étape-1-initialisation">Étape 1 : Initialisation</a></li>
+  <li><a href="#étape-2-e-step" id="toc-étape-2-e-step" class="nav-link" data-scroll-target="#étape-2-e-step">Étape 2 : E-step</a></li>
+  <li><a href="#étape-3-m-step" id="toc-étape-3-m-step" class="nav-link" data-scroll-target="#étape-3-m-step">Étape 3 : M-step</a></li>
+  <li><a href="#étape-4-itération" id="toc-étape-4-itération" class="nav-link" data-scroll-target="#étape-4-itération">Étape 4 : Itération</a></li>
   </ul></li>
   <li><a href="#modélisation-pratique" id="toc-modélisation-pratique" class="nav-link" data-scroll-target="#modélisation-pratique">Modélisation pratique</a>
   <ul class="collapse">
@@ -536,6 +539,12 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#comparaison-conceptuelle" id="toc-comparaison-conceptuelle" class="nav-link" data-scroll-target="#comparaison-conceptuelle">Comparaison conceptuelle</a></li>
   <li><a href="#gmm-comme-généralisation-de-k-means" id="toc-gmm-comme-généralisation-de-k-means" class="nav-link" data-scroll-target="#gmm-comme-généralisation-de-k-means">GMM comme généralisation de K-means</a></li>
+  </ul></li>
+  <li><a href="#pièges-à-éviter-et-bonnes-pratiques" id="toc-pièges-à-éviter-et-bonnes-pratiques" class="nav-link" data-scroll-target="#pièges-à-éviter-et-bonnes-pratiques">Pièges à éviter et bonnes pratiques</a>
+  <ul class="collapse">
+  <li><a href="#piège-1-les-composantes-fantômes" id="toc-piège-1-les-composantes-fantômes" class="nav-link" data-scroll-target="#piège-1-les-composantes-fantômes">Piège 1 : Les “Composantes Fantômes”</a></li>
+  <li><a href="#piège-2-la-convergence-prématurée" id="toc-piège-2-la-convergence-prématurée" class="nav-link" data-scroll-target="#piège-2-la-convergence-prématurée">Piège 2 : La Convergence Prématurée</a></li>
+  <li><a href="#piège-3-linterprétation-abusive" id="toc-piège-3-linterprétation-abusive" class="nav-link" data-scroll-target="#piège-3-linterprétation-abusive">Piège 3 : L’Interprétation Abusive</a></li>
   </ul></li>
   <li><a href="#synthèse-des-concepts-clés" id="toc-synthèse-des-concepts-clés" class="nav-link" data-scroll-target="#synthèse-des-concepts-clés">Synthèse des concepts clés</a>
   <ul class="collapse">
@@ -562,7 +571,13 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="le-problème-fondamental">Le problème fondamental</h3>
 <p>Imaginez que vous êtes dans une salle avec plusieurs instruments de musique qui jouent en même temps. Vous enregistrez le son global (le mélange). Comment retrouver <strong>les caractéristiques de chaque instrument</strong> (hauteur, volume) sans savoir qui joue quoi à quel moment ?</p>
 <p>C’est exactement le problème que résout l’algorithme EM pour les modèles de mélange : <strong>séparer un mélange en ses composantes sous-jacentes</strong> quand on ne connaît pas l’origine de chaque observation.</p>
-<p>📌 <strong>Concept clé :</strong> L’EM est utilisé quand certaines informations sont <strong>manquantes</strong> (ici, l’étiquette de quelle composante a généré chaque donnée). On appelle ces informations manquantes des <strong>variables latentes</strong>.</p>
+<p>📌 <strong>Le cœur du problème :</strong></p>
+<p>Avec les modèles de mélange, nous avons <strong>deux types d’inconnues</strong> qui dépendent l’une de l’autre :</p>
+<ul>
+<li><strong>Les paramètres</strong> de chaque composante (moyenne, variance)</li>
+<li><strong>L’origine</strong> de chaque point (quelle composante l’a générée)</li>
+</ul>
+<p>C’est un <strong>cercle vicieux</strong> : pour connaître l’un, il faut connaître l’autre.</p>
 </section>
 <section id="rappel-modèles-utilisés-jusquà-présent" class="level3">
 <h3 class="anchored" data-anchor-id="rappel-modèles-utilisés-jusquà-présent">Rappel : Modèles utilisés jusqu’à présent</h3>
@@ -629,13 +644,19 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="interprétation-probabiliste">Interprétation probabiliste</h2>
 <section id="les-modèles-de-mélange-comme-bosses-dans-le-paysage" class="level3">
 <h3 class="anchored" data-anchor-id="les-modèles-de-mélange-comme-bosses-dans-le-paysage">Les modèles de mélange comme “bosses” dans le paysage</h3>
-<p>Imaginez un paysage de montagnes avec plusieurs sommets. Chaque sommet représente un groupe dans vos données. Un modèle de mélange gaussien modélise ce paysage comme une <strong>superposition de collines gaussiennes</strong>.</p>
+<p>Imaginez que vos données forment un <strong>paysage de montagnes</strong>. Chaque montagne représente un groupe naturel dans vos données. Un modèle de mélange gaussien (GMM) représente ce paysage comme une <strong>superposition de collines gaussiennes</strong>.</p>
 <p>La densité <span class="math inline">\(f(x)\)</span> représente un <strong>processus aléatoire</strong> où <span class="math inline">\(x\)</span> est tiré d’un ensemble d’états <span class="math inline">\(\omega_j\)</span> avec probabilité a priori <span class="math inline">\(\mathbb{P}(\omega_j)\)</span>.</p>
 <p><span class="math display">\[f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j) = \mathbb{P}(x|\theta) = \sum_{j=1}^{c} \mathbb{P}(\omega_j) \mathbb{P}(x|\omega_j, \theta_j)\]</span></p>
 <p><strong>Par identification :</strong></p>
 <ul>
 <li><span class="math inline">\(\pi_j = \mathbb{P}(\omega_j)\)</span> avec la contrainte <span class="math inline">\(\sum_j \pi_j = 1\)</span></li>
 <li><span class="math inline">\(\phi(x, \theta_j) = \mathbb{P}(x|\omega_j, \theta_j)\)</span> est la <strong>probabilité conditionnelle</strong> que <span class="math inline">\(x\)</span> soit généré par l’état <span class="math inline">\(\omega_j\)</span></li>
+</ul>
+<p>💡 <strong>Pourquoi des gaussiennes ?</strong></p>
+<ul>
+<li><strong>Théorème central limite</strong> : beaucoup de phénomènes naturels sont gaussiens</li>
+<li><strong>Universalité</strong> : un mélange de gaussiennes peut approximer n’importe quelle densité</li>
+<li><strong>Calculabilité</strong> : les formules sont mathématiquement maniables</li>
 </ul>
 <hr>
 </section>
@@ -723,7 +744,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="le-cercle-vicieux">Le cercle vicieux</h3>
 <p>Pour estimer les paramètres (<span class="math inline">\(\mu_j\)</span>, <span class="math inline">\(\Sigma_j\)</span>), il faudrait connaître l’origine de chaque point. Pour connaître l’origine de chaque point, il faudrait connaître les paramètres.</p>
 <p><strong>C’est le problème classique du “poulet et de l’œuf” !</strong></p>
-<p>💡 <strong>La solution EM :</strong> Au lieu de chercher une solution parfaite d’un coup, l’EM procède par <strong>approximations successives</strong>.</p>
+<p>💡 <strong>La solution EM :</strong> Au lieu de chercher une solution parfaite d’un coup, l’EM procède par <strong>approximations successives</strong> en alternant deux questions.</p>
 <hr>
 </section>
 </section>
@@ -779,11 +800,14 @@ window.Quarto = {
 <li>C’est la <strong>vraisemblance</strong> que <span class="math inline">\(x_i\)</span> soit (purement) modélisée par la composante <span class="math inline">\(\phi_j\)</span></li>
 <li><span class="math inline">\(\gamma_{ij}\)</span> représente la <strong>part de <span class="math inline">\(x_i\)</span></strong> qui est modélisée (générée) par la composante <span class="math inline">\(\phi_j\)</span></li>
 </ul>
+<p><strong>Interprétation générale :</strong></p>
+<p>Pour <span class="math inline">\(c\)</span> composantes :</p>
+<p><span class="math display">\[\gamma_{ij} = \frac{\pi_j \phi(x_i, \theta_j)}{\sum_{k=1}^{c} \pi_k \phi(x_i, \theta_k)}\]</span></p>
 </div>
 </div>
 </div>
 <p><strong>Question :</strong> Sachant les paramètres actuels, quelle est la probabilité que chaque point vienne de chaque composante ?</p>
-<p>C’est une <strong>attribution douce</strong> (soft assignment) : chaque point appartient partiellement à toutes les composantes.</p>
+<p>C’est une <strong>attribution douce</strong> (soft assignment). Contrairement au K-means qui dit “ce point est à 100% dans ce cluster”, l’EM dit “ce point est à 60% dans le cluster A, 30% dans B, 10% dans C”.</p>
 </section>
 <section id="étape-m-maximization-mise-à-jour-des-paramètres" class="level3">
 <h3 class="anchored" data-anchor-id="étape-m-maximization-mise-à-jour-des-paramètres">Étape M (Maximization) : Mise à jour des paramètres</h3>
@@ -802,14 +826,18 @@ window.Quarto = {
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Moyennes :</strong></p>
-<p><span class="math display">\[\hat{\mu}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} x_i\]</span></p>
-<p><span class="math display">\[\hat{\mu}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} x_i\]</span></p>
+<p><span class="math display">\[\hat{\mu}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} x_i = \frac{\sum_{i=1}^{N} \gamma_{i1} x_i}{\sum_{i=1}^{N} \gamma_{i1}}\]</span></p>
+<p><span class="math display">\[\hat{\mu}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} x_i = \frac{\sum_{i=1}^{N} \gamma_{i2} x_i}{\sum_{i=1}^{N} \gamma_{i2}}\]</span></p>
 <p><strong>Covariances :</strong></p>
 <p><span class="math display">\[\hat{\Sigma}_1 = \sum_{i=1}^{N} \frac{\gamma_{i1}}{\sum_{k=1}^{N} \gamma_{k1}} (x_i - \hat{\mu}_1)(x_i - \hat{\mu}_1)^T\]</span></p>
 <p><span class="math display">\[\hat{\Sigma}_2 = \sum_{i=1}^{N} \frac{\gamma_{i2}}{\sum_{k=1}^{N} \gamma_{k2}} (x_i - \hat{\mu}_2)(x_i - \hat{\mu}_2)^T\]</span></p>
 <p><strong>Poids du mélange :</strong></p>
 <p><span class="math display">\[\pi_j = \frac{1}{N} \sum_{i=1}^{N} \gamma_{ij}\]</span></p>
 <p>Cette formule garantit que <span class="math inline">\(\sum_j \pi_j = 1\)</span>.</p>
+<p><strong>Forme générale pour <span class="math inline">\(c\)</span> composantes :</strong></p>
+<p><span class="math display">\[\mu_j = \frac{\sum_{i=1}^{N} \gamma_{ij} x_i}{\sum_i \gamma_{ij}}\]</span></p>
+<p><span class="math display">\[\Sigma_j = \frac{X_j \Gamma_j X_j^T}{\text{Tr}(\Gamma_j)}\]</span></p>
+<p>où <span class="math inline">\(\Gamma_j = \text{diag}(\gamma_{1j}, \ldots, \gamma_{Nj})\)</span> et <span class="math inline">\(X_j\)</span> est centré sur <span class="math inline">\(\mu_j\)</span>.</p>
 </div>
 </div>
 </div>
@@ -854,6 +882,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="propriété-de-monotonie">Propriété de monotonie</h3>
 <p>✅ <strong>Propriété garantie :</strong> À chaque itération, <span class="math inline">\(LL(\theta^{t+1}, X) \geq LL(\theta^t, X)\)</span>.</p>
 <p>La log-vraisemblance <strong>ne diminue jamais</strong> (propriété hill-climbing).</p>
+<p>💡 <strong>Pourquoi ça marche ?</strong> Chaque étape améliore la <strong>vraisemblance</strong> des données (probabilité d’observer ces données avec le modèle courant). C’est un algorithme <strong>“hill-climbing”</strong> : à chaque itération, on monte la colline de vraisemblance.</p>
 <hr>
 </section>
 </section>
@@ -867,7 +896,7 @@ window.Quarto = {
 <li><strong>Sensible aux maxima locaux</strong> : peut converger vers un optimum local plutôt que global</li>
 <li>Différentes initialisations peuvent donner différents résultats</li>
 </ul>
-<p>💡 <strong>L’initialisation est cruciale :</strong> L’EM est un algorithme “hill-climbing” : il gravit la colline de vraisemblance à partir de son point de départ. S’il part d’un mauvais endroit, il peut rester coincé dans un <strong>maximum local</strong> (petit sommet) au lieu d’atteindre le <strong>maximum global</strong> (plus haut sommet).</p>
+<p>💡 <strong>L’initialisation est cruciale :</strong> L’EM peut converger vers des <strong>maxima locaux</strong> (petits sommets) au lieu du maximum global (plus haut sommet).</p>
 </section>
 <section id="stratégies-dinitialisation" class="level3">
 <h3 class="anchored" data-anchor-id="stratégies-dinitialisation">Stratégies d’initialisation</h3>
@@ -889,28 +918,34 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-<section id="généralisation-à-c-composantes" class="level2">
-<h2 class="anchored" data-anchor-id="généralisation-à-c-composantes">Généralisation à c composantes</h2>
-<section id="algorithme-em-complet" class="level3">
-<h3 class="anchored" data-anchor-id="algorithme-em-complet">Algorithme EM complet</h3>
-<p><strong>Étape 1 : Initialisation</strong></p>
-<p>Initialisation des paramètres :</p>
+<section id="algorithme-em-complet-pour-c-composantes" class="level2">
+<h2 class="anchored" data-anchor-id="algorithme-em-complet-pour-c-composantes">Algorithme EM complet pour c composantes</h2>
+<section id="étape-1-initialisation" class="level3">
+<h3 class="anchored" data-anchor-id="étape-1-initialisation">Étape 1 : Initialisation</h3>
+<p><strong>Initialisation des paramètres :</strong></p>
 <p><span class="math display">\[\theta^0 = \{\pi_j^0, \mu_j^0, \Sigma_j^0\}_{j \in [[c]]}\]</span></p>
 <p><strong>Stratégies courantes :</strong></p>
 <ul>
 <li><strong>Générale :</strong> <span class="math inline">\(\pi_j = 1/c\)</span>, <span class="math inline">\(\mu_j\)</span> choisi aléatoirement, <span class="math inline">\(\Sigma_j = I_D\)</span></li>
 <li><strong>Alternative :</strong> utiliser K-means comme initialisation</li>
 </ul>
-<p><strong>Étape 2 : E-step</strong></p>
-<p>Calcul des responsabilités pour chaque donnée <span class="math inline">\(i \in [[N]]\)</span> et chaque composante <span class="math inline">\(j \in [[c]]\)</span> :</p>
+</section>
+<section id="étape-2-e-step" class="level3">
+<h3 class="anchored" data-anchor-id="étape-2-e-step">Étape 2 : E-step</h3>
+<p><strong>Calcul des responsabilités :</strong></p>
+<p>Pour chaque donnée <span class="math inline">\(i \in [[N]]\)</span> et chaque composante <span class="math inline">\(j \in [[c]]\)</span> :</p>
 <p><span class="math display">\[\gamma_{ij} = \frac{\pi_j \phi(x_i, \theta_j)}{\sum_{k=1}^{c} \pi_k \phi(x_i, \theta_k)}\]</span></p>
-<p><strong>Étape 3 : M-step</strong></p>
-<p>Estimation des paramètres du mélange :</p>
+</section>
+<section id="étape-3-m-step" class="level3">
+<h3 class="anchored" data-anchor-id="étape-3-m-step">Étape 3 : M-step</h3>
+<p><strong>Estimation des paramètres du mélange :</strong></p>
 <p><span class="math display">\[\mu_j = \frac{\sum_{i=1}^{N} \gamma_{ij} x_i}{\sum_i \gamma_{ij}}\]</span></p>
 <p><span class="math display">\[\Sigma_j = \frac{X_j \Gamma_j X_j^T}{\text{Tr}(\Gamma_j)}\]</span></p>
 <p>où <span class="math inline">\(\Gamma_j = \text{diag}(\gamma_{1j}, \ldots, \gamma_{Nj})\)</span> et <span class="math inline">\(X_j\)</span> est centré sur <span class="math inline">\(\mu_j\)</span>.</p>
 <p><span class="math display">\[\pi_j = \frac{\sum_i \gamma_{ij}}{N}\]</span></p>
-<p><strong>Étape 4 : Itération</strong></p>
+</section>
+<section id="étape-4-itération" class="level3">
+<h3 class="anchored" data-anchor-id="étape-4-itération">Étape 4 : Itération</h3>
 <p>Itérer les étapes 2 et 3 jusqu’à convergence.</p>
 <hr>
 </section>
@@ -936,6 +971,7 @@ window.Quarto = {
 <p><span class="math display">\[\Sigma \in \mathbb{R}^{D \times D}\]</span></p>
 <p>→ <strong><span class="math inline">\(O(D^2)\)</span> paramètres</strong> par composante</p>
 <p>💡 <strong>Conseil pratique :</strong> Commencer avec des modèles simples (sphériques) puis augmenter la complexité si nécessaire.</p>
+<p>⚠️ <strong>Attention à la sur-paramétrisation !</strong> Avec D=256 dimensions et K=10 composantes, une covariance complète nécessite ≈ 330,000 paramètres ! Souvent, on réduit d’abord la dimension avec PCA.</p>
 <hr>
 </section>
 </section>
@@ -996,7 +1032,7 @@ window.Quarto = {
 <li><span class="math inline">\(-2 \cdot LL(\theta, X)\)</span> : pénalise les modèles avec mauvaise vraisemblance</li>
 <li><span class="math inline">\(|\theta| \log(N)\)</span> : pénalise la complexité du modèle</li>
 </ul>
-<p>💡 <strong>Interprétation :</strong> Le BIC favorise les modèles qui expliquent bien les données <strong>sans sur-ajustement</strong>.</p>
+<p>💡 <strong>Interprétation :</strong> Le BIC favorise les modèles qui expliquent bien les données <strong>sans sur-ajustement</strong> (équilibre entre qualité d’ajustement et complexité).</p>
 <hr>
 </section>
 </section>
@@ -1009,12 +1045,14 @@ window.Quarto = {
 <li><strong>Assignation dure</strong> (hard assignment)</li>
 <li>Chaque point appartient à <strong>un seul cluster</strong></li>
 <li>Minimise la distance euclidienne aux centres</li>
+<li>Modèle géométrique basé sur les distances</li>
 </ul>
 <p><strong>GMM avec EM :</strong></p>
 <ul>
 <li><strong>Assignation douce</strong> (soft assignment)</li>
 <li>Chaque point a une <strong>probabilité d’appartenance</strong> à chaque composante</li>
 <li>Maximise la vraisemblance selon un modèle probabiliste</li>
+<li>Modèle probabiliste basé sur les densités</li>
 </ul>
 </section>
 <section id="gmm-comme-généralisation-de-k-means" class="level3">
@@ -1025,6 +1063,26 @@ window.Quarto = {
 <li><span class="math inline">\(\sigma \to 0\)</span> : les responsabilités <span class="math inline">\(\gamma_{ij}\)</span> deviennent binaires</li>
 <li>Assignation douce → assignation dure</li>
 </ul>
+<p>📌 <strong>Point clé :</strong> K-means si on veut un clustering simple et rapide avec des clusters sphériques. EM si on veut un modèle probabiliste, des formes flexibles, ou gérer l’incertitude.</p>
+<hr>
+</section>
+</section>
+<section id="pièges-à-éviter-et-bonnes-pratiques" class="level2">
+<h2 class="anchored" data-anchor-id="pièges-à-éviter-et-bonnes-pratiques">Pièges à éviter et bonnes pratiques</h2>
+<section id="piège-1-les-composantes-fantômes" class="level3">
+<h3 class="anchored" data-anchor-id="piège-1-les-composantes-fantômes">Piège 1 : Les “Composantes Fantômes”</h3>
+<p><strong>Problème :</strong> L’EM peut créer des composantes avec très peu de points (<span class="math inline">\(\pi_j \approx 0\)</span>) qui capturent du bruit.</p>
+<p><strong>Solution :</strong> Regarder les poids <span class="math inline">\(\pi_j\)</span> après convergence, fusionner ou éliminer les composantes trop petites.</p>
+</section>
+<section id="piège-2-la-convergence-prématurée" class="level3">
+<h3 class="anchored" data-anchor-id="piège-2-la-convergence-prématurée">Piège 2 : La Convergence Prématurée</h3>
+<p><strong>Problème :</strong> L’algorithme semble converger mais reste dans un maximum local médiocre.</p>
+<p><strong>Solution :</strong> Multiples essais avec initialisations différentes, monitoring de la vraisemblance.</p>
+</section>
+<section id="piège-3-linterprétation-abusive" class="level3">
+<h3 class="anchored" data-anchor-id="piège-3-linterprétation-abusive">Piège 3 : L’Interprétation Abusive</h3>
+<p><strong>Problème :</strong> Penser que les composantes trouvées correspondent forcément à des “classes réelles”.</p>
+<p><strong>Solution :</strong> L’EM trouve des <strong>groupes statistiques</strong>, pas nécessairement des catégories sémantiques. Valider avec des connaissances du domaine.</p>
 <hr>
 </section>
 </section>
@@ -1057,6 +1115,7 @@ window.Quarto = {
 <li><strong>Probabilistic Latent Semantic Analysis (pLSA)</strong> : EM où les variables cachées sont les concepts latents</li>
 <li><strong>Modèles de Markov cachés</strong> (HMM)</li>
 <li><strong>Factorisation matricielle</strong></li>
+<li>Segmentation d’images, séparation de sources audio</li>
 </ul>
 <hr>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1069,15 +1128,18 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>En 30 secondes :</strong></p>
+<p><strong>À retenir absolument :</strong></p>
 <ul>
-<li>EM = algorithme pour estimer modèles avec variables cachées</li>
-<li>Deux étapes : E (calcul responsabilités), M (mise à jour paramètres)</li>
-<li>Pour GMM : modélise données comme mélange de gaussiennes</li>
-<li>Avantage : attribution douce, modèle probabiliste</li>
-<li>Défis : initialisation, choix de K, maxima locaux</li>
-<li>Utilisations : clustering, séparation sources, segmentation</li>
-<li>Parenté : généralise K-means, lié à d’autres modèles latents</li>
+<li>EM = algorithme pour modèles avec variables latentes</li>
+<li>Deux étapes alternées : E (responsabilités) → M (paramètres)</li>
+<li>GMM = mélange de gaussiennes, modélise densité des données</li>
+<li>Initialisation cruciale → utiliser K-means ou K-means++</li>
+<li>Choix de K avec BIC ou validation croisée</li>
+<li>Forme covariance : commencer simple (sphérique), complexifier si besoin</li>
+<li>Avantage principal : modèle probabiliste avec assignations douces</li>
+<li>Parenté : généralise K-means (cas particulier)</li>
+<li>Applications : segmentation, séparation de sources, clustering avancé</li>
+<li>Vérification : toujours visualiser et valider les résultats</li>
 </ul>
 </div>
 </div>
@@ -1110,6 +1172,13 @@ window.Quarto = {
 <li>BIC (Bayesian Information Criterion)</li>
 <li>Trade-off biais-variance</li>
 <li>Parcimonie de modèle</li>
+</ul>
+<p><strong>Points à développer :</strong></p>
+<ul>
+<li>Dérivation de la log-vraisemblance</li>
+<li>Calcul des responsabilités par la règle de Bayes</li>
+<li>Dérivation des équations de mise à jour du M-step</li>
+<li>Preuve de la monotonie de <span class="math inline">\(LL\)</span> dans l’algorithme EM</li>
 </ul>
 </div>
 </div>
