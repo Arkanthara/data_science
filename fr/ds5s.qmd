@@ -256,7 +256,7 @@ avec :
 
 **Approximation :**
 
-$$\mathbb{P}(x | C = k) \propto \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)$$
+$$\mathbb{P}(x | C = k) \propto \exp\left(-(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)$$
 
 **Prior uniforme :** $\mathbb{P}(C = k) = \frac{1}{M}$ (toutes les classes équiprobables)
 

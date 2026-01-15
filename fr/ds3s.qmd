@@ -238,7 +238,7 @@ où $d$ est la dimension souhaitée.
 
 Exiger que l'espace latent conserve une proportion $\tau$ de la variance totale :
 
-$$\frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} > \tau$$
+$$\frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} \geq \tau$$
 
 Exemple : $\tau = 0.95$ signifie conserver 95% de la variance.
 
