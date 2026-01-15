@@ -1,6 +1,6 @@
 project:
   type: website
-  title: "ISS"
+  title: "Data Science"
   output-dir: ../_site/fr
 
 website:
