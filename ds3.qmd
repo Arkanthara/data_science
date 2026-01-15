@@ -333,7 +333,7 @@ where $d$ is the desired dimension, giving $\tilde{y}_i \in \mathbb{R}^d$
 
 Require that the latent space retains a proportion $\tau$ of the total variance:
 
-$$\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ such that } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} > \tau$$
+$$\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ such that } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} \geq \tau$$
 
 **Example:** $\tau = 0.95$ means retaining 95% of the variance
 

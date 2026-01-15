@@ -726,7 +726,7 @@ window.Quarto = {
 <p>where <span class="math inline">\(d\)</span> is the desired dimension, giving <span class="math inline">\(\tilde{y}_i \in \mathbb{R}^d\)</span></p>
 <p><strong>Strategy 2: Variance Threshold</strong></p>
 <p>Require that the latent space retains a proportion <span class="math inline">\(\tau\)</span> of the total variance:</p>
-<p><span class="math display">\[\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ such that } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} &gt; \tau\]</span></p>
+<p><span class="math display">\[\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ such that } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} \geq \tau\]</span></p>
 <p><strong>Example:</strong> <span class="math inline">\(\tau = 0.95\)</span> means retaining 95% of the variance</p>
 <p><strong>Strategy 3: Reconstruction Error</strong></p>
 <p>Train <span class="math inline">\(K\)</span> such that <span class="math inline">\(L(X) \leq \epsilon\)</span>, where for example:</p>

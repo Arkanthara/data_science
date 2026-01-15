@@ -238,7 +238,7 @@ where $d$ is the desired dimension.
 
 Require that the latent space retains a proportion $\tau$ of the total variance:
 
-$$\frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} > \tau$$
+$$\frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} \geq \tau$$
 
 Example: $\tau = 0.95$ means retaining 95% of the variance.
 

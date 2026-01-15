@@ -760,7 +760,7 @@ window.Quarto = {
 <p>où <span class="math inline">\(d\)</span> est la dimension souhaitée, ce qui donne <span class="math inline">\(\tilde{y}_i \in \mathbb{R}^d\)</span></p>
 <p><strong>Stratégie 2 : Seuil de variance</strong></p>
 <p>Exiger que l’espace latent conserve une proportion <span class="math inline">\(\tau\)</span> de la variance totale :</p>
-<p><span class="math display">\[\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ tel que } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} &gt; \tau\]</span></p>
+<p><span class="math display">\[\text{Var}(Y) = \tau \cdot \text{Var}(X) \quad \Rightarrow \quad K \text{ tel que } \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} \geq \tau\]</span></p>
 <p><strong>Exemple :</strong> <span class="math inline">\(\tau = 0.95\)</span> signifie conserver 95% de la variance</p>
 <p><strong>Stratégie 3 : Erreur de reconstruction</strong></p>
 <p>Entraîner <span class="math inline">\(K\)</span> tel que <span class="math inline">\(L(X) \leq \epsilon\)</span>, où par exemple :</p>

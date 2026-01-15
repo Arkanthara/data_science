@@ -729,7 +729,7 @@ window.Quarto = {
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Approximation:</strong></p>
-<p><span class="math display">\[\mathbb{P}(x | C = k) \propto \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)\]</span></p>
+<p><span class="math display">\[\mathbb{P}(x | C = k) \propto \exp\left(-(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)\]</span></p>
 <p><strong>Uniform prior:</strong> <span class="math inline">\(\mathbb{P}(C = k) = \frac{1}{M}\)</span> (all classes equally likely)</p>
 <p><strong>Simplification:</strong> The evidence <span class="math inline">\(\mathbb{P}(x_j)\)</span> is <strong>ignored</strong> because it is constant for all classes (normalization).</p>
 </div>
