@@ -29,9 +29,9 @@ Le clustering est une méthode **non supervisée** qui vise à découvrir des **
 
 ---
 
-## L'intuition géométrique : Le jeu des chaises musicales
+### L'intuition géométrique : Le jeu des chaises musicales
 
-### Analogie pratique
+#### Analogie pratique
 
 Imaginez un jeu de chaises musicales avec K chaises (clusters) et N joueurs (points de données). Quand la musique s'arrête :
 
@@ -45,9 +45,9 @@ Imaginez un jeu de chaises musicales avec K chaises (clusters) et N joueurs (poi
 
 ---
 
-## Panorama des méthodes de clustering
+### Panorama des méthodes de clustering
 
-### Principales méthodes
+#### Principales méthodes
 
 Il existe un grand nombre de méthodes de clustering, incluant :
 
@@ -132,9 +132,9 @@ $$\theta = [M, Z]$$
 
 ---
 
-## Fonction de perte k-means
+### Fonction de perte k-means
 
-### Problème d'optimisation
+#### Problème d'optimisation
 
 k-means cherche l'assignation suivante :
 
@@ -154,7 +154,7 @@ $$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
 - **Mathématique** : rend le problème plus facile à résoudre
 - **Géométrique** : pénalise plus les points très éloignés
 
-### Complexité du problème
+#### Complexité du problème
 
 ⚠️ **Difficulté majeure :** Puisque l'assignation est binaire, l'optimisation exacte est **NP-Hard**.
 
@@ -162,9 +162,9 @@ $$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
 
 ---
 
-## Algorithme de descente de coordonnées
+### Algorithme de descente de coordonnées
 
-### Principe général
+#### Principe général
 
 La descente de coordonnées est un **algorithme de minimisation alternée**.
 
@@ -194,9 +194,9 @@ $$x^{(t+1)}(d) = \underset{y}{\arg\min} \, f^d(x^{(t)}, y)$$
 
 ---
 
-## Application au k-means
+### Application au k-means
 
-### Optimisation alternée de Z et M
+#### Optimisation alternée de Z et M
 
 On **alterne l'optimisation** de $Z$ et $M$.
 
@@ -206,7 +206,7 @@ $$L_M(Z) = L(\theta, X)|_{M = M}$$
 
 $$L_Z(M) = L(\theta, X)|_{Z = Z}$$
 
-### Les deux équations magiques
+#### Les deux équations magiques
 
 **Optimisation par rapport à M (représentants) :**
 
@@ -315,9 +315,9 @@ L'étape 2 est équivalente à construire le **diagramme de Voronoï discret** d
 
 ---
 
-## Sensibilité à l'initialisation
+### Sensibilité à l'initialisation
 
-### Problème des optima locaux
+#### Problème des optima locaux
 
 ⚠️ **Limitation majeure :** Puisque l'optimisation exacte (assignation optimale) est **NP-Hard**, l'algorithme k-means atteint un **optimum local**.
 
@@ -326,11 +326,11 @@ L'étape 2 est équivalente à construire le **diagramme de Voronoï discret** d
 - La qualité du résultat **varie selon l'initialisation**
 - Différentes initialisations peuvent donner des résultats très différents
 
-### Le dilemme de l'initialisation
+#### Le dilemme de l'initialisation
 
 Si toutes les chaises commencent dans le même coin, le jeu sera très long et donnera un mauvais résultat. **K-means est très sensible à l'initialisation !**
 
-### Stratégies pratiques
+#### Stratégies pratiques
 
 **Randomisation :**
 
@@ -342,9 +342,11 @@ Sinon, utiliser des **heuristiques pour une meilleure initialisation** (comme k-
 
 ---
 
-## K-means++ : Initialisation intelligente
+## Initialisation, liens et relations
 
-### Principe fondamental
+### K-means++ : Initialisation intelligente
+
+#### Principe fondamental
 
 Le principe de **k-means++** est de **maximalement disperser** les représentants de clusters initiaux $M^{(0)}$ sur les données.
 
@@ -353,7 +355,7 @@ Le principe de **k-means++** est de **maximalement disperser** les représentant
 - Produit des clusters de **meilleure qualité**
 - **Accélère la convergence** de k-means
 
-### Algorithme k-means++ détaillé
+#### Algorithme k-means++ détaillé
 
 **Étape 1 : Premier centre**
 
@@ -377,13 +379,13 @@ $$\mathbb{P}(\text{choisir } x_i) = \frac{\Delta_i}{\sum_j \Delta_j}$$
 
 Répéter depuis l'étape 2 jusqu'à ce que $K$ représentants soient choisis.
 
-### Intuition de l'algorithme
+#### Intuition de l'algorithme
 
 💡 **Idée clé :** Les points **loin des centres déjà sélectionnés** ont plus de chances d'être choisis comme nouveaux centres.
 
 **Conséquence :** Les centres initiaux sont bien **répartis dans l'espace des données**, couvrant les différentes régions de densité.
 
-### Adoption pratique
+#### Adoption pratique
 
 📌 **Utilisation répandue :** Cette stratégie d'initialisation est utilisée par plusieurs packages de Data Science : MATLAB™, Python SciKit Learn, R, et autres bibliothèques standards.
 
@@ -391,9 +393,9 @@ Répéter depuis l'étape 2 jusqu'à ce que $K$ représentants soient choisis.
 
 ---
 
-## Relation entre k-means et modèles gaussiens
+### Relation entre k-means et modèles gaussiens
 
-### k-means comme cas particulier du GMM
+#### k-means comme cas particulier du GMM
 
 **Question :** Pourquoi dit-on que k-means considère un **modèle gaussien** pour les clusters ?
 
@@ -425,9 +427,9 @@ Quand $\sigma \to 0$, maximiser cette probabilité est équivalent à minimiser 
 
 ---
 
-## Lien intrinsèque avec la métrique euclidienne
+### Lien intrinsèque avec la métrique euclidienne
 
-### Pourquoi k-means dépend de la métrique euclidienne ?
+#### Pourquoi k-means dépend de la métrique euclidienne ?
 
 **Analyse de la fonction de perte :**
 
@@ -435,7 +437,7 @@ $$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
 
 La norme $\|\cdot\|_2$ est la **norme euclidienne** : $\|x\|_2^2 = \sum_d x(d)^2$.
 
-### Conséquences pratiques
+#### Conséquences pratiques
 
 **Sensibilité à l'échelle :**
 
@@ -454,13 +456,13 @@ k-means ne peut pas être directement appliqué à des données **non-euclidienn
 
 ---
 
-## Choix du nombre de clusters K
+### Choix du nombre de clusters K
 
-### Problématique
+#### Problématique
 
 ⚠️ **Difficulté :** Le nombre de clusters $K$ doit être **spécifié a priori** dans k-means.
 
-### Méthodes de sélection
+#### Méthodes de sélection
 
 **Méthode du coude (Elbow method) :**
 
