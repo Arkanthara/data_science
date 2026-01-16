@@ -1,0 +1,687 @@
+# L'essentiel
+
+## Introduction et Motivation
+
+L'algorithme **k-means** est une méthode d'**estimation de facteurs latents discrets** dans un contexte **non supervisé** de clustering (regroupement).
+
+### Le problème fondamental
+
+Imaginez : On vous donne 1000 photos d'animaux non étiquetées et on vous demande : "Combien y a-t-il de types d'animaux différents, et quelles photos vont ensemble ?" C'est exactement le problème du clustering !
+
+**K-means** répond à cette question en faisant **une hypothèse simplificatrice** : chaque type d'animal peut être représenté par une **image moyenne** (prototype), et chaque photo est proche de l'un de ces prototypes.
+
+📌 **Concept clé :** Le clustering est **non supervisé** : pas d'étiquettes, pas de professeur pour dire "ceci est un chat". L'algorithme doit découvrir la structure par lui-même.
+
+### Problématique des données réelles
+
+**Observation fondamentale :**
+
+Les données ne proviennent généralement **pas d'un simple processus gaussien** (variations autour d'un prototype moyen).
+
+**Caractéristiques des données réelles :**
+
+- La distribution des données montre généralement une **non-uniformité**
+- Présence de **régions de densité plus élevée**
+
+**Définition du clustering :**
+
+Le clustering est une méthode **non supervisée** qui vise à découvrir des **groupes cohérents** de données, correspondant à des **pics de densité** des données.
+
+---
+
+## L'intuition géométrique : Le jeu des chaises musicales
+
+### Analogie pratique
+
+Imaginez un jeu de chaises musicales avec K chaises (clusters) et N joueurs (points de données). Quand la musique s'arrête :
+
+- Chaque joueur court vers la chaise la plus proche **(assignation)**
+- On déplace chaque chaise au centre des joueurs qui l'entourent **(mise à jour)**
+- On recommence jusqu'à ce que les chaises ne bougent plus
+
+**C'est exactement k-means !**
+
+💡 **Idée essentielle :** K-means alterne entre deux questions simples : "où va chaque point ?" et "où sont les centres ?". Cette alternance garantit une amélioration à chaque étape.
+
+---
+
+## Panorama des méthodes de clustering
+
+### Principales méthodes
+
+Il existe un grand nombre de méthodes de clustering, incluant :
+
+**Méthodes hiérarchiques :**
+
+- Hierarchical Agglomerative Clustering (HAC)
+
+**Méthodes de partitionnement :**
+
+- **k-means** (algorithme de Lloyd)
+- k-medoids
+
+**Méthodes spectrales :**
+
+- Spectral clustering
+
+**Autres approches :**
+
+- Community detection
+- High-dimensional clustering
+- Self-Organizing Maps (SOM)
+- Neural Gas
+
+📌 **Note historique :** La recherche sur le clustering est active depuis au moins 50 ans.
+
+---
+
+## Clustering hiérarchique agglomératif
+
+### Principe de l'algorithme
+
+**Processus itératif :**
+
+- **Initialisation** : Chaque donnée est un cluster
+- **Recherche** : Trouver la paire de clusters la plus proche
+- **Fusion** : Fusionner ces deux clusters
+- **Itération** : Répéter jusqu'à la fin
+
+**Résultat :** Production d'un **dendrogramme** des données.
+
+### Distances entre ensembles (clusters)
+
+**Métriques possibles :**
+
+- **Distance entre centres** (centroid linkage)
+- **Distance maximale** (complete linkage) : $\max_{x \in C_1, y \in C_2} d(x,y)$
+- **Distance minimale** (single linkage) : $\min_{x \in C_1, y \in C_2} d(x,y)$
+
+⚠️ **Limitation :** Le nombre de clusters est **inconnu a priori**.
+
+---
+
+## Stratégie k-means
+
+### Hypothèses fondamentales
+
+L'algorithme de clustering **k-means** postule :
+
+- Un espace métrique **(euclidien)** normé sur les données
+- Une assignation **non supervisée** des données aux clusters
+- Un algorithme d'**assignation dure** (hard-assignment) : l'assignation est **binaire**, chaque donnée est assignée à **un et un seul** cluster
+
+### Modèle formel
+
+**Données :**
+
+Soit $X = \{x_i\}_{i \in [[N]]} \subset \Omega \subseteq \mathbb{R}^D$, et $K \in \mathbb{N}^*$ donné.
+
+**Variables du modèle :**
+
+- **Variables d'assignation binaire (latentes) :**
+
+$$Z = \{z_{ik}\} \quad \text{avec} \quad z_{ik} \in \{\text{false}, \text{true}\} \equiv \{0, 1\} \quad \forall i, k$$
+
+- **Représentants des clusters :**
+
+$$M = \{\mu_k\}_{k \in [[K]]} \quad \text{avec} \quad \mu_k \in \mathbb{R}^D \quad \forall k$$
+
+**Paramètres complets :**
+
+$$\theta = [M, Z]$$
+
+---
+
+## Fonction de perte k-means
+
+### Problème d'optimisation
+
+k-means cherche l'assignation suivante :
+
+$$\hat{\theta} = [\hat{M}, \hat{Z}] = \underset{\theta = [M,Z]}{\arg\min} \, L(\theta, X)$$
+
+**Fonction de perte :**
+
+$$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
+
+**Interprétation :**
+
+- Somme des **distances au carré** entre chaque point et son représentant de cluster
+- Plus cette somme est petite, meilleure est la partition
+
+💡 **Pourquoi au carré ?** Deux raisons :
+
+- **Mathématique** : rend le problème plus facile à résoudre
+- **Géométrique** : pénalise plus les points très éloignés
+
+### Complexité du problème
+
+⚠️ **Difficulté majeure :** Puisque l'assignation est binaire, l'optimisation exacte est **NP-Hard**.
+
+✅ **Solution pratique :** Chercher une **approximation par descente de coordonnées** (coordinate descent).
+
+---
+
+## Algorithme de descente de coordonnées
+
+### Principe général
+
+La descente de coordonnées est un **algorithme de minimisation alternée**.
+
+**Problème :**
+
+Soit $f : \mathbb{R}^D \to \mathbb{R}$, on cherche :
+
+$$x^* = \underset{x \in \mathbb{R}^D}{\arg\min} \, f(x)$$
+
+::: {.callout-note collapse="true"}
+## 📌 Détails mathématiques : Stratégie de résolution
+
+**Définition des fonctions partielles :**
+
+Pour $d \in [[D]]$, on définit $f^d : \mathbb{R}^D \times \mathbb{R} \to \mathbb{R}$ :
+
+$$f^d(x, y) = f([x(1), \ldots, x(d-1), y, x(d+1), \ldots, x(D)]^T)$$
+
+**Optimisation alternée :**
+
+On cherche alternativement le minimum selon chaque coordonnée :
+
+$$x^{(t+1)}(d) = \underset{y}{\arg\min} \, f^d(x^{(t)}, y)$$
+
+💡 **Principe :** Fixer toutes les variables sauf une, optimiser cette variable, puis passer à la suivante.
+:::
+
+---
+
+## Application au k-means
+
+### Optimisation alternée de Z et M
+
+On **alterne l'optimisation** de $Z$ et $M$.
+
+**Définitions des pertes partielles :**
+
+$$L_M(Z) = L(\theta, X)|_{M = M}$$
+
+$$L_Z(M) = L(\theta, X)|_{Z = Z}$$
+
+### Les deux équations magiques
+
+**Optimisation par rapport à M (représentants) :**
+
+::: {.callout-note collapse="true"}
+## 📌 Détails mathématiques : Calcul des centres
+
+**Calcul de la dérivée :**
+
+$$\frac{\partial L_Z}{\partial \mu_k} = -2 \sum_{i=1}^{N} z_{ik}(x_i - \mu_k)$$
+
+**Condition d'optimalité :**
+
+Le représentant optimal $M$ pour une assignation donnée $Z$ est atteint quand :
+
+$$\frac{\partial L_Z}{\partial \mu_k} = 0 \quad \Rightarrow \quad \mu_k = \frac{\sum_{i=1}^{N} z_{ik} x_i}{\sum_{i=1}^{N} z_{ik}}$$
+:::
+
+✅ **Conclusion fondamentale :** Les représentants des clusters sont leurs **centres de masse** (barycentres).
+
+**Optimisation par rapport à Z (assignation) :**
+
+Étant donné un ensemble de représentants de clusters $M$, pour minimiser $L_M(Z)$ :
+
+$$z_{ik} = 1 \quad \text{seulement quand} \quad k = \underset{m}{\arg\min} \, \|x_i - \mu_m\|_2^2$$
+
+(et $z_{ik} = 0$ sinon)
+
+✅ **Conclusion :** $L_M(Z)$ est minimale quand **chaque donnée est assignée à son représentant de cluster le plus proche**.
+
+---
+
+## Algorithme k-means complet
+
+### Description détaillée
+
+**Données d'entrée :**
+
+- $X = \{x_i\}_{i \in [[N]]}$ avec $x_i \in \mathbb{R}^D$
+- $K \in \mathbb{N}^*$ (nombre de clusters)
+
+### Étapes de l'algorithme
+
+**Étape 1 : Initialisation**
+
+Initialiser les représentants de clusters $M^{(0)}$.
+
+**Étape 2 : Assignation (E-step like)**
+
+Étant donné les représentants de clusters $M^{(t)}$, l'assignation $Z^{(t)}$ associe chaque donnée à son représentant de cluster le plus proche :
+
+$$z_{ik}^{(t)} = \begin{cases} 1 & \text{si } k = \arg\min_m \|x_i - \mu_m^{(t)}\|_2^2 \\ 0 & \text{sinon} \end{cases}$$
+
+**Étape 3 : Mise à jour (M-step like)**
+
+Étant donné l'assignation $Z^{(t)}$, les nouveaux représentants de clusters $M^{(t+1)}$ sont les centres de masse des données assignées aux clusters :
+
+$$\mu_k^{(t+1)} = \frac{\sum_{i=1}^{N} z_{ik}^{(t)} x_i}{\sum_{i=1}^{N} z_{ik}^{(t)}}$$
+
+**Étape 4 : Convergence**
+
+Répéter depuis l'étape 2 jusqu'à convergence.
+
+### Critères de convergence
+
+La convergence est atteinte quand :
+
+- Les centres de masse **ne bougent plus beaucoup** : $\|\mu_k^{(t+1)} - \mu_k^{(t)}\| < \epsilon$
+- Ou l'assignation est **stable** : $Z^{(t+1)} = Z^{(t)}$
+
+📌 **Note importante :** L'étape 2 est similaire à une étape d'**Expectation**, et l'étape 3 est similaire à une étape de **Maximization**, en considérant une assignation dure (référence à l'algorithme EM).
+
+---
+
+## Propriétés de l'algorithme k-means
+
+### Garanties théoriques
+
+**Décroissance de la perte :**
+
+Puisqu'il effectue une **minimisation alternée de fonctions convexes**, il garantit de **diminuer la perte à chaque itération** :
+
+$$L(M^{(t+1)}, Z^{(t+1)}) \leq L(M^{(t)}, Z^{(t)})$$
+
+**Finitude :**
+
+Il existe un nombre **combinatoire mais fini** d'assignations possibles → le nombre d'itérations est **(grand mais) fini**.
+
+💡 **Pourquoi ça converge ?** Chaque étape ne peut qu'améliorer (ou laisser inchangé) le critère. Comme il y a un nombre fini d'assignations possibles, l'algorithme doit terminer.
+
+### Interprétation géométrique
+
+**Diagramme de Voronoï :**
+
+L'étape 2 est équivalente à construire le **diagramme de Voronoï discret** de $X$ avec les centres $M$ comme graines (seeds).
+
+**Définition :** Le diagramme de Voronoï partitionne l'espace en régions, où chaque région contient tous les points plus proches d'un centre donné que de tout autre centre.
+
+### Lien avec l'algorithme EM
+
+**Comparaison conceptuelle :**
+
+- **Étape 2 (Assignation)** : similaire à une étape **Expectation** (mais dure)
+- **Étape 3 (Mise à jour)** : similaire à une étape **Maximization**
+
+**Différence clé :** k-means utilise une **assignation dure** (hard-assignment) tandis que EM utilise une **assignation douce** (soft-assignment).
+
+---
+
+## Sensibilité à l'initialisation
+
+### Problème des optima locaux
+
+⚠️ **Limitation majeure :** Puisque l'optimisation exacte (assignation optimale) est **NP-Hard**, l'algorithme k-means atteint un **optimum local**.
+
+**Conséquences :**
+
+- La qualité du résultat **varie selon l'initialisation**
+- Différentes initialisations peuvent donner des résultats très différents
+
+### Le dilemme de l'initialisation
+
+Si toutes les chaises commencent dans le même coin, le jeu sera très long et donnera un mauvais résultat. **K-means est très sensible à l'initialisation !**
+
+### Stratégies pratiques
+
+**Randomisation :**
+
+La randomisation peut être utile si le calcul est rapide → lancer plusieurs fois avec différentes initialisations.
+
+**Heuristiques :**
+
+Sinon, utiliser des **heuristiques pour une meilleure initialisation** (comme k-means++).
+
+---
+
+## K-means++ : Initialisation intelligente
+
+### Principe fondamental
+
+Le principe de **k-means++** est de **maximalement disperser** les représentants de clusters initiaux $M^{(0)}$ sur les données.
+
+**Avantages démontrés :**
+
+- Produit des clusters de **meilleure qualité**
+- **Accélère la convergence** de k-means
+
+### Algorithme k-means++ détaillé
+
+**Étape 1 : Premier centre**
+
+Sélectionner le premier représentant de cluster $\mu_1^0$ **aléatoirement** parmi les données $X$.
+
+**Étape 2 : Calcul des distances**
+
+Pour toutes les données non sélectionnées $x_i$, calculer :
+
+$$\Delta_i = \|x_i - \mu_m^0\|_2^2$$
+
+la distance entre $x_i$ et son représentant le plus proche $\mu_m^0$ parmi les $k$ représentants déjà sélectionnés.
+
+**Étape 3 : Échantillonnage pondéré**
+
+Échantillonner le prochain représentant $\mu_{k+1}^0$ depuis $X$ avec une **probabilité proportionnelle** à la distribution $\Delta$ :
+
+$$\mathbb{P}(\text{choisir } x_i) = \frac{\Delta_i}{\sum_j \Delta_j}$$
+
+**Étape 4 : Itération**
+
+Répéter depuis l'étape 2 jusqu'à ce que $K$ représentants soient choisis.
+
+### Intuition de l'algorithme
+
+💡 **Idée clé :** Les points **loin des centres déjà sélectionnés** ont plus de chances d'être choisis comme nouveaux centres.
+
+**Conséquence :** Les centres initiaux sont bien **répartis dans l'espace des données**, couvrant les différentes régions de densité.
+
+### Adoption pratique
+
+📌 **Utilisation répandue :** Cette stratégie d'initialisation est utilisée par plusieurs packages de Data Science : MATLAB™, Python SciKit Learn, R, et autres bibliothèques standards.
+
+💡 **Astuce pratique :** Toujours utiliser k-means++ ou lancer k-means plusieurs fois avec différentes initialisations aléatoires et garder le meilleur résultat.
+
+---
+
+## Relation entre k-means et modèles gaussiens
+
+### k-means comme cas particulier du GMM
+
+**Question :** Pourquoi dit-on que k-means considère un **modèle gaussien** pour les clusters ?
+
+**Réponse :**
+
+k-means peut être vu comme un cas limite de GMM (Gaussian Mixture Model) où :
+
+**Hypothèses du modèle :**
+
+- Chaque cluster suit une distribution **normale**
+- Matrices de covariance **sphériques et identiques** : $\Sigma_k = \sigma^2 I_D$ pour tous les clusters
+- Variance $\sigma^2 \to 0$ : les distributions deviennent des pics
+
+**Conséquence :**
+
+Dans cette limite, l'**assignation douce** (soft-assignment) du GMM devient une **assignation dure** (hard-assignment), et on retrouve k-means.
+
+::: {.callout-note collapse="true"}
+## 📌 Détails mathématiques : Formulation probabiliste
+
+Si on considère le modèle probabiliste :
+
+$$\mathbb{P}(x | \mu_k, \sigma^2) = \frac{1}{(2\pi\sigma^2)^{D/2}} \exp\left(-\frac{\|x - \mu_k\|^2}{2\sigma^2}\right)$$
+
+Quand $\sigma \to 0$, maximiser cette probabilité est équivalent à minimiser $\|x - \mu_k\|^2$, ce qui est exactement le critère de k-means.
+:::
+
+📌 **K-means est un cas particulier de GMM !** Quand on prend un mélange de gaussiennes avec covariances sphériques et identiques $\Sigma_k = \sigma^2 I$, et qu'on fait tendre $\sigma \to 0$, alors l'assignation douce devient dure, et on retrouve k-means.
+
+---
+
+## Lien intrinsèque avec la métrique euclidienne
+
+### Pourquoi k-means dépend de la métrique euclidienne ?
+
+**Analyse de la fonction de perte :**
+
+$$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
+
+La norme $\|\cdot\|_2$ est la **norme euclidienne** : $\|x\|_2^2 = \sum_d x(d)^2$.
+
+### Conséquences pratiques
+
+**Sensibilité à l'échelle :**
+
+k-means est **sensible à l'échelle** des variables. Des variables avec de grandes valeurs dominent la distance.
+
+**Solution :** **Normalisation** des données avant d'appliquer k-means :
+
+- Centrer : soustraire la moyenne
+- Réduire : diviser par l'écart-type
+
+**Limitation aux espaces euclidiens :**
+
+k-means ne peut pas être directement appliqué à des données **non-euclidiennes** (graphes, textes, etc.).
+
+**Alternatives :** Pour d'autres métriques, utiliser des variantes comme k-medoids qui fonctionnent avec des distances arbitraires.
+
+---
+
+## Choix du nombre de clusters K
+
+### Problématique
+
+⚠️ **Difficulté :** Le nombre de clusters $K$ doit être **spécifié a priori** dans k-means.
+
+### Méthodes de sélection
+
+**Méthode du coude (Elbow method) :**
+
+Tracer la perte $L$ en fonction de $K$ et chercher un "coude" dans la courbe.
+
+**Silhouette score :**
+
+Mesure la qualité du clustering en comparant la distance intra-cluster à la distance inter-cluster.
+
+Pour un point $i$ :
+
+$$s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}$$
+
+où $a(i)$ = distance moyenne aux autres points du même cluster, $b(i)$ = distance moyenne aux points du cluster le plus proche.
+
+**Interprétation :** $s(i) \approx 1$ = bien classé, $\approx 0$ = à la frontière, $\approx -1$ = mal classé.
+
+**Gap statistic :**
+
+Compare la perte observée à la perte attendue sous une distribution de référence.
+
+**Critères d'information :**
+
+- BIC (Bayesian Information Criterion)
+- AIC (Akaike Information Criterion)
+
+💡 **Conseil pratique :** Tester plusieurs valeurs de $K$ et utiliser des critères multiples.
+
+---
+
+## Les pièges de k-means et comment les éviter
+
+### Piège 1 : Les Clusters Non Sphériques
+
+**Problème :** K-means suppose des clusters sphériques. S'ils sont allongés ou de formes bizarres, ça échoue.
+
+**Solution :**
+
+- Standardiser les données (centrer-réduire)
+- Utiliser une autre méthode (GMM, spectral clustering)
+- Transformer les données (PCA d'abord)
+
+### Piège 2 : Les Clusters de Tailles Très Différentes
+
+**Problème :** K-means tend à créer des clusters de taille similaire, même si la réalité est différente.
+
+**Solution :** Ajuster K, ou utiliser une méthode qui gère ça (GMM).
+
+### Piège 3 : La Sensibilité aux Outliers
+
+**Problème :** Un point très éloigné tire le centre de son cluster vers lui.
+
+**Solution :**
+
+- Détecter et enlever les outliers avant
+- Utiliser k-medoids (plus robuste)
+- Standardiser pour réduire l'influence
+
+### Piège 4 : L'Interprétation des Résultats
+
+**Problème :** K-means trouve toujours K clusters, même si les données n'ont pas de structure.
+
+**Solution :** Toujours valider avec des méthodes objectives (silhouette, gap statistic).
+
+---
+
+## Variantes de k-means
+
+### K-medoids
+
+**Différence :** Les centres sont des points réels des données (pas des moyennes).
+
+**Avantage :** Plus robuste aux outliers, fonctionne avec n'importe quelle distance.
+
+### Mini-batch K-means
+
+**Différence :** Utilise des sous-échantillons des données à chaque itération.
+
+**Avantage :** Beaucoup plus rapide pour les grandes données.
+
+### Fuzzy C-means
+
+**Différence :** Assignation douce (comme GMM) mais avec un critère géométrique.
+
+**Avantage :** Points frontières appartiennent partiellement à plusieurs clusters.
+
+### Clustering contraint
+
+Le clustering peut être **contraint** avec :
+
+**Contraintes MUST-LINK :**
+
+Deux points doivent être dans le **même cluster**.
+
+**Contraintes CANNOT-LINK :**
+
+Deux points doivent être dans des **clusters différents**.
+
+**Application pratique :** Ces contraintes permettent d'incorporer des **connaissances a priori** ou des **contraintes du domaine** dans le processus de clustering.
+
+---
+
+## En pratique : La recette complète
+
+### Étape 1 : Préparation des Données
+
+- **Nettoyer** : gérer les valeurs manquantes
+- **Standardiser** : centrer et réduire chaque variable
+- **Visualiser** (si possible en 2D/3D) pour avoir une idée
+
+### Étape 2 : Choix de K
+
+- **Méthode du coude** : tracer inertie vs K
+- **Score de silhouette** : moyenne sur tous les points
+- **Connaissance du domaine** : parfois on sait combien de clusters on cherche
+
+### Étape 3 : Exécution
+
+- Initialiser K centres avec k-means++
+- Répéter :
+  - Assigner chaque point au centre le plus proche
+  - Recalculer les centres comme moyennes
+  - Si les centres bougent peu, arrêter
+- Évaluer avec score de silhouette
+- Si doute, relancer avec différentes initialisations
+
+### Étape 4 : Validation
+
+- **Interne** : scores (silhouette, Davies-Bouldin)
+- **Externe** : si on a quelques étiquettes, comparer
+- **Manuelle** : visualisation, bon sens
+
+---
+
+## Comparaison k-means vs GMM vs Clustering hiérarchique
+
+| Critère | k-means | GMM (avec EM) | Clustering hiérarchique |
+|--------|---------|---------------|-------------------------|
+| **Type d'assignation** | Dure (hard) | Douce (soft) | Hiérarchique |
+| **Forme des clusters** | Sphériques (même variance) | Elliptiques (covariances différentes) | Flexible |
+| **Nombre de clusters** | Doit être spécifié | Doit être spécifié | Déterminé a posteriori (dendrogramme) |
+| **Complexité** | $O(N \cdot K \cdot D \cdot T)$ | $O(N \cdot K \cdot D^2 \cdot T)$ | $O(N^2 \log N)$ ou $O(N^3)$ |
+| **Avantages** | Rapide, simple | Modèle probabiliste, clusters de formes variées | Pas besoin de spécifier K, visualisation |
+| **Inconvénients** | Sensible à l'initialisation, suppose clusters sphériques | Plus lent, plus de paramètres | Coûteux pour grandes données, pas de réassignation |
+
+---
+
+## Synthèse des concepts clés
+
+### Caractéristiques essentielles de k-means
+
+**Nature de la méthode :**
+
+- k-means fait partie de la famille **non supervisée** de techniques de modélisation de données
+- Une des techniques de clustering les **plus populaires**
+
+**Assignation :**
+
+- k-means effectue une **assignation dure** (hard-assignment)
+- Chaque point appartient à **un seul cluster**
+
+**Optimisation :**
+
+- Critère d'optimisation (perte) **solide** mais **NP-Hard**
+- L'algorithme k-means cherche une **solution approximative** par descente de coordonnées (minimisation alternée)
+
+**Convergence :**
+
+- La perte **n'est pas convexe** → technique **sensible à l'initialisation**
+- k-means++ est une **heuristique a priori** pour l'initialisation, efficace en pratique
+
+**Extensions :**
+
+- Clustering peut être **contraint** (contraintes MUST-LINK et CANNOT-LINK)
+
+---
+
+::: {.callout-tip}
+## 💡 Fiche de révision condensée
+
+**En 30 secondes pour l'oral :**
+
+- K-means = clustering par minimisation de distance
+- Deux étapes : assignation (points → centre plus proche) et mise à jour (recalcul des centres)
+- Problèmes : choix de K, initialisation, clusters sphériques
+- Solutions : k-means++, méthode du coude, standardisation
+- Parenté : cas particulier des GMM avec $\sigma \to 0$
+- Applications : segmentation, regroupement, réduction de dimension
+:::
+
+::: {.callout-important}
+## 📌 Concepts mathématiques à maîtriser
+
+**Algèbre et géométrie :**
+
+- Norme euclidienne et distance
+- Centre de masse (barycentre)
+- Diagramme de Voronoï
+- Espaces métriques
+
+**Optimisation :**
+
+- Descente de coordonnées
+- Minimisation alternée
+- Optimisation combinatoire
+- Complexité NP-Hard
+- Convergence d'algorithmes itératifs
+- Optima locaux vs globaux
+- Fonctions convexes
+
+**Probabilités et statistiques :**
+
+- Distribution gaussienne multivariée
+- Maximum de vraisemblance
+- Modèles de mélange
+
+**Points à développer :**
+
+- Dérivation de la fonction de perte
+- Calcul de $\frac{\partial L_Z}{\partial \mu_k}$ et condition d'optimalité
+- Preuve que les centres sont les barycentres
+- Preuve de la décroissance monotone de la perte
+- Relation entre k-means et modèle gaussien limite
+:::

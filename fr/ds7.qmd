@@ -1,4 +1,4 @@
-# Document de Révision : Algorithme k-means
+# Cours détaillé
 
 ---
 
@@ -41,9 +41,9 @@ Synonyme souvent utilisé (en traitement du signal) pour le clustering, signifia
 
 ---
 
-## Panorama des méthodes de clustering
+### Panorama des méthodes de clustering
 
-### Principales méthodes
+#### Principales méthodes
 
 Il existe un grand nombre de méthodes de clustering, incluant :
 
@@ -79,19 +79,19 @@ Il existe un grand nombre de méthodes de clustering, incluant :
 
 **Étape 1 : Initialisation**
 
-Chaque donnée est un cluster
+- Chaque donnée est un cluster
 
 **Étape 2 : Recherche**
 
-Trouver la paire de clusters la plus proche
+- Trouver la paire de clusters la plus proche
 
 **Étape 3 : Fusion**
 
-Fusionner ces deux clusters
+- Fusionner ces deux clusters
 
 **Étape 4 : Itération**
 
-Répéter depuis l'étape 2 jusqu'à la fin
+- Répéter depuis l'étape 2 jusqu'à la fin
 
 **Résultat :** Production d'un **dendrogramme** des données
 
@@ -125,11 +125,11 @@ Soit $X = \{x_i\}_{i \in [[N]]} \subset \Omega \subseteq \mathbb{R}^D$, et $K \i
 
 **Variables du modèle :**
 
-**Variables d'assignation binaire (latentes) :**
+- **Variables d'assignation binaire (latentes) :**
 
 $$Z = \{z_{ik}\} \quad \text{avec} \quad z_{ik} \in \{\text{false}, \text{true}\} \equiv \{0, 1\} \quad \forall i, k$$
 
-**Représentants des clusters :**
+- **Représentants des clusters :**
 
 $$M = \{\mu_k\}_{k \in [[K]]} \quad \text{avec} \quad \mu_k \in \mathbb{R}^D \quad \forall k$$
 
@@ -139,15 +139,15 @@ $$\theta = [M, Z]$$
 
 ---
 
-## Fonction de perte k-means
+### Fonction de perte k-means
 
-### Problème d'optimisation
+#### Problème d'optimisation
 
 k-means cherche l'assignation suivante :
 
 $$\hat{\theta} = [\hat{M}, \hat{Z}] = \underset{\theta = [M,Z]}{\arg\min} \, L(\theta, X)$$
 
-### Fonction de perte
+#### Fonction de perte
 
 **Définition :**
 
@@ -158,7 +158,7 @@ $$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
 - Somme des **distances au carré** entre chaque point et son représentant de cluster
 - Plus cette somme est petite, meilleure est la partition
 
-### Complexité du problème
+#### Complexité du problème
 
 ⚠️ **Difficulté majeure :** Puisque l'assignation est binaire, l'optimisation exacte est **NP-Hard**
 
@@ -166,9 +166,9 @@ $$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
 
 ---
 
-## Rappel : Algorithme de descente de coordonnées
+### Rappel : Algorithme de descente de coordonnées
 
-### Principe général
+#### Principe général
 
 La descente de coordonnées est un **algorithme de minimisation alternée** :
 
@@ -178,7 +178,7 @@ Soit $f : \mathbb{R}^D \to \mathbb{R}$, on cherche :
 
 $$x^* = \underset{x \in \mathbb{R}^D}{\arg\min} \, f(x)$$
 
-### Stratégie de résolution
+#### Stratégie de résolution
 
 **Définition des fonctions partielles :**
 
@@ -196,19 +196,19 @@ $$x^{(t+1)}(d) = \underset{y}{\arg\min} \, f^d(x^{(t)}, y)$$
 
 ---
 
-## Application au k-means
+### Application au k-means
 
-### Optimisation alternée de Z et M
+#### Optimisation alternée de Z et M
 
 On **alterne l'optimisation** de $Z$ et $M$
 
 **Définitions des pertes partielles :**
 
-$$L_M(Z) = L(\theta, X)|_{M = \bar{M}}$$
+$$L_M(Z) = L(\theta, X)|_{M = M}$$
 
-$$L_Z(M) = L(\theta, X)|_{Z = \bar{Z}}$$
+$$L_Z(M) = L(\theta, X)|_{Z = Z}$$
 
-### Optimisation par rapport à M (représentants)
+#### Optimisation par rapport à M (représentants)
 
 **Calcul de la dérivée :**
 
@@ -224,17 +224,17 @@ $$\frac{\partial L_Z}{\partial \mu_k} = 0 \quad \Rightarrow \quad \mu_k = \frac{
 
 ---
 
-## Mise à jour de l'assignation
+### Mise à jour de l'assignation
 
-### Optimisation par rapport à Z
+#### Optimisation par rapport à Z
 
 Étant donné un ensemble de représentants de clusters $M$, pour minimiser $L_M(Z)$ :
 
 **Rappel de la perte :**
 
-$$L_M(Z) = \left[\sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2\right]_{M = \bar{M}}$$
+$$L_M(Z) = \left[\sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2\right]_{M = M}$$
 
-### Règle d'assignation
+#### Règle d'assignation
 
 C'est une **somme de termes positifs** → on assigne :
 
@@ -332,9 +332,9 @@ L'étape 2 est équivalente à construire le **diagramme de Voronoï discret** d
 
 ---
 
-## Sensibilité à l'initialisation
+### Sensibilité à l'initialisation
 
-### Problème des optima locaux
+#### Problème des optima locaux
 
 ⚠️ **Limitation majeure :** Puisque l'optimisation exacte (assignation optimale) est **NP-Hard**, l'algorithme k-means atteint un **optimum local**
 
@@ -343,7 +343,7 @@ L'étape 2 est équivalente à construire le **diagramme de Voronoï discret** d
 - La qualité du résultat **varie selon l'initialisation**
 - Différentes initialisations peuvent donner des résultats très différents
 
-### Stratégies pratiques
+#### Stratégies pratiques
 
 **Randomisation :**
 
@@ -355,9 +355,11 @@ Sinon, utiliser des **heuristiques pour une meilleure initialisation** (comme k-
 
 ---
 
-## k-means++ : Initialisation intelligente
+## Variantes, liens et relations
 
-### Principe fondamental
+### k-means++ : Initialisation intelligente
+
+#### Principe fondamental
 
 Le principe de **k-means++** est de **maximalement disperser** les représentants de clusters initiaux $M^{(0)}$ sur les données
 
@@ -366,7 +368,7 @@ Le principe de **k-means++** est de **maximalement disperser** les représentant
 1. Produit des clusters de **meilleure qualité**
 2. **Accélère la convergence** de k-means
 
-### Algorithme k-means++ détaillé
+#### Algorithme k-means++ détaillé
 
 **Étape 1 : Premier centre**
 
@@ -390,13 +392,13 @@ $$\mathbb{P}(\text{choisir } x_i) = \frac{\Delta_i}{\sum_j \Delta_j}$$
 
 Répéter depuis l'étape 2 jusqu'à ce que $K$ représentants soient choisis
 
-### Intuition de l'algorithme
+#### Intuition de l'algorithme
 
 💡 **Idée clé :** Les points **loin des centres déjà sélectionnés** ont plus de chances d'être choisis comme nouveaux centres
 
 **Conséquence :** Les centres initiaux sont bien **répartis dans l'espace des données**, couvrant les différentes régions de densité
 
-### Adoption pratique
+#### Adoption pratique
 
 📌 **Utilisation répandue :** Cette stratégie d'initialisation est utilisée par plusieurs packages de Data Science :
 
@@ -407,9 +409,9 @@ Répéter depuis l'étape 2 jusqu'à ce que $K$ représentants soient choisis
 
 ---
 
-## Relation entre k-means et modèles gaussiens
+### Relation entre k-means et modèles gaussiens
 
-### k-means comme cas particulier du GMM
+#### k-means comme cas particulier du GMM
 
 **Question :** Pourquoi dit-on que k-means considère un **modèle gaussien** pour les clusters ?
 
@@ -427,7 +429,7 @@ k-means peut être vu comme un cas limite de GMM (Gaussian Mixture Model) où :
 
 Dans cette limite, l'**assignation douce** (soft-assignment) du GMM devient une **assignation dure** (hard-assignment), et on retrouve k-means
 
-### Formulation probabiliste
+#### Formulation probabiliste
 
 Si on considère le modèle probabiliste :
 
@@ -437,9 +439,9 @@ Quand $\sigma \to 0$, maximiser cette probabilité est équivalent à minimiser 
 
 ---
 
-## Lien intrinsèque avec la métrique euclidienne
+### Lien intrinsèque avec la métrique euclidienne
 
-### Pourquoi k-means dépend de la métrique euclidienne ?
+#### Pourquoi k-means dépend de la métrique euclidienne ?
 
 **Analyse de la fonction de perte :**
 
@@ -447,7 +449,7 @@ $$L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2$$
 
 La norme $\|\cdot\|_2$ est la **norme euclidienne** : $\|x\|_2^2 = \sum_d x(d)^2$
 
-### Conséquences pratiques
+#### Conséquences pratiques
 
 **Sensibilité à l'échelle :**
 
@@ -466,9 +468,9 @@ k-means ne peut pas être directement appliqué à des données **non-euclidienn
 
 ---
 
-## Clustering contraint
+### Clustering contraint
 
-### Extension de k-means
+#### Extension de k-means
 
 Le clustering peut être **contraint** avec :
 
@@ -480,7 +482,7 @@ Deux points doivent être dans le **même cluster**
 
 Deux points doivent être dans des **clusters différents**
 
-### Application pratique
+#### Application pratique
 
 Ces contraintes permettent d'incorporer des **connaissances a priori** ou des **contraintes du domaine** dans le processus de clustering
 
@@ -516,46 +518,26 @@ Ces contraintes permettent d'incorporer des **connaissances a priori** ou des **
 
 ---
 
-## Comparaison k-means vs GMM vs Clustering hiérarchique
+### Comparaison k-means vs GMM vs Clustering hiérarchique
 
-### Tableau comparatif
-
-**k-means :**
-
-- **Type d'assignation :** Dure (hard)
-- **Forme des clusters :** Sphériques (même variance)
-- **Nombre de clusters :** Doit être spécifié
-- **Complexité :** $O(N \cdot K \cdot D \cdot T)$ où $T$ est le nombre d'itérations
-- **Avantages :** Rapide, simple
-- **Inconvénients :** Sensible à l'initialisation, suppose clusters sphériques
-
-**GMM (avec EM) :**
-
-- **Type d'assignation :** Douce (soft)
-- **Forme des clusters :** Elliptiques (covariances différentes)
-- **Nombre de clusters :** Doit être spécifié
-- **Complexité :** $O(N \cdot K \cdot D^2 \cdot T)$
-- **Avantages :** Modèle probabiliste, clusters de formes variées
-- **Inconvénients :** Plus lent, plus de paramètres à estimer
-
-**Clustering hiérarchique :**
-
-- **Type d'assignation :** Hiérarchique
-- **Forme des clusters :** Flexible
-- **Nombre de clusters :** Déterminé a posteriori (dendrogramme)
-- **Complexité :** $O(N^2 \log N)$ ou $O(N^3)$
-- **Avantages :** Pas besoin de spécifier K, visualisation par dendrogramme
-- **Inconvénients :** Coûteux pour grandes données, pas de réassignation
+| Critère | k-means | GMM (avec EM) | Clustering hiérarchique |
+|--------|------------------------|-------------------------|--------------------------|
+| **Type d’assignation** | Dure (hard) | Douce (soft) | Hiérarchique |
+| **Forme des clusters** | Sphériques<br>(même variance) | Elliptiques<br>(covariances différentes) | Flexible |
+| **Nombre de clusters** | Doit être spécifié | Doit être spécifié | Déterminé a posteriori<br>(dendrogramme) |
+| **Complexité** | $O(N \cdot K \cdot D \cdot T)$<br>où $T$ est le nombre d'itérations | $O(N \cdot K \cdot D^2 \cdot T)$ |  $O(N^2 \log N)$ ou $O(N^3)$  |
+| **Avantages** | Rapide<br>simple | Modèle probabiliste<br>clusters de formes variées | Pas besoin de spécifier K<br>visualisation par dendrogramme |
+| **Inconvénients** | Sensible à l’initialisation<br>suppose clusters sphériques | Plus lent<br>plus de paramètres à estimer | Coûteux pour grandes données<br>pas de réassignation |
 
 ---
 
-## Choix du nombre de clusters K
+### Choix du nombre de clusters K
 
-### Problématique
+#### Problématique
 
 ⚠️ **Difficulté :** Le nombre de clusters $K$ doit être **spécifié a priori** dans k-means
 
-### Méthodes de sélection
+#### Méthodes de sélection
 
 **Méthode du coude (Elbow method) :**
 
