@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds6s1 – ISS</title>
+<title>ds7s1 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -72,9 +107,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -287,7 +319,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds6.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds6s1.html">Intuition Behind the EM Algorithm</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -399,7 +431,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link">
+  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Intuition</span></a>
   </div>
 </li>
@@ -428,7 +460,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds6s1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ds6s1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Intuition Behind the EM Algorithm</span></a>
   </div>
 </li>
@@ -444,79 +476,67 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intuition-behind-the-em-algorithm" id="toc-intuition-behind-the-em-algorithm" class="nav-link active" data-scroll-target="#intuition-behind-the-em-algorithm">Intuition Behind the EM Algorithm</a>
+  <li><a href="#intuition" id="toc-intuition" class="nav-link active" data-scroll-target="#intuition">Intuition</a>
   <ul class="collapse">
-  <li><a href="#the-fundamental-problem-separating-mixed-sources" id="toc-the-fundamental-problem-separating-mixed-sources" class="nav-link" data-scroll-target="#the-fundamental-problem-separating-mixed-sources">1. The Fundamental Problem: Separating Mixed Sources</a></li>
-  <li><a href="#gaussian-mixture-models-the-mathematics-of-landscape" id="toc-gaussian-mixture-models-the-mathematics-of-landscape" class="nav-link" data-scroll-target="#gaussian-mixture-models-the-mathematics-of-landscape">2. Gaussian Mixture Models: The Mathematics of “Landscape”</a>
+  <li><a href="#the-fundamental-problem-grouping-without-a-guide" id="toc-the-fundamental-problem-grouping-without-a-guide" class="nav-link" data-scroll-target="#the-fundamental-problem-grouping-without-a-guide">1. The Fundamental Problem: Grouping Without a Guide</a></li>
+  <li><a href="#the-geometric-intuition-the-musical-chairs-game" id="toc-the-geometric-intuition-the-musical-chairs-game" class="nav-link" data-scroll-target="#the-geometric-intuition-the-musical-chairs-game">2. The Geometric Intuition: The Musical Chairs Game</a></li>
+  <li><a href="#the-mathematical-formulation-minimizing-energy" id="toc-the-mathematical-formulation-minimizing-energy" class="nav-link" data-scroll-target="#the-mathematical-formulation-minimizing-energy">3. The Mathematical Formulation: Minimizing Energy</a>
   <ul class="collapse">
-  <li><a href="#the-geometric-idea" id="toc-the-geometric-idea" class="nav-link" data-scroll-target="#the-geometric-idea">The Geometric Idea</a></li>
+  <li><a href="#the-criterion-to-minimize" id="toc-the-criterion-to-minimize" class="nav-link" data-scroll-target="#the-criterion-to-minimize">The Criterion to Minimize</a></li>
+  <li><a href="#the-two-magic-equations" id="toc-the-two-magic-equations" class="nav-link" data-scroll-target="#the-two-magic-equations">The Two Magic Equations</a></li>
   </ul></li>
-  <li><a href="#the-em-algorithm-the-two-step-dance" id="toc-the-em-algorithm-the-two-step-dance" class="nav-link" data-scroll-target="#the-em-algorithm-the-two-step-dance">3. The EM Algorithm: The Two-Step Dance</a>
+  <li><a href="#the-initialization-problem-where-to-place-the-first-chairs" id="toc-the-initialization-problem-where-to-place-the-first-chairs" class="nav-link" data-scroll-target="#the-initialization-problem-where-to-place-the-first-chairs">4. The Initialization Problem: Where to Place the First Chairs?</a>
   <ul class="collapse">
-  <li><a href="#the-general-principle" id="toc-the-general-principle" class="nav-link" data-scroll-target="#the-general-principle">The General Principle</a></li>
-  <li><a href="#e-step-expectation-assigning-points" id="toc-e-step-expectation-assigning-points" class="nav-link" data-scroll-target="#e-step-expectation-assigning-points">E-step (Expectation): “Assigning Points”</a></li>
-  <li><a href="#m-step-maximization-updating-parameters" id="toc-m-step-maximization-updating-parameters" class="nav-link" data-scroll-target="#m-step-maximization-updating-parameters">M-step (Maximization): “Updating Parameters”</a></li>
+  <li><a href="#the-dilemma" id="toc-the-dilemma" class="nav-link" data-scroll-target="#the-dilemma">The Dilemma</a></li>
+  <li><a href="#k-means-the-smart-solution" id="toc-k-means-the-smart-solution" class="nav-link" data-scroll-target="#k-means-the-smart-solution">K-means++: The Smart Solution</a></li>
   </ul></li>
-  <li><a href="#crucial-practical-details" id="toc-crucial-practical-details" class="nav-link" data-scroll-target="#crucial-practical-details">4. Crucial Practical Details</a>
+  <li><a href="#choosing-k-how-many-chairs" id="toc-choosing-k-how-many-chairs" class="nav-link" data-scroll-target="#choosing-k-how-many-chairs">5. Choosing K: How Many Chairs?</a>
   <ul class="collapse">
-  <li><a href="#initialization-the-starting-point-is-crucial" id="toc-initialization-the-starting-point-is-crucial" class="nav-link" data-scroll-target="#initialization-the-starting-point-is-crucial">Initialization: The Starting Point is Crucial</a></li>
-  <li><a href="#choosing-k-how-many-components" id="toc-choosing-k-how-many-components" class="nav-link" data-scroll-target="#choosing-k-how-many-components">Choosing K: How Many Components?</a></li>
-  <li><a href="#covariance-matrix-form" id="toc-covariance-matrix-form" class="nav-link" data-scroll-target="#covariance-matrix-form">Covariance Matrix Form</a></li>
+  <li><a href="#the-main-problem" id="toc-the-main-problem" class="nav-link" data-scroll-target="#the-main-problem">The Main Problem</a></li>
+  <li><a href="#methods-for-choosing-k" id="toc-methods-for-choosing-k" class="nav-link" data-scroll-target="#methods-for-choosing-k">Methods for Choosing K</a></li>
   </ul></li>
-  <li><a href="#em-in-action-complete-example" id="toc-em-in-action-complete-example" class="nav-link" data-scroll-target="#em-in-action-complete-example">5. EM in Action: Complete Example</a>
+  <li><a href="#k-means-vs-gmm-the-clustering-duel" id="toc-k-means-vs-gmm-the-clustering-duel" class="nav-link" data-scroll-target="#k-means-vs-gmm-the-clustering-duel">6. K-means vs GMM: The Clustering Duel</a></li>
+  <li><a href="#k-means-pitfalls-and-how-to-avoid-them" id="toc-k-means-pitfalls-and-how-to-avoid-them" class="nav-link" data-scroll-target="#k-means-pitfalls-and-how-to-avoid-them">7. K-means Pitfalls and How to Avoid Them</a>
   <ul class="collapse">
-  <li><a href="#scenario-image-segmentation" id="toc-scenario-image-segmentation" class="nav-link" data-scroll-target="#scenario-image-segmentation">Scenario: Image Segmentation</a></li>
-  <li><a href="#convergence-visualization" id="toc-convergence-visualization" class="nav-link" data-scroll-target="#convergence-visualization">Convergence Visualization</a></li>
+  <li><a href="#pitfall-1-non-spherical-clusters" id="toc-pitfall-1-non-spherical-clusters" class="nav-link" data-scroll-target="#pitfall-1-non-spherical-clusters">Pitfall 1: Non-Spherical Clusters</a></li>
+  <li><a href="#pitfall-2-very-different-cluster-sizes" id="toc-pitfall-2-very-different-cluster-sizes" class="nav-link" data-scroll-target="#pitfall-2-very-different-cluster-sizes">Pitfall 2: Very Different Cluster Sizes</a></li>
+  <li><a href="#pitfall-3-sensitivity-to-outliers" id="toc-pitfall-3-sensitivity-to-outliers" class="nav-link" data-scroll-target="#pitfall-3-sensitivity-to-outliers">Pitfall 3: Sensitivity to Outliers</a></li>
+  <li><a href="#pitfall-4-result-interpretation" id="toc-pitfall-4-result-interpretation" class="nav-link" data-scroll-target="#pitfall-4-result-interpretation">Pitfall 4: Result Interpretation</a></li>
   </ul></li>
-  <li><a href="#em-vs-k-means-the-deep-difference" id="toc-em-vs-k-means-the-deep-difference" class="nav-link" data-scroll-target="#em-vs-k-means-the-deep-difference">6. EM vs K-means: The Deep Difference</a></li>
-  <li><a href="#pitfalls-to-avoid-and-best-practices" id="toc-pitfalls-to-avoid-and-best-practices" class="nav-link" data-scroll-target="#pitfalls-to-avoid-and-best-practices">7. Pitfalls to Avoid and Best Practices</a>
+  <li><a href="#in-practice-the-complete-recipe" id="toc-in-practice-the-complete-recipe" class="nav-link" data-scroll-target="#in-practice-the-complete-recipe">8. In Practice: The Complete Recipe</a>
   <ul class="collapse">
-  <li><a href="#pitfall-1-ghost-components" id="toc-pitfall-1-ghost-components" class="nav-link" data-scroll-target="#pitfall-1-ghost-components">Pitfall 1: “Ghost Components”</a></li>
-  <li><a href="#pitfall-2-premature-convergence" id="toc-pitfall-2-premature-convergence" class="nav-link" data-scroll-target="#pitfall-2-premature-convergence">Pitfall 2: Premature Convergence</a></li>
-  <li><a href="#pitfall-3-abusive-interpretation" id="toc-pitfall-3-abusive-interpretation" class="nav-link" data-scroll-target="#pitfall-3-abusive-interpretation">Pitfall 3: Abusive Interpretation</a></li>
+  <li><a href="#step-1-data-preparation" id="toc-step-1-data-preparation" class="nav-link" data-scroll-target="#step-1-data-preparation">Step 1: Data Preparation</a></li>
+  <li><a href="#step-2-choosing-k" id="toc-step-2-choosing-k" class="nav-link" data-scroll-target="#step-2-choosing-k">Step 2: Choosing K</a></li>
+  <li><a href="#step-3-execution" id="toc-step-3-execution" class="nav-link" data-scroll-target="#step-3-execution">Step 3: Execution</a></li>
+  <li><a href="#step-4-validation" id="toc-step-4-validation" class="nav-link" data-scroll-target="#step-4-validation">Step 4: Validation</a></li>
   </ul></li>
-  <li><a href="#synthetic-cheat-sheet" id="toc-synthetic-cheat-sheet" class="nav-link" data-scroll-target="#synthetic-cheat-sheet">8. Synthetic Cheat Sheet</a></li>
-  <li><a href="#answering-the-examiners-questions" id="toc-answering-the-examiners-questions" class="nav-link" data-scroll-target="#answering-the-examiners-questions">9. Answering the Examiner’s Questions</a></li>
-  <li><a href="#in-summary-the-philosophy-of-em" id="toc-in-summary-the-philosophy-of-em" class="nav-link" data-scroll-target="#in-summary-the-philosophy-of-em">10. In Summary: The Philosophy of EM</a></li>
+  <li><a href="#k-means-variants" id="toc-k-means-variants" class="nav-link" data-scroll-target="#k-means-variants">9. K-means Variants</a>
+  <ul class="collapse">
+  <li><a href="#k-medoids" id="toc-k-medoids" class="nav-link" data-scroll-target="#k-medoids">K-medoids</a></li>
+  <li><a href="#mini-batch-k-means" id="toc-mini-batch-k-means" class="nav-link" data-scroll-target="#mini-batch-k-means">Mini-batch K-means</a></li>
+  <li><a href="#fuzzy-c-means" id="toc-fuzzy-c-means" class="nav-link" data-scroll-target="#fuzzy-c-means">Fuzzy C-means</a></li>
+  </ul></li>
+  <li><a href="#quick-review-cheat-sheet" id="toc-quick-review-cheat-sheet" class="nav-link" data-scroll-target="#quick-review-cheat-sheet">10. Quick Review Cheat Sheet</a></li>
+  <li><a href="#for-the-oral-exam-the-story-to-tell" id="toc-for-the-oral-exam-the-story-to-tell" class="nav-link" data-scroll-target="#for-the-oral-exam-the-story-to-tell">11. For the Oral Exam: The Story to Tell</a></li>
+  <li><a href="#frequently-asked-exam-questions" id="toc-frequently-asked-exam-questions" class="nav-link" data-scroll-target="#frequently-asked-exam-questions">12. Frequently Asked Exam Questions</a></li>
+  <li><a href="#final-word" id="toc-final-word" class="nav-link" data-scroll-target="#final-word">13. Final Word</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds6s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds7s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds6.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds6s1.html">Intuition Behind the EM Algorithm</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav></header>
 
 
 
 
 
-<p>Here’s the English version of your EM algorithm intuition guide, preserving all the content, structure, and visual elements:</p>
-<hr>
-<section id="intuition-behind-the-em-algorithm" class="level1">
-<h1>Intuition Behind the EM Algorithm</h1>
-<section id="the-fundamental-problem-separating-mixed-sources" class="level2">
-<h2 class="anchored" data-anchor-id="the-fundamental-problem-separating-mixed-sources">1. The Fundamental Problem: Separating Mixed Sources</h2>
-<p><strong>Imagine this situation:</strong> You’re recording the sound of a room where several instruments are playing together. You have the final mix, but you want to isolate each instrument. How can you do this without knowing which note belongs to which instrument?</p>
-<p>This is <strong>exactly</strong> the problem that the EM algorithm solves for Gaussian Mixture Models.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Mixture of sources&lt;br/&gt;instruments + noise] --&gt; B{Problem}
-    B --&gt; C[Naive approach:&lt;br/&gt;try to separate directly]
-    B --&gt; D[EM approach:&lt;br/&gt;alternate between two questions]
-    C --&gt; E[Failure - lack of information]
-    D --&gt; F[Success - progressive estimation]
-
-    style E fill:#ffcccc
-    style F fill:#ccffcc
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="intuition" class="level1">
+<h1>Intuition</h1>
+<section id="the-fundamental-problem-grouping-without-a-guide" class="level2">
+<h2 class="anchored" data-anchor-id="the-fundamental-problem-grouping-without-a-guide">1. The Fundamental Problem: Grouping Without a Guide</h2>
+<p><strong>Imagine this:</strong> You’re given 1,000 unlabeled animal photos and asked: “How many different types of animals are there, and which photos go together?” This is exactly the clustering problem!</p>
+<p><strong>K-means</strong> answers this question by making <strong>a simplifying assumption</strong>: each type of animal can be represented by an <strong>average image</strong> (prototype), and each photo is close to one of these prototypes.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -527,72 +547,44 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>The core of the problem:</strong> With mixture models, we have <strong>two types of unknowns</strong> that depend on each other: 1. <strong>The parameters</strong> of each component (mean, variance) 2. <strong>The origin</strong> of each point (which component generated it)</p>
-<p>This is a <strong>vicious circle</strong>: to know one, you need to know the other.</p>
+<p><strong>Key Concept: Unsupervised Learning</strong> Clustering is <strong>unsupervised</strong>: no labels, no teacher to say “this is a cat.” The algorithm must discover the structure by itself.</p>
 </div>
 </div>
+<pre class="mermaid"><code>flowchart TD
+    A[Unlabeled data] --&gt; B{Clustering problem}
+    B --&gt; C[k-means approach:&lt;br/&gt;find K centers&lt;br/&gt;and assign each point&lt;br/&gt;to the nearest center]
+    B --&gt; D[Hierarchical approach:&lt;br/&gt;build a tree&lt;br/&gt;of groupings]
+    C --&gt; E[Advantage: simple, fast]
+    D --&gt; F[Advantage: visualization&lt;br/&gt;via dendrogram]
+
+    style E fill:#e6f3ff
+    style F fill:#e6ffe6</code></pre>
 </section>
-<section id="gaussian-mixture-models-the-mathematics-of-landscape" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-mixture-models-the-mathematics-of-landscape">2. Gaussian Mixture Models: The Mathematics of “Landscape”</h2>
-<section id="the-geometric-idea" class="level3">
-<h3 class="anchored" data-anchor-id="the-geometric-idea">The Geometric Idea</h3>
-<p>Imagine your data forms a <strong>mountain landscape</strong>. Each mountain represents a natural group in your data. A Gaussian Mixture Model (GMM) represents this landscape as a <strong>superposition of Gaussian hills</strong>.</p>
-<p><strong>GMM Formula:</strong></p>
-<pre><code>f(x) = π₁·N(x|µ₁,Σ₁) + π₂·N(x|µ₂,Σ₂) + ... + πₖ·N(x|µₖ,Σₖ)</code></pre>
-<p><strong>Where:</strong> - <strong>πⱼ</strong> = “relative height” of hill j (mixture weight) - <strong>N(x|µⱼ,Σⱼ)</strong> = shape of the hill (Gaussian centered at µⱼ, shape Σⱼ)</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Why Gaussians?</strong> 1. <strong>Central Limit Theorem</strong>: many natural phenomena are Gaussian 2. <strong>Universality</strong>: a mixture of Gaussians can approximate any density 3. <strong>Computability</strong>: the formulas are mathematically tractable</p>
-</div>
-</div>
+<section id="the-geometric-intuition-the-musical-chairs-game" class="level2">
+<h2 class="anchored" data-anchor-id="the-geometric-intuition-the-musical-chairs-game">2. The Geometric Intuition: The Musical Chairs Game</h2>
+<p><strong>Analogy:</strong> Imagine a game of musical chairs with K chairs (clusters) and N players (data points). When the music stops: 1. Each player runs to the nearest chair <strong>(assignment)</strong> 2. Each chair is moved to the center of the players surrounding it <strong>(update)</strong> 3. Repeat until the chairs no longer move</p>
+<p><strong>This is exactly k-means!</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    A[K chairs placed&lt;br/&gt;randomly] --&gt; B[Music stops:&lt;br/&gt;each player runs&lt;br/&gt;to the nearest chair]
+    B --&gt; C[Move each chair&lt;br/&gt;to the center of&lt;br/&gt;surrounding players]
+    C --&gt; D{Did the chairs&lt;br/&gt;move much?}
+    D --&gt;|Yes, repeat| B
+    D --&gt;|No, game over| E[Result: K groups&lt;br/&gt;of players]</code></pre>
 </section>
+<section id="the-mathematical-formulation-minimizing-energy" class="level2">
+<h2 class="anchored" data-anchor-id="the-mathematical-formulation-minimizing-energy">3. The Mathematical Formulation: Minimizing Energy</h2>
+<section id="the-criterion-to-minimize" class="level3">
+<h3 class="anchored" data-anchor-id="the-criterion-to-minimize">The Criterion to Minimize</h3>
+<p>K-means seeks to minimize:</p>
+<pre><code>L = sum over all points of (distance to its cluster center)²</code></pre>
+<p><strong>Why squared?</strong> Two reasons: 1. <strong>Mathematical</strong>: makes the problem easier to solve 2. <strong>Geometric</strong>: penalizes more points that are very far away</p>
 </section>
-<section id="the-em-algorithm-the-two-step-dance" class="level2">
-<h2 class="anchored" data-anchor-id="the-em-algorithm-the-two-step-dance">3. The EM Algorithm: The Two-Step Dance</h2>
-<section id="the-general-principle" class="level3">
-<h3 class="anchored" data-anchor-id="the-general-principle">The General Principle</h3>
-<p>Rather than seeking a perfect solution all at once (impossible), EM proceeds by <strong>successive approximations</strong> by alternating two questions:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A[Initialization] --&gt; B["E-step:&lt;br/&gt;If parameters were known,&lt;br/&gt;what would be the most likely origin?"]
-    B --&gt; C["M-step:&lt;br/&gt;If origins were known,&lt;br/&gt;what would be the best parameters?"]
-    C --&gt; D{Convergence?}
-    D --&gt;|No, improve| B
-    D --&gt;|Yes, stop| E[Final solution]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="e-step-expectation-assigning-points" class="level3">
-<h3 class="anchored" data-anchor-id="e-step-expectation-assigning-points">E-step (Expectation): “Assigning Points”</h3>
-<p><strong>Question:</strong> Given the current parameters, what is the probability that each point comes from each component?</p>
-<p><strong>Responsibility Calculation:</strong></p>
-<pre><code>γᵢⱼ = P(point i comes from component j | current parameters)
-      = [πⱼ·N(xᵢ|µⱼ,Σⱼ)] / [∑ₖ πₖ·N(xᵢ|µₖ,Σₖ)]</code></pre>
-<p><strong>Interpretation:</strong> This is a <strong>soft assignment</strong>. Unlike K-means which says “this point is 100% in this cluster,” EM says “this point is 60% in cluster A, 30% in B, 10% in C.”</p>
-</section>
-<section id="m-step-maximization-updating-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="m-step-maximization-updating-parameters">M-step (Maximization): “Updating Parameters”</h3>
-<p><strong>Question:</strong> Given these membership probabilities, what are the best parameter estimates?</p>
-<p><strong>Update Formulas:</strong></p>
-<pre><code>µⱼ = [∑ᵢ γᵢⱼ·xᵢ] / [∑ᵢ γᵢⱼ]           (weighted mean)
-Σⱼ = [∑ᵢ γᵢⱼ·(xᵢ-µⱼ)(xᵢ-µⱼ)ᵀ] / [∑ᵢ γᵢⱼ]  (weighted covariance)
-πⱼ = [∑ᵢ γᵢⱼ] / N                  (component proportion)</code></pre>
+<section id="the-two-magic-equations" class="level3">
+<h3 class="anchored" data-anchor-id="the-two-magic-equations">The Two Magic Equations</h3>
+<p><strong>Assignment step (E-like):</strong> For each point <code>x_i</code>, find the nearest center <code>μ_k</code>:</p>
+<pre><code>Assign x_i to cluster k that minimizes ||x_i - μ_k||²</code></pre>
+<p><strong>Update step (M-like):</strong> For each cluster <code>k</code>, recalculate its center:</p>
+<pre><code>μ_k = average of all points assigned to cluster k</code></pre>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -603,183 +595,120 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Why does it work?</strong> Each step improves the <strong>likelihood</strong> of the data (probability of observing this data with the current model). It’s a <strong>“hill-climbing”</strong> algorithm: at each iteration, we climb the likelihood hill.</p>
+<p><strong>Why does it converge?</strong> Each step can only improve (or leave unchanged) the criterion. Since there’s a finite number of possible assignments, the algorithm must terminate.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="crucial-practical-details" class="level2">
-<h2 class="anchored" data-anchor-id="crucial-practical-details">4. Crucial Practical Details</h2>
-<section id="initialization-the-starting-point-is-crucial" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-the-starting-point-is-crucial">Initialization: The Starting Point is Crucial</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Initialization choice] --&gt; B{Method}
-    B --&gt; C[Simple random]
-    B --&gt; D[K-means]
-    B --&gt; E[K-means++]
+<section id="the-initialization-problem-where-to-place-the-first-chairs" class="level2">
+<h2 class="anchored" data-anchor-id="the-initialization-problem-where-to-place-the-first-chairs">4. The Initialization Problem: Where to Place the First Chairs?</h2>
+<section id="the-dilemma" class="level3">
+<h3 class="anchored" data-anchor-id="the-dilemma">The Dilemma</h3>
+<p>If all chairs start in the same corner, the game will be very long and yield a poor result. <strong>K-means is very sensitive to initialization!</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    A[Initialization choice] --&gt; B[Poor initialization]
+    A --&gt; C[Good initialization]
+    B --&gt; D[Slow convergence&lt;br/&gt;Poor quality clusters&lt;br/&gt;Local maximum]
+    C --&gt; E[Fast convergence&lt;br/&gt;Good quality clusters&lt;br/&gt;Global (or good) maximum]
 
-    C --&gt; F[Risk: slow convergence&lt;br/&gt;or local maximum]
-    D --&gt; G[Improvement: smarter&lt;br/&gt;starting point]
-    E --&gt; H[Best: spreads initial&lt;br/&gt;centers apart]
-
-    style F fill:#ffcccc
-    style G fill:#ffffcc
-    style H fill:#ccffcc
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Why is this important?</strong> EM can converge to <strong>local maxima</strong> (small peaks) instead of the global maximum (highest peak).</p>
+    style D fill:#ffcccc
+    style E fill:#ccffcc</code></pre>
 </section>
-<section id="choosing-k-how-many-components" class="level3">
-<h3 class="anchored" data-anchor-id="choosing-k-how-many-components">Choosing K: How Many Components?</h3>
-<p><strong>The classic dilemma:</strong> - <strong>K too small</strong> = underfitting = model too simple - <strong>K too large</strong> = overfitting = model too complex</p>
-<p><strong>Solution: The BIC (Bayesian Information Criterion)</strong></p>
-<pre><code>BIC = -2·log(likelihood) + n_parameters·log(n_points)</code></pre>
-<p><strong>Choose the K that minimizes BIC</strong> (balance between fit quality and complexity).</p>
-</section>
-<section id="covariance-matrix-form" class="level3">
-<h3 class="anchored" data-anchor-id="covariance-matrix-form">Covariance Matrix Form</h3>
-<p><strong>Three main options:</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 53%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Form</th>
-<th>Number of parameters</th>
-<th>Usage</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Spherical</strong></td>
-<td>Σ = σ²I</td>
-<td>1 per component</td>
-<td>Isotropic data, spherical clusters</td>
-</tr>
-<tr class="even">
-<td><strong>Diagonal</strong></td>
-<td>Σ = diag(σ₁²,…,σ_D²)</td>
-<td>D per component</td>
-<td>Axes aligned with principal axes</td>
-</tr>
-<tr class="odd">
-<td><strong>Full</strong></td>
-<td>Full Σ</td>
-<td>D(D+1)/2 per component</td>
-<td>Free ellipsoidal clusters</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled">
+<section id="k-means-the-smart-solution" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-the-smart-solution">K-means++: The Smart Solution</h3>
+<p><strong>Principle:</strong> Spread out the initial centers from each other.</p>
+<p><strong>Algorithm:</strong> 1. Choose a first center at random 2. For each point, calculate its distance <code>D(x)</code> to the nearest center 3. Choose the next center with probability proportional to <code>D(x)²</code> 4. Repeat until K centers are chosen</p>
+<p><strong>Why does it work?</strong> By favoring distant points, we better cover the data space.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Beware of over-parameterization!</strong> With D=256 dimensions and K=10 components, a full covariance requires ≈ 330,000 parameters! Often, dimension reduction with PCA is performed first.</p>
+<p><strong>Practical tip:</strong> Always use k-means++ or run k-means multiple times with different random initializations and keep the best result.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="em-in-action-complete-example" class="level2">
-<h2 class="anchored" data-anchor-id="em-in-action-complete-example">5. EM in Action: Complete Example</h2>
-<section id="scenario-image-segmentation" class="level3">
-<h3 class="anchored" data-anchor-id="scenario-image-segmentation">Scenario: Image Segmentation</h3>
-<ol type="1">
-<li><strong>Data</strong>: Image pixels (3 dimensions: R, G, B)</li>
-<li><strong>Objective</strong>: Separate the image into homogeneous regions (sky, ground, vegetation…)</li>
-<li><strong>EM Procedure</strong>:
-<ul>
-<li>Initialization: K=3 (hypothesis of 3 main regions)</li>
-<li>E-step: For each pixel, calculate its probability of belonging to each region</li>
-<li>M-step: Recalculate the average colors and variances of each region</li>
-<li>Repeat until convergence (≈ 10-20 iterations)</li>
-</ul></li>
-<li><strong>Result</strong>: Probabilistic segmentation map</li>
-</ol>
+<section id="choosing-k-how-many-chairs" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-k-how-many-chairs">5. Choosing K: How Many Chairs?</h2>
+<section id="the-main-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-main-problem">The Main Problem</h3>
+<p>K-means needs to be told how many clusters to look for. But in real life, <strong>we don’t know in advance!</strong></p>
 </section>
-<section id="convergence-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="convergence-visualization">Convergence Visualization</h3>
-<pre><code>Iteration 0: likelihood = -15230.4
-Iteration 1: likelihood = -12456.2  (+ improvement)
-Iteration 2: likelihood = -11234.5  (+ improvement)
-...
-Iteration 15: likelihood = -9823.1   (convergence)
-Iteration 16: likelihood = -9823.0   (very small improvement → stop)</code></pre>
+<section id="methods-for-choosing-k" class="level3">
+<h3 class="anchored" data-anchor-id="methods-for-choosing-k">Methods for Choosing K</h3>
+<section id="elbow-method" class="level4">
+<h4 class="anchored" data-anchor-id="elbow-method">1. Elbow Method</h4>
+<p><strong>Principle:</strong> Plot the error (inertia) as a function of K.</p>
+<pre><code>Error(K) = sum of squared distances from points to their center</code></pre>
+<p>As K increases, the error decreases. We look for the “elbow” where improvement slows down.</p>
 </section>
+<section id="silhouette-score" class="level4">
+<h4 class="anchored" data-anchor-id="silhouette-score">2. Silhouette Score</h4>
+<p><strong>Principle:</strong> Measures how well a point fits in its cluster vs.&nbsp;outside its cluster.</p>
+<pre><code>s(i) = (b(i) - a(i)) / max(a(i), b(i))</code></pre>
+<p>where <code>a(i)</code> = average distance to other points in the same cluster, <code>b(i)</code> = average distance to points in the nearest other cluster.</p>
+<p><strong>Interpretation:</strong> <code>s(i) ≈ 1</code> = well classified, <code>≈ 0</code> = on the border, <code>≈ -1</code> = misclassified.</p>
 </section>
-<section id="em-vs-k-means-the-deep-difference" class="level2">
-<h2 class="anchored" data-anchor-id="em-vs-k-means-the-deep-difference">6. EM vs K-means: The Deep Difference</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Clustering] --&gt; B{K-means}
-    A --&gt; C{GMM with EM}
-
-    B --&gt; D[Geometric model&lt;br/&gt;Euclidean distance]
-    B --&gt; E[Hard assignment&lt;br/&gt;0 or 1]
-    B --&gt; F[Spherical shapes&lt;br/&gt;constrained]
-
-    C --&gt; G[Probabilistic model&lt;br/&gt;Probability density]
-    C --&gt; H[Soft assignment&lt;br/&gt;probabilities]
-    C --&gt; I[Flexible shapes&lt;br/&gt;ellipsoidal]
-
-    D --&gt; J[Advantage: simple, fast]
-    E --&gt; J
-    F --&gt; J
-
-    G --&gt; K[Advantage: rich, robust]
-    H --&gt; K
-    I --&gt; K
-
-    style J fill:#e6f3ff
-    style K fill:#e6ffe6
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Key point:</strong> K-means is <strong>a special case</strong> of EM! When covariances are spherical and probabilities are forced to 0 or 1, we get K-means.</p>
-</section>
-<section id="pitfalls-to-avoid-and-best-practices" class="level2">
-<h2 class="anchored" data-anchor-id="pitfalls-to-avoid-and-best-practices">7. Pitfalls to Avoid and Best Practices</h2>
-<section id="pitfall-1-ghost-components" class="level3">
-<h3 class="anchored" data-anchor-id="pitfall-1-ghost-components">Pitfall 1: “Ghost Components”</h3>
-<p><strong>Problem:</strong> EM can create components with very few points (πⱼ ≈ 0) that capture noise. <strong>Solution:</strong> Check the weights πⱼ after convergence, merge or eliminate very small components.</p>
-</section>
-<section id="pitfall-2-premature-convergence" class="level3">
-<h3 class="anchored" data-anchor-id="pitfall-2-premature-convergence">Pitfall 2: Premature Convergence</h3>
-<p><strong>Problem:</strong> The algorithm seems to converge but remains in a poor local maximum. <strong>Solution:</strong> Multiple trials with different initializations, monitor likelihood.</p>
-</section>
-<section id="pitfall-3-abusive-interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="pitfall-3-abusive-interpretation">Pitfall 3: Abusive Interpretation</h3>
-<p><strong>Problem:</strong> Thinking that the found components necessarily correspond to “real classes.” <strong>Solution:</strong> EM finds <strong>statistical groups</strong>, not necessarily semantic categories. Validate with domain knowledge.</p>
+<section id="practical-rule" class="level4">
+<h4 class="anchored" data-anchor-id="practical-rule">3. Practical Rule</h4>
+<p>For N points: <code>K ≈ √(N/2)</code> (very rough, use with caution).</p>
 </section>
 </section>
-<section id="synthetic-cheat-sheet" class="level2">
-<h2 class="anchored" data-anchor-id="synthetic-cheat-sheet">8. Synthetic Cheat Sheet</h2>
+</section>
+<section id="k-means-vs-gmm-the-clustering-duel" class="level2">
+<h2 class="anchored" data-anchor-id="k-means-vs-gmm-the-clustering-duel">6. K-means vs GMM: The Clustering Duel</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 30%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>K-means</th>
+<th>GMM with EM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Philosophy</strong></td>
+<td>Geometric (distance)</td>
+<td>Probabilistic (density)</td>
+</tr>
+<tr class="even">
+<td><strong>Membership</strong></td>
+<td>Hard (0 or 1)</td>
+<td>Soft (probability)</td>
+</tr>
+<tr class="odd">
+<td><strong>Cluster shape</strong></td>
+<td>Spheres (all same size)</td>
+<td>Ellipses (variable sizes/orientations)</td>
+</tr>
+<tr class="even">
+<td><strong>Model</strong></td>
+<td>Minimizes distance</td>
+<td>Maximizes likelihood</td>
+</tr>
+<tr class="odd">
+<td><strong>Speed</strong></td>
+<td>Fast (O(NKT))</td>
+<td>Slower (more calculations)</td>
+</tr>
+<tr class="even">
+<td><strong>Limit case</strong></td>
+<td>-</td>
+<td>K-means = GMM with σ→0 and spherical covariances</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -790,32 +719,127 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Must remember for the oral exam:</strong></p>
+<p><strong>K-means is a special case of GMM!</strong> When we take a Gaussian mixture with: - Spherical and identical covariances: <code>Σ_k = σ²I</code> - And let <code>σ → 0</code> Then soft assignment becomes hard, and we recover k-means.</p>
+</div>
+</div>
+</section>
+<section id="k-means-pitfalls-and-how-to-avoid-them" class="level2">
+<h2 class="anchored" data-anchor-id="k-means-pitfalls-and-how-to-avoid-them">7. K-means Pitfalls and How to Avoid Them</h2>
+<section id="pitfall-1-non-spherical-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="pitfall-1-non-spherical-clusters">Pitfall 1: Non-Spherical Clusters</h3>
+<p><strong>Problem:</strong> K-means assumes spherical clusters. If they’re elongated or oddly shaped, it fails.</p>
+<p><strong>Solution:</strong> - Standardize the data (center and scale) - Use another method (GMM, spectral clustering) - Transform the data (PCA first)</p>
+</section>
+<section id="pitfall-2-very-different-cluster-sizes" class="level3">
+<h3 class="anchored" data-anchor-id="pitfall-2-very-different-cluster-sizes">Pitfall 2: Very Different Cluster Sizes</h3>
+<p><strong>Problem:</strong> K-means tends to create clusters of similar size, even if reality is different.</p>
+<p><strong>Solution:</strong> Adjust K, or use a method that handles this (GMM).</p>
+</section>
+<section id="pitfall-3-sensitivity-to-outliers" class="level3">
+<h3 class="anchored" data-anchor-id="pitfall-3-sensitivity-to-outliers">Pitfall 3: Sensitivity to Outliers</h3>
+<p><strong>Problem:</strong> A very distant point pulls its cluster center toward it.</p>
+<p><strong>Solution:</strong> - Detect and remove outliers beforehand - Use k-medoids (more robust) - Standardize to reduce influence</p>
+</section>
+<section id="pitfall-4-result-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="pitfall-4-result-interpretation">Pitfall 4: Result Interpretation</h3>
+<p><strong>Problem:</strong> K-means always finds K clusters, even if the data has no structure.</p>
+<p><strong>Solution:</strong> Always validate with objective methods (silhouette, gap statistic).</p>
+</section>
+</section>
+<section id="in-practice-the-complete-recipe" class="level2">
+<h2 class="anchored" data-anchor-id="in-practice-the-complete-recipe">8. In Practice: The Complete Recipe</h2>
+<section id="step-1-data-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-data-preparation">Step 1: Data Preparation</h3>
 <ol type="1">
-<li><strong>EM</strong> = algorithm for models with latent variables</li>
-<li><strong>Two alternating steps</strong>: E (responsibilities) → M (parameters)</li>
-<li><strong>GMM</strong> = mixture of Gaussians, models data density</li>
-<li><strong>Crucial initialization</strong> → use K-means or K-means++</li>
-<li><strong>Choose K</strong> with BIC or cross-validation</li>
-<li><strong>Covariance form</strong>: start simple (spherical), complexify if needed</li>
-<li><strong>Main advantage</strong>: probabilistic model with soft assignments</li>
-<li><strong>Relationship</strong>: generalizes K-means (special case)</li>
-<li><strong>Applications</strong>: segmentation, source separation, advanced clustering</li>
-<li><strong>Verification</strong>: always visualize and validate results</li>
+<li><strong>Clean</strong>: handle missing values</li>
+<li><strong>Standardize</strong>: center and scale each variable</li>
+<li><strong>Visualize</strong> (if possible in 2D/3D) to get an idea</li>
+</ol>
+</section>
+<section id="step-2-choosing-k" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-choosing-k">Step 2: Choosing K</h3>
+<ol type="1">
+<li><strong>Elbow method</strong>: plot inertia vs K</li>
+<li><strong>Silhouette score</strong>: average over all points</li>
+<li><strong>Domain knowledge</strong>: sometimes we know how many clusters to look for</li>
+</ol>
+</section>
+<section id="step-3-execution" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-execution">Step 3: Execution</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialize K centers <span class="cf">with</span> k<span class="op">-</span>means<span class="op">++</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Repeat:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   a. Assign each point to the nearest center</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculate centers <span class="im">as</span> averages</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   c. If centers move little, stop</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Evaluate <span class="cf">with</span> silhouette score</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> If <span class="kw">in</span> doubt, rerun <span class="cf">with</span> different initializations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-4-validation" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-validation">Step 4: Validation</h3>
+<ol type="1">
+<li><strong>Internal</strong>: scores (silhouette, Davies-Bouldin)</li>
+<li><strong>External</strong>: if you have some labels, compare</li>
+<li><strong>Manual</strong>: visualization, common sense</li>
+</ol>
+</section>
+</section>
+<section id="k-means-variants" class="level2">
+<h2 class="anchored" data-anchor-id="k-means-variants">9. K-means Variants</h2>
+<section id="k-medoids" class="level3">
+<h3 class="anchored" data-anchor-id="k-medoids">K-medoids</h3>
+<p><strong>Difference</strong>: Centers are actual data points (not averages).</p>
+<p><strong>Advantage</strong>: More robust to outliers, works with any distance.</p>
+</section>
+<section id="mini-batch-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="mini-batch-k-means">Mini-batch K-means</h3>
+<p><strong>Difference</strong>: Uses data subsamples at each iteration.</p>
+<p><strong>Advantage</strong>: Much faster for large datasets.</p>
+</section>
+<section id="fuzzy-c-means" class="level3">
+<h3 class="anchored" data-anchor-id="fuzzy-c-means">Fuzzy C-means</h3>
+<p><strong>Difference</strong>: Soft assignment (like GMM) but with a geometric criterion.</p>
+<p><strong>Advantage</strong>: Border points belong partially to multiple clusters.</p>
+</section>
+</section>
+<section id="quick-review-cheat-sheet" class="level2">
+<h2 class="anchored" data-anchor-id="quick-review-cheat-sheet">10. Quick Review Cheat Sheet</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>In 30 seconds for the oral exam:</strong></p>
+<ol type="1">
+<li><strong>K-means</strong> = clustering by distance minimization</li>
+<li><strong>Two steps</strong>: assignment (points → nearest center) and update (recalculate centers)</li>
+<li><strong>Problems</strong>: choice of K, initialization, spherical clusters</li>
+<li><strong>Solutions</strong>: k-means++, elbow method, standardization</li>
+<li><strong>Relationship</strong>: special case of GMM with σ→0</li>
+<li><strong>Applications</strong>: segmentation, grouping, dimensionality reduction</li>
 </ol>
 </div>
 </div>
 </section>
-<section id="answering-the-examiners-questions" class="level2">
-<h2 class="anchored" data-anchor-id="answering-the-examiners-questions">9. Answering the Examiner’s Questions</h2>
-<p><strong>Q: “Why does EM always converge?”</strong> A: “EM guarantees that the likelihood never decreases (monotonicity). It converges to a local maximum, but not necessarily the global one.”</p>
-<p><strong>Q: “How to choose between EM and K-means?”</strong> A: “K-means if you want simple and fast clustering with spherical clusters. EM if you want a probabilistic model, flexible shapes, or to handle uncertainty.”</p>
-<p><strong>Q: “What to do if EM gives different results each time?”</strong> A: “This is normal! EM depends on initialization. You need to run it multiple times and keep the solution with the highest likelihood, or use smart initialization (K-means++).”</p>
+<section id="for-the-oral-exam-the-story-to-tell" class="level2">
+<h2 class="anchored" data-anchor-id="for-the-oral-exam-the-story-to-tell">11. For the Oral Exam: The Story to Tell</h2>
+<p>“Imagine organizing a party with guests scattered in a park. You want to create K discussion groups. You place K facilitators randomly (initialization), each guest joins the nearest facilitator (assignment), then the facilitators move to the center of their group (update). You repeat until the facilitators no longer move. This is exactly k-means!”</p>
 </section>
-<section id="in-summary-the-philosophy-of-em" class="level2">
-<h2 class="anchored" data-anchor-id="in-summary-the-philosophy-of-em">10. In Summary: The Philosophy of EM</h2>
-<p>The EM algorithm teaches us a profound lesson: <strong>faced with incompleteness, iteration and alternation are powerful</strong>. Instead of seeking the perfect solution all at once (impossible mission), we alternate between estimating causes and estimating effects, each step building on the previous one.</p>
-<p><strong>To conclude:</strong> EM doesn’t claim to find the Truth, but the <strong>best probabilistic explanation</strong> given the observations and the chosen model. It’s a tool of mathematical humility that recognizes and manages uncertainty.</p>
+<section id="frequently-asked-exam-questions" class="level2">
+<h2 class="anchored" data-anchor-id="frequently-asked-exam-questions">12. Frequently Asked Exam Questions</h2>
+<p><strong>Q: “Why is k-means sensitive to initialization?”</strong> A: “Because the criterion to minimize has multiple local minima. Depending on where you start, you can get stuck in a bad minimum.”</p>
+<p><strong>Q: “How to choose K if you have no idea?”</strong> A: “Use the elbow method to see where improvement slows down, and validate with the silhouette score. Test several K values and see what makes sense for your data.”</p>
+<p><strong>Q: “When not to use k-means?”</strong> A: “When your clusters aren’t spherical, or have very different sizes, or when you have a lot of noise/outliers.”</p>
+</section>
+<section id="final-word" class="level2">
+<h2 class="anchored" data-anchor-id="final-word">13. Final Word</h2>
+<p>K-means is like a Swiss Army knife for clustering: <strong>simple, fast, useful in many situations</strong>. But like any simple tool, you need to know its limitations. The key is to always: 1. <strong>Prepare</strong> your data (clean, standardize) 2. <strong>Choose K intelligently</strong> (elbow method, silhouette) 3. <strong>Initialize properly</strong> (k-means++) 4. <strong>Validate</strong> the results (visualization, scores)</p>
+<p><strong>In summary:</strong> K-means is your first tool for exploring the structure of unlabeled data. Not the most sophisticated, but often the most practical to start with.</p>
 
 
 </section>
