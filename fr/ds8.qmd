@@ -1,0 +1,1155 @@
+# Document de Révision : Concepts fondamentaux et applications en Data Science
+
+---
+
+## Introduction générale
+
+### Principaux problèmes d'intérêt en Data Science
+
+Les applications principales de la Data Science couvrent plusieurs domaines :
+
+**Extraction de caractéristiques (Feature Extraction)**
+
+Extraire des descripteurs pertinents des données brutes
+
+**Fouille de données (Information Mining)**
+
+Découvrir des patterns cachés dans les données
+
+**Reconnaissance et Classification**
+
+Identifier et catégoriser des objets ou patterns
+
+**Recherche et Identification (Search & Identification)**
+
+Retrouver et authentifier des éléments dans des bases de données
+
+**Transmission et Compression**
+
+Encoder et transmettre l'information efficacement
+
+**Sécurité Multimédia**
+
+Protéger et authentifier les contenus numériques
+
+---
+
+## Notations fondamentales
+
+### Variables aléatoires scalaires
+
+**Variable aléatoire scalaire :**
+
+- $X$ : variable aléatoire scalaire
+- $x$ : réalisation de la variable aléatoire
+- $X$ prend des valeurs dans $\mathcal{X}$
+
+**Ensembles de valeurs possibles :**
+
+**Variables discrètes :**
+
+- $\mathcal{X} = \{0, 1, 2, \ldots\}$ (entiers)
+- $\mathcal{X} = \{0, 1\}$ (binaire)
+- $\mathcal{X} = \{a, b, \ldots, z\}$ (alphabet)
+- $\mathcal{X} = \{\text{Janvier}, \text{Février}, \ldots, \text{Décembre}\}$
+
+**Variables continues :**
+
+- $\mathcal{X} = \mathbb{R}$ (réels)
+- $x_i \in \mathbb{S}$ ou $\mathcal{X}$ (espace général)
+
+### Vecteurs aléatoires
+
+**Notation vectorielle :**
+
+$$X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix} \quad \text{ou} \quad X = (X_1, X_2, \ldots, X_N)$$
+
+**Réalisation du vecteur :**
+
+$$x = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{pmatrix}$$
+
+avec $x_i \in \mathcal{X}$ pour tout $i$
+
+📌 **Convention :** Les vecteurs sont notés en gras ou avec une flèche selon le contexte
+
+---
+
+## Distributions de probabilité
+
+### Variables discrètes
+
+**Fonction de masse de probabilité (pmf) :**
+
+$$p_X(x) = \mathbb{P}[X = x]$$
+
+**Exemple : Loi binomiale**
+
+$$X \sim p_X(x) = B(M, p)$$
+
+$$p_X(k) = \mathbb{P}[X = k] = \binom{M}{k} p^k (1-p)^{M-k}, \quad k = 0, 1, \ldots, M$$
+
+### Variables continues
+
+**Fonction de densité de probabilité (pdf) :**
+
+$$f_X(x)$$
+
+avec la propriété $\int_{-\infty}^{+\infty} f_X(x) dx = 1$
+
+**Exemple : Loi normale (gaussienne)**
+
+$$X \sim f_X(x) = \mathcal{N}(\mu_X, \sigma_X^2)$$
+
+$$f_X(x) = \frac{1}{\sqrt{2\pi\sigma_X^2}} \exp\left(-\frac{(x - \mu_X)^2}{2\sigma_X^2}\right)$$
+
+---
+
+## Moments des distributions
+
+### Définitions des moments
+
+**Pour les variables discrètes :**
+
+**1er moment (moyenne) :**
+
+$$\mu_X = \mathbb{E}_{p_X(x)}[X] = \sum_{i=1}^{M} x_i p(x_i)$$
+
+**2ème moment (variance) :**
+
+$$\sigma_X^2 = \text{Var}[X] = \mathbb{E}_{p_X(x)}[(X - \mu_X)^2] = \sum_{i=1}^{M} (x_i - \mu_X)^2 p(x_i)$$
+
+**Pour les variables continues :**
+
+**1er moment (moyenne) :**
+
+$$\mu_X = \mathbb{E}_{f_X(x)}[X] = \int_{x \in \mathcal{X}} x f_X(x) dx$$
+
+**2ème moment (variance) :**
+
+$$\sigma_X^2 = \text{Var}[X] = \mathbb{E}_{f_X(x)}[(X - \mu_X)^2] = \int_{x \in \mathcal{X}} (x - \mu_X)^2 f_X(x) dx$$
+
+### Moments d'ordre supérieur
+
+**3ème moment (skewness - asymétrie) :**
+
+$$\frac{\mathbb{E}_{p_X(x)}[(X - \mu_X)^3]}{\sigma_X^3} \quad \text{ou} \quad \frac{\mathbb{E}_{f_X(x)}[(X - \mu_X)^3]}{\sigma_X^3}$$
+
+**4ème moment (kurtosis - aplatissement) :**
+
+$$\frac{\mathbb{E}_{p_X(x)}[(X - \mu_X)^4]}{\sigma_X^4} \quad \text{ou} \quad \frac{\mathbb{E}_{f_X(x)}[(X - \mu_X)^4]}{\sigma_X^4}$$
+
+### Interprétation intuitive
+
+**Moyenne ($\mu_X$) :**
+
+Centre de la distribution
+
+**Variance ($\sigma_X^2$) :**
+
+Dispersion autour de la moyenne
+
+**Skewness :**
+
+Asymétrie de la distribution (positive → queue à droite, négative → queue à gauche)
+
+**Kurtosis :**
+
+"Épaisseur" des queues de distribution (> 3 : queues épaisses, < 3 : queues fines)
+
+💡 **Principe général :** Étant donné une pmf/pdf, on peut calculer les moments (pas pour toutes les distributions)
+
+---
+
+## Fonction caractéristique
+
+### Définition
+
+**Fonction caractéristique d'une pdf :**
+
+$$\Phi(t) = \int_{-\infty}^{+\infty} f(x) e^{jtx} dx = \mathbb{E}_{f(x)}[e^{jtX}]$$
+
+où $j = \sqrt{-1}$
+
+**Fonction génératrice des moments :**
+
+$$M(t) = \mathbb{E}_{f(x)}[e^{tX}]$$
+
+### Récupération de la pdf
+
+La pdf peut être récupérée par transformée inverse :
+
+$$f(x) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \Phi(t) e^{-jtx} dt$$
+
+### Développement en série de Taylor
+
+**Pour la fonction caractéristique :**
+
+$$\Phi(t) = \mathbb{E}_{f(x)}[\exp(jtX)] = 1 + jt\mathbb{E}_{f(x)}[X] - \frac{t^2}{2!}\mathbb{E}_{f(x)}[X^2] + \ldots + \frac{(jt)^n}{n!}\mathbb{E}_{f(x)}[X^n]$$
+
+**Pour la fonction génératrice :**
+
+$$M(t) = \mathbb{E}_{f(x)}[\exp(tX)] = 1 + t\mathbb{E}_{f(x)}[X] + \frac{t^2}{2!}\mathbb{E}_{f(x)}[X^2] + \ldots + \frac{t^n}{n!}\mathbb{E}_{f(x)}[X^n]$$
+
+Rappel : $\exp(tX) = \sum_{n=0}^{\infty} \frac{(t)^n \cdot X^n}{n!}$
+
+✅ **Point clé :** Les quatre premiers moments définissent respectivement la moyenne, variance, skewness et kurtosis de la pdf $f(x)$
+
+---
+
+## Estimation empirique des moments
+
+### Moments de la pdf
+
+**Données :**
+
+Séquence i.i.d. $x = (x_1, \ldots, x_N)$ tirée de $f(x)$
+
+**Estimation du n-ième moment empirique :**
+
+$$\hat{m}_n = \frac{1}{N} \sum_{i=1}^{N} x_i^n, \quad n \geq 1$$
+
+**Moments théoriques :**
+
+$$m_n = \mathbb{E}[X^n] = \int_{-\infty}^{+\infty} f(x) x^n dx$$
+
+✅ $\hat{m}_n$ est une **estimation non biaisée** des vrais moments de la pdf
+
+### Moments de la CDF (Cumulative Distribution Function)
+
+**Définition des moments de la CDF :**
+
+$$M_n = \int_{-\infty}^{+\infty} \Phi(t) t^n dt$$
+
+**Lien avec la pdf :**
+
+$$M_n = j^n 2\pi \frac{d^n}{dx^n} f(x) \bigg|_{x=0}$$
+
+### Estimation empirique des moments de CDF
+
+**Étape 1 :** Estimer l'histogramme empirique à $M$ bins : $\{h(m)\}_{m=0}^{M-1}$
+
+**Étape 2 :** Estimer la CDF à $K$ points avec $K = 2^{\lceil \log_2 M \rceil}$ :
+
+$$\Phi(k) = \sum_{m=0}^{M-1} h(m) \exp\left\{-j\frac{2\pi mk}{K}\right\}$$
+
+**Étape 3 :** Calcul inverse par transformée de Fourier :
+
+$$h(m) = \frac{1}{K} \sum_{k=0}^{K-1} \Phi(k) \exp\left\{j\frac{2\pi mk}{K}\right\}, \quad 0 \leq m \leq M-1$$
+
+**Étape 4 :** Calculer les moments empiriques de la CDF :
+
+$$\hat{M}_n' = \sum_{k=0}^{K/2-1} |\Phi(k)| k^n$$
+
+**Forme alternative (borne supérieure) :**
+
+$$\hat{M}_n = \sum_{k=0}^{K-1} \Phi(k) \sin^n\left(\frac{\pi k}{K}\right)$$
+
+📌 **Note :** La transformée de Fourier fonctionne dans les deux sens (pdf ↔ CDF)
+
+---
+
+## Applications des moments : Analyse d'images
+
+### Pipeline de traitement
+
+**Transformation par ondelettes (DWT) :**
+
+Image → DWT → Coefficients d'ondelettes → Calcul des moments (pdf/CDF)
+
+**Applications pratiques :**
+
+**Détection d'outliers :**
+
+Identifier des images anormales par analyse des moments
+
+**Détection de fausses images (Fake detection) :**
+
+Distinguer images authentiques vs manipulées
+
+**Stéganalyse :**
+
+Détecter des messages secrets cachés dans les images
+
+💡 **Principe :** Les moments statistiques capturent des propriétés fines de la distribution qui changent en cas de manipulation
+
+---
+
+## Propriétés de la variance et covariance
+
+### Propriétés fondamentales
+
+Soit $X$ et $Y$ des variables aléatoires, $a, b, c$ des constantes.
+
+**Décomposition de la variance :**
+
+$$\text{Var}[X] = \mathbb{E}[X - \mathbb{E}[X]]^2 = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$$
+
+**Bornes :**
+
+$$0 \leq \text{Var}[X] \leq \mathbb{E}[X^2]$$
+
+**Variance d'un multiple :**
+
+$$\text{Var}[cX] = c^2 \text{Var}[X]$$
+
+**Variance d'une combinaison linéaire :**
+
+$$\text{Var}[aX + bY] = a^2 \text{Var}[X] + 2ab \text{Cov}[X, Y] + b^2 \text{Var}[Y]$$
+
+### Covariance
+
+**Définition :**
+
+$$\text{Cov}[X, Y] = \mathbb{E}_{p(x,y)}[(X - \mu_X)(Y - \mu_Y)]$$
+
+**Forme développée (variables discrètes) :**
+
+$$\text{Cov}[X, Y] = \sum_{(x,y) \in \mathcal{S}_{X,Y}} p(x,y)(x - \mu_X)(y - \mu_Y)$$
+
+**Forme alternative :**
+
+$$\text{Cov}[X, Y] = \mathbb{E}_{p(x,y)}[XY] - \mu_X \mu_Y = \sigma_{XY}$$
+
+---
+
+## Vecteurs aléatoires
+
+### Notations
+
+**Vecteur aléatoire :**
+
+$$X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix}$$
+
+où chaque $X_i$ est une variable aléatoire avec sa distribution $p_{X_i}(x_i)$ ou $f_{X_i}(x_i)$
+
+**Distribution jointe :**
+
+- **pmf jointe :** $p_X(x) = p_X(x_1, x_2, \ldots, x_N)$
+- **pdf jointe :** $f_X(x) = f_X(x_1, x_2, \ldots, x_N)$
+
+### Exemple : Image comme vecteur
+
+**Lecture en zig-zag :**
+
+Une image $n \times m$ est lue en zig-zag pour former un vecteur de dimension $N = n \times m$
+
+$$X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix}$$
+
+⚠️ **Complexité :** Pour une image moderne de taille $1000 \times 1000$, on a $N = 1,000,000$ pixels. La distribution jointe décrit toutes les relations par paires, triplets, etc.
+
+### Représentations alternatives
+
+**Lecture par lignes (matrice) :**
+
+$$X = \begin{pmatrix} | & | & & | \\ x_1 & x_2 & \cdots & x_m \\ | & | & & | \end{pmatrix}$$
+
+de dimension $n \times m$
+
+**Image comme colonne dans une base de données :**
+
+$$X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{pmatrix}$$
+
+où chaque $x_i$ représente une image entière
+
+---
+
+## Règle de chaîne et décomposition
+
+### Règle de chaîne pour probabilités jointes
+
+**Distribution jointe complète :**
+
+$$p_X(x) = p(x_1, x_2, \ldots, x_N)$$
+
+**Décomposition par règle de chaîne :**
+
+$$p(x_1, x_2, \ldots, x_N) = p(x_1) \cdot p(x_2 | x_1) \cdot p(x_3 | x_2, x_1) \cdots p(x_N | x_{N-1}, \ldots, x_2, x_1)$$
+
+**Forme générale :**
+
+$$p(x_1, x_2, \ldots, x_N) = \prod_{i=1}^{N} p(x_i | x_{i-1}, \ldots, x_2, x_1)$$
+
+### Cas particulier : 2 variables
+
+$$p(x_1, x_2) = p(x_1) p(x_2 | x_1) = p(x_2) p(x_1 | x_2)$$
+
+**Conséquence (règle de Bayes) :**
+
+$$p(x_2 | x_1) = \frac{p(x_2) p(x_1 | x_2)}{p(x_1)}$$
+
+---
+
+## Indépendance
+
+### Variables indépendantes
+
+**Définition :**
+
+$X_1$ et $X_2$ sont **indépendantes** (noté $X_1 \perp X_2$) si :
+
+$$p(x_1, x_2) = p(x_1) \cdot p(x_2)$$
+
+### Généralisation à N variables
+
+**Variables indépendantes et identiquement distribuées (i.i.d.) :**
+
+$$p_X(x_1, x_2, \ldots, x_N) = p_X(x_1) \cdot p_X(x_2) \cdots p_X(x_N) = \prod_{i=1}^{N} p_X(x_i)$$
+
+### Application pratique de l'indépendance
+
+**Simplification majeure :**
+
+$$X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix} \quad \text{avec} \quad \begin{cases} X_1 \sim p(x_1) \\ X_2 \sim p(x_2) \\ \vdots \\ X_N \sim p(x_N) \end{cases}$$
+
+Au lieu de modéliser $p_X(x_1, x_2, \ldots, x_N)$ (complexité exponentielle), on modélise $N$ distributions univariées indépendantes.
+
+✅ **Avantage :** Réduction drastique de la complexité
+
+---
+
+## Modèles de Markov
+
+### Modèle de Markov de 1er ordre
+
+**Hypothèse markovienne :**
+
+La dépendance est limitée à **un élément du passé** :
+
+$$p(x_i | x_{i-1}, x_{i-2}, \ldots, x_1) \stackrel{\text{Markov 1}}{\Rightarrow} p(x_i | x_{i-1})$$
+
+**Distribution jointe sous Markov 1 :**
+
+$$p(x_1, x_2, \ldots, x_N) \stackrel{\text{Markov 1}}{\Rightarrow} p(x_1) \prod_{i=2}^{N} p(x_i | x_{i-1})$$
+
+✅ **Simplification :** La modélisation d'une pmf/pdf complexe est réduite à la définition de **distributions conditionnelles par paires**
+
+### Modèle de Markov de 2ème ordre
+
+**Hypothèse markovienne d'ordre 2 :**
+
+La dépendance est limitée à **deux éléments du passé** :
+
+$$p(x_i | x_{i-1}, x_{i-2}, \ldots, x_1) \stackrel{\text{Markov 2}}{\Rightarrow} p(x_i | x_{i-1}, x_{i-2})$$
+
+**Distribution jointe sous Markov 2 :**
+
+$$p(x_1, x_2, \ldots, x_N) \stackrel{\text{Markov 2}}{\Rightarrow} p(x_1) \cdot p(x_2 | x_1) \prod_{i=3}^{N} p(x_i | x_{i-1}, x_{i-2})$$
+
+### Application pratique : Traitement d'images
+
+**Modèle Markovien pour images :**
+
+$$X = \begin{pmatrix} \vdots \\ X_{i-2} \\ X_{i-1} \\ X_i \\ \vdots \end{pmatrix} \quad \Rightarrow \quad p(x_i | x_{i-1}, x_{i-2})$$
+
+Chaque pixel $X_i$ dépend conditionnellement des deux pixels précédents $X_{i-1}$ et $X_{i-2}$
+
+💡 **Application :** Modélisation de textures, compression d'images, génération d'images
+
+---
+
+## Indépendance conditionnelle
+
+### Définition
+
+Les variables aléatoires $X_1$ et $X_3$ sont **conditionnellement indépendantes** étant donné $X_2$ si :
+
+$$p(x_1, x_3 | x_2) = p(x_1 | x_2) \cdot p(x_3 | x_2)$$
+
+### Décomposition avec règle de chaîne
+
+$$p(x_1, x_2, x_3) = p(x_2) \cdot p(x_1, x_3 | x_2)$$
+
+Si $X_1 \perp X_3 | X_2$ :
+
+$$p(x_1, x_2, x_3) = p(x_2) \cdot p(x_1 | x_2) \cdot p(x_3 | x_2)$$
+
+### Représentation graphique
+
+```{mermaid}
+graph TD
+    X2[X2] --> X1[X1]
+    X2 --> X3[X3]
+```
+
+$X_2$ est un "parent" commun de $X_1$ et $X_3$, qui deviennent indépendants conditionnellement à $X_2$
+
+---
+
+## Normes vectorielles
+
+### Norme $L_p$ ou norme $p$
+
+**Définition générale :**
+
+$$\|x\|_p = \left(\sum_{i=1}^{N} |x_i|^p\right)^{1/p}$$
+
+### Normes particulières
+
+**Norme $L_1$ (norme Manhattan) :**
+
+$$\|x\|_1 = \sum_{i=1}^{N} |x_i| = |x_1| + |x_2| + \cdots + |x_N|$$
+
+**Norme $L_2$ (norme euclidienne) :**
+
+$$\|x\|_2 = \sqrt{\sum_{i=1}^{N} x_i^2} = \sqrt{x_1^2 + x_2^2 + \cdots + x_N^2}$$
+
+**Norme $L_\infty$ (norme maximum) :**
+
+$$\|x\|_\infty = \max\{|x_1|, |x_2|, \ldots, |x_N|\}$$
+
+**Norme unitaire :**
+
+$$\|x\| = \frac{x}{\|x\|_2}$$
+
+Donne un vecteur de longueur 1 dans la même direction
+
+---
+
+## Distances et mesures de similarité
+
+### Distance euclidienne ($L_2$)
+
+**Définition :**
+
+$$d_2(x, y) = \|x - y\|_2 = \sqrt{\sum_{i=1}^{N} (x_i - y_i)^2}$$
+
+### Distance $L_1$
+
+**Définition :**
+
+$$d_1(x, y) = \|x - y\|_1 = \sum_{i=1}^{N} |x_i - y_i|$$
+
+### Distance de Hamming
+
+**Définition :**
+
+$$d_H(x, y) = \|x \oplus y\| = \sum_{i=1}^{N} \mathbb{1}\{x_i, y_i\}$$
+
+où la fonction indicatrice est :
+
+$$\mathbb{1}\{x_i, y_i\} = \begin{cases} 0 & \text{si } x_i = y_i \\ 1 & \text{si } x_i \neq y_i \end{cases}$$
+
+### Distance attendue pour vecteurs aléatoires
+
+**Définition :**
+
+Pour deux vecteurs aléatoires avec pdf $f(x)$ :
+
+$$D = \mathbb{E}_{f(x)}[d(X, Y)]$$
+
+où
+
+$$d(X, Y) = \frac{1}{N} \sum_{i=1}^{N} d(X_i, Y_i)$$
+
+---
+
+## Interprétation géométrique des distances
+
+### Cas d'une image
+
+Pour $n = 2$ dimensions, une image $n \times m$ peut être représentée comme :
+
+$$x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}$$
+
+**Distance euclidienne entre deux images :**
+
+$$d_2(x_1, x_2) = \|x_1 - x_2\|_2 = \sqrt{\sum_{i=1}^{N} (x_{1i} - x_{2i})^2}$$
+
+représente la longueur du vecteur différence $x_1 - x_2$
+
+### Proximité perceptuelle
+
+**Images perceptuellement proches :**
+
+$$\|x_1 - x_2\|_2 \text{ petit} \quad \Rightarrow \quad \text{Images visuellement similaires}$$
+
+**Images perceptuellement différentes :**
+
+$$\|x_1 - x_2\|_2 \text{ grand} \quad \Rightarrow \quad \text{Images visuellement différentes}$$
+
+⚠️ **Limitation :** La distance euclidienne ne capture pas toujours la similarité perceptuelle humaine
+
+---
+
+## Lien entre distance et produit scalaire
+
+### Décomposition de la distance au carré
+
+$$\|x_1 - x_2\|_2^2 = \|x_1\|_2^2 - 2x_1^T x_2 + \|x_2\|_2^2$$
+
+**Produit scalaire (inner product) :**
+
+$$x^T y = y^T x \in \mathbb{R}$$
+
+$$x^T y = \begin{pmatrix} x_1 & x_2 & \cdots & x_n \end{pmatrix} \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix} = \sum_{i=1}^{n} x_i y_i$$
+
+### Relation inverse
+
+**Distance petite ⇔ Produit scalaire grand :**
+
+$$\|x_1 - x_2\|_2 \text{ petit} \quad \Rightarrow \quad x_1^T x_2 \text{ grand}$$
+
+**Distance grande ⇔ Produit scalaire petit :**
+
+$$\|x_1 - x_2\|_2 \text{ grand} \quad \Rightarrow \quad x_1^T x_2 \text{ petit}$$
+
+💡 **Interprétation géométrique :** Plus deux vecteurs pointent dans la même direction, plus leur produit scalaire est grand et leur distance est petite
+
+---
+
+## Similarité cosinus
+
+### Définition géométrique
+
+**Angle entre deux vecteurs :**
+
+$$x_1^T x_2 = \|x_1\|_2 \|x_2\|_2 \cos\theta$$
+
+**Similarité cosinus :**
+
+$$\cos\theta = \frac{x_1^T x_2}{\|x_1\|_2 \|x_2\|_2}$$
+
+### Projection sur un vecteur unitaire
+
+**Vecteur unitaire (direction) :**
+
+$$\hat{x}_2 = \frac{x_2}{\|x_2\|_2}$$
+
+**Projection de $x_1$ sur $\hat{x}_2$ :**
+
+$$x_1^T \hat{x}_2 = x_1^T \frac{x_2}{\|x_2\|_2} = \frac{x_1^T x_2}{\|x_2\|_2}$$
+
+**Longueur de la projection :**
+
+$$\|x_1\|_2 \cos\theta = x_1^T \hat{x}_2 = \frac{x_1^T x_2}{\|x_2\|_2}$$
+
+---
+
+## Vecteurs orthogonaux et colinéaires
+
+### Vecteurs orthogonaux
+
+**Condition d'orthogonalité ($\theta = 90°$) :**
+
+$$x_1^T x_2 = 0 \quad \Leftrightarrow \quad \|x_1\|_2 \|x_2\|_2 \cos(90°) = 0$$
+
+**Distance entre vecteurs orthogonaux :**
+
+$$\|x_1 - x_2\|_2^2 = \|x_1\|_2^2 + \|x_2\|_2^2 - 2x_1^T x_2 = \|x_1\|_2^2 + \|x_2\|_2^2$$
+
+(Théorème de Pythagore)
+
+### Vecteurs colinéaires
+
+**Condition de colinéarité ($\theta = 0°$) :**
+
+$$x_1^T x_2 = \max \quad \Leftrightarrow \quad \|x_1\|_2 \|x_2\|_2 \cos(0°) = \|x_1\|_2 \|x_2\|_2$$
+
+**Si de plus $\|x_1\|_2 = \|x_2\|_2$ :**
+
+$$\|x_1 - x_2\|_2^2 = \|x_1\|_2^2 + \|x_2\|_2^2 - 2\|x_1\|_2\|x_2\|_2 = 0$$
+
+$$\Rightarrow x_1 = x_2$$
+
+---
+
+## Extraction de caractéristiques (Feature Extraction)
+
+### Principe général
+
+**Objectif :**
+
+Extraire des descripteurs/empreintes caractéristiques à partir d'une image originale avec distribution $p_X(x)$
+
+**Types d'approches :**
+
+**Hand-crafted (faites à la main) :**
+
+Conçues sous des contraintes strictes de complexité/mémoire
+
+- Descripteurs SIFT, SURF, HOG
+- Moments statistiques
+- Filtres de Gabor
+
+**Learned (apprises) :**
+
+Apprises directement à partir des données
+
+- Features de réseaux de neurones profonds
+- Embeddings appris
+
+### Techniques clés
+
+**PCA/ICA :**
+
+Analyse en composantes principales/indépendantes
+
+**Réduction de dimensionnalité :**
+
+Projeter dans un espace de dimension réduite
+
+**Transformées de décorrélation :**
+
+DCT, DWT (ondelettes), etc.
+
+**Quantification vectorielle (k-means) :**
+
+Clustering et représentation par centres
+
+---
+
+## Information Mining (Fouille de données)
+
+### Problématique
+
+**Objectif :**
+
+L'élément (ou caractéristique) commun est **inconnu** et doit être **découvert** dans la collection ou base de données
+
+### Applications
+
+**Images/Multimédia :**
+
+Découvrir des patterns visuels récurrents
+
+**Biomarqueurs :**
+
+Identifier des marqueurs biologiques dans des données médicales
+
+**Analyse de marché :**
+
+Détecter des tendances et segments de clientèle
+
+### Techniques de base
+
+**Classification :**
+
+Assigner des catégories aux données
+
+**Clustering :**
+
+Regrouper des données similaires
+
+**Prédiction :**
+
+Prédire des valeurs futures ou manquantes
+
+---
+
+## Architectures typiques pour Mining
+
+### Architecture 1 : Features de classification
+
+```{mermaid}
+graph LR
+    A[Données] --> B[Extraction de features]
+    B --> C[Hand-crafted]
+    B --> D[Machine Learning]
+    C --> E[Classes]
+    D --> E
+```
+
+**Principe :**
+
+Les features sont extraites puis utilisées pour la classification
+
+### Architecture 2 : Features d'auto-encodage
+
+```{mermaid}
+graph LR
+    A[Données] --> B[Encoder]
+    B --> C[Features/Latent]
+    C --> D[Decoder]
+    D --> E[Reconstruction]
+```
+
+**Principe :**
+
+Les features sont prises du goulot d'étranglement (bottleneck) d'un auto-encodeur
+
+### Architecture 3 : Apprentissage auto-supervisé
+
+```{mermaid}
+graph LR
+    A[Données] --> B[Encoder]
+    B --> C[Features]
+    C --> D[Métrique de similarité]
+    D --> E[Comparaison]
+```
+
+**Principe :**
+
+Les features sont apprises par apprentissage contrastif (contrastive learning)
+
+---
+
+## Reconnaissance et Classification
+
+### Problèmes de base
+
+**Classification binaire (2 classes) :**
+
+Distinguer entre deux hypothèses $H_0$ et $H_1$
+
+**Classification M-aire (M classes) :**
+
+Distinguer entre $M$ hypothèses $H_0, H_1, \ldots, H_{M-1}$
+
+### Domaines d'application
+
+**Reconnaissance de patterns :**
+
+Reconnaître des objets, visages, gestes
+
+**Récupération d'information (Information Retrieval) :**
+
+Rechercher des documents pertinents
+
+**Classification :**
+
+Catégoriser automatiquement des données
+
+**Machine Learning :**
+
+Apprendre à partir d'exemples
+
+**Identification/Authentification :**
+
+Vérifier l'identité (biométrie, etc.)
+
+### Base commune : Test d'hypothèses
+
+Tous ces problèmes se ramènent au **test d'hypothèses** probabiliste
+
+---
+
+## Test d'hypothèses : Classification binaire
+
+### Formulation du problème
+
+**Deux hypothèses :**
+
+$$\begin{cases} H_0 : Y \sim f_Y(y | H_0) \\ H_1 : Y \sim f_Y(y | H_1) \end{cases}$$
+
+**Données :**
+
+Les pdfs des classes sont données
+
+**Décision :**
+
+Quelle classe est observée ?
+
+### Espaces de représentation
+
+**Espace des distributions :**
+
+Mesurer la **proximité des pdfs** (sous hypothèses spécifiques)
+
+**Espace des réalisations :**
+
+Mesurer la **proximité des vecteurs** observés
+
+### Classifieurs pratiques
+
+**k-NN (k-Nearest Neighbors) :**
+
+Classification basée sur les $k$ plus proches voisins
+
+**Classifieur profond (Deep classifier) :**
+
+Réseau de neurones pour apprendre la frontière de décision
+
+---
+
+## Test d'hypothèses : Détection d'anomalies
+
+### Formulation asymétrique
+
+**Hypothèse nulle (classe normale) :**
+
+$$H_0 : Y \sim \text{any pdf (inconnue)}$$
+
+**Hypothèse alternative (classe cible) :**
+
+$$H_1 : Y \sim f_Y(y | H_1)$$
+
+**Objectif :**
+
+Déterminer dans quelle **région** se situe l'observation
+
+**Application :**
+
+Détection d'outliers, détection de fraude, détection d'intrusion
+
+---
+
+## Classification M-aire
+
+### Formulation du problème
+
+**M hypothèses :**
+
+$$\begin{cases} H_0 : Y \sim f_Y(y | H_0) \\ H_1 : Y \sim f_Y(y | H_1) \\ \vdots \\ H_{M-1} : Y \sim f_Y(y | H_{M-1}) \end{cases}$$
+
+**Données :**
+
+Les pdfs de toutes les classes sont données
+
+**Décision :**
+
+Quelle classe parmi les $M$ est observée ?
+
+**Problème principal :**
+
+Séparation efficace des classes dans l'espace des features
+
+---
+
+## Lien avec le Machine Learning
+
+### Configurations d'apprentissage
+
+**Apprentissage supervisé (Supervised learning) :**
+
+- Données d'entraînement **étiquetées** fournies
+- **Objectif :** Faire des prédictions (estimer les pdfs) basées sur des exemples
+
+**Apprentissage non supervisé (Unsupervised learning) :**
+
+- Données d'entraînement **non étiquetées**
+- **Objectif :** Révéler la structure dans les données observées (data mining)
+
+**Apprentissage semi-supervisé (Semi-supervised learning) :**
+
+- Nombre **limité** de données étiquetées + beaucoup de données non étiquetées
+- **Objectif :** Améliorer les prédictions en exploitant les exemples non étiquetés
+
+### Configuration théorique vs pratique
+
+**Configuration théorique (IT - Information Theory) :**
+
+Toutes les pdfs des classes sont **connues**
+
+**Configuration pratique (Machine Learning) :**
+
+Les pdfs ne sont **pas connues** mais peuvent être **estimées** à partir des données
+
+---
+
+## Recherche et Identification
+
+### Problème d'identification
+
+**Configuration :**
+
+- **Codebook de features** : Base de données de $M$ éléments de référence
+- **Probe features** : Requête à identifier
+
+**Question fondamentale :**
+
+Combien d'images peuvent être identifiées de manière **non ambiguë** ?
+
+$$M(P_e \to 0)$$
+
+où $P_e$ est la probabilité d'erreur
+
+**Réponse :**
+
+$M$ doit être tel que les distorsions ne causent **aucune ambiguïté**
+
+**Conséquence :**
+
+- Probabilité de fausse acceptation (false acceptance)
+- Probabilité de décodage incorrect
+
+---
+
+## Architectures pour Recherche
+
+### Architecture 1 : Auto-encodage
+
+**Phase d'entraînement :**
+
+```{mermaid}
+graph LR
+    A[Données] --> B[Encoder]
+    B --> C[Features/Embedding]
+    C --> D[Decoder]
+    D --> E[Reconstruction]
+```
+
+**Phase d'extraction de features :**
+
+Les features du bottleneck sont utilisées comme représentation compacte
+
+### Architecture 2 : Apprentissage auto-supervisé
+
+**Phase d'entraînement :**
+
+```{mermaid}
+graph LR
+    A[Données] --> B[Encoder]
+    B --> C[Features]
+    C --> D[Métrique de similarité]
+    D --> E[Loss contrastive]
+```
+
+**Phase d'extraction :**
+
+Les features apprises sont utilisées pour la recherche par similarité
+
+💡 **Principe :** Apprendre des représentations telles que les éléments similaires sont proches dans l'espace des features
+
+---
+
+## Transmission et Compression
+
+### Communication numérique
+
+**Canaux de transmission :**
+
+- Câble optique
+- WiFi/3G/4G/5G
+- Systèmes fixes/mobiles
+- Systèmes de diffusion/accès multiple
+
+### Compression sans perte (Lossless)
+
+**Configuration :**
+
+$$X \xrightarrow{\text{Encoder}} R \xrightarrow{\text{Decoder}} \hat{X}$$
+
+**Propriété :**
+
+$$\hat{X} = X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] = 0$$
+
+**Taille compressée :**
+
+Par exemple : 500 Kbytes (image compressée vs originale)
+
+**Usages :**
+
+Documents texte, images médicales, données scientifiques
+
+### Compression avec perte (Lossy)
+
+**Configuration :**
+
+$$X \xrightarrow{\text{Encoder}} R \xrightarrow{\text{Decoder}} \hat{X}$$
+
+**Propriété :**
+
+$$\hat{X} \neq X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] \neq 0$$
+
+**Distorsion :**
+
+Perte d'information contrôlée et acceptable
+
+**Taille compressée :**
+
+Par exemple : 64 Kbytes (forte compression)
+
+**Usages :**
+
+Images, vidéos, audio pour consommation humaine
+
+---
+
+## Concepts mathématiques à maîtriser
+
+### Probabilités et statistiques
+
+**Fondamentaux :**
+
+- Variables aléatoires (discrètes, continues)
+- Distributions (pmf, pdf, CDF)
+- Moments (moyenne, variance, skewness, kurtosis)
+- Fonction caractéristique et fonction génératrice
+
+**Concepts avancés :**
+
+- Indépendance et indépendance conditionnelle
+- Modèles de Markov
+- Règle de chaîne
+- Covariance et corrélation
+
+### Algèbre linéaire
+
+**Vecteurs et matrices :**
+
+- Normes vectorielles ($L_1$, $L_2$, $L_\infty$)
+- Produit scalaire
+- Projection
+- Orthogonalité
+
+**Mesures de distance :**
+
+- Distance euclidienne
+- Distance de Hamming
+- Similarité cosinus
+
+### Théorie de l'information
+
+**Concepts de base :**
+
+- Entropie
+- Information mutuelle
+- Divergence KL
+
+---
+
+## Questions d'examen types
+
+### Questions conceptuelles
+
+**Notations et définitions :**
+
+- Différence entre variable aléatoire et réalisation
+- Différence entre pmf et pdf
+- Qu'est-ce qu'un moment d'une distribution ?
+
+**Indépendance et dépendance :**
+
+- Définir l'indépendance de variables aléatoires
+- Qu'est-ce qu'un modèle de Markov ?
+- Différence entre indépendance et indépendance conditionnelle
+
+**Distances et similarités :**
+
+- Relation entre distance euclidienne et produit scalaire
+- Qu'est-ce que la similarité cosinus ?
+- Interprétation géométrique de l'orthogonalité
+
+### Questions d'applications
+
+**Extraction de features :**
+
+- Différence entre features hand-crafted et learned
+- Rôle de la PCA dans l'extraction de features
+- Applications des moments statistiques
+
+**Classification :**
+
+- Différence entre classification binaire et M-aire
+- Lien entre test d'hypothèses et classification
+- Différence entre apprentissage supervisé et non supervisé
+
+**Compression :**
+
+- Différence entre compression avec et sans perte
+- Notion de distorsion
+- Trade-off rate-distorsion
+
+### Développements mathématiques
+
+**Moments :**
+
+- Calculer les moments empiriques d'une distribution
+- Développement en série de Taylor de la fonction caractéristique
+- Relation entre moments de pdf et CDF
+
+**Probabilités :**
+
+- Appliquer la règle de chaîne pour décomposer une distribution jointe
+- Démontrer des propriétés de la variance et covariance
+- Simplification sous hypothèse d'indépendance

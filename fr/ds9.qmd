@@ -1,0 +1,1396 @@
+# Document de Révision : Fondamentaux de la Théorie de l'Information pour la Data Science
+
+---
+
+## Introduction générale
+
+### Contexte de la théorie de l'information
+
+La **théorie de l'information** fournit un cadre mathématique rigoureux pour quantifier l'information, l'incertitude et la dépendance entre variables aléatoires.
+
+**Applications en Data Science :**
+
+- Compression de données
+- Apprentissage automatique
+- Sélection de features
+- Mesure de similarité entre distributions
+- Optimisation de réseaux de neurones
+
+---
+
+## Rappel : Règle de chaîne pour probabilités
+
+### Règle de chaîne générale
+
+**Pour N variables aléatoires :**
+
+$$p(x_1, x_2, \ldots, x_n) = p(x_1) \cdot p(x_2 | x_1) \cdot p(x_3 | x_2, x_1) \cdots p(x_n | x_{n-1}, \ldots, x_2, x_1)$$
+
+**Forme compacte :**
+
+$$p(x_1, x_2, \ldots, x_n) = \prod_{i=1}^{n} p(x_i | x_{i-1}, \ldots, x_2, x_1)$$
+
+### Cas particulier : 2 variables
+
+$$p(x_1, x_2) = p(x_1) p(x_2 | x_1) = p(x_2) p(x_1 | x_2)$$
+
+### Variables indépendantes
+
+**Définition :**
+
+Si les variables sont **indépendantes** : $X_1 \perp X_2$
+
+$$p(x_1, x_2) = p(x_1) \cdot p(x_2)$$
+
+**Généralisation à N variables i.i.d. :**
+
+$$p(x_1, x_2, \ldots, x_n) = \prod_{i=1}^{n} p(x_i) = [p(x)]^n$$
+
+---
+
+## Exemples de décomposition par règle de chaîne
+
+### Trois variables : Différentes décompositions
+
+**Chaîne linéaire :**
+
+```{mermaid}
+graph LR
+    X --> Y
+    Y --> Z
+```
+
+$$p(x, y, z) = p(x) \cdot p(y | x) \cdot p(z | x, y)$$
+
+**Indépendance complète :**
+
+$$p(x, y, z) = p(x) \cdot p(y) \cdot p(z)$$
+
+**Indépendance conditionnelle (Y comme parent commun) :**
+
+```{mermaid}
+graph TD
+    Y --> X
+    Y --> Z
+```
+
+$$p(x, y, z) = p(y) \cdot p(x | y) \cdot p(z | y)$$
+
+**Structure alternative :**
+
+$$p(x, y, z) = p(z) \cdot p(y | z) \cdot p(x | y, z)$$
+
+$$p(x, y, z) = p(z | x, y) \cdot p(x) \cdot p(y)$$
+
+$$p(x, y, z) = p(z) \cdot p(x | z) \cdot p(y | z)$$
+
+---
+
+## Entropie (Entropy)
+
+### Définition formelle
+
+**Entropie d'une variable aléatoire discrète :**
+
+Soit $X$ une variable aléatoire discrète prenant ses valeurs dans $\mathcal{X} = \{x_1, x_2, \ldots, x_n\}$
+
+$$H(X) = -\sum_{x \in \mathcal{X}} p_X(x) \log_2 p_X(x) = -\mathbb{E}_{p_X}[\log p_X(x)]$$
+
+**Unités :**
+
+- **Base 2** ($\alpha = 2$) : mesure en **bits**
+- **Base $e$** ($\alpha = e$) : mesure en **nats**
+
+On note parfois $H_\alpha(X)$ pour spécifier la base
+
+### Interprétation
+
+✅ **L'entropie mesure :**
+
+- L'**incertitude** d'une variable aléatoire discrète
+- Le **caractère aléatoire** (randomness)
+- Le nombre **moyen de bits** nécessaires pour encoder la variable
+
+📌 **Point important :** $H(X)$ dépend uniquement de la **distribution** de $X$, pas des valeurs particulières prises
+
+**Notations équivalentes :**
+
+- $H(X)$
+- $H(p)$
+- $H(p(x))$
+
+### Espérance et entropie
+
+**Rappel de l'espérance :**
+
+$$\mathbb{E}_{p_X}[g(X)] = \sum_{x \in \mathcal{X}} p_X(x) g(x)$$
+
+**Entropie comme espérance :**
+
+$$H(X) = \mathbb{E}_{p_X}[-\log p_X(x)]$$
+
+---
+
+## Entropie d'une variable binaire
+
+### Cas binaire : Variable de Bernoulli
+
+**Variable binaire :**
+
+$X \in \mathcal{X} = \{0, 1\}$
+
+$$\mathbb{P}[X = 0] = 1 - \theta$$
+
+$$\mathbb{P}[X = 1] = \theta$$
+
+**Forme compacte :**
+
+$$\mathbb{P}[X = x] = \theta^x (1 - \theta)^{1-x}$$
+
+### Formule de l'entropie binaire
+
+$$H(X) = -\theta \log_2 \theta - (1 - \theta) \log_2(1 - \theta) := H(\theta) \text{ ou } H_2(\theta)$$
+
+### Propriétés de $H(\theta)$
+
+**Symétrie :**
+
+La fonction est **symétrique** par rapport à $\theta = 0.5$
+
+$$H(\theta) = H(1 - \theta)$$
+
+**Maximum :**
+
+Le maximum est atteint en $\theta = 0.5$ :
+
+$$\max_{\theta} H(\theta) = H(0.5) = 1 \text{ bit}$$
+
+✅ **Principe fondamental :** L'entropie est **maximale** si les symboles sont **équiprobables**
+
+**Exemples numériques :**
+
+- $\theta = 0.11$ : $H(0.11) \approx 0.5$ bit
+- $\theta = 0.5$ : $H(0.5) = 1$ bit
+- $\theta = 0.89$ : $H(0.89) \approx 0.5$ bit
+
+---
+
+## Application : Compression sans perte
+
+### Schéma de compression
+
+**Compression sans perte (Lossless) :**
+
+$$X \xrightarrow{\text{Encodeur}} R \xrightarrow{\text{Décodeur}} \hat{X}$$
+
+**Propriété :**
+
+$$\hat{X} = X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] = 0$$
+
+**Compression avec perte (Lossy) :**
+
+$$\hat{X} \neq X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] \neq 0$$
+
+### Complexité de compression pour images
+
+**Problématique :**
+
+Soit une image représentée comme vecteur $x \sim p_x(x) = p_x(x_1, x_2, \ldots, x_n)$
+
+**Connaissance de la distribution source :**
+
+La **pdf/pmf jointe** est nécessaire pour la compression optimale
+
+**Défis :**
+
+1. Modélisation : la pdf multidimensionnelle est **très complexe**
+2. La vraie pdf est **inconnue**
+3. Simplification courante : considérer les pixels **indépendamment** (mais cela **augmente l'entropie**)
+4. Le codage indépendant des symboles n'est **pas optimal** selon la théorie rate-distorsion de Shannon qui suggère un **codage par blocs**
+
+**Solution intermédiaire :**
+
+Utiliser un **codage par sous-blocs** (comme dans JPEG)
+
+### Complexité computationnelle
+
+**Codage par blocs de Shannon :**
+
+Complexité **exponentielle** en fonction de la longueur du bloc
+
+**Méthodes pratiques :**
+
+Réduire la taille des blocs jusqu'à un symbole/pixel (sous-optimal mais **complexité réduite**)
+
+---
+
+## Taux de compression
+
+### Définition pratique
+
+**Ratio de compression (Compression Ratio) :**
+
+$$CR = \frac{\text{Nombre de bits avant}}{\text{Nombre de bits après}}$$
+
+### Taux de compression réels
+
+**Pour images réelles :**
+
+**Compression sans perte :**
+
+$CR \approx 2$
+
+**Compression avec perte :**
+
+- **JPEG** : $CR = 10$ à $50$
+- **JPEG 2000** : $CR$ jusqu'à $150$
+
+---
+
+## Lien avec la théorie de l'information : Assignation optimale de codes
+
+### Principe de base
+
+**Histogramme et indépendance :**
+
+⚠️ L'histogramme est **trompeur** mais supposons que les pixels de l'image sont **discrets** et **indépendants**
+
+**Entropie pour variables discrètes :**
+
+$$H(X) = -\sum_{i=0}^{L-1} p_i \log p_i = \ell_{av}$$
+
+où $\ell_{av}$ est la **longueur moyenne** nécessaire
+
+**Probabilité d'observer une intensité particulière :**
+
+$$p_i = \mathbb{P}\{X(i, j) = k\} = \frac{\text{Nombre de } x(i,j) = k}{\text{Nombre total de pixels } (M \times N)}$$
+
+✅ **Interprétation :** Cela correspond au **nombre moyen de bits** nécessaires pour décrire chaque pixel
+
+### Lien entre probabilité et longueur de code
+
+**Longueur de code pour chaque niveau :**
+
+Définir une longueur de code $\ell_i$ pour chaque niveau de gris avec probabilité $p_i$ :
+
+$$\ell_i \approx -\log p_i = \log \frac{1}{p_i}$$
+
+**Exemples numériques :**
+
+$$p_i = 0.5 = 2^{-1} \quad : \quad \ell_i = \log \frac{1}{2^{-1}} = \log 2 = 1 \text{ bit}$$
+
+$$p_i = 0.25 = 2^{-2} \quad : \quad \ell_i = \log \frac{1}{2^{-2}} = \log 2^2 = 2 \text{ bits}$$
+
+### Principe du codage à longueur variable
+
+✅ **Conclusion fondamentale :**
+
+- Les symboles **plus fréquents** se voient assigner des codes **plus courts**
+- Les symboles **moins fréquents** se voient assigner des codes **plus longs**
+
+→ **Codage à longueur variable** (Variable Length Coding)
+
+**Longueur moyenne :**
+
+$$\ell_{av} = H(X) = \sum_{i=0}^{L-1} p_i \log p_i = \sum_{i=0}^{L-1} p_i \ell_i$$
+
+---
+
+## Exemple : Image à 8 niveaux
+
+### Table de codage
+
+**Données :**
+
+| Niveau | Probabilité | Code longueur fixe | Code longueur variable |
+|--------|-------------|-------------------|----------------------|
+| 0 | 0.19 | 000 | 00 |
+| 1 | 0.25 | 001 | 11 |
+| 2 | 0.21 | 010 | 01 |
+| 3 | 0.16 | 011 | 101 |
+| 4 | 0.08 | 100 | 1001 |
+| 5 | 0.06 | 101 | 10001 |
+| 6 | 0.03 | 110 | 100001 |
+| 7 | 0.02 | 111 | 100000 |
+
+### Calculs
+
+**Somme des probabilités :**
+
+$$\sum p_i = 1$$
+
+**Entropie de la source :**
+
+$$H = 2.6508 \text{ bits}$$
+
+**Longueur moyenne (code fixe) :**
+
+$$\ell_{av}^{\text{fixe}} = 3 \text{ bits}$$
+
+**Longueur moyenne (code variable) :**
+
+$$\ell_{av}^{\text{var}} = 2.7000 \text{ bits}$$
+
+### Observations
+
+1. Le code à longueur variable est **très proche** de l'entropie de la source
+2. Le code à longueur fixe est **loin** de l'entropie
+3. La différence peut être **significative** pour de gros fichiers :
+
+**Calcul pratique :**
+
+- Différence : $3 - 2.65 = 0.35$ bits par symbole/pixel
+- Pour une image $1000 \times 1000 = 1$ Mio de symboles
+- Différence totale : $1 \text{ Mio} \times 0.35 = 3.5 \times 10^5$ bits $= 42.7$ Kbytes
+
+---
+
+## Codes sources pratiques : Codage de Huffman
+
+### Principe du codage de Huffman
+
+**Objectif :**
+
+Concevoir un code qui **approche l'entropie** de la source
+
+**Codage de Huffman :**
+
+Code **optimal** (longueur de code minimale) pour le codage indépendant de $N$ symboles
+
+### Hypothèses
+
+1. Tous les symboles sont **indépendants** (pas très réaliste)
+2. Encodage **symbole par symbole**
+3. La pmf de la source est **connue** (peut être estimée par histogramme)
+
+### Algorithme de Huffman
+
+**Étapes :**
+
+**Étape 1 :** Arranger les symboles par **probabilité décroissante**. Les considérer comme des nœuds
+
+**Étape 2 :** Fusionner les nœuds avec les **plus faibles probabilités**
+
+**Étape 3 :** Assigner **0 et 1** aux branches supérieure et inférieure, respectivement
+
+**Étape 4 :** Lire le code de la **racine à la feuille**
+
+### Exemple de construction
+
+**Probabilités ordonnées :**
+
+```
+0.25, 0.21, 0.19, 0.16, 0.08, 0.06, 0.03, 0.02
+```
+
+**Arbre de Huffman :**
+
+```{mermaid}
+graph TD
+    A[1.00] -->|0| B[0.40]
+    A -->|1| C[0.60]
+    B -->|0| D[0.19]
+    B -->|1| E[0.21]
+    C -->|0| F[0.25]
+    C -->|1| G[0.35]
+    G -->|0| H[0.16]
+    G -->|1| I[0.19]
+```
+
+**Codes résultants :**
+
+| Niveau | Probabilité | Code Huffman |
+|--------|-------------|--------------|
+| 0 | 0.19 | 00 |
+| 1 | 0.25 | 11 |
+| 2 | 0.21 | 01 |
+| 3 | 0.16 | 101 |
+| 4 | 0.08 | 1001 |
+| 5 | 0.06 | 10001 |
+| 6 | 0.03 | 100001 |
+| 7 | 0.02 | 100000 |
+
+✅ **Propriété :** Les symboles avec la **plus haute probabilité** ont la **longueur la plus courte**
+
+---
+
+## Code préfixe
+
+### Définition
+
+**Code préfixe (Prefix code) :**
+
+Aucun code n'est le **préfixe** d'un autre code
+
+### Importance du code préfixe
+
+**Pourquoi est-ce important ?**
+
+1. Pour le **décodage unique** à partir d'une chaîne sans besoin de voir le symbole suivant
+2. Le code préfixe peut être décodé **instantanément**
+
+### Exemple comparatif
+
+**Code A (NON préfixe) :**
+
+| Symbole | Code |
+|---------|------|
+| 1 | 1 |
+| 2 | 00 |
+| 3 | 11 |
+| 4 | 110 |
+
+**Code B (préfixe) :**
+
+| Symbole | Code |
+|---------|------|
+| 1 | 0 |
+| 2 | 10 |
+| 3 | 110 |
+| 4 | 111 |
+
+**Exemple d'encodage : 1234321**
+
+- **Code A :** `100011110110010` → ❌ Pas de décodage unique
+- **Code B :** `010110111110100` → ✅ Décodage unique
+
+---
+
+## Entropie jointe (Joint Entropy)
+
+### Définition
+
+**Entropie jointe de deux variables discrètes :**
+
+Soit $X \in \mathcal{X} = \{x_1, x_2, \ldots, x_n\}$ et $Y \in \mathcal{Y} = \{y_1, y_2, \ldots, y_m\}$
+
+$$H(X, Y) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log_2 p_{X,Y}(x, y)$$
+
+**Forme espérance :**
+
+$$H(X, Y) = -\mathbb{E}_{p_{X,Y}}[\log p_{X,Y}(x, y)]$$
+
+### Propriété de symétrie
+
+$$H(X, Y) = H(Y, X)$$
+
+---
+
+## Entropie conditionnelle (Conditional Entropy)
+
+### Définition
+
+**Entropie conditionnelle de $X$ sachant $Y$ :**
+
+$$H(X | Y) = \sum_{y \in \mathcal{Y}} p_Y(y) H(X | Y = y)$$
+
+**Forme développée :**
+
+$$H(X | Y) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log p_{X|Y}(x | y)$$
+
+### Entropie conditionnelle pour une valeur fixée
+
+**Pour $Y = y$ fixé :**
+
+$$H(X | Y = y) = -\sum_{i=1}^{n} p_{X|Y}(x_i | y) \log p_{X|Y}(x_i | y)$$
+
+### Développement complet
+
+$$H(X | Y) = -\sum_{j=1}^{m} p_Y(y_j) \left[\sum_{i=1}^{n} p_{X|Y}(x_i | y_j) \log p_{X|Y}(x_i | y_j)\right]$$
+
+$$= -\sum_{i=1}^{n} \sum_{j=1}^{m} p_{X,Y}(x_i, y_j) \log p_{X|Y}(x_i | y_j)$$
+
+### Asymétrie
+
+⚠️ **Attention :**
+
+$$H(X | Y) \neq H(Y | X)$$
+
+L'entropie conditionnelle n'est **pas symétrique**
+
+---
+
+## Propriétés de l'entropie
+
+### Propriété 1 : Non-négativité
+
+**Entropie strictement positive :**
+
+$$H(X) \geq 0$$
+
+$$H(X, Y) \geq 0$$
+
+$$H(X | Y) \geq 0$$
+
+**Justification :**
+
+$$0 \leq p_X(x) \leq 1 \quad \Rightarrow \quad \log p_X(x) \leq 0$$
+
+$$\Rightarrow \quad 0 \leq -\sum p_X(x) \log p_X(x)$$
+
+De même pour $p_{X,Y}(x, y)$ et $p_{X|Y}(x | y)$
+
+---
+
+### Propriété 2 : Règle de chaîne pour l'entropie
+
+**Cas de 2 variables :**
+
+$$p(x, y) = p(x | y) p(y) = p(y | x) p(x)$$
+
+**Entropie jointe :**
+
+$$H(X, Y) = H(X | Y) + H(Y) = H(Y | X) + H(X)$$
+
+**Démonstration :**
+
+$$-\log p_{X,Y}(x, y) = -\log[p_{Y|X}(y | x) p_X(x)] = -\log p_{Y|X}(y | x) - \log p_X(x)$$
+
+$$H(X, Y) = \mathbb{E}_{p_{X,Y}}[-\log p_{X,Y}(x, y)] = \mathbb{E}_{p_{X,Y}}[-\log p_X(x)] + \mathbb{E}_{p_{X,Y}}[-\log p_{Y|X}(y | x)]$$
+
+$$= H(X) + H(Y | X)$$
+
+**Cas général de N variables :**
+
+$$p(x_1, \ldots, x_N) = p(x_1) \prod_{i=2}^{N} p(x_i | x_{i-1}, \ldots, x_1)$$
+
+$$H(X_1, X_2, \ldots, X_N) = \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1)$$
+
+**Conséquence pour variables indépendantes :**
+
+$$H(X_1, X_2) \leq H(X_1) + H(X_2)$$
+
+Égalité si et seulement si les variables sont **indépendantes**
+
+---
+
+### Application à un vecteur d'image
+
+**Représentation vectorielle :**
+
+$$X = p_x(x) = p_x(x_1, x_2, \ldots, x_N)$$
+
+$$X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix}$$
+
+**Modèle de Markov d'ordre 2 :**
+
+$$p(x_i | x_{i-1}, x_{i-2})$$
+
+**Entropie totale :**
+
+$$H(X_1, X_2, \ldots, X_N) = \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1)$$
+
+**Pour variables indépendantes :**
+
+$$H(X_1, X_2, \ldots, X_N) = \sum_{i=1}^{N} H(X_i)$$
+
+---
+
+### Propriété 3 : Augmentation de l'entropie par ajout de variables
+
+**Principe :**
+
+Ajouter une nouvelle variable aléatoire **augmente** l'entropie
+
+$$H(X) \leq H(X, Y) \leq H(X, Y, Z) \leq \cdots$$
+
+**Conditions d'égalité :**
+
+$$H(X) = H(X, Y) \quad \Leftrightarrow \quad Y = f(X)$$
+
+($Y$ est une fonction déterministe de $X$)
+
+$$H(X, Y) = H(X, Y, Z) \quad \Leftrightarrow \quad Z = f(X, Y)$$
+
+**Décomposition :**
+
+$$H(X, Y) = H(X) + H(Y | X)$$
+
+où $H(Y | X) \geq 0$
+
+---
+
+### Propriété 4 : Conditionnement réduit l'entropie
+
+**Principe fondamental :**
+
+Le conditionnement **réduit** (ou laisse inchangée) l'entropie
+
+$$H(X) \geq H(X | Y) \geq H(X | Y, Z) \geq \cdots$$
+
+**Conditions d'égalité :**
+
+$$H(X) = H(X | Y) \quad \Leftrightarrow \quad X \perp Y$$
+
+($X$ et $Y$ sont indépendants)
+
+$$H(X | Y) = H(X | Y, Z) \quad \Leftrightarrow \quad X \perp Z | Y$$
+
+($X$ et $Z$ sont conditionnellement indépendants sachant $Y$)
+
+💡 **Intuition :** Connaître $Y$ ne peut que **réduire l'incertitude** sur $X$
+
+---
+
+### Propriété 5 : Entropie maximale pour distribution uniforme
+
+**Théorème :**
+
+$$H(X) \leq \log_2 |\mathcal{X}|$$
+
+**Condition d'égalité :**
+
+Égalité si et seulement si $X$ suit une **distribution uniforme** :
+
+$$\mathbb{P}[X = x_i] = \frac{1}{N} = \frac{1}{|\mathcal{X}|}$$
+
+**Démonstration :**
+
+Soit $\mathcal{X} = \{x_1, x_2, \ldots, x_N\}$ et $\mathbb{P}[X = x_i] = p_i$
+
+$$H(X) = -\sum_{x \in \mathcal{X}} \mathbb{P}[X = x] \log_2 \mathbb{P}[X = x]$$
+
+$$= -(p_1 \log_2 p_1 + p_2 \log_2 p_2 + \cdots + p_N \log_2 p_N)$$
+
+**Objectif :**
+
+Trouver la distribution $\{p_i\}_{i=1}^{N}$ qui maximise $H(X)$ sous la contrainte $\sum p_i = 1$
+
+**Résultat :**
+
+La distribution uniforme $p_i = 1/N$ maximise l'entropie
+
+---
+
+## Divergence de Kullback-Leibler (KLD)
+
+### Définition
+
+**Entropie relative ou divergence KL :**
+
+Entre deux pmfs $p(x)$ et $q(x)$ :
+
+$$D_{KL}(p \| q) = D(p \| q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} = \mathbb{E}_{p(x)}\left[\log_2 \frac{p(x)}{q(x)}\right]$$
+
+### Conventions
+
+**Valeurs limites :**
+
+$$0 \log_2 \frac{0}{q(x)} = 0, \quad \forall q(x)$$
+
+$$p(x) \log_2 \frac{p(x)}{0} = +\infty, \quad \forall p(x) > 0$$
+
+### Propriétés fondamentales
+
+**Asymétrie :**
+
+$$D(p \| q) \neq D(q \| p)$$
+
+❌ La KLD n'est **pas une distance** (pas symétrique, ne vérifie pas l'inégalité triangulaire)
+
+**Non-négativité :**
+
+$$D(p \| q) \geq 0$$
+
+avec égalité si et seulement si $p(x) = q(x)$ pour tout $x$
+
+---
+
+## Interprétation pratique de la KLD
+
+### Problème de codage avec mauvaise distribution
+
+**Situation :**
+
+- **Distribution réelle des données :** $p(x)$ (inconnue)
+- **Distribution supposée pour le codage :** $q(x)$
+
+**Longueur de code :**
+
+Pour $q(x)$ : $\ell_q(x) = -\log q(x)$
+
+Pour $p(x)$ : $\ell_p(x) = -\log p(x)$
+
+**Longueur moyenne attendue :**
+
+Si on utilise le code conçu pour $q(x)$ pour coder des données de $p(x)$ :
+
+$$\ell_{av}^q = \mathbb{E}_{X \sim p(x)}[\ell_q(X)] = \sum_x p(x) \cdot (-\log q(x))$$
+
+### Décomposition de la longueur moyenne
+
+$$\ell_{av}^q = \sum_x p(x) \cdot (-\log q(x))$$
+
+$$= \sum_x p(x) \left(-\log \frac{p(x)}{q(x)} \cdot \frac{1}{p(x)}\right)$$
+
+$$= \sum_x p(x) \log \frac{p(x)}{q(x)} + \sum_x p(x) \log \frac{1}{p(x)}$$
+
+$$= D(p(x) \| q(x)) + H(p(x))$$
+
+**Formule fondamentale :**
+
+$$\mathbb{E}_{X \sim p(x)}[\ell_q(X)] = H(p(x)) + D(p(x) \| q(x))$$
+
+### Interprétation
+
+✅ **En Machine Learning :**
+
+La KLD mesure le niveau de **similarité** entre deux distributions
+
+✅ **En théorie du codage :**
+
+La KLD mesure l'**inefficacité** du codage conçu pour la pmf $q(x)$ alors que les données proviennent de la pmf $p(x)$
+
+**Bits supplémentaires :**
+
+$$D(p(x) \| q(x))$$
+
+représente les **bits extra** nécessaires en moyenne
+
+**Condition optimale :**
+
+$$D(p(x) \| q(x)) = 0 \quad \Leftrightarrow \quad p(x) = q(x)$$
+
+---
+
+## Exemple numérique de KLD
+
+### Configuration
+
+**Variables binaires :**
+
+$x \in \mathcal{X} = \{0, 1\}$
+
+- $p(0) = a$, $p(1) = 1 - a$
+- $q(0) = b$, $q(1) = 1 - b$
+
+### Formules
+
+$$D(p \| q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} = a \log_2 \frac{a}{b} + (1-a) \log_2 \frac{1-a}{1-b}$$
+
+$$D(q \| p) = \sum_{x \in \mathcal{X}} q(x) \log_2 \frac{q(x)}{p(x)} = b \log_2 \frac{b}{a} + (1-b) \log_2 \frac{1-b}{1-a}$$
+
+### Calcul avec valeurs spécifiques
+
+**Paramètres :**
+
+$a = 1/4$, $b = 1/8$
+
+$$D(p \| q) = \frac{1}{4} \log_2 \frac{8}{4} + \left(1 - \frac{1}{4}\right) \log_2 \frac{1 - 1/4}{1 - 1/8} = 0.0832 \text{ bit}$$
+
+$$D(q \| p) = \frac{1}{8} \log_2 \frac{4}{8} + \left(1 - \frac{1}{8}\right) \log_2 \frac{1 - 1/8}{1 - 1/4} = 0.0696 \text{ bit}$$
+
+✅ **Vérification :**
+
+$$D(p \| q) \neq D(q \| p)$$
+
+---
+
+## Cross-Entropy (Entropie croisée)
+
+### Définition
+
+**Entropie croisée entre pmfs $p(x)$ et $q(x)$ :**
+
+$$H(p, q) = -\sum_{x \in \mathcal{X}} p(x) \log q(x) = -\mathbb{E}_{p(x)}[\log q(x)]$$
+
+### Lien avec la KLD
+
+**Relation fondamentale :**
+
+$$H(p, q) = H(p) + D_{KL}(p \| q)$$
+
+**Démonstration :**
+
+$$D_{KL}(p \| q) = \mathbb{E}_{p(x)}\left[\log \frac{p(x)}{q(x)}\right] = \mathbb{E}_{p(x)}[\log p(x)] - \mathbb{E}_{p(x)}[\log q(x)]$$
+
+$$= -H(p) + H(p, q)$$
+
+### Propriété d'optimisation
+
+📌 **Remarque importante :**
+
+Puisque $H(p)$ est **constant** (ne dépend pas de $q$), optimiser $H(p, q)$ par rapport à $q(x)$ est **équivalent** à optimiser $D_{KL}(p \| q)$
+
+$$\min_q H(p, q) \quad \Leftrightarrow \quad \min_q D_{KL}(p \| q)$$
+
+✅ **Application en Machine Learning :**
+
+La cross-entropy est largement utilisée comme **fonction de perte** dans les réseaux de neurones pour la classification
+
+---
+
+## Information mutuelle (Mutual Information)
+
+### Définition
+
+**Information mutuelle entre deux variables aléatoires $X$ et $Y$ :**
+
+$$I(X; Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log \frac{p_{X,Y}(x, y)}{p_X(x) p_Y(y)}$$
+
+**Forme espérance :**
+
+$$I(X; Y) = \mathbb{E}_{p_{X,Y}(x,y)}\left[\log \frac{p_{X,Y}(x, y)}{p_X(x) p_Y(y)}\right]$$
+
+### Forme alternative
+
+$$I(X; Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log \frac{p_{X|Y}(x | y)}{p_X(x)} \cdot p_Y(y)$$
+
+### Propriétés fondamentales
+
+**Symétrie :**
+
+$$I(X; Y) = I(Y; X)$$
+
+**Non-négativité :**
+
+$$I(X; Y) \geq 0$$
+
+**Condition d'annulation :**
+
+$$I(X; Y) = 0 \quad \Leftrightarrow \quad X \perp Y$$
+
+(si et seulement si $X$ et $Y$ sont indépendants)
+
+---
+
+## Information mutuelle via KL-divergence
+
+### Formulation en termes de KLD
+
+**Information mutuelle comme divergence KL :**
+
+$$I(X; Y) = D_{KL}(p_{X,Y}(x, y) \| p_X(x) p_Y(y))$$
+
+$$= \mathbb{E}_{p_{X,Y}(x,y)}\left[\log \frac{p_{X,Y}(x, y)}{p_X(x) p_Y(y)}\right]$$
+
+### Interprétation
+
+✅ **L'information mutuelle mesure :**
+
+À quel point la distribution jointe $p_{X,Y}(x, y)$ diffère du produit des marginales $p_X(x) p_Y(y)$
+
+**Autrement dit :**
+
+Mesure la **dépendance** entre $X$ et $Y$ par rapport à l'hypothèse d'**indépendance**
+
+⚠️ **Attention aux notations :**
+
+Équivalence : $p_{X,Y}(x, y) = p(x, y)$
+
+### Formes conditionnelles
+
+$$I(X; Y) = \mathbb{E}_{p(y)}[D_{KL}(p(x|y) \| p(x))]$$
+
+$$I(X; Y) = \mathbb{E}_{p(x)}[D_{KL}(p(y|x) \| p(y))]$$
+
+---
+
+## Relations entre information mutuelle et entropie
+
+### Relations fondamentales
+
+**Relation 1 :**
+
+$$I(X; Y) = H(X) - H(X | Y)$$
+
+**Relation 2 :**
+
+$$I(X; Y) = H(Y) - H(Y | X)$$
+
+**Relation 3 :**
+
+$$I(X; Y) = H(X) + H(Y) - H(X, Y)$$
+
+**Cas particulier :**
+
+$$I(X; X) = H(X)$$
+
+car $H(X | X) = 0$
+
+### Diagramme de Venn des entropies
+
+```
+     H(X)              H(Y)
+    ┌────────────┬────────────┐
+    │            │            │
+    │  H(X|Y)    │  I(X;Y)    │  H(Y|X)
+    │            │            │
+    └────────────┴────────────┘
+         H(X,Y)
+```
+
+**Lecture du diagramme :**
+
+- $H(X, Y)$ : entropie jointe (tout le rectangle)
+- $I(X; Y)$ : information mutuelle (intersection)
+- $H(X | Y)$ : entropie de $X$ sachant $Y$ (partie gauche uniquement)
+- $H(Y | X)$ : entropie de $Y$ sachant $X$ (partie droite uniquement)
+
+---
+
+## Information mutuelle conditionnelle
+
+### Définition
+
+**Information mutuelle entre $X$ et $Y$ sachant $Z$ :**
+
+$$I(X; Y | Z) = H(X | Z) - H(X | Y, Z)$$
+
+**Forme avec KL-divergence :**
+
+$$I(X; Y | Z) = \mathbb{E}_{p(x,y,z)}\left[\log \frac{p_{X,Y|Z}(x, y | z)}{p_{X|Z}(x | z) p_{Y|Z}(y | z)}\right]$$
+
+$$= \mathbb{E}_{p(x,y,z)}\left[\log \frac{p_{X|Y,Z}(x | y, z)}{p_{X|Z}(x | z)}\right]$$
+
+### Démonstration
+
+$$p_{X,Y|Z}(x, y | z) = p_{Y|Z}(y | z) \cdot p_{X|Y,Z}(x | y, z)$$
+
+$$I(X; Y | Z) = \mathbb{E}_{p(x,y,z)}[\log p_{X|Y,Z}(x | y, z)] - \mathbb{E}_{p(x,y,z)}[\log p_{X|Z}(x | z)]$$
+
+$$= -H(X | Y, Z) + H(X | Z)$$
+
+---
+
+## Propriétés de l'information mutuelle
+
+### Information mutuelle conditionnelle
+
+**Diagramme :**
+
+```
+     H(X|Z)         H(Y|Z)
+    ┌──────────┬──────────┐
+    │          │          │
+    │          │ I(X;Y|Z) │
+    │          │          │
+    └──────────┴──────────┘
+```
+
+$$I(X; Y | Z) = H(X | Z) - H(X | Y, Z)$$
+
+---
+
+### Règle de chaîne pour l'information mutuelle
+
+**Pour N variables :**
+
+$$I(X_1, X_2, \ldots, X_N; Y) = \sum_{i=1}^{N} I(X_i; Y | X_{i-1}, \ldots, X_1)$$
+
+**Démonstration :**
+
+$$I(X_1, X_2, \ldots, X_N; Y) = H(X_1, X_2, \ldots, X_N) - H(X_1, X_2, \ldots, X_N | Y)$$
+
+$$= \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1) - \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1, Y)$$
+
+$$= \sum_{i=1}^{N} I(X_i; Y | X_{i-1}, \ldots, X_1)$$
+
+### Application : Pixels d'image et label
+
+**Configuration :**
+
+$$X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix} \in \mathcal{X}^N$$
+
+représente une image de $N = n \times m$ pixels
+
+$$Y \in \mathcal{Y}$$
+
+représente un label
+
+**Information mutuelle totale :**
+
+$$I(X_1, X_2, \ldots, X_N; Y) = \sum_{i=1}^{N} I(X_i; Y | X_{i-1}, \ldots, X_1)$$
+
+---
+
+### Décomposition complexe
+
+**Exemple avec 2 variables et 2 labels :**
+
+$$I(X_1, X_2; Y_1, Y_2) = I(X_1; Y_1, Y_2) + I(X_2; Y_1, Y_2 | X_1)$$
+
+**Décomposition de $I(X_1; Y_1, Y_2)$ :**
+
+$$I(X_1; Y_1, Y_2) = I(X_1; Y_1) + I(X_1; Y_2 | Y_1) = I(X_1; Y_2) + I(X_1; Y_1 | Y_2)$$
+
+**Décomposition de $I(X_2; Y_1, Y_2 | X_1)$ :**
+
+$$I(X_2; Y_1, Y_2 | X_1) = I(X_2; Y_1 | X_1) + I(X_2; Y_2 | X_1, Y_1)$$
+
+$$= I(X_2; Y_2 | X_1) + I(X_2; Y_1 | X_1, Y_2)$$
+
+---
+
+## Inégalité de traitement des données
+
+### Chaîne de Markov
+
+**Configuration :**
+
+```{mermaid}
+graph LR
+    X --> Y
+    Y --> Z
+```
+
+$$p_{X,Y,Z}(x, y, z) = p_X(x) \cdot p_{Y|X}(y | x) \cdot p_{Z|Y}(z | y)$$
+
+**Notation :** $X \to Y \to Z$
+
+### Inégalité fondamentale
+
+**Deux inégalités valides :**
+
+$$I(X; Y) \geq I(X; Z)$$
+
+$$I(Y; Z) \geq I(X; Z)$$
+
+**Cas particulier important :**
+
+Si $Z = g(Y)$ (fonction déterministe de $Y$) :
+
+$$I(X; Y) \geq I(X; Z)$$
+
+### Interprétation
+
+✅ **Principe de non-créativité de l'information :**
+
+La quantité d'information **ne peut pas être augmentée** par un traitement quelconque
+
+⚠️ **Ceci inclut les réseaux de neurones profonds !**
+
+L'information mutuelle entre l'entrée et la sortie d'un réseau ne peut qu'être **inférieure ou égale** à l'information mutuelle entre l'entrée et les couches intermédiaires
+
+---
+
+### Démonstration de l'inégalité
+
+**En utilisant la règle de chaîne :**
+
+$$I(X; Y, Z) = I(X; Z) + I(X; Y | Z) \quad \text{(a)}$$
+
+$$I(X; Y, Z) = I(X; Y) + I(X; Z | Y) \quad \text{(b)}$$
+
+**Propriété clé :**
+
+Pour la chaîne de Markov $X \to Y \to Z$ :
+
+$$X \perp Z | Y \quad \Rightarrow \quad I(X; Z | Y) = 0$$
+
+**Donc de (b) :**
+
+$$I(X; Y, Z) = I(X; Y)$$
+
+**En combinant avec (a) :**
+
+$$I(X; Y) = I(X; Z) + I(X; Y | Z)$$
+
+**Conclusion :**
+
+$$I(X; Y) \geq I(X; Z)$$
+
+car $I(X; Y | Z) \geq 0$
+
+---
+
+## Variables continues : Entropie différentielle
+
+### Motivation
+
+**Pour variables discrètes :**
+
+$$P[x_k; \Delta x] = \int f_X(x) dx \approx f_X(x_k) \Delta x$$
+
+**Entropie avec quantification :**
+
+$$H(X; \Delta x) = -\sum_{i=1}^{N} P[x_k; \Delta x] \log_2 P[x_k; \Delta x]$$
+
+$$= -\sum_{i=1}^{N} f_X(x_k) \Delta x \log_2[f_X(x_k) \Delta x]$$
+
+### Décomposition
+
+$$H(X; \Delta x) = -\sum_{i=1}^{N} f_X(x_k) \Delta x \log_2 f_X(x_k) - \sum_{i=1}^{N} f_X(x_k) \Delta x \log_2 \Delta x$$
+
+$$= -\sum_{i=1}^{N} f_X(x_k) \Delta x \log_2 f_X(x_k) - \log_2 \Delta x \underbrace{\sum_{i=1}^{N} f_X(x_k) \Delta x}_{= 1}$$
+
+**Passage à la limite :**
+
+$$H(X; \Delta x) = -\int f_X(x) \log_2 f_X(x) dx - \log_2 \Delta x$$
+
+### Problème avec la limite
+
+⚠️ **Dans la limite $\Delta x \to 0$ :**
+
+$\Delta x$ tend vers zéro pour un grand $N$
+
+**Conséquence :**
+
+$\log_2 \Delta x \to -\infty$
+
+Donc $H(X; \Delta x) \to +\infty$
+
+---
+
+## Définition de l'entropie différentielle
+
+### Définition formelle
+
+**Entropie différentielle d'une v.a. continue $X$ avec pdf $f_X(x)$ :**
+
+$$h(X) = -\int_{\mathcal{X}} f_X(x) \log_2 f_X(x) dx = -\mathbb{E}_{f_X}[\log_2 f_X(x)]$$
+
+⚠️ **Attention :**
+
+- Notation différente : $h(X)$ au lieu de $H(X)$
+- Peut être **négative** (contrairement à l'entropie discrète)
+- N'a pas d'interprétation directe en termes de bits
+
+---
+
+## Entropie différentielle d'une gaussienne
+
+### Variable gaussienne
+
+**Distribution :**
+
+$$X \sim \mathcal{N}(0, \sigma_X^2)$$
+
+**Entropie différentielle :**
+
+$$h(X) = -\mathbb{E}_{f_X}[\log_2 f_X(x)] = \frac{1}{2} \log_2(2\pi e \sigma_X^2)$$
+
+### Démonstration
+
+**PDF gaussienne :**
+
+$$f_X(x) = \frac{1}{\sqrt{2\pi\sigma_X^2}} \exp\left(-\frac{x^2}{2\sigma_X^2}\right)$$
+
+**Calcul de l'entropie :**
+
+$$h(X) = -\int f_X(x) \ln f_X(x) dx \quad \text{[nats]}$$
+
+$$= -\int f_X(x) \left[-\frac{x^2}{2\sigma_X^2} - \ln(\sqrt{2\pi\sigma_X^2})\right] dx$$
+
+$$= \int_{-\infty}^{\infty} f_X(x) \frac{x^2}{2\sigma_X^2} dx + \ln(\sqrt{2\pi\sigma_X^2}) \underbrace{\int_{-\infty}^{\infty} f_X(x) dx}_{= 1}$$
+
+**Calcul de la première intégrale :**
+
+$$\int_{-\infty}^{\infty} f_X(x) \frac{x^2}{2\sigma_X^2} dx = \frac{1}{2\sigma_X^2} \underbrace{\int_{-\infty}^{\infty} x^2 f_X(x) dx}_{= \text{Var}[X] = \sigma_X^2} = \frac{\sigma_X^2}{2\sigma_X^2} = \frac{1}{2}$$
+
+**Résultat en nats :**
+
+$$h(X) = \frac{1}{2} + \ln(\sqrt{2\pi\sigma_X^2}) = \frac{1}{2} \ln e + \frac{1}{2} \ln(2\pi\sigma_X^2)$$
+
+$$= \frac{1}{2}[\ln e + \ln(2\pi\sigma_X^2)] = \frac{1}{2} \ln(2\pi e \sigma_X^2) \quad \text{[nats]}$$
+
+**Conversion en bits :**
+
+$$h(X) = \frac{1}{2} \log_2(2\pi e \sigma_X^2) \quad \text{[bits]}$$
+
+---
+
+## Propriétés de l'entropie différentielle
+
+### Propriété 1 : Invariance par translation
+
+**Translation :**
+
+$$h(X + a) = h(X)$$
+
+où $a$ est une constante scalaire
+
+💡 **Interprétation :** Décaler une distribution ne change pas son entropie différentielle
+
+### Propriété 2 : Effet de la mise à l'échelle
+
+**Pour variable scalaire :**
+
+Si $X$ est une variable aléatoire scalaire :
+
+$$h(aX) = h(X) + \log |a|$$
+
+**Pour variable vectorielle :**
+
+Si $X$ est un vecteur aléatoire et $A$ est une matrice :
+
+$$h(AX) = h(X) + \log |\det(A)|$$
+
+où $\det(A)$ est le **déterminant** de la matrice $A$
+
+💡 **Interprétation :**
+
+- Étirer la distribution (facteur $|a| > 1$) **augmente** l'entropie
+- Compresser la distribution (facteur $|a| < 1$) **diminue** l'entropie
+
+---
+
+## Concepts mathématiques à maîtriser
+
+### Théorie de l'information
+
+**Concepts fondamentaux :**
+
+- Entropie (discrète et différentielle)
+- Entropie jointe et conditionnelle
+- Information mutuelle
+- Divergence KL
+- Cross-entropy
+
+**Relations :**
+
+- Règle de chaîne pour entropie
+- Relations entre $H(X)$, $H(Y)$, $H(X,Y)$, $I(X;Y)$
+- Inégalité de traitement des données
+
+### Probabilités
+
+**Distributions :**
+
+- Distribution discrète vs continue
+- Distribution uniforme
+- Distribution gaussienne
+
+**Concepts :**
+
+- Indépendance
+- Conditionnement
+- Marginalisation
+
+### Codage et compression
+
+**Théorie du codage :**
+
+- Longueur de code optimale
+- Code préfixe
+- Codage de Huffman
+- Taux de compression
+
+---
+
+## Questions d'examen types
+
+### Questions conceptuelles
+
+**Entropie :**
+
+- Définir l'entropie et expliquer son interprétation
+- Quelle distribution maximise l'entropie ?
+- Différence entre entropie et entropie différentielle
+
+**Relations :**
+
+- Relation entre $H(X,Y)$, $H(X)$, et $H(Y|X)$
+- Qu'est-ce que l'information mutuelle ?
+- Pourquoi $H(X|Y) \leq H(X)$ ?
+
+**KLD et cross-entropy :**
+
+- Définir la divergence KL
+- Interprétation en termes de codage
+- Lien entre KLD et cross-entropy
+
+### Questions techniques
+
+**Calculs :**
+
+- Calculer l'entropie d'une distribution binaire
+- Calculer la KLD entre deux distributions
+- Calculer l'information mutuelle entre deux variables
+
+**Codage :**
+
+- Appliquer l'algorithme de Huffman
+- Calculer la longueur moyenne d'un code
+- Qu'est-ce qu'un code préfixe et pourquoi est-il important ?
+
+**Propriétés :**
+
+- Démontrer la règle de chaîne pour l'entropie
+- Démontrer l'inégalité de traitement des données
+- Prouver que $I(X;Y) \geq 0$
+
+### Démonstrations mathématiques
+
+**Propriétés de l'entropie :**
+
+- Montrer que le conditionnement réduit l'entropie
+- Prouver que la distribution uniforme maximise l'entropie
+- Démontrer la règle de chaîne pour l'information mutuelle
+
+**Variables continues :**
+
+- Calculer l'entropie différentielle d'une gaussienne
+- Effet de la mise à l'échelle sur l'entropie différentielle
+
+---
+
+## Applications en Machine Learning
+
+### Fonctions de perte
+
+**Cross-entropy comme loss :**
+
+Utilisée en classification pour minimiser la divergence entre :
+
+- Distribution prédite par le modèle : $q(y|x)$
+- Distribution vraie (one-hot) : $p(y|x)$
+
+$$\mathcal{L} = -\sum_i p(y_i) \log q(y_i)$$
+
+### Sélection de features
+
+**Information mutuelle :**
+
+Mesurer $I(X_i; Y)$ pour sélectionner les features les plus informatives
+
+**Critère :**
+
+Garder les features avec $I(X_i; Y)$ élevée
+
+### Régularisation
+
+**Variational AutoEncoders (VAE) :**
+
+Minimiser la KLD entre :
+
+- Distribution encodée $q(z|x)$
+- Prior $p(z)$ (souvent gaussien)
+
+$$\mathcal{L}_{KL} = D_{KL}(q(z|x) \| p(z))$$
+
+---
+
+## Résumé des formules clés
+
+### Entropie
+
+$$H(X) = -\sum_x p(x) \log p(x)$$
+
+$$H(X,Y) = -\sum_x \sum_y p(x,y) \log p(x,y)$$
+
+$$H(X|Y) = -\sum_x \sum_y p(x,y) \log p(x|y)$$
+
+### Relations
+
+$$H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)$$
+
+$$H(X|Y) \leq H(X)$$
+
+$$H(X,Y) \leq H(X) + H(Y)$$
+
+### Information mutuelle
+
+$$I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)$$
+
+$$I(X;Y) = H(X) + H(Y) - H(X,Y)$$
+
+$$I(X;Y) = D_{KL}(p(x,y) \| p(x)p(y))$$
+
+### KLD et Cross-entropy
+
+$$D_{KL}(p \| q) = \sum_x p(x) \log \frac{p(x)}{q(x)}$$
+
+$$H(p,q) = -\sum_x p(x) \log q(x)$$
+
+$$H(p,q) = H(p) + D_{KL}(p \| q)$$
