@@ -1,0 +1,2345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds9 – ISS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ISS</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./../index.html">
+ <span class="dropdown-text">Anglais</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Français</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détailé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Questions d’Examen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds7s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intuition</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6s1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intuition</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#document-de-révision-fondamentaux-de-la-théorie-de-linformation-pour-la-data-science" id="toc-document-de-révision-fondamentaux-de-la-théorie-de-linformation-pour-la-data-science" class="nav-link active" data-scroll-target="#document-de-révision-fondamentaux-de-la-théorie-de-linformation-pour-la-data-science">Document de Révision : Fondamentaux de la Théorie de l’Information pour la Data Science</a>
+  <ul class="collapse">
+  <li><a href="#introduction-générale" id="toc-introduction-générale" class="nav-link" data-scroll-target="#introduction-générale">Introduction générale</a>
+  <ul class="collapse">
+  <li><a href="#contexte-de-la-théorie-de-linformation" id="toc-contexte-de-la-théorie-de-linformation" class="nav-link" data-scroll-target="#contexte-de-la-théorie-de-linformation">Contexte de la théorie de l’information</a></li>
+  </ul></li>
+  <li><a href="#rappel-règle-de-chaîne-pour-probabilités" id="toc-rappel-règle-de-chaîne-pour-probabilités" class="nav-link" data-scroll-target="#rappel-règle-de-chaîne-pour-probabilités">Rappel : Règle de chaîne pour probabilités</a>
+  <ul class="collapse">
+  <li><a href="#règle-de-chaîne-générale" id="toc-règle-de-chaîne-générale" class="nav-link" data-scroll-target="#règle-de-chaîne-générale">Règle de chaîne générale</a></li>
+  <li><a href="#cas-particulier-2-variables" id="toc-cas-particulier-2-variables" class="nav-link" data-scroll-target="#cas-particulier-2-variables">Cas particulier : 2 variables</a></li>
+  <li><a href="#variables-indépendantes" id="toc-variables-indépendantes" class="nav-link" data-scroll-target="#variables-indépendantes">Variables indépendantes</a></li>
+  </ul></li>
+  <li><a href="#exemples-de-décomposition-par-règle-de-chaîne" id="toc-exemples-de-décomposition-par-règle-de-chaîne" class="nav-link" data-scroll-target="#exemples-de-décomposition-par-règle-de-chaîne">Exemples de décomposition par règle de chaîne</a>
+  <ul class="collapse">
+  <li><a href="#trois-variables-différentes-décompositions" id="toc-trois-variables-différentes-décompositions" class="nav-link" data-scroll-target="#trois-variables-différentes-décompositions">Trois variables : Différentes décompositions</a></li>
+  </ul></li>
+  <li><a href="#entropie-entropy" id="toc-entropie-entropy" class="nav-link" data-scroll-target="#entropie-entropy">Entropie (Entropy)</a>
+  <ul class="collapse">
+  <li><a href="#définition-formelle" id="toc-définition-formelle" class="nav-link" data-scroll-target="#définition-formelle">Définition formelle</a></li>
+  <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
+  <li><a href="#espérance-et-entropie" id="toc-espérance-et-entropie" class="nav-link" data-scroll-target="#espérance-et-entropie">Espérance et entropie</a></li>
+  </ul></li>
+  <li><a href="#entropie-dune-variable-binaire" id="toc-entropie-dune-variable-binaire" class="nav-link" data-scroll-target="#entropie-dune-variable-binaire">Entropie d’une variable binaire</a>
+  <ul class="collapse">
+  <li><a href="#cas-binaire-variable-de-bernoulli" id="toc-cas-binaire-variable-de-bernoulli" class="nav-link" data-scroll-target="#cas-binaire-variable-de-bernoulli">Cas binaire : Variable de Bernoulli</a></li>
+  <li><a href="#formule-de-lentropie-binaire" id="toc-formule-de-lentropie-binaire" class="nav-link" data-scroll-target="#formule-de-lentropie-binaire">Formule de l’entropie binaire</a></li>
+  <li><a href="#propriétés-de-htheta" id="toc-propriétés-de-htheta" class="nav-link" data-scroll-target="#propriétés-de-htheta">Propriétés de <span class="math inline">\(H(\theta)\)</span></a></li>
+  </ul></li>
+  <li><a href="#application-compression-sans-perte" id="toc-application-compression-sans-perte" class="nav-link" data-scroll-target="#application-compression-sans-perte">Application : Compression sans perte</a>
+  <ul class="collapse">
+  <li><a href="#schéma-de-compression" id="toc-schéma-de-compression" class="nav-link" data-scroll-target="#schéma-de-compression">Schéma de compression</a></li>
+  <li><a href="#complexité-de-compression-pour-images" id="toc-complexité-de-compression-pour-images" class="nav-link" data-scroll-target="#complexité-de-compression-pour-images">Complexité de compression pour images</a></li>
+  <li><a href="#complexité-computationnelle" id="toc-complexité-computationnelle" class="nav-link" data-scroll-target="#complexité-computationnelle">Complexité computationnelle</a></li>
+  </ul></li>
+  <li><a href="#taux-de-compression" id="toc-taux-de-compression" class="nav-link" data-scroll-target="#taux-de-compression">Taux de compression</a>
+  <ul class="collapse">
+  <li><a href="#définition-pratique" id="toc-définition-pratique" class="nav-link" data-scroll-target="#définition-pratique">Définition pratique</a></li>
+  <li><a href="#taux-de-compression-réels" id="toc-taux-de-compression-réels" class="nav-link" data-scroll-target="#taux-de-compression-réels">Taux de compression réels</a></li>
+  </ul></li>
+  <li><a href="#lien-avec-la-théorie-de-linformation-assignation-optimale-de-codes" id="toc-lien-avec-la-théorie-de-linformation-assignation-optimale-de-codes" class="nav-link" data-scroll-target="#lien-avec-la-théorie-de-linformation-assignation-optimale-de-codes">Lien avec la théorie de l’information : Assignation optimale de codes</a>
+  <ul class="collapse">
+  <li><a href="#principe-de-base" id="toc-principe-de-base" class="nav-link" data-scroll-target="#principe-de-base">Principe de base</a></li>
+  <li><a href="#lien-entre-probabilité-et-longueur-de-code" id="toc-lien-entre-probabilité-et-longueur-de-code" class="nav-link" data-scroll-target="#lien-entre-probabilité-et-longueur-de-code">Lien entre probabilité et longueur de code</a></li>
+  <li><a href="#principe-du-codage-à-longueur-variable" id="toc-principe-du-codage-à-longueur-variable" class="nav-link" data-scroll-target="#principe-du-codage-à-longueur-variable">Principe du codage à longueur variable</a></li>
+  </ul></li>
+  <li><a href="#exemple-image-à-8-niveaux" id="toc-exemple-image-à-8-niveaux" class="nav-link" data-scroll-target="#exemple-image-à-8-niveaux">Exemple : Image à 8 niveaux</a>
+  <ul class="collapse">
+  <li><a href="#table-de-codage" id="toc-table-de-codage" class="nav-link" data-scroll-target="#table-de-codage">Table de codage</a></li>
+  <li><a href="#calculs" id="toc-calculs" class="nav-link" data-scroll-target="#calculs">Calculs</a></li>
+  <li><a href="#observations" id="toc-observations" class="nav-link" data-scroll-target="#observations">Observations</a></li>
+  </ul></li>
+  <li><a href="#codes-sources-pratiques-codage-de-huffman" id="toc-codes-sources-pratiques-codage-de-huffman" class="nav-link" data-scroll-target="#codes-sources-pratiques-codage-de-huffman">Codes sources pratiques : Codage de Huffman</a>
+  <ul class="collapse">
+  <li><a href="#principe-du-codage-de-huffman" id="toc-principe-du-codage-de-huffman" class="nav-link" data-scroll-target="#principe-du-codage-de-huffman">Principe du codage de Huffman</a></li>
+  <li><a href="#hypothèses" id="toc-hypothèses" class="nav-link" data-scroll-target="#hypothèses">Hypothèses</a></li>
+  <li><a href="#algorithme-de-huffman" id="toc-algorithme-de-huffman" class="nav-link" data-scroll-target="#algorithme-de-huffman">Algorithme de Huffman</a></li>
+  <li><a href="#exemple-de-construction" id="toc-exemple-de-construction" class="nav-link" data-scroll-target="#exemple-de-construction">Exemple de construction</a></li>
+  </ul></li>
+  <li><a href="#code-préfixe" id="toc-code-préfixe" class="nav-link" data-scroll-target="#code-préfixe">Code préfixe</a>
+  <ul class="collapse">
+  <li><a href="#définition" id="toc-définition" class="nav-link" data-scroll-target="#définition">Définition</a></li>
+  <li><a href="#importance-du-code-préfixe" id="toc-importance-du-code-préfixe" class="nav-link" data-scroll-target="#importance-du-code-préfixe">Importance du code préfixe</a></li>
+  <li><a href="#exemple-comparatif" id="toc-exemple-comparatif" class="nav-link" data-scroll-target="#exemple-comparatif">Exemple comparatif</a></li>
+  </ul></li>
+  <li><a href="#entropie-jointe-joint-entropy" id="toc-entropie-jointe-joint-entropy" class="nav-link" data-scroll-target="#entropie-jointe-joint-entropy">Entropie jointe (Joint Entropy)</a>
+  <ul class="collapse">
+  <li><a href="#définition-1" id="toc-définition-1" class="nav-link" data-scroll-target="#définition-1">Définition</a></li>
+  <li><a href="#propriété-de-symétrie" id="toc-propriété-de-symétrie" class="nav-link" data-scroll-target="#propriété-de-symétrie">Propriété de symétrie</a></li>
+  </ul></li>
+  <li><a href="#entropie-conditionnelle-conditional-entropy" id="toc-entropie-conditionnelle-conditional-entropy" class="nav-link" data-scroll-target="#entropie-conditionnelle-conditional-entropy">Entropie conditionnelle (Conditional Entropy)</a>
+  <ul class="collapse">
+  <li><a href="#définition-2" id="toc-définition-2" class="nav-link" data-scroll-target="#définition-2">Définition</a></li>
+  <li><a href="#entropie-conditionnelle-pour-une-valeur-fixée" id="toc-entropie-conditionnelle-pour-une-valeur-fixée" class="nav-link" data-scroll-target="#entropie-conditionnelle-pour-une-valeur-fixée">Entropie conditionnelle pour une valeur fixée</a></li>
+  <li><a href="#développement-complet" id="toc-développement-complet" class="nav-link" data-scroll-target="#développement-complet">Développement complet</a></li>
+  <li><a href="#asymétrie" id="toc-asymétrie" class="nav-link" data-scroll-target="#asymétrie">Asymétrie</a></li>
+  </ul></li>
+  <li><a href="#propriétés-de-lentropie" id="toc-propriétés-de-lentropie" class="nav-link" data-scroll-target="#propriétés-de-lentropie">Propriétés de l’entropie</a>
+  <ul class="collapse">
+  <li><a href="#propriété-1-non-négativité" id="toc-propriété-1-non-négativité" class="nav-link" data-scroll-target="#propriété-1-non-négativité">Propriété 1 : Non-négativité</a></li>
+  <li><a href="#propriété-2-règle-de-chaîne-pour-lentropie" id="toc-propriété-2-règle-de-chaîne-pour-lentropie" class="nav-link" data-scroll-target="#propriété-2-règle-de-chaîne-pour-lentropie">Propriété 2 : Règle de chaîne pour l’entropie</a></li>
+  <li><a href="#application-à-un-vecteur-dimage" id="toc-application-à-un-vecteur-dimage" class="nav-link" data-scroll-target="#application-à-un-vecteur-dimage">Application à un vecteur d’image</a></li>
+  <li><a href="#propriété-3-augmentation-de-lentropie-par-ajout-de-variables" id="toc-propriété-3-augmentation-de-lentropie-par-ajout-de-variables" class="nav-link" data-scroll-target="#propriété-3-augmentation-de-lentropie-par-ajout-de-variables">Propriété 3 : Augmentation de l’entropie par ajout de variables</a></li>
+  <li><a href="#propriété-4-conditionnement-réduit-lentropie" id="toc-propriété-4-conditionnement-réduit-lentropie" class="nav-link" data-scroll-target="#propriété-4-conditionnement-réduit-lentropie">Propriété 4 : Conditionnement réduit l’entropie</a></li>
+  <li><a href="#propriété-5-entropie-maximale-pour-distribution-uniforme" id="toc-propriété-5-entropie-maximale-pour-distribution-uniforme" class="nav-link" data-scroll-target="#propriété-5-entropie-maximale-pour-distribution-uniforme">Propriété 5 : Entropie maximale pour distribution uniforme</a></li>
+  </ul></li>
+  <li><a href="#divergence-de-kullback-leibler-kld" id="toc-divergence-de-kullback-leibler-kld" class="nav-link" data-scroll-target="#divergence-de-kullback-leibler-kld">Divergence de Kullback-Leibler (KLD)</a>
+  <ul class="collapse">
+  <li><a href="#définition-3" id="toc-définition-3" class="nav-link" data-scroll-target="#définition-3">Définition</a></li>
+  <li><a href="#conventions" id="toc-conventions" class="nav-link" data-scroll-target="#conventions">Conventions</a></li>
+  <li><a href="#propriétés-fondamentales" id="toc-propriétés-fondamentales" class="nav-link" data-scroll-target="#propriétés-fondamentales">Propriétés fondamentales</a></li>
+  </ul></li>
+  <li><a href="#interprétation-pratique-de-la-kld" id="toc-interprétation-pratique-de-la-kld" class="nav-link" data-scroll-target="#interprétation-pratique-de-la-kld">Interprétation pratique de la KLD</a>
+  <ul class="collapse">
+  <li><a href="#problème-de-codage-avec-mauvaise-distribution" id="toc-problème-de-codage-avec-mauvaise-distribution" class="nav-link" data-scroll-target="#problème-de-codage-avec-mauvaise-distribution">Problème de codage avec mauvaise distribution</a></li>
+  <li><a href="#décomposition-de-la-longueur-moyenne" id="toc-décomposition-de-la-longueur-moyenne" class="nav-link" data-scroll-target="#décomposition-de-la-longueur-moyenne">Décomposition de la longueur moyenne</a></li>
+  <li><a href="#interprétation-1" id="toc-interprétation-1" class="nav-link" data-scroll-target="#interprétation-1">Interprétation</a></li>
+  </ul></li>
+  <li><a href="#exemple-numérique-de-kld" id="toc-exemple-numérique-de-kld" class="nav-link" data-scroll-target="#exemple-numérique-de-kld">Exemple numérique de KLD</a>
+  <ul class="collapse">
+  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration">Configuration</a></li>
+  <li><a href="#formules" id="toc-formules" class="nav-link" data-scroll-target="#formules">Formules</a></li>
+  <li><a href="#calcul-avec-valeurs-spécifiques" id="toc-calcul-avec-valeurs-spécifiques" class="nav-link" data-scroll-target="#calcul-avec-valeurs-spécifiques">Calcul avec valeurs spécifiques</a></li>
+  </ul></li>
+  <li><a href="#cross-entropy-entropie-croisée" id="toc-cross-entropy-entropie-croisée" class="nav-link" data-scroll-target="#cross-entropy-entropie-croisée">Cross-Entropy (Entropie croisée)</a>
+  <ul class="collapse">
+  <li><a href="#définition-4" id="toc-définition-4" class="nav-link" data-scroll-target="#définition-4">Définition</a></li>
+  <li><a href="#lien-avec-la-kld" id="toc-lien-avec-la-kld" class="nav-link" data-scroll-target="#lien-avec-la-kld">Lien avec la KLD</a></li>
+  <li><a href="#propriété-doptimisation" id="toc-propriété-doptimisation" class="nav-link" data-scroll-target="#propriété-doptimisation">Propriété d’optimisation</a></li>
+  </ul></li>
+  <li><a href="#information-mutuelle-mutual-information" id="toc-information-mutuelle-mutual-information" class="nav-link" data-scroll-target="#information-mutuelle-mutual-information">Information mutuelle (Mutual Information)</a>
+  <ul class="collapse">
+  <li><a href="#définition-5" id="toc-définition-5" class="nav-link" data-scroll-target="#définition-5">Définition</a></li>
+  <li><a href="#forme-alternative" id="toc-forme-alternative" class="nav-link" data-scroll-target="#forme-alternative">Forme alternative</a></li>
+  <li><a href="#propriétés-fondamentales-1" id="toc-propriétés-fondamentales-1" class="nav-link" data-scroll-target="#propriétés-fondamentales-1">Propriétés fondamentales</a></li>
+  </ul></li>
+  <li><a href="#information-mutuelle-via-kl-divergence" id="toc-information-mutuelle-via-kl-divergence" class="nav-link" data-scroll-target="#information-mutuelle-via-kl-divergence">Information mutuelle via KL-divergence</a>
+  <ul class="collapse">
+  <li><a href="#formulation-en-termes-de-kld" id="toc-formulation-en-termes-de-kld" class="nav-link" data-scroll-target="#formulation-en-termes-de-kld">Formulation en termes de KLD</a></li>
+  <li><a href="#interprétation-2" id="toc-interprétation-2" class="nav-link" data-scroll-target="#interprétation-2">Interprétation</a></li>
+  <li><a href="#formes-conditionnelles" id="toc-formes-conditionnelles" class="nav-link" data-scroll-target="#formes-conditionnelles">Formes conditionnelles</a></li>
+  </ul></li>
+  <li><a href="#relations-entre-information-mutuelle-et-entropie" id="toc-relations-entre-information-mutuelle-et-entropie" class="nav-link" data-scroll-target="#relations-entre-information-mutuelle-et-entropie">Relations entre information mutuelle et entropie</a>
+  <ul class="collapse">
+  <li><a href="#relations-fondamentales" id="toc-relations-fondamentales" class="nav-link" data-scroll-target="#relations-fondamentales">Relations fondamentales</a></li>
+  <li><a href="#diagramme-de-venn-des-entropies" id="toc-diagramme-de-venn-des-entropies" class="nav-link" data-scroll-target="#diagramme-de-venn-des-entropies">Diagramme de Venn des entropies</a></li>
+  </ul></li>
+  <li><a href="#information-mutuelle-conditionnelle" id="toc-information-mutuelle-conditionnelle" class="nav-link" data-scroll-target="#information-mutuelle-conditionnelle">Information mutuelle conditionnelle</a>
+  <ul class="collapse">
+  <li><a href="#définition-6" id="toc-définition-6" class="nav-link" data-scroll-target="#définition-6">Définition</a></li>
+  <li><a href="#démonstration" id="toc-démonstration" class="nav-link" data-scroll-target="#démonstration">Démonstration</a></li>
+  </ul></li>
+  <li><a href="#propriétés-de-linformation-mutuelle" id="toc-propriétés-de-linformation-mutuelle" class="nav-link" data-scroll-target="#propriétés-de-linformation-mutuelle">Propriétés de l’information mutuelle</a>
+  <ul class="collapse">
+  <li><a href="#information-mutuelle-conditionnelle-1" id="toc-information-mutuelle-conditionnelle-1" class="nav-link" data-scroll-target="#information-mutuelle-conditionnelle-1">Information mutuelle conditionnelle</a></li>
+  <li><a href="#règle-de-chaîne-pour-linformation-mutuelle" id="toc-règle-de-chaîne-pour-linformation-mutuelle" class="nav-link" data-scroll-target="#règle-de-chaîne-pour-linformation-mutuelle">Règle de chaîne pour l’information mutuelle</a></li>
+  <li><a href="#application-pixels-dimage-et-label" id="toc-application-pixels-dimage-et-label" class="nav-link" data-scroll-target="#application-pixels-dimage-et-label">Application : Pixels d’image et label</a></li>
+  <li><a href="#décomposition-complexe" id="toc-décomposition-complexe" class="nav-link" data-scroll-target="#décomposition-complexe">Décomposition complexe</a></li>
+  </ul></li>
+  <li><a href="#inégalité-de-traitement-des-données" id="toc-inégalité-de-traitement-des-données" class="nav-link" data-scroll-target="#inégalité-de-traitement-des-données">Inégalité de traitement des données</a>
+  <ul class="collapse">
+  <li><a href="#chaîne-de-markov" id="toc-chaîne-de-markov" class="nav-link" data-scroll-target="#chaîne-de-markov">Chaîne de Markov</a></li>
+  <li><a href="#inégalité-fondamentale" id="toc-inégalité-fondamentale" class="nav-link" data-scroll-target="#inégalité-fondamentale">Inégalité fondamentale</a></li>
+  <li><a href="#interprétation-3" id="toc-interprétation-3" class="nav-link" data-scroll-target="#interprétation-3">Interprétation</a></li>
+  <li><a href="#démonstration-de-linégalité" id="toc-démonstration-de-linégalité" class="nav-link" data-scroll-target="#démonstration-de-linégalité">Démonstration de l’inégalité</a></li>
+  </ul></li>
+  <li><a href="#variables-continues-entropie-différentielle" id="toc-variables-continues-entropie-différentielle" class="nav-link" data-scroll-target="#variables-continues-entropie-différentielle">Variables continues : Entropie différentielle</a>
+  <ul class="collapse">
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#décomposition" id="toc-décomposition" class="nav-link" data-scroll-target="#décomposition">Décomposition</a></li>
+  <li><a href="#problème-avec-la-limite" id="toc-problème-avec-la-limite" class="nav-link" data-scroll-target="#problème-avec-la-limite">Problème avec la limite</a></li>
+  </ul></li>
+  <li><a href="#définition-de-lentropie-différentielle" id="toc-définition-de-lentropie-différentielle" class="nav-link" data-scroll-target="#définition-de-lentropie-différentielle">Définition de l’entropie différentielle</a>
+  <ul class="collapse">
+  <li><a href="#définition-formelle-1" id="toc-définition-formelle-1" class="nav-link" data-scroll-target="#définition-formelle-1">Définition formelle</a></li>
+  </ul></li>
+  <li><a href="#entropie-différentielle-dune-gaussienne" id="toc-entropie-différentielle-dune-gaussienne" class="nav-link" data-scroll-target="#entropie-différentielle-dune-gaussienne">Entropie différentielle d’une gaussienne</a>
+  <ul class="collapse">
+  <li><a href="#variable-gaussienne" id="toc-variable-gaussienne" class="nav-link" data-scroll-target="#variable-gaussienne">Variable gaussienne</a></li>
+  <li><a href="#démonstration-1" id="toc-démonstration-1" class="nav-link" data-scroll-target="#démonstration-1">Démonstration</a></li>
+  </ul></li>
+  <li><a href="#propriétés-de-lentropie-différentielle" id="toc-propriétés-de-lentropie-différentielle" class="nav-link" data-scroll-target="#propriétés-de-lentropie-différentielle">Propriétés de l’entropie différentielle</a>
+  <ul class="collapse">
+  <li><a href="#propriété-1-invariance-par-translation" id="toc-propriété-1-invariance-par-translation" class="nav-link" data-scroll-target="#propriété-1-invariance-par-translation">Propriété 1 : Invariance par translation</a></li>
+  <li><a href="#propriété-2-effet-de-la-mise-à-léchelle" id="toc-propriété-2-effet-de-la-mise-à-léchelle" class="nav-link" data-scroll-target="#propriété-2-effet-de-la-mise-à-léchelle">Propriété 2 : Effet de la mise à l’échelle</a></li>
+  </ul></li>
+  <li><a href="#concepts-mathématiques-à-maîtriser" id="toc-concepts-mathématiques-à-maîtriser" class="nav-link" data-scroll-target="#concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</a>
+  <ul class="collapse">
+  <li><a href="#théorie-de-linformation" id="toc-théorie-de-linformation" class="nav-link" data-scroll-target="#théorie-de-linformation">Théorie de l’information</a></li>
+  <li><a href="#probabilités" id="toc-probabilités" class="nav-link" data-scroll-target="#probabilités">Probabilités</a></li>
+  <li><a href="#codage-et-compression" id="toc-codage-et-compression" class="nav-link" data-scroll-target="#codage-et-compression">Codage et compression</a></li>
+  </ul></li>
+  <li><a href="#questions-dexamen-types" id="toc-questions-dexamen-types" class="nav-link" data-scroll-target="#questions-dexamen-types">Questions d’examen types</a>
+  <ul class="collapse">
+  <li><a href="#questions-conceptuelles" id="toc-questions-conceptuelles" class="nav-link" data-scroll-target="#questions-conceptuelles">Questions conceptuelles</a></li>
+  <li><a href="#questions-techniques" id="toc-questions-techniques" class="nav-link" data-scroll-target="#questions-techniques">Questions techniques</a></li>
+  <li><a href="#démonstrations-mathématiques" id="toc-démonstrations-mathématiques" class="nav-link" data-scroll-target="#démonstrations-mathématiques">Démonstrations mathématiques</a></li>
+  </ul></li>
+  <li><a href="#applications-en-machine-learning" id="toc-applications-en-machine-learning" class="nav-link" data-scroll-target="#applications-en-machine-learning">Applications en Machine Learning</a>
+  <ul class="collapse">
+  <li><a href="#fonctions-de-perte" id="toc-fonctions-de-perte" class="nav-link" data-scroll-target="#fonctions-de-perte">Fonctions de perte</a></li>
+  <li><a href="#sélection-de-features" id="toc-sélection-de-features" class="nav-link" data-scroll-target="#sélection-de-features">Sélection de features</a></li>
+  <li><a href="#régularisation" id="toc-régularisation" class="nav-link" data-scroll-target="#régularisation">Régularisation</a></li>
+  </ul></li>
+  <li><a href="#résumé-des-formules-clés" id="toc-résumé-des-formules-clés" class="nav-link" data-scroll-target="#résumé-des-formules-clés">Résumé des formules clés</a>
+  <ul class="collapse">
+  <li><a href="#entropie" id="toc-entropie" class="nav-link" data-scroll-target="#entropie">Entropie</a></li>
+  <li><a href="#relations" id="toc-relations" class="nav-link" data-scroll-target="#relations">Relations</a></li>
+  <li><a href="#information-mutuelle" id="toc-information-mutuelle" class="nav-link" data-scroll-target="#information-mutuelle">Information mutuelle</a></li>
+  <li><a href="#kld-et-cross-entropy" id="toc-kld-et-cross-entropy" class="nav-link" data-scroll-target="#kld-et-cross-entropy">KLD et Cross-entropy</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds9.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="document-de-révision-fondamentaux-de-la-théorie-de-linformation-pour-la-data-science" class="level1">
+<h1>Document de Révision : Fondamentaux de la Théorie de l’Information pour la Data Science</h1>
+<hr>
+<section id="introduction-générale" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-générale">Introduction générale</h2>
+<section id="contexte-de-la-théorie-de-linformation" class="level3">
+<h3 class="anchored" data-anchor-id="contexte-de-la-théorie-de-linformation">Contexte de la théorie de l’information</h3>
+<p>La <strong>théorie de l’information</strong> fournit un cadre mathématique rigoureux pour quantifier l’information, l’incertitude et la dépendance entre variables aléatoires.</p>
+<p><strong>Applications en Data Science :</strong></p>
+<ul>
+<li>Compression de données</li>
+<li>Apprentissage automatique</li>
+<li>Sélection de features</li>
+<li>Mesure de similarité entre distributions</li>
+<li>Optimisation de réseaux de neurones</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="rappel-règle-de-chaîne-pour-probabilités" class="level2">
+<h2 class="anchored" data-anchor-id="rappel-règle-de-chaîne-pour-probabilités">Rappel : Règle de chaîne pour probabilités</h2>
+<section id="règle-de-chaîne-générale" class="level3">
+<h3 class="anchored" data-anchor-id="règle-de-chaîne-générale">Règle de chaîne générale</h3>
+<p><strong>Pour N variables aléatoires :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, \ldots, x_n) = p(x_1) \cdot p(x_2 | x_1) \cdot p(x_3 | x_2, x_1) \cdots p(x_n | x_{n-1}, \ldots, x_2, x_1)\]</span></p>
+<p><strong>Forme compacte :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, \ldots, x_n) = \prod_{i=1}^{n} p(x_i | x_{i-1}, \ldots, x_2, x_1)\]</span></p>
+</section>
+<section id="cas-particulier-2-variables" class="level3">
+<h3 class="anchored" data-anchor-id="cas-particulier-2-variables">Cas particulier : 2 variables</h3>
+<p><span class="math display">\[p(x_1, x_2) = p(x_1) p(x_2 | x_1) = p(x_2) p(x_1 | x_2)\]</span></p>
+</section>
+<section id="variables-indépendantes" class="level3">
+<h3 class="anchored" data-anchor-id="variables-indépendantes">Variables indépendantes</h3>
+<p><strong>Définition :</strong></p>
+<p>Si les variables sont <strong>indépendantes</strong> : <span class="math inline">\(X_1 \perp X_2\)</span></p>
+<p><span class="math display">\[p(x_1, x_2) = p(x_1) \cdot p(x_2)\]</span></p>
+<p><strong>Généralisation à N variables i.i.d. :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, \ldots, x_n) = \prod_{i=1}^{n} p(x_i) = [p(x)]^n\]</span></p>
+<hr>
+</section>
+</section>
+<section id="exemples-de-décomposition-par-règle-de-chaîne" class="level2">
+<h2 class="anchored" data-anchor-id="exemples-de-décomposition-par-règle-de-chaîne">Exemples de décomposition par règle de chaîne</h2>
+<section id="trois-variables-différentes-décompositions" class="level3">
+<h3 class="anchored" data-anchor-id="trois-variables-différentes-décompositions">Trois variables : Différentes décompositions</h3>
+<p><strong>Chaîne linéaire :</strong></p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    X --&gt; Y
+    Y --&gt; Z
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><span class="math display">\[p(x, y, z) = p(x) \cdot p(y | x) \cdot p(z | x, y)\]</span></p>
+<p><strong>Indépendance complète :</strong></p>
+<p><span class="math display">\[p(x, y, z) = p(x) \cdot p(y) \cdot p(z)\]</span></p>
+<p><strong>Indépendance conditionnelle (Y comme parent commun) :</strong></p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    Y --&gt; X
+    Y --&gt; Z
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><span class="math display">\[p(x, y, z) = p(y) \cdot p(x | y) \cdot p(z | y)\]</span></p>
+<p><strong>Structure alternative :</strong></p>
+<p><span class="math display">\[p(x, y, z) = p(z) \cdot p(y | z) \cdot p(x | y, z)\]</span></p>
+<p><span class="math display">\[p(x, y, z) = p(z | x, y) \cdot p(x) \cdot p(y)\]</span></p>
+<p><span class="math display">\[p(x, y, z) = p(z) \cdot p(x | z) \cdot p(y | z)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="entropie-entropy" class="level2">
+<h2 class="anchored" data-anchor-id="entropie-entropy">Entropie (Entropy)</h2>
+<section id="définition-formelle" class="level3">
+<h3 class="anchored" data-anchor-id="définition-formelle">Définition formelle</h3>
+<p><strong>Entropie d’une variable aléatoire discrète :</strong></p>
+<p>Soit <span class="math inline">\(X\)</span> une variable aléatoire discrète prenant ses valeurs dans <span class="math inline">\(\mathcal{X} = \{x_1, x_2, \ldots, x_n\}\)</span></p>
+<p><span class="math display">\[H(X) = -\sum_{x \in \mathcal{X}} p_X(x) \log_2 p_X(x) = -\mathbb{E}_{p_X}[\log p_X(x)]\]</span></p>
+<p><strong>Unités :</strong></p>
+<ul>
+<li><strong>Base 2</strong> (<span class="math inline">\(\alpha = 2\)</span>) : mesure en <strong>bits</strong></li>
+<li><strong>Base <span class="math inline">\(e\)</span></strong> (<span class="math inline">\(\alpha = e\)</span>) : mesure en <strong>nats</strong></li>
+</ul>
+<p>On note parfois <span class="math inline">\(H_\alpha(X)\)</span> pour spécifier la base</p>
+</section>
+<section id="interprétation" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation">Interprétation</h3>
+<p>✅ <strong>L’entropie mesure :</strong></p>
+<ul>
+<li>L’<strong>incertitude</strong> d’une variable aléatoire discrète</li>
+<li>Le <strong>caractère aléatoire</strong> (randomness)</li>
+<li>Le nombre <strong>moyen de bits</strong> nécessaires pour encoder la variable</li>
+</ul>
+<p>📌 <strong>Point important :</strong> <span class="math inline">\(H(X)\)</span> dépend uniquement de la <strong>distribution</strong> de <span class="math inline">\(X\)</span>, pas des valeurs particulières prises</p>
+<p><strong>Notations équivalentes :</strong></p>
+<ul>
+<li><span class="math inline">\(H(X)\)</span></li>
+<li><span class="math inline">\(H(p)\)</span></li>
+<li><span class="math inline">\(H(p(x))\)</span></li>
+</ul>
+</section>
+<section id="espérance-et-entropie" class="level3">
+<h3 class="anchored" data-anchor-id="espérance-et-entropie">Espérance et entropie</h3>
+<p><strong>Rappel de l’espérance :</strong></p>
+<p><span class="math display">\[\mathbb{E}_{p_X}[g(X)] = \sum_{x \in \mathcal{X}} p_X(x) g(x)\]</span></p>
+<p><strong>Entropie comme espérance :</strong></p>
+<p><span class="math display">\[H(X) = \mathbb{E}_{p_X}[-\log p_X(x)]\]</span></p>
+<hr>
+</section>
+</section>
+<section id="entropie-dune-variable-binaire" class="level2">
+<h2 class="anchored" data-anchor-id="entropie-dune-variable-binaire">Entropie d’une variable binaire</h2>
+<section id="cas-binaire-variable-de-bernoulli" class="level3">
+<h3 class="anchored" data-anchor-id="cas-binaire-variable-de-bernoulli">Cas binaire : Variable de Bernoulli</h3>
+<p><strong>Variable binaire :</strong></p>
+<p><span class="math inline">\(X \in \mathcal{X} = \{0, 1\}\)</span></p>
+<p><span class="math display">\[\mathbb{P}[X = 0] = 1 - \theta\]</span></p>
+<p><span class="math display">\[\mathbb{P}[X = 1] = \theta\]</span></p>
+<p><strong>Forme compacte :</strong></p>
+<p><span class="math display">\[\mathbb{P}[X = x] = \theta^x (1 - \theta)^{1-x}\]</span></p>
+</section>
+<section id="formule-de-lentropie-binaire" class="level3">
+<h3 class="anchored" data-anchor-id="formule-de-lentropie-binaire">Formule de l’entropie binaire</h3>
+<p><span class="math display">\[H(X) = -\theta \log_2 \theta - (1 - \theta) \log_2(1 - \theta) := H(\theta) \text{ ou } H_2(\theta)\]</span></p>
+</section>
+<section id="propriétés-de-htheta" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-de-htheta">Propriétés de <span class="math inline">\(H(\theta)\)</span></h3>
+<p><strong>Symétrie :</strong></p>
+<p>La fonction est <strong>symétrique</strong> par rapport à <span class="math inline">\(\theta = 0.5\)</span></p>
+<p><span class="math display">\[H(\theta) = H(1 - \theta)\]</span></p>
+<p><strong>Maximum :</strong></p>
+<p>Le maximum est atteint en <span class="math inline">\(\theta = 0.5\)</span> :</p>
+<p><span class="math display">\[\max_{\theta} H(\theta) = H(0.5) = 1 \text{ bit}\]</span></p>
+<p>✅ <strong>Principe fondamental :</strong> L’entropie est <strong>maximale</strong> si les symboles sont <strong>équiprobables</strong></p>
+<p><strong>Exemples numériques :</strong></p>
+<ul>
+<li><span class="math inline">\(\theta = 0.11\)</span> : <span class="math inline">\(H(0.11) \approx 0.5\)</span> bit</li>
+<li><span class="math inline">\(\theta = 0.5\)</span> : <span class="math inline">\(H(0.5) = 1\)</span> bit</li>
+<li><span class="math inline">\(\theta = 0.89\)</span> : <span class="math inline">\(H(0.89) \approx 0.5\)</span> bit</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="application-compression-sans-perte" class="level2">
+<h2 class="anchored" data-anchor-id="application-compression-sans-perte">Application : Compression sans perte</h2>
+<section id="schéma-de-compression" class="level3">
+<h3 class="anchored" data-anchor-id="schéma-de-compression">Schéma de compression</h3>
+<p><strong>Compression sans perte (Lossless) :</strong></p>
+<p><span class="math display">\[X \xrightarrow{\text{Encodeur}} R \xrightarrow{\text{Décodeur}} \hat{X}\]</span></p>
+<p><strong>Propriété :</strong></p>
+<p><span class="math display">\[\hat{X} = X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] = 0\]</span></p>
+<p><strong>Compression avec perte (Lossy) :</strong></p>
+<p><span class="math display">\[\hat{X} \neq X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] \neq 0\]</span></p>
+</section>
+<section id="complexité-de-compression-pour-images" class="level3">
+<h3 class="anchored" data-anchor-id="complexité-de-compression-pour-images">Complexité de compression pour images</h3>
+<p><strong>Problématique :</strong></p>
+<p>Soit une image représentée comme vecteur <span class="math inline">\(x \sim p_x(x) = p_x(x_1, x_2, \ldots, x_n)\)</span></p>
+<p><strong>Connaissance de la distribution source :</strong></p>
+<p>La <strong>pdf/pmf jointe</strong> est nécessaire pour la compression optimale</p>
+<p><strong>Défis :</strong></p>
+<ol type="1">
+<li>Modélisation : la pdf multidimensionnelle est <strong>très complexe</strong></li>
+<li>La vraie pdf est <strong>inconnue</strong></li>
+<li>Simplification courante : considérer les pixels <strong>indépendamment</strong> (mais cela <strong>augmente l’entropie</strong>)</li>
+<li>Le codage indépendant des symboles n’est <strong>pas optimal</strong> selon la théorie rate-distorsion de Shannon qui suggère un <strong>codage par blocs</strong></li>
+</ol>
+<p><strong>Solution intermédiaire :</strong></p>
+<p>Utiliser un <strong>codage par sous-blocs</strong> (comme dans JPEG)</p>
+</section>
+<section id="complexité-computationnelle" class="level3">
+<h3 class="anchored" data-anchor-id="complexité-computationnelle">Complexité computationnelle</h3>
+<p><strong>Codage par blocs de Shannon :</strong></p>
+<p>Complexité <strong>exponentielle</strong> en fonction de la longueur du bloc</p>
+<p><strong>Méthodes pratiques :</strong></p>
+<p>Réduire la taille des blocs jusqu’à un symbole/pixel (sous-optimal mais <strong>complexité réduite</strong>)</p>
+<hr>
+</section>
+</section>
+<section id="taux-de-compression" class="level2">
+<h2 class="anchored" data-anchor-id="taux-de-compression">Taux de compression</h2>
+<section id="définition-pratique" class="level3">
+<h3 class="anchored" data-anchor-id="définition-pratique">Définition pratique</h3>
+<p><strong>Ratio de compression (Compression Ratio) :</strong></p>
+<p><span class="math display">\[CR = \frac{\text{Nombre de bits avant}}{\text{Nombre de bits après}}\]</span></p>
+</section>
+<section id="taux-de-compression-réels" class="level3">
+<h3 class="anchored" data-anchor-id="taux-de-compression-réels">Taux de compression réels</h3>
+<p><strong>Pour images réelles :</strong></p>
+<p><strong>Compression sans perte :</strong></p>
+<p><span class="math inline">\(CR \approx 2\)</span></p>
+<p><strong>Compression avec perte :</strong></p>
+<ul>
+<li><strong>JPEG</strong> : <span class="math inline">\(CR = 10\)</span> à <span class="math inline">\(50\)</span></li>
+<li><strong>JPEG 2000</strong> : <span class="math inline">\(CR\)</span> jusqu’à <span class="math inline">\(150\)</span></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="lien-avec-la-théorie-de-linformation-assignation-optimale-de-codes" class="level2">
+<h2 class="anchored" data-anchor-id="lien-avec-la-théorie-de-linformation-assignation-optimale-de-codes">Lien avec la théorie de l’information : Assignation optimale de codes</h2>
+<section id="principe-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="principe-de-base">Principe de base</h3>
+<p><strong>Histogramme et indépendance :</strong></p>
+<p>⚠️ L’histogramme est <strong>trompeur</strong> mais supposons que les pixels de l’image sont <strong>discrets</strong> et <strong>indépendants</strong></p>
+<p><strong>Entropie pour variables discrètes :</strong></p>
+<p><span class="math display">\[H(X) = -\sum_{i=0}^{L-1} p_i \log p_i = \ell_{av}\]</span></p>
+<p>où <span class="math inline">\(\ell_{av}\)</span> est la <strong>longueur moyenne</strong> nécessaire</p>
+<p><strong>Probabilité d’observer une intensité particulière :</strong></p>
+<p><span class="math display">\[p_i = \mathbb{P}\{X(i, j) = k\} = \frac{\text{Nombre de } x(i,j) = k}{\text{Nombre total de pixels } (M \times N)}\]</span></p>
+<p>✅ <strong>Interprétation :</strong> Cela correspond au <strong>nombre moyen de bits</strong> nécessaires pour décrire chaque pixel</p>
+</section>
+<section id="lien-entre-probabilité-et-longueur-de-code" class="level3">
+<h3 class="anchored" data-anchor-id="lien-entre-probabilité-et-longueur-de-code">Lien entre probabilité et longueur de code</h3>
+<p><strong>Longueur de code pour chaque niveau :</strong></p>
+<p>Définir une longueur de code <span class="math inline">\(\ell_i\)</span> pour chaque niveau de gris avec probabilité <span class="math inline">\(p_i\)</span> :</p>
+<p><span class="math display">\[\ell_i \approx -\log p_i = \log \frac{1}{p_i}\]</span></p>
+<p><strong>Exemples numériques :</strong></p>
+<p><span class="math display">\[p_i = 0.5 = 2^{-1} \quad : \quad \ell_i = \log \frac{1}{2^{-1}} = \log 2 = 1 \text{ bit}\]</span></p>
+<p><span class="math display">\[p_i = 0.25 = 2^{-2} \quad : \quad \ell_i = \log \frac{1}{2^{-2}} = \log 2^2 = 2 \text{ bits}\]</span></p>
+</section>
+<section id="principe-du-codage-à-longueur-variable" class="level3">
+<h3 class="anchored" data-anchor-id="principe-du-codage-à-longueur-variable">Principe du codage à longueur variable</h3>
+<p>✅ <strong>Conclusion fondamentale :</strong></p>
+<ul>
+<li>Les symboles <strong>plus fréquents</strong> se voient assigner des codes <strong>plus courts</strong></li>
+<li>Les symboles <strong>moins fréquents</strong> se voient assigner des codes <strong>plus longs</strong></li>
+</ul>
+<p>→ <strong>Codage à longueur variable</strong> (Variable Length Coding)</p>
+<p><strong>Longueur moyenne :</strong></p>
+<p><span class="math display">\[\ell_{av} = H(X) = \sum_{i=0}^{L-1} p_i \log p_i = \sum_{i=0}^{L-1} p_i \ell_i\]</span></p>
+<hr>
+</section>
+</section>
+<section id="exemple-image-à-8-niveaux" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-image-à-8-niveaux">Exemple : Image à 8 niveaux</h2>
+<section id="table-de-codage" class="level3">
+<h3 class="anchored" data-anchor-id="table-de-codage">Table de codage</h3>
+<p><strong>Données :</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Niveau</th>
+<th>Probabilité</th>
+<th>Code longueur fixe</th>
+<th>Code longueur variable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.19</td>
+<td>000</td>
+<td>00</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.25</td>
+<td>001</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.21</td>
+<td>010</td>
+<td>01</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0.16</td>
+<td>011</td>
+<td>101</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>0.08</td>
+<td>100</td>
+<td>1001</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>0.06</td>
+<td>101</td>
+<td>10001</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>0.03</td>
+<td>110</td>
+<td>100001</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>0.02</td>
+<td>111</td>
+<td>100000</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="calculs" class="level3">
+<h3 class="anchored" data-anchor-id="calculs">Calculs</h3>
+<p><strong>Somme des probabilités :</strong></p>
+<p><span class="math display">\[\sum p_i = 1\]</span></p>
+<p><strong>Entropie de la source :</strong></p>
+<p><span class="math display">\[H = 2.6508 \text{ bits}\]</span></p>
+<p><strong>Longueur moyenne (code fixe) :</strong></p>
+<p><span class="math display">\[\ell_{av}^{\text{fixe}} = 3 \text{ bits}\]</span></p>
+<p><strong>Longueur moyenne (code variable) :</strong></p>
+<p><span class="math display">\[\ell_{av}^{\text{var}} = 2.7000 \text{ bits}\]</span></p>
+</section>
+<section id="observations" class="level3">
+<h3 class="anchored" data-anchor-id="observations">Observations</h3>
+<ol type="1">
+<li>Le code à longueur variable est <strong>très proche</strong> de l’entropie de la source</li>
+<li>Le code à longueur fixe est <strong>loin</strong> de l’entropie</li>
+<li>La différence peut être <strong>significative</strong> pour de gros fichiers :</li>
+</ol>
+<p><strong>Calcul pratique :</strong></p>
+<ul>
+<li>Différence : <span class="math inline">\(3 - 2.65 = 0.35\)</span> bits par symbole/pixel</li>
+<li>Pour une image <span class="math inline">\(1000 \times 1000 = 1\)</span> Mio de symboles</li>
+<li>Différence totale : <span class="math inline">\(1 \text{ Mio} \times 0.35 = 3.5 \times 10^5\)</span> bits <span class="math inline">\(= 42.7\)</span> Kbytes</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="codes-sources-pratiques-codage-de-huffman" class="level2">
+<h2 class="anchored" data-anchor-id="codes-sources-pratiques-codage-de-huffman">Codes sources pratiques : Codage de Huffman</h2>
+<section id="principe-du-codage-de-huffman" class="level3">
+<h3 class="anchored" data-anchor-id="principe-du-codage-de-huffman">Principe du codage de Huffman</h3>
+<p><strong>Objectif :</strong></p>
+<p>Concevoir un code qui <strong>approche l’entropie</strong> de la source</p>
+<p><strong>Codage de Huffman :</strong></p>
+<p>Code <strong>optimal</strong> (longueur de code minimale) pour le codage indépendant de <span class="math inline">\(N\)</span> symboles</p>
+</section>
+<section id="hypothèses" class="level3">
+<h3 class="anchored" data-anchor-id="hypothèses">Hypothèses</h3>
+<ol type="1">
+<li>Tous les symboles sont <strong>indépendants</strong> (pas très réaliste)</li>
+<li>Encodage <strong>symbole par symbole</strong></li>
+<li>La pmf de la source est <strong>connue</strong> (peut être estimée par histogramme)</li>
+</ol>
+</section>
+<section id="algorithme-de-huffman" class="level3">
+<h3 class="anchored" data-anchor-id="algorithme-de-huffman">Algorithme de Huffman</h3>
+<p><strong>Étapes :</strong></p>
+<p><strong>Étape 1 :</strong> Arranger les symboles par <strong>probabilité décroissante</strong>. Les considérer comme des nœuds</p>
+<p><strong>Étape 2 :</strong> Fusionner les nœuds avec les <strong>plus faibles probabilités</strong></p>
+<p><strong>Étape 3 :</strong> Assigner <strong>0 et 1</strong> aux branches supérieure et inférieure, respectivement</p>
+<p><strong>Étape 4 :</strong> Lire le code de la <strong>racine à la feuille</strong></p>
+</section>
+<section id="exemple-de-construction" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-de-construction">Exemple de construction</h3>
+<p><strong>Probabilités ordonnées :</strong></p>
+<pre><code>0.25, 0.21, 0.19, 0.16, 0.08, 0.06, 0.03, 0.02</code></pre>
+<p><strong>Arbre de Huffman :</strong></p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[1.00] --&gt;|0| B[0.40]
+    A --&gt;|1| C[0.60]
+    B --&gt;|0| D[0.19]
+    B --&gt;|1| E[0.21]
+    C --&gt;|0| F[0.25]
+    C --&gt;|1| G[0.35]
+    G --&gt;|0| H[0.16]
+    G --&gt;|1| I[0.19]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Codes résultants :</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Niveau</th>
+<th>Probabilité</th>
+<th>Code Huffman</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.19</td>
+<td>00</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.25</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.21</td>
+<td>01</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0.16</td>
+<td>101</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>0.08</td>
+<td>1001</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>0.06</td>
+<td>10001</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>0.03</td>
+<td>100001</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>0.02</td>
+<td>100000</td>
+</tr>
+</tbody>
+</table>
+<p>✅ <strong>Propriété :</strong> Les symboles avec la <strong>plus haute probabilité</strong> ont la <strong>longueur la plus courte</strong></p>
+<hr>
+</section>
+</section>
+<section id="code-préfixe" class="level2">
+<h2 class="anchored" data-anchor-id="code-préfixe">Code préfixe</h2>
+<section id="définition" class="level3">
+<h3 class="anchored" data-anchor-id="définition">Définition</h3>
+<p><strong>Code préfixe (Prefix code) :</strong></p>
+<p>Aucun code n’est le <strong>préfixe</strong> d’un autre code</p>
+</section>
+<section id="importance-du-code-préfixe" class="level3">
+<h3 class="anchored" data-anchor-id="importance-du-code-préfixe">Importance du code préfixe</h3>
+<p><strong>Pourquoi est-ce important ?</strong></p>
+<ol type="1">
+<li>Pour le <strong>décodage unique</strong> à partir d’une chaîne sans besoin de voir le symbole suivant</li>
+<li>Le code préfixe peut être décodé <strong>instantanément</strong></li>
+</ol>
+</section>
+<section id="exemple-comparatif" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-comparatif">Exemple comparatif</h3>
+<p><strong>Code A (NON préfixe) :</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbole</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>00</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>110</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Code B (préfixe) :</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbole</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>110</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exemple d’encodage : 1234321</strong></p>
+<ul>
+<li><strong>Code A :</strong> <code>100011110110010</code> → ❌ Pas de décodage unique</li>
+<li><strong>Code B :</strong> <code>010110111110100</code> → ✅ Décodage unique</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="entropie-jointe-joint-entropy" class="level2">
+<h2 class="anchored" data-anchor-id="entropie-jointe-joint-entropy">Entropie jointe (Joint Entropy)</h2>
+<section id="définition-1" class="level3">
+<h3 class="anchored" data-anchor-id="définition-1">Définition</h3>
+<p><strong>Entropie jointe de deux variables discrètes :</strong></p>
+<p>Soit <span class="math inline">\(X \in \mathcal{X} = \{x_1, x_2, \ldots, x_n\}\)</span> et <span class="math inline">\(Y \in \mathcal{Y} = \{y_1, y_2, \ldots, y_m\}\)</span></p>
+<p><span class="math display">\[H(X, Y) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log_2 p_{X,Y}(x, y)\]</span></p>
+<p><strong>Forme espérance :</strong></p>
+<p><span class="math display">\[H(X, Y) = -\mathbb{E}_{p_{X,Y}}[\log p_{X,Y}(x, y)]\]</span></p>
+</section>
+<section id="propriété-de-symétrie" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-de-symétrie">Propriété de symétrie</h3>
+<p><span class="math display">\[H(X, Y) = H(Y, X)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="entropie-conditionnelle-conditional-entropy" class="level2">
+<h2 class="anchored" data-anchor-id="entropie-conditionnelle-conditional-entropy">Entropie conditionnelle (Conditional Entropy)</h2>
+<section id="définition-2" class="level3">
+<h3 class="anchored" data-anchor-id="définition-2">Définition</h3>
+<p><strong>Entropie conditionnelle de <span class="math inline">\(X\)</span> sachant <span class="math inline">\(Y\)</span> :</strong></p>
+<p><span class="math display">\[H(X | Y) = \sum_{y \in \mathcal{Y}} p_Y(y) H(X | Y = y)\]</span></p>
+<p><strong>Forme développée :</strong></p>
+<p><span class="math display">\[H(X | Y) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log p_{X|Y}(x | y)\]</span></p>
+</section>
+<section id="entropie-conditionnelle-pour-une-valeur-fixée" class="level3">
+<h3 class="anchored" data-anchor-id="entropie-conditionnelle-pour-une-valeur-fixée">Entropie conditionnelle pour une valeur fixée</h3>
+<p><strong>Pour <span class="math inline">\(Y = y\)</span> fixé :</strong></p>
+<p><span class="math display">\[H(X | Y = y) = -\sum_{i=1}^{n} p_{X|Y}(x_i | y) \log p_{X|Y}(x_i | y)\]</span></p>
+</section>
+<section id="développement-complet" class="level3">
+<h3 class="anchored" data-anchor-id="développement-complet">Développement complet</h3>
+<p><span class="math display">\[H(X | Y) = -\sum_{j=1}^{m} p_Y(y_j) \left[\sum_{i=1}^{n} p_{X|Y}(x_i | y_j) \log p_{X|Y}(x_i | y_j)\right]\]</span></p>
+<p><span class="math display">\[= -\sum_{i=1}^{n} \sum_{j=1}^{m} p_{X,Y}(x_i, y_j) \log p_{X|Y}(x_i | y_j)\]</span></p>
+</section>
+<section id="asymétrie" class="level3">
+<h3 class="anchored" data-anchor-id="asymétrie">Asymétrie</h3>
+<p>⚠️ <strong>Attention :</strong></p>
+<p><span class="math display">\[H(X | Y) \neq H(Y | X)\]</span></p>
+<p>L’entropie conditionnelle n’est <strong>pas symétrique</strong></p>
+<hr>
+</section>
+</section>
+<section id="propriétés-de-lentropie" class="level2">
+<h2 class="anchored" data-anchor-id="propriétés-de-lentropie">Propriétés de l’entropie</h2>
+<section id="propriété-1-non-négativité" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-1-non-négativité">Propriété 1 : Non-négativité</h3>
+<p><strong>Entropie strictement positive :</strong></p>
+<p><span class="math display">\[H(X) \geq 0\]</span></p>
+<p><span class="math display">\[H(X, Y) \geq 0\]</span></p>
+<p><span class="math display">\[H(X | Y) \geq 0\]</span></p>
+<p><strong>Justification :</strong></p>
+<p><span class="math display">\[0 \leq p_X(x) \leq 1 \quad \Rightarrow \quad \log p_X(x) \leq 0\]</span></p>
+<p><span class="math display">\[\Rightarrow \quad 0 \leq -\sum p_X(x) \log p_X(x)\]</span></p>
+<p>De même pour <span class="math inline">\(p_{X,Y}(x, y)\)</span> et <span class="math inline">\(p_{X|Y}(x | y)\)</span></p>
+<hr>
+</section>
+<section id="propriété-2-règle-de-chaîne-pour-lentropie" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-2-règle-de-chaîne-pour-lentropie">Propriété 2 : Règle de chaîne pour l’entropie</h3>
+<p><strong>Cas de 2 variables :</strong></p>
+<p><span class="math display">\[p(x, y) = p(x | y) p(y) = p(y | x) p(x)\]</span></p>
+<p><strong>Entropie jointe :</strong></p>
+<p><span class="math display">\[H(X, Y) = H(X | Y) + H(Y) = H(Y | X) + H(X)\]</span></p>
+<p><strong>Démonstration :</strong></p>
+<p><span class="math display">\[-\log p_{X,Y}(x, y) = -\log[p_{Y|X}(y | x) p_X(x)] = -\log p_{Y|X}(y | x) - \log p_X(x)\]</span></p>
+<p><span class="math display">\[H(X, Y) = \mathbb{E}_{p_{X,Y}}[-\log p_{X,Y}(x, y)] = \mathbb{E}_{p_{X,Y}}[-\log p_X(x)] + \mathbb{E}_{p_{X,Y}}[-\log p_{Y|X}(y | x)]\]</span></p>
+<p><span class="math display">\[= H(X) + H(Y | X)\]</span></p>
+<p><strong>Cas général de N variables :</strong></p>
+<p><span class="math display">\[p(x_1, \ldots, x_N) = p(x_1) \prod_{i=2}^{N} p(x_i | x_{i-1}, \ldots, x_1)\]</span></p>
+<p><span class="math display">\[H(X_1, X_2, \ldots, X_N) = \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1)\]</span></p>
+<p><strong>Conséquence pour variables indépendantes :</strong></p>
+<p><span class="math display">\[H(X_1, X_2) \leq H(X_1) + H(X_2)\]</span></p>
+<p>Égalité si et seulement si les variables sont <strong>indépendantes</strong></p>
+<hr>
+</section>
+<section id="application-à-un-vecteur-dimage" class="level3">
+<h3 class="anchored" data-anchor-id="application-à-un-vecteur-dimage">Application à un vecteur d’image</h3>
+<p><strong>Représentation vectorielle :</strong></p>
+<p><span class="math display">\[X = p_x(x) = p_x(x_1, x_2, \ldots, x_N)\]</span></p>
+<p><span class="math display">\[X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix}\]</span></p>
+<p><strong>Modèle de Markov d’ordre 2 :</strong></p>
+<p><span class="math display">\[p(x_i | x_{i-1}, x_{i-2})\]</span></p>
+<p><strong>Entropie totale :</strong></p>
+<p><span class="math display">\[H(X_1, X_2, \ldots, X_N) = \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1)\]</span></p>
+<p><strong>Pour variables indépendantes :</strong></p>
+<p><span class="math display">\[H(X_1, X_2, \ldots, X_N) = \sum_{i=1}^{N} H(X_i)\]</span></p>
+<hr>
+</section>
+<section id="propriété-3-augmentation-de-lentropie-par-ajout-de-variables" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-3-augmentation-de-lentropie-par-ajout-de-variables">Propriété 3 : Augmentation de l’entropie par ajout de variables</h3>
+<p><strong>Principe :</strong></p>
+<p>Ajouter une nouvelle variable aléatoire <strong>augmente</strong> l’entropie</p>
+<p><span class="math display">\[H(X) \leq H(X, Y) \leq H(X, Y, Z) \leq \cdots\]</span></p>
+<p><strong>Conditions d’égalité :</strong></p>
+<p><span class="math display">\[H(X) = H(X, Y) \quad \Leftrightarrow \quad Y = f(X)\]</span></p>
+<p>(<span class="math inline">\(Y\)</span> est une fonction déterministe de <span class="math inline">\(X\)</span>)</p>
+<p><span class="math display">\[H(X, Y) = H(X, Y, Z) \quad \Leftrightarrow \quad Z = f(X, Y)\]</span></p>
+<p><strong>Décomposition :</strong></p>
+<p><span class="math display">\[H(X, Y) = H(X) + H(Y | X)\]</span></p>
+<p>où <span class="math inline">\(H(Y | X) \geq 0\)</span></p>
+<hr>
+</section>
+<section id="propriété-4-conditionnement-réduit-lentropie" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-4-conditionnement-réduit-lentropie">Propriété 4 : Conditionnement réduit l’entropie</h3>
+<p><strong>Principe fondamental :</strong></p>
+<p>Le conditionnement <strong>réduit</strong> (ou laisse inchangée) l’entropie</p>
+<p><span class="math display">\[H(X) \geq H(X | Y) \geq H(X | Y, Z) \geq \cdots\]</span></p>
+<p><strong>Conditions d’égalité :</strong></p>
+<p><span class="math display">\[H(X) = H(X | Y) \quad \Leftrightarrow \quad X \perp Y\]</span></p>
+<p>(<span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont indépendants)</p>
+<p><span class="math display">\[H(X | Y) = H(X | Y, Z) \quad \Leftrightarrow \quad X \perp Z | Y\]</span></p>
+<p>(<span class="math inline">\(X\)</span> et <span class="math inline">\(Z\)</span> sont conditionnellement indépendants sachant <span class="math inline">\(Y\)</span>)</p>
+<p>💡 <strong>Intuition :</strong> Connaître <span class="math inline">\(Y\)</span> ne peut que <strong>réduire l’incertitude</strong> sur <span class="math inline">\(X\)</span></p>
+<hr>
+</section>
+<section id="propriété-5-entropie-maximale-pour-distribution-uniforme" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-5-entropie-maximale-pour-distribution-uniforme">Propriété 5 : Entropie maximale pour distribution uniforme</h3>
+<p><strong>Théorème :</strong></p>
+<p><span class="math display">\[H(X) \leq \log_2 |\mathcal{X}|\]</span></p>
+<p><strong>Condition d’égalité :</strong></p>
+<p>Égalité si et seulement si <span class="math inline">\(X\)</span> suit une <strong>distribution uniforme</strong> :</p>
+<p><span class="math display">\[\mathbb{P}[X = x_i] = \frac{1}{N} = \frac{1}{|\mathcal{X}|}\]</span></p>
+<p><strong>Démonstration :</strong></p>
+<p>Soit <span class="math inline">\(\mathcal{X} = \{x_1, x_2, \ldots, x_N\}\)</span> et <span class="math inline">\(\mathbb{P}[X = x_i] = p_i\)</span></p>
+<p><span class="math display">\[H(X) = -\sum_{x \in \mathcal{X}} \mathbb{P}[X = x] \log_2 \mathbb{P}[X = x]\]</span></p>
+<p><span class="math display">\[= -(p_1 \log_2 p_1 + p_2 \log_2 p_2 + \cdots + p_N \log_2 p_N)\]</span></p>
+<p><strong>Objectif :</strong></p>
+<p>Trouver la distribution <span class="math inline">\(\{p_i\}_{i=1}^{N}\)</span> qui maximise <span class="math inline">\(H(X)\)</span> sous la contrainte <span class="math inline">\(\sum p_i = 1\)</span></p>
+<p><strong>Résultat :</strong></p>
+<p>La distribution uniforme <span class="math inline">\(p_i = 1/N\)</span> maximise l’entropie</p>
+<hr>
+</section>
+</section>
+<section id="divergence-de-kullback-leibler-kld" class="level2">
+<h2 class="anchored" data-anchor-id="divergence-de-kullback-leibler-kld">Divergence de Kullback-Leibler (KLD)</h2>
+<section id="définition-3" class="level3">
+<h3 class="anchored" data-anchor-id="définition-3">Définition</h3>
+<p><strong>Entropie relative ou divergence KL :</strong></p>
+<p>Entre deux pmfs <span class="math inline">\(p(x)\)</span> et <span class="math inline">\(q(x)\)</span> :</p>
+<p><span class="math display">\[D_{KL}(p \| q) = D(p \| q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} = \mathbb{E}_{p(x)}\left[\log_2 \frac{p(x)}{q(x)}\right]\]</span></p>
+</section>
+<section id="conventions" class="level3">
+<h3 class="anchored" data-anchor-id="conventions">Conventions</h3>
+<p><strong>Valeurs limites :</strong></p>
+<p><span class="math display">\[0 \log_2 \frac{0}{q(x)} = 0, \quad \forall q(x)\]</span></p>
+<p><span class="math display">\[p(x) \log_2 \frac{p(x)}{0} = +\infty, \quad \forall p(x) &gt; 0\]</span></p>
+</section>
+<section id="propriétés-fondamentales" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-fondamentales">Propriétés fondamentales</h3>
+<p><strong>Asymétrie :</strong></p>
+<p><span class="math display">\[D(p \| q) \neq D(q \| p)\]</span></p>
+<p>❌ La KLD n’est <strong>pas une distance</strong> (pas symétrique, ne vérifie pas l’inégalité triangulaire)</p>
+<p><strong>Non-négativité :</strong></p>
+<p><span class="math display">\[D(p \| q) \geq 0\]</span></p>
+<p>avec égalité si et seulement si <span class="math inline">\(p(x) = q(x)\)</span> pour tout <span class="math inline">\(x\)</span></p>
+<hr>
+</section>
+</section>
+<section id="interprétation-pratique-de-la-kld" class="level2">
+<h2 class="anchored" data-anchor-id="interprétation-pratique-de-la-kld">Interprétation pratique de la KLD</h2>
+<section id="problème-de-codage-avec-mauvaise-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="problème-de-codage-avec-mauvaise-distribution">Problème de codage avec mauvaise distribution</h3>
+<p><strong>Situation :</strong></p>
+<ul>
+<li><strong>Distribution réelle des données :</strong> <span class="math inline">\(p(x)\)</span> (inconnue)</li>
+<li><strong>Distribution supposée pour le codage :</strong> <span class="math inline">\(q(x)\)</span></li>
+</ul>
+<p><strong>Longueur de code :</strong></p>
+<p>Pour <span class="math inline">\(q(x)\)</span> : <span class="math inline">\(\ell_q(x) = -\log q(x)\)</span></p>
+<p>Pour <span class="math inline">\(p(x)\)</span> : <span class="math inline">\(\ell_p(x) = -\log p(x)\)</span></p>
+<p><strong>Longueur moyenne attendue :</strong></p>
+<p>Si on utilise le code conçu pour <span class="math inline">\(q(x)\)</span> pour coder des données de <span class="math inline">\(p(x)\)</span> :</p>
+<p><span class="math display">\[\ell_{av}^q = \mathbb{E}_{X \sim p(x)}[\ell_q(X)] = \sum_x p(x) \cdot (-\log q(x))\]</span></p>
+</section>
+<section id="décomposition-de-la-longueur-moyenne" class="level3">
+<h3 class="anchored" data-anchor-id="décomposition-de-la-longueur-moyenne">Décomposition de la longueur moyenne</h3>
+<p><span class="math display">\[\ell_{av}^q = \sum_x p(x) \cdot (-\log q(x))\]</span></p>
+<p><span class="math display">\[= \sum_x p(x) \left(-\log \frac{p(x)}{q(x)} \cdot \frac{1}{p(x)}\right)\]</span></p>
+<p><span class="math display">\[= \sum_x p(x) \log \frac{p(x)}{q(x)} + \sum_x p(x) \log \frac{1}{p(x)}\]</span></p>
+<p><span class="math display">\[= D(p(x) \| q(x)) + H(p(x))\]</span></p>
+<p><strong>Formule fondamentale :</strong></p>
+<p><span class="math display">\[\mathbb{E}_{X \sim p(x)}[\ell_q(X)] = H(p(x)) + D(p(x) \| q(x))\]</span></p>
+</section>
+<section id="interprétation-1" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-1">Interprétation</h3>
+<p>✅ <strong>En Machine Learning :</strong></p>
+<p>La KLD mesure le niveau de <strong>similarité</strong> entre deux distributions</p>
+<p>✅ <strong>En théorie du codage :</strong></p>
+<p>La KLD mesure l’<strong>inefficacité</strong> du codage conçu pour la pmf <span class="math inline">\(q(x)\)</span> alors que les données proviennent de la pmf <span class="math inline">\(p(x)\)</span></p>
+<p><strong>Bits supplémentaires :</strong></p>
+<p><span class="math display">\[D(p(x) \| q(x))\]</span></p>
+<p>représente les <strong>bits extra</strong> nécessaires en moyenne</p>
+<p><strong>Condition optimale :</strong></p>
+<p><span class="math display">\[D(p(x) \| q(x)) = 0 \quad \Leftrightarrow \quad p(x) = q(x)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="exemple-numérique-de-kld" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-numérique-de-kld">Exemple numérique de KLD</h2>
+<section id="configuration" class="level3">
+<h3 class="anchored" data-anchor-id="configuration">Configuration</h3>
+<p><strong>Variables binaires :</strong></p>
+<p><span class="math inline">\(x \in \mathcal{X} = \{0, 1\}\)</span></p>
+<ul>
+<li><span class="math inline">\(p(0) = a\)</span>, <span class="math inline">\(p(1) = 1 - a\)</span></li>
+<li><span class="math inline">\(q(0) = b\)</span>, <span class="math inline">\(q(1) = 1 - b\)</span></li>
+</ul>
+</section>
+<section id="formules" class="level3">
+<h3 class="anchored" data-anchor-id="formules">Formules</h3>
+<p><span class="math display">\[D(p \| q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} = a \log_2 \frac{a}{b} + (1-a) \log_2 \frac{1-a}{1-b}\]</span></p>
+<p><span class="math display">\[D(q \| p) = \sum_{x \in \mathcal{X}} q(x) \log_2 \frac{q(x)}{p(x)} = b \log_2 \frac{b}{a} + (1-b) \log_2 \frac{1-b}{1-a}\]</span></p>
+</section>
+<section id="calcul-avec-valeurs-spécifiques" class="level3">
+<h3 class="anchored" data-anchor-id="calcul-avec-valeurs-spécifiques">Calcul avec valeurs spécifiques</h3>
+<p><strong>Paramètres :</strong></p>
+<p><span class="math inline">\(a = 1/4\)</span>, <span class="math inline">\(b = 1/8\)</span></p>
+<p><span class="math display">\[D(p \| q) = \frac{1}{4} \log_2 \frac{8}{4} + \left(1 - \frac{1}{4}\right) \log_2 \frac{1 - 1/4}{1 - 1/8} = 0.0832 \text{ bit}\]</span></p>
+<p><span class="math display">\[D(q \| p) = \frac{1}{8} \log_2 \frac{4}{8} + \left(1 - \frac{1}{8}\right) \log_2 \frac{1 - 1/8}{1 - 1/4} = 0.0696 \text{ bit}\]</span></p>
+<p>✅ <strong>Vérification :</strong></p>
+<p><span class="math display">\[D(p \| q) \neq D(q \| p)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="cross-entropy-entropie-croisée" class="level2">
+<h2 class="anchored" data-anchor-id="cross-entropy-entropie-croisée">Cross-Entropy (Entropie croisée)</h2>
+<section id="définition-4" class="level3">
+<h3 class="anchored" data-anchor-id="définition-4">Définition</h3>
+<p><strong>Entropie croisée entre pmfs <span class="math inline">\(p(x)\)</span> et <span class="math inline">\(q(x)\)</span> :</strong></p>
+<p><span class="math display">\[H(p, q) = -\sum_{x \in \mathcal{X}} p(x) \log q(x) = -\mathbb{E}_{p(x)}[\log q(x)]\]</span></p>
+</section>
+<section id="lien-avec-la-kld" class="level3">
+<h3 class="anchored" data-anchor-id="lien-avec-la-kld">Lien avec la KLD</h3>
+<p><strong>Relation fondamentale :</strong></p>
+<p><span class="math display">\[H(p, q) = H(p) + D_{KL}(p \| q)\]</span></p>
+<p><strong>Démonstration :</strong></p>
+<p><span class="math display">\[D_{KL}(p \| q) = \mathbb{E}_{p(x)}\left[\log \frac{p(x)}{q(x)}\right] = \mathbb{E}_{p(x)}[\log p(x)] - \mathbb{E}_{p(x)}[\log q(x)]\]</span></p>
+<p><span class="math display">\[= -H(p) + H(p, q)\]</span></p>
+</section>
+<section id="propriété-doptimisation" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-doptimisation">Propriété d’optimisation</h3>
+<p>📌 <strong>Remarque importante :</strong></p>
+<p>Puisque <span class="math inline">\(H(p)\)</span> est <strong>constant</strong> (ne dépend pas de <span class="math inline">\(q\)</span>), optimiser <span class="math inline">\(H(p, q)\)</span> par rapport à <span class="math inline">\(q(x)\)</span> est <strong>équivalent</strong> à optimiser <span class="math inline">\(D_{KL}(p \| q)\)</span></p>
+<p><span class="math display">\[\min_q H(p, q) \quad \Leftrightarrow \quad \min_q D_{KL}(p \| q)\]</span></p>
+<p>✅ <strong>Application en Machine Learning :</strong></p>
+<p>La cross-entropy est largement utilisée comme <strong>fonction de perte</strong> dans les réseaux de neurones pour la classification</p>
+<hr>
+</section>
+</section>
+<section id="information-mutuelle-mutual-information" class="level2">
+<h2 class="anchored" data-anchor-id="information-mutuelle-mutual-information">Information mutuelle (Mutual Information)</h2>
+<section id="définition-5" class="level3">
+<h3 class="anchored" data-anchor-id="définition-5">Définition</h3>
+<p><strong>Information mutuelle entre deux variables aléatoires <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> :</strong></p>
+<p><span class="math display">\[I(X; Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log \frac{p_{X,Y}(x, y)}{p_X(x) p_Y(y)}\]</span></p>
+<p><strong>Forme espérance :</strong></p>
+<p><span class="math display">\[I(X; Y) = \mathbb{E}_{p_{X,Y}(x,y)}\left[\log \frac{p_{X,Y}(x, y)}{p_X(x) p_Y(y)}\right]\]</span></p>
+</section>
+<section id="forme-alternative" class="level3">
+<h3 class="anchored" data-anchor-id="forme-alternative">Forme alternative</h3>
+<p><span class="math display">\[I(X; Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{X,Y}(x, y) \log \frac{p_{X|Y}(x | y)}{p_X(x)} \cdot p_Y(y)\]</span></p>
+</section>
+<section id="propriétés-fondamentales-1" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-fondamentales-1">Propriétés fondamentales</h3>
+<p><strong>Symétrie :</strong></p>
+<p><span class="math display">\[I(X; Y) = I(Y; X)\]</span></p>
+<p><strong>Non-négativité :</strong></p>
+<p><span class="math display">\[I(X; Y) \geq 0\]</span></p>
+<p><strong>Condition d’annulation :</strong></p>
+<p><span class="math display">\[I(X; Y) = 0 \quad \Leftrightarrow \quad X \perp Y\]</span></p>
+<p>(si et seulement si <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont indépendants)</p>
+<hr>
+</section>
+</section>
+<section id="information-mutuelle-via-kl-divergence" class="level2">
+<h2 class="anchored" data-anchor-id="information-mutuelle-via-kl-divergence">Information mutuelle via KL-divergence</h2>
+<section id="formulation-en-termes-de-kld" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-en-termes-de-kld">Formulation en termes de KLD</h3>
+<p><strong>Information mutuelle comme divergence KL :</strong></p>
+<p><span class="math display">\[I(X; Y) = D_{KL}(p_{X,Y}(x, y) \| p_X(x) p_Y(y))\]</span></p>
+<p><span class="math display">\[= \mathbb{E}_{p_{X,Y}(x,y)}\left[\log \frac{p_{X,Y}(x, y)}{p_X(x) p_Y(y)}\right]\]</span></p>
+</section>
+<section id="interprétation-2" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-2">Interprétation</h3>
+<p>✅ <strong>L’information mutuelle mesure :</strong></p>
+<p>À quel point la distribution jointe <span class="math inline">\(p_{X,Y}(x, y)\)</span> diffère du produit des marginales <span class="math inline">\(p_X(x) p_Y(y)\)</span></p>
+<p><strong>Autrement dit :</strong></p>
+<p>Mesure la <strong>dépendance</strong> entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> par rapport à l’hypothèse d’<strong>indépendance</strong></p>
+<p>⚠️ <strong>Attention aux notations :</strong></p>
+<p>Équivalence : <span class="math inline">\(p_{X,Y}(x, y) = p(x, y)\)</span></p>
+</section>
+<section id="formes-conditionnelles" class="level3">
+<h3 class="anchored" data-anchor-id="formes-conditionnelles">Formes conditionnelles</h3>
+<p><span class="math display">\[I(X; Y) = \mathbb{E}_{p(y)}[D_{KL}(p(x|y) \| p(x))]\]</span></p>
+<p><span class="math display">\[I(X; Y) = \mathbb{E}_{p(x)}[D_{KL}(p(y|x) \| p(y))]\]</span></p>
+<hr>
+</section>
+</section>
+<section id="relations-entre-information-mutuelle-et-entropie" class="level2">
+<h2 class="anchored" data-anchor-id="relations-entre-information-mutuelle-et-entropie">Relations entre information mutuelle et entropie</h2>
+<section id="relations-fondamentales" class="level3">
+<h3 class="anchored" data-anchor-id="relations-fondamentales">Relations fondamentales</h3>
+<p><strong>Relation 1 :</strong></p>
+<p><span class="math display">\[I(X; Y) = H(X) - H(X | Y)\]</span></p>
+<p><strong>Relation 2 :</strong></p>
+<p><span class="math display">\[I(X; Y) = H(Y) - H(Y | X)\]</span></p>
+<p><strong>Relation 3 :</strong></p>
+<p><span class="math display">\[I(X; Y) = H(X) + H(Y) - H(X, Y)\]</span></p>
+<p><strong>Cas particulier :</strong></p>
+<p><span class="math display">\[I(X; X) = H(X)\]</span></p>
+<p>car <span class="math inline">\(H(X | X) = 0\)</span></p>
+</section>
+<section id="diagramme-de-venn-des-entropies" class="level3">
+<h3 class="anchored" data-anchor-id="diagramme-de-venn-des-entropies">Diagramme de Venn des entropies</h3>
+<pre><code>     H(X)              H(Y)
+    ┌────────────┬────────────┐
+    │            │            │
+    │  H(X|Y)    │  I(X;Y)    │  H(Y|X)
+    │            │            │
+    └────────────┴────────────┘
+         H(X,Y)</code></pre>
+<p><strong>Lecture du diagramme :</strong></p>
+<ul>
+<li><span class="math inline">\(H(X, Y)\)</span> : entropie jointe (tout le rectangle)</li>
+<li><span class="math inline">\(I(X; Y)\)</span> : information mutuelle (intersection)</li>
+<li><span class="math inline">\(H(X | Y)\)</span> : entropie de <span class="math inline">\(X\)</span> sachant <span class="math inline">\(Y\)</span> (partie gauche uniquement)</li>
+<li><span class="math inline">\(H(Y | X)\)</span> : entropie de <span class="math inline">\(Y\)</span> sachant <span class="math inline">\(X\)</span> (partie droite uniquement)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="information-mutuelle-conditionnelle" class="level2">
+<h2 class="anchored" data-anchor-id="information-mutuelle-conditionnelle">Information mutuelle conditionnelle</h2>
+<section id="définition-6" class="level3">
+<h3 class="anchored" data-anchor-id="définition-6">Définition</h3>
+<p><strong>Information mutuelle entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sachant <span class="math inline">\(Z\)</span> :</strong></p>
+<p><span class="math display">\[I(X; Y | Z) = H(X | Z) - H(X | Y, Z)\]</span></p>
+<p><strong>Forme avec KL-divergence :</strong></p>
+<p><span class="math display">\[I(X; Y | Z) = \mathbb{E}_{p(x,y,z)}\left[\log \frac{p_{X,Y|Z}(x, y | z)}{p_{X|Z}(x | z) p_{Y|Z}(y | z)}\right]\]</span></p>
+<p><span class="math display">\[= \mathbb{E}_{p(x,y,z)}\left[\log \frac{p_{X|Y,Z}(x | y, z)}{p_{X|Z}(x | z)}\right]\]</span></p>
+</section>
+<section id="démonstration" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration">Démonstration</h3>
+<p><span class="math display">\[p_{X,Y|Z}(x, y | z) = p_{Y|Z}(y | z) \cdot p_{X|Y,Z}(x | y, z)\]</span></p>
+<p><span class="math display">\[I(X; Y | Z) = \mathbb{E}_{p(x,y,z)}[\log p_{X|Y,Z}(x | y, z)] - \mathbb{E}_{p(x,y,z)}[\log p_{X|Z}(x | z)]\]</span></p>
+<p><span class="math display">\[= -H(X | Y, Z) + H(X | Z)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="propriétés-de-linformation-mutuelle" class="level2">
+<h2 class="anchored" data-anchor-id="propriétés-de-linformation-mutuelle">Propriétés de l’information mutuelle</h2>
+<section id="information-mutuelle-conditionnelle-1" class="level3">
+<h3 class="anchored" data-anchor-id="information-mutuelle-conditionnelle-1">Information mutuelle conditionnelle</h3>
+<p><strong>Diagramme :</strong></p>
+<pre><code>     H(X|Z)         H(Y|Z)
+    ┌──────────┬──────────┐
+    │          │          │
+    │          │ I(X;Y|Z) │
+    │          │          │
+    └──────────┴──────────┘</code></pre>
+<p><span class="math display">\[I(X; Y | Z) = H(X | Z) - H(X | Y, Z)\]</span></p>
+<hr>
+</section>
+<section id="règle-de-chaîne-pour-linformation-mutuelle" class="level3">
+<h3 class="anchored" data-anchor-id="règle-de-chaîne-pour-linformation-mutuelle">Règle de chaîne pour l’information mutuelle</h3>
+<p><strong>Pour N variables :</strong></p>
+<p><span class="math display">\[I(X_1, X_2, \ldots, X_N; Y) = \sum_{i=1}^{N} I(X_i; Y | X_{i-1}, \ldots, X_1)\]</span></p>
+<p><strong>Démonstration :</strong></p>
+<p><span class="math display">\[I(X_1, X_2, \ldots, X_N; Y) = H(X_1, X_2, \ldots, X_N) - H(X_1, X_2, \ldots, X_N | Y)\]</span></p>
+<p><span class="math display">\[= \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1) - \sum_{i=1}^{N} H(X_i | X_{i-1}, \ldots, X_1, Y)\]</span></p>
+<p><span class="math display">\[= \sum_{i=1}^{N} I(X_i; Y | X_{i-1}, \ldots, X_1)\]</span></p>
+</section>
+<section id="application-pixels-dimage-et-label" class="level3">
+<h3 class="anchored" data-anchor-id="application-pixels-dimage-et-label">Application : Pixels d’image et label</h3>
+<p><strong>Configuration :</strong></p>
+<p><span class="math display">\[X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix} \in \mathcal{X}^N\]</span></p>
+<p>représente une image de <span class="math inline">\(N = n \times m\)</span> pixels</p>
+<p><span class="math display">\[Y \in \mathcal{Y}\]</span></p>
+<p>représente un label</p>
+<p><strong>Information mutuelle totale :</strong></p>
+<p><span class="math display">\[I(X_1, X_2, \ldots, X_N; Y) = \sum_{i=1}^{N} I(X_i; Y | X_{i-1}, \ldots, X_1)\]</span></p>
+<hr>
+</section>
+<section id="décomposition-complexe" class="level3">
+<h3 class="anchored" data-anchor-id="décomposition-complexe">Décomposition complexe</h3>
+<p><strong>Exemple avec 2 variables et 2 labels :</strong></p>
+<p><span class="math display">\[I(X_1, X_2; Y_1, Y_2) = I(X_1; Y_1, Y_2) + I(X_2; Y_1, Y_2 | X_1)\]</span></p>
+<p><strong>Décomposition de <span class="math inline">\(I(X_1; Y_1, Y_2)\)</span> :</strong></p>
+<p><span class="math display">\[I(X_1; Y_1, Y_2) = I(X_1; Y_1) + I(X_1; Y_2 | Y_1) = I(X_1; Y_2) + I(X_1; Y_1 | Y_2)\]</span></p>
+<p><strong>Décomposition de <span class="math inline">\(I(X_2; Y_1, Y_2 | X_1)\)</span> :</strong></p>
+<p><span class="math display">\[I(X_2; Y_1, Y_2 | X_1) = I(X_2; Y_1 | X_1) + I(X_2; Y_2 | X_1, Y_1)\]</span></p>
+<p><span class="math display">\[= I(X_2; Y_2 | X_1) + I(X_2; Y_1 | X_1, Y_2)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="inégalité-de-traitement-des-données" class="level2">
+<h2 class="anchored" data-anchor-id="inégalité-de-traitement-des-données">Inégalité de traitement des données</h2>
+<section id="chaîne-de-markov" class="level3">
+<h3 class="anchored" data-anchor-id="chaîne-de-markov">Chaîne de Markov</h3>
+<p><strong>Configuration :</strong></p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    X --&gt; Y
+    Y --&gt; Z
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><span class="math display">\[p_{X,Y,Z}(x, y, z) = p_X(x) \cdot p_{Y|X}(y | x) \cdot p_{Z|Y}(z | y)\]</span></p>
+<p><strong>Notation :</strong> <span class="math inline">\(X \to Y \to Z\)</span></p>
+</section>
+<section id="inégalité-fondamentale" class="level3">
+<h3 class="anchored" data-anchor-id="inégalité-fondamentale">Inégalité fondamentale</h3>
+<p><strong>Deux inégalités valides :</strong></p>
+<p><span class="math display">\[I(X; Y) \geq I(X; Z)\]</span></p>
+<p><span class="math display">\[I(Y; Z) \geq I(X; Z)\]</span></p>
+<p><strong>Cas particulier important :</strong></p>
+<p>Si <span class="math inline">\(Z = g(Y)\)</span> (fonction déterministe de <span class="math inline">\(Y\)</span>) :</p>
+<p><span class="math display">\[I(X; Y) \geq I(X; Z)\]</span></p>
+</section>
+<section id="interprétation-3" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-3">Interprétation</h3>
+<p>✅ <strong>Principe de non-créativité de l’information :</strong></p>
+<p>La quantité d’information <strong>ne peut pas être augmentée</strong> par un traitement quelconque</p>
+<p>⚠️ <strong>Ceci inclut les réseaux de neurones profonds !</strong></p>
+<p>L’information mutuelle entre l’entrée et la sortie d’un réseau ne peut qu’être <strong>inférieure ou égale</strong> à l’information mutuelle entre l’entrée et les couches intermédiaires</p>
+<hr>
+</section>
+<section id="démonstration-de-linégalité" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-de-linégalité">Démonstration de l’inégalité</h3>
+<p><strong>En utilisant la règle de chaîne :</strong></p>
+<p><span class="math display">\[I(X; Y, Z) = I(X; Z) + I(X; Y | Z) \quad \text{(a)}\]</span></p>
+<p><span class="math display">\[I(X; Y, Z) = I(X; Y) + I(X; Z | Y) \quad \text{(b)}\]</span></p>
+<p><strong>Propriété clé :</strong></p>
+<p>Pour la chaîne de Markov <span class="math inline">\(X \to Y \to Z\)</span> :</p>
+<p><span class="math display">\[X \perp Z | Y \quad \Rightarrow \quad I(X; Z | Y) = 0\]</span></p>
+<p><strong>Donc de (b) :</strong></p>
+<p><span class="math display">\[I(X; Y, Z) = I(X; Y)\]</span></p>
+<p><strong>En combinant avec (a) :</strong></p>
+<p><span class="math display">\[I(X; Y) = I(X; Z) + I(X; Y | Z)\]</span></p>
+<p><strong>Conclusion :</strong></p>
+<p><span class="math display">\[I(X; Y) \geq I(X; Z)\]</span></p>
+<p>car <span class="math inline">\(I(X; Y | Z) \geq 0\)</span></p>
+<hr>
+</section>
+</section>
+<section id="variables-continues-entropie-différentielle" class="level2">
+<h2 class="anchored" data-anchor-id="variables-continues-entropie-différentielle">Variables continues : Entropie différentielle</h2>
+<section id="motivation" class="level3">
+<h3 class="anchored" data-anchor-id="motivation">Motivation</h3>
+<p><strong>Pour variables discrètes :</strong></p>
+<p><span class="math display">\[P[x_k; \Delta x] = \int f_X(x) dx \approx f_X(x_k) \Delta x\]</span></p>
+<p><strong>Entropie avec quantification :</strong></p>
+<p><span class="math display">\[H(X; \Delta x) = -\sum_{i=1}^{N} P[x_k; \Delta x] \log_2 P[x_k; \Delta x]\]</span></p>
+<p><span class="math display">\[= -\sum_{i=1}^{N} f_X(x_k) \Delta x \log_2[f_X(x_k) \Delta x]\]</span></p>
+</section>
+<section id="décomposition" class="level3">
+<h3 class="anchored" data-anchor-id="décomposition">Décomposition</h3>
+<p><span class="math display">\[H(X; \Delta x) = -\sum_{i=1}^{N} f_X(x_k) \Delta x \log_2 f_X(x_k) - \sum_{i=1}^{N} f_X(x_k) \Delta x \log_2 \Delta x\]</span></p>
+<p><span class="math display">\[= -\sum_{i=1}^{N} f_X(x_k) \Delta x \log_2 f_X(x_k) - \log_2 \Delta x \underbrace{\sum_{i=1}^{N} f_X(x_k) \Delta x}_{= 1}\]</span></p>
+<p><strong>Passage à la limite :</strong></p>
+<p><span class="math display">\[H(X; \Delta x) = -\int f_X(x) \log_2 f_X(x) dx - \log_2 \Delta x\]</span></p>
+</section>
+<section id="problème-avec-la-limite" class="level3">
+<h3 class="anchored" data-anchor-id="problème-avec-la-limite">Problème avec la limite</h3>
+<p>⚠️ <strong>Dans la limite <span class="math inline">\(\Delta x \to 0\)</span> :</strong></p>
+<p><span class="math inline">\(\Delta x\)</span> tend vers zéro pour un grand <span class="math inline">\(N\)</span></p>
+<p><strong>Conséquence :</strong></p>
+<p><span class="math inline">\(\log_2 \Delta x \to -\infty\)</span></p>
+<p>Donc <span class="math inline">\(H(X; \Delta x) \to +\infty\)</span></p>
+<hr>
+</section>
+</section>
+<section id="définition-de-lentropie-différentielle" class="level2">
+<h2 class="anchored" data-anchor-id="définition-de-lentropie-différentielle">Définition de l’entropie différentielle</h2>
+<section id="définition-formelle-1" class="level3">
+<h3 class="anchored" data-anchor-id="définition-formelle-1">Définition formelle</h3>
+<p><strong>Entropie différentielle d’une v.a. continue <span class="math inline">\(X\)</span> avec pdf <span class="math inline">\(f_X(x)\)</span> :</strong></p>
+<p><span class="math display">\[h(X) = -\int_{\mathcal{X}} f_X(x) \log_2 f_X(x) dx = -\mathbb{E}_{f_X}[\log_2 f_X(x)]\]</span></p>
+<p>⚠️ <strong>Attention :</strong></p>
+<ul>
+<li>Notation différente : <span class="math inline">\(h(X)\)</span> au lieu de <span class="math inline">\(H(X)\)</span></li>
+<li>Peut être <strong>négative</strong> (contrairement à l’entropie discrète)</li>
+<li>N’a pas d’interprétation directe en termes de bits</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="entropie-différentielle-dune-gaussienne" class="level2">
+<h2 class="anchored" data-anchor-id="entropie-différentielle-dune-gaussienne">Entropie différentielle d’une gaussienne</h2>
+<section id="variable-gaussienne" class="level3">
+<h3 class="anchored" data-anchor-id="variable-gaussienne">Variable gaussienne</h3>
+<p><strong>Distribution :</strong></p>
+<p><span class="math display">\[X \sim \mathcal{N}(0, \sigma_X^2)\]</span></p>
+<p><strong>Entropie différentielle :</strong></p>
+<p><span class="math display">\[h(X) = -\mathbb{E}_{f_X}[\log_2 f_X(x)] = \frac{1}{2} \log_2(2\pi e \sigma_X^2)\]</span></p>
+</section>
+<section id="démonstration-1" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-1">Démonstration</h3>
+<p><strong>PDF gaussienne :</strong></p>
+<p><span class="math display">\[f_X(x) = \frac{1}{\sqrt{2\pi\sigma_X^2}} \exp\left(-\frac{x^2}{2\sigma_X^2}\right)\]</span></p>
+<p><strong>Calcul de l’entropie :</strong></p>
+<p><span class="math display">\[h(X) = -\int f_X(x) \ln f_X(x) dx \quad \text{[nats]}\]</span></p>
+<p><span class="math display">\[= -\int f_X(x) \left[-\frac{x^2}{2\sigma_X^2} - \ln(\sqrt{2\pi\sigma_X^2})\right] dx\]</span></p>
+<p><span class="math display">\[= \int_{-\infty}^{\infty} f_X(x) \frac{x^2}{2\sigma_X^2} dx + \ln(\sqrt{2\pi\sigma_X^2}) \underbrace{\int_{-\infty}^{\infty} f_X(x) dx}_{= 1}\]</span></p>
+<p><strong>Calcul de la première intégrale :</strong></p>
+<p><span class="math display">\[\int_{-\infty}^{\infty} f_X(x) \frac{x^2}{2\sigma_X^2} dx = \frac{1}{2\sigma_X^2} \underbrace{\int_{-\infty}^{\infty} x^2 f_X(x) dx}_{= \text{Var}[X] = \sigma_X^2} = \frac{\sigma_X^2}{2\sigma_X^2} = \frac{1}{2}\]</span></p>
+<p><strong>Résultat en nats :</strong></p>
+<p><span class="math display">\[h(X) = \frac{1}{2} + \ln(\sqrt{2\pi\sigma_X^2}) = \frac{1}{2} \ln e + \frac{1}{2} \ln(2\pi\sigma_X^2)\]</span></p>
+<p><span class="math display">\[= \frac{1}{2}[\ln e + \ln(2\pi\sigma_X^2)] = \frac{1}{2} \ln(2\pi e \sigma_X^2) \quad \text{[nats]}\]</span></p>
+<p><strong>Conversion en bits :</strong></p>
+<p><span class="math display">\[h(X) = \frac{1}{2} \log_2(2\pi e \sigma_X^2) \quad \text{[bits]}\]</span></p>
+<hr>
+</section>
+</section>
+<section id="propriétés-de-lentropie-différentielle" class="level2">
+<h2 class="anchored" data-anchor-id="propriétés-de-lentropie-différentielle">Propriétés de l’entropie différentielle</h2>
+<section id="propriété-1-invariance-par-translation" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-1-invariance-par-translation">Propriété 1 : Invariance par translation</h3>
+<p><strong>Translation :</strong></p>
+<p><span class="math display">\[h(X + a) = h(X)\]</span></p>
+<p>où <span class="math inline">\(a\)</span> est une constante scalaire</p>
+<p>💡 <strong>Interprétation :</strong> Décaler une distribution ne change pas son entropie différentielle</p>
+</section>
+<section id="propriété-2-effet-de-la-mise-à-léchelle" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-2-effet-de-la-mise-à-léchelle">Propriété 2 : Effet de la mise à l’échelle</h3>
+<p><strong>Pour variable scalaire :</strong></p>
+<p>Si <span class="math inline">\(X\)</span> est une variable aléatoire scalaire :</p>
+<p><span class="math display">\[h(aX) = h(X) + \log |a|\]</span></p>
+<p><strong>Pour variable vectorielle :</strong></p>
+<p>Si <span class="math inline">\(X\)</span> est un vecteur aléatoire et <span class="math inline">\(A\)</span> est une matrice :</p>
+<p><span class="math display">\[h(AX) = h(X) + \log |\det(A)|\]</span></p>
+<p>où <span class="math inline">\(\det(A)\)</span> est le <strong>déterminant</strong> de la matrice <span class="math inline">\(A\)</span></p>
+<p>💡 <strong>Interprétation :</strong></p>
+<ul>
+<li>Étirer la distribution (facteur <span class="math inline">\(|a| &gt; 1\)</span>) <strong>augmente</strong> l’entropie</li>
+<li>Compresser la distribution (facteur <span class="math inline">\(|a| &lt; 1\)</span>) <strong>diminue</strong> l’entropie</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="concepts-mathématiques-à-maîtriser" class="level2">
+<h2 class="anchored" data-anchor-id="concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</h2>
+<section id="théorie-de-linformation" class="level3">
+<h3 class="anchored" data-anchor-id="théorie-de-linformation">Théorie de l’information</h3>
+<p><strong>Concepts fondamentaux :</strong></p>
+<ul>
+<li>Entropie (discrète et différentielle)</li>
+<li>Entropie jointe et conditionnelle</li>
+<li>Information mutuelle</li>
+<li>Divergence KL</li>
+<li>Cross-entropy</li>
+</ul>
+<p><strong>Relations :</strong></p>
+<ul>
+<li>Règle de chaîne pour entropie</li>
+<li>Relations entre <span class="math inline">\(H(X)\)</span>, <span class="math inline">\(H(Y)\)</span>, <span class="math inline">\(H(X,Y)\)</span>, <span class="math inline">\(I(X;Y)\)</span></li>
+<li>Inégalité de traitement des données</li>
+</ul>
+</section>
+<section id="probabilités" class="level3">
+<h3 class="anchored" data-anchor-id="probabilités">Probabilités</h3>
+<p><strong>Distributions :</strong></p>
+<ul>
+<li>Distribution discrète vs continue</li>
+<li>Distribution uniforme</li>
+<li>Distribution gaussienne</li>
+</ul>
+<p><strong>Concepts :</strong></p>
+<ul>
+<li>Indépendance</li>
+<li>Conditionnement</li>
+<li>Marginalisation</li>
+</ul>
+</section>
+<section id="codage-et-compression" class="level3">
+<h3 class="anchored" data-anchor-id="codage-et-compression">Codage et compression</h3>
+<p><strong>Théorie du codage :</strong></p>
+<ul>
+<li>Longueur de code optimale</li>
+<li>Code préfixe</li>
+<li>Codage de Huffman</li>
+<li>Taux de compression</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="questions-dexamen-types" class="level2">
+<h2 class="anchored" data-anchor-id="questions-dexamen-types">Questions d’examen types</h2>
+<section id="questions-conceptuelles" class="level3">
+<h3 class="anchored" data-anchor-id="questions-conceptuelles">Questions conceptuelles</h3>
+<p><strong>Entropie :</strong></p>
+<ul>
+<li>Définir l’entropie et expliquer son interprétation</li>
+<li>Quelle distribution maximise l’entropie ?</li>
+<li>Différence entre entropie et entropie différentielle</li>
+</ul>
+<p><strong>Relations :</strong></p>
+<ul>
+<li>Relation entre <span class="math inline">\(H(X,Y)\)</span>, <span class="math inline">\(H(X)\)</span>, et <span class="math inline">\(H(Y|X)\)</span></li>
+<li>Qu’est-ce que l’information mutuelle ?</li>
+<li>Pourquoi <span class="math inline">\(H(X|Y) \leq H(X)\)</span> ?</li>
+</ul>
+<p><strong>KLD et cross-entropy :</strong></p>
+<ul>
+<li>Définir la divergence KL</li>
+<li>Interprétation en termes de codage</li>
+<li>Lien entre KLD et cross-entropy</li>
+</ul>
+</section>
+<section id="questions-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="questions-techniques">Questions techniques</h3>
+<p><strong>Calculs :</strong></p>
+<ul>
+<li>Calculer l’entropie d’une distribution binaire</li>
+<li>Calculer la KLD entre deux distributions</li>
+<li>Calculer l’information mutuelle entre deux variables</li>
+</ul>
+<p><strong>Codage :</strong></p>
+<ul>
+<li>Appliquer l’algorithme de Huffman</li>
+<li>Calculer la longueur moyenne d’un code</li>
+<li>Qu’est-ce qu’un code préfixe et pourquoi est-il important ?</li>
+</ul>
+<p><strong>Propriétés :</strong></p>
+<ul>
+<li>Démontrer la règle de chaîne pour l’entropie</li>
+<li>Démontrer l’inégalité de traitement des données</li>
+<li>Prouver que <span class="math inline">\(I(X;Y) \geq 0\)</span></li>
+</ul>
+</section>
+<section id="démonstrations-mathématiques" class="level3">
+<h3 class="anchored" data-anchor-id="démonstrations-mathématiques">Démonstrations mathématiques</h3>
+<p><strong>Propriétés de l’entropie :</strong></p>
+<ul>
+<li>Montrer que le conditionnement réduit l’entropie</li>
+<li>Prouver que la distribution uniforme maximise l’entropie</li>
+<li>Démontrer la règle de chaîne pour l’information mutuelle</li>
+</ul>
+<p><strong>Variables continues :</strong></p>
+<ul>
+<li>Calculer l’entropie différentielle d’une gaussienne</li>
+<li>Effet de la mise à l’échelle sur l’entropie différentielle</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="applications-en-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="applications-en-machine-learning">Applications en Machine Learning</h2>
+<section id="fonctions-de-perte" class="level3">
+<h3 class="anchored" data-anchor-id="fonctions-de-perte">Fonctions de perte</h3>
+<p><strong>Cross-entropy comme loss :</strong></p>
+<p>Utilisée en classification pour minimiser la divergence entre :</p>
+<ul>
+<li>Distribution prédite par le modèle : <span class="math inline">\(q(y|x)\)</span></li>
+<li>Distribution vraie (one-hot) : <span class="math inline">\(p(y|x)\)</span></li>
+</ul>
+<p><span class="math display">\[\mathcal{L} = -\sum_i p(y_i) \log q(y_i)\]</span></p>
+</section>
+<section id="sélection-de-features" class="level3">
+<h3 class="anchored" data-anchor-id="sélection-de-features">Sélection de features</h3>
+<p><strong>Information mutuelle :</strong></p>
+<p>Mesurer <span class="math inline">\(I(X_i; Y)\)</span> pour sélectionner les features les plus informatives</p>
+<p><strong>Critère :</strong></p>
+<p>Garder les features avec <span class="math inline">\(I(X_i; Y)\)</span> élevée</p>
+</section>
+<section id="régularisation" class="level3">
+<h3 class="anchored" data-anchor-id="régularisation">Régularisation</h3>
+<p><strong>Variational AutoEncoders (VAE) :</strong></p>
+<p>Minimiser la KLD entre :</p>
+<ul>
+<li>Distribution encodée <span class="math inline">\(q(z|x)\)</span></li>
+<li>Prior <span class="math inline">\(p(z)\)</span> (souvent gaussien)</li>
+</ul>
+<p><span class="math display">\[\mathcal{L}_{KL} = D_{KL}(q(z|x) \| p(z))\]</span></p>
+<hr>
+</section>
+</section>
+<section id="résumé-des-formules-clés" class="level2">
+<h2 class="anchored" data-anchor-id="résumé-des-formules-clés">Résumé des formules clés</h2>
+<section id="entropie" class="level3">
+<h3 class="anchored" data-anchor-id="entropie">Entropie</h3>
+<p><span class="math display">\[H(X) = -\sum_x p(x) \log p(x)\]</span></p>
+<p><span class="math display">\[H(X,Y) = -\sum_x \sum_y p(x,y) \log p(x,y)\]</span></p>
+<p><span class="math display">\[H(X|Y) = -\sum_x \sum_y p(x,y) \log p(x|y)\]</span></p>
+</section>
+<section id="relations" class="level3">
+<h3 class="anchored" data-anchor-id="relations">Relations</h3>
+<p><span class="math display">\[H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)\]</span></p>
+<p><span class="math display">\[H(X|Y) \leq H(X)\]</span></p>
+<p><span class="math display">\[H(X,Y) \leq H(X) + H(Y)\]</span></p>
+</section>
+<section id="information-mutuelle" class="level3">
+<h3 class="anchored" data-anchor-id="information-mutuelle">Information mutuelle</h3>
+<p><span class="math display">\[I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)\]</span></p>
+<p><span class="math display">\[I(X;Y) = H(X) + H(Y) - H(X,Y)\]</span></p>
+<p><span class="math display">\[I(X;Y) = D_{KL}(p(x,y) \| p(x)p(y))\]</span></p>
+</section>
+<section id="kld-et-cross-entropy" class="level3">
+<h3 class="anchored" data-anchor-id="kld-et-cross-entropy">KLD et Cross-entropy</h3>
+<p><span class="math display">\[D_{KL}(p \| q) = \sum_x p(x) \log \frac{p(x)}{q(x)}\]</span></p>
+<p><span class="math display">\[H(p,q) = -\sum_x p(x) \log q(x)\]</span></p>
+<p><span class="math display">\[H(p,q) = H(p) + D_{KL}(p \| q)\]</span></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

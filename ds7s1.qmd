@@ -11,7 +11,7 @@
 Clustering is **unsupervised**: no labels, no teacher to say "this is a cat." The algorithm must discover the structure by itself.
 :::
 
-```mermaid
+```{mermaid}
 flowchart TD
     A[Unlabeled data] --> B{Clustering problem}
     B --> C[k-means approach:<br/>find K centers<br/>and assign each point<br/>to the nearest center]
@@ -32,7 +32,7 @@ flowchart TD
 
 **This is exactly k-means!**
 
-```mermaid
+```{mermaid}
 flowchart TD
     A[K chairs placed<br/>randomly] --> B[Music stops:<br/>each player runs<br/>to the nearest chair]
     B --> C[Move each chair<br/>to the center of<br/>surrounding players]
@@ -77,7 +77,7 @@ Each step can only improve (or leave unchanged) the criterion. Since there's a f
 ### The Dilemma
 If all chairs start in the same corner, the game will be very long and yield a poor result. **K-means is very sensitive to initialization!**
 
-```mermaid
+```{mermaid}
 flowchart TD
     A[Initialization choice] --> B[Poor initialization]
     A --> C[Good initialization]

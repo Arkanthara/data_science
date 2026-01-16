@@ -1,8 +1,4 @@
-Here's the English version of your EM algorithm intuition guide, preserving all the content, structure, and visual elements:
-
----
-
-# Intuition Behind the EM Algorithm
+# Intuition
 
 ## 1. The Fundamental Problem: Separating Mixed Sources
 

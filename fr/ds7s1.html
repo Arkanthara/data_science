@@ -107,6 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -556,7 +559,12 @@ Important
 <p><strong>Concept Clé : Apprentissage non supervisé</strong> Le clustering est <strong>non supervisé</strong> : pas d’étiquettes, pas de professeur pour dire “ceci est un chat”. L’algorithme doit découvrir la structure par lui-même.</p>
 </div>
 </div>
-<pre class="mermaid"><code>flowchart TD
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
     A[Données non étiquetées] --&gt; B{Problème de clustering}
     B --&gt; C[Approche k-means :&lt;br/&gt;trouver K centres&lt;br/&gt;et assigner chaque point&lt;br/&gt;au centre le plus proche]
     B --&gt; D[Approche hiérarchique :&lt;br/&gt;construire un arbre&lt;br/&gt;de regroupements]
@@ -564,18 +572,35 @@ Important
     D --&gt; F[Avantage : visualisation&lt;br/&gt;par dendrogramme]
     
     style E fill:#e6f3ff
-    style F fill:#e6ffe6</code></pre>
+    style F fill:#e6ffe6
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="lintuition-géométrique-le-jeu-des-chaises-musicales" class="level2">
 <h2 class="anchored" data-anchor-id="lintuition-géométrique-le-jeu-des-chaises-musicales">2. L’Intuition Géométrique : Le Jeu des Chaises Musicales</h2>
 <p><strong>Analogie :</strong> Imaginez un jeu de chaises musicales avec K chaises (clusters) et N joueurs (points de données). Quand la musique s’arrête : 1. Chaque joueur court vers la chaise la plus proche <strong>(assignation)</strong> 2. On déplace chaque chaise au centre des joueurs qui l’entourent <strong>(mise à jour)</strong> 3. On recommence jusqu’à ce que les chaises ne bougent plus</p>
 <p><strong>C’est exactement k-means !</strong></p>
-<pre class="mermaid"><code>flowchart TD
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
     A[K chaises placées&lt;br/&gt;au hasard] --&gt; B[Musique s'arrête :&lt;br/&gt;chaque joueur court&lt;br/&gt;vers la chaise la plus proche]
     B --&gt; C[On déplace chaque chaise&lt;br/&gt;au centre des joueurs&lt;br/&gt;qui l'entourent]
     C --&gt; D{Les chaises ont-elles&lt;br/&gt;beaucoup bougé ?}
     D --&gt;|Oui, recommencer| B
-    D --&gt;|Non, fin du jeu| E[Résultat : K groupes&lt;br/&gt;de joueurs]</code></pre>
+    D --&gt;|Non, fin du jeu| E[Résultat : K groupes&lt;br/&gt;de joueurs]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="la-formulation-mathématique-minimiser-lénergie" class="level2">
 <h2 class="anchored" data-anchor-id="la-formulation-mathématique-minimiser-lénergie">3. La Formulation Mathématique : Minimiser l’Énergie</h2>
@@ -611,14 +636,25 @@ Note
 <section id="le-dilemme" class="level3">
 <h3 class="anchored" data-anchor-id="le-dilemme">Le Dilemme</h3>
 <p>Si toutes les chaises commencent dans le même coin, le jeu sera très long et donnera un mauvais résultat. <strong>K-means est très sensible à l’initialisation !</strong></p>
-<pre class="mermaid"><code>flowchart TD
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
     A[Choix d'initialisation] --&gt; B[Mauvaise initialisation]
     A --&gt; C[Bonne initialisation]
     B --&gt; D[Convergence lente&lt;br/&gt;Clusters de mauvaise qualité&lt;br/&gt;Maximum local]
     C --&gt; E[Convergence rapide&lt;br/&gt;Clusters de bonne qualité&lt;br/&gt;Maximum global (ou bon)]
     
     style D fill:#ffcccc
-    style E fill:#ccffcc</code></pre>
+    style E fill:#ccffcc
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="k-means-la-solution-intelligente" class="level3">
 <h3 class="anchored" data-anchor-id="k-means-la-solution-intelligente">K-means++ : La Solution Intelligente</h3>
@@ -773,14 +809,14 @@ Important
 </section>
 <section id="étape-3-exécution" class="level3">
 <h3 class="anchored" data-anchor-id="étape-3-exécution">Étape 3 : Exécution</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialiser K centres avec k<span class="op">-</span>means<span class="op">++</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Répéter:</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   a. Assigner chaque point au centre le plus proche</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculer les centres comme moyennes</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   c. Si les centres bougent peu, arrêter</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Évaluer avec score de silhouette</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Si doute, relancer avec différentes initialisations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialiser K centres avec k<span class="op">-</span>means<span class="op">++</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Répéter:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   a. Assigner chaque point au centre le plus proche</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculer les centres comme moyennes</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   c. Si les centres bougent peu, arrêter</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Évaluer avec score de silhouette</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Si doute, relancer avec différentes initialisations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="étape-4-validation" class="level3">
 <h3 class="anchored" data-anchor-id="étape-4-validation">Étape 4 : Validation</h3>

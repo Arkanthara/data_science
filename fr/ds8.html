@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds8 – ISS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ISS</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./../index.html">
+ <span class="dropdown-text">Anglais</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Français</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détailé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Questions d’Examen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds2s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds3s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds5s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds7s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intuition</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours détaillé</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6s.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">L’essentiel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds6s1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intuition</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#document-de-révision-concepts-fondamentaux-et-applications-en-data-science" id="toc-document-de-révision-concepts-fondamentaux-et-applications-en-data-science" class="nav-link active" data-scroll-target="#document-de-révision-concepts-fondamentaux-et-applications-en-data-science">Document de Révision : Concepts fondamentaux et applications en Data Science</a>
+  <ul class="collapse">
+  <li><a href="#introduction-générale" id="toc-introduction-générale" class="nav-link" data-scroll-target="#introduction-générale">Introduction générale</a>
+  <ul class="collapse">
+  <li><a href="#principaux-problèmes-dintérêt-en-data-science" id="toc-principaux-problèmes-dintérêt-en-data-science" class="nav-link" data-scroll-target="#principaux-problèmes-dintérêt-en-data-science">Principaux problèmes d’intérêt en Data Science</a></li>
+  </ul></li>
+  <li><a href="#notations-fondamentales" id="toc-notations-fondamentales" class="nav-link" data-scroll-target="#notations-fondamentales">Notations fondamentales</a>
+  <ul class="collapse">
+  <li><a href="#variables-aléatoires-scalaires" id="toc-variables-aléatoires-scalaires" class="nav-link" data-scroll-target="#variables-aléatoires-scalaires">Variables aléatoires scalaires</a></li>
+  <li><a href="#vecteurs-aléatoires" id="toc-vecteurs-aléatoires" class="nav-link" data-scroll-target="#vecteurs-aléatoires">Vecteurs aléatoires</a></li>
+  </ul></li>
+  <li><a href="#distributions-de-probabilité" id="toc-distributions-de-probabilité" class="nav-link" data-scroll-target="#distributions-de-probabilité">Distributions de probabilité</a>
+  <ul class="collapse">
+  <li><a href="#variables-discrètes" id="toc-variables-discrètes" class="nav-link" data-scroll-target="#variables-discrètes">Variables discrètes</a></li>
+  <li><a href="#variables-continues" id="toc-variables-continues" class="nav-link" data-scroll-target="#variables-continues">Variables continues</a></li>
+  </ul></li>
+  <li><a href="#moments-des-distributions" id="toc-moments-des-distributions" class="nav-link" data-scroll-target="#moments-des-distributions">Moments des distributions</a>
+  <ul class="collapse">
+  <li><a href="#définitions-des-moments" id="toc-définitions-des-moments" class="nav-link" data-scroll-target="#définitions-des-moments">Définitions des moments</a></li>
+  <li><a href="#moments-dordre-supérieur" id="toc-moments-dordre-supérieur" class="nav-link" data-scroll-target="#moments-dordre-supérieur">Moments d’ordre supérieur</a></li>
+  <li><a href="#interprétation-intuitive" id="toc-interprétation-intuitive" class="nav-link" data-scroll-target="#interprétation-intuitive">Interprétation intuitive</a></li>
+  </ul></li>
+  <li><a href="#fonction-caractéristique" id="toc-fonction-caractéristique" class="nav-link" data-scroll-target="#fonction-caractéristique">Fonction caractéristique</a>
+  <ul class="collapse">
+  <li><a href="#définition" id="toc-définition" class="nav-link" data-scroll-target="#définition">Définition</a></li>
+  <li><a href="#récupération-de-la-pdf" id="toc-récupération-de-la-pdf" class="nav-link" data-scroll-target="#récupération-de-la-pdf">Récupération de la pdf</a></li>
+  <li><a href="#développement-en-série-de-taylor" id="toc-développement-en-série-de-taylor" class="nav-link" data-scroll-target="#développement-en-série-de-taylor">Développement en série de Taylor</a></li>
+  </ul></li>
+  <li><a href="#estimation-empirique-des-moments" id="toc-estimation-empirique-des-moments" class="nav-link" data-scroll-target="#estimation-empirique-des-moments">Estimation empirique des moments</a>
+  <ul class="collapse">
+  <li><a href="#moments-de-la-pdf" id="toc-moments-de-la-pdf" class="nav-link" data-scroll-target="#moments-de-la-pdf">Moments de la pdf</a></li>
+  <li><a href="#moments-de-la-cdf-cumulative-distribution-function" id="toc-moments-de-la-cdf-cumulative-distribution-function" class="nav-link" data-scroll-target="#moments-de-la-cdf-cumulative-distribution-function">Moments de la CDF (Cumulative Distribution Function)</a></li>
+  <li><a href="#estimation-empirique-des-moments-de-cdf" id="toc-estimation-empirique-des-moments-de-cdf" class="nav-link" data-scroll-target="#estimation-empirique-des-moments-de-cdf">Estimation empirique des moments de CDF</a></li>
+  </ul></li>
+  <li><a href="#applications-des-moments-analyse-dimages" id="toc-applications-des-moments-analyse-dimages" class="nav-link" data-scroll-target="#applications-des-moments-analyse-dimages">Applications des moments : Analyse d’images</a>
+  <ul class="collapse">
+  <li><a href="#pipeline-de-traitement" id="toc-pipeline-de-traitement" class="nav-link" data-scroll-target="#pipeline-de-traitement">Pipeline de traitement</a></li>
+  </ul></li>
+  <li><a href="#propriétés-de-la-variance-et-covariance" id="toc-propriétés-de-la-variance-et-covariance" class="nav-link" data-scroll-target="#propriétés-de-la-variance-et-covariance">Propriétés de la variance et covariance</a>
+  <ul class="collapse">
+  <li><a href="#propriétés-fondamentales" id="toc-propriétés-fondamentales" class="nav-link" data-scroll-target="#propriétés-fondamentales">Propriétés fondamentales</a></li>
+  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance">Covariance</a></li>
+  </ul></li>
+  <li><a href="#vecteurs-aléatoires-1" id="toc-vecteurs-aléatoires-1" class="nav-link" data-scroll-target="#vecteurs-aléatoires-1">Vecteurs aléatoires</a>
+  <ul class="collapse">
+  <li><a href="#notations" id="toc-notations" class="nav-link" data-scroll-target="#notations">Notations</a></li>
+  <li><a href="#exemple-image-comme-vecteur" id="toc-exemple-image-comme-vecteur" class="nav-link" data-scroll-target="#exemple-image-comme-vecteur">Exemple : Image comme vecteur</a></li>
+  <li><a href="#représentations-alternatives" id="toc-représentations-alternatives" class="nav-link" data-scroll-target="#représentations-alternatives">Représentations alternatives</a></li>
+  </ul></li>
+  <li><a href="#règle-de-chaîne-et-décomposition" id="toc-règle-de-chaîne-et-décomposition" class="nav-link" data-scroll-target="#règle-de-chaîne-et-décomposition">Règle de chaîne et décomposition</a>
+  <ul class="collapse">
+  <li><a href="#règle-de-chaîne-pour-probabilités-jointes" id="toc-règle-de-chaîne-pour-probabilités-jointes" class="nav-link" data-scroll-target="#règle-de-chaîne-pour-probabilités-jointes">Règle de chaîne pour probabilités jointes</a></li>
+  <li><a href="#cas-particulier-2-variables" id="toc-cas-particulier-2-variables" class="nav-link" data-scroll-target="#cas-particulier-2-variables">Cas particulier : 2 variables</a></li>
+  </ul></li>
+  <li><a href="#indépendance" id="toc-indépendance" class="nav-link" data-scroll-target="#indépendance">Indépendance</a>
+  <ul class="collapse">
+  <li><a href="#variables-indépendantes" id="toc-variables-indépendantes" class="nav-link" data-scroll-target="#variables-indépendantes">Variables indépendantes</a></li>
+  <li><a href="#généralisation-à-n-variables" id="toc-généralisation-à-n-variables" class="nav-link" data-scroll-target="#généralisation-à-n-variables">Généralisation à N variables</a></li>
+  <li><a href="#application-pratique-de-lindépendance" id="toc-application-pratique-de-lindépendance" class="nav-link" data-scroll-target="#application-pratique-de-lindépendance">Application pratique de l’indépendance</a></li>
+  </ul></li>
+  <li><a href="#modèles-de-markov" id="toc-modèles-de-markov" class="nav-link" data-scroll-target="#modèles-de-markov">Modèles de Markov</a>
+  <ul class="collapse">
+  <li><a href="#modèle-de-markov-de-1er-ordre" id="toc-modèle-de-markov-de-1er-ordre" class="nav-link" data-scroll-target="#modèle-de-markov-de-1er-ordre">Modèle de Markov de 1er ordre</a></li>
+  <li><a href="#modèle-de-markov-de-2ème-ordre" id="toc-modèle-de-markov-de-2ème-ordre" class="nav-link" data-scroll-target="#modèle-de-markov-de-2ème-ordre">Modèle de Markov de 2ème ordre</a></li>
+  <li><a href="#application-pratique-traitement-dimages" id="toc-application-pratique-traitement-dimages" class="nav-link" data-scroll-target="#application-pratique-traitement-dimages">Application pratique : Traitement d’images</a></li>
+  </ul></li>
+  <li><a href="#indépendance-conditionnelle" id="toc-indépendance-conditionnelle" class="nav-link" data-scroll-target="#indépendance-conditionnelle">Indépendance conditionnelle</a>
+  <ul class="collapse">
+  <li><a href="#définition-1" id="toc-définition-1" class="nav-link" data-scroll-target="#définition-1">Définition</a></li>
+  <li><a href="#décomposition-avec-règle-de-chaîne" id="toc-décomposition-avec-règle-de-chaîne" class="nav-link" data-scroll-target="#décomposition-avec-règle-de-chaîne">Décomposition avec règle de chaîne</a></li>
+  <li><a href="#représentation-graphique" id="toc-représentation-graphique" class="nav-link" data-scroll-target="#représentation-graphique">Représentation graphique</a></li>
+  </ul></li>
+  <li><a href="#normes-vectorielles" id="toc-normes-vectorielles" class="nav-link" data-scroll-target="#normes-vectorielles">Normes vectorielles</a>
+  <ul class="collapse">
+  <li><a href="#norme-l_p-ou-norme-p" id="toc-norme-l_p-ou-norme-p" class="nav-link" data-scroll-target="#norme-l_p-ou-norme-p">Norme <span class="math inline">\(L_p\)</span> ou norme <span class="math inline">\(p\)</span></a></li>
+  <li><a href="#normes-particulières" id="toc-normes-particulières" class="nav-link" data-scroll-target="#normes-particulières">Normes particulières</a></li>
+  </ul></li>
+  <li><a href="#distances-et-mesures-de-similarité" id="toc-distances-et-mesures-de-similarité" class="nav-link" data-scroll-target="#distances-et-mesures-de-similarité">Distances et mesures de similarité</a>
+  <ul class="collapse">
+  <li><a href="#distance-euclidienne-l_2" id="toc-distance-euclidienne-l_2" class="nav-link" data-scroll-target="#distance-euclidienne-l_2">Distance euclidienne (<span class="math inline">\(L_2\)</span>)</a></li>
+  <li><a href="#distance-l_1" id="toc-distance-l_1" class="nav-link" data-scroll-target="#distance-l_1">Distance <span class="math inline">\(L_1\)</span></a></li>
+  <li><a href="#distance-de-hamming" id="toc-distance-de-hamming" class="nav-link" data-scroll-target="#distance-de-hamming">Distance de Hamming</a></li>
+  <li><a href="#distance-attendue-pour-vecteurs-aléatoires" id="toc-distance-attendue-pour-vecteurs-aléatoires" class="nav-link" data-scroll-target="#distance-attendue-pour-vecteurs-aléatoires">Distance attendue pour vecteurs aléatoires</a></li>
+  </ul></li>
+  <li><a href="#interprétation-géométrique-des-distances" id="toc-interprétation-géométrique-des-distances" class="nav-link" data-scroll-target="#interprétation-géométrique-des-distances">Interprétation géométrique des distances</a>
+  <ul class="collapse">
+  <li><a href="#cas-dune-image" id="toc-cas-dune-image" class="nav-link" data-scroll-target="#cas-dune-image">Cas d’une image</a></li>
+  <li><a href="#proximité-perceptuelle" id="toc-proximité-perceptuelle" class="nav-link" data-scroll-target="#proximité-perceptuelle">Proximité perceptuelle</a></li>
+  </ul></li>
+  <li><a href="#lien-entre-distance-et-produit-scalaire" id="toc-lien-entre-distance-et-produit-scalaire" class="nav-link" data-scroll-target="#lien-entre-distance-et-produit-scalaire">Lien entre distance et produit scalaire</a>
+  <ul class="collapse">
+  <li><a href="#décomposition-de-la-distance-au-carré" id="toc-décomposition-de-la-distance-au-carré" class="nav-link" data-scroll-target="#décomposition-de-la-distance-au-carré">Décomposition de la distance au carré</a></li>
+  <li><a href="#relation-inverse" id="toc-relation-inverse" class="nav-link" data-scroll-target="#relation-inverse">Relation inverse</a></li>
+  </ul></li>
+  <li><a href="#similarité-cosinus" id="toc-similarité-cosinus" class="nav-link" data-scroll-target="#similarité-cosinus">Similarité cosinus</a>
+  <ul class="collapse">
+  <li><a href="#définition-géométrique" id="toc-définition-géométrique" class="nav-link" data-scroll-target="#définition-géométrique">Définition géométrique</a></li>
+  <li><a href="#projection-sur-un-vecteur-unitaire" id="toc-projection-sur-un-vecteur-unitaire" class="nav-link" data-scroll-target="#projection-sur-un-vecteur-unitaire">Projection sur un vecteur unitaire</a></li>
+  </ul></li>
+  <li><a href="#vecteurs-orthogonaux-et-colinéaires" id="toc-vecteurs-orthogonaux-et-colinéaires" class="nav-link" data-scroll-target="#vecteurs-orthogonaux-et-colinéaires">Vecteurs orthogonaux et colinéaires</a>
+  <ul class="collapse">
+  <li><a href="#vecteurs-orthogonaux" id="toc-vecteurs-orthogonaux" class="nav-link" data-scroll-target="#vecteurs-orthogonaux">Vecteurs orthogonaux</a></li>
+  <li><a href="#vecteurs-colinéaires" id="toc-vecteurs-colinéaires" class="nav-link" data-scroll-target="#vecteurs-colinéaires">Vecteurs colinéaires</a></li>
+  </ul></li>
+  <li><a href="#extraction-de-caractéristiques-feature-extraction" id="toc-extraction-de-caractéristiques-feature-extraction" class="nav-link" data-scroll-target="#extraction-de-caractéristiques-feature-extraction">Extraction de caractéristiques (Feature Extraction)</a>
+  <ul class="collapse">
+  <li><a href="#principe-général" id="toc-principe-général" class="nav-link" data-scroll-target="#principe-général">Principe général</a></li>
+  <li><a href="#techniques-clés" id="toc-techniques-clés" class="nav-link" data-scroll-target="#techniques-clés">Techniques clés</a></li>
+  </ul></li>
+  <li><a href="#information-mining-fouille-de-données" id="toc-information-mining-fouille-de-données" class="nav-link" data-scroll-target="#information-mining-fouille-de-données">Information Mining (Fouille de données)</a>
+  <ul class="collapse">
+  <li><a href="#problématique" id="toc-problématique" class="nav-link" data-scroll-target="#problématique">Problématique</a></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a></li>
+  <li><a href="#techniques-de-base" id="toc-techniques-de-base" class="nav-link" data-scroll-target="#techniques-de-base">Techniques de base</a></li>
+  </ul></li>
+  <li><a href="#architectures-typiques-pour-mining" id="toc-architectures-typiques-pour-mining" class="nav-link" data-scroll-target="#architectures-typiques-pour-mining">Architectures typiques pour Mining</a>
+  <ul class="collapse">
+  <li><a href="#architecture-1-features-de-classification" id="toc-architecture-1-features-de-classification" class="nav-link" data-scroll-target="#architecture-1-features-de-classification">Architecture 1 : Features de classification</a></li>
+  <li><a href="#architecture-2-features-dauto-encodage" id="toc-architecture-2-features-dauto-encodage" class="nav-link" data-scroll-target="#architecture-2-features-dauto-encodage">Architecture 2 : Features d’auto-encodage</a></li>
+  <li><a href="#architecture-3-apprentissage-auto-supervisé" id="toc-architecture-3-apprentissage-auto-supervisé" class="nav-link" data-scroll-target="#architecture-3-apprentissage-auto-supervisé">Architecture 3 : Apprentissage auto-supervisé</a></li>
+  </ul></li>
+  <li><a href="#reconnaissance-et-classification" id="toc-reconnaissance-et-classification" class="nav-link" data-scroll-target="#reconnaissance-et-classification">Reconnaissance et Classification</a>
+  <ul class="collapse">
+  <li><a href="#problèmes-de-base" id="toc-problèmes-de-base" class="nav-link" data-scroll-target="#problèmes-de-base">Problèmes de base</a></li>
+  <li><a href="#domaines-dapplication" id="toc-domaines-dapplication" class="nav-link" data-scroll-target="#domaines-dapplication">Domaines d’application</a></li>
+  <li><a href="#base-commune-test-dhypothèses" id="toc-base-commune-test-dhypothèses" class="nav-link" data-scroll-target="#base-commune-test-dhypothèses">Base commune : Test d’hypothèses</a></li>
+  </ul></li>
+  <li><a href="#test-dhypothèses-classification-binaire" id="toc-test-dhypothèses-classification-binaire" class="nav-link" data-scroll-target="#test-dhypothèses-classification-binaire">Test d’hypothèses : Classification binaire</a>
+  <ul class="collapse">
+  <li><a href="#formulation-du-problème" id="toc-formulation-du-problème" class="nav-link" data-scroll-target="#formulation-du-problème">Formulation du problème</a></li>
+  <li><a href="#espaces-de-représentation" id="toc-espaces-de-représentation" class="nav-link" data-scroll-target="#espaces-de-représentation">Espaces de représentation</a></li>
+  <li><a href="#classifieurs-pratiques" id="toc-classifieurs-pratiques" class="nav-link" data-scroll-target="#classifieurs-pratiques">Classifieurs pratiques</a></li>
+  </ul></li>
+  <li><a href="#test-dhypothèses-détection-danomalies" id="toc-test-dhypothèses-détection-danomalies" class="nav-link" data-scroll-target="#test-dhypothèses-détection-danomalies">Test d’hypothèses : Détection d’anomalies</a>
+  <ul class="collapse">
+  <li><a href="#formulation-asymétrique" id="toc-formulation-asymétrique" class="nav-link" data-scroll-target="#formulation-asymétrique">Formulation asymétrique</a></li>
+  </ul></li>
+  <li><a href="#classification-m-aire" id="toc-classification-m-aire" class="nav-link" data-scroll-target="#classification-m-aire">Classification M-aire</a>
+  <ul class="collapse">
+  <li><a href="#formulation-du-problème-1" id="toc-formulation-du-problème-1" class="nav-link" data-scroll-target="#formulation-du-problème-1">Formulation du problème</a></li>
+  </ul></li>
+  <li><a href="#lien-avec-le-machine-learning" id="toc-lien-avec-le-machine-learning" class="nav-link" data-scroll-target="#lien-avec-le-machine-learning">Lien avec le Machine Learning</a>
+  <ul class="collapse">
+  <li><a href="#configurations-dapprentissage" id="toc-configurations-dapprentissage" class="nav-link" data-scroll-target="#configurations-dapprentissage">Configurations d’apprentissage</a></li>
+  <li><a href="#configuration-théorique-vs-pratique" id="toc-configuration-théorique-vs-pratique" class="nav-link" data-scroll-target="#configuration-théorique-vs-pratique">Configuration théorique vs pratique</a></li>
+  </ul></li>
+  <li><a href="#recherche-et-identification" id="toc-recherche-et-identification" class="nav-link" data-scroll-target="#recherche-et-identification">Recherche et Identification</a>
+  <ul class="collapse">
+  <li><a href="#problème-didentification" id="toc-problème-didentification" class="nav-link" data-scroll-target="#problème-didentification">Problème d’identification</a></li>
+  </ul></li>
+  <li><a href="#architectures-pour-recherche" id="toc-architectures-pour-recherche" class="nav-link" data-scroll-target="#architectures-pour-recherche">Architectures pour Recherche</a>
+  <ul class="collapse">
+  <li><a href="#architecture-1-auto-encodage" id="toc-architecture-1-auto-encodage" class="nav-link" data-scroll-target="#architecture-1-auto-encodage">Architecture 1 : Auto-encodage</a></li>
+  <li><a href="#architecture-2-apprentissage-auto-supervisé" id="toc-architecture-2-apprentissage-auto-supervisé" class="nav-link" data-scroll-target="#architecture-2-apprentissage-auto-supervisé">Architecture 2 : Apprentissage auto-supervisé</a></li>
+  </ul></li>
+  <li><a href="#transmission-et-compression" id="toc-transmission-et-compression" class="nav-link" data-scroll-target="#transmission-et-compression">Transmission et Compression</a>
+  <ul class="collapse">
+  <li><a href="#communication-numérique" id="toc-communication-numérique" class="nav-link" data-scroll-target="#communication-numérique">Communication numérique</a></li>
+  <li><a href="#compression-sans-perte-lossless" id="toc-compression-sans-perte-lossless" class="nav-link" data-scroll-target="#compression-sans-perte-lossless">Compression sans perte (Lossless)</a></li>
+  <li><a href="#compression-avec-perte-lossy" id="toc-compression-avec-perte-lossy" class="nav-link" data-scroll-target="#compression-avec-perte-lossy">Compression avec perte (Lossy)</a></li>
+  </ul></li>
+  <li><a href="#concepts-mathématiques-à-maîtriser" id="toc-concepts-mathématiques-à-maîtriser" class="nav-link" data-scroll-target="#concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</a>
+  <ul class="collapse">
+  <li><a href="#probabilités-et-statistiques" id="toc-probabilités-et-statistiques" class="nav-link" data-scroll-target="#probabilités-et-statistiques">Probabilités et statistiques</a></li>
+  <li><a href="#algèbre-linéaire" id="toc-algèbre-linéaire" class="nav-link" data-scroll-target="#algèbre-linéaire">Algèbre linéaire</a></li>
+  <li><a href="#théorie-de-linformation" id="toc-théorie-de-linformation" class="nav-link" data-scroll-target="#théorie-de-linformation">Théorie de l’information</a></li>
+  </ul></li>
+  <li><a href="#questions-dexamen-types" id="toc-questions-dexamen-types" class="nav-link" data-scroll-target="#questions-dexamen-types">Questions d’examen types</a>
+  <ul class="collapse">
+  <li><a href="#questions-conceptuelles" id="toc-questions-conceptuelles" class="nav-link" data-scroll-target="#questions-conceptuelles">Questions conceptuelles</a></li>
+  <li><a href="#questions-dapplications" id="toc-questions-dapplications" class="nav-link" data-scroll-target="#questions-dapplications">Questions d’applications</a></li>
+  <li><a href="#développements-mathématiques" id="toc-développements-mathématiques" class="nav-link" data-scroll-target="#développements-mathématiques">Développements mathématiques</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds8.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="document-de-révision-concepts-fondamentaux-et-applications-en-data-science" class="level1">
+<h1>Document de Révision : Concepts fondamentaux et applications en Data Science</h1>
+<hr>
+<section id="introduction-générale" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-générale">Introduction générale</h2>
+<section id="principaux-problèmes-dintérêt-en-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="principaux-problèmes-dintérêt-en-data-science">Principaux problèmes d’intérêt en Data Science</h3>
+<p>Les applications principales de la Data Science couvrent plusieurs domaines :</p>
+<p><strong>Extraction de caractéristiques (Feature Extraction)</strong></p>
+<p>Extraire des descripteurs pertinents des données brutes</p>
+<p><strong>Fouille de données (Information Mining)</strong></p>
+<p>Découvrir des patterns cachés dans les données</p>
+<p><strong>Reconnaissance et Classification</strong></p>
+<p>Identifier et catégoriser des objets ou patterns</p>
+<p><strong>Recherche et Identification (Search &amp; Identification)</strong></p>
+<p>Retrouver et authentifier des éléments dans des bases de données</p>
+<p><strong>Transmission et Compression</strong></p>
+<p>Encoder et transmettre l’information efficacement</p>
+<p><strong>Sécurité Multimédia</strong></p>
+<p>Protéger et authentifier les contenus numériques</p>
+<hr>
+</section>
+</section>
+<section id="notations-fondamentales" class="level2">
+<h2 class="anchored" data-anchor-id="notations-fondamentales">Notations fondamentales</h2>
+<section id="variables-aléatoires-scalaires" class="level3">
+<h3 class="anchored" data-anchor-id="variables-aléatoires-scalaires">Variables aléatoires scalaires</h3>
+<p><strong>Variable aléatoire scalaire :</strong></p>
+<ul>
+<li><span class="math inline">\(X\)</span> : variable aléatoire scalaire</li>
+<li><span class="math inline">\(x\)</span> : réalisation de la variable aléatoire</li>
+<li><span class="math inline">\(X\)</span> prend des valeurs dans <span class="math inline">\(\mathcal{X}\)</span></li>
+</ul>
+<p><strong>Ensembles de valeurs possibles :</strong></p>
+<p><strong>Variables discrètes :</strong></p>
+<ul>
+<li><span class="math inline">\(\mathcal{X} = \{0, 1, 2, \ldots\}\)</span> (entiers)</li>
+<li><span class="math inline">\(\mathcal{X} = \{0, 1\}\)</span> (binaire)</li>
+<li><span class="math inline">\(\mathcal{X} = \{a, b, \ldots, z\}\)</span> (alphabet)</li>
+<li><span class="math inline">\(\mathcal{X} = \{\text{Janvier}, \text{Février}, \ldots, \text{Décembre}\}\)</span></li>
+</ul>
+<p><strong>Variables continues :</strong></p>
+<ul>
+<li><span class="math inline">\(\mathcal{X} = \mathbb{R}\)</span> (réels)</li>
+<li><span class="math inline">\(x_i \in \mathbb{S}\)</span> ou <span class="math inline">\(\mathcal{X}\)</span> (espace général)</li>
+</ul>
+</section>
+<section id="vecteurs-aléatoires" class="level3">
+<h3 class="anchored" data-anchor-id="vecteurs-aléatoires">Vecteurs aléatoires</h3>
+<p><strong>Notation vectorielle :</strong></p>
+<p><span class="math display">\[X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix} \quad \text{ou} \quad X = (X_1, X_2, \ldots, X_N)\]</span></p>
+<p><strong>Réalisation du vecteur :</strong></p>
+<p><span class="math display">\[x = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{pmatrix}\]</span></p>
+<p>avec <span class="math inline">\(x_i \in \mathcal{X}\)</span> pour tout <span class="math inline">\(i\)</span></p>
+<p>📌 <strong>Convention :</strong> Les vecteurs sont notés en gras ou avec une flèche selon le contexte</p>
+<hr>
+</section>
+</section>
+<section id="distributions-de-probabilité" class="level2">
+<h2 class="anchored" data-anchor-id="distributions-de-probabilité">Distributions de probabilité</h2>
+<section id="variables-discrètes" class="level3">
+<h3 class="anchored" data-anchor-id="variables-discrètes">Variables discrètes</h3>
+<p><strong>Fonction de masse de probabilité (pmf) :</strong></p>
+<p><span class="math display">\[p_X(x) = \mathbb{P}[X = x]\]</span></p>
+<p><strong>Exemple : Loi binomiale</strong></p>
+<p><span class="math display">\[X \sim p_X(x) = B(M, p)\]</span></p>
+<p><span class="math display">\[p_X(k) = \mathbb{P}[X = k] = \binom{M}{k} p^k (1-p)^{M-k}, \quad k = 0, 1, \ldots, M\]</span></p>
+</section>
+<section id="variables-continues" class="level3">
+<h3 class="anchored" data-anchor-id="variables-continues">Variables continues</h3>
+<p><strong>Fonction de densité de probabilité (pdf) :</strong></p>
+<p><span class="math display">\[f_X(x)\]</span></p>
+<p>avec la propriété <span class="math inline">\(\int_{-\infty}^{+\infty} f_X(x) dx = 1\)</span></p>
+<p><strong>Exemple : Loi normale (gaussienne)</strong></p>
+<p><span class="math display">\[X \sim f_X(x) = \mathcal{N}(\mu_X, \sigma_X^2)\]</span></p>
+<p><span class="math display">\[f_X(x) = \frac{1}{\sqrt{2\pi\sigma_X^2}} \exp\left(-\frac{(x - \mu_X)^2}{2\sigma_X^2}\right)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="moments-des-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="moments-des-distributions">Moments des distributions</h2>
+<section id="définitions-des-moments" class="level3">
+<h3 class="anchored" data-anchor-id="définitions-des-moments">Définitions des moments</h3>
+<p><strong>Pour les variables discrètes :</strong></p>
+<p><strong>1er moment (moyenne) :</strong></p>
+<p><span class="math display">\[\mu_X = \mathbb{E}_{p_X(x)}[X] = \sum_{i=1}^{M} x_i p(x_i)\]</span></p>
+<p><strong>2ème moment (variance) :</strong></p>
+<p><span class="math display">\[\sigma_X^2 = \text{Var}[X] = \mathbb{E}_{p_X(x)}[(X - \mu_X)^2] = \sum_{i=1}^{M} (x_i - \mu_X)^2 p(x_i)\]</span></p>
+<p><strong>Pour les variables continues :</strong></p>
+<p><strong>1er moment (moyenne) :</strong></p>
+<p><span class="math display">\[\mu_X = \mathbb{E}_{f_X(x)}[X] = \int_{x \in \mathcal{X}} x f_X(x) dx\]</span></p>
+<p><strong>2ème moment (variance) :</strong></p>
+<p><span class="math display">\[\sigma_X^2 = \text{Var}[X] = \mathbb{E}_{f_X(x)}[(X - \mu_X)^2] = \int_{x \in \mathcal{X}} (x - \mu_X)^2 f_X(x) dx\]</span></p>
+</section>
+<section id="moments-dordre-supérieur" class="level3">
+<h3 class="anchored" data-anchor-id="moments-dordre-supérieur">Moments d’ordre supérieur</h3>
+<p><strong>3ème moment (skewness - asymétrie) :</strong></p>
+<p><span class="math display">\[\frac{\mathbb{E}_{p_X(x)}[(X - \mu_X)^3]}{\sigma_X^3} \quad \text{ou} \quad \frac{\mathbb{E}_{f_X(x)}[(X - \mu_X)^3]}{\sigma_X^3}\]</span></p>
+<p><strong>4ème moment (kurtosis - aplatissement) :</strong></p>
+<p><span class="math display">\[\frac{\mathbb{E}_{p_X(x)}[(X - \mu_X)^4]}{\sigma_X^4} \quad \text{ou} \quad \frac{\mathbb{E}_{f_X(x)}[(X - \mu_X)^4]}{\sigma_X^4}\]</span></p>
+</section>
+<section id="interprétation-intuitive" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-intuitive">Interprétation intuitive</h3>
+<p><strong>Moyenne (<span class="math inline">\(\mu_X\)</span>) :</strong></p>
+<p>Centre de la distribution</p>
+<p><strong>Variance (<span class="math inline">\(\sigma_X^2\)</span>) :</strong></p>
+<p>Dispersion autour de la moyenne</p>
+<p><strong>Skewness :</strong></p>
+<p>Asymétrie de la distribution (positive → queue à droite, négative → queue à gauche)</p>
+<p><strong>Kurtosis :</strong></p>
+<p>“Épaisseur” des queues de distribution (&gt; 3 : queues épaisses, &lt; 3 : queues fines)</p>
+<p>💡 <strong>Principe général :</strong> Étant donné une pmf/pdf, on peut calculer les moments (pas pour toutes les distributions)</p>
+<hr>
+</section>
+</section>
+<section id="fonction-caractéristique" class="level2">
+<h2 class="anchored" data-anchor-id="fonction-caractéristique">Fonction caractéristique</h2>
+<section id="définition" class="level3">
+<h3 class="anchored" data-anchor-id="définition">Définition</h3>
+<p><strong>Fonction caractéristique d’une pdf :</strong></p>
+<p><span class="math display">\[\Phi(t) = \int_{-\infty}^{+\infty} f(x) e^{jtx} dx = \mathbb{E}_{f(x)}[e^{jtX}]\]</span></p>
+<p>où <span class="math inline">\(j = \sqrt{-1}\)</span></p>
+<p><strong>Fonction génératrice des moments :</strong></p>
+<p><span class="math display">\[M(t) = \mathbb{E}_{f(x)}[e^{tX}]\]</span></p>
+</section>
+<section id="récupération-de-la-pdf" class="level3">
+<h3 class="anchored" data-anchor-id="récupération-de-la-pdf">Récupération de la pdf</h3>
+<p>La pdf peut être récupérée par transformée inverse :</p>
+<p><span class="math display">\[f(x) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \Phi(t) e^{-jtx} dt\]</span></p>
+</section>
+<section id="développement-en-série-de-taylor" class="level3">
+<h3 class="anchored" data-anchor-id="développement-en-série-de-taylor">Développement en série de Taylor</h3>
+<p><strong>Pour la fonction caractéristique :</strong></p>
+<p><span class="math display">\[\Phi(t) = \mathbb{E}_{f(x)}[\exp(jtX)] = 1 + jt\mathbb{E}_{f(x)}[X] - \frac{t^2}{2!}\mathbb{E}_{f(x)}[X^2] + \ldots + \frac{(jt)^n}{n!}\mathbb{E}_{f(x)}[X^n]\]</span></p>
+<p><strong>Pour la fonction génératrice :</strong></p>
+<p><span class="math display">\[M(t) = \mathbb{E}_{f(x)}[\exp(tX)] = 1 + t\mathbb{E}_{f(x)}[X] + \frac{t^2}{2!}\mathbb{E}_{f(x)}[X^2] + \ldots + \frac{t^n}{n!}\mathbb{E}_{f(x)}[X^n]\]</span></p>
+<p>Rappel : <span class="math inline">\(\exp(tX) = \sum_{n=0}^{\infty} \frac{(t)^n \cdot X^n}{n!}\)</span></p>
+<p>✅ <strong>Point clé :</strong> Les quatre premiers moments définissent respectivement la moyenne, variance, skewness et kurtosis de la pdf <span class="math inline">\(f(x)\)</span></p>
+<hr>
+</section>
+</section>
+<section id="estimation-empirique-des-moments" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-empirique-des-moments">Estimation empirique des moments</h2>
+<section id="moments-de-la-pdf" class="level3">
+<h3 class="anchored" data-anchor-id="moments-de-la-pdf">Moments de la pdf</h3>
+<p><strong>Données :</strong></p>
+<p>Séquence i.i.d. <span class="math inline">\(x = (x_1, \ldots, x_N)\)</span> tirée de <span class="math inline">\(f(x)\)</span></p>
+<p><strong>Estimation du n-ième moment empirique :</strong></p>
+<p><span class="math display">\[\hat{m}_n = \frac{1}{N} \sum_{i=1}^{N} x_i^n, \quad n \geq 1\]</span></p>
+<p><strong>Moments théoriques :</strong></p>
+<p><span class="math display">\[m_n = \mathbb{E}[X^n] = \int_{-\infty}^{+\infty} f(x) x^n dx\]</span></p>
+<p>✅ <span class="math inline">\(\hat{m}_n\)</span> est une <strong>estimation non biaisée</strong> des vrais moments de la pdf</p>
+</section>
+<section id="moments-de-la-cdf-cumulative-distribution-function" class="level3">
+<h3 class="anchored" data-anchor-id="moments-de-la-cdf-cumulative-distribution-function">Moments de la CDF (Cumulative Distribution Function)</h3>
+<p><strong>Définition des moments de la CDF :</strong></p>
+<p><span class="math display">\[M_n = \int_{-\infty}^{+\infty} \Phi(t) t^n dt\]</span></p>
+<p><strong>Lien avec la pdf :</strong></p>
+<p><span class="math display">\[M_n = j^n 2\pi \frac{d^n}{dx^n} f(x) \bigg|_{x=0}\]</span></p>
+</section>
+<section id="estimation-empirique-des-moments-de-cdf" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-empirique-des-moments-de-cdf">Estimation empirique des moments de CDF</h3>
+<p><strong>Étape 1 :</strong> Estimer l’histogramme empirique à <span class="math inline">\(M\)</span> bins : <span class="math inline">\(\{h(m)\}_{m=0}^{M-1}\)</span></p>
+<p><strong>Étape 2 :</strong> Estimer la CDF à <span class="math inline">\(K\)</span> points avec <span class="math inline">\(K = 2^{\lceil \log_2 M \rceil}\)</span> :</p>
+<p><span class="math display">\[\Phi(k) = \sum_{m=0}^{M-1} h(m) \exp\left\{-j\frac{2\pi mk}{K}\right\}\]</span></p>
+<p><strong>Étape 3 :</strong> Calcul inverse par transformée de Fourier :</p>
+<p><span class="math display">\[h(m) = \frac{1}{K} \sum_{k=0}^{K-1} \Phi(k) \exp\left\{j\frac{2\pi mk}{K}\right\}, \quad 0 \leq m \leq M-1\]</span></p>
+<p><strong>Étape 4 :</strong> Calculer les moments empiriques de la CDF :</p>
+<p><span class="math display">\[\hat{M}_n' = \sum_{k=0}^{K/2-1} |\Phi(k)| k^n\]</span></p>
+<p><strong>Forme alternative (borne supérieure) :</strong></p>
+<p><span class="math display">\[\hat{M}_n = \sum_{k=0}^{K-1} \Phi(k) \sin^n\left(\frac{\pi k}{K}\right)\]</span></p>
+<p>📌 <strong>Note :</strong> La transformée de Fourier fonctionne dans les deux sens (pdf ↔︎ CDF)</p>
+<hr>
+</section>
+</section>
+<section id="applications-des-moments-analyse-dimages" class="level2">
+<h2 class="anchored" data-anchor-id="applications-des-moments-analyse-dimages">Applications des moments : Analyse d’images</h2>
+<section id="pipeline-de-traitement" class="level3">
+<h3 class="anchored" data-anchor-id="pipeline-de-traitement">Pipeline de traitement</h3>
+<p><strong>Transformation par ondelettes (DWT) :</strong></p>
+<p>Image → DWT → Coefficients d’ondelettes → Calcul des moments (pdf/CDF)</p>
+<p><strong>Applications pratiques :</strong></p>
+<p><strong>Détection d’outliers :</strong></p>
+<p>Identifier des images anormales par analyse des moments</p>
+<p><strong>Détection de fausses images (Fake detection) :</strong></p>
+<p>Distinguer images authentiques vs manipulées</p>
+<p><strong>Stéganalyse :</strong></p>
+<p>Détecter des messages secrets cachés dans les images</p>
+<p>💡 <strong>Principe :</strong> Les moments statistiques capturent des propriétés fines de la distribution qui changent en cas de manipulation</p>
+<hr>
+</section>
+</section>
+<section id="propriétés-de-la-variance-et-covariance" class="level2">
+<h2 class="anchored" data-anchor-id="propriétés-de-la-variance-et-covariance">Propriétés de la variance et covariance</h2>
+<section id="propriétés-fondamentales" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-fondamentales">Propriétés fondamentales</h3>
+<p>Soit <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> des variables aléatoires, <span class="math inline">\(a, b, c\)</span> des constantes.</p>
+<p><strong>Décomposition de la variance :</strong></p>
+<p><span class="math display">\[\text{Var}[X] = \mathbb{E}[X - \mathbb{E}[X]]^2 = \mathbb{E}[X^2] - (\mathbb{E}[X])^2\]</span></p>
+<p><strong>Bornes :</strong></p>
+<p><span class="math display">\[0 \leq \text{Var}[X] \leq \mathbb{E}[X^2]\]</span></p>
+<p><strong>Variance d’un multiple :</strong></p>
+<p><span class="math display">\[\text{Var}[cX] = c^2 \text{Var}[X]\]</span></p>
+<p><strong>Variance d’une combinaison linéaire :</strong></p>
+<p><span class="math display">\[\text{Var}[aX + bY] = a^2 \text{Var}[X] + 2ab \text{Cov}[X, Y] + b^2 \text{Var}[Y]\]</span></p>
+</section>
+<section id="covariance" class="level3">
+<h3 class="anchored" data-anchor-id="covariance">Covariance</h3>
+<p><strong>Définition :</strong></p>
+<p><span class="math display">\[\text{Cov}[X, Y] = \mathbb{E}_{p(x,y)}[(X - \mu_X)(Y - \mu_Y)]\]</span></p>
+<p><strong>Forme développée (variables discrètes) :</strong></p>
+<p><span class="math display">\[\text{Cov}[X, Y] = \sum_{(x,y) \in \mathcal{S}_{X,Y}} p(x,y)(x - \mu_X)(y - \mu_Y)\]</span></p>
+<p><strong>Forme alternative :</strong></p>
+<p><span class="math display">\[\text{Cov}[X, Y] = \mathbb{E}_{p(x,y)}[XY] - \mu_X \mu_Y = \sigma_{XY}\]</span></p>
+<hr>
+</section>
+</section>
+<section id="vecteurs-aléatoires-1" class="level2">
+<h2 class="anchored" data-anchor-id="vecteurs-aléatoires-1">Vecteurs aléatoires</h2>
+<section id="notations" class="level3">
+<h3 class="anchored" data-anchor-id="notations">Notations</h3>
+<p><strong>Vecteur aléatoire :</strong></p>
+<p><span class="math display">\[X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix}\]</span></p>
+<p>où chaque <span class="math inline">\(X_i\)</span> est une variable aléatoire avec sa distribution <span class="math inline">\(p_{X_i}(x_i)\)</span> ou <span class="math inline">\(f_{X_i}(x_i)\)</span></p>
+<p><strong>Distribution jointe :</strong></p>
+<ul>
+<li><strong>pmf jointe :</strong> <span class="math inline">\(p_X(x) = p_X(x_1, x_2, \ldots, x_N)\)</span></li>
+<li><strong>pdf jointe :</strong> <span class="math inline">\(f_X(x) = f_X(x_1, x_2, \ldots, x_N)\)</span></li>
+</ul>
+</section>
+<section id="exemple-image-comme-vecteur" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-image-comme-vecteur">Exemple : Image comme vecteur</h3>
+<p><strong>Lecture en zig-zag :</strong></p>
+<p>Une image <span class="math inline">\(n \times m\)</span> est lue en zig-zag pour former un vecteur de dimension <span class="math inline">\(N = n \times m\)</span></p>
+<p><span class="math display">\[X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix}\]</span></p>
+<p>⚠️ <strong>Complexité :</strong> Pour une image moderne de taille <span class="math inline">\(1000 \times 1000\)</span>, on a <span class="math inline">\(N = 1,000,000\)</span> pixels. La distribution jointe décrit toutes les relations par paires, triplets, etc.</p>
+</section>
+<section id="représentations-alternatives" class="level3">
+<h3 class="anchored" data-anchor-id="représentations-alternatives">Représentations alternatives</h3>
+<p><strong>Lecture par lignes (matrice) :</strong></p>
+<p><span class="math display">\[X = \begin{pmatrix} | &amp; | &amp; &amp; | \\ x_1 &amp; x_2 &amp; \cdots &amp; x_m \\ | &amp; | &amp; &amp; | \end{pmatrix}\]</span></p>
+<p>de dimension <span class="math inline">\(n \times m\)</span></p>
+<p><strong>Image comme colonne dans une base de données :</strong></p>
+<p><span class="math display">\[X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{pmatrix}\]</span></p>
+<p>où chaque <span class="math inline">\(x_i\)</span> représente une image entière</p>
+<hr>
+</section>
+</section>
+<section id="règle-de-chaîne-et-décomposition" class="level2">
+<h2 class="anchored" data-anchor-id="règle-de-chaîne-et-décomposition">Règle de chaîne et décomposition</h2>
+<section id="règle-de-chaîne-pour-probabilités-jointes" class="level3">
+<h3 class="anchored" data-anchor-id="règle-de-chaîne-pour-probabilités-jointes">Règle de chaîne pour probabilités jointes</h3>
+<p><strong>Distribution jointe complète :</strong></p>
+<p><span class="math display">\[p_X(x) = p(x_1, x_2, \ldots, x_N)\]</span></p>
+<p><strong>Décomposition par règle de chaîne :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, \ldots, x_N) = p(x_1) \cdot p(x_2 | x_1) \cdot p(x_3 | x_2, x_1) \cdots p(x_N | x_{N-1}, \ldots, x_2, x_1)\]</span></p>
+<p><strong>Forme générale :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, \ldots, x_N) = \prod_{i=1}^{N} p(x_i | x_{i-1}, \ldots, x_2, x_1)\]</span></p>
+</section>
+<section id="cas-particulier-2-variables" class="level3">
+<h3 class="anchored" data-anchor-id="cas-particulier-2-variables">Cas particulier : 2 variables</h3>
+<p><span class="math display">\[p(x_1, x_2) = p(x_1) p(x_2 | x_1) = p(x_2) p(x_1 | x_2)\]</span></p>
+<p><strong>Conséquence (règle de Bayes) :</strong></p>
+<p><span class="math display">\[p(x_2 | x_1) = \frac{p(x_2) p(x_1 | x_2)}{p(x_1)}\]</span></p>
+<hr>
+</section>
+</section>
+<section id="indépendance" class="level2">
+<h2 class="anchored" data-anchor-id="indépendance">Indépendance</h2>
+<section id="variables-indépendantes" class="level3">
+<h3 class="anchored" data-anchor-id="variables-indépendantes">Variables indépendantes</h3>
+<p><strong>Définition :</strong></p>
+<p><span class="math inline">\(X_1\)</span> et <span class="math inline">\(X_2\)</span> sont <strong>indépendantes</strong> (noté <span class="math inline">\(X_1 \perp X_2\)</span>) si :</p>
+<p><span class="math display">\[p(x_1, x_2) = p(x_1) \cdot p(x_2)\]</span></p>
+</section>
+<section id="généralisation-à-n-variables" class="level3">
+<h3 class="anchored" data-anchor-id="généralisation-à-n-variables">Généralisation à N variables</h3>
+<p><strong>Variables indépendantes et identiquement distribuées (i.i.d.) :</strong></p>
+<p><span class="math display">\[p_X(x_1, x_2, \ldots, x_N) = p_X(x_1) \cdot p_X(x_2) \cdots p_X(x_N) = \prod_{i=1}^{N} p_X(x_i)\]</span></p>
+</section>
+<section id="application-pratique-de-lindépendance" class="level3">
+<h3 class="anchored" data-anchor-id="application-pratique-de-lindépendance">Application pratique de l’indépendance</h3>
+<p><strong>Simplification majeure :</strong></p>
+<p><span class="math display">\[X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_N \end{pmatrix} \quad \text{avec} \quad \begin{cases} X_1 \sim p(x_1) \\ X_2 \sim p(x_2) \\ \vdots \\ X_N \sim p(x_N) \end{cases}\]</span></p>
+<p>Au lieu de modéliser <span class="math inline">\(p_X(x_1, x_2, \ldots, x_N)\)</span> (complexité exponentielle), on modélise <span class="math inline">\(N\)</span> distributions univariées indépendantes.</p>
+<p>✅ <strong>Avantage :</strong> Réduction drastique de la complexité</p>
+<hr>
+</section>
+</section>
+<section id="modèles-de-markov" class="level2">
+<h2 class="anchored" data-anchor-id="modèles-de-markov">Modèles de Markov</h2>
+<section id="modèle-de-markov-de-1er-ordre" class="level3">
+<h3 class="anchored" data-anchor-id="modèle-de-markov-de-1er-ordre">Modèle de Markov de 1er ordre</h3>
+<p><strong>Hypothèse markovienne :</strong></p>
+<p>La dépendance est limitée à <strong>un élément du passé</strong> :</p>
+<p><span class="math display">\[p(x_i | x_{i-1}, x_{i-2}, \ldots, x_1) \stackrel{\text{Markov 1}}{\Rightarrow} p(x_i | x_{i-1})\]</span></p>
+<p><strong>Distribution jointe sous Markov 1 :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, \ldots, x_N) \stackrel{\text{Markov 1}}{\Rightarrow} p(x_1) \prod_{i=2}^{N} p(x_i | x_{i-1})\]</span></p>
+<p>✅ <strong>Simplification :</strong> La modélisation d’une pmf/pdf complexe est réduite à la définition de <strong>distributions conditionnelles par paires</strong></p>
+</section>
+<section id="modèle-de-markov-de-2ème-ordre" class="level3">
+<h3 class="anchored" data-anchor-id="modèle-de-markov-de-2ème-ordre">Modèle de Markov de 2ème ordre</h3>
+<p><strong>Hypothèse markovienne d’ordre 2 :</strong></p>
+<p>La dépendance est limitée à <strong>deux éléments du passé</strong> :</p>
+<p><span class="math display">\[p(x_i | x_{i-1}, x_{i-2}, \ldots, x_1) \stackrel{\text{Markov 2}}{\Rightarrow} p(x_i | x_{i-1}, x_{i-2})\]</span></p>
+<p><strong>Distribution jointe sous Markov 2 :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, \ldots, x_N) \stackrel{\text{Markov 2}}{\Rightarrow} p(x_1) \cdot p(x_2 | x_1) \prod_{i=3}^{N} p(x_i | x_{i-1}, x_{i-2})\]</span></p>
+</section>
+<section id="application-pratique-traitement-dimages" class="level3">
+<h3 class="anchored" data-anchor-id="application-pratique-traitement-dimages">Application pratique : Traitement d’images</h3>
+<p><strong>Modèle Markovien pour images :</strong></p>
+<p><span class="math display">\[X = \begin{pmatrix} \vdots \\ X_{i-2} \\ X_{i-1} \\ X_i \\ \vdots \end{pmatrix} \quad \Rightarrow \quad p(x_i | x_{i-1}, x_{i-2})\]</span></p>
+<p>Chaque pixel <span class="math inline">\(X_i\)</span> dépend conditionnellement des deux pixels précédents <span class="math inline">\(X_{i-1}\)</span> et <span class="math inline">\(X_{i-2}\)</span></p>
+<p>💡 <strong>Application :</strong> Modélisation de textures, compression d’images, génération d’images</p>
+<hr>
+</section>
+</section>
+<section id="indépendance-conditionnelle" class="level2">
+<h2 class="anchored" data-anchor-id="indépendance-conditionnelle">Indépendance conditionnelle</h2>
+<section id="définition-1" class="level3">
+<h3 class="anchored" data-anchor-id="définition-1">Définition</h3>
+<p>Les variables aléatoires <span class="math inline">\(X_1\)</span> et <span class="math inline">\(X_3\)</span> sont <strong>conditionnellement indépendantes</strong> étant donné <span class="math inline">\(X_2\)</span> si :</p>
+<p><span class="math display">\[p(x_1, x_3 | x_2) = p(x_1 | x_2) \cdot p(x_3 | x_2)\]</span></p>
+</section>
+<section id="décomposition-avec-règle-de-chaîne" class="level3">
+<h3 class="anchored" data-anchor-id="décomposition-avec-règle-de-chaîne">Décomposition avec règle de chaîne</h3>
+<p><span class="math display">\[p(x_1, x_2, x_3) = p(x_2) \cdot p(x_1, x_3 | x_2)\]</span></p>
+<p>Si <span class="math inline">\(X_1 \perp X_3 | X_2\)</span> :</p>
+<p><span class="math display">\[p(x_1, x_2, x_3) = p(x_2) \cdot p(x_1 | x_2) \cdot p(x_3 | x_2)\]</span></p>
+</section>
+<section id="représentation-graphique" class="level3">
+<h3 class="anchored" data-anchor-id="représentation-graphique">Représentation graphique</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    X2[X2] --&gt; X1[X1]
+    X2 --&gt; X3[X3]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><span class="math inline">\(X_2\)</span> est un “parent” commun de <span class="math inline">\(X_1\)</span> et <span class="math inline">\(X_3\)</span>, qui deviennent indépendants conditionnellement à <span class="math inline">\(X_2\)</span></p>
+<hr>
+</section>
+</section>
+<section id="normes-vectorielles" class="level2">
+<h2 class="anchored" data-anchor-id="normes-vectorielles">Normes vectorielles</h2>
+<section id="norme-l_p-ou-norme-p" class="level3">
+<h3 class="anchored" data-anchor-id="norme-l_p-ou-norme-p">Norme <span class="math inline">\(L_p\)</span> ou norme <span class="math inline">\(p\)</span></h3>
+<p><strong>Définition générale :</strong></p>
+<p><span class="math display">\[\|x\|_p = \left(\sum_{i=1}^{N} |x_i|^p\right)^{1/p}\]</span></p>
+</section>
+<section id="normes-particulières" class="level3">
+<h3 class="anchored" data-anchor-id="normes-particulières">Normes particulières</h3>
+<p><strong>Norme <span class="math inline">\(L_1\)</span> (norme Manhattan) :</strong></p>
+<p><span class="math display">\[\|x\|_1 = \sum_{i=1}^{N} |x_i| = |x_1| + |x_2| + \cdots + |x_N|\]</span></p>
+<p><strong>Norme <span class="math inline">\(L_2\)</span> (norme euclidienne) :</strong></p>
+<p><span class="math display">\[\|x\|_2 = \sqrt{\sum_{i=1}^{N} x_i^2} = \sqrt{x_1^2 + x_2^2 + \cdots + x_N^2}\]</span></p>
+<p><strong>Norme <span class="math inline">\(L_\infty\)</span> (norme maximum) :</strong></p>
+<p><span class="math display">\[\|x\|_\infty = \max\{|x_1|, |x_2|, \ldots, |x_N|\}\]</span></p>
+<p><strong>Norme unitaire :</strong></p>
+<p><span class="math display">\[\|x\| = \frac{x}{\|x\|_2}\]</span></p>
+<p>Donne un vecteur de longueur 1 dans la même direction</p>
+<hr>
+</section>
+</section>
+<section id="distances-et-mesures-de-similarité" class="level2">
+<h2 class="anchored" data-anchor-id="distances-et-mesures-de-similarité">Distances et mesures de similarité</h2>
+<section id="distance-euclidienne-l_2" class="level3">
+<h3 class="anchored" data-anchor-id="distance-euclidienne-l_2">Distance euclidienne (<span class="math inline">\(L_2\)</span>)</h3>
+<p><strong>Définition :</strong></p>
+<p><span class="math display">\[d_2(x, y) = \|x - y\|_2 = \sqrt{\sum_{i=1}^{N} (x_i - y_i)^2}\]</span></p>
+</section>
+<section id="distance-l_1" class="level3">
+<h3 class="anchored" data-anchor-id="distance-l_1">Distance <span class="math inline">\(L_1\)</span></h3>
+<p><strong>Définition :</strong></p>
+<p><span class="math display">\[d_1(x, y) = \|x - y\|_1 = \sum_{i=1}^{N} |x_i - y_i|\]</span></p>
+</section>
+<section id="distance-de-hamming" class="level3">
+<h3 class="anchored" data-anchor-id="distance-de-hamming">Distance de Hamming</h3>
+<p><strong>Définition :</strong></p>
+<p><span class="math display">\[d_H(x, y) = \|x \oplus y\| = \sum_{i=1}^{N} \mathbb{1}\{x_i, y_i\}\]</span></p>
+<p>où la fonction indicatrice est :</p>
+<p><span class="math display">\[\mathbb{1}\{x_i, y_i\} = \begin{cases} 0 &amp; \text{si } x_i = y_i \\ 1 &amp; \text{si } x_i \neq y_i \end{cases}\]</span></p>
+</section>
+<section id="distance-attendue-pour-vecteurs-aléatoires" class="level3">
+<h3 class="anchored" data-anchor-id="distance-attendue-pour-vecteurs-aléatoires">Distance attendue pour vecteurs aléatoires</h3>
+<p><strong>Définition :</strong></p>
+<p>Pour deux vecteurs aléatoires avec pdf <span class="math inline">\(f(x)\)</span> :</p>
+<p><span class="math display">\[D = \mathbb{E}_{f(x)}[d(X, Y)]\]</span></p>
+<p>où</p>
+<p><span class="math display">\[d(X, Y) = \frac{1}{N} \sum_{i=1}^{N} d(X_i, Y_i)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="interprétation-géométrique-des-distances" class="level2">
+<h2 class="anchored" data-anchor-id="interprétation-géométrique-des-distances">Interprétation géométrique des distances</h2>
+<section id="cas-dune-image" class="level3">
+<h3 class="anchored" data-anchor-id="cas-dune-image">Cas d’une image</h3>
+<p>Pour <span class="math inline">\(n = 2\)</span> dimensions, une image <span class="math inline">\(n \times m\)</span> peut être représentée comme :</p>
+<p><span class="math display">\[x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}\]</span></p>
+<p><strong>Distance euclidienne entre deux images :</strong></p>
+<p><span class="math display">\[d_2(x_1, x_2) = \|x_1 - x_2\|_2 = \sqrt{\sum_{i=1}^{N} (x_{1i} - x_{2i})^2}\]</span></p>
+<p>représente la longueur du vecteur différence <span class="math inline">\(x_1 - x_2\)</span></p>
+</section>
+<section id="proximité-perceptuelle" class="level3">
+<h3 class="anchored" data-anchor-id="proximité-perceptuelle">Proximité perceptuelle</h3>
+<p><strong>Images perceptuellement proches :</strong></p>
+<p><span class="math display">\[\|x_1 - x_2\|_2 \text{ petit} \quad \Rightarrow \quad \text{Images visuellement similaires}\]</span></p>
+<p><strong>Images perceptuellement différentes :</strong></p>
+<p><span class="math display">\[\|x_1 - x_2\|_2 \text{ grand} \quad \Rightarrow \quad \text{Images visuellement différentes}\]</span></p>
+<p>⚠️ <strong>Limitation :</strong> La distance euclidienne ne capture pas toujours la similarité perceptuelle humaine</p>
+<hr>
+</section>
+</section>
+<section id="lien-entre-distance-et-produit-scalaire" class="level2">
+<h2 class="anchored" data-anchor-id="lien-entre-distance-et-produit-scalaire">Lien entre distance et produit scalaire</h2>
+<section id="décomposition-de-la-distance-au-carré" class="level3">
+<h3 class="anchored" data-anchor-id="décomposition-de-la-distance-au-carré">Décomposition de la distance au carré</h3>
+<p><span class="math display">\[\|x_1 - x_2\|_2^2 = \|x_1\|_2^2 - 2x_1^T x_2 + \|x_2\|_2^2\]</span></p>
+<p><strong>Produit scalaire (inner product) :</strong></p>
+<p><span class="math display">\[x^T y = y^T x \in \mathbb{R}\]</span></p>
+<p><span class="math display">\[x^T y = \begin{pmatrix} x_1 &amp; x_2 &amp; \cdots &amp; x_n \end{pmatrix} \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix} = \sum_{i=1}^{n} x_i y_i\]</span></p>
+</section>
+<section id="relation-inverse" class="level3">
+<h3 class="anchored" data-anchor-id="relation-inverse">Relation inverse</h3>
+<p><strong>Distance petite ⇔ Produit scalaire grand :</strong></p>
+<p><span class="math display">\[\|x_1 - x_2\|_2 \text{ petit} \quad \Rightarrow \quad x_1^T x_2 \text{ grand}\]</span></p>
+<p><strong>Distance grande ⇔ Produit scalaire petit :</strong></p>
+<p><span class="math display">\[\|x_1 - x_2\|_2 \text{ grand} \quad \Rightarrow \quad x_1^T x_2 \text{ petit}\]</span></p>
+<p>💡 <strong>Interprétation géométrique :</strong> Plus deux vecteurs pointent dans la même direction, plus leur produit scalaire est grand et leur distance est petite</p>
+<hr>
+</section>
+</section>
+<section id="similarité-cosinus" class="level2">
+<h2 class="anchored" data-anchor-id="similarité-cosinus">Similarité cosinus</h2>
+<section id="définition-géométrique" class="level3">
+<h3 class="anchored" data-anchor-id="définition-géométrique">Définition géométrique</h3>
+<p><strong>Angle entre deux vecteurs :</strong></p>
+<p><span class="math display">\[x_1^T x_2 = \|x_1\|_2 \|x_2\|_2 \cos\theta\]</span></p>
+<p><strong>Similarité cosinus :</strong></p>
+<p><span class="math display">\[\cos\theta = \frac{x_1^T x_2}{\|x_1\|_2 \|x_2\|_2}\]</span></p>
+</section>
+<section id="projection-sur-un-vecteur-unitaire" class="level3">
+<h3 class="anchored" data-anchor-id="projection-sur-un-vecteur-unitaire">Projection sur un vecteur unitaire</h3>
+<p><strong>Vecteur unitaire (direction) :</strong></p>
+<p><span class="math display">\[\hat{x}_2 = \frac{x_2}{\|x_2\|_2}\]</span></p>
+<p><strong>Projection de <span class="math inline">\(x_1\)</span> sur <span class="math inline">\(\hat{x}_2\)</span> :</strong></p>
+<p><span class="math display">\[x_1^T \hat{x}_2 = x_1^T \frac{x_2}{\|x_2\|_2} = \frac{x_1^T x_2}{\|x_2\|_2}\]</span></p>
+<p><strong>Longueur de la projection :</strong></p>
+<p><span class="math display">\[\|x_1\|_2 \cos\theta = x_1^T \hat{x}_2 = \frac{x_1^T x_2}{\|x_2\|_2}\]</span></p>
+<hr>
+</section>
+</section>
+<section id="vecteurs-orthogonaux-et-colinéaires" class="level2">
+<h2 class="anchored" data-anchor-id="vecteurs-orthogonaux-et-colinéaires">Vecteurs orthogonaux et colinéaires</h2>
+<section id="vecteurs-orthogonaux" class="level3">
+<h3 class="anchored" data-anchor-id="vecteurs-orthogonaux">Vecteurs orthogonaux</h3>
+<p><strong>Condition d’orthogonalité (<span class="math inline">\(\theta = 90°\)</span>) :</strong></p>
+<p><span class="math display">\[x_1^T x_2 = 0 \quad \Leftrightarrow \quad \|x_1\|_2 \|x_2\|_2 \cos(90°) = 0\]</span></p>
+<p><strong>Distance entre vecteurs orthogonaux :</strong></p>
+<p><span class="math display">\[\|x_1 - x_2\|_2^2 = \|x_1\|_2^2 + \|x_2\|_2^2 - 2x_1^T x_2 = \|x_1\|_2^2 + \|x_2\|_2^2\]</span></p>
+<p>(Théorème de Pythagore)</p>
+</section>
+<section id="vecteurs-colinéaires" class="level3">
+<h3 class="anchored" data-anchor-id="vecteurs-colinéaires">Vecteurs colinéaires</h3>
+<p><strong>Condition de colinéarité (<span class="math inline">\(\theta = 0°\)</span>) :</strong></p>
+<p><span class="math display">\[x_1^T x_2 = \max \quad \Leftrightarrow \quad \|x_1\|_2 \|x_2\|_2 \cos(0°) = \|x_1\|_2 \|x_2\|_2\]</span></p>
+<p><strong>Si de plus <span class="math inline">\(\|x_1\|_2 = \|x_2\|_2\)</span> :</strong></p>
+<p><span class="math display">\[\|x_1 - x_2\|_2^2 = \|x_1\|_2^2 + \|x_2\|_2^2 - 2\|x_1\|_2\|x_2\|_2 = 0\]</span></p>
+<p><span class="math display">\[\Rightarrow x_1 = x_2\]</span></p>
+<hr>
+</section>
+</section>
+<section id="extraction-de-caractéristiques-feature-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="extraction-de-caractéristiques-feature-extraction">Extraction de caractéristiques (Feature Extraction)</h2>
+<section id="principe-général" class="level3">
+<h3 class="anchored" data-anchor-id="principe-général">Principe général</h3>
+<p><strong>Objectif :</strong></p>
+<p>Extraire des descripteurs/empreintes caractéristiques à partir d’une image originale avec distribution <span class="math inline">\(p_X(x)\)</span></p>
+<p><strong>Types d’approches :</strong></p>
+<p><strong>Hand-crafted (faites à la main) :</strong></p>
+<p>Conçues sous des contraintes strictes de complexité/mémoire</p>
+<ul>
+<li>Descripteurs SIFT, SURF, HOG</li>
+<li>Moments statistiques</li>
+<li>Filtres de Gabor</li>
+</ul>
+<p><strong>Learned (apprises) :</strong></p>
+<p>Apprises directement à partir des données</p>
+<ul>
+<li>Features de réseaux de neurones profonds</li>
+<li>Embeddings appris</li>
+</ul>
+</section>
+<section id="techniques-clés" class="level3">
+<h3 class="anchored" data-anchor-id="techniques-clés">Techniques clés</h3>
+<p><strong>PCA/ICA :</strong></p>
+<p>Analyse en composantes principales/indépendantes</p>
+<p><strong>Réduction de dimensionnalité :</strong></p>
+<p>Projeter dans un espace de dimension réduite</p>
+<p><strong>Transformées de décorrélation :</strong></p>
+<p>DCT, DWT (ondelettes), etc.</p>
+<p><strong>Quantification vectorielle (k-means) :</strong></p>
+<p>Clustering et représentation par centres</p>
+<hr>
+</section>
+</section>
+<section id="information-mining-fouille-de-données" class="level2">
+<h2 class="anchored" data-anchor-id="information-mining-fouille-de-données">Information Mining (Fouille de données)</h2>
+<section id="problématique" class="level3">
+<h3 class="anchored" data-anchor-id="problématique">Problématique</h3>
+<p><strong>Objectif :</strong></p>
+<p>L’élément (ou caractéristique) commun est <strong>inconnu</strong> et doit être <strong>découvert</strong> dans la collection ou base de données</p>
+</section>
+<section id="applications" class="level3">
+<h3 class="anchored" data-anchor-id="applications">Applications</h3>
+<p><strong>Images/Multimédia :</strong></p>
+<p>Découvrir des patterns visuels récurrents</p>
+<p><strong>Biomarqueurs :</strong></p>
+<p>Identifier des marqueurs biologiques dans des données médicales</p>
+<p><strong>Analyse de marché :</strong></p>
+<p>Détecter des tendances et segments de clientèle</p>
+</section>
+<section id="techniques-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="techniques-de-base">Techniques de base</h3>
+<p><strong>Classification :</strong></p>
+<p>Assigner des catégories aux données</p>
+<p><strong>Clustering :</strong></p>
+<p>Regrouper des données similaires</p>
+<p><strong>Prédiction :</strong></p>
+<p>Prédire des valeurs futures ou manquantes</p>
+<hr>
+</section>
+</section>
+<section id="architectures-typiques-pour-mining" class="level2">
+<h2 class="anchored" data-anchor-id="architectures-typiques-pour-mining">Architectures typiques pour Mining</h2>
+<section id="architecture-1-features-de-classification" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-1-features-de-classification">Architecture 1 : Features de classification</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Extraction de features]
+    B --&gt; C[Hand-crafted]
+    B --&gt; D[Machine Learning]
+    C --&gt; E[Classes]
+    D --&gt; E
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Principe :</strong></p>
+<p>Les features sont extraites puis utilisées pour la classification</p>
+</section>
+<section id="architecture-2-features-dauto-encodage" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-2-features-dauto-encodage">Architecture 2 : Features d’auto-encodage</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Encoder]
+    B --&gt; C[Features/Latent]
+    C --&gt; D[Decoder]
+    D --&gt; E[Reconstruction]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Principe :</strong></p>
+<p>Les features sont prises du goulot d’étranglement (bottleneck) d’un auto-encodeur</p>
+</section>
+<section id="architecture-3-apprentissage-auto-supervisé" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-3-apprentissage-auto-supervisé">Architecture 3 : Apprentissage auto-supervisé</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Encoder]
+    B --&gt; C[Features]
+    C --&gt; D[Métrique de similarité]
+    D --&gt; E[Comparaison]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Principe :</strong></p>
+<p>Les features sont apprises par apprentissage contrastif (contrastive learning)</p>
+<hr>
+</section>
+</section>
+<section id="reconnaissance-et-classification" class="level2">
+<h2 class="anchored" data-anchor-id="reconnaissance-et-classification">Reconnaissance et Classification</h2>
+<section id="problèmes-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="problèmes-de-base">Problèmes de base</h3>
+<p><strong>Classification binaire (2 classes) :</strong></p>
+<p>Distinguer entre deux hypothèses <span class="math inline">\(H_0\)</span> et <span class="math inline">\(H_1\)</span></p>
+<p><strong>Classification M-aire (M classes) :</strong></p>
+<p>Distinguer entre <span class="math inline">\(M\)</span> hypothèses <span class="math inline">\(H_0, H_1, \ldots, H_{M-1}\)</span></p>
+</section>
+<section id="domaines-dapplication" class="level3">
+<h3 class="anchored" data-anchor-id="domaines-dapplication">Domaines d’application</h3>
+<p><strong>Reconnaissance de patterns :</strong></p>
+<p>Reconnaître des objets, visages, gestes</p>
+<p><strong>Récupération d’information (Information Retrieval) :</strong></p>
+<p>Rechercher des documents pertinents</p>
+<p><strong>Classification :</strong></p>
+<p>Catégoriser automatiquement des données</p>
+<p><strong>Machine Learning :</strong></p>
+<p>Apprendre à partir d’exemples</p>
+<p><strong>Identification/Authentification :</strong></p>
+<p>Vérifier l’identité (biométrie, etc.)</p>
+</section>
+<section id="base-commune-test-dhypothèses" class="level3">
+<h3 class="anchored" data-anchor-id="base-commune-test-dhypothèses">Base commune : Test d’hypothèses</h3>
+<p>Tous ces problèmes se ramènent au <strong>test d’hypothèses</strong> probabiliste</p>
+<hr>
+</section>
+</section>
+<section id="test-dhypothèses-classification-binaire" class="level2">
+<h2 class="anchored" data-anchor-id="test-dhypothèses-classification-binaire">Test d’hypothèses : Classification binaire</h2>
+<section id="formulation-du-problème" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-du-problème">Formulation du problème</h3>
+<p><strong>Deux hypothèses :</strong></p>
+<p><span class="math display">\[\begin{cases} H_0 : Y \sim f_Y(y | H_0) \\ H_1 : Y \sim f_Y(y | H_1) \end{cases}\]</span></p>
+<p><strong>Données :</strong></p>
+<p>Les pdfs des classes sont données</p>
+<p><strong>Décision :</strong></p>
+<p>Quelle classe est observée ?</p>
+</section>
+<section id="espaces-de-représentation" class="level3">
+<h3 class="anchored" data-anchor-id="espaces-de-représentation">Espaces de représentation</h3>
+<p><strong>Espace des distributions :</strong></p>
+<p>Mesurer la <strong>proximité des pdfs</strong> (sous hypothèses spécifiques)</p>
+<p><strong>Espace des réalisations :</strong></p>
+<p>Mesurer la <strong>proximité des vecteurs</strong> observés</p>
+</section>
+<section id="classifieurs-pratiques" class="level3">
+<h3 class="anchored" data-anchor-id="classifieurs-pratiques">Classifieurs pratiques</h3>
+<p><strong>k-NN (k-Nearest Neighbors) :</strong></p>
+<p>Classification basée sur les <span class="math inline">\(k\)</span> plus proches voisins</p>
+<p><strong>Classifieur profond (Deep classifier) :</strong></p>
+<p>Réseau de neurones pour apprendre la frontière de décision</p>
+<hr>
+</section>
+</section>
+<section id="test-dhypothèses-détection-danomalies" class="level2">
+<h2 class="anchored" data-anchor-id="test-dhypothèses-détection-danomalies">Test d’hypothèses : Détection d’anomalies</h2>
+<section id="formulation-asymétrique" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-asymétrique">Formulation asymétrique</h3>
+<p><strong>Hypothèse nulle (classe normale) :</strong></p>
+<p><span class="math display">\[H_0 : Y \sim \text{any pdf (inconnue)}\]</span></p>
+<p><strong>Hypothèse alternative (classe cible) :</strong></p>
+<p><span class="math display">\[H_1 : Y \sim f_Y(y | H_1)\]</span></p>
+<p><strong>Objectif :</strong></p>
+<p>Déterminer dans quelle <strong>région</strong> se situe l’observation</p>
+<p><strong>Application :</strong></p>
+<p>Détection d’outliers, détection de fraude, détection d’intrusion</p>
+<hr>
+</section>
+</section>
+<section id="classification-m-aire" class="level2">
+<h2 class="anchored" data-anchor-id="classification-m-aire">Classification M-aire</h2>
+<section id="formulation-du-problème-1" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-du-problème-1">Formulation du problème</h3>
+<p><strong>M hypothèses :</strong></p>
+<p><span class="math display">\[\begin{cases} H_0 : Y \sim f_Y(y | H_0) \\ H_1 : Y \sim f_Y(y | H_1) \\ \vdots \\ H_{M-1} : Y \sim f_Y(y | H_{M-1}) \end{cases}\]</span></p>
+<p><strong>Données :</strong></p>
+<p>Les pdfs de toutes les classes sont données</p>
+<p><strong>Décision :</strong></p>
+<p>Quelle classe parmi les <span class="math inline">\(M\)</span> est observée ?</p>
+<p><strong>Problème principal :</strong></p>
+<p>Séparation efficace des classes dans l’espace des features</p>
+<hr>
+</section>
+</section>
+<section id="lien-avec-le-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="lien-avec-le-machine-learning">Lien avec le Machine Learning</h2>
+<section id="configurations-dapprentissage" class="level3">
+<h3 class="anchored" data-anchor-id="configurations-dapprentissage">Configurations d’apprentissage</h3>
+<p><strong>Apprentissage supervisé (Supervised learning) :</strong></p>
+<ul>
+<li>Données d’entraînement <strong>étiquetées</strong> fournies</li>
+<li><strong>Objectif :</strong> Faire des prédictions (estimer les pdfs) basées sur des exemples</li>
+</ul>
+<p><strong>Apprentissage non supervisé (Unsupervised learning) :</strong></p>
+<ul>
+<li>Données d’entraînement <strong>non étiquetées</strong></li>
+<li><strong>Objectif :</strong> Révéler la structure dans les données observées (data mining)</li>
+</ul>
+<p><strong>Apprentissage semi-supervisé (Semi-supervised learning) :</strong></p>
+<ul>
+<li>Nombre <strong>limité</strong> de données étiquetées + beaucoup de données non étiquetées</li>
+<li><strong>Objectif :</strong> Améliorer les prédictions en exploitant les exemples non étiquetés</li>
+</ul>
+</section>
+<section id="configuration-théorique-vs-pratique" class="level3">
+<h3 class="anchored" data-anchor-id="configuration-théorique-vs-pratique">Configuration théorique vs pratique</h3>
+<p><strong>Configuration théorique (IT - Information Theory) :</strong></p>
+<p>Toutes les pdfs des classes sont <strong>connues</strong></p>
+<p><strong>Configuration pratique (Machine Learning) :</strong></p>
+<p>Les pdfs ne sont <strong>pas connues</strong> mais peuvent être <strong>estimées</strong> à partir des données</p>
+<hr>
+</section>
+</section>
+<section id="recherche-et-identification" class="level2">
+<h2 class="anchored" data-anchor-id="recherche-et-identification">Recherche et Identification</h2>
+<section id="problème-didentification" class="level3">
+<h3 class="anchored" data-anchor-id="problème-didentification">Problème d’identification</h3>
+<p><strong>Configuration :</strong></p>
+<ul>
+<li><strong>Codebook de features</strong> : Base de données de <span class="math inline">\(M\)</span> éléments de référence</li>
+<li><strong>Probe features</strong> : Requête à identifier</li>
+</ul>
+<p><strong>Question fondamentale :</strong></p>
+<p>Combien d’images peuvent être identifiées de manière <strong>non ambiguë</strong> ?</p>
+<p><span class="math display">\[M(P_e \to 0)\]</span></p>
+<p>où <span class="math inline">\(P_e\)</span> est la probabilité d’erreur</p>
+<p><strong>Réponse :</strong></p>
+<p><span class="math inline">\(M\)</span> doit être tel que les distorsions ne causent <strong>aucune ambiguïté</strong></p>
+<p><strong>Conséquence :</strong></p>
+<ul>
+<li>Probabilité de fausse acceptation (false acceptance)</li>
+<li>Probabilité de décodage incorrect</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="architectures-pour-recherche" class="level2">
+<h2 class="anchored" data-anchor-id="architectures-pour-recherche">Architectures pour Recherche</h2>
+<section id="architecture-1-auto-encodage" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-1-auto-encodage">Architecture 1 : Auto-encodage</h3>
+<p><strong>Phase d’entraînement :</strong></p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Encoder]
+    B --&gt; C[Features/Embedding]
+    C --&gt; D[Decoder]
+    D --&gt; E[Reconstruction]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Phase d’extraction de features :</strong></p>
+<p>Les features du bottleneck sont utilisées comme représentation compacte</p>
+</section>
+<section id="architecture-2-apprentissage-auto-supervisé" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-2-apprentissage-auto-supervisé">Architecture 2 : Apprentissage auto-supervisé</h3>
+<p><strong>Phase d’entraînement :</strong></p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Encoder]
+    B --&gt; C[Features]
+    C --&gt; D[Métrique de similarité]
+    D --&gt; E[Loss contrastive]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Phase d’extraction :</strong></p>
+<p>Les features apprises sont utilisées pour la recherche par similarité</p>
+<p>💡 <strong>Principe :</strong> Apprendre des représentations telles que les éléments similaires sont proches dans l’espace des features</p>
+<hr>
+</section>
+</section>
+<section id="transmission-et-compression" class="level2">
+<h2 class="anchored" data-anchor-id="transmission-et-compression">Transmission et Compression</h2>
+<section id="communication-numérique" class="level3">
+<h3 class="anchored" data-anchor-id="communication-numérique">Communication numérique</h3>
+<p><strong>Canaux de transmission :</strong></p>
+<ul>
+<li>Câble optique</li>
+<li>WiFi/3G/4G/5G</li>
+<li>Systèmes fixes/mobiles</li>
+<li>Systèmes de diffusion/accès multiple</li>
+</ul>
+</section>
+<section id="compression-sans-perte-lossless" class="level3">
+<h3 class="anchored" data-anchor-id="compression-sans-perte-lossless">Compression sans perte (Lossless)</h3>
+<p><strong>Configuration :</strong></p>
+<p><span class="math display">\[X \xrightarrow{\text{Encoder}} R \xrightarrow{\text{Decoder}} \hat{X}\]</span></p>
+<p><strong>Propriété :</strong></p>
+<p><span class="math display">\[\hat{X} = X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] = 0\]</span></p>
+<p><strong>Taille compressée :</strong></p>
+<p>Par exemple : 500 Kbytes (image compressée vs originale)</p>
+<p><strong>Usages :</strong></p>
+<p>Documents texte, images médicales, données scientifiques</p>
+</section>
+<section id="compression-avec-perte-lossy" class="level3">
+<h3 class="anchored" data-anchor-id="compression-avec-perte-lossy">Compression avec perte (Lossy)</h3>
+<p><strong>Configuration :</strong></p>
+<p><span class="math display">\[X \xrightarrow{\text{Encoder}} R \xrightarrow{\text{Decoder}} \hat{X}\]</span></p>
+<p><strong>Propriété :</strong></p>
+<p><span class="math display">\[\hat{X} \neq X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] \neq 0\]</span></p>
+<p><strong>Distorsion :</strong></p>
+<p>Perte d’information contrôlée et acceptable</p>
+<p><strong>Taille compressée :</strong></p>
+<p>Par exemple : 64 Kbytes (forte compression)</p>
+<p><strong>Usages :</strong></p>
+<p>Images, vidéos, audio pour consommation humaine</p>
+<hr>
+</section>
+</section>
+<section id="concepts-mathématiques-à-maîtriser" class="level2">
+<h2 class="anchored" data-anchor-id="concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</h2>
+<section id="probabilités-et-statistiques" class="level3">
+<h3 class="anchored" data-anchor-id="probabilités-et-statistiques">Probabilités et statistiques</h3>
+<p><strong>Fondamentaux :</strong></p>
+<ul>
+<li>Variables aléatoires (discrètes, continues)</li>
+<li>Distributions (pmf, pdf, CDF)</li>
+<li>Moments (moyenne, variance, skewness, kurtosis)</li>
+<li>Fonction caractéristique et fonction génératrice</li>
+</ul>
+<p><strong>Concepts avancés :</strong></p>
+<ul>
+<li>Indépendance et indépendance conditionnelle</li>
+<li>Modèles de Markov</li>
+<li>Règle de chaîne</li>
+<li>Covariance et corrélation</li>
+</ul>
+</section>
+<section id="algèbre-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="algèbre-linéaire">Algèbre linéaire</h3>
+<p><strong>Vecteurs et matrices :</strong></p>
+<ul>
+<li>Normes vectorielles (<span class="math inline">\(L_1\)</span>, <span class="math inline">\(L_2\)</span>, <span class="math inline">\(L_\infty\)</span>)</li>
+<li>Produit scalaire</li>
+<li>Projection</li>
+<li>Orthogonalité</li>
+</ul>
+<p><strong>Mesures de distance :</strong></p>
+<ul>
+<li>Distance euclidienne</li>
+<li>Distance de Hamming</li>
+<li>Similarité cosinus</li>
+</ul>
+</section>
+<section id="théorie-de-linformation" class="level3">
+<h3 class="anchored" data-anchor-id="théorie-de-linformation">Théorie de l’information</h3>
+<p><strong>Concepts de base :</strong></p>
+<ul>
+<li>Entropie</li>
+<li>Information mutuelle</li>
+<li>Divergence KL</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="questions-dexamen-types" class="level2">
+<h2 class="anchored" data-anchor-id="questions-dexamen-types">Questions d’examen types</h2>
+<section id="questions-conceptuelles" class="level3">
+<h3 class="anchored" data-anchor-id="questions-conceptuelles">Questions conceptuelles</h3>
+<p><strong>Notations et définitions :</strong></p>
+<ul>
+<li>Différence entre variable aléatoire et réalisation</li>
+<li>Différence entre pmf et pdf</li>
+<li>Qu’est-ce qu’un moment d’une distribution ?</li>
+</ul>
+<p><strong>Indépendance et dépendance :</strong></p>
+<ul>
+<li>Définir l’indépendance de variables aléatoires</li>
+<li>Qu’est-ce qu’un modèle de Markov ?</li>
+<li>Différence entre indépendance et indépendance conditionnelle</li>
+</ul>
+<p><strong>Distances et similarités :</strong></p>
+<ul>
+<li>Relation entre distance euclidienne et produit scalaire</li>
+<li>Qu’est-ce que la similarité cosinus ?</li>
+<li>Interprétation géométrique de l’orthogonalité</li>
+</ul>
+</section>
+<section id="questions-dapplications" class="level3">
+<h3 class="anchored" data-anchor-id="questions-dapplications">Questions d’applications</h3>
+<p><strong>Extraction de features :</strong></p>
+<ul>
+<li>Différence entre features hand-crafted et learned</li>
+<li>Rôle de la PCA dans l’extraction de features</li>
+<li>Applications des moments statistiques</li>
+</ul>
+<p><strong>Classification :</strong></p>
+<ul>
+<li>Différence entre classification binaire et M-aire</li>
+<li>Lien entre test d’hypothèses et classification</li>
+<li>Différence entre apprentissage supervisé et non supervisé</li>
+</ul>
+<p><strong>Compression :</strong></p>
+<ul>
+<li>Différence entre compression avec et sans perte</li>
+<li>Notion de distorsion</li>
+<li>Trade-off rate-distorsion</li>
+</ul>
+</section>
+<section id="développements-mathématiques" class="level3">
+<h3 class="anchored" data-anchor-id="développements-mathématiques">Développements mathématiques</h3>
+<p><strong>Moments :</strong></p>
+<ul>
+<li>Calculer les moments empiriques d’une distribution</li>
+<li>Développement en série de Taylor de la fonction caractéristique</li>
+<li>Relation entre moments de pdf et CDF</li>
+</ul>
+<p><strong>Probabilités :</strong></p>
+<ul>
+<li>Appliquer la règle de chaîne pour décomposer une distribution jointe</li>
+<li>Démontrer des propriétés de la variance et covariance</li>
+<li>Simplification sous hypothèse d’indépendance</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

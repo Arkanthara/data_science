@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds7s1 – ISS</title>
+<title>ds7s1 – Data Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,6 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -281,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">ISS</span>
+    <span class="navbar-title">Data Science</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -449,19 +452,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Detailed Course: Expectation-Maximization (EM) Algorithm</span></a>
+ <span class="menu-text">Detailed Course</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds6s.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Essentials of the Expectation-Maximization (EM) Algorithm</span></a>
+ <span class="menu-text">The Essentials</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds6s1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intuition Behind the EM Algorithm</span></a>
+ <span class="menu-text">Intuition</span></a>
   </div>
 </li>
       </ul>
@@ -550,7 +553,12 @@ Important
 <p><strong>Key Concept: Unsupervised Learning</strong> Clustering is <strong>unsupervised</strong>: no labels, no teacher to say “this is a cat.” The algorithm must discover the structure by itself.</p>
 </div>
 </div>
-<pre class="mermaid"><code>flowchart TD
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
     A[Unlabeled data] --&gt; B{Clustering problem}
     B --&gt; C[k-means approach:&lt;br/&gt;find K centers&lt;br/&gt;and assign each point&lt;br/&gt;to the nearest center]
     B --&gt; D[Hierarchical approach:&lt;br/&gt;build a tree&lt;br/&gt;of groupings]
@@ -558,18 +566,35 @@ Important
     D --&gt; F[Advantage: visualization&lt;br/&gt;via dendrogram]
 
     style E fill:#e6f3ff
-    style F fill:#e6ffe6</code></pre>
+    style F fill:#e6ffe6
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-geometric-intuition-the-musical-chairs-game" class="level2">
 <h2 class="anchored" data-anchor-id="the-geometric-intuition-the-musical-chairs-game">2. The Geometric Intuition: The Musical Chairs Game</h2>
 <p><strong>Analogy:</strong> Imagine a game of musical chairs with K chairs (clusters) and N players (data points). When the music stops: 1. Each player runs to the nearest chair <strong>(assignment)</strong> 2. Each chair is moved to the center of the players surrounding it <strong>(update)</strong> 3. Repeat until the chairs no longer move</p>
 <p><strong>This is exactly k-means!</strong></p>
-<pre class="mermaid"><code>flowchart TD
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
     A[K chairs placed&lt;br/&gt;randomly] --&gt; B[Music stops:&lt;br/&gt;each player runs&lt;br/&gt;to the nearest chair]
     B --&gt; C[Move each chair&lt;br/&gt;to the center of&lt;br/&gt;surrounding players]
     C --&gt; D{Did the chairs&lt;br/&gt;move much?}
     D --&gt;|Yes, repeat| B
-    D --&gt;|No, game over| E[Result: K groups&lt;br/&gt;of players]</code></pre>
+    D --&gt;|No, game over| E[Result: K groups&lt;br/&gt;of players]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-mathematical-formulation-minimizing-energy" class="level2">
 <h2 class="anchored" data-anchor-id="the-mathematical-formulation-minimizing-energy">3. The Mathematical Formulation: Minimizing Energy</h2>
@@ -605,14 +630,25 @@ Note
 <section id="the-dilemma" class="level3">
 <h3 class="anchored" data-anchor-id="the-dilemma">The Dilemma</h3>
 <p>If all chairs start in the same corner, the game will be very long and yield a poor result. <strong>K-means is very sensitive to initialization!</strong></p>
-<pre class="mermaid"><code>flowchart TD
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
     A[Initialization choice] --&gt; B[Poor initialization]
     A --&gt; C[Good initialization]
     B --&gt; D[Slow convergence&lt;br/&gt;Poor quality clusters&lt;br/&gt;Local maximum]
     C --&gt; E[Fast convergence&lt;br/&gt;Good quality clusters&lt;br/&gt;Global (or good) maximum]
 
     style D fill:#ffcccc
-    style E fill:#ccffcc</code></pre>
+    style E fill:#ccffcc
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="k-means-the-smart-solution" class="level3">
 <h3 class="anchored" data-anchor-id="k-means-the-smart-solution">K-means++: The Smart Solution</h3>
@@ -766,14 +802,14 @@ Important
 </section>
 <section id="step-3-execution" class="level3">
 <h3 class="anchored" data-anchor-id="step-3-execution">Step 3: Execution</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialize K centers <span class="cf">with</span> k<span class="op">-</span>means<span class="op">++</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Repeat:</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   a. Assign each point to the nearest center</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculate centers <span class="im">as</span> averages</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   c. If centers move little, stop</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Evaluate <span class="cf">with</span> silhouette score</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> If <span class="kw">in</span> doubt, rerun <span class="cf">with</span> different initializations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialize K centers <span class="cf">with</span> k<span class="op">-</span>means<span class="op">++</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Repeat:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   a. Assign each point to the nearest center</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculate centers <span class="im">as</span> averages</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   c. If centers move little, stop</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Evaluate <span class="cf">with</span> silhouette score</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> If <span class="kw">in</span> doubt, rerun <span class="cf">with</span> different initializations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="step-4-validation" class="level3">
 <h3 class="anchored" data-anchor-id="step-4-validation">Step 4: Validation</h3>

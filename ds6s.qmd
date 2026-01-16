@@ -1,8 +1,4 @@
-Here is the **exact English translation** of your detailed EM algorithm cheat sheet, preserving all content, structure, mathematical notation, and formatting:
-
----
-
-# The Essentials of the Expectation-Maximization (EM) Algorithm
+# The Essentials
 
 ## Introduction and Motivation
 
