@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds5s – ISS</title>
+<title>ds7s1 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -73,35 +108,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -313,7 +319,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s.html">L’essentiel</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -402,7 +408,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds5s.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ds5s.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">L’essentiel</span></a>
   </div>
 </li>
@@ -431,7 +437,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link">
+  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Intuition</span></a>
   </div>
 </li>
@@ -476,465 +482,373 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#lessentiel" id="toc-lessentiel" class="nav-link active" data-scroll-target="#lessentiel">L’essentiel</a>
+  <li><a href="#intuition" id="toc-intuition" class="nav-link active" data-scroll-target="#intuition">Intuition</a>
   <ul class="collapse">
-  <li><a href="#introduction-et-motivation" id="toc-introduction-et-motivation" class="nav-link" data-scroll-target="#introduction-et-motivation">Introduction et Motivation</a>
+  <li><a href="#le-problème-fondamental-regrouper-sans-guide" id="toc-le-problème-fondamental-regrouper-sans-guide" class="nav-link" data-scroll-target="#le-problème-fondamental-regrouper-sans-guide">1. Le Problème Fondamental : Regrouper sans Guide</a></li>
+  <li><a href="#lintuition-géométrique-le-jeu-des-chaises-musicales" id="toc-lintuition-géométrique-le-jeu-des-chaises-musicales" class="nav-link" data-scroll-target="#lintuition-géométrique-le-jeu-des-chaises-musicales">2. L’Intuition Géométrique : Le Jeu des Chaises Musicales</a></li>
+  <li><a href="#la-formulation-mathématique-minimiser-lénergie" id="toc-la-formulation-mathématique-minimiser-lénergie" class="nav-link" data-scroll-target="#la-formulation-mathématique-minimiser-lénergie">3. La Formulation Mathématique : Minimiser l’Énergie</a>
   <ul class="collapse">
-  <li><a href="#le-problème-fondamental" id="toc-le-problème-fondamental" class="nav-link" data-scroll-target="#le-problème-fondamental">Le problème fondamental</a></li>
-  <li><a href="#apprentissage-supervisé" id="toc-apprentissage-supervisé" class="nav-link" data-scroll-target="#apprentissage-supervisé">Apprentissage supervisé</a></li>
+  <li><a href="#le-critère-à-minimiser" id="toc-le-critère-à-minimiser" class="nav-link" data-scroll-target="#le-critère-à-minimiser">Le Critère à Minimiser</a></li>
+  <li><a href="#les-deux-équations-magiques" id="toc-les-deux-équations-magiques" class="nav-link" data-scroll-target="#les-deux-équations-magiques">Les Deux Équations Magiques</a></li>
   </ul></li>
-  <li><a href="#intuition-géométrique-séparer-des-nuages-de-points-colorés" id="toc-intuition-géométrique-séparer-des-nuages-de-points-colorés" class="nav-link" data-scroll-target="#intuition-géométrique-séparer-des-nuages-de-points-colorés">Intuition géométrique : Séparer des nuages de points colorés</a></li>
-  <li><a href="#les-deux-objectifs-en-tension" id="toc-les-deux-objectifs-en-tension" class="nav-link" data-scroll-target="#les-deux-objectifs-en-tension">Les deux objectifs en tension</a>
+  <li><a href="#le-problème-de-linitialisation-où-placer-les-premières-chaises" id="toc-le-problème-de-linitialisation-où-placer-les-premières-chaises" class="nav-link" data-scroll-target="#le-problème-de-linitialisation-où-placer-les-premières-chaises">4. Le Problème de l’Initialisation : Où Placer les Premières Chaises ?</a>
   <ul class="collapse">
-  <li><a href="#objectif-1-éloigner-les-centres-between-class" id="toc-objectif-1-éloigner-les-centres-between-class" class="nav-link" data-scroll-target="#objectif-1-éloigner-les-centres-between-class">Objectif 1 : Éloigner les centres (Between-class)</a></li>
-  <li><a href="#objectif-2-regrouper-chaque-classe-within-class" id="toc-objectif-2-regrouper-chaque-classe-within-class" class="nav-link" data-scroll-target="#objectif-2-regrouper-chaque-classe-within-class">Objectif 2 : Regrouper chaque classe (Within-class)</a></li>
+  <li><a href="#le-dilemme" id="toc-le-dilemme" class="nav-link" data-scroll-target="#le-dilemme">Le Dilemme</a></li>
+  <li><a href="#k-means-la-solution-intelligente" id="toc-k-means-la-solution-intelligente" class="nav-link" data-scroll-target="#k-means-la-solution-intelligente">K-means++ : La Solution Intelligente</a></li>
   </ul></li>
-  <li><a href="#critère-de-fisher-le-compromis-mathématique" id="toc-critère-de-fisher-le-compromis-mathématique" class="nav-link" data-scroll-target="#critère-de-fisher-le-compromis-mathématique">Critère de Fisher : Le compromis mathématique</a>
+  <li><a href="#le-choix-de-k-combien-de-chaises" id="toc-le-choix-de-k-combien-de-chaises" class="nav-link" data-scroll-target="#le-choix-de-k-combien-de-chaises">5. Le Choix de K : Combien de Chaises ?</a>
   <ul class="collapse">
-  <li><a href="#formulation-pour-2-classes" id="toc-formulation-pour-2-classes" class="nav-link" data-scroll-target="#formulation-pour-2-classes">Formulation pour 2 classes</a></li>
-  <li><a href="#généralisation-à-m-classes" id="toc-généralisation-à-m-classes" class="nav-link" data-scroll-target="#généralisation-à-m-classes">Généralisation à M classes</a></li>
+  <li><a href="#le-problème-principal" id="toc-le-problème-principal" class="nav-link" data-scroll-target="#le-problème-principal">Le Problème Principal</a></li>
+  <li><a href="#méthodes-pour-choisir-k" id="toc-méthodes-pour-choisir-k" class="nav-link" data-scroll-target="#méthodes-pour-choisir-k">Méthodes pour Choisir K</a></li>
   </ul></li>
-  <li><a href="#solution-problème-aux-valeurs-propres" id="toc-solution-problème-aux-valeurs-propres" class="nav-link" data-scroll-target="#solution-problème-aux-valeurs-propres">Solution : Problème aux valeurs propres</a>
+  <li><a href="#k-means-vs-gmm-le-duel-des-clusters" id="toc-k-means-vs-gmm-le-duel-des-clusters" class="nav-link" data-scroll-target="#k-means-vs-gmm-le-duel-des-clusters">6. K-means vs GMM : Le Duel des Clusters</a></li>
+  <li><a href="#les-pièges-de-k-means-et-comment-les-éviter" id="toc-les-pièges-de-k-means-et-comment-les-éviter" class="nav-link" data-scroll-target="#les-pièges-de-k-means-et-comment-les-éviter">7. Les Pièges de K-means et Comment les Éviter</a>
   <ul class="collapse">
-  <li><a href="#résolution-par-dérivation" id="toc-résolution-par-dérivation" class="nav-link" data-scroll-target="#résolution-par-dérivation">Résolution par dérivation</a></li>
+  <li><a href="#piège-1-les-clusters-non-sphériques" id="toc-piège-1-les-clusters-non-sphériques" class="nav-link" data-scroll-target="#piège-1-les-clusters-non-sphériques">Piège 1 : Les Clusters Non Sphériques</a></li>
+  <li><a href="#piège-2-les-clusters-de-tailles-très-différentes" id="toc-piège-2-les-clusters-de-tailles-très-différentes" class="nav-link" data-scroll-target="#piège-2-les-clusters-de-tailles-très-différentes">Piège 2 : Les Clusters de Tailles Très Différentes</a></li>
+  <li><a href="#piège-3-la-sensibilité-aux-outliers" id="toc-piège-3-la-sensibilité-aux-outliers" class="nav-link" data-scroll-target="#piège-3-la-sensibilité-aux-outliers">Piège 3 : La Sensibilité aux Outliers</a></li>
+  <li><a href="#piège-4-linterprétation-des-résultats" id="toc-piège-4-linterprétation-des-résultats" class="nav-link" data-scroll-target="#piège-4-linterprétation-des-résultats">Piège 4 : L’Interprétation des Résultats</a></li>
   </ul></li>
-  <li><a href="#limitation-dimensionnelle" id="toc-limitation-dimensionnelle" class="nav-link" data-scroll-target="#limitation-dimensionnelle">Limitation dimensionnelle</a>
+  <li><a href="#en-pratique-la-recette-complète" id="toc-en-pratique-la-recette-complète" class="nav-link" data-scroll-target="#en-pratique-la-recette-complète">8. En Pratique : La Recette Complète</a>
   <ul class="collapse">
-  <li><a href="#pourquoi-seulement-m-1-dimensions" id="toc-pourquoi-seulement-m-1-dimensions" class="nav-link" data-scroll-target="#pourquoi-seulement-m-1-dimensions">Pourquoi seulement M-1 dimensions ?</a></li>
+  <li><a href="#étape-1-préparation-des-données" id="toc-étape-1-préparation-des-données" class="nav-link" data-scroll-target="#étape-1-préparation-des-données">Étape 1 : Préparation des Données</a></li>
+  <li><a href="#étape-2-choix-de-k" id="toc-étape-2-choix-de-k" class="nav-link" data-scroll-target="#étape-2-choix-de-k">Étape 2 : Choix de K</a></li>
+  <li><a href="#étape-3-exécution" id="toc-étape-3-exécution" class="nav-link" data-scroll-target="#étape-3-exécution">Étape 3 : Exécution</a></li>
+  <li><a href="#étape-4-validation" id="toc-étape-4-validation" class="nav-link" data-scroll-target="#étape-4-validation">Étape 4 : Validation</a></li>
   </ul></li>
-  <li><a href="#application-pratique-de-la-lda" id="toc-application-pratique-de-la-lda" class="nav-link" data-scroll-target="#application-pratique-de-la-lda">Application pratique de la LDA</a>
+  <li><a href="#les-variantes-de-k-means" id="toc-les-variantes-de-k-means" class="nav-link" data-scroll-target="#les-variantes-de-k-means">9. Les Variantes de K-means</a>
   <ul class="collapse">
-  <li><a href="#algorithme-lda-complet" id="toc-algorithme-lda-complet" class="nav-link" data-scroll-target="#algorithme-lda-complet">Algorithme LDA complet</a></li>
+  <li><a href="#k-medoids" id="toc-k-medoids" class="nav-link" data-scroll-target="#k-medoids">K-medoids</a></li>
+  <li><a href="#mini-batch-k-means" id="toc-mini-batch-k-means" class="nav-link" data-scroll-target="#mini-batch-k-means">Mini-batch K-means</a></li>
+  <li><a href="#fuzzy-c-means" id="toc-fuzzy-c-means" class="nav-link" data-scroll-target="#fuzzy-c-means">Fuzzy C-means</a></li>
   </ul></li>
-  <li><a href="#lda-comme-classifieur-lhypothèse-gaussienne" id="toc-lda-comme-classifieur-lhypothèse-gaussienne" class="nav-link" data-scroll-target="#lda-comme-classifieur-lhypothèse-gaussienne">LDA comme classifieur : L’hypothèse gaussienne</a>
-  <ul class="collapse">
-  <li><a href="#modélisation-probabiliste" id="toc-modélisation-probabiliste" class="nav-link" data-scroll-target="#modélisation-probabiliste">Modélisation probabiliste</a></li>
-  <li><a href="#approximation-gaussienne" id="toc-approximation-gaussienne" class="nav-link" data-scroll-target="#approximation-gaussienne">Approximation gaussienne</a></li>
-  <li><a href="#pourquoi-la-frontière-est-elle-linéaire" id="toc-pourquoi-la-frontière-est-elle-linéaire" class="nav-link" data-scroll-target="#pourquoi-la-frontière-est-elle-linéaire">Pourquoi la frontière est-elle linéaire ?</a></li>
-  </ul></li>
-  <li><a href="#optimalité-de-la-lda" id="toc-optimalité-de-la-lda" class="nav-link" data-scroll-target="#optimalité-de-la-lda">Optimalité de la LDA</a>
-  <ul class="collapse">
-  <li><a href="#conditions-doptimalité" id="toc-conditions-doptimalité" class="nav-link" data-scroll-target="#conditions-doptimalité">Conditions d’optimalité</a></li>
-  <li><a href="#quand-la-lda-fonctionne-bien-et-moins-bien" id="toc-quand-la-lda-fonctionne-bien-et-moins-bien" class="nav-link" data-scroll-target="#quand-la-lda-fonctionne-bien-et-moins-bien">Quand la LDA fonctionne bien (et moins bien)</a></li>
-  </ul></li>
-  <li><a href="#lda-vs-qda-le-dilemme-linéaire-vs-quadratique" id="toc-lda-vs-qda-le-dilemme-linéaire-vs-quadratique" class="nav-link" data-scroll-target="#lda-vs-qda-le-dilemme-linéaire-vs-quadratique">LDA vs QDA : Le dilemme linéaire vs quadratique</a>
-  <ul class="collapse">
-  <li><a href="#la-différence-cruciale" id="toc-la-différence-cruciale" class="nav-link" data-scroll-target="#la-différence-cruciale">La différence cruciale</a></li>
-  </ul></li>
-  <li><a href="#comparaison-lda-vs-pca" id="toc-comparaison-lda-vs-pca" class="nav-link" data-scroll-target="#comparaison-lda-vs-pca">Comparaison LDA vs PCA</a>
-  <ul class="collapse">
-  <li><a href="#différences-fondamentales" id="toc-différences-fondamentales" class="nav-link" data-scroll-target="#différences-fondamentales">Différences fondamentales</a></li>
-  <li><a href="#complémentarité" id="toc-complémentarité" class="nav-link" data-scroll-target="#complémentarité">Complémentarité</a></li>
-  </ul></li>
+  <li><a href="#fiche-de-révision-express" id="toc-fiche-de-révision-express" class="nav-link" data-scroll-target="#fiche-de-révision-express">10. Fiche de Révision Express</a></li>
+  <li><a href="#pour-loral-lhistoire-à-raconter" id="toc-pour-loral-lhistoire-à-raconter" class="nav-link" data-scroll-target="#pour-loral-lhistoire-à-raconter">11. Pour l’Oral : L’Histoire à Raconter</a></li>
+  <li><a href="#questions-fréquentes-à-lexamen" id="toc-questions-fréquentes-à-lexamen" class="nav-link" data-scroll-target="#questions-fréquentes-à-lexamen">12. Questions Fréquentes à l’Examen</a></li>
+  <li><a href="#le-mot-de-la-fin" id="toc-le-mot-de-la-fin" class="nav-link" data-scroll-target="#le-mot-de-la-fin">13. Le Mot de la Fin</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds5s.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds7s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds5.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds5s.html">L’essentiel</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav></header>
 
 
 
 
 
-<section id="lessentiel" class="level1">
-<h1>L’essentiel</h1>
-<section id="introduction-et-motivation" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-et-motivation">Introduction et Motivation</h2>
-<p>La <strong>LDA</strong> (Analyse Discriminante Linéaire) est une méthode d’<strong>analyse latente supervisée</strong> qui permet de trouver les facteurs latents optimaux pour la discrimination entre classes.</p>
-<section id="le-problème-fondamental" class="level3">
-<h3 class="anchored" data-anchor-id="le-problème-fondamental">Le problème fondamental</h3>
-<p>Imaginez que vous travaillez dans un centre de tri postal. Vous avez des lettres avec 100 mesures différentes (poids, taille, couleur, texture…). Vous devez les trier automatiquement par type (lettre, colis, magazine). Comment trouver <strong>la ou les dimensions qui séparent le mieux les catégories</strong> ?</p>
-<p>C’est exactement ce que résout la LDA : trouver <strong>les axes qui maximisent la séparation entre classes</strong> tout en minimisant la dispersion à l’intérieur de chaque classe.</p>
-<p>📌 <strong>Différence fondamentale avec la PCA :</strong></p>
-<p>La PCA regarde <strong>toutes</strong> les données et cherche les directions de variation maximale. La LDA regarde d’abord <strong>les étiquettes</strong> (les classes) et cherche les directions qui séparent le mieux ces classes.</p>
-<p>⚠️ <strong>Attention :</strong> Cette LDA ne doit pas être confondue avec <strong>Latent Dirichlet Allocation</strong> (utilisée en NLP).</p>
-</section>
-<section id="apprentissage-supervisé" class="level3">
-<h3 class="anchored" data-anchor-id="apprentissage-supervisé">Apprentissage supervisé</h3>
-<p>Soit des données <span class="math inline">\(X \subset \Omega \subseteq \mathbb{R}^D\)</span> associées à des catégories (étiquettes de classe) <span class="math inline">\(Y = [[M]] \subset \mathbb{N}\)</span>.</p>
-<p><strong>L’apprentissage supervisé</strong> consiste à trouver (apprendre) les paramètres <span class="math inline">\(\theta\)</span> d’un apprenant (fonction) <span class="math inline">\(\phi_\theta\)</span> de manière à minimiser la perte <span class="math inline">\(L_{X \times Y}(\theta)\)</span> encourue lors de la prédiction des étiquettes de classe.</p>
-<p><span class="math display">\[\phi_\theta : \Omega \to Y\]</span> <span class="math display">\[x_i \mapsto \phi_\theta(x_i) = \tilde{y}_i\]</span></p>
-<hr>
-</section>
-</section>
-<section id="intuition-géométrique-séparer-des-nuages-de-points-colorés" class="level2">
-<h2 class="anchored" data-anchor-id="intuition-géométrique-séparer-des-nuages-de-points-colorés">Intuition géométrique : Séparer des nuages de points colorés</h2>
-<p>Imaginez des points de deux couleurs (rouge et bleu) dispersés sur un plan. Vous ne pouvez regarder que selon une seule direction (comme une lampe torche qui éclaire une ligne).</p>
-<p><strong>Question :</strong> Comment orienter la lampe pour que, sur cette ligne, les points rouges et bleus soient <strong>le plus séparés possible</strong> ?</p>
-<p>💡 <strong>Idée essentielle :</strong> La LDA cherche la <strong>ligne de démarcation</strong>, comme un arbitre qui trace une ligne entre deux équipes. Elle trouve la direction qui sépare le mieux les groupes, tout en s’assurant que chaque équipe est regroupée.</p>
-<p>On cherche une <strong>direction</strong> <span class="math inline">\(a \in \mathbb{R}^D\)</span> telle que la projection des données sur cette direction <span class="math inline">\(\hat{X} = \text{Proj}_a(X)\)</span> montre des <strong>propriétés optimales pour la discrimination</strong> entre classes.</p>
-<hr>
-</section>
-<section id="les-deux-objectifs-en-tension" class="level2">
-<h2 class="anchored" data-anchor-id="les-deux-objectifs-en-tension">Les deux objectifs en tension</h2>
-<section id="objectif-1-éloigner-les-centres-between-class" class="level3">
-<h3 class="anchored" data-anchor-id="objectif-1-éloigner-les-centres-between-class">Objectif 1 : Éloigner les centres (Between-class)</h3>
-<p><strong>“Mettre les moyennes le plus loin possible”</strong></p>
-<p>Si les projections des classes sont <strong>bien séparées</strong>, alors elles peuvent être facilement discriminées.</p>
-<p>✅ <strong>Objectif :</strong> Chercher la direction <span class="math inline">\(a\)</span> où la discrimination inter-classes est <strong>maximale</strong>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Formulation inter-classes
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>La direction <span class="math inline">\(a\)</span> doit être <strong>colinéaire</strong> à la ligne <span class="math inline">\(\mu_1 - \mu_2\)</span> qui relie les centres de masse des classes, car :</p>
-<p><span class="math display">\[\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \left\|\frac{a^T\mu_1}{\|a\|^2}a - \frac{a^T\mu_2}{\|a\|^2}a\right\|^2 = \frac{1}{\|a\|^2}(a^T(\mu_1 - \mu_2))^2\]</span></p>
-<p>Cette expression est <strong>maximale</strong> quand <span class="math inline">\(a = \lambda(\mu_1 - \mu_2)\)</span>.</p>
-<p>💡 <strong>Propriété :</strong> Le centre de masse des données projetées est la projection du centre de masse des données originales.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="objectif-2-regrouper-chaque-classe-within-class" class="level3">
-<h3 class="anchored" data-anchor-id="objectif-2-regrouper-chaque-classe-within-class">Objectif 2 : Regrouper chaque classe (Within-class)</h3>
-<p><strong>“Garder chaque classe compacte”</strong></p>
-<p>On cherche également à <strong>minimiser la variance</strong> de chaque classe projetée individuellement.</p>
-<p>Pour chaque classe <span class="math inline">\(k\)</span>, la variance normalisée de la projection est :</p>
-<p><span class="math display">\[\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k)\]</span></p>
-<p>📌 <strong>Le dilemme :</strong> Parfois, étirer les centres les éloigne, mais cela peut aussi étirer les classes. Il faut trouver le bon compromis.</p>
-<hr>
-</section>
-</section>
-<section id="critère-de-fisher-le-compromis-mathématique" class="level2">
-<h2 class="anchored" data-anchor-id="critère-de-fisher-le-compromis-mathématique">Critère de Fisher : Le compromis mathématique</h2>
-<section id="formulation-pour-2-classes" class="level3">
-<h3 class="anchored" data-anchor-id="formulation-pour-2-classes">Formulation pour 2 classes</h3>
-<p>Le <strong>critère de Fisher</strong> maximise le ratio :</p>
-<p><span class="math display">\[\underset{a}{\arg\max} \frac{\|\hat{\mu}_1 - \hat{\mu}_2\|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}\]</span></p>
-<p><strong>Interprétation :</strong></p>
-<ul>
-<li><strong>Numérateur :</strong> Distance entre les moyennes projetées (inter-classe) → à <strong>maximiser</strong></li>
-<li><strong>Dénominateur :</strong> Somme des variances intra-classes → à <strong>minimiser</strong></li>
-</ul>
-<p>💡 <strong>Astuce mnémotechnique :</strong></p>
-<ul>
-<li><strong>B</strong> comme <strong>Between</strong> = <strong>B</strong> pour “Bien séparer” (les centres)</li>
-<li><strong>W</strong> comme <strong>Within</strong> = “Regrouper” (chaque classe)</li>
-</ul>
-</section>
-<section id="généralisation-à-m-classes" class="level3">
-<h3 class="anchored" data-anchor-id="généralisation-à-m-classes">Généralisation à M classes</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Matrices de covariance
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Matrice de covariance inter-classes :</strong></p>
-<p>Soit <span class="math inline">\(B = [\mu_1 - \mu, \ldots, \mu_M - \mu]\)</span> la matrice des centres de classes centrés, où :</p>
-<ul>
-<li><span class="math inline">\(\mu = \frac{1}{N} \sum_i^N x_i\)</span> est la moyenne globale</li>
-<li><span class="math inline">\(N = \sum_k N_k\)</span> est le nombre total de points</li>
-</ul>
-<p><span class="math display">\[\Sigma_b = \frac{1}{M} BB^T\]</span></p>
-<p><strong>Critère à maximiser :</strong></p>
-<p><span class="math display">\[\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{\|a\|^2} a^T \Sigma_b a\]</span></p>
-<p><strong>Matrice de covariance intra-classe :</strong></p>
-<p>Soit <span class="math inline">\(A_k = [x_1 - \mu_k, \ldots, x_{N_k} - \mu_k]\)</span> avec <span class="math inline">\(y_i = k\)</span>, la matrice des données centrées pour la classe <span class="math inline">\(k\)</span>.</p>
-<p><span class="math display">\[\Sigma_w = \sum_k \frac{1}{N_k} A_k A_k^T\]</span></p>
-<p><strong>Critère à minimiser :</strong></p>
-<p><span class="math display">\[\sum_k \frac{1}{N_k} \sum_{y_i = k} (\hat{x}_i - \hat{\mu}_k)^T (\hat{x}_i - \hat{\mu}_k) = \frac{1}{a^T a} a^T \Sigma_w a\]</span></p>
-</div>
-</div>
-</div>
-<p>Le <strong>critère de Fisher généralisé</strong> combine les critères inter-classe et intra-classe :</p>
-<p><span class="math display">\[\underset{a}{\arg\max} \, J(a) = \underset{a}{\arg\max} \frac{a^T \Sigma_b a}{a^T \Sigma_w a}\]</span></p>
-<p>où :</p>
-<ul>
-<li><strong><span class="math inline">\(\Sigma_b\)</span></strong> = matrice de covariance “entre classes” (between) → mesure l’éloignement des centres</li>
-<li><strong><span class="math inline">\(\Sigma_w\)</span></strong> = matrice de covariance “dans les classes” (within) → mesure la dispersion interne</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="solution-problème-aux-valeurs-propres" class="level2">
-<h2 class="anchored" data-anchor-id="solution-problème-aux-valeurs-propres">Solution : Problème aux valeurs propres</h2>
-<section id="résolution-par-dérivation" class="level3">
-<h3 class="anchored" data-anchor-id="résolution-par-dérivation">Résolution par dérivation</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Dérivation
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Pour trouver le maximum, on calcule la dérivée :</p>
-<p><span class="math display">\[\frac{\partial J(a)}{\partial a} = \frac{\Sigma_b a (a^T \Sigma_w a) - \Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0\]</span></p>
-<p><strong>Équation résultante :</strong></p>
-<p><span class="math display">\[\Sigma_b a = J(a) \Sigma_w a\]</span></p>
-<p>Ce qui peut se réécrire :</p>
-<p><span class="math display">\[\Sigma_w^{-1} \Sigma_b a = J(a) a\]</span></p>
-</div>
-</div>
-</div>
-<p>✅ <strong>Solution :</strong> <span class="math inline">\(a\)</span> est solution du <strong>système aux valeurs propres généralisé</strong>.</p>
-<p>La direction optimale <span class="math inline">\(a\)</span> est le <strong>premier vecteur propre</strong> de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (avec valeur propre <span class="math inline">\(\lambda_1 = J(a)\)</span>).</p>
-<hr>
-</section>
-</section>
-<section id="limitation-dimensionnelle" class="level2">
-<h2 class="anchored" data-anchor-id="limitation-dimensionnelle">Limitation dimensionnelle</h2>
-<section id="pourquoi-seulement-m-1-dimensions" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-seulement-m-1-dimensions">Pourquoi seulement M-1 dimensions ?</h3>
-<p>Les vecteurs propres correspondant aux <strong>plus grandes valeurs propres</strong> <span class="math inline">\(\lambda_i\)</span> sont les dimensions les plus discriminatives :</p>
-<p><span class="math display">\[a_1, a_2, \ldots, a_p \quad \text{avec} \quad \lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_p\]</span></p>
-<p>📌 <strong>Propriété fondamentale :</strong> <span class="math inline">\(M\)</span> classes peuvent être discriminées dans un sous-espace de dimension <strong>au plus</strong> <span class="math inline">\((M-1)\)</span>.</p>
-<p><strong>Conséquence :</strong> Il y a seulement <span class="math inline">\(M - 1\)</span> valeurs propres <strong>non nulles</strong>.</p>
-<p>💡 <strong>Analogie :</strong> Avec 3 points (3 classes), vous pouvez au plus les placer dans un plan (2D). Avec 2 points (2 classes), vous pouvez au plus les placer sur une ligne (1D).</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Cas M = 2
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Pour deux classes, on peut montrer que :</p>
-<p><span class="math display">\[BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T\]</span></p>
-<p><strong>Implications :</strong></p>
-<ul>
-<li><span class="math inline">\(BB^T a\)</span> est un vecteur selon la direction <span class="math inline">\((\mu_1 - \mu_2)\)</span></li>
-<li>La solution est <span class="math inline">\(a = \lambda \Sigma_w^{-1} (\mu_1 - \mu_2)\)</span></li>
-</ul>
-</div>
-</div>
-</div>
-<p>⚠️ <strong>Piège à éviter :</strong> Si vous avez plus de dimensions que M-1, les directions supplémentaires auront une valeur propre nulle → pas discriminantes.</p>
-<hr>
-</section>
-</section>
-<section id="application-pratique-de-la-lda" class="level2">
-<h2 class="anchored" data-anchor-id="application-pratique-de-la-lda">Application pratique de la LDA</h2>
-<section id="algorithme-lda-complet" class="level3">
-<h3 class="anchored" data-anchor-id="algorithme-lda-complet">Algorithme LDA complet</h3>
-<p><strong>Étape 1 : Préparer les données</strong></p>
-<ul>
-<li>Vérifier que chaque classe a assez d’exemples (au moins D+1 pour éviter <span class="math inline">\(\Sigma_w\)</span> singulière)</li>
-<li>Optionnel : standardiser si les échelles sont très différentes</li>
-</ul>
-<p><strong>Étape 2 : Calculer les matrices clés</strong></p>
-<ul>
-<li><strong><span class="math inline">\(\Sigma_w\)</span></strong> (within) : moyenne des covariances de chaque classe</li>
-<li><strong><span class="math inline">\(\Sigma_b\)</span></strong> (between) : covariance des centres de classes</li>
-</ul>
-<p><strong>Étape 3 : Résoudre le problème aux valeurs propres</strong></p>
-<p>Calculer les vecteurs propres de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span></p>
-<p><strong>Étape 4 : Garder les M-1 premières directions</strong></p>
-<p>Trier par valeurs propres décroissantes, garder les plus importantes</p>
-<p><strong>Étape 5 : Projeter et classifier</strong></p>
-<ul>
-<li>Projeter les données sur le sous-espace discriminant</li>
-<li>Classifier (par exemple avec une règle du plus proche voisin)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="lda-comme-classifieur-lhypothèse-gaussienne" class="level2">
-<h2 class="anchored" data-anchor-id="lda-comme-classifieur-lhypothèse-gaussienne">LDA comme classifieur : L’hypothèse gaussienne</h2>
-<section id="modélisation-probabiliste" class="level3">
-<h3 class="anchored" data-anchor-id="modélisation-probabiliste">Modélisation probabiliste</h3>
-<p>Pour une nouvelle donnée <span class="math inline">\(j\)</span> :</p>
-<ul>
-<li><span class="math inline">\(x_j\)</span> est <strong>connu</strong></li>
-<li><span class="math inline">\(y_j\)</span> est <strong>inconnu</strong></li>
-</ul>
-<p><strong>Question :</strong> À quelle classe <span class="math inline">\(k\)</span> le point <span class="math inline">\(j\)</span> appartient-il ?</p>
-<p>On déclare la variable aléatoire de classe <span class="math inline">\(C\)</span> et on utilise la <strong>règle de Bayes</strong> :</p>
-<p><span class="math display">\[\mathbb{P}(C = k | x_j) = \frac{\mathbb{P}(x_j | C = k) \mathbb{P}(C = k)}{\mathbb{P}(x_j)}\]</span></p>
-<p><strong>Composantes :</strong></p>
-<ul>
-<li><span class="math inline">\(\mathbb{P}(x_j | C = k)\)</span> : <strong>vraisemblance</strong> (likelihood)</li>
-<li><span class="math inline">\(\mathbb{P}(C = k)\)</span> : <strong>prior</strong> (probabilité a priori)</li>
-<li><span class="math inline">\(\mathbb{P}(x_j)\)</span> : <strong>évidence</strong> (normalisation)</li>
-</ul>
-</section>
-<section id="approximation-gaussienne" class="level3">
-<h3 class="anchored" data-anchor-id="approximation-gaussienne">Approximation gaussienne</h3>
-<p>La LDA suppose que <strong>chaque classe suit une distribution gaussienne</strong> :</p>
-<p><span class="math display">\[\mathbb{P}(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)\]</span></p>
-<p>avec :</p>
-<ul>
-<li>Moyennes différentes pour chaque classe</li>
-<li><strong>Même matrice de covariance</strong> pour toutes les classes (crucial !)</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>📌 Détails mathématiques : Maximum de vraisemblance
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Approximation :</strong></p>
-<p><span class="math display">\[\mathbb{P}(x | C = k) \propto \exp\left(-(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)\right)\]</span></p>
-<p><strong>Prior uniforme :</strong> <span class="math inline">\(\mathbb{P}(C = k) = \frac{1}{M}\)</span> (toutes les classes équiprobables)</p>
-<p><strong>Simplification :</strong> L’évidence <span class="math inline">\(\mathbb{P}(x_j)\)</span> est <strong>ignorée</strong> car constante pour toutes les classes (normalisation).</p>
-</div>
-</div>
-</div>
-<p><strong>Règle de décision :</strong></p>
-<p><span class="math display">\[\delta(x) = \underset{k}{\arg\max} \, \mathbb{P}(x | C = k)\]</span></p>
-<p><strong>Interprétation :</strong> On assigne <span class="math inline">\(x\)</span> à la classe <span class="math inline">\(k\)</span> qui maximise la vraisemblance.</p>
-</section>
-<section id="pourquoi-la-frontière-est-elle-linéaire" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-la-frontière-est-elle-linéaire">Pourquoi la frontière est-elle linéaire ?</h3>
-<p>Avec cette hypothèse, la frontière entre deux classes est <strong>linéaire</strong> (d’où le “L” de LDA).</p>
-<p>💡 <strong>Pourquoi ?</strong> Les contours d’égal densité de deux gaussiennes avec même covariance sont des hyperplans.</p>
-<hr>
-</section>
-</section>
-<section id="optimalité-de-la-lda" class="level2">
-<h2 class="anchored" data-anchor-id="optimalité-de-la-lda">Optimalité de la LDA</h2>
-<section id="conditions-doptimalité" class="level3">
-<h3 class="anchored" data-anchor-id="conditions-doptimalité">Conditions d’optimalité</h3>
-<p>✅ <strong>La LDA est optimale</strong> lorsque les <span class="math inline">\(M\)</span> classes suivent chacune une <strong>distribution gaussienne</strong> avec la même matrice de covariance.</p>
-<p><strong>Justification :</strong></p>
-<p>Les critères de discrimination sont basés sur les matrices de covariance <span class="math inline">\(\Sigma_w\)</span> et <span class="math inline">\(\Sigma_b\)</span>, qui caractérisent pleinement les distributions gaussiennes.</p>
-</section>
-<section id="quand-la-lda-fonctionne-bien-et-moins-bien" class="level3">
-<h3 class="anchored" data-anchor-id="quand-la-lda-fonctionne-bien-et-moins-bien">Quand la LDA fonctionne bien (et moins bien)</h3>
-<p><strong>Conditions idéales ✅</strong></p>
-<ul>
-<li>Les classes sont <strong>approximativement gaussiennes</strong></li>
-<li>Les covariances des classes sont <strong>similaires</strong></li>
-<li>Assez d’exemples par classe (au moins 10× le nombre de dimensions)</li>
-<li>Relations <strong>linéaires</strong> entre variables</li>
-</ul>
-<p><strong>Situations problématiques ❌</strong></p>
-<ul>
-<li><strong>Covariances très différentes</strong> → utiliser QDA (Quadratic Discriminant Analysis)</li>
-<li><strong>Relations non-linéaires</strong> → Kernel LDA ou méthodes non-linéaires</li>
-<li><strong>Peu d’exemples</strong> par rapport aux dimensions → régulariser ou réduire dimension d’abord</li>
-<li><strong>Classes non-gaussiennes</strong> → autres classifieurs (forêts aléatoires, SVM…)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="lda-vs-qda-le-dilemme-linéaire-vs-quadratique" class="level2">
-<h2 class="anchored" data-anchor-id="lda-vs-qda-le-dilemme-linéaire-vs-quadratique">LDA vs QDA : Le dilemme linéaire vs quadratique</h2>
-<section id="la-différence-cruciale" class="level3">
-<h3 class="anchored" data-anchor-id="la-différence-cruciale">La différence cruciale</h3>
-<ul>
-<li><strong>LDA :</strong> Suppose <strong>même covariance</strong> pour toutes classes → frontières linéaires</li>
-<li><strong>QDA :</strong> Suppose <strong>covariances différentes</strong> → frontières quadratiques</li>
-</ul>
-<p>💡 <strong>Règle pratique :</strong> Si vous avez peu de données, LDA est plus robuste (moins de paramètres à estimer).</p>
-<hr>
-</section>
-</section>
-<section id="comparaison-lda-vs-pca" class="level2">
-<h2 class="anchored" data-anchor-id="comparaison-lda-vs-pca">Comparaison LDA vs PCA</h2>
-<section id="différences-fondamentales" class="level3">
-<h3 class="anchored" data-anchor-id="différences-fondamentales">Différences fondamentales</h3>
-<p><strong>PCA (non supervisée) :</strong></p>
-<ul>
-<li>Maximise la <strong>variance</strong> globale</li>
-<li>Ignore les étiquettes de classe</li>
-<li>Trouve les directions de variance maximale</li>
-<li>Basée sur <span class="math inline">\(\Sigma\)</span> (covariance totale)</li>
-</ul>
-<p><strong>LDA (supervisée) :</strong></p>
-<ul>
-<li>Maximise la <strong>séparation entre classes</strong></li>
-<li>Utilise les étiquettes de classe</li>
-<li>Trouve les directions discriminantes</li>
-<li>Basée sur <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (ratio de covariances)</li>
-</ul>
-</section>
-<section id="complémentarité" class="level3">
-<h3 class="anchored" data-anchor-id="complémentarité">Complémentarité</h3>
-<p>💡 <strong>En pratique :</strong> On peut combiner PCA et LDA :</p>
-<ul>
-<li>PCA pour réduction initiale de dimension (éliminer le bruit)</li>
-<li>LDA pour maximiser la discrimination</li>
-</ul>
-<p><strong>Exemple concret :</strong> Reconnaissance faciale avec Fisherfaces (LDA) contrairement aux Eigenfaces (PCA).</p>
-<hr>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>💡 Fiche de révision condensée
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>En 30 secondes :</strong></p>
-<ul>
-<li>LDA = réduction supervisée (utilise les étiquettes)</li>
-<li>Maximise (distance entre centres) / (dispersion dans classes)</li>
-<li>Solution = vecteurs propres de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span></li>
-<li>Au plus M-1 dimensions discriminantes</li>
-<li>Suppose : classes gaussiennes, mêmes covariances</li>
-<li>Utile pour : classification, visualisation supervisée</li>
-<li>Alternative : QDA si covariances différentes</li>
-</ul>
-</div>
-</div>
+<section id="intuition" class="level1">
+<h1>Intuition</h1>
+<section id="le-problème-fondamental-regrouper-sans-guide" class="level2">
+<h2 class="anchored" data-anchor-id="le-problème-fondamental-regrouper-sans-guide">1. Le Problème Fondamental : Regrouper sans Guide</h2>
+<p><strong>Imaginez :</strong> On vous donne 1000 photos d’animaux non étiquetées et on vous demande : “Combien y a-t-il de types d’animaux différents, et quelles photos vont ensemble ?” C’est exactement le problème du clustering !</p>
+<p><strong>K-means</strong> répond à cette question en faisant <strong>une hypothèse simplificatrice</strong> : chaque type d’animal peut être représenté par une <strong>image moyenne</strong> (prototype), et chaque photo est proche de l’un de ces prototypes.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>📌 Concepts mathématiques à maîtriser
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Pour bien comprendre la LDA :</p>
-<p><strong>Algèbre linéaire :</strong></p>
-<ul>
-<li>Vecteurs propres et valeurs propres</li>
-<li>Système aux valeurs propres généralisé</li>
-<li>Matrices de covariance</li>
-<li>Projection orthogonale</li>
-</ul>
-<p><strong>Statistiques :</strong></p>
-<ul>
-<li>Moyenne et variance</li>
-<li>Covariance et corrélation</li>
-<li>Distribution normale multivariée</li>
-<li>Règle de Bayes</li>
-</ul>
-<p><strong>Optimisation :</strong></p>
-<ul>
-<li>Dérivation de fonctions matricielles</li>
-<li>Optimisation sous contrainte</li>
-<li>Méthode du ratio de Rayleigh</li>
-</ul>
+<p><strong>Concept Clé : Apprentissage non supervisé</strong> Le clustering est <strong>non supervisé</strong> : pas d’étiquettes, pas de professeur pour dire “ceci est un chat”. L’algorithme doit découvrir la structure par lui-même.</p>
 </div>
 </div>
-
-
+<pre class="mermaid"><code>flowchart TD
+    A[Données non étiquetées] --&gt; B{Problème de clustering}
+    B --&gt; C[Approche k-means :&lt;br/&gt;trouver K centres&lt;br/&gt;et assigner chaque point&lt;br/&gt;au centre le plus proche]
+    B --&gt; D[Approche hiérarchique :&lt;br/&gt;construire un arbre&lt;br/&gt;de regroupements]
+    C --&gt; E[Avantage : simple, rapide]
+    D --&gt; F[Avantage : visualisation&lt;br/&gt;par dendrogramme]
+    
+    style E fill:#e6f3ff
+    style F fill:#e6ffe6</code></pre>
 </section>
+<section id="lintuition-géométrique-le-jeu-des-chaises-musicales" class="level2">
+<h2 class="anchored" data-anchor-id="lintuition-géométrique-le-jeu-des-chaises-musicales">2. L’Intuition Géométrique : Le Jeu des Chaises Musicales</h2>
+<p><strong>Analogie :</strong> Imaginez un jeu de chaises musicales avec K chaises (clusters) et N joueurs (points de données). Quand la musique s’arrête : 1. Chaque joueur court vers la chaise la plus proche <strong>(assignation)</strong> 2. On déplace chaque chaise au centre des joueurs qui l’entourent <strong>(mise à jour)</strong> 3. On recommence jusqu’à ce que les chaises ne bougent plus</p>
+<p><strong>C’est exactement k-means !</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    A[K chaises placées&lt;br/&gt;au hasard] --&gt; B[Musique s'arrête :&lt;br/&gt;chaque joueur court&lt;br/&gt;vers la chaise la plus proche]
+    B --&gt; C[On déplace chaque chaise&lt;br/&gt;au centre des joueurs&lt;br/&gt;qui l'entourent]
+    C --&gt; D{Les chaises ont-elles&lt;br/&gt;beaucoup bougé ?}
+    D --&gt;|Oui, recommencer| B
+    D --&gt;|Non, fin du jeu| E[Résultat : K groupes&lt;br/&gt;de joueurs]</code></pre>
+</section>
+<section id="la-formulation-mathématique-minimiser-lénergie" class="level2">
+<h2 class="anchored" data-anchor-id="la-formulation-mathématique-minimiser-lénergie">3. La Formulation Mathématique : Minimiser l’Énergie</h2>
+<section id="le-critère-à-minimiser" class="level3">
+<h3 class="anchored" data-anchor-id="le-critère-à-minimiser">Le Critère à Minimiser</h3>
+<p>K-means cherche à minimiser :</p>
+<pre><code>L = somme sur tous les points de (distance au centre de son cluster)²</code></pre>
+<p><strong>Pourquoi au carré ?</strong> Deux raisons : 1. <strong>Mathématique</strong> : rend le problème plus facile à résoudre 2. <strong>Géométrique</strong> : pénalise plus les points très éloignés</p>
+</section>
+<section id="les-deux-équations-magiques" class="level3">
+<h3 class="anchored" data-anchor-id="les-deux-équations-magiques">Les Deux Équations Magiques</h3>
+<p><strong>Étape d’assignation (E-like) :</strong> Pour chaque point <code>x_i</code>, trouver le centre <code>μ_k</code> le plus proche :</p>
+<pre><code>Assigner x_i au cluster k qui minimise ||x_i - μ_k||²</code></pre>
+<p><strong>Étape de mise à jour (M-like) :</strong> Pour chaque cluster <code>k</code>, recalculer son centre :</p>
+<pre><code>μ_k = moyenne de tous les points assignés au cluster k</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Pourquoi ça converge ?</strong> Chaque étape ne peut qu’améliorer (ou laisser inchangé) le critère. Comme il y a un nombre fini d’assignations possibles, l’algorithme doit terminer.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="le-problème-de-linitialisation-où-placer-les-premières-chaises" class="level2">
+<h2 class="anchored" data-anchor-id="le-problème-de-linitialisation-où-placer-les-premières-chaises">4. Le Problème de l’Initialisation : Où Placer les Premières Chaises ?</h2>
+<section id="le-dilemme" class="level3">
+<h3 class="anchored" data-anchor-id="le-dilemme">Le Dilemme</h3>
+<p>Si toutes les chaises commencent dans le même coin, le jeu sera très long et donnera un mauvais résultat. <strong>K-means est très sensible à l’initialisation !</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    A[Choix d'initialisation] --&gt; B[Mauvaise initialisation]
+    A --&gt; C[Bonne initialisation]
+    B --&gt; D[Convergence lente&lt;br/&gt;Clusters de mauvaise qualité&lt;br/&gt;Maximum local]
+    C --&gt; E[Convergence rapide&lt;br/&gt;Clusters de bonne qualité&lt;br/&gt;Maximum global (ou bon)]
+    
+    style D fill:#ffcccc
+    style E fill:#ccffcc</code></pre>
+</section>
+<section id="k-means-la-solution-intelligente" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-la-solution-intelligente">K-means++ : La Solution Intelligente</h3>
+<p><strong>Principe :</strong> Éloigner les centres initiaux les uns des autres.</p>
+<p><strong>Algorithme :</strong> 1. Choisir un premier centre au hasard 2. Pour chaque point, calculer sa distance <code>D(x)</code> au centre le plus proche 3. Choisir le prochain centre avec une probabilité proportionnelle à <code>D(x)²</code> 4. Répéter jusqu’à avoir K centres</p>
+<p><strong>Pourquoi ça marche ?</strong> En favorisant les points éloignés, on couvre mieux l’espace des données.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Astuce pratique :</strong> Toujours utiliser k-means++ ou lancer k-means plusieurs fois avec différentes initialisations aléatoires et garder le meilleur résultat.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="le-choix-de-k-combien-de-chaises" class="level2">
+<h2 class="anchored" data-anchor-id="le-choix-de-k-combien-de-chaises">5. Le Choix de K : Combien de Chaises ?</h2>
+<section id="le-problème-principal" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-principal">Le Problème Principal</h3>
+<p>K-means a besoin qu’on lui dise combien de clusters chercher. Mais dans la vraie vie, <strong>on ne sait pas à l’avance</strong> !</p>
+</section>
+<section id="méthodes-pour-choisir-k" class="level3">
+<h3 class="anchored" data-anchor-id="méthodes-pour-choisir-k">Méthodes pour Choisir K</h3>
+<section id="méthode-du-coude-elbow-method" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-du-coude-elbow-method">1. Méthode du Coude (Elbow Method)</h4>
+<p><strong>Principe :</strong> Tracer l’erreur (inertie) en fonction de K.</p>
+<pre><code>Erreur(K) = somme des distances² des points à leur centre</code></pre>
+<p>Quand K augmente, l’erreur diminue. On cherche le “coude” où l’amélioration ralentit.</p>
+</section>
+<section id="score-de-silhouette" class="level4">
+<h4 class="anchored" data-anchor-id="score-de-silhouette">2. Score de Silhouette</h4>
+<p><strong>Principe :</strong> Mesure combien un point est bien dans son cluster vs hors de son cluster.</p>
+<pre><code>s(i) = (b(i) - a(i)) / max(a(i), b(i))</code></pre>
+<p>où <code>a(i)</code> = distance moyenne aux autres points du même cluster,<br>
+<code>b(i)</code> = distance moyenne aux points du cluster le plus proche.</p>
+<p><strong>Interprétation :</strong> <code>s(i) ≈ 1</code> = bien classé, <code>≈ 0</code> = à la frontière, <code>≈ -1</code> = mal classé.</p>
+</section>
+<section id="règle-pratique" class="level4">
+<h4 class="anchored" data-anchor-id="règle-pratique">3. Règle Pratique</h4>
+<p>Pour N points : <code>K ≈ √(N/2)</code> (très grossier, à utiliser avec prudence).</p>
+</section>
+</section>
+</section>
+<section id="k-means-vs-gmm-le-duel-des-clusters" class="level2">
+<h2 class="anchored" data-anchor-id="k-means-vs-gmm-le-duel-des-clusters">6. K-means vs GMM : Le Duel des Clusters</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 30%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>K-means</th>
+<th>GMM avec EM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Philosophie</strong></td>
+<td>Géométrique (distance)</td>
+<td>Probabiliste (densité)</td>
+</tr>
+<tr class="even">
+<td><strong>Appartenance</strong></td>
+<td>Dure (0 ou 1)</td>
+<td>Douce (probabilité)</td>
+</tr>
+<tr class="odd">
+<td><strong>Forme clusters</strong></td>
+<td>Sphères (toutes mêmes tailles)</td>
+<td>Ellipses (tailles/orientations variables)</td>
+</tr>
+<tr class="even">
+<td><strong>Modèle</strong></td>
+<td>Minimise distance</td>
+<td>Maximise vraisemblance</td>
+</tr>
+<tr class="odd">
+<td><strong>Vitesse</strong></td>
+<td>Rapide (O(NKT))</td>
+<td>Plus lent (plus de calculs)</td>
+</tr>
+<tr class="even">
+<td><strong>Cas limite</strong></td>
+<td>-</td>
+<td>K-means = GMM avec σ→0 et covariances sphériques</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>K-means est un cas particulier de GMM !</strong> Quand on prend un mélange de gaussiennes avec : - Covariances sphériques et identiques : <code>Σ_k = σ²I</code> - Et qu’on fait tendre <code>σ → 0</code> Alors l’assignation douce devient dure, et on retrouve k-means.</p>
+</div>
+</div>
+</section>
+<section id="les-pièges-de-k-means-et-comment-les-éviter" class="level2">
+<h2 class="anchored" data-anchor-id="les-pièges-de-k-means-et-comment-les-éviter">7. Les Pièges de K-means et Comment les Éviter</h2>
+<section id="piège-1-les-clusters-non-sphériques" class="level3">
+<h3 class="anchored" data-anchor-id="piège-1-les-clusters-non-sphériques">Piège 1 : Les Clusters Non Sphériques</h3>
+<p><strong>Problème :</strong> K-means suppose des clusters sphériques. S’ils sont allongés ou de formes bizarres, ça échoue.</p>
+<p><strong>Solution :</strong> - Standardiser les données (centrer-réduire) - Utiliser une autre méthode (GMM, spectral clustering) - Transformer les données (PCA d’abord)</p>
+</section>
+<section id="piège-2-les-clusters-de-tailles-très-différentes" class="level3">
+<h3 class="anchored" data-anchor-id="piège-2-les-clusters-de-tailles-très-différentes">Piège 2 : Les Clusters de Tailles Très Différentes</h3>
+<p><strong>Problème :</strong> K-means tend à créer des clusters de taille similaire, même si la réalité est différente.</p>
+<p><strong>Solution :</strong> Ajuster K, ou utiliser une méthode qui gère ça (GMM).</p>
+</section>
+<section id="piège-3-la-sensibilité-aux-outliers" class="level3">
+<h3 class="anchored" data-anchor-id="piège-3-la-sensibilité-aux-outliers">Piège 3 : La Sensibilité aux Outliers</h3>
+<p><strong>Problème :</strong> Un point très éloigné tire le centre de son cluster vers lui.</p>
+<p><strong>Solution :</strong> - Détecter et enlever les outliers avant - Utiliser k-medoids (plus robuste) - Standardiser pour réduire l’influence</p>
+</section>
+<section id="piège-4-linterprétation-des-résultats" class="level3">
+<h3 class="anchored" data-anchor-id="piège-4-linterprétation-des-résultats">Piège 4 : L’Interprétation des Résultats</h3>
+<p><strong>Problème :</strong> K-means trouve toujours K clusters, même si les données n’ont pas de structure.</p>
+<p><strong>Solution :</strong> Toujours valider avec des méthodes objectives (silhouette, gap statistic).</p>
+</section>
+</section>
+<section id="en-pratique-la-recette-complète" class="level2">
+<h2 class="anchored" data-anchor-id="en-pratique-la-recette-complète">8. En Pratique : La Recette Complète</h2>
+<section id="étape-1-préparation-des-données" class="level3">
+<h3 class="anchored" data-anchor-id="étape-1-préparation-des-données">Étape 1 : Préparation des Données</h3>
+<ol type="1">
+<li><strong>Nettoyer</strong> : gérer les valeurs manquantes</li>
+<li><strong>Standardiser</strong> : centrer et réduire chaque variable</li>
+<li><strong>Visualiser</strong> (si possible en 2D/3D) pour avoir une idée</li>
+</ol>
+</section>
+<section id="étape-2-choix-de-k" class="level3">
+<h3 class="anchored" data-anchor-id="étape-2-choix-de-k">Étape 2 : Choix de K</h3>
+<ol type="1">
+<li><strong>Méthode du coude</strong> : tracer inertie vs K</li>
+<li><strong>Score de silhouette</strong> : moyenne sur tous les points</li>
+<li><strong>Connaissance du domaine</strong> : parfois on sait combien de clusters on cherche</li>
+</ol>
+</section>
+<section id="étape-3-exécution" class="level3">
+<h3 class="anchored" data-anchor-id="étape-3-exécution">Étape 3 : Exécution</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialiser K centres avec k<span class="op">-</span>means<span class="op">++</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Répéter:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   a. Assigner chaque point au centre le plus proche</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculer les centres comme moyennes</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   c. Si les centres bougent peu, arrêter</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Évaluer avec score de silhouette</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Si doute, relancer avec différentes initialisations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="étape-4-validation" class="level3">
+<h3 class="anchored" data-anchor-id="étape-4-validation">Étape 4 : Validation</h3>
+<ol type="1">
+<li><strong>Interne</strong> : scores (silhouette, Davies-Bouldin)</li>
+<li><strong>Externe</strong> : si on a quelques étiquettes, comparer</li>
+<li><strong>Manuelle</strong> : visualisation, bon sens</li>
+</ol>
+</section>
+</section>
+<section id="les-variantes-de-k-means" class="level2">
+<h2 class="anchored" data-anchor-id="les-variantes-de-k-means">9. Les Variantes de K-means</h2>
+<section id="k-medoids" class="level3">
+<h3 class="anchored" data-anchor-id="k-medoids">K-medoids</h3>
+<p><strong>Différence</strong> : Les centres sont des points réels des données (pas des moyennes).</p>
+<p><strong>Avantage</strong> : Plus robuste aux outliers, fonctionne avec n’importe quelle distance.</p>
+</section>
+<section id="mini-batch-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="mini-batch-k-means">Mini-batch K-means</h3>
+<p><strong>Différence</strong> : Utilise des sous-échantillons des données à chaque itération.</p>
+<p><strong>Avantage</strong> : Beaucoup plus rapide pour les grandes données.</p>
+</section>
+<section id="fuzzy-c-means" class="level3">
+<h3 class="anchored" data-anchor-id="fuzzy-c-means">Fuzzy C-means</h3>
+<p><strong>Différence</strong> : Assignation douce (comme GMM) mais avec un critère géométrique.</p>
+<p><strong>Avantage</strong> : Points frontières appartiennent partiellement à plusieurs clusters.</p>
+</section>
+</section>
+<section id="fiche-de-révision-express" class="level2">
+<h2 class="anchored" data-anchor-id="fiche-de-révision-express">10. Fiche de Révision Express</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>En 30 secondes pour l’oral :</strong></p>
+<ol type="1">
+<li><strong>K-means</strong> = clustering par minimisation de distance</li>
+<li><strong>Deux étapes</strong> : assignation (points → centre plus proche) et mise à jour (recalcul des centres)</li>
+<li><strong>Problèmes</strong> : choix de K, initialisation, clusters sphériques</li>
+<li><strong>Solutions</strong> : k-means++, méthode du coude, standardisation</li>
+<li><strong>Parenté</strong> : cas particulier des GMM avec σ→0</li>
+<li><strong>Applications</strong> : segmentation, regroupement, réduction de dimension</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="pour-loral-lhistoire-à-raconter" class="level2">
+<h2 class="anchored" data-anchor-id="pour-loral-lhistoire-à-raconter">11. Pour l’Oral : L’Histoire à Raconter</h2>
+<p>“Imaginez organiser une fête avec des invités dispersés dans un parc. Vous voulez créer K groupes de discussion. Vous placez K animateurs au hasard (initialisation), chaque invité rejoint l’animateur le plus proche (assignation), puis les animateurs se déplacent au centre de leur groupe (mise à jour). On recommence jusqu’à ce que les animateurs ne bougent plus. C’est exactement k-means !”</p>
+</section>
+<section id="questions-fréquentes-à-lexamen" class="level2">
+<h2 class="anchored" data-anchor-id="questions-fréquentes-à-lexamen">12. Questions Fréquentes à l’Examen</h2>
+<p><strong>Q : “Pourquoi k-means est-il sensible à l’initialisation ?”</strong> R : “Parce que le critère à minimiser a plusieurs minima locaux. Selon où on commence, on peut rester coincé dans un mauvais minimum.”</p>
+<p><strong>Q : “Comment choisir K si on n’a aucune idée ?”</strong> R : “Utilisez la méthode du coude pour voir où l’amélioration ralentit, et validez avec le score de silhouette. Testez plusieurs K et regardez ce qui a du sens pour vos données.”</p>
+<p><strong>Q : “Quand ne pas utiliser k-means ?”</strong> R : “Quand vos clusters ne sont pas sphériques, ou ont des tailles très différentes, ou quand vous avez beaucoup de bruit/outliers.”</p>
+</section>
+<section id="le-mot-de-la-fin" class="level2">
+<h2 class="anchored" data-anchor-id="le-mot-de-la-fin">13. Le Mot de la Fin</h2>
+<p>K-means est comme un couteau suisse du clustering : <strong>simple, rapide, utile dans beaucoup de situations</strong>. Mais comme tout outil simple, il faut connaître ses limites. L’essentiel est de toujours : 1. <strong>Préparer</strong> ses données (nettoyer, standardiser) 2. <strong>Choisir K intelligemment</strong> (méthode du coude, silhouette) 3. <strong>Initialiser proprement</strong> (k-means++) 4. <strong>Valider</strong> les résultats (visualisation, scores)</p>
+<p><strong>En résumé :</strong> K-means est votre premier outil pour explorer la structure de données non étiquetées. Pas le plus sophistiqué, mais souvent le plus pratique pour commencer.</p>
+
+
 </section>
 </section>
 
