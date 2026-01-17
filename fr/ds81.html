@@ -525,6 +525,32 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#problématique" id="toc-problématique" class="nav-link" data-scroll-target="#problématique">Problématique</a></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a></li>
+  <li><a href="#techniques-de-base" id="toc-techniques-de-base" class="nav-link" data-scroll-target="#techniques-de-base">Techniques de base</a></li>
+  <li><a href="#architectures-pour-mining" id="toc-architectures-pour-mining" class="nav-link" data-scroll-target="#architectures-pour-mining">Architectures pour Mining</a></li>
+  </ul></li>
+  <li><a href="#reconnaissance-et-classification-1" id="toc-reconnaissance-et-classification-1" class="nav-link" data-scroll-target="#reconnaissance-et-classification-1">Reconnaissance et Classification</a>
+  <ul class="collapse">
+  <li><a href="#problèmes-de-base" id="toc-problèmes-de-base" class="nav-link" data-scroll-target="#problèmes-de-base">Problèmes de base</a></li>
+  <li><a href="#domaines-dapplication" id="toc-domaines-dapplication" class="nav-link" data-scroll-target="#domaines-dapplication">Domaines d’application</a></li>
+  <li><a href="#base-commune-test-dhypothèses" id="toc-base-commune-test-dhypothèses" class="nav-link" data-scroll-target="#base-commune-test-dhypothèses">Base commune : Test d’hypothèses</a></li>
+  <li><a href="#lien-avec-le-machine-learning" id="toc-lien-avec-le-machine-learning" class="nav-link" data-scroll-target="#lien-avec-le-machine-learning">Lien avec le Machine Learning</a></li>
+  </ul></li>
+  <li><a href="#recherche-et-identification-1" id="toc-recherche-et-identification-1" class="nav-link" data-scroll-target="#recherche-et-identification-1">Recherche et Identification</a>
+  <ul class="collapse">
+  <li><a href="#problème-didentification" id="toc-problème-didentification" class="nav-link" data-scroll-target="#problème-didentification">Problème d’identification</a></li>
+  <li><a href="#architectures-pour-recherche" id="toc-architectures-pour-recherche" class="nav-link" data-scroll-target="#architectures-pour-recherche">Architectures pour Recherche</a></li>
+  </ul></li>
+  <li><a href="#transmission-et-compression-1" id="toc-transmission-et-compression-1" class="nav-link" data-scroll-target="#transmission-et-compression-1">Transmission et Compression</a>
+  <ul class="collapse">
+  <li><a href="#communication-numérique" id="toc-communication-numérique" class="nav-link" data-scroll-target="#communication-numérique">Communication numérique</a></li>
+  <li><a href="#compression-sans-perte-lossless" id="toc-compression-sans-perte-lossless" class="nav-link" data-scroll-target="#compression-sans-perte-lossless">Compression sans perte (Lossless)</a></li>
+  <li><a href="#compression-avec-perte-lossy" id="toc-compression-avec-perte-lossy" class="nav-link" data-scroll-target="#compression-avec-perte-lossy">Compression avec perte (Lossy)</a></li>
+  </ul></li>
+  <li><a href="#préparation-à-lexamen" id="toc-préparation-à-lexamen" class="nav-link" data-scroll-target="#préparation-à-lexamen">Préparation à l’examen</a>
+  <ul class="collapse">
+  <li><a href="#concepts-mathématiques-à-maîtriser" id="toc-concepts-mathématiques-à-maîtriser" class="nav-link" data-scroll-target="#concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</a></li>
+  <li><a href="#questions-dexamen-types" id="toc-questions-dexamen-types" class="nav-link" data-scroll-target="#questions-dexamen-types">Questions d’examen types</a></li>
+  <li><a href="#développements-mathématiques" id="toc-développements-mathématiques" class="nav-link" data-scroll-target="#développements-mathématiques">Développements mathématiques</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -1814,8 +1840,1312 @@ window.Quarto = {
 <p><strong>Exemples :</strong></p>
 <ul>
 <li>Détection automatique de styles artistiques</li>
-<li>Identification de scènes typiques (plage</li>
+<li>Identification de scènes typiques (plage, montagne, ville)</li>
+<li>Découverte de motifs récurrents dans des images médicales</li>
 </ul>
+</section>
+<section id="biomarqueurs" class="level4">
+<h4 class="anchored" data-anchor-id="biomarqueurs">Biomarqueurs</h4>
+<p><strong>Objectif :</strong></p>
+<p>Identifier des marqueurs biologiques dans des données médicales (génomique, protéomique, imagerie).</p>
+<p><strong>Exemples :</strong></p>
+<ul>
+<li>Découverte de gènes associés à des maladies</li>
+<li>Identification de patterns dans l’imagerie médicale prédictifs de diagnostic</li>
+<li>Profils moléculaires caractéristiques de sous-types de cancer</li>
+</ul>
+</section>
+<section id="analyse-de-marché" class="level4">
+<h4 class="anchored" data-anchor-id="analyse-de-marché">Analyse de marché</h4>
+<p><strong>Objectif :</strong></p>
+<p>Détecter des tendances, segments de clientèle, et patterns de comportement.</p>
+<p><strong>Exemples :</strong></p>
+<ul>
+<li>Segmentation automatique de clients</li>
+<li>Analyse de panier de marché (market basket analysis)</li>
+<li>Détection de tendances émergentes</li>
+<li>Identification de produits complémentaires</li>
+</ul>
+</section>
+</section>
+<section id="techniques-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="techniques-de-base">Techniques de base</h3>
+<section id="classification-supervisée" class="level4">
+<h4 class="anchored" data-anchor-id="classification-supervisée">Classification supervisée</h4>
+<p><strong>Principe :</strong></p>
+<p>Assigner des catégories prédéfinies aux données en apprenant à partir d’exemples étiquetés.</p>
+<p><strong>Algorithmes :</strong></p>
+<ul>
+<li>Arbres de décision</li>
+<li>SVM (Support Vector Machines)</li>
+<li>Réseaux de neurones</li>
+<li>k-NN (k-Nearest Neighbors)</li>
+<li>Naive Bayes</li>
+</ul>
+<p><strong>Processus :</strong></p>
+<ol type="1">
+<li>Entraînement sur données étiquetées</li>
+<li>Validation et ajustement des hyperparamètres</li>
+<li>Test sur données nouvelles</li>
+<li>Déploiement</li>
+</ol>
+</section>
+<section id="clustering-regroupement" class="level4">
+<h4 class="anchored" data-anchor-id="clustering-regroupement">Clustering (regroupement)</h4>
+<p><strong>Principe :</strong></p>
+<p>Regrouper des données similaires sans supervision préalable.</p>
+<p><strong>Algorithmes :</strong></p>
+<ul>
+<li>k-means : Partitionnement en k clusters</li>
+<li>Clustering hiérarchique : Construction d’un arbre de clusters</li>
+<li>DBSCAN : Clustering basé sur la densité</li>
+<li>GMM (Gaussian Mixture Models) : Modèles de mélanges gaussiens</li>
+</ul>
+<p><strong>Applications :</strong></p>
+<ul>
+<li>Segmentation d’images</li>
+<li>Analyse de groupes de clients</li>
+<li>Organisation de documents</li>
+</ul>
+</section>
+<section id="prédiction" class="level4">
+<h4 class="anchored" data-anchor-id="prédiction">Prédiction</h4>
+<p><strong>Principe :</strong></p>
+<p>Prédire des valeurs futures ou manquantes basées sur des patterns historiques.</p>
+<p><strong>Types :</strong></p>
+<ul>
+<li><strong>Régression</strong> : Prédire des valeurs continues</li>
+<li><strong>Séries temporelles</strong> : Prédire des valeurs futures</li>
+<li><strong>Imputation</strong> : Estimer des valeurs manquantes</li>
+</ul>
+<p><strong>Algorithmes :</strong></p>
+<ul>
+<li>Régression linéaire/logistique</li>
+<li>ARIMA pour séries temporelles</li>
+<li>Réseaux de neurones récurrents (RNN, LSTM)</li>
+<li>Gradient Boosting</li>
+</ul>
+</section>
+</section>
+<section id="architectures-pour-mining" class="level3">
+<h3 class="anchored" data-anchor-id="architectures-pour-mining">Architectures pour Mining</h3>
+<section id="architecture-1-features-de-classification" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-1-features-de-classification">Architecture 1 : Features de classification</h4>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Extraction de features]
+    B --&gt; C[Hand-crafted]
+    B --&gt; D[Deep Learning]
+    C --&gt; E[Classifier]
+    D --&gt; E
+    E --&gt; F[Classes découvertes]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Principe :</strong></p>
+<ol type="1">
+<li>Extraire des features (hand-crafted ou apprises)</li>
+<li>Appliquer un algorithme de clustering ou classification non supervisée</li>
+<li>Découvrir des catégories naturelles dans les données</li>
+</ol>
+<p><strong>Exemple :</strong></p>
+<ul>
+<li>Features : Histogrammes de couleurs, textures</li>
+<li>Clustering : k-means</li>
+<li>Résultat : Découverte automatique de catégories d’images (paysages, portraits, etc.)</li>
+</ul>
+</section>
+<section id="architecture-2-features-dauto-encodage" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-2-features-dauto-encodage">Architecture 2 : Features d’auto-encodage</h4>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Encoder]
+    B --&gt; C[Features/Latent]
+    C --&gt; D[Decoder]
+    D --&gt; E[Reconstruction]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Principe :</strong></p>
+<ol type="1">
+<li>Entraîner un autoencodeur à reconstruire les données</li>
+<li>Extraire les features du goulot d’étranglement (bottleneck)</li>
+<li>Utiliser ces features pour mining (clustering, visualisation)</li>
+</ol>
+<p><strong>Variantes :</strong></p>
+<ul>
+<li><strong>Autoencoder classique</strong> : Minimise l’erreur de reconstruction</li>
+<li><strong>Variational Autoencoder (VAE)</strong> : Apprend une distribution latente</li>
+<li><strong>Denoising Autoencoder</strong> : Robuste au bruit</li>
+</ul>
+<p><strong>Applications :</strong></p>
+<ul>
+<li>Découverte de structures latentes</li>
+<li>Détection d’anomalies</li>
+<li>Génération de nouvelles données</li>
+</ul>
+</section>
+<section id="architecture-3-apprentissage-auto-supervisé" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-3-apprentissage-auto-supervisé">Architecture 3 : Apprentissage auto-supervisé</h4>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Encoder]
+    B --&gt; C[Features]
+    C --&gt; D[Métrique de similarité]
+    D --&gt; E[Loss contrastive]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Principe :</strong></p>
+<p>Les features sont apprises par apprentissage contrastif (contrastive learning) :</p>
+<ol type="1">
+<li>Créer des paires d’exemples similaires/dissimilaires</li>
+<li>Apprendre des features telles que :
+<ul>
+<li>Exemples similaires → features proches</li>
+<li>Exemples dissimilaires → features éloignées</li>
+</ul></li>
+</ol>
+<p><strong>Méthodes :</strong></p>
+<ul>
+<li><strong>SimCLR</strong> : Contrastive learning pour images</li>
+<li><strong>MoCo</strong> : Momentum contrast</li>
+<li><strong>BYOL</strong> : Bootstrap Your Own Latent</li>
+</ul>
+<p>💡 <strong>Principe clé :</strong> Apprendre des représentations telles que les éléments similaires sont proches dans l’espace des features, sans labels explicites.</p>
+<p><strong>Applications :</strong></p>
+<ul>
+<li>Pré-entraînement de modèles</li>
+<li>Recherche par similarité</li>
+<li>Few-shot learning</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="reconnaissance-et-classification-1" class="level2">
+<h2 class="anchored" data-anchor-id="reconnaissance-et-classification-1">Reconnaissance et Classification</h2>
+<section id="problèmes-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="problèmes-de-base">Problèmes de base</h3>
+<section id="classification-binaire" class="level4">
+<h4 class="anchored" data-anchor-id="classification-binaire">Classification binaire</h4>
+<p><strong>Formulation :</strong></p>
+<p>Distinguer entre deux hypothèses <span class="math inline">\(H_0\)</span> et <span class="math inline">\(H_1\)</span>.</p>
+<p><strong>Exemple :</strong></p>
+<ul>
+<li>Spam vs non-spam</li>
+<li>Maladie vs santé</li>
+<li>Fraude vs transaction normale</li>
+</ul>
+<p><strong>Décision :</strong></p>
+<p><span class="math display">\[\hat{y} = \begin{cases} H_0 &amp; \text{si } \text{score}(x) &lt; \text{seuil} \\ H_1 &amp; \text{si } \text{score}(x) \geq \text{seuil} \end{cases}\]</span></p>
+</section>
+<section id="classification-m-aire" class="level4">
+<h4 class="anchored" data-anchor-id="classification-m-aire">Classification M-aire</h4>
+<p><strong>Formulation :</strong></p>
+<p>Distinguer entre <span class="math inline">\(M\)</span> hypothèses <span class="math inline">\(H_0, H_1, \ldots, H_{M-1}\)</span>.</p>
+<p><strong>Exemple :</strong></p>
+<ul>
+<li>Reconnaissance de chiffres (0-9) : <span class="math inline">\(M = 10\)</span></li>
+<li>Classification d’espèces : <span class="math inline">\(M\)</span> espèces différentes</li>
+<li>Reconnaissance d’émotions : joie, tristesse, colère, etc.</li>
+</ul>
+<p><strong>Décision :</strong></p>
+<p><span class="math display">\[\hat{y} = \arg\max_{i \in \{0, \ldots, M-1\}} \text{score}_i(x)\]</span></p>
+</section>
+</section>
+<section id="domaines-dapplication" class="level3">
+<h3 class="anchored" data-anchor-id="domaines-dapplication">Domaines d’application</h3>
+<section id="reconnaissance-de-patterns" class="level4">
+<h4 class="anchored" data-anchor-id="reconnaissance-de-patterns">Reconnaissance de patterns</h4>
+<p><strong>Objectif :</strong></p>
+<p>Reconnaître des objets, visages, gestes, ou patterns spécifiques.</p>
+<p><strong>Exemples :</strong></p>
+<ul>
+<li>Reconnaissance faciale</li>
+<li>Reconnaissance de caractères (OCR)</li>
+<li>Reconnaissance de gestes</li>
+<li>Reconnaissance d’objets dans des scènes</li>
+</ul>
+<p><strong>Défis :</strong></p>
+<ul>
+<li>Variabilité intra-classe (même objet, apparences différentes)</li>
+<li>Similarité inter-classe (objets différents, apparences similaires)</li>
+<li>Occlusions partielles</li>
+<li>Variations d’éclairage, pose, échelle</li>
+</ul>
+</section>
+<section id="information-retrieval-récupération-dinformation" class="level4">
+<h4 class="anchored" data-anchor-id="information-retrieval-récupération-dinformation">Information Retrieval (Récupération d’information)</h4>
+<p><strong>Objectif :</strong></p>
+<p>Rechercher des documents, images, ou éléments pertinents dans une grande base de données.</p>
+<p><strong>Exemples :</strong></p>
+<ul>
+<li>Moteurs de recherche web</li>
+<li>Recherche d’images par contenu</li>
+<li>Recherche de documents similaires</li>
+<li>Systèmes de recommandation</li>
+</ul>
+<p><strong>Métriques :</strong></p>
+<ul>
+<li>Précision : proportion de résultats pertinents parmi les retournés</li>
+<li>Rappel : proportion de résultats pertinents retrouvés</li>
+<li>F1-score : moyenne harmonique de précision et rappel</li>
+</ul>
+</section>
+<section id="machine-learning" class="level4">
+<h4 class="anchored" data-anchor-id="machine-learning">Machine Learning</h4>
+<p><strong>Objectif :</strong></p>
+<p>Apprendre à partir d’exemples pour faire des prédictions sur de nouvelles données.</p>
+<p><strong>Paradigmes :</strong></p>
+<ul>
+<li>Supervisé : avec labels</li>
+<li>Non supervisé : sans labels</li>
+<li>Semi-supervisé : labels partiels</li>
+<li>Par renforcement : apprentissage par récompenses</li>
+</ul>
+</section>
+<section id="identification-et-authentification" class="level4">
+<h4 class="anchored" data-anchor-id="identification-et-authentification">Identification et Authentification</h4>
+<p><strong>Objectif :</strong></p>
+<p>Vérifier l’identité d’une personne ou d’un objet.</p>
+<p><strong>Applications biométriques :</strong></p>
+<ul>
+<li>Empreintes digitales</li>
+<li>Reconnaissance faciale</li>
+<li>Reconnaissance d’iris</li>
+<li>Reconnaissance vocale</li>
+<li>Signature manuscrite</li>
+</ul>
+<p><strong>Métriques de performance :</strong></p>
+<ul>
+<li>FAR (False Acceptance Rate) : taux de fausses acceptations</li>
+<li>FRR (False Rejection Rate) : taux de faux rejets</li>
+<li>EER (Equal Error Rate) : point où FAR = FRR</li>
+</ul>
+</section>
+</section>
+<section id="base-commune-test-dhypothèses" class="level3">
+<h3 class="anchored" data-anchor-id="base-commune-test-dhypothèses">Base commune : Test d’hypothèses</h3>
+<p>Tous ces problèmes se ramènent au <strong>test d’hypothèses</strong> probabiliste : étant donné une observation, quelle hypothèse est la plus probable ?</p>
+<section id="test-dhypothèses-classification-binaire" class="level4">
+<h4 class="anchored" data-anchor-id="test-dhypothèses-classification-binaire">Test d’hypothèses : Classification binaire</h4>
+<section id="formulation-du-problème" class="level5">
+<h5 class="anchored" data-anchor-id="formulation-du-problème">Formulation du problème</h5>
+<p><strong>Deux hypothèses :</strong></p>
+<p><span class="math display">\[\begin{cases} H_0 : Y \sim f_Y(y | H_0) \\ H_1 : Y \sim f_Y(y | H_1) \end{cases}\]</span></p>
+<p><strong>Données :</strong></p>
+<ul>
+<li>Les pdfs des classes sont données (configuration théorique)</li>
+<li>Ou estimées à partir de données d’entraînement (configuration pratique)</li>
+</ul>
+<p><strong>Question :</strong></p>
+<p>Quelle classe est observée pour une nouvelle réalisation <span class="math inline">\(y\)</span> ?</p>
+</section>
+<section id="espaces-de-représentation" class="level5">
+<h5 class="anchored" data-anchor-id="espaces-de-représentation">Espaces de représentation</h5>
+<p><strong>Espace des distributions :</strong></p>
+<p>Mesurer la <strong>proximité des pdfs</strong> sous hypothèses spécifiques.</p>
+<p><strong>Approches :</strong></p>
+<ul>
+<li>Divergence de Kullback-Leibler</li>
+<li>Distance de Bhattacharyya</li>
+<li>Information mutuelle</li>
+</ul>
+<p><strong>Espace des réalisations :</strong></p>
+<p>Mesurer la <strong>proximité des vecteurs</strong> observés dans l’espace des features.</p>
+<p><strong>Approches :</strong></p>
+<ul>
+<li>Distance euclidienne</li>
+<li>Distance de Mahalanobis</li>
+<li>Similarité cosinus</li>
+</ul>
+</section>
+<section id="règle-de-décision-optimale-test-du-rapport-de-vraisemblance" class="level5">
+<h5 class="anchored" data-anchor-id="règle-de-décision-optimale-test-du-rapport-de-vraisemblance">Règle de décision optimale : Test du rapport de vraisemblance</h5>
+<p><strong>Rapport de vraisemblance :</strong></p>
+<p><span class="math display">\[\Lambda(y) = \frac{f_Y(y | H_1)}{f_Y(y | H_0)}\]</span></p>
+<p><strong>Règle de décision :</strong></p>
+<p><span class="math display">\[\hat{H} = \begin{cases} H_1 &amp; \text{si } \Lambda(y) &gt; \tau \\ H_0 &amp; \text{sinon} \end{cases}\]</span></p>
+<p>où <span class="math inline">\(\tau\)</span> est un seuil déterminé par les coûts ou probabilités a priori.</p>
+<p><strong>Critère de Neyman-Pearson :</strong></p>
+<p>Maximiser la probabilité de détection pour un taux de fausse alarme fixé.</p>
+<p><strong>Critère de Bayes :</strong></p>
+<p>Minimiser le risque moyen en tenant compte des probabilités a priori et des coûts.</p>
+</section>
+<section id="classifieurs-pratiques" class="level5">
+<h5 class="anchored" data-anchor-id="classifieurs-pratiques">Classifieurs pratiques</h5>
+<p><strong>k-NN (k-Nearest Neighbors) :</strong></p>
+<ul>
+<li>Classifier un point selon la classe majoritaire parmi ses <span class="math inline">\(k\)</span> plus proches voisins</li>
+<li>Non-paramétrique</li>
+<li>Simple mais efficace</li>
+<li>Coût computationnel élevé pour grandes bases de données</li>
+</ul>
+<p><strong>Classifieur profond (Deep classifier) :</strong></p>
+<ul>
+<li>Réseau de neurones pour apprendre la frontière de décision</li>
+<li>Capable de capturer des relations complexes et non-linéaires</li>
+<li>Nécessite beaucoup de données d’entraînement</li>
+<li>État-de-l’art pour images, textes, audio</li>
+</ul>
+<p><strong>SVM (Support Vector Machine) :</strong></p>
+<ul>
+<li>Trouve l’hyperplan de séparation optimal (marge maximale)</li>
+<li>Peut utiliser des noyaux pour non-linéarité</li>
+<li>Efficace en haute dimension</li>
+</ul>
+<p><strong>Arbres de décision et Random Forests :</strong></p>
+<ul>
+<li>Partitionnement récursif de l’espace</li>
+<li>Interprétables</li>
+<li>Robustes, peu de prétraitement nécessaire</li>
+</ul>
+</section>
+</section>
+<section id="test-dhypothèses-détection-danomalies" class="level4">
+<h4 class="anchored" data-anchor-id="test-dhypothèses-détection-danomalies">Test d’hypothèses : Détection d’anomalies</h4>
+<section id="formulation-asymétrique" class="level5">
+<h5 class="anchored" data-anchor-id="formulation-asymétrique">Formulation asymétrique</h5>
+<p><strong>Hypothèse nulle (classe normale) :</strong></p>
+<p><span class="math display">\[H_0 : Y \sim \text{distribution quelconque (peut être inconnue)}\]</span></p>
+<p><strong>Hypothèse alternative (classe cible/anormale) :</strong></p>
+<p><span class="math display">\[H_1 : Y \sim f_Y(y | H_1)\]</span></p>
+<p><strong>Différence avec classification binaire :</strong></p>
+<p>La classe <span class="math inline">\(H_0\)</span> n’est pas bien caractérisée, on cherche à détecter des déviations.</p>
+</section>
+<section id="objectif-1" class="level5">
+<h5 class="anchored" data-anchor-id="objectif-1">Objectif</h5>
+<p>Déterminer dans quelle <strong>région</strong> se situe l’observation :</p>
+<ul>
+<li>Région normale (attendue)</li>
+<li>Région anormale (outlier, anomalie)</li>
+</ul>
+</section>
+<section id="approches" class="level5">
+<h5 class="anchored" data-anchor-id="approches">Approches</h5>
+<p><strong>Modélisation de la classe normale :</strong></p>
+<ol type="1">
+<li>Apprendre la distribution normale <span class="math inline">\(f_Y(y | H_0)\)</span></li>
+<li>Définir un seuil de vraisemblance</li>
+<li>Détecter les points de faible vraisemblance comme anomalies</li>
+</ol>
+<p><strong>One-Class SVM :</strong></p>
+<p>Apprendre une frontière englobant la classe normale.</p>
+<p><strong>Autoencodeurs :</strong></p>
+<p>Les anomalies ont une erreur de reconstruction élevée.</p>
+<p><strong>Isolation Forest :</strong></p>
+<p>Les anomalies sont plus faciles à isoler (moins de splits nécessaires).</p>
+</section>
+<section id="applications-1" class="level5">
+<h5 class="anchored" data-anchor-id="applications-1">Applications</h5>
+<ul>
+<li>Détection d’outliers dans des données</li>
+<li>Détection de fraude bancaire</li>
+<li>Détection d’intrusion réseau</li>
+<li>Maintenance prédictive (détection de pannes)</li>
+<li>Contrôle qualité industriel</li>
+</ul>
+</section>
+</section>
+<section id="classification-m-aire-1" class="level4">
+<h4 class="anchored" data-anchor-id="classification-m-aire-1">Classification M-aire</h4>
+<section id="formulation-du-problème-1" class="level5">
+<h5 class="anchored" data-anchor-id="formulation-du-problème-1">Formulation du problème</h5>
+<p><strong>M hypothèses :</strong></p>
+<p><span class="math display">\[\begin{cases} H_0 : Y \sim f_Y(y | H_0) \\ H_1 : Y \sim f_Y(y | H_1) \\ \vdots \\ H_{M-1} : Y \sim f_Y(y | H_{M-1}) \end{cases}\]</span></p>
+<p><strong>Données :</strong></p>
+<p>Les pdfs de toutes les classes sont données ou estimées.</p>
+<p><strong>Décision :</strong></p>
+<p>Quelle classe parmi les <span class="math inline">\(M\)</span> est observée ?</p>
+</section>
+<section id="approche-par-maximum-a-posteriori-map" class="level5">
+<h5 class="anchored" data-anchor-id="approche-par-maximum-a-posteriori-map">Approche par maximum a posteriori (MAP)</h5>
+<p><strong>Règle de décision :</strong></p>
+<p><span class="math display">\[\hat{H} = \arg\max_{i=0, \ldots, M-1} p(H_i | y) = \arg\max_{i} f_Y(y | H_i) p(H_i)\]</span></p>
+<p>où <span class="math inline">\(p(H_i)\)</span> sont les probabilités a priori des classes.</p>
+</section>
+<section id="stratégies-one-vs-rest-et-one-vs-one" class="level5">
+<h5 class="anchored" data-anchor-id="stratégies-one-vs-rest-et-one-vs-one">Stratégies One-vs-Rest et One-vs-One</h5>
+<p><strong>One-vs-Rest (OvR) :</strong></p>
+<ul>
+<li>Entraîner <span class="math inline">\(M\)</span> classifieurs binaires</li>
+<li>Chacun sépare une classe du reste</li>
+<li>Prédiction : classe avec le score le plus élevé</li>
+</ul>
+<p><strong>One-vs-One (OvO) :</strong></p>
+<ul>
+<li>Entraîner <span class="math inline">\(\frac{M(M-1)}{2}\)</span> classifieurs binaires</li>
+<li>Chacun sépare une paire de classes</li>
+<li>Prédiction : vote majoritaire</li>
+</ul>
+</section>
+<section id="problème-principal" class="level5">
+<h5 class="anchored" data-anchor-id="problème-principal">Problème principal</h5>
+<p><strong>Séparation efficace des classes dans l’espace des features :</strong></p>
+<ul>
+<li>Réduction de dimensionnalité (PCA, LDA)</li>
+<li>Apprentissage de métriques</li>
+<li>Deep learning pour features discriminantes</li>
+</ul>
+<p><strong>Gestion du déséquilibre de classes :</strong></p>
+<ul>
+<li>Ré-échantillonnage (oversampling, undersampling)</li>
+<li>Pondération des classes dans la fonction de coût</li>
+<li>Métriques adaptées (F1-score, Cohen’s Kappa)</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="lien-avec-le-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="lien-avec-le-machine-learning">Lien avec le Machine Learning</h3>
+<section id="configurations-dapprentissage" class="level4">
+<h4 class="anchored" data-anchor-id="configurations-dapprentissage">Configurations d’apprentissage</h4>
+<section id="apprentissage-supervisé-supervised-learning" class="level5">
+<h5 class="anchored" data-anchor-id="apprentissage-supervisé-supervised-learning">Apprentissage supervisé (Supervised learning)</h5>
+<p><strong>Caractéristiques :</strong></p>
+<ul>
+<li>Données d’entraînement <strong>étiquetées</strong> fournies : <span class="math inline">\((x_i, y_i)_{i=1}^N\)</span></li>
+<li><strong>Objectif :</strong> Apprendre une fonction <span class="math inline">\(f: X \to Y\)</span> pour prédire <span class="math inline">\(y\)</span> à partir de <span class="math inline">\(x\)</span></li>
+<li>Estimer les pdfs <span class="math inline">\(f_Y(y|H_i)\)</span> ou directement la fonction de décision</li>
+</ul>
+<p><strong>Exemples d’algorithmes :</strong></p>
+<ul>
+<li>Régression linéaire/logistique</li>
+<li>SVM</li>
+<li>Arbres de décision</li>
+<li>Réseaux de neurones</li>
+</ul>
+<p><strong>Applications :</strong></p>
+<ul>
+<li>Classification d’images</li>
+<li>Prédiction de prix</li>
+<li>Diagnostic médical</li>
+<li>Reconnaissance de la parole</li>
+</ul>
+</section>
+<section id="apprentissage-non-supervisé-unsupervised-learning" class="level5">
+<h5 class="anchored" data-anchor-id="apprentissage-non-supervisé-unsupervised-learning">Apprentissage non supervisé (Unsupervised learning)</h5>
+<p><strong>Caractéristiques :</strong></p>
+<ul>
+<li>Données d’entraînement <strong>non étiquetées</strong> : <span class="math inline">\(\{x_i\}_{i=1}^N\)</span></li>
+<li><strong>Objectif :</strong> Découvrir la structure cachée dans les données</li>
+<li>Pas de vérité terrain (ground truth)</li>
+</ul>
+<p><strong>Exemples d’algorithmes :</strong></p>
+<ul>
+<li>k-means, GMM</li>
+<li>PCA, ICA</li>
+<li>Autoencodeurs</li>
+<li>Détection d’anomalies</li>
+</ul>
+<p><strong>Applications :</strong></p>
+<ul>
+<li>Segmentation de clients</li>
+<li>Réduction de dimensionnalité</li>
+<li>Découverte de topics</li>
+<li>Détection d’outliers</li>
+</ul>
+</section>
+<section id="apprentissage-semi-supervisé-semi-supervised-learning" class="level5">
+<h5 class="anchored" data-anchor-id="apprentissage-semi-supervisé-semi-supervised-learning">Apprentissage semi-supervisé (Semi-supervised learning)</h5>
+<p><strong>Caractéristiques :</strong></p>
+<ul>
+<li>Nombre <strong>limité</strong> de données étiquetées + beaucoup de données non étiquetées</li>
+<li><strong>Objectif :</strong> Exploiter les données non étiquetées pour améliorer les prédictions</li>
+<li>Hypothèse : la structure des données non étiquetées informe sur les classes</li>
+</ul>
+<p><strong>Approches :</strong></p>
+<ul>
+<li><strong>Self-training</strong> : Utiliser les prédictions confiantes comme nouveaux labels</li>
+<li><strong>Co-training</strong> : Plusieurs modèles s’entraînent mutuellement</li>
+<li><strong>Graph-based methods</strong> : Propagation de labels sur un graphe</li>
+</ul>
+<p><strong>Applications :</strong></p>
+<ul>
+<li>Situation où les labels sont coûteux à obtenir</li>
+<li>Annotation médicale</li>
+<li>Traduction automatique</li>
+<li>Reconnaissance de la parole</li>
+</ul>
+</section>
+</section>
+<section id="configuration-théorique-vs-pratique" class="level4">
+<h4 class="anchored" data-anchor-id="configuration-théorique-vs-pratique">Configuration théorique vs pratique</h4>
+<section id="configuration-théorique-théorie-de-linformation" class="level5">
+<h5 class="anchored" data-anchor-id="configuration-théorique-théorie-de-linformation">Configuration théorique (Théorie de l’Information)</h5>
+<p><strong>Hypothèses :</strong></p>
+<ul>
+<li>Toutes les pdfs des classes sont <strong>parfaitement connues</strong></li>
+<li><span class="math inline">\(f_Y(y | H_i)\)</span> données analytiquement</li>
+</ul>
+<p><strong>Analyse :</strong></p>
+<ul>
+<li>Calcul des performances optimales (bornes théoriques)</li>
+<li>Test du rapport de vraisemblance optimal</li>
+<li>Bornes de Bayes error rate</li>
+</ul>
+<p><strong>Utilité :</strong></p>
+<ul>
+<li>Comprendre les limites fondamentales</li>
+<li>Guider la conception d’algorithmes</li>
+<li>Évaluer la performance des méthodes pratiques</li>
+</ul>
+</section>
+<section id="configuration-pratique-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="configuration-pratique-machine-learning">Configuration pratique (Machine Learning)</h5>
+<p><strong>Réalité :</strong></p>
+<ul>
+<li>Les pdfs ne sont <strong>pas connues</strong> a priori</li>
+<li>Doivent être <strong>estimées</strong> à partir de données d’entraînement</li>
+</ul>
+<p><strong>Approches :</strong></p>
+<ul>
+<li><strong>Paramétriques</strong> : Supposer une forme (gaussienne, etc.) et estimer les paramètres</li>
+<li><strong>Non-paramétriques</strong> : k-NN, kernel density estimation, histogrammes</li>
+<li><strong>Discriminatives</strong> : Apprendre directement la frontière de décision sans modéliser les pdfs</li>
+</ul>
+<p><strong>Défis :</strong></p>
+<ul>
+<li>Taille limitée des données d’entraînement</li>
+<li>Sur-apprentissage (overfitting)</li>
+<li>Généralisation à de nouvelles données</li>
+<li>Dérive des données (distribution shift)</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+<section id="recherche-et-identification-1" class="level2">
+<h2 class="anchored" data-anchor-id="recherche-et-identification-1">Recherche et Identification</h2>
+<section id="problème-didentification" class="level3">
+<h3 class="anchored" data-anchor-id="problème-didentification">Problème d’identification</h3>
+<section id="configuration-générale" class="level4">
+<h4 class="anchored" data-anchor-id="configuration-générale">Configuration générale</h4>
+<p><strong>Éléments du système :</strong></p>
+<ul>
+<li><p><strong>Codebook de features (Gallery)</strong> : Base de données de <span class="math inline">\(M\)</span> éléments de référence <span class="math display">\[\mathcal{C} = \{z_1, z_2, \ldots, z_M\}\]</span></p></li>
+<li><p><strong>Probe features (Query)</strong> : Requête à identifier <span class="math display">\[q\]</span></p></li>
+</ul>
+<p><strong>Objectif :</strong></p>
+<p>Trouver l’élément du codebook le plus similaire à la requête :</p>
+<p><span class="math display">\[\hat{i} = \arg\min_{i=1,\ldots,M} d(q, z_i)\]</span></p>
+<p>ou</p>
+<p><span class="math display">\[\hat{i} = \arg\max_{i=1,\ldots,M} \text{sim}(q, z_i)\]</span></p>
+</section>
+<section id="question-fondamentale-capacité-du-système" class="level4">
+<h4 class="anchored" data-anchor-id="question-fondamentale-capacité-du-système">Question fondamentale : Capacité du système</h4>
+<p><strong>Problématique :</strong></p>
+<p>Combien d’images/éléments peuvent être identifiés de manière <strong>non ambiguë</strong> ?</p>
+<p><span class="math display">\[M_{\max}(P_e \to 0)\]</span></p>
+<p>où <span class="math inline">\(P_e\)</span> est la probabilité d’erreur d’identification.</p>
+<p><strong>Réponse théorique :</strong></p>
+<p><span class="math inline">\(M\)</span> doit être tel que les distorsions (bruit, variations) ne causent <strong>aucune ambiguïté</strong> entre les éléments du codebook.</p>
+<p><strong>Facteurs limitants :</strong></p>
+<ul>
+<li>Dimensionnalité des features : <span class="math inline">\(d\)</span></li>
+<li>Niveau de bruit/distorsion</li>
+<li>Qualité de l’extraction de features</li>
+<li>Métrique de similarité utilisée</li>
+</ul>
+</section>
+<section id="types-derreurs" class="level4">
+<h4 class="anchored" data-anchor-id="types-derreurs">Types d’erreurs</h4>
+<p><strong>Probabilité de fausse acceptation (False Acceptance Rate, FAR) :</strong></p>
+<p><span class="math display">\[\text{FAR} = P(\text{accepter } z_j | \text{requête provient de } z_i), \quad i \neq j\]</span></p>
+<p><strong>Probabilité de faux rejet (False Rejection Rate, FRR) :</strong></p>
+<p><span class="math display">\[\text{FRR} = P(\text{rejeter } z_i | \text{requête provient de } z_i)\]</span></p>
+<p><strong>Probabilité de décodage incorrect :</strong></p>
+<p><span class="math display">\[P_e = P(\hat{i} \neq i)\]</span></p>
+<p><strong>Trade-off FAR vs FRR :</strong></p>
+<ul>
+<li>Seuil strict → FAR faible, FRR élevé</li>
+<li>Seuil lâche → FAR élevé, FRR faible</li>
+<li>Optimisation selon l’application (sécurité vs convivialité)</li>
+</ul>
+</section>
+</section>
+<section id="architectures-pour-recherche" class="level3">
+<h3 class="anchored" data-anchor-id="architectures-pour-recherche">Architectures pour Recherche</h3>
+<section id="architecture-1-auto-encodage" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-1-auto-encodage">Architecture 1 : Auto-encodage</h4>
+<section id="phase-dentraînement" class="level5">
+<h5 class="anchored" data-anchor-id="phase-dentraînement">Phase d’entraînement</h5>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Encoder]
+    B --&gt; C[Features/Embedding]
+    C --&gt; D[Decoder]
+    D --&gt; E[Reconstruction]
+    E --&gt; F[Loss de reconstruction]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Objectif de l’entraînement :</strong></p>
+<p>Minimiser l’erreur de reconstruction :</p>
+<p><span class="math display">\[\mathcal{L} = \mathbb{E}[\|X - \text{Decoder}(\text{Encoder}(X))\|^2]\]</span></p>
+</section>
+<section id="phase-dutilisation" class="level5">
+<h5 class="anchored" data-anchor-id="phase-dutilisation">Phase d’utilisation</h5>
+<p><strong>Extraction de features :</strong></p>
+<p>Les features du bottleneck <span class="math inline">\(z = \text{Encoder}(x)\)</span> sont utilisées comme représentation compacte.</p>
+<p><strong>Construction du codebook :</strong></p>
+<p>Pour chaque élément de référence <span class="math inline">\(x_i\)</span> :</p>
+<p><span class="math display">\[z_i = \text{Encoder}(x_i)\]</span></p>
+<p><strong>Recherche :</strong></p>
+<p>Pour une requête <span class="math inline">\(q\)</span> :</p>
+<ol type="1">
+<li>Extraire : <span class="math inline">\(z_q = \text{Encoder}(q)\)</span></li>
+<li>Comparer : <span class="math inline">\(\hat{i} = \arg\min_{i} \|z_q - z_i\|_2\)</span></li>
+</ol>
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Compression automatique</li>
+<li>Pas besoin de labels</li>
+<li>Features génériques</li>
+</ul>
+<p><strong>Limitations :</strong></p>
+<ul>
+<li>Pas optimisé pour la similarité</li>
+<li>Peut perdre des détails discriminants</li>
+</ul>
+</section>
+</section>
+<section id="architecture-2-apprentissage-auto-supervisé-métrique-learning" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-2-apprentissage-auto-supervisé-métrique-learning">Architecture 2 : Apprentissage auto-supervisé / métrique learning</h4>
+<section id="phase-dentraînement-1" class="level5">
+<h5 class="anchored" data-anchor-id="phase-dentraînement-1">Phase d’entraînement</h5>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données] --&gt; B[Augmentations]
+    B --&gt; C[Encoder]
+    C --&gt; D[Features]
+    D --&gt; E[Métrique de similarité]
+    E --&gt; F[Loss contrastive]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Principe :</strong></p>
+<p>Apprendre un espace d’embedding où :</p>
+<ul>
+<li>Éléments similaires → embeddings proches</li>
+<li>Éléments dissimilaires → embeddings éloignés</li>
+</ul>
+<p><strong>Losses contrastives :</strong></p>
+<p><strong>Triplet loss :</strong></p>
+<p><span class="math display">\[\mathcal{L} = \max(0, \|z_a - z_p\|^2 - \|z_a - z_n\|^2 + \text{margin})\]</span></p>
+<p>où : - <span class="math inline">\(z_a\)</span> : anchor - <span class="math inline">\(z_p\)</span> : positive (similaire) - <span class="math inline">\(z_n\)</span> : negative (dissimilaire)</p>
+<p><strong>Contrastive loss (SimCLR, MoCo) :</strong></p>
+<p><span class="math display">\[\mathcal{L} = -\log \frac{\exp(\text{sim}(z_i, z_j)/\tau)}{\sum_{k} \exp(\text{sim}(z_i, z_k)/\tau)}\]</span></p>
+</section>
+<section id="phase-dutilisation-1" class="level5">
+<h5 class="anchored" data-anchor-id="phase-dutilisation-1">Phase d’utilisation</h5>
+<p><strong>Même processus qu’auto-encodage</strong> mais avec des features optimisées pour la similarité.</p>
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Features très discriminantes</li>
+<li>Robustes aux variations</li>
+<li>État-de-l’art pour recherche par similarité</li>
+</ul>
+<p>💡 <strong>Principe clé :</strong> Apprendre des représentations telles que la distance dans l’espace des features reflète fidèlement la similarité sémantique.</p>
+</section>
+</section>
+<section id="applications-pratiques-2" class="level4">
+<h4 class="anchored" data-anchor-id="applications-pratiques-2">Applications pratiques</h4>
+<p><strong>Recherche d’images par contenu (CBIR) :</strong></p>
+<ul>
+<li>Google Images, Pinterest</li>
+<li>Recherche de produits similaires (e-commerce)</li>
+</ul>
+<p><strong>Reconnaissance faciale :</strong></p>
+<ul>
+<li>Déverrouillage de smartphones</li>
+<li>Systèmes de sécurité</li>
+<li>Organisation de photos</li>
+</ul>
+<p><strong>Recherche de documents :</strong></p>
+<ul>
+<li>Plagiat detection</li>
+<li>Recommandation d’articles scientifiques</li>
+</ul>
+<p><strong>Recherche de musique/audio :</strong></p>
+<ul>
+<li>Shazam (reconnaissance de chansons)</li>
+<li>Recherche de samples similaires</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="transmission-et-compression-1" class="level2">
+<h2 class="anchored" data-anchor-id="transmission-et-compression-1">Transmission et Compression</h2>
+<section id="communication-numérique" class="level3">
+<h3 class="anchored" data-anchor-id="communication-numérique">Communication numérique</h3>
+<section id="contexte" class="level4">
+<h4 class="anchored" data-anchor-id="contexte">Contexte</h4>
+<p><strong>Chaîne de communication :</strong></p>
+<pre><code>Source → Encodeur → Canal → Décodeur → Destination</code></pre>
+<p><strong>Canaux de transmission :</strong></p>
+<ul>
+<li>Câble optique : haute capacité, faible perte</li>
+<li>WiFi/3G/4G/5G : sans fil, capacité variable</li>
+<li>Systèmes fixes/mobiles</li>
+<li>Systèmes de diffusion (broadcast)</li>
+<li>Systèmes d’accès multiple (multiple access)</li>
+</ul>
+</section>
+<section id="défis" class="level4">
+<h4 class="anchored" data-anchor-id="défis">Défis</h4>
+<ul>
+<li>Capacité limitée du canal (bande passante)</li>
+<li>Bruit et interférences</li>
+<li>Latence</li>
+<li>Efficacité énergétique (appareils mobiles)</li>
+</ul>
+</section>
+</section>
+<section id="compression-sans-perte-lossless" class="level3">
+<h3 class="anchored" data-anchor-id="compression-sans-perte-lossless">Compression sans perte (Lossless)</h3>
+<section id="principe" class="level4">
+<h4 class="anchored" data-anchor-id="principe">Principe</h4>
+<p><strong>Configuration :</strong></p>
+<p><span class="math display">\[X \xrightarrow{\text{Encoder}} R \xrightarrow{\text{Decoder}} \hat{X}\]</span></p>
+<p><strong>Propriété fondamentale :</strong></p>
+<p><span class="math display">\[\hat{X} = X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] = 0\]</span></p>
+<p><strong>Reconstruction parfaite</strong> : Aucune perte d’information.</p>
+</section>
+<section id="taux-de-compression" class="level4">
+<h4 class="anchored" data-anchor-id="taux-de-compression">Taux de compression</h4>
+<p><strong>Taux (Rate) :</strong></p>
+<p><span class="math display">\[R = \frac{\text{Taille compressée}}{\text{Taille originale}}\]</span></p>
+<p><strong>Exemple :</strong></p>
+<ul>
+<li>Image originale : 3 MB</li>
+<li>Image compressée : 500 KB</li>
+<li><span class="math inline">\(R = 500/3000 \approx 0.17\)</span> (compression de 83%)</li>
+</ul>
+</section>
+<section id="limites-théoriques" class="level4">
+<h4 class="anchored" data-anchor-id="limites-théoriques">Limites théoriques</h4>
+<p><strong>Borne de Shannon :</strong></p>
+<p>Le taux minimal pour compression sans perte est l’<strong>entropie</strong> <span class="math inline">\(H(X)\)</span> de la source :</p>
+<p><span class="math display">\[R_{\min} = H(X) = -\sum_{x} p(x) \log_2 p(x)\]</span></p>
+<p><strong>Interprétation :</strong></p>
+<p>On ne peut pas compresser en dessous de l’entropie sans perdre d’information.</p>
+</section>
+<section id="techniques-de-compression-sans-perte" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-de-compression-sans-perte">Techniques de compression sans perte</h4>
+<p><strong>Codage de Huffman :</strong></p>
+<ul>
+<li>Codes de longueur variable</li>
+<li>Symboles fréquents → codes courts</li>
+<li>Optimal pour codage par symbole</li>
+</ul>
+<p><strong>Codage arithmétique :</strong></p>
+<ul>
+<li>Représente le message entier par un intervalle</li>
+<li>Peut approcher l’entropie de très près</li>
+<li>Plus efficace que Huffman pour certaines distributions</li>
+</ul>
+<p><strong>LZW (Lempel-Ziv-Welch) :</strong></p>
+<ul>
+<li>Construit un dictionnaire de séquences</li>
+<li>Utilisé dans GIF, TIFF</li>
+</ul>
+<p><strong>Run-Length Encoding (RLE) :</strong></p>
+<ul>
+<li>Encode les séquences répétitives</li>
+<li>Efficace pour images binaires, fax</li>
+</ul>
+</section>
+<section id="usages" class="level4">
+<h4 class="anchored" data-anchor-id="usages">Usages</h4>
+<p><strong>Documents texte :</strong></p>
+<ul>
+<li>ZIP, GZIP, BZIP2</li>
+<li>Préservation exacte nécessaire</li>
+</ul>
+<p><strong>Images médicales :</strong></p>
+<ul>
+<li>DICOM avec compression lossless</li>
+<li>Aucune perte d’information diagnostique permise</li>
+</ul>
+<p><strong>Données scientifiques :</strong></p>
+<ul>
+<li>HDF5, NetCDF</li>
+<li>Reproduction exacte des expériences</li>
+</ul>
+<p><strong>Archives :</strong></p>
+<ul>
+<li>Préservation à long terme</li>
+<li>Intégrité des données</li>
+</ul>
+</section>
+</section>
+<section id="compression-avec-perte-lossy" class="level3">
+<h3 class="anchored" data-anchor-id="compression-avec-perte-lossy">Compression avec perte (Lossy)</h3>
+<section id="principe-1" class="level4">
+<h4 class="anchored" data-anchor-id="principe-1">Principe</h4>
+<p><strong>Configuration :</strong></p>
+<p><span class="math display">\[X \xrightarrow{\text{Encoder}} R \xrightarrow{\text{Decoder}} \hat{X}\]</span></p>
+<p><strong>Propriété :</strong></p>
+<p><span class="math display">\[\hat{X} \neq X \quad \Rightarrow \quad D = \mathbb{E}[\|X - \hat{X}\|^2] &gt; 0\]</span></p>
+<p><strong>Distorsion acceptée</strong> : Perte d’information contrôlée pour un taux de compression plus élevé.</p>
+</section>
+<section id="trade-off-rate-distorsion" class="level4">
+<h4 class="anchored" data-anchor-id="trade-off-rate-distorsion">Trade-off Rate-Distorsion</h4>
+<p><strong>Fonction Rate-Distorsion <span class="math inline">\(R(D)\)</span> :</strong></p>
+<p>Taux minimal pour atteindre une distorsion donnée <span class="math inline">\(D\)</span> :</p>
+<p><span class="math display">\[R(D) = \min_{p(\hat{x}|x): \mathbb{E}[d(X,\hat{X})] \leq D} I(X; \hat{X})\]</span></p>
+<p>où <span class="math inline">\(I(X; \hat{X})\)</span> est l’information mutuelle.</p>
+<p><strong>Principe :</strong></p>
+<ul>
+<li>Distorsion faible → Taux élevé (moins de compression)</li>
+<li>Distorsion élevée → Taux faible (plus de compression)</li>
+</ul>
+<p><strong>Exemple :</strong></p>
+<ul>
+<li>Qualité JPEG élevée (90%) : 2 MB, distorsion faible</li>
+<li>Qualité JPEG faible (30%) : 200 KB, distorsion visible</li>
+</ul>
+</section>
+<section id="mesures-de-distorsion" class="level4">
+<h4 class="anchored" data-anchor-id="mesures-de-distorsion">Mesures de distorsion</h4>
+<p><strong>MSE (Mean Squared Error) :</strong></p>
+<p><span class="math display">\[D = \mathbb{E}[(X - \hat{X})^2] = \frac{1}{N}\sum_{i=1}^N (x_i - \hat{x}_i)^2\]</span></p>
+<p><strong>PSNR (Peak Signal-to-Noise Ratio) :</strong></p>
+<p><span class="math display">\[\text{PSNR} = 10 \log_{10}\left(\frac{\text{MAX}^2}{D}\right) \text{ dB}\]</span></p>
+<p>où MAX est la valeur maximale possible du signal.</p>
+<p><strong>SSIM (Structural Similarity Index) :</strong></p>
+<p>Mesure perceptuelle tenant compte de la structure, luminance, et contraste.</p>
+<p><span class="math display">\[\text{SSIM}(x, \hat{x}) = \frac{(2\mu_x\mu_{\hat{x}} + c_1)(2\sigma_{x\hat{x}} + c_2)}{(\mu_x^2 + \mu_{\hat{x}}^2 + c_1)(\sigma_x^2 + \sigma_{\hat{x}}^2 + c_2)}\]</span></p>
+</section>
+<section id="techniques-de-compression-avec-perte" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-de-compression-avec-perte">Techniques de compression avec perte</h4>
+<p><strong>Transform coding (JPEG, MPEG) :</strong></p>
+<ol type="1">
+<li>Transformation (DCT)</li>
+<li>Quantification (perte d’information)</li>
+<li>Codage entropique</li>
+</ol>
+<p><strong>Prédiction (MPEG, H.264/265) :</strong></p>
+<ul>
+<li>Exploiter la redondance temporelle (vidéo)</li>
+<li>Encoder seulement les différences</li>
+</ul>
+<p><strong>Quantification vectorielle :</strong></p>
+<ul>
+<li>Représenter par codes d’un codebook</li>
+<li>k-means pour construire le codebook</li>
+</ul>
+<p><strong>Deep learning (autoencodeurs, VAE) :</strong></p>
+<ul>
+<li>Apprendre la compression/décompression</li>
+<li>Approches récentes très performantes</li>
+</ul>
+</section>
+<section id="usages-1" class="level4">
+<h4 class="anchored" data-anchor-id="usages-1">Usages</h4>
+<p><strong>Images :</strong></p>
+<ul>
+<li>JPEG pour photos</li>
+<li>WebP pour le web</li>
+<li>Consommation humaine, distorsion imperceptible</li>
+</ul>
+<p><strong>Vidéos :</strong></p>
+<ul>
+<li>H.264, H.265, VP9, AV1</li>
+<li>Streaming,broadcast TV</li>
+<li>Compression 100:1 ou plus</li>
+</ul>
+<p><strong>Audio :</strong></p>
+<ul>
+<li>MP3, AAC, Opus</li>
+<li>Musique, podcasts</li>
+<li>Exploite les limitations de l’audition humaine</li>
+</ul>
+<p><strong>Principe général :</strong></p>
+<p>Éliminer l’information peu perceptible pour l’humain tout en préservant la qualité subjective.</p>
+</section>
+</section>
+</section>
+<section id="préparation-à-lexamen" class="level2">
+<h2 class="anchored" data-anchor-id="préparation-à-lexamen">Préparation à l’examen</h2>
+<section id="concepts-mathématiques-à-maîtriser" class="level3">
+<h3 class="anchored" data-anchor-id="concepts-mathématiques-à-maîtriser">Concepts mathématiques à maîtriser</h3>
+<section id="probabilités-et-statistiques" class="level4">
+<h4 class="anchored" data-anchor-id="probabilités-et-statistiques">Probabilités et statistiques</h4>
+<section id="fondamentaux" class="level5">
+<h5 class="anchored" data-anchor-id="fondamentaux">Fondamentaux</h5>
+<p><strong>Variables aléatoires :</strong></p>
+<ul>
+<li>Différence entre variable aléatoire et réalisation</li>
+<li>Variables discrètes vs continues</li>
+<li>pmf vs pdf vs CDF</li>
+</ul>
+<p><strong>Distributions :</strong></p>
+<ul>
+<li>Loi binomiale, gaussienne, uniforme</li>
+<li>Propriétés des distributions classiques</li>
+<li>Paramètres et moments</li>
+</ul>
+<p><strong>Moments :</strong></p>
+<ul>
+<li>Moyenne, variance, écart-type</li>
+<li>Skewness, kurtosis</li>
+<li>Calcul et interprétation</li>
+</ul>
+<p><strong>Fonction caractéristique :</strong></p>
+<ul>
+<li>Définition et propriétés</li>
+<li>Lien avec les moments</li>
+<li>Transformée de Fourier</li>
+</ul>
+</section>
+<section id="concepts-avancés" class="level5">
+<h5 class="anchored" data-anchor-id="concepts-avancés">Concepts avancés</h5>
+<p><strong>Indépendance :</strong></p>
+<ul>
+<li>Indépendance de variables</li>
+<li>Variables i.i.d.</li>
+<li>Indépendance conditionnelle</li>
+</ul>
+<p><strong>Modèles de Markov :</strong></p>
+<ul>
+<li>Propriété de Markov d’ordre 1 et 2</li>
+<li>Décomposition de distributions jointes</li>
+<li>Applications</li>
+</ul>
+<p><strong>Règle de chaîne :</strong></p>
+<ul>
+<li>Décomposition de probabilités jointes</li>
+<li>Règle de Bayes</li>
+<li>Applications pratiques</li>
+</ul>
+<p><strong>Covariance et corrélation :</strong></p>
+<ul>
+<li>Définitions et calculs</li>
+<li>Propriétés</li>
+<li>Matrice de covariance</li>
+</ul>
+</section>
+</section>
+<section id="algèbre-linéaire" class="level4">
+<h4 class="anchored" data-anchor-id="algèbre-linéaire">Algèbre linéaire</h4>
+<section id="vecteurs-et-matrices" class="level5">
+<h5 class="anchored" data-anchor-id="vecteurs-et-matrices">Vecteurs et matrices</h5>
+<p><strong>Normes vectorielles :</strong></p>
+<ul>
+<li>Définitions <span class="math inline">\(L_1\)</span>, <span class="math inline">\(L_2\)</span>, <span class="math inline">\(L_\infty\)</span></li>
+<li>Propriétés</li>
+<li>Applications</li>
+</ul>
+<p><strong>Produit scalaire :</strong></p>
+<ul>
+<li>Définition et calcul</li>
+<li>Interprétation géométrique</li>
+<li>Lien avec la distance</li>
+</ul>
+<p><strong>Projections :</strong></p>
+<ul>
+<li>Projection sur un vecteur</li>
+<li>Projection orthogonale</li>
+<li>Applications (PCA)</li>
+</ul>
+<p><strong>Orthogonalité :</strong></p>
+<ul>
+<li>Vecteurs orthogonaux</li>
+<li>Bases orthonormales</li>
+<li>Gram-Schmidt</li>
+</ul>
+</section>
+<section id="mesures-de-distance" class="level5">
+<h5 class="anchored" data-anchor-id="mesures-de-distance">Mesures de distance</h5>
+<p><strong>Distance euclidienne :</strong></p>
+<ul>
+<li>Définition</li>
+<li>Propriétés métriques</li>
+<li>Applications</li>
+</ul>
+<p><strong>Distance de Hamming :</strong></p>
+<ul>
+<li>Pour vecteurs binaires</li>
+<li>Applications en codage</li>
+</ul>
+<p><strong>Similarité cosinus :</strong></p>
+<ul>
+<li>Définition</li>
+<li>Normalisation</li>
+<li>Utilisation en recherche d’information</li>
+</ul>
+</section>
+</section>
+<section id="théorie-de-linformation" class="level4">
+<h4 class="anchored" data-anchor-id="théorie-de-linformation">Théorie de l’information</h4>
+<p><strong>Entropie :</strong></p>
+<p><span class="math display">\[H(X) = -\sum_x p(x) \log p(x)\]</span></p>
+<p>Mesure de l’incertitude/information.</p>
+<p><strong>Information mutuelle :</strong></p>
+<p><span class="math display">\[I(X;Y) = \sum_{x,y} p(x,y) \log\frac{p(x,y)}{p(x)p(y)}\]</span></p>
+<p>Information partagée entre deux variables.</p>
+<p><strong>Divergence de Kullback-Leibler :</strong></p>
+<p><span class="math display">\[D_{KL}(P \| Q) = \sum_x p(x) \log\frac{p(x)}{q(x)}\]</span></p>
+<p>Mesure de dissimilarité entre distributions.</p>
+</section>
+</section>
+<section id="questions-dexamen-types" class="level3">
+<h3 class="anchored" data-anchor-id="questions-dexamen-types">Questions d’examen types</h3>
+<section id="questions-conceptuelles" class="level4">
+<h4 class="anchored" data-anchor-id="questions-conceptuelles">Questions conceptuelles</h4>
+<section id="notations-et-définitions" class="level5">
+<h5 class="anchored" data-anchor-id="notations-et-définitions">Notations et définitions</h5>
+<p><strong>Question 1 :</strong></p>
+<p>Expliquez la différence entre une variable aléatoire <span class="math inline">\(X\)</span> et une réalisation <span class="math inline">\(x\)</span>.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li><span class="math inline">\(X\)</span> : variable aléatoire (fonction de l’espace d’échantillonnage vers <span class="math inline">\(\mathbb{R}\)</span>)</li>
+<li><span class="math inline">\(x\)</span> : valeur observée/réalisée de la variable</li>
+<li><span class="math inline">\(X\)</span> est l’objet théorique, <span class="math inline">\(x\)</span> est la donnée concrète</li>
+</ul>
+<p><strong>Question 2 :</strong></p>
+<p>Quelle est la différence entre une pmf et une pdf ?</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>pmf : fonction de masse, pour variables discrètes, <span class="math inline">\(\sum p(x) = 1\)</span></li>
+<li>pdf : fonction de densité, pour variables continues, <span class="math inline">\(\int f(x)dx = 1\)</span></li>
+<li>pmf donne des probabilités directement, pdf nécessite l’intégration</li>
+</ul>
+<p><strong>Question 3 :</strong></p>
+<p>Qu’est-ce qu’un moment d’une distribution ? Donnez les interprétations des moments d’ordres 1 à 4.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Moment d’ordre <span class="math inline">\(n\)</span> : <span class="math inline">\(m_n = \mathbb{E}[X^n]\)</span></li>
+<li>Ordre 1 : Moyenne (centre de masse)</li>
+<li>Ordre 2 (centré) : Variance (dispersion)</li>
+<li>Ordre 3 (normalisé) : Skewness (asymétrie)</li>
+<li>Ordre 4 (normalisé) : Kurtosis (épaisseur des queues)</li>
+</ul>
+</section>
+<section id="indépendance-et-dépendance" class="level5">
+<h5 class="anchored" data-anchor-id="indépendance-et-dépendance">Indépendance et dépendance</h5>
+<p><strong>Question 4 :</strong></p>
+<p>Définissez l’indépendance de deux variables aléatoires. La covariance nulle implique-t-elle l’indépendance ?</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Indépendance : <span class="math inline">\(p(x_1, x_2) = p(x_1)p(x_2)\)</span></li>
+<li><span class="math inline">\(\text{Cov}[X,Y] = 0\)</span> n’implique pas nécessairement <span class="math inline">\(X \perp Y\)</span></li>
+<li>Exception : pour lois gaussiennes, décorrélation ⇔ indépendance</li>
+</ul>
+<p><strong>Question 5 :</strong></p>
+<p>Qu’est-ce qu’un modèle de Markov d’ordre 1 ? Quelle simplification apporte-t-il ?</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Propriété : <span class="math inline">\(p(x_i | x_{i-1}, \ldots, x_1) = p(x_i | x_{i-1})\)</span></li>
+<li>Simplification : <span class="math inline">\(p(x_1, \ldots, x_N) = p(x_1)\prod_{i=2}^N p(x_i|x_{i-1})\)</span></li>
+<li>Réduit la complexité de exponentielle à linéaire</li>
+</ul>
+<p><strong>Question 6 :</strong></p>
+<p>Différence entre indépendance et indépendance conditionnelle avec exemple graphique.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Indépendance : <span class="math inline">\(X_1 \perp X_2\)</span></li>
+<li>Indépendance conditionnelle : <span class="math inline">\(X_1 \perp X_3 | X_2\)</span></li>
+<li>Exemple : <span class="math inline">\(X_2 \to X_1\)</span>, <span class="math inline">\(X_2 \to X_3\)</span> : sachant <span class="math inline">\(X_2\)</span>, <span class="math inline">\(X_1\)</span> et <span class="math inline">\(X_3\)</span> deviennent indépendants</li>
+</ul>
+</section>
+<section id="distances-et-similarités" class="level5">
+<h5 class="anchored" data-anchor-id="distances-et-similarités">Distances et similarités</h5>
+<p><strong>Question 7 :</strong></p>
+<p>Quelle est la relation entre distance euclidienne et produit scalaire ?</p>
+<p><strong>Réponse attendue :</strong></p>
+<p><span class="math display">\[\|x_1 - x_2\|_2^2 = \|x_1\|_2^2 + \|x_2\|_2^2 - 2x_1^Tx_2\]</span></p>
+<p>Distance petite ⇔ produit scalaire grand (pour normes comparables)</p>
+<p><strong>Question 8 :</strong></p>
+<p>Qu’est-ce que la similarité cosinus et quand l’utiliser ?</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li><span class="math inline">\(\cos\theta = \frac{x^Ty}{\|x\|_2\|y\|_2}\)</span></li>
+<li>Mesure l’angle, invariant à la magnitude</li>
+<li>Utile quand seule l’orientation importe (recherche documentaire, comparaison de directions)</li>
+</ul>
+<p><strong>Question 9 :</strong></p>
+<p>Interprétation géométrique de l’orthogonalité.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li><span class="math inline">\(x \perp y \Leftrightarrow x^Ty = 0\)</span></li>
+<li>Angle de 90°</li>
+<li>Théorème de Pythagore : <span class="math inline">\(\|x-y\|^2 = \|x\|^2 + \|y\|^2\)</span></li>
+</ul>
+</section>
+</section>
+<section id="questions-dapplications" class="level4">
+<h4 class="anchored" data-anchor-id="questions-dapplications">Questions d’applications</h4>
+<section id="extraction-de-features" class="level5">
+<h5 class="anchored" data-anchor-id="extraction-de-features">Extraction de features</h5>
+<p><strong>Question 10 :</strong></p>
+<p>Différence entre features hand-crafted et learned. Avantages et inconvénients.</p>
+<p><strong>Réponse attendue :</strong></p>
+<p>Hand-crafted : - Conçues manuellement (SIFT, HOG) - Interprétables, peu de données nécessaires - Performance limitée</p>
+<p>Learned : - Apprises automatiquement (CNN) - Haute performance, adaptatives - Besoin de beaucoup de données, boîte noire</p>
+<p><strong>Question 11 :</strong></p>
+<p>Rôle de la PCA dans l’extraction de features.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Trouve les directions de variance maximale</li>
+<li>Réduction de dimensionnalité</li>
+<li>Décorrélation des features</li>
+<li>Préservation de l’information importante</li>
+</ul>
+<p><strong>Question 12 :</strong></p>
+<p>Applications des moments statistiques en analyse d’images.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Détection d’outliers : moments anormaux</li>
+<li>Fake detection : manipulations modifient les statistiques</li>
+<li>Stéganalyse : insertion de données change les moments</li>
+<li>Utilisation avec DWT pour capturer propriétés multi-échelles</li>
+</ul>
+</section>
+<section id="classification" class="level5">
+<h5 class="anchored" data-anchor-id="classification">Classification</h5>
+<p><strong>Question 13 :</strong></p>
+<p>Différence entre classification binaire et M-aire.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Binaire : 2 classes, une frontière de décision</li>
+<li>M-aire : M classes, frontières multiples ou régions de décision</li>
+<li>Complexité croît avec M</li>
+</ul>
+<p><strong>Question 14 :</strong></p>
+<p>Lien entre test d’hypothèses et classification.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Classification = test d’hypothèses probabiliste</li>
+<li>Chaque classe = une hypothèse <span class="math inline">\(H_i\)</span></li>
+<li>Décision basée sur vraisemblances ou distances</li>
+<li>Optimal : test du rapport de vraisemblance</li>
+</ul>
+<p><strong>Question 15 :</strong></p>
+<p>Différence entre apprentissage supervisé, non supervisé, et semi-supervisé.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Supervisé : données étiquetées, prédiction</li>
+<li>Non supervisé : données non étiquetées, découverte de structure</li>
+<li>Semi-supervisé : peu de labels + beaucoup de non-labels, amélioration mutuelle</li>
+</ul>
+</section>
+<section id="compression" class="level5">
+<h5 class="anchored" data-anchor-id="compression">Compression</h5>
+<p><strong>Question 16 :</strong></p>
+<p>Différence entre compression avec et sans perte.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li>Sans perte : <span class="math inline">\(\hat{X} = X\)</span>, reconstruction parfaite, applications critiques</li>
+<li>Avec perte : <span class="math inline">\(\hat{X} \neq X\)</span>, distorsion acceptée, taux plus élevé, multimédia</li>
+</ul>
+<p><strong>Question 17 :</strong></p>
+<p>Notion de distorsion en compression.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li><span class="math inline">\(D = \mathbb{E}[\|X - \hat{X}\|^2]\)</span> ou autre métrique</li>
+<li>Trade-off avec le taux de compression</li>
+<li>Mesures : MSE, PSNR, SSIM</li>
+</ul>
+<p><strong>Question 18 :</strong></p>
+<p>Trade-off rate-distorsion.</p>
+<p><strong>Réponse attendue :</strong></p>
+<ul>
+<li><span class="math inline">\(R(D)\)</span> : taux minimal pour distorsion <span class="math inline">\(D\)</span></li>
+<li>Distorsion ↓ ⇒ Taux ↑</li>
+<li>Fonction Rate-Distorsion caractérise la limite théorique</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="développements-mathématiques" class="level3">
+<h3 class="anchored" data-anchor-id="développements-mathématiques">Développements mathématiques</h3>
+<section id="moments" class="level4">
+<h4 class="anchored" data-anchor-id="moments">Moments</h4>
+<p><strong>Exercice 1 :</strong></p>
+<p>Calculer les moments empiriques d’ordre 1 et 2 pour l’échantillon <span class="math inline">\(\{2, 4, 6, 8, 10\}\)</span>.</p>
+<p><strong>Solution :</strong></p>
+<p><span class="math display">\[\hat{m}_1 = \frac{1}{5}(2+4+6+8+10) = 6\]</span></p>
+<p><span class="math display">\[\hat{m}_2 = \frac{1}{5}(4+16+36+64+100) = 44\]</span></p>
+<p><span class="math display">\[\hat{\sigma}^2 = \hat{m}_2 - \hat{m}_1^2 = 44 - 36 = 8\]</span></p>
+<p><strong>Exercice 2 :</strong></p>
+<p>Développer la fonction génératrice pour une loi de Bernoulli <span class="math inline">\(p(0) = 1-p\)</span>, <span class="math inline">\(p(1) = p\)</span>.</p>
+<p><strong>Solution :</strong></p>
+<p><span class="math display">\[M(t) = \mathbb{E}[e^{tX}] = (1-p)e^0 + p e^t = 1-p + pe^t\]</span></p>
+<p>Moments : - <span class="math inline">\(\mathbb{E}[X] = M'(0) = p\)</span> - <span class="math inline">\(\mathbb{E}[X^2] = M''(0) = p\)</span> - <span class="math inline">\(\text{Var}[X] = p - p^2 = p(1-p)\)</span></p>
+<p><strong>Exercice 3 :</strong></p>
+<p>Démontrer que <span class="math inline">\(\text{Var}[X] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2\)</span>.</p>
+<p><strong>Solution :</strong></p>
+<p><span class="math display">\[\begin{align}
+\text{Var}[X] &amp;= \mathbb{E}[(X - \mu)^2] \\
+&amp;= \mathbb{E}[X^2 - 2X\mu + \mu^2] \\
+&amp;= \mathbb{E}[X^2] - 2\mu\mathbb{E}[X] + \mu^2 \\
+&amp;= \mathbb{E}[X^2] - 2\mu^2 + \mu^2 \\
+&amp;= \mathbb{E}[X^2] - \mu^2
+\end{align}\]</span></p>
+</section>
+<section id="probabilités" class="level4">
+<h4 class="anchored" data-anchor-id="probabilités">Probabilités</h4>
+<p><strong>Exercice 4 :</strong></p>
+<p>Appliquer la règle de chaîne pour décomposer <span class="math inline">\(p(x_1, x_2, x_3)\)</span>.</p>
+<p><strong>Solution :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, x_3) = p(x_1) \cdot p(x_2|x_1) \cdot p(x_3|x_2, x_1)\]</span></p>
+<p>Ou alternativement :</p>
+<p><span class="math display">\[p(x_1, x_2, x_3) = p(x_3) \cdot p(x_2|x_3) \cdot p(x_1|x_2, x_3)\]</span></p>
+<p><strong>Exercice 5 :</strong></p>
+<p>Simplifier sous hypothèse d’indépendance <span class="math inline">\(X_1 \perp X_2 \perp X_3\)</span>.</p>
+<p><strong>Solution :</strong></p>
+<p><span class="math display">\[p(x_1, x_2, x_3) = p(x_1) \cdot p(x_2) \cdot p(x_3)\]</span></p>
+<p><strong>Exercice 6 :</strong></p>
+<p>Démontrer que si <span class="math inline">\(X \perp Y\)</span>, alors <span class="math inline">\(\text{Cov}[X,Y] = 0\)</span>.</p>
+<p><strong>Solution :</strong></p>
+<p><span class="math display">\[\begin{align}
+\text{Cov}[X,Y] &amp;= \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y] \\
+&amp;= \sum_{x,y} xy \cdot p(x,y) - \mathbb{E}[X]\mathbb{E}[Y]
+\end{align}\]</span></p>
+<p>Si <span class="math inline">\(X \perp Y\)</span> : <span class="math inline">\(p(x,y) = p(x)p(y)\)</span></p>
+<p><span class="math display">\[\begin{align}
+&amp;= \sum_{x,y} xy \cdot p(x)p(y) - \mathbb{E}[X]\mathbb{E}[Y] \\
+&amp;= \sum_x xp(x) \sum_y yp(y) - \mathbb{E}[X]\mathbb{E}[Y] \\
+&amp;= \mathbb{E}[X]\mathbb{E}[Y] - \mathbb{E}[X]\mathbb{E}[Y] = 0
+\end{align}\]</span></p>
 
 
 </section>
