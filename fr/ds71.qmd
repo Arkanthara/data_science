@@ -1,0 +1,193 @@
+# Algorithme k-means et estimation de facteurs latents discrets
+
+## Motivation
+
+Comprendre les propriétés géométriques et statistiques des données, les analyser et développer des outils pour cette analyse. Ici, nous nous intéressons particulièrement à l’approche non supervisée du **clustering**.
+
+---
+
+## Clustering
+
+Le clustering est une méthode non supervisée qui vise à découvrir des groupes cohérents dans les données, correspondant aux pics de densité.
+
+Un synonyme souvent utilisé est la **Quantification Vectorielle (VQ)**.
+
+### Méthodes de clustering
+
+Il existe de nombreuses méthodes de clustering :
+
+- Clustering hiérarchique agglomératif  
+- **k-means** (algorithme de Lloyd)  
+- Clustering spectral  
+- Détection de communautés  
+- Clustering en haute dimension  
+- Cartes auto-organisatrices (SOM)  
+- Neural Gas
+
+La recherche sur le clustering est active depuis au moins 50 ans.
+
+---
+
+### Clustering hiérarchique agglomératif
+
+Processus itératif :
+
+1. Initialisation : chaque donnée est un cluster  
+2. Trouver la paire de clusters la plus proche  
+3. Fusionner ces deux clusters  
+4. Itérer depuis l’étape 2 jusqu’à la fin  
+
+On obtient un **dendrogramme**.
+
+La distance entre clusters peut être définie par :
+
+- Distance entre centres  
+- Distance maximale  
+- Distance minimale  
+
+Le nombre de clusters est **inconnu à priori**.
+
+---
+
+## k-means
+
+### Stratégie
+
+Le **k-means** postule un espace métrique (euclidien) sur les données.  
+C’est un algorithme d’affectation **binaire** : chaque donnée appartient à un et un seul cluster.
+
+#### Modèle
+
+Données :  
+$\mathcal{X} = \{ \mathbf{x}_i \}_{i \in [M]} \subset \Omega \subseteq \mathbb{R}^D$  
+Nombre de clusters : $K \in \mathbb{N}^*$
+
+Variables d’affectation binaires latentes :  
+$\mathbf{Z} = \{ z_{ik} \}$ avec $z_{ik} \in \{0, 1\}$
+
+Représentants des clusters :  
+$\mathbf{M} = \{ \mu_k \}_{k \in [K]}$ avec $\mu_k \in \mathbb{R}^D$
+
+Paramètres :  
+$\theta = [M, Z]$
+
+---
+
+### Fonction de coût
+
+Le k-means cherche à minimiser :
+
+$$
+\hat{\theta} = [\hat{M}, \hat{Z}] = \underset{\theta = [M, Z]}{\mathrm{argmin}} \mathcal{L}(\theta, \mathcal{X})
+$$
+
+avec :
+
+$$
+\mathcal{L}(\theta, \mathcal{X}) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \| \mathbf{x}_i - \mu_k \|_2^2
+$$
+
+L’optimisation exacte est **NP-difficile** → on utilise une **descente de coordonnées**.
+
+---
+
+## Descente de coordonnées
+
+Algorithme de minimisation alternée :
+
+Soit $f : \mathbb{R}^D \mapsto \mathbb{R}$, on cherche :
+
+$$
+x^* = \arg \min_{x \in \mathbb{R}^D} f(x)
+$$
+
+On définit pour $d \in [D]$ :
+
+$$
+f_d(x, y) = f([x_{(1)}, \dots, x_{(d-1)}, y, x_{(d+1)}, \dots, x_{(D)}]^\top)
+$$
+
+On minimise alternativement :
+
+$$
+x^{(t+1)}_{(d)} = \underset{y}{\arg \min} f_d(x^{(t)}, y)
+$$
+
+---
+
+## Application à k-means
+
+On alterne l’optimisation de $Z$ et $M$.
+
+Pour un $Z$ fixé, le représentant optimal d’un cluster est le **centre de masse** :
+
+$$
+\mu_k = \frac{\sum_{i=1}^{N} z_{ik} \mathbf{x}_i}{\sum_{i=1}^{N} z_{ik}}
+$$
+
+Pour un $M$ fixé, on affecte chaque donnée au cluster le plus proche :
+
+$$
+z_{ik} = 1 \quad \text{si } k = \arg \min_j \| \mathbf{x}_i - \mu_j \|_2^2
+$$
+
+---
+
+### Algorithme k-means
+
+1. Initialiser les représentants $M^{(0)}$  
+2. **Étape d’affectation** : étant donné $M^{(t)}$, affecter chaque donnée au représentant le plus proche → $Z^{(t)}$  
+3. **Étape de mise à jour** : étant donné $Z^{(t)}$, calculer les nouveaux représentants $M^{(t+1)}$ comme centres de masse  
+4. Répéter jusqu’à convergence (centres stables ou affectation stable)
+
+L’étape 2 est similaire à une **étape E** (Expectation), l’étape 3 à une **étape M** (Maximisation), en affectation dure (cf. EM).
+
+---
+
+### Propriétés
+
+- La perte décroît à chaque itération (minimisation alternée de fonctions convexes)  
+- Nombre d’itérations fini (nombre fini d’affectations)  
+- Étape d’affectation = construction du **diagramme de Voronoi** discret  
+- Résultat = **optimum local** (problème NP-dur)  
+- Sensible à l’initialisation
+
+---
+
+### k-means++
+
+Initialisation des représentants pour les **maximiser éloignés** :
+
+1. Choisir $\mu_1^0$ aléatoirement parmi les données  
+2. Pour chaque donnée non sélectionnée, calculer la distance au représentant le plus proche déjà choisi :  
+   $\Delta_j = \min_{m} \| \mathbf{x}_j - \mu_m^0 \|_2^2$  
+3. Choisir le prochain représentant avec une probabilité proportionnelle à $\Delta_j$  
+4. Répéter jusqu’à avoir $K$ représentants
+
+Cette méthode améliore la qualité des clusters et accélère la convergence.
+
+---
+
+## Résumé
+
+- Le clustering fait partie des méthodes **non supervisées**  
+- **k-means** est l’une des techniques les plus populaires  
+- Affectation **binaire** (dure)  
+- Critère d’optimisation NP-dur → solution approchée par **descente de coordonnées**  
+- Résultat dépend de l’initialisation  
+- **k-means++** : initialisation heuristique efficace  
+- Le clustering peut être **contraint** (liens MUST/CANNOT)
+
+---
+
+## Exemples de questions
+
+- Décrire formellement le clustering  
+- En quoi est-ce une technique non supervisée ?  
+- Pourquoi k-means est-il lié à la métrique euclidienne ?  
+- Pourquoi dit-on que k-means suppose un modèle gaussien pour les clusters ?  
+- L’algorithme k-means est-il exact ?  
+- Quels sont les principes d’initialisation de k-means ?  
+- Qu’est-ce que la descente de coordonnées ?
+
+Il est fortement conseillé de maîtriser l’algèbre présentée dans ce chapitre.

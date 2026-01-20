@@ -1,0 +1,191 @@
+# Explication du problème du clustering et de l'algorithme k-means
+
+## Question
+
+Expliquez le problème du regroupement et décrivez l'algorithme de regroupement k-means.
+En particulier, discutez de la fonction qu'il minimise et de sa relation avec un modèle gaussien.
+
+## Le problème du clustering
+
+Le **clustering** (ou regroupement) est une tâche fondamentale en analyse de données non supervisée. Son objectif est d'organiser un ensemble de données en **groupes homogènes** sans avoir recours à des étiquettes préexistantes.
+
+### Pourquoi le clustering est-il nécessaire ?
+
+Les données réelles présentent rarement une distribution uniforme :
+
+- Elles tendent à se regrouper en **régions de haute densité** séparées par des régions de faible densité
+- Ces regroupements naturels correspondent souvent à des **sous-populations** ou **catégories intrinsèques**
+- Le clustering permet de découvrir cette **structure latente** sans supervision
+
+### Définition formelle
+
+Étant donné un ensemble de données $\mathcal{X} = \{ \mathbf{x}_i \}_{i=1}^N$ avec $\mathbf{x}_i \in \mathbb{R}^D$, le clustering cherche à :
+
+1. Partitionner les données en $K$ groupes (clusters)
+2. Maximiser la **similarité intra-cluster** (données d'un même groupe se ressemblent)
+3. Maximiser la **dissimilarité inter-clusters** (groupes différents sont distincts)
+
+---
+
+## L'algorithme k-means
+
+Le **k-means** est l'algorithme de clustering le plus populaire en raison de sa simplicité et efficacité.
+
+### Principe fondamental
+
+k-means postule que les données existent dans un **espace métrique euclidien** et que chaque cluster peut être représenté par son **centre** (moyenne des points du cluster).
+
+L'algorithme effectue une **affectation dure** : chaque donnée appartient à un et un seul cluster.
+
+### Modélisation mathématique
+
+#### Variables
+
+- **Données** : $\mathcal{X} = \{ \mathbf{x}_i \}_{i=1}^N \subset \mathbb{R}^D$
+- **Nombre de clusters** : $K \in \mathbb{N}^*$ (fixé a priori)
+- **Variables d'affectation latentes** : $\mathbf{Z} = \{ z_{ik} \}$ où $z_{ik} \in \{0, 1\}$ avec $\sum_{k=1}^K z_{ik} = 1$
+- **Représentants des clusters** : $\mathbf{M} = \{ \mu_k \}_{k=1}^K \subset \mathbb{R}^D$
+
+#### Fonction de coût (loss function)
+
+k-means minimise la **somme des carrés des distances** entre chaque point et le centre de son cluster :
+
+$$
+\mathcal{L}(\mathbf{M}, \mathbf{Z}; \mathcal{X}) = \sum_{i=1}^N \sum_{k=1}^K z_{ik} \| \mathbf{x}_i - \mu_k \|_2^2
+$$
+
+Cette fonction mesure la **compacité** des clusters : plus la valeur est faible, plus les points sont proches de leur centre.
+
+### Pourquoi cette fonction de coût ?
+
+1. **Interprétation géométrique** : Minimiser la variance intra-cluster
+2. **Propriété statistique** : Avec la distance euclidienne, le centre optimal est la moyenne (preuve par dérivation)
+3. **Convexité par morceaux** : Convexe en $\mathbf{M}$ pour $\mathbf{Z}$ fixé, et convexe en $\mathbf{Z}$ pour $\mathbf{M}$ fixé
+
+---
+
+## L'algorithme d'optimisation
+
+### Descente de coordonnées
+
+Le problème d'optimisation combinatoire est **NP-dur**. k-means utilise une **descente de coordonnées** (optimisation alternée) :
+
+#### Étape E (Expectation - Affectation)
+
+Pour des centres $\mathbf{M}^{(t)}$ fixés, on affecte chaque point à son cluster le plus proche :
+
+$$
+z_{ik}^{(t+1)} = 
+\begin{cases} 
+1 & \text{si } k = \arg\min_j \| \mathbf{x}_i - \mu_j^{(t)} \|_2^2 \\
+0 & \text{sinon}
+\end{cases}
+$$
+
+#### Étape M (Maximization - Mise à jour des centres)
+
+Pour une affectation $\mathbf{Z}^{(t+1)}$ fixée, on recalcule les centres comme moyennes :
+
+$$
+\mu_k^{(t+1)} = \frac{\sum_{i=1}^N z_{ik}^{(t+1)} \mathbf{x}_i}{\sum_{i=1}^N z_{ik}^{(t+1)}}
+$$
+
+### Algorithme complet
+
+1. **Initialisation** : Choisir $K$ centres initiaux (aléatoirement ou par k-means++)
+2. **Étape d'affectation** : Assigner chaque point au centre le plus proche
+3. **Étape de mise à jour** : Recalculer les centres comme moyennes des points assignés
+4. **Itération** : Répéter étapes 2-3 jusqu'à convergence
+   - Critère d'arrêt : Les centres ne bougent plus ou l'affectation est stable
+
+---
+
+## Relation avec un modèle gaussien
+
+### Hypothèse sous-jacente
+
+k-means suppose implicitement que chaque cluster suit une **distribution gaussienne isotrope** avec :
+
+- **Même covariance** : $\Sigma_k = \sigma^2 I$ pour tous les clusters
+- **Centres différents** : $\mu_k$ spécifiques à chaque cluster
+- **Égale probabilité a priori** : $P(\text{cluster } k) = 1/K$
+
+### Modèle de mélange de gaussiennes (GMM)
+
+Considérons un **mélange de gaussiennes** avec covariance sphérique :
+
+$$
+p(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x} | \mu_k, \sigma^2 I)
+$$
+
+où $\pi_k = 1/K$ sont les poids des clusters.
+
+### Log-vraisemblance et k-means
+
+La log-vraisemblance des données sous ce modèle est :
+
+$$
+\log p(\mathcal{X} | \mathbf{M}, \sigma) = \sum_{i=1}^N \log \left( \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x}_i | \mu_k, \sigma^2 I) \right)
+$$
+
+#### Approximation "hard assignment"
+
+k-means correspond à deux approximations :
+
+1. **Affectation dure** : Au lieu d'affectations probabilistes, chaque point appartient entièrement à un cluster
+2. **Limite de variance nulle** : Quand $\sigma^2 \to 0$, la vraisemblance est dominée par le cluster le plus proche
+
+Dans cette limite, maximiser la log-vraisemblance équivaut à **minimiser** :
+
+$$
+\sum_{i=1}^N \min_k \| \mathbf{x}_i - \mu_k \|_2^2
+$$
+
+Ce qui est exactement la fonction de coût de k-means !
+
+### Interprétation probabiliste
+
+- **k-means** ≈ **EM pour GMM avec covariance sphérique et affectation dure**
+- **Étape E** : Affectation au cluster le plus probable (mode de la distribution postérieure)
+- **Étape M** : Maximisation de la vraisemblance pour chaque cluster
+
+Cette connexion explique pourquoi k-means :
+
+- Fonctionne bien quand les clusters sont **sphériques** et de **taille similaire**
+- Est sensible aux **outliers** (les gaussiennes décroissent exponentiellement)
+- Suppose une **même échelle** dans toutes les dimensions (covariance isotrope)
+
+---
+
+## Propriétés et limitations
+
+### Avantages
+
+- **Simple et efficace** : Complexité linéaire en $N$ par itération
+- **Interprétable** : Les centres sont des "prototypes" des clusters
+- **Convergence garantie** : La fonction de coût décroît à chaque itération
+
+### Limitations
+
+- **Nombre de clusters $K$** : Doit être spécifié a priori
+- **Initialisation sensible** : Converge vers un optimum local
+- **Forme des clusters** : Suppose des clusters convexes et sphériques
+- **Métrique euclidienne** : Peut ne pas convenir à tous les types de données
+
+### Solutions courantes
+
+- **k-means++** : Initialisation intelligente pour de meilleurs résultats
+- **Exécutions multiples** : Lancer l'algorithme plusieurs fois avec différentes initialisations
+- **Standardisation** : Mettre les données à même échelle avant application
+
+---
+
+## Conclusion
+
+Le **clustering** adresse le problème fondamental de découvrir la structure sous-jacente dans des données non étiquetées. 
+
+L'**algorithme k-means** offre une solution efficace en minimisant la somme des carrés des distances intra-cluster via une descente de coordonnées alternée.
+
+Son lien avec un **modèle gaussien** révèle que k-means suppose implicitement des clusters sphériques de variance égale, correspondant à un mélange de gaussiennes isotropes en limite d'affectation dure.
+
+Cette compréhension théorique guide son application pratique : k-means excelle quand les données forment naturellement des groupes compacts et sphériques, mais nécessite des adaptations (comme k-means++ ou le choix judicieux de $K$) pour des cas plus complexes.

@@ -1,0 +1,285 @@
+# Data Science: Expectation-Maximization for Density Modelling & Latent Factor Estimation
+
+## Motivation
+
+Jusqu’à présent, nous avons utilisé un modèle implicite pour les données :
+
+* Les modèles à composantes → la variance comme critère sur les données centrées (distribution normale)
+* Les modèles discriminants → variance des données projetées pour les modèles intra-classe et inter-classes
+
+La distribution est fixée (essentiellement normale) et nous recherchons ses paramètres $\theta$ (par exemple $\theta = [\mu , \Sigma ]$).
+
+Alternativement, nous pouvons rechercher un modèle pour la densité des données.
+
+Soit $f_{\theta}(x): \Omega \rightarrow \mathbb{R}$ la densité des données.
+
+## Density Estimation
+
+### Méthodes
+
+* Méthodes des plus proches voisins (kNN)
+* Fenêtres de Parzen, réseaux RBF
+* Histogrammes
+* Modèles de mélange
+
+### Modélisation par mélange gaussien
+
+Dans ce cadre, nous faisons trois hypothèses :
+
+1. Le nombre de composantes ($c \in \mathbb{N}^*$) est connu
+2. La famille de fonctions $\mathcal{F}$ est connue
+3. Les étiquettes (labels de classe) sont inconnues
+
+### Interprétation probabiliste
+
+La densité $f(x)$ représente un processus aléatoire où $x$ est tiré d’un ensemble d’états $\omega_j$ avec une probabilité a priori $\mathbb{P}(\omega_j)$.
+
+$$
+f(x) = \sum_{j = 1}^{c}\pi_{j}\phi (x,\theta_{j})
+$$
+
+$$
+f(x) = \mathbb{P}(x|\theta) = \sum_{j = 1}^{c}\mathbb{P}(\omega_j)\mathbb{P}(x|\omega_j,\theta_j)
+$$
+
+On obtient (par identification) :
+
+* $\pi_j = \mathbb{P}(\omega_j)$ avec $\sum_j \pi_j = 1$
+* $\phi (x, \theta_j) = \mathbb{P}(x|\omega_j, \theta_j)$ est la probabilité conditionnelle que $x$ soit généré par l’état $\omega_j$
+
+### Choix de la densité de base
+
+$\phi$ est une fonction de densité de probabilité. Choisir la famille normale (agnostique) comme base ($\phi \in \mathbb{P} = \{\mathcal{N}(\mu, \Sigma)\}$) semble raisonnable :
+
+$$
+f(x) = \sum_{j=1}^{c} \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)
+$$
+
+C’est-à-dire : $\phi_j(x) := \phi(x, \theta_j) = \mathcal{N}(x|\mu_j, \Sigma_j)$
+
+* Peut approximer n’importe quelle densité
+* Permet un système linéaire de ses paramètres lors de la maximisation de la log-vraisemblance (MLE)
+
+## Estimation par Maximum de Vraisemblance (MLE)
+
+### Cas de base : 1 composante, $c = 1$
+
+Paramètres : $\theta = [\mu, \Sigma]$
+
+On maximise la log-vraisemblance :
+
+$$
+\hat{\theta} = \arg \max_{\theta} \sum_{i} \log e^{-(x_i - \mu)^T \Sigma^{-1}(x_i - \mu)}
+$$
+
+Ce qui équivaut à :
+
+$$
+\hat{\theta} = \arg \min_{\theta} \sum_{i} (x_i - \mu)^T \Sigma^{-1}(x_i - \mu)
+$$
+
+On obtient les estimateurs :
+
+$$
+\hat{\mu} = \frac{1}{N} \sum_{i} x_i
+$$
+
+$$
+\hat{\Sigma} = \frac{1}{N} \sum_{i} (x_i - \hat{\mu})(x_i - \hat{\mu})^T
+$$
+
+### Cas plus complexe : 2 composantes
+
+Paramètres : $\theta = [\pi_1,\theta_1,\pi_2,\theta_2] = [\pi_1,[\mu_1,\Sigma_1],\pi_2,[\mu_2,\Sigma_2]]$ avec $\pi_1 + \pi_2 = 1$
+
+La vraisemblance s’écrit :
+
+$$
+\mathbb{L}(\theta ,\mathcal{X}) = \sum_{i}^{N}\log [\pi_{1}\phi (x_{i},\theta_{1}) + \pi_{2}\phi (x_{i},\theta_{2})]
+$$
+
+**Difficulté** : La somme à l’intérieur du logarithme rend la maximisation directe difficile.
+
+**Solution** : Un algorithme itératif en 2 étapes (E-M) pour maximiser la vraisemblance incomplète. C’est l’algorithme **Expectation-Maximization (EM)**.
+
+## Algorithme Expectation-Maximization (EM)
+
+### Problème des assignations manquantes
+
+Ce qui manque ici est l’assignation de chaque $x_{i}$ à l’une des 2 composantes $\phi_{j}$. Si nous la connaissions, nous pourrions traiter le problème comme deux fois le cas à 1 composante.
+
+Nous introduisons des variables latentes (non observées) : l’assignation binaire $\delta_{ij} \in \{\text{true, false}\}$ de chaque $x_{i}$ à la composante $\phi_{j}$ :
+
+* $x_{i} \sim \phi_{1} \Rightarrow \delta_{i1} = \mathrm{true},\delta_{i2} = \mathrm{false}$
+* $x_{i} \sim \phi_{2} \Rightarrow \delta_{i1} = \mathrm{false},\delta_{i2} = \mathrm{true}$
+
+Mais nous ne pouvons qu’estimer $\delta_{ij}$ → Stratégie EM.
+
+### Étape E (Expectation)
+
+Paramètres : $\theta = [\pi_1,\theta_1,\pi_2,\theta_2] = [\pi_1,[\mu_1,\Sigma_1],\pi_2,[\mu_2,\Sigma_2]]$
+
+Supposons que nous connaissons une valeur initiale pour $\theta^0 = [\pi_1^0,\theta_1^0,\pi_2^0,\theta_2^0]$.
+
+Nous pouvons inférer la contribution (statistique) $\gamma_{ij}$ de chaque donnée $x_{i}$ à chaque composante $\phi_{j}$ (paramétrée par $\theta_{j}^{0}$) :
+
+$$
+\gamma_{ij}(\theta^0) = \mathbf{P}[\delta_{ij} = \mathrm{true}|\theta^0,\mathcal{X}]
+$$
+
+Par exemple pour la composante 1 :
+
+$$
+\gamma_{i1}(\theta^0) = \frac{\pi_1^0\phi(x_i,\theta_1^0)}{\pi_1^0\phi(x_i,\theta_1^0) + \pi_2^0\phi(x_i,\theta_2^0)}
+$$
+
+$\gamma_{ij}$ est la **responsabilité**. C’est la vraisemblance que $x_{i}$ soit (purement) modélisé par la composante $\phi_{j}$.
+
+$\gamma_{ij}$ représente la part de $x_{i}$ qui est modélisée (générée) par la composante $\phi_{j}$.
+
+### Responsabilité et assignation douce (soft-assignment)
+
+Nous pouvons utiliser $\gamma_{ij}$ pour déterminer $\delta_{ij}$ → $x_i$ peut être assigné à $\phi_1$ ou $\phi_2$ (vote maximum → binarisation) → assignation dure de type **K-means** : chaque donnée est assignée à une et une seule composante (cluster).
+
+L’algorithme EM est plus « doux » : une donnée contribue (via $\gamma_{ij}$) à plusieurs composantes (modes de densité). EM calcule une **assignation douce** avec :
+
+$$
+\sum_j \gamma_{ij} = 1 \quad \forall i
+$$
+
+### Exemple visuel : itérations successives des étapes E et M
+
+(Les pages 16 à 27 du PDF original contiennent une série de figures illustrant les itérations successives de l’algorithme EM pour un mélange de deux gaussiennes. Ces figures montrent l’évolution des composantes estimées et des responsabilités au fil des itérations.)
+
+### Résultats numériques d’estimation
+
+Paramètres réels du mélange (exemple) :
+
+| Paramètre | $\pi_1$ | $\mu_1$ | $\Sigma_1$ | $\mu_2$ | $\Sigma_2$ |
+|-----------|---------|---------|------------|---------|------------|
+| Valeur    | 0.75    | 2       | 2          | 8       | 1          |
+
+Paramètres estimés après 10 et 20 itérations :
+
+| Itérations | $\pi_1$ | $\mu_1$ | $\Sigma_1$ | $\mu_2$ | $\Sigma_2$ |
+|------------|---------|---------|------------|---------|------------|
+| 10         | 0.76    | 2.17    | 1.56       | 7.91    | 1.06       |
+| 20         | 0.76    | 2.15    | 1.98       | 8.01    | 0.98       |
+
+## Généralisation aux mélanges à $c$ composantes
+
+Variables latentes généralisées : $\delta_{i1}, \delta_{i2}, \dots, \delta_{ij}, \dots, \delta_{ic}$ où $\delta_{ij} = \text{true}$ si la donnée $x_i$ est générée par la composante $\phi_j$.
+
+La responsabilité $\gamma_{ij}$ est l’espérance de $\delta_{ij}$ sur toutes les composantes.
+
+Paramètres à estimer : $\theta = [\pi_j, \theta_j]_{j \in [c]} = [\pi_j, [\mu_j, \Sigma_j]]_j$
+
+### Algorithme EM pour $c$ composantes
+
+1. **Initialisation** : $\theta^{0} = \{\pi_{j}^{0},\mu_{j}^{0},\Sigma_{j}^{0}\}_{j\in [c]}$
+   * En général : $\pi_{j} = 1 / c$, $\mu_{j}$ choisi aléatoirement et $\Sigma_{k} = \mathbf{Id}$
+   * Alternative : utiliser **K-means** pour l’initialisation
+
+2. **Étape E** : Calculer les responsabilités pour chaque donnée $i \in [N]$ et chaque composante $j \in [c]$
+   $$
+   \gamma_{ij} = \frac{\pi_j\phi(x_i,\theta_j)}{\sum_{k = 1}^{c}\pi_k\phi(x_i,\theta_k)}
+   $$
+
+3. **Étape M** : Estimation des paramètres du mélange
+   * Moyenne : $\mu_{j} = \frac{\sum_{i = 1}^{N}\gamma_{ij}x_{i}}{\sum_{i}\gamma_{ij}}$
+   * Covariance : $\Sigma_{j} = \frac{x_{j}\Gamma_{j}x_{j}^{\top}}{\mathrm{Tr}(\Gamma_{j})}$ où $\Gamma_{j} = \mathrm{diag}[\gamma_{ij},\ldots ,\gamma_{ij}]$ et $x_{j}$ est centré sur $\mu_{j}$
+   * Poids : $\pi_{j} = \frac{\sum_{i}\gamma_{ij}}{N}$
+
+4. **Itérer** les étapes 2 et 3 jusqu’à convergence.
+
+## Modélisation et considérations pratiques
+
+### Impact de la paramétrisation
+
+La paramétrisation a priori du mélange influence la convergence. Les paramètres clés sont :
+
+1. $c$ : le nombre de composantes
+2. $\Sigma_{j}$ : la forme des matrices de covariance (diagonale, pleine, paramétrée)
+
+Des modèles trop flexibles ou trop rigides peuvent conduire à une mauvaise convergence, voire à une absence de convergence.
+
+Le nombre de variables à estimer est de l’ordre de $D \times D \times c + 2 \times c$. Si $N$ est petit, $D$ grand et $c$ grand → risque de **sur-paramétrisation**.
+
+### Forme de la matrice de covariance
+
+Problème de sur-paramétrisation typique : dans un problème de reconnaissance de caractères, $x_{j}\in \mathbb{R}^{256}$. Il faudrait estimer $256^{2}\times c$ paramètres pour la covariance (avec seulement environ 7000 points de données) !
+
+Solutions de paramétrisation :
+
+* Modèles sphériques : $\Sigma = \sigma \mathrm{Id}$ → 1 paramètre
+* Modèles diagonaux : $\Sigma = \mathrm{diag}(\sigma_{1},\ldots ,\sigma_{D})$ → $D$ paramètres
+* Modèles pleins : $\Sigma \in \mathbb{R}^{D\times D}$ → $O(D^{2})$ paramètres
+
+### Pré-traitement par réduction de dimension (PCA)
+
+Pour les modèles complexes, la convergence peut être impossible si $p$ (le nombre de paramètres) est trop grand.
+
+Une solution est d’utiliser l’**Analyse en Composantes Principales (PCA)** pour réduire la dimension des données avant d’appliquer EM.
+
+Exemple : 50 composantes principales reconstruisent 90% du signal. On peut alors appliquer EM dans l’espace des 50 (ou 10, ou 2) premières composantes principales.
+
+### Choix du nombre de composantes $c$
+
+#### Principe de parcimonie
+
+Plus $c$ est grand, moins il y a de points assignés en moyenne à chaque composante. Il faut rechercher des modèles parcimonieux, c’est-à-dire avec un petit nombre de paramètres.
+
+#### Critère d’information bayésien (BIC)
+
+Plus $c$ est grand, meilleure est l’estimation de la vraisemblance. Il faut trouver un compromis entre la vraisemblance et la complexité du modèle.
+
+Le BIC est défini par :
+
+$$
+\mathrm{BIC}(\theta ,\chi) = -2\mathrm{LL}(\theta ,\chi) + |\theta |\log (N)
+$$
+
+On cherche alors :
+
+$$
+\hat{\theta} = \underset {\theta}{\mathrm{argmin}}\ \mathrm{BIC}(\theta ,\chi)
+$$
+
+### Exemple pratique avec un mélange à 4 composantes
+
+(Les pages 39 à 45 du PDF original contiennent une série de figures illustrant l’application de l’algorithme EM avec un mélange de 4 gaussiennes, y compris le processus de test de différents modèles et le réglage manuel.)
+
+**Remarques importantes** :
+
+* Il faut tester tous les modèles possibles
+* La convergence dépend de l’initialisation
+* Un réglage fin manuel est parfois nécessaire
+
+## Résumé
+
+### Modèles de mélange gaussien (GMM)
+
+* Le modèle de mélange gaussien généralise les hypothèses sous-jacentes à l’ACP et l’ADL
+* Modélisation et estimation explicite de la densité
+* Également classification par MLE (non supervisée) : si les composantes sont des classes, la donnée $x_j$ est associée à la classe $j$ pour laquelle $\mathbb{P}(C = j|x_j) \approx \pi_j \phi_j(x_j)$ est maximale parmi toutes les classes
+
+### Algorithme EM
+
+* Algorithme itératif pour maximiser la (log-)vraisemblance
+* Principe utilisé dans de nombreux autres scénarios
+* Basé sur la définition de variables non observées (latentes) $(\delta_{ij})$
+* Exemple d’autre application : **Analyse sémantique latente probabiliste (pLSA)** → EM où les variables cachées sont les concepts latents
+
+## Questions d’exemple
+
+* Qu’est-ce qu’un modèle de mélange gaussien (GMM) ?
+* Pourquoi peut-il être considéré comme une modélisation conditionnelle ?
+* Comment l’utiliser pour générer des données ?
+* Qu’est-ce que la responsabilité ? Comment l’interpréter ?
+* Pourquoi EM pour GMM est-il un MLE ?
+* Comment interpréter l’étape E ?
+* Comment interpréter l’étape M ?
+* Discutez de la relation entre GMM et K-means
+* Que sont les assignations dures (hard) et douces (soft) ?
+
+**Il est fortement conseillé de développer l’algèbre contenue dans ce chapitre.**

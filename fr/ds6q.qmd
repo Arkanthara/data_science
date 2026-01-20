@@ -1,0 +1,269 @@
+# Questions
+
+### 1. Qu'est-ce qu'un modèle de mélange gaussien (GMM) ?
+
+**Intuition :**
+
+Un modèle de mélange gaussien (GMM) est un modèle probabiliste qui représente une distribution de données complexe comme une somme pondérée de plusieurs distributions gaussiennes (normales). Au lieu de supposer que les données proviennent d'une seule courbe en cloche, il modélise les données comme provenant de plusieurs courbes en cloche qui se chevauchent.
+
+**Réponse détaillée :**
+
+Formellement, un GMM est défini comme :
+
+$$
+f(x) = \sum_{j=1}^{c} \pi_j \phi(x, \theta_j)
+$$
+
+où :
+
+- $c$ est le nombre de composantes gaussiennes (clusters)
+- $\pi_j$ sont les poids du mélange avec $\sum_{j=1}^c \pi_j = 1$ et $\pi_j \geq 0$
+- $\phi(x, \theta_j)$ est la fonction de densité gaussienne pour la composante $j$ :
+
+$$
+\phi(x, \theta_j) = \mathcal{N}(x|\mu_j, \Sigma_j) = \frac{1}{(2\pi)^{D/2}|\Sigma_j|^{1/2}} \exp\left(-\frac{1}{2}(x - \mu_j)^T \Sigma_j^{-1}(x - \mu_j)\right)
+$$
+
+Les paramètres à estimer sont $\theta = \{\pi_j, \mu_j, \Sigma_j\}_{j=1}^c$. Les GMM sont des approximateurs universels de densités lisses et sont particulièrement utiles pour modéliser des distributions multi-modales.
+
+---
+
+### 2. Pourquoi peut-il être vu comme une modélisation conditionnelle ?
+
+**Intuition :**
+
+Le GMM peut être interprété comme un processus génératif où chaque point de données est produit en sélectionnant d'abord aléatoirement l'une des composantes gaussiennes selon les poids du mélange, puis en échantillonnant à partir de cette composante sélectionnée.
+
+**Réponse détaillée :**
+
+Nous pouvons introduire une variable aléatoire latente (cachée) catégorielle $z \in \{1, \dots, c\}$ qui indique quelle composante a généré un point de données. Le processus génératif est :
+
+1. Échantillonner $z \sim \text{Categorical}(\pi_1, \dots, \pi_c)$
+2. Étant donné $z = j$, échantillonner $x \sim \mathcal{N}(\mu_j, \Sigma_j)$
+
+Ainsi, la distribution jointe se factorise comme :
+
+$$
+p(x, z) = p(z)p(x|z)
+$$
+
+où :
+
+- $p(z = j) = \pi_j$
+- $p(x|z = j) = \mathcal{N}(x|\mu_j, \Sigma_j)$
+
+La distribution marginale de $x$ est obtenue en sommant sur $z$ :
+
+$$
+p(x) = \sum_{j=1}^c p(z=j)p(x|z=j) = \sum_{j=1}^c \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)
+$$
+
+Ceci est exactement la formulation du GMM, ce qui en fait un modèle conditionnel où $x$ est conditionné par la variable latente $z$.
+
+---
+
+### 3. Comment peut-on l'utiliser pour générer des données ?
+
+**Intuition :**
+
+Pour générer de nouvelles données à partir d'un GMM entraîné, nous simulons le processus génératif : choisir aléatoirement une composante selon les poids du mélange, puis tirer un échantillon de la distribution gaussienne sélectionnée.
+
+**Réponse détaillée :**
+
+Étant donné les paramètres estimés $\{\pi_j, \mu_j, \Sigma_j\}_{j=1}^c$, la procédure de génération de données est :
+
+1. **Échantillonner l'indice de composante :** Choisir aléatoirement une composante $j$ avec probabilité $\pi_j$.
+2. **Échantillonner à partir de la gaussienne :** Générer un vecteur $x$ à partir de la distribution normale multivariée $\mathcal{N}(\mu_j, \Sigma_j)$.
+
+Mathématiquement :
+
+- Tirer $j \sim \text{Categorical}(\pi_1, \dots, \pi_c)$
+- Tirer $x \sim \mathcal{N}(\mu_j, \Sigma_j)$
+
+Ce processus peut être répété pour générer n'importe quel nombre de points de données synthétiques qui suivent la même distribution que les données d'entraînement. Ceci est utile pour l'augmentation de données, les simulations de Monte Carlo, ou comme composant dans des modèles génératifs plus complexes.
+
+---
+
+### 4. Qu'est-ce que la responsabilité ? Comment l'interpréter ?
+
+**Intuition :**
+
+La responsabilité $\gamma_{ij}$ est un poids d'affectation "soft" qui représente la probabilité ou le degré auquel le point de données $i$ appartient à la composante $j$, étant donné les paramètres actuels du modèle.
+
+**Réponse détaillée :**
+
+La responsabilité $\gamma_{ij}$ est définie comme :
+
+$$
+\gamma_{ij} = p(z_j = 1 | x_i, \theta) = \frac{\pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)}{\sum_{k=1}^c \pi_k \mathcal{N}(x_i|\mu_k, \Sigma_k)}
+$$
+
+Ceci est obtenu en utilisant le théorème de Bayes :
+
+- $\pi_j$ est la probabilité a priori de la composante $j$
+- $\mathcal{N}(x_i|\mu_j, \Sigma_j)$ est la vraisemblance de $x_i$ sous la composante $j$
+- Le dénominateur est la vraisemblance marginale (évidence)
+
+**Interprétation :**
+
+- $\gamma_{ij} \in [0, 1]$
+- $\sum_{j=1}^c \gamma_{ij} = 1$ pour chaque point de données $i$
+- $\gamma_{ij}$ représente la probabilité a posteriori que la composante $j$ ait généré le point de données $i$
+- Elle quantifie la "responsabilité" que la composante $j$ prend pour expliquer $x_i$
+
+Dans l'algorithme EM, les responsabilités sont calculées dans l'E-step et utilisées comme affectations soft dans le M-step pour mettre à jour les paramètres.
+
+---
+
+### 5. Pourquoi EM pour GMM est-il un MLE ?
+
+**Intuition :**
+
+L'algorithme EM pour GMM est une méthode pour trouver les paramètres qui maximisent la vraisemblance des données observées, ce qui en fait une approche d'estimation du maximum de vraisemblance (MLE).
+
+**Réponse détaillée :**
+
+Étant données les données $X = \{x_1, \dots, x_N\}$, la log-vraisemblance sous un GMM est :
+
+$$
+LL(\theta; X) = \sum_{i=1}^N \log \left( \sum_{j=1}^c \pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j) \right)
+$$
+
+La maximisation directe est difficile à cause de la somme à l'intérieur du logarithme. EM résout ce problème en :
+
+1. **E-step :** Calculer les responsabilités $\gamma_{ij}$ (valeurs attendues des indicateurs latents)
+2. **M-step :** Maximiser la log-vraisemblance complète attendue des données :
+
+$$
+Q(\theta, \theta^{\text{old}}) = \sum_{i=1}^N \sum_{j=1}^c \gamma_{ij} \left[ \log \pi_j + \log \mathcal{N}(x_i|\mu_j, \Sigma_j) \right]
+$$
+
+Les mises à jour du M-step ($\pi_j^{\text{new}}, \mu_j^{\text{new}}, \Sigma_j^{\text{new}}$) sont obtenues en fixant les dérivées de $Q$ à zéro, donnant :
+
+$$
+\pi_j^{\text{new}} = \frac{\sum_i \gamma_{ij}}{N}, \quad
+\mu_j^{\text{new}} = \frac{\sum_i \gamma_{ij} x_i}{\sum_i \gamma_{ij}}, \quad
+\Sigma_j^{\text{new}} = \frac{\sum_i \gamma_{ij} (x_i - \mu_j^{\text{new}})(x_i - \mu_j^{\text{new}})^T}{\sum_i \gamma_{ij}}
+$$
+
+EM garantit que $LL(\theta^{\text{new}}; X) \geq LL(\theta^{\text{old}}; X)$, augmentant itérativement la vraisemblance jusqu'à convergence vers un maximum (local). Ainsi, EM pour GMM effectue un MLE.
+
+---
+
+### 6. Comment interpréter l'E-step ?
+
+**Intuition :**
+
+L'E-step (étape d'espérance) calcule les valeurs attendues des variables latentes (affectations aux composantes) étant données les paramètres actuels et les données observées. Elle "remplit" l'information manquante nécessaire pour le M-step.
+
+**Réponse détaillée :**
+
+Dans l'E-step, nous calculons les responsabilités $\gamma_{ij}$ pour tous $i, j$ :
+
+$$
+\gamma_{ij} = \mathbb{E}[z_{ij} | x_i, \theta^{\text{old}}] = p(z_j = 1 | x_i, \theta^{\text{old}})
+$$
+
+où $z_{ij}$ est une variable indicatrice : $z_{ij} = 1$ si $x_i$ appartient à la composante $j$, sinon $0$.
+
+**Interprétation :**
+
+- Nous calculons la probabilité a posteriori de chaque affectation latente
+- Ceci est une affectation "soft", par opposition à l'affectation "hard" (comme dans k-means)
+- L'E-step utilise le théorème de Bayes pour mettre à jour nos croyances sur quelle composante a généré chaque point de données, basé sur les estimations actuelles des paramètres
+- Ces responsabilités sont ensuite utilisées comme poids dans le M-step pour mettre à jour les paramètres
+
+L'E-step complète essentiellement les données en fournissant les valeurs attendues pour les variables latentes manquantes, permettant la maximisation subséquente dans le M-step.
+
+---
+
+### 7. Comment interpréter le M-step ?
+
+**Intuition :**
+
+Le M-step (étape de maximisation) met à jour les paramètres du modèle en maximisant la log-vraisemblance complète attendue des données, en utilisant les responsabilités calculées dans l'E-step comme poids.
+
+**Réponse détaillée :**
+
+Étant données les responsabilités $\gamma_{ij}$ de l'E-step, le M-step met à jour les paramètres $\theta = \{\pi_j, \mu_j, \Sigma_j\}$ en maximisant :
+
+$$
+Q(\theta, \theta^{\text{old}}) = \sum_{i=1}^N \sum_{j=1}^c \gamma_{ij} \left[ \log \pi_j + \log \mathcal{N}(x_i|\mu_j, \Sigma_j) \right]
+$$
+
+**Interprétation :**
+
+- La fonction $Q$ est la log-vraisemblance complète attendue des données, où l'espérance est prise par rapport à la distribution a posteriori de $z$ calculée dans l'E-step
+- Les formules de mise à jour sont des versions pondérées du MLE standard pour les distributions gaussiennes :
+  - $\pi_j$ est mis à jour vers la responsabilité moyenne de la composante $j$
+  - $\mu_j$ est mis à jour vers la moyenne pondérée des points de données, avec les poids $\gamma_{ij}$
+  - $\Sigma_j$ est mis à jour vers la matrice de covariance pondérée
+- Les poids $\gamma_{ij}$ garantissent que les points de données contribuent davantage aux paramètres des composantes auxquelles ils sont susceptibles d'appartenir
+
+Le M-step garantit que la log-vraisemblance des données observées ne diminue pas (et typiquement augmente) avec les nouveaux paramètres.
+
+---
+
+### 8. Discutez de la relation entre GMM et k-means
+
+**Intuition :**
+
+k-means peut être vu comme un cas spécial et simplifié de GMM où les affectations de clusters sont "hard" (chaque point appartient exactement à un cluster) et les clusters sont sphériques avec une variance égale.
+
+**Réponse détaillée :**
+
+**Similitudes :**
+
+- Les deux sont des méthodes de clustering non supervisées
+- Les deux nécessitent de spécifier le nombre de clusters/composantes $c$
+- Les deux sont sensibles à l'initialisation
+
+**Différences :**
+
+| Aspect | k-means | GMM (EM) |
+|--------|---------|----------|
+| **Affectation** | Hard : chaque point assigné à un cluster | Soft : chaque point a des probabilités d'appartenir à chaque composante |
+| **Forme du cluster** | Sphérique (basée sur la distance Euclidienne) | Ellipsoïdale (les matrices de covariance peuvent être complètes, diagonales ou sphériques) |
+| **Probabiliste** | Non | Oui, fournit des vraisemblances |
+| **Algorithme** | Minimise la somme des distances au carré | Maximise la log-vraisemblance via EM |
+| **Convergence** | Peut converger plus rapidement | Plus lent à cause des affectations soft |
+
+**Relation :**
+k-means est un cas particulier de GMM quand :
+
+- Toutes les matrices de covariance sont sphériques et identiques : $\Sigma_j = \sigma^2 I$ pour tout $j$
+- Les poids de mélange sont égaux : $\pi_j = 1/c$
+- La variance $\sigma^2 \to 0$
+- Dans cette limite, les responsabilités deviennent binaires (affectations hard), et l'algorithme EM se réduit à une forme similaire à k-means.
+
+Ainsi, GMM est une généralisation probabiliste plus flexible de k-means.
+
+---
+
+### 9. Que sont les affectations hard et soft ?
+
+**Intuition :**
+
+L'affectation hard signifie que chaque point de données appartient exclusivement à un cluster. L'affectation soft signifie que chaque point de données a une distribution de probabilité sur les clusters, représentant des degrés d'appartenance.
+
+**Réponse détaillée :**
+
+**Affectation Hard :**
+
+- Chaque point de données $x_i$ est assigné à exactement un cluster $j^*$
+- $j^* = \arg\max_j \gamma_{ij}$ (dans le contexte de GMM)
+- Appartenance binaire : $\gamma_{ij} \in \{0, 1\}$
+- Utilisée dans des algorithmes comme k-means
+- Avantages : Plus simple, calcul plus rapide
+- Désavantages : Peut ne pas capturer l'incertitude ou les clusters qui se chevauchent
+
+**Affectation Soft :**
+
+- Chaque point de données $x_i$ a un vecteur de responsabilités $(\gamma_{i1}, \dots, \gamma_{ic})$
+- $\gamma_{ij} \in [0, 1]$ et $\sum_j \gamma_{ij} = 1$
+- Représente les probabilités a posteriori d'appartenance au cluster
+- Utilisée dans EM pour GMM
+- Avantages : Plus expressive, gère l'incertitude, permet des clusters qui se chevauchent
+- Désavantages : Plus intensive en calculs, peut converger plus lentement
+
+En pratique, les affectations soft sont plus informatives mais nécessitent plus de calcul. De nombreux algorithmes peuvent être adaptés pour utiliser l'une ou l'autre approche.

@@ -1,0 +1,299 @@
+### 1. Expliquez la configuration de l'apprentissage supervisé
+
+**Intuition :**
+
+L'apprentissage supervisé est un paradigme où nous avons un jeu de données avec des caractéristiques d'entrée et des étiquettes de sortie correspondantes. Le but est d'apprendre une mapping des entrées vers les sorties afin de pouvoir prédire l'étiquette pour de nouvelles entrées non vues.
+
+**Réponse détaillée :**
+
+Dans l'apprentissage supervisé, on nous donne un jeu de données $X = \{x_1, \dots, x_N\} \subset \Omega \subseteq \mathbb{R}^D$ et un ensemble d'étiquettes $Y = \{y_1, \dots, y_N\} \subset \mathbb{N}$ (pour la classification) ou $\mathbb{R}$ (pour la régression). Chaque paire $(x_i, y_i)$ est un exemple, où $x_i$ est le vecteur de caractéristiques et $y_i$ est l'étiquette cible.
+
+L'objectif est de trouver une fonction $\phi_\theta: \Omega \to Y$ (paramétrée par $\theta$) qui minimise une fonction de perte $L_{X \times Y}(\theta)$ qui mesure l'écart entre les étiquettes prédites $\phi_\theta(x_i)$ et les vraies étiquettes $y_i$. Les fonctions de perte courantes incluent l'erreur quadratique moyenne pour la régression et l'entropie croisée pour la classification.
+
+Le processus d'apprentissage implique d'ajuster les paramètres $\theta$ pour minimiser la perte, généralement en utilisant des algorithmes d'optimisation comme la descente de gradient. Une fois apprise, $\phi_\theta$ peut être utilisée pour prédire les étiquettes de nouveaux points de données.
+
+Des exemples d'apprenants supervisés incluent la régression linéaire, la régression logistique, les réseaux de neurones et les machines à vecteurs de support.
+
+---
+
+### 2. Pourquoi la LDA est-elle une méthode linéaire ?
+
+**Intuition :**
+
+la LDA trouve une combinaison linéaire des caractéristiques qui sépare le mieux les classes. La frontière de décision dans l'espace transformé est linéaire.
+
+**Réponse détaillée :**
+
+la LDA est une méthode linéaire car elle cherche une direction de projection (ou directions) $a \in \mathbb{R}^D$ telle que les données projetées $\hat{x} = a^T x$ maximisent la séparation des classes. Le critère utilisé (critère de Fisher) conduit à une solution qui est une fonction linéaire des caractéristiques d'entrée.
+
+Spécifiquement, la LDA trouve un ensemble de discriminants linéaires en résolvant un problème aux valeurs propres généralisé $\Sigma_b a = \lambda \Sigma_w a$, où $\Sigma_b$ et $\Sigma_w$ sont les matrices de covariance inter-classe et intra-classe. Les vecteurs propres $a$ définissent des transformations linéaires de l'espace d'entrée.
+
+De plus, lorsqu'elle est utilisée pour la classification, la LDA suppose que chaque classe suit une distribution gaussienne avec une matrice de covariance commune, conduisant à une frontière de décision linéaire. La règle de classification est basée sur des fonctions linéaires de l'entrée $x$.
+
+---
+
+### 3. Qu'est-ce qui caractérise une direction discriminante ? Que représente $a$ ?
+
+**Intuition :**
+
+Une direction discriminante est une direction dans l'espace des caractéristiques le long de laquelle les données projetées montrent une séparation maximale entre les classes et une dispersion minimale à l'intérieur de chaque classe.
+
+**Réponse détaillée :**
+
+Une direction discriminante, représentée par un vecteur $a \in \mathbb{R}^D$, est caractérisée par la propriété que lorsque les points de données sont projetés sur cette direction, le rapport de la variance inter-classe sur la variance intra-classe est maximisé.
+
+Mathématiquement, pour deux classes, les moyennes projetées sont $\hat{\mu}_1 = a^T \mu_1$ et $\hat{\mu}_2 = a^T \mu_2$, et les variances intra-classe sont $\hat{\sigma}_1^2 = a^T \Sigma_1 a$ et $\hat{\sigma}_2^2 = a^T \Sigma_2 a$ (en supposant une covariance commune $\Sigma_w$). Le critère de Fisher cherche $a$ qui maximise :
+
+$$
+J(a) = \frac{(\hat{\mu}_1 - \hat{\mu}_2)^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2} = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}.
+$$
+
+Le vecteur $a$ représente la direction dans l'espace original de dimension $D$ qui sépare le mieux les classes. C'est la combinaison linéaire des caractéristiques originales qui donne la caractéristique la plus discriminante.
+
+---
+
+### 4. Quel est le critère de Fisher ?
+
+**Intuition :**
+
+Le critère de Fisher est une mesure de la séparabilité des classes. Il est défini comme le rapport de la variance inter-classe sur la variance intra-classe. Maximiser ce rapport conduit à une séparation optimale des classes.
+
+**Réponse détaillée :**
+
+Le critère de Fisher, pour deux classes, est défini comme :
+
+$$
+J(a) = \frac{(\hat{\mu}_1 - \hat{\mu}_2)^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2},
+$$
+
+où $\hat{\mu}_k$ est la moyenne des projections de la classe $k$, et $\hat{\sigma}_k^2$ est la variance des projections de la classe $k$.
+
+Dans le cas multi-classes, le critère se généralise à :
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a},
+$$
+
+où $\Sigma_b$ est la matrice de covariance inter-classe et $\Sigma_w$ est la matrice de covariance intra-classe.
+
+Maximiser $J(a)$ conduit à une direction de projection qui maximise la distance entre les moyennes des classes (numérateur) tout en minimisant la dispersion à l'intérieur de chaque classe (dénominateur). C'est l'objectif fondamental de la LDA.
+
+---
+
+### 5. Quel est le critère inter-classe ? Expliquez son principe.
+
+**Intuition :**
+
+Le critère inter-classe mesure à quel point les moyennes des classes sont éloignées. Une bonne direction discriminante devrait avoir les moyennes des classes projetées aussi éloignées que possible.
+
+**Réponse détaillée :**
+
+Le critère inter-classe vise à maximiser la séparation entre les centroïdes des classes après projection. Pour deux classes, c'est simplement le carré de la distance entre les moyennes projetées : $(\hat{\mu}_1 - \hat{\mu}_2)^2$.
+
+Pour $M$ classes, nous définissons la matrice de covariance inter-classe :
+
+$$
+\Sigma_b = \frac{1}{M} \sum_{k=1}^M (\mu_k - \mu)(\mu_k - \mu)^T,
+$$
+
+où $\mu_k$ est la moyenne de la classe $k$ et $\mu$ est la moyenne globale.
+
+Le critère inter-classe pour une direction de projection $a$ est alors $a^T \Sigma_b a$. Maximiser cette quantité encourage les moyennes des classes projetées à être étalées.
+
+---
+
+### 6. Comment calculer la matrice de covariance inter-classe ?
+
+**Intuition :**
+
+La matrice de covariance inter-classe est calculée comme la covariance des moyennes des classes autour de la moyenne globale, pondérée par les tailles des classes.
+
+**Réponse détaillée :**
+
+Étant donné $M$ classes, soit $\mu_k$ le vecteur moyen de la classe $k$, $N_k$ le nombre d'échantillons dans la classe $k$, et $\mu = \frac{1}{N} \sum_{k=1}^M N_k \mu_k$ la moyenne globale (avec $N = \sum_k N_k$).
+
+La matrice de covariance inter-classe $\Sigma_b$ est calculée comme :
+
+$$
+\Sigma_b = \frac{1}{M} \sum_{k=1}^M (\mu_k - \mu)(\mu_k - \mu)^T.
+$$
+
+Alternativement, certaines formulations utilisent une version pondérée :
+
+$$
+\Sigma_b = \sum_{k=1}^M N_k (\mu_k - \mu)(\mu_k - \mu)^T.
+$$
+
+Dans les deux cas, $\Sigma_b$ capture la dispersion des moyennes des classes autour de la moyenne globale.
+
+---
+
+### 7. Quel est le critère intra-classe ? Expliquez son principe.
+
+**Intuition :**
+
+Le critère intra-classe mesure à quel point les points de données sont regroupés à l'intérieur de chaque classe après projection. Une bonne direction discriminante devrait avoir une dispersion minimale à l'intérieur de chaque classe.
+
+**Réponse détaillée :**
+
+Le critère intra-classe vise à minimiser la variance à l'intérieur de chaque classe après projection. Pour deux classes, c'est la somme des variances des données projetées dans chaque classe : $\hat{\sigma}_1^2 + \hat{\sigma}_2^2$.
+
+Pour $M$ classes, nous définissons la matrice de covariance intra-classe comme :
+
+$$
+\Sigma_w = \sum_{k=1}^M \Sigma_k,
+$$
+
+où $\Sigma_k$ est la matrice de covariance de la classe $k$. Alternativement, si nous supposons une matrice de covariance commune, nous pouvons calculer $\Sigma_w$ comme la covariance poolée :
+
+$$
+\Sigma_w = \frac{1}{N} \sum_{k=1}^M \sum_{y_i=k} (x_i - \mu_k)(x_i - \mu_k)^T.
+$$
+
+Le critère intra-classe pour une direction de projection $a$ est $a^T \Sigma_w a$. Minimiser cette quantité encourage les points de données à l'intérieur de chaque classe à être regroupés autour de leur moyenne de classe.
+
+---
+
+### 8. Comment calculer la matrice de covariance intra-classe ?
+
+**Intuition :**
+
+La matrice de covariance intra-classe est calculée comme la somme des matrices de covariance de chaque classe, ou comme la moyenne des écarts au carré des points de données par rapport à leur moyenne de classe.
+
+**Réponse détaillée :**
+
+Pour chaque classe $k$, calculez la matrice de données centrées $A_k = [x_1^{(k)} - \mu_k, \dots, x_{N_k}^{(k)} - \mu_k]$, où $x_i^{(k)}$ sont les points de données de la classe $k$ et $\mu_k$ est la moyenne de la classe.
+
+Ensuite, la matrice de covariance intra-classe pour la classe $k$ est $\frac{1}{N_k} A_k A_k^T$. La matrice de covariance intra-classe globale est la somme (ou la moyenne) de ces matrices spécifiques à chaque classe :
+
+$$
+\Sigma_w = \sum_{k=1}^M \frac{1}{N_k} A_k A_k^T.
+$$
+
+Alternativement, si nous supposons des tailles de classes égales, nous pouvons calculer $\Sigma_w$ comme :
+
+$$
+\Sigma_w = \frac{1}{N} \sum_{k=1}^M \sum_{y_i=k} (x_i - \mu_k)(x_i - \mu_k)^T.
+$$
+
+---
+
+### 9. Comment sont-ils combinés ?
+
+**Intuition :**
+
+Le critère de Fisher combine les critères inter-classe et intra-classe en prenant leur rapport. Nous maximisons ce rapport pour trouver une direction qui maximise simultanément la séparation des classes et minimise la dispersion intra-classe.
+
+**Réponse détaillée :**
+
+Le critère combiné est le critère de Fisher :
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}.
+$$
+
+Ce rapport est connu comme le quotient de Rayleigh. Maximiser $J(a)$ est équivalent à résoudre le problème aux valeurs propres généralisé :
+
+$$
+\Sigma_b a = \lambda \Sigma_w a.
+$$
+
+Le vecteur propre $a$ correspondant à la plus grande valeur propre $\lambda$ est la première direction discriminante. Les directions suivantes sont obtenues en prenant les vecteurs propres correspondant aux valeurs propres suivantes.
+
+---
+
+### 10. Pouvez-vous justifier et expliquer la dérivation du maximum pour $a$ ?
+
+**Intuition :**
+
+Pour maximiser le rapport $J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}$, nous fixons la dérivée par rapport à $a$ à zéro. Cela conduit à un problème aux valeurs propres généralisé.
+
+**Réponse détaillée :**
+
+Nous voulons maximiser $J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}$. Puisque $J(a)$ est invariant à l'échelle (multiplier $a$ par un scalaire ne change pas le rapport), nous pouvons contraindre $a^T \Sigma_w a = 1$ et maximiser $a^T \Sigma_b a$.
+
+En utilisant les multiplicateurs de Lagrange, nous définissons le lagrangien :
+
+$$
+\mathcal{L}(a, \lambda) = a^T \Sigma_b a - \lambda (a^T \Sigma_w a - 1).
+$$
+
+Prenant la dérivée par rapport à $a$ et fixant à zéro :
+
+$$
+\frac{\partial \mathcal{L}}{\partial a} = 2 \Sigma_b a - 2 \lambda \Sigma_w a = 0 \quad \Rightarrow \quad \Sigma_b a = \lambda \Sigma_w a.
+$$
+
+C'est un problème aux valeurs propres généralisé. Les vecteurs propres $a$ qui satisfont cette équation sont les directions discriminantes, et les valeurs propres $\lambda$ donnent la valeur de $J(a)$.
+
+---
+
+### 11. Pouvez-vous décrire la situation multidimensionnelle (D > 2) ?
+
+**Intuition :**
+
+Dans l'espace multidimensionnel (D > 2), la LDA cherche multiple directions discriminantes qui forment un sous-espace. Le nombre de telles directions est au plus le nombre de classes moins un.
+
+**Réponse détaillée :**
+
+Pour $M$ classes dans un espace de dimension $D$ (avec $D > 2$), la LDA cherche un ensemble de directions discriminantes $a_1, a_2, \dots, a_{M-1}$ qui forment une base orthogonale pour un sous-espace de dimension au plus $M-1$.
+
+Nous résolvons le problème aux valeurs propres généralisé $\Sigma_b a = \lambda \Sigma_w a$ et prenons les vecteurs propres correspondant aux plus grandes valeurs propres. Ces vecteurs propres sont ordonnés par leur pouvoir discriminant (la valeur propre indique la valeur du critère de Fisher).
+
+Les données peuvent alors être projetées sur ce sous-espace pour la visualisation ou la classification. Notez que si $D > M$, il y a au plus $M-1$ valeurs propres non nulles car la matrice de covariance inter-classe $\Sigma_b$ a un rang au plus $M-1$.
+
+---
+
+### 12. Comment faire de l'inférence en utilisant la LDA ?
+
+**Intuition :**
+
+L'inférence en ADL consiste à assigner un nouveau point de données à la classe qui maximise la probabilité a posteriori, en supposant des distributions conditionnelles gaussiennes pour chaque classe avec une matrice de covariance commune.
+
+**Réponse détaillée :**
+
+Après avoir obtenu les directions discriminantes, nous pouvons utiliser la LDA pour la classification. La méthode suppose que chaque classe $k$ suit une distribution gaussienne $\mathcal{N}(\mu_k, \Sigma_w)$ (matrice de covariance commune).
+
+Pour un nouveau point de données $x$, nous calculons la probabilité a posteriori $\mathbb{P}(C=k|x)$ en utilisant la règle de Bayes :
+
+$$
+\mathbb{P}(C=k|x) = \frac{\mathbb{P}(x|C=k) \mathbb{P}(C=k)}{\mathbb{P}(x)}.
+$$
+
+En ignorant le terme d'évidence constant, nous assignons $x$ à la classe $k$ qui maximise la fonction discriminante :
+
+$$
+\delta_k(x) = x^T \Sigma_w^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma_w^{-1} \mu_k + \log \mathbb{P}(C=k).
+$$
+
+En pratique, nous utilisons souvent les données projetées dans le sous-espace discriminant et effectuons la classification en utilisant des frontières de décision linéaires.
+
+---
+
+### 13. Fournissez un exemple de modèle de données conditionnelles utilisant la LDA.
+
+**Intuition :**
+
+La LDA peut être vue comme un modèle génératif où chaque classe est modélisée par une distribution gaussienne avec la même matrice de covariance. La distribution conditionnelle des données étant donné la classe est gaussienne.
+
+**Réponse détaillée :**
+
+Considérons un problème de classification avec $M$ classes. Le modèle de données conditionnelles pour la LDA suppose :
+
+$$
+x | C=k \sim \mathcal{N}(\mu_k, \Sigma_w),
+$$
+
+où $\mu_k$ est la moyenne de la classe $k$ et $\Sigma_w$ est la matrice de covariance intra-classe commune.
+
+La distribution a priori sur les classes est $\mathbb{P}(C=k) = \pi_k$ (souvent estimée à partir des fréquences des classes).
+
+Alors, la distribution jointe de $x$ et $C$ est :
+
+$$
+\mathbb{P}(x, C=k) = \mathbb{P}(x|C=k) \mathbb{P}(C=k) = \frac{1}{(2\pi)^{D/2} |\Sigma_w|^{1/2}} \exp\left(-\frac{1}{2}(x-\mu_k)^T \Sigma_w^{-1}(x-\mu_k)\right) \pi_k.
+$$
+
+Ce modèle conduit à des frontières de décision linéaires. La règle de classification est d'assigner $x$ à la classe $k$ qui maximise la posterior $\mathbb{P}(C=k|x)$, ce qui est équivalent à maximiser la fonction discriminante $\delta_k(x)$ définie ci-dessus.
+
+---

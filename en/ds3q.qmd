@@ -1,0 +1,257 @@
+# Questions
+
+### 1. Explain how PCA uses variance as a criterion
+
+**Intuition:**  
+
+PCA seeks the directions (components) in the data along which the data varies the most. By maximizing the variance of the projected data, PCA finds the most informative axes, assuming that directions with higher variance carry more information about the structure of the data.
+
+**Detailed Answer:**  
+
+Formally, given a centered dataset $X = \{x_1, \dots, x_N\}$ (with mean $\bar{x} = 0$ for simplicity), PCA defines the first principal component $u_1$ as the unit vector that maximizes the variance of the projections of the data onto it. The variance of the projections is given by:
+$$
+v_{u_1} = \frac{1}{N} \sum_{i=1}^N (u_1^T x_i)^2 = u_1^T \Sigma u_1,
+$$
+where $\Sigma = \frac{1}{N} \sum_{i=1}^N x_i x_i^T$ is the covariance matrix of the data. The optimization problem is:
+$$
+u_1 = \arg\max_{u: \|u\|=1} u^T \Sigma u.
+$$
+Using Lagrange multipliers, we set up the Lagrangian $J(u) = u^T \Sigma u + \lambda(1 - u^T u)$. Taking the derivative with respect to $u$ and setting to zero yields:
+$$
+\Sigma u = \lambda u.
+$$
+Thus, $u_1$ is the eigenvector of $\Sigma$ corresponding to the largest eigenvalue $\lambda_1$. The subsequent components $u_2, u_3, \dots, u_D$ are chosen similarly, but each is constrained to be orthogonal to the previous ones. They correspond to the eigenvectors of $\Sigma$ in decreasing order of eigenvalues. The eigenvalues $\lambda_d$ represent the variance captured by each component. Therefore, PCA uses variance as a criterion by selecting the orthogonal directions that maximize the projected variance, which are exactly the eigenvectors of the covariance matrix.
+
+---
+
+### 2. Show that variance maximization is equivalent to error minimization
+
+**Intuition:**  
+
+Maximizing the variance of the projected data is equivalent to minimizing the reconstruction error when approximating the original data by its projection onto a lower-dimensional subspace. In other words, the best low-dimensional representation is the one that retains as much variance as possible, which simultaneously minimizes the error of approximation.
+
+**Detailed Answer:**  
+
+Consider projecting a centered data point $x_i$ onto a unit vector $u$. The projection is $(u^T x_i) u$, and the reconstruction error (squared distance) is $\|x_i - (u^T x_i) u\|^2$. The total reconstruction error over all data points when using a set of orthonormal vectors $\{u_1, \dots, u_K\}$ is:
+$$
+\sum_{i=1}^N \left\| x_i - \sum_{d=1}^K (u_d^T x_i) u_d \right\|^2.
+$$
+We can show that minimizing this error is equivalent to maximizing the variance captured by the projections. Note that the total variance in the data is $\sum_{i=1}^N \|x_i\|^2$, which is constant. For a single component $u$, we have:
+$$
+\sum_i \|x_i\|^2 = \sum_i \|x_i - (u^T x_i) u\|^2 + \sum_i (u^T x_i)^2.
+$$
+Thus, minimizing the reconstruction error $\sum_i \|x_i - (u^T x_i) u\|^2$ is equivalent to maximizing the projected variance $\sum_i (u^T x_i)^2$. This equivalence extends to multiple components because the components are orthogonal. Therefore, the principal components that maximize the variance also minimize the reconstruction error.
+
+---
+
+### 3. Show how PCA uses the Eckart-Young theorem
+
+**Intuition:**  
+
+The Eckart-Young theorem states that the best low-rank approximation of a matrix (in terms of Frobenius norm) is given by its truncated Singular Value Decomposition (SVD). PCA is essentially performing a low-rank approximation of the data matrix, and the theorem guarantees that the principal components yield the optimal approximation.
+
+**Detailed Answer:**  
+
+Let $X$ be the $D \times N$ centered data matrix. The covariance matrix is $\Sigma = \frac{1}{N} X X^T$. PCA computes the eigendecomposition $\Sigma = U \Lambda U^T$, where $U$ is orthogonal and $\Lambda$ is diagonal with eigenvalues $\lambda_1 \ge \dots \ge \lambda_D$. The Eckart-Young theorem applies to the SVD of $X$. Write the SVD as $X = U \Psi V^T$, where $U$ and $V$ are orthogonal and $\Psi$ is diagonal with singular values $\psi_1 \ge \dots \ge \psi_D$. Then $\Sigma = \frac{1}{N} U \Psi^2 U^T$, so the eigenvalues are $\lambda_d = \psi_d^2 / N$. For a given $K < D$, the best rank-$K$ approximation to $X$ (in Frobenius norm) is:
+$$
+X_K = U_K \Psi_K V_K^T,
+$$
+where $U_K$ and $V_K$ contain the first $K$ columns of $U$ and $V$, and $\Psi_K$ is the top-left $K \times K$ submatrix of $\Psi$. The projected data in PCA is $Y = U_K^T X$, which corresponds to the latent coordinates. The reconstruction is $\tilde{X} = U_K Y = U_K U_K^T X$. Notice that $U_K U_K^T X$ is exactly the projection of $X$ onto the subspace spanned by the first $K$ principal components. The Eckart-Young theorem guarantees that this reconstruction minimizes the Frobenius error $\|X - \tilde{X}\|_F^2$ among all rank-$K$ approximations. Thus, PCA uses the Eckart-Young theorem to provide an optimal low-rank approximation of the data.
+
+---
+
+### 4. Given some data, how do you apply PCA?
+
+**Intuition:**  
+
+Applying PCA involves a sequence of steps: center the data, compute the covariance matrix, find its eigenvectors and eigenvalues, and then use these to transform the data into a new coordinate system defined by the principal components.
+
+**Detailed Answer:**  
+
+Given a dataset $X = \{x_1, \dots, x_N\}$ with $x_i \in \mathbb{R}^D$, the steps to apply PCA are:
+
+1. **Center the data:** Compute the empirical mean $\bar{x} = \frac{1}{N} \sum_{i=1}^N x_i$, and subtract it from each data point: $x_i^{(c)} = x_i - \bar{x}$.
+
+2. **Form the centered data matrix:** Let $X_c$ be the $D \times N$ matrix whose columns are the centered vectors $x_i^{(c)}$.
+
+3. **Compute the covariance matrix:** Calculate the $D \times D$ covariance matrix $\Sigma = \frac{1}{N} X_c X_c^T$.
+
+4. **Eigendecomposition:** Compute the eigenvectors and eigenvalues of $\Sigma$. That is, solve $\Sigma u = \lambda u$. The eigenvectors $u_1, \dots, u_D$ are the principal components, ordered by decreasing eigenvalues $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_D$.
+
+5. **Select the number of components:** Choose $K$ (with $1 \le K \le D$) based on a criterion (e.g., variance retained, scree plot, etc.). Let $U_K$ be the matrix whose columns are the first $K$ eigenvectors.
+
+6. **Project the data:** The transformed data in the lower-dimensional space is $y_i = U_K^T x_i^{(c)}$ for each $i$, giving a $K$-dimensional representation.
+
+Optionally, one may whiten the data by scaling each component by $1/\sqrt{\lambda_d}$ to have unit variance.
+
+---
+
+### 5. What information does it provide you with?
+
+**Intuition:**  
+
+PCA provides information about the directions of greatest variance in the data, the amount of variance captured by each direction, and a low-dimensional representation that preserves as much variance as possible. It also reveals correlations between original features and allows for dimensionality reduction, noise reduction, and data visualization.
+
+**Detailed Answer:**  
+
+PCA yields several pieces of information:
+
+- **Principal components:** The eigenvectors $u_1, \dots, u_D$ of the covariance matrix. These are orthogonal directions in the original space along which the data varies the most.
+
+- **Explained variances:** The eigenvalues $\lambda_1, \dots, \lambda_D$ indicate the amount of variance captured by each principal component. The total variance is $\sum_{d=1}^D \lambda_d$.
+
+- **Variance proportions:** The proportion of total variance explained by the $d$-th component is $\lambda_d / \sum_{j=1}^D \lambda_j$. This helps assess the importance of each component.
+
+- **Low-dimensional representation:** The projected data $y_i$ in the latent space of dimension $K$ (with $K < D$) provides a compressed version of the data that retains most of the variance.
+
+- **Reconstruction error:** When using $K$ components, the reconstruction error (mean squared error) is given by the sum of the eigenvalues of the omitted components: $\sum_{d=K+1}^D \lambda_d$.
+
+- **Insights into data structure:** By examining the principal components, one can identify which original features contribute most to each component (via the loadings). This can reveal hidden patterns or correlations among features.
+
+- **Decorrelated features:** The transformed features (principal components) are uncorrelated, which can be useful for downstream analysis.
+
+---
+
+### 6. How do you reconstruct data with K < D components?
+
+**Intuition:**  
+
+Reconstruction is done by mapping the reduced $K$-dimensional representation back to the original $D$-dimensional space using the $K$ principal components. This gives an approximation of the original data that loses the information corresponding to the discarded components.
+
+**Detailed Answer:**  
+
+After performing PCA and obtaining the first $K$ principal components (columns of $U_K$), we have the latent representation $y_i = U_K^T (x_i - \bar{x})$ for each data point. To reconstruct an approximation $\tilde{x}_i$ of the original (centered) data, we compute:
+$$
+\tilde{x}_i^{(c)} = U_K y_i = U_K U_K^T (x_i - \bar{x}).
+$$
+Then, we add back the mean to obtain the reconstruction in the original coordinate system:
+$$
+\tilde{x}_i = \tilde{x}_i^{(c)} + \bar{x} = \bar{x} + U_K U_K^T (x_i - \bar{x}).
+$$
+Note that $U_K U_K^T$ is a projection matrix onto the subspace spanned by the first $K$ principal components. The reconstruction error is the difference between $x_i$ and $\tilde{x}_i$, and its squared norm averaged over all points equals the sum of the eigenvalues of the omitted components: $\sum_{d=K+1}^D \lambda_d$.
+
+---
+
+### 7. How do you select the components to keep?
+
+**Intuition:**  
+
+The goal is to choose a number of components $K$ that balances dimensionality reduction with retention of important information. Common methods include setting a threshold on the cumulative explained variance, looking for an "elbow" in the scree plot, or using criteria based on reconstruction error.
+
+**Detailed Answer:**  
+
+Several strategies exist:
+
+- **Variance threshold:** Choose $K$ such that the proportion of total variance explained by the first $K$ components exceeds a predefined threshold $\tau$ (e.g., 0.95 or 95%). That is, find the smallest $K$ satisfying:
+  $$
+  \frac{\sum_{d=1}^K \lambda_d}{\sum_{d=1}^D \lambda_d} \ge \tau.
+  $$
+
+- **Scree plot:** Plot the eigenvalues in decreasing order and look for an "elbow" point where the eigenvalues start to level off. The components before the elbow are retained.
+
+- **Kaiser criterion:** In some fields (like factor analysis), retain components with eigenvalues greater than 1 (if the data is standardized). However, this is less common for PCA.
+
+- **Reconstruction error threshold:** Choose $K$ such that the reconstruction error (or its average) is below a tolerance $\epsilon$. That is, ensure $\sum_{d=K+1}^D \lambda_d \le \epsilon$.
+
+- **Cross-validation:** Use PCA in a cross-validation setting to choose $K$ that optimizes a downstream task (e.g., classification accuracy) or minimizes reconstruction error on a validation set.
+
+- **Information-theoretic criteria:** Such as minimum description length (MDL) or Bayesian information criterion (BIC).
+
+In practice, the variance threshold and scree plot are the most common.
+
+---
+
+### 8. Can you apply PCA on any data?
+
+**Intuition:**  
+
+PCA is a mathematical procedure that can be applied to any numeric dataset, as long as we can compute the covariance matrix and its eigendecomposition. However, the appropriateness and interpretability of PCA depend on the data characteristics.
+
+**Detailed Answer:**  
+
+Technically, PCA can be applied to any dataset represented as a real-valued matrix. The steps (centering, covariance computation, eigendecomposition) are well-defined for any such data. However, there are practical considerations:
+
+- **Data type:** PCA is designed for continuous numeric data. It may not be suitable for categorical data or data with missing values without appropriate preprocessing.
+
+- **Scale sensitivity:** PCA is sensitive to the scales of the variables. If variables are on different scales, those with larger variances will dominate the first components. Therefore, it is common to standardize the data (subtract mean and divide by standard deviation) to give each variable equal weight.
+
+- **Linearity assumption:** PCA assumes that the principal components are linear combinations of the original features. If the data has nonlinear structure, PCA may not capture it effectively.
+
+- **Distributional assumptions:** While not strictly required, PCA is most interpretable when the data follows a multivariate Gaussian distribution. For non-Gaussian data, the components may not represent the directions of maximal information.
+
+- **Correlations:** PCA works best when there are correlations among variables that can be exploited for dimensionality reduction. If variables are uncorrelated, PCA will not be effective.
+
+Thus, while PCA can be computed on any numeric dataset, its utility depends on the data meeting certain conditions.
+
+---
+
+### 9. Is it relevant to apply PCA on any data?
+
+**Intuition:**  
+
+No, PCA is not always relevant. Its relevance depends on the goals and the nature of the data. For example, if the data has nonlinear structure or if the assumptions of PCA are violated, other methods may be more appropriate.
+
+**Detailed Answer:**  
+
+PCA is relevant when:
+
+- The goal is dimensionality reduction, noise reduction, or visualization.
+- The data has linear correlations that can be captured by orthogonal transformations.
+- The data is approximately Gaussian, or at least symmetric and unimodal.
+- The variance in the data is a meaningful measure of information.
+
+PCA is not relevant when:
+
+- The data has a nonlinear structure (consider kernel PCA or manifold learning).
+- The data is clustered or multi-modal; PCA may collapse clusters together because it focuses on global variance.
+- The data has outliers, as PCA is sensitive to them (robust PCA variants exist).
+- The goal is to preserve local neighborhoods (as in t-SNE).
+- The data is discrete or categorical (consider correspondence analysis or other techniques).
+- The variables are uncorrelated; PCA would not reduce dimensionality effectively.
+
+Therefore, one should assess the data structure and the analysis objectives before deciding to use PCA.
+
+---
+
+### 10. How can I apply PCA over clustered data?
+
+**Intuition:** 
+
+Applying PCA to clustered data is technically possible, but it may not preserve the cluster structure because PCA seeks directions of global variance, which might not align with the separation between clusters. Careful interpretation and possibly alternative methods are needed.
+
+**Detailed Answer:** 
+
+When data is clustered, PCA can still be applied in the same manner as described above. However, note the following:
+
+- **Global vs. local structure:** PCA captures the global variance structure. If clusters are well-separated, the first principal components might align with the direction of separation between clusters, but this is not guaranteed. Often, the first component aligns with the overall spread of all clusters combined, which may not be useful for distinguishing clusters.
+
+- **Centering issue:** PCA centers the data globally. If clusters have different means, the global mean may lie between clusters, and centering can actually obscure the cluster structure.
+
+- **Recommendations:**
+  - **Visualization:** PCA can be used to visualize clustered data in 2D or 3D, but be aware that clusters may overlap in the principal component space.
+  - **Standardization:** If features have different scales, standardize them to avoid dominance by one feature.
+  - **Consider cluster-aware methods:** Methods like Linear Discriminant Analysis (LDA) use label information to find directions that separate clusters. For unsupervised clustering, one might first cluster the data and then perform PCA within each cluster to understand local structure.
+  - **Kernel PCA:** If clusters are nonlinearly separable, kernel PCA might capture the structure better.
+
+In summary, PCA can be applied to clustered data, but it may not preserve or highlight the cluster boundaries. It is often used as a preprocessing step for clustering (to reduce noise) rather than for visualizing clusters.
+
+---
+
+### 11. Show that PCA is equivalent to a linear AE
+
+**Intuition:**  
+
+A linear autoencoder (AE) with a bottleneck layer of size $K$ and linear activation functions learns to reconstruct its input by minimizing the mean squared error. The optimal weights of such an autoencoder yield the same transformation as PCA: the encoder projects onto the $K$-dimensional subspace spanned by the first $K$ principal components, and the decoder reconstructs from this projection.
+
+**Detailed Answer:**
+
+Consider a linear autoencoder with one hidden layer of $K$ units, no biases, and linear activation functions. Let the encoder weight matrix be $W_{\text{enc}} \in \mathbb{R}^{K \times D}$ and the decoder weight matrix be $W_{\text{dec}} \in \mathbb{R}^{D \times K}$. The autoencoder maps an input $x \in \mathbb{R}^D$ to a latent code $z = W_{\text{enc}} x$ and then reconstructs $\tilde{x} = W_{\text{dec}} z = W_{\text{dec}} W_{\text{enc}} x$. The goal is to minimize the reconstruction error over a centered dataset $X$ (mean subtracted):
+$$
+\min_{W_{\text{enc}}, W_{\text{dec}}} \sum_{i=1}^N \|x_i - W_{\text{dec}} W_{\text{enc}} x_i\|^2.
+$$
+This is equivalent to finding a rank-$K$ matrix $A = W_{\text{dec}} W_{\text{enc}}$ that best approximates the identity on the data, i.e., minimizing $\|X - A X\|_F^2$. By the Eckart-Young theorem, the optimal $A$ is the projection onto the subspace spanned by the first $K$ principal components. Specifically, if $U_K$ contains the first $K$ eigenvectors of the covariance matrix $\Sigma = \frac{1}{N} X X^T$, then the optimal solution is $A = U_K U_K^T$. Moreover, one possible choice for the weights is $W_{\text{enc}} = U_K^T$ and $W_{\text{dec}} = U_K$. Then the autoencoder performs exactly the PCA projection and reconstruction:
+
+- Encoding: $z_i = U_K^T x_i$ (same as PCA projection).
+- Decoding: $\tilde{x}_i = U_K z_i = U_K U_K^T x_i$ (same as PCA reconstruction).
+
+Note that the weights are not unique (e.g., any invertible linear transformation of the latent space can be compensated by its inverse in the decoder). However, the subspace spanned by the columns of $W_{\text{dec}}$ is unique and equals the subspace spanned by the first $K$ principal components. Thus, a linear autoencoder trained to minimize mean squared error on centered data learns the same representation as PCA.

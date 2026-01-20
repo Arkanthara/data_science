@@ -1,0 +1,206 @@
+# Cours : Analyse Discriminante Linéaire (LDA)
+
+## Introduction
+
+Ce cours introduit l'**Analyse Discriminante Linéaire (LDA)**, une méthode supervisée de modélisation de données conditionnelles et de classification.  
+L'objectif est de présenter une définition supervisée des facteurs latents, de proposer une modélisation conditionnelle des données et de réaliser la classification d'éléments non étiquetés..
+
+---
+
+## Apprentissage supervisé
+
+Étant donné des données $X \subset \Omega \subset \mathbb{R}^D$ associées à des étiquettes de classe $y = [M] \subset \mathbb{N}$, l'apprentissage supervisé consiste à trouver (apprendre) les paramètres $\theta$ d'un apprenant (fonction) $\phi_\theta$ de manière à minimiser la perte $\mathcal{L}_{X \times y}(\theta)$ encourue lors de la prédiction des étiquettes de classe à l'aide de $\phi_\theta$.
+
+$$
+\begin{aligned}
+\phi_\theta : & \quad \Omega \to y \\
+& x_t \mapsto \phi_\theta(x_t) = \tilde{y}_t
+\end{aligned}
+$$
+
+**Exemples :**  
+- $\phi_\theta$ est une régression logistique avec paramètres $\theta$.  
+- $\phi_\theta$ est un réseau de neurones avec poids $\theta$.  
+- $\mathcal{L}_{X \times y}(\theta) = \sum_x \|\phi_\theta(x_t) - y_t\|^2_{\text{some}}$.
+
+---
+
+## Analyse Discriminante Linéaire (LDA)
+
+**Problème :** Étant donné des données multivariées $X$ associées à des étiquettes $y$, nous cherchons un modèle pour ces données.
+
+---
+
+### Direction discriminante (cas à 2 classes)
+
+Nous cherchons une direction $a \in \mathbb{R}^D$ telle que la projection des données sur cette direction $\hat{X} = \text{Proj}_a(X)$ présente des propriétés optimales pour la discrimination entre classes.
+
+---
+
+### Critère inter-classe
+
+Si les projections des classes sont bien séparées, elles peuvent être facilement discriminées.  
+Nous cherchons donc une direction $a$ qui maximise la discrimination inter-classe.
+
+Il est clair que $a$ doit être colinéaire à la droite $\mu_1 - \mu_2$ reliant les centres de masse des classes, car :
+
+$$
+\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \frac{1}{\|a\|^2} (a^T(\mu_1 - \mu_2))^2
+$$
+
+est maximale lorsque $a = \lambda(\mu_1 - \mu_2)$.
+
+**Note :** Les données originales ($x_i \in X$) ne changent pas. Seules les données projetées ($\hat{x}_i \in \hat{X}$) changent lorsque l'on fait varier $a$.  
+Le centre de masse des données projetées est la projection du centre de masse des données originales.
+
+---
+
+### Critère intra-classe
+
+Nous cherchons également à minimiser la variance intra-classe des données projetées.  
+Le critère de Fisher maximise :
+
+$$
+\underset{a}{\operatorname{argmax}} \frac{\|\hat{\mu}_1 - \hat{\mu}_2\|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}
+$$
+
+où $\hat{\sigma}_k$ est la variance normalisée de la projection de la classe $k$ :
+
+$$
+\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{y_k = k} (\hat{x}_k - \hat{\mu}_k)^T (\hat{x}_k - \hat{\mu}_k)
+$$
+
+---
+
+### Critère de Fisher (combinaison des critères)
+
+Le critère de Fisher combine les critères inter et intra-classe :
+
+$$
+\arg\max_a \mathcal{L}(a) = \arg\max_a \frac{a^\top \Sigma_b a}{a^\top \Sigma_w a}
+$$
+
+où $\Sigma_b$ est la matrice de covariance inter-classes et $\Sigma_w$ la matrice de covariance intra-classes.
+
+La solution est obtenue en annulant la dérivée :
+
+$$
+\frac{\partial \mathcal{L}(a)}{\partial a} = \frac{\Sigma_b a(a^\top \Sigma_w a) - \Sigma_w a(a^\top \Sigma_b a)}{(a^\top \Sigma_w a)^2} = 0
+$$
+
+Ce qui conduit au système généralisé de valeurs propres :
+
+$$
+\Sigma_b a = \mathcal{L}(a) \Sigma_w a
+$$
+
+Ainsi, $a$ est le premier vecteur propre de $\Sigma_w^{-1} \Sigma_b$ (avec valeur propre $\lambda_1 = \mathcal{L}(a)$).
+
+---
+
+### Généralisation à plusieurs classes
+
+Pour $M$ classes, on définit :
+
+- La matrice des centres centrés : $B = [\mu_1 - \mu, \ldots, \mu_M - \mu]$ (où $\mu = \frac{1}{N} \sum_N x_i$ et $N = \sum_k N_k$).  
+- La matrice de covariance inter-classes : $\Sigma_b = \frac{1}{M} BB^T$.  
+- On maximise sur $a \in \mathbb{R}^D$ :
+
+$$
+\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{\|a\|^2} a^T \Sigma_b a
+$$
+
+---
+
+### Sous-espaces discriminants
+
+Les vecteurs propres correspondant aux plus grandes valeurs propres $\lambda_i$ sont les dimensions les plus discriminantes :  
+$a_1, a_2, \ldots a_p$ avec $\lambda_1 > \lambda_2 > \ldots > \lambda_p$.
+
+Pour $M$ classes, on peut discriminer dans un sous-espace de dimension au plus $M-1$ (projections itératives).  
+Il n'y a donc que $M-1$ valeurs propres non nulles.
+
+---
+
+### Cas particulier : $M = 2$
+
+Dans ce cas :
+
+$$
+BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T
+$$
+
+Ainsi, $BB^T a$ est un vecteur dans la direction $(\mu_1 - \mu_2)$, et :
+
+$$
+a = \lambda \Sigma_w^{-1}(\mu_1 - \mu_2)
+$$
+
+---
+
+## Exemples
+
+LDA trouve le sous-espace optimal pour séparer linéairement les données selon les étiquettes $y_i$.
+
+**Exemple concret :** 7291 images $16 \times 16$ (8 bits) de chiffres de 0 à 9, soit $x_i \in \mathbb{R}^{256}$ et $y_i \in [10]$.
+
+---
+
+## Inférence et modélisation conditionnelle
+
+### Modélisation gaussienne
+
+Chaque classe est modélisée par $P(x|C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)$.  
+On suppose un prior uniforme : $P(C = k) = 1/M$.  
+L'évidence $P(x_j)$ est ignorée (car constante pour tous les $k$).  
+On utilise alors le maximum de vraisemblance :
+
+$$
+P(x|C = k) \simeq \exp\left( -(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k) \right)
+$$
+
+---
+
+### Décision de classification
+
+La règle de décision est :
+
+$$
+\delta(x) = \arg\max_k P(x|C = k)
+$$
+
+---
+
+## Optimalité et limites
+
+- LDA est optimal lorsque les $M$ classes sont chacune distribuées selon une loi gaussienne (critère de discrimination basé sur $\Sigma_w$ et $\Sigma_b$).  
+- LDA ne prend pas en compte les relations non linéaires entre variables (discrimination linéaire).  
+- Pour des problèmes non linéaires, il faut utiliser des méthodes de classification non linéaires.
+
+---
+
+## Résumé
+
+- LDA est une technique supervisée.  
+- LDA trouve les facteurs latents linéaires optimaux expliquant la discrimination (linéaire).  
+- Le critère de Fisher combine la dispersion intra-classe et inter-classes.  
+- LDA est résolu en trouvant les valeurs propres de $\Sigma_w^{-1} \Sigma_b$.  
+- Ces facteurs latents peuvent être utilisés pour la visualisation (en tenant compte des étiquettes).  
+- LDA (comme classification) est un exemple de modélisation conditionnelle : chaque classe suit une loi normale.
+
+---
+
+## Questions d'exemple
+
+1. Expliquer dans le cadre de l'apprentissage supervisé : pourquoi LDA est une méthode linéaire ?  
+2. Qu'est-ce qui caractérise une direction discriminante ? Que représente $a$ ?  
+3. Quel est le critère de Fisher ?  
+4. Qu'est-ce que le critère inter-classes ? Expliquer son principe.  
+5. Comment calculer la matrice de covariance inter-classes ?  
+6. Qu'est-ce que le critère intra-classes ? Expliquer son principe.  
+7. Comment calculer la matrice de covariance intra-classes ?  
+8. Comment ces deux critères sont-ils combinés ?  
+9. Pouvez-vous justifier et expliquer la dérivation du maximum pour $a$ ?  
+10. Décrire la situation multidimensionnelle ($D > 2$).  
+11. Comment faire de l'inférence avec LDA ?  
+12. Donner un exemple de modèle conditionnel de données utilisant LDA.

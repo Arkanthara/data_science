@@ -1,0 +1,340 @@
+# Cours : Analyse en Composantes Principales (PCA)
+
+## Motivation
+
+Les données brutes sont souvent représentées dans un espace de grande dimension, mais cette représentation n'est pas toujours optimale pour l'analyse ou la modélisation.
+
+* Les représentations de base peuvent ne pas être optimales
+* Les modèles latents permettent de révéler les facteurs sous-jacents (latents) qui gouvernent le processus étudié
+* Cette approche utilise la corrélation statistique pour identifier des facteurs latents **linéaires**
+* Cela permet une simplification des données par réduction dimensionnelle raisonnée
+
+Nous allons explorer plusieurs interprétations de cette méthode fondamentale.
+
+**Lecture recommandée :** [1] (chapitre 12) et [3] (chapitres 3 et 10.3)
+
+## Formalisation
+
+### Maximisation de la variance
+
+#### Intuition géométrique
+
+Étant donné un ensemble de données $X \subset \Omega$, nous cherchons à décomposer $\Omega$ en sous-espaces tels que la projection de $X$ sur ces sous-espaces conserve le maximum d'**information**.
+
+**Question cruciale :** Quelle information devrions-nous conserver ?
+
+* Imaginez que $X$ soit presque contenu dans un plan 2D au sein d'un espace 3D
+* Un choix pertinent serait de choisir comme sous-espace ce plan, avec une base $\{ \mathbf{u}_1, \mathbf{u}_2 \}$
+
+**Caractéristiques clés d'une bonne base :**
+
+* Les données varient **maximum** le long de ces directions
+* Les données varient **minimum** orthogonalement à ces directions (ex: $\mathbf{u}_3$)
+
+### Formalisation mathématique
+
+Soit $\mathcal{X}$ nos données, et $\{ \mathbf{u}_i \}_{i \in [D]}$ une nouvelle base orthonormale de $\mathbb{R}^D$.
+
+* La **Première Composante Principale** $\mathbf{u}_1$ est choisie pour maximiser la variance des données projetées
+* $\mathbf{u}_2$ est ensuite choisie orthogonalement à $\mathbf{u}_1$, et ainsi de suite
+
+#### Modèle statistique
+
+Pour $\mathcal{X}$, nous définissons :
+
+* **Moyenne empirique :**
+  
+  $$
+  \overline{\mathcal{X}} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i
+  $$
+
+* **Variance projetée sur $\mathbf{u}_1$ :**
+  
+  $$
+  v_{\mathbf{u}_1} = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{u}_1^T \mathbf{x}_i - \mathbf{u}_1^T \overline{\mathcal{X}})^2 = \mathbf{u}_1^T \Sigma \mathbf{u}_1
+  $$
+
+où $\Sigma = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{x}_i - \overline{\mathbf{x}})(\mathbf{x}_i - \overline{\mathbf{x}})^T$ est la **matrice de covariance**.
+
+Nous cherchons donc :
+
+$$
+\mathbf{u}_1 = \arg\max_{\mathbf{u}} \mathbf{u}^T \Sigma \mathbf{u} \quad \text{sous} \quad \mathbf{u}^T \mathbf{u} = 1
+$$
+
+### Solution par optimisation contrainte
+
+Nous formons le lagrangien :
+
+$$
+J(\mathbf{u}) = \mathbf{u}^T \Sigma \mathbf{u} + \lambda (1 - \mathbf{u}^T \mathbf{u})
+$$
+
+Les conditions d'optimalité donnent :
+
+$$
+\frac{\partial J(\mathbf{u})}{\partial \mathbf{u}} = 0 \quad \text{et} \quad \frac{\partial J(\mathbf{u})}{\partial \lambda} = 0
+$$
+
+Ce qui conduit à :
+
+$$
+\Sigma \mathbf{u}_1 = \lambda_1 \mathbf{u}_1 \quad \Rightarrow \quad v_{\mathbf{u}_1} = \mathbf{u}_1^T \Sigma \mathbf{u}_1 = \lambda_1
+$$
+
+**Interprétation clé :** $(\mathbf{u}_1, \lambda_1)$ est une **paire propre** de $\Sigma$.
+
+En poursuivant le processus, nous obtenons toutes les composantes principales comme les paires propres $\{(\mathbf{u}_i, \lambda_i)\}_{i \in [D]}$.
+
+Nous pouvons écrire de manière compacte :
+
+$$
+\Lambda = \mathbf{U}^\top \Sigma \mathbf{U}
+$$
+
+avec $\Lambda = \text{diag}(\lambda_1, \dots, \lambda_D)$ et $\mathbf{U} = [\mathbf{u}_1, \dots, \mathbf{u}_D]$.
+
+### Dualité variance-erreur
+
+La variance projetée s'exprime comme :
+
+$$
+\nu_{\mathbf{u}_1} = \frac{1}{N}\sum_{i = 1}^N (\mathbf{u}_1^T (\mathbf{x}_i - \overline{\mathbf{x}}))^2
+$$
+
+**Maximiser cette variance équivaut à minimiser l'erreur d'approximation quadratique :**
+
+$$
+\mathbf{u}_1 = \underset{\mathbf{u}^T \mathbf{u} = 1}{\arg \min} \sum_{i = 1}^N \| (\mathbf{x}_i - \overline{\mathbf{x}}) - [\mathbf{u}^T (\mathbf{x}_i - \overline{\mathbf{x}})] \mathbf{u} \|_2^2
+$$
+
+**Équivalence fondamentale :** Maximisation de variance $\Leftrightarrow$ Minimisation d'erreur.
+
+## Interprétation physique
+
+Considérons un système physique $\mathcal{X}$ avec des masses unitaires aux positions $\mathbf{x}_i$.
+
+* **Inertie par rapport à un point $\mathbf{a}$ :**
+  
+  $$
+  \mathrm{I}_{\mathbf{a}}(\mathcal{X}) = \sum_{i = 1}^{N} \mathrm{d}^{2}(\mathbf{a},\mathbf{x}_{i})
+  $$
+
+* **Théorème de Huygens :** Si $\mathbf{g}$ est le centre de masse, alors
+  
+  $$
+  \mathrm{I}_{\mathbf{a}}(\mathcal{X}) = \mathrm{d}^{2}(\mathbf{a},\mathbf{g}) + \mathrm{I}_{\mathbf{g}}(\mathcal{X})
+  $$
+
+Pour un sous-espace $\mathcal{J}$ passant par $\mathbf{g}$ :
+
+$$
+\mathrm{I}_{\mathcal{J}}(\mathcal{X}) = \sum_{i = 1}^{N} \mathrm{d}^{2}(\mathcal{J},\mathbf{x}_{i})
+$$
+
+où $\mathrm{d}(\mathcal{J},\mathbf{x}_{i}) = \| \mathbf{x}_{i} - \mathrm{Proj}_{\mathcal{J}}(\mathbf{x}_{i})\|$.
+
+**Conclusion physique :** Une Composante Principale est un **sous-espace d'inertie minimale**.
+
+## Structure de l'espace latent
+
+### Propriétés fondamentales
+
+La base $\{ \mathbf{u}_1, \dots, \mathbf{u}_D \}$ de l'espace latent possède :
+
+* **Valeurs propres ordonnées :** $\lambda_1 \geqslant \lambda_2 \geqslant \dots \geqslant \lambda_D$
+* **Variance totale :** $\sum_{d = 1}^{D}\lambda_d = \mathrm{Tr}(\Sigma)$
+* **Décorrélation :** $\mathbf{u}_d^\top \mathbf{u}_{d'} = 0$ (orthogonalité)
+* **Matrice de covariance diagonale :** $\Lambda$ est diagonale
+
+### Transformation des données
+
+Les coordonnées latentes $\mathbf{y}_i$ sont obtenues par :
+
+$$
+y_i(d) = \mathbf{u}_d^\top (\mathbf{x}_i - \overline{\mathbf{x}}) \quad \Rightarrow \quad \mathbf{y}_i = \mathbf{U}^\top (\mathbf{x}_i - \overline{\mathbf{x}})
+$$
+
+Cette transformation linéaire combine trois opérations :
+
+1. **Centrage** sur $\overline{\mathbf{x}}$
+2. **Rotation** via $\mathbf{U}$
+3. **Mise à l'échelle** via $\Lambda^{1/2}$ (blanchiment)
+
+## Structure du modèle
+
+### Hypothèse sous-jacente
+
+L'espace latent préserve la variance des données centrées, ce qui suppose un modèle :
+
+$$
+X_i \sim \mathcal{N}(\overline{\mathbf{x}}, \Sigma)
+$$
+
+**Conséquence importante :** PCA sera moins pertinent pour des données non-gaussiennes (ex: données clusterisées).
+
+### Transformation exacte
+
+À ce stade, PCA est une transformation **exacte** et **inversible** :
+
+$$
+\mathbf{y}_i = \mathbf{U}^\top (\mathbf{x}_i - \overline{\mathbf{x}}) \quad \Leftrightarrow \quad \mathbf{x}_i = \overline{\mathbf{x}} + \mathbf{U} \mathbf{y}_i
+$$
+
+L'étude du **spectre** $\{ \lambda_1 \geqslant \lambda_2 \geqslant \dots \geqslant \lambda_D \}$ est cruciale.
+
+## PCA pour la réduction de dimension
+
+### Approximation de bas rang
+
+D'après le **théorème d'Eckart-Young**, pour $K < D$ :
+
+* **Approximation optimale :** $\Sigma_K = \sum_{d = 1}^{K} \lambda_d \mathbf{u}_d \mathbf{u}_d^\top$
+* **Erreur minimale :** $\| \Sigma - \Sigma_K \|_F^2 = \sum_{d = K + 1}^{D} \lambda_d$
+
+Par troncation :
+
+$$
+\Sigma_K = \mathbf{U}_K \Lambda_K \mathbf{U}_K^\top
+$$
+
+Les données transformées et reconstruites deviennent :
+
+* **Représentation réduite :** $\tilde{\mathbf{y}}_i = \mathbf{U}_K^\top \mathbf{x}_i \in \mathbb{R}^K$
+* **Reconstruction :** $\tilde{\mathbf{x}}_i = \mathbf{U}_K \mathbf{U}_K^\top \mathbf{x}_i + \overline{\mathbf{x}}$
+
+### Géométrie de PCA
+
+#### Mesures de qualité
+
+* **Contribution variance :**
+  
+  $$
+  c_d = \frac{\lambda_d}{\sum_{k} \lambda_k}
+  $$
+
+* **Alignement des données :**
+  
+  $$
+  \rho_d(\mathbf{x}_i) = \frac{(\mathbf{u}_d^\top \mathbf{x}_i)^2}{\|\mathbf{x}_i\|^2} = \cos^2 (\angle (\mathbf{u}_d, \mathbf{x}_i))
+  $$
+
+#### Normalisation des échelles
+
+Chaque dimension originale a sa propre échelle (variance $\sigma_d^2$). PCA est plus efficace quand toutes les échelles sont comparables.
+
+**Solution :** Utiliser la **matrice de corrélation** plutôt que la covariance :
+
+* **Matrice de mise à l'échelle :** $\mathbf{S} = \mathrm{diag}[\sigma_1^2, \dots, \sigma_D^2]$
+* **Métrique associée :** $\mathrm{d}_S^2(\mathbf{x}, \mathbf{y}) = (\mathbf{x} - \mathbf{y})^\top \mathbf{S}^{-1} (\mathbf{x} - \mathbf{y})$
+* **PCA sur données normalisées :** Utiliser $\Sigma_S$ (matrice de corrélation)
+
+## PCA pratique : mode d'emploi
+
+### Algorithme étape par étape
+
+1. **Calculer** la moyenne empirique $\overline{\mathbf{x}}$
+2. **Centrer** les données : $\mathbf{x}_i \leftarrow (\mathbf{x}_i - \overline{\mathbf{x}})$
+3. **Former** la matrice centrée $\mathbf{X}$
+4. **Calculer** $\Sigma = \frac{1}{N} \mathbf{X} \mathbf{X}^\top$
+5. **Décomposer** $\Sigma = \mathbf{U} \Lambda \mathbf{U}^\top$
+6. **Sélectionner** $K$ composantes
+7. **Projeter** et/ou **reconstruire** les données
+
+### Stratégies de sélection de $K$
+
+* **Dimension cible :** $K = d$ (dimension souhaitée)
+* **Variance conservée :** Choisir $K$ tel que
+  
+  $$
+  \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} \geq \tau
+  $$
+  
+  (ex: $\tau = 0.95$ pour 95% de variance)
+
+* **Erreur de reconstruction :** Choisir $K$ tel que
+  
+  $$
+  \mathcal{L}(\mathbf{x}) = \sum_i \| \mathbf{x}_i - \tilde{\mathbf{x}}_i \|^2 \leq \epsilon
+  $$
+
+## PCA et AutoEncodeurs Linéaires
+
+### Architecture d'un AutoEncodeur Linéaire
+
+* **Encodeur :** $\mathbf{z}(\mathbf{x}_i) = W_{\mathrm{enc}} \mathbf{x}_i$
+* **Décodeur :** $\tilde{\mathbf{x}}_i = W_{\mathrm{dec}} \mathbf{z}(\mathbf{x}_i)$
+
+### Fonction de coût
+
+$$
+\theta^{*} = \arg\min_{W_{\mathrm{enc}}, W_{\mathrm{dec}}} \sum_{i=1}^{N} \| \mathbf{x}_i - \tilde{\mathbf{x}}_i \|^2
+$$
+
+### Équivalence avec PCA
+
+**Théorème :** Un AutoEncodeur Linéaire entraîné sur des données **centrées** réalise exactement une PCA.
+
+* **Encodeur :** $W_{\mathrm{enc}} = \mathbf{U}_K^\top$
+* **Décodeur :** $W_{\mathrm{dec}} = \mathbf{U}_K$
+
+### Généralisations
+
+* **AutoEncodeurs Non-Linéaires :** Ajout de couches cachées
+* **AutoEncodeurs Variationnels (VAE) :** Modification de la fonction de coût (ELBO)
+* **AutoEncodeurs parcimonieux :** Contraintes de régularisation
+
+## Alternatives et extensions
+
+### PCA Probabiliste
+
+Reformulation probabiliste avec :
+
+* **Distribution latente :** $\mathbb{P}(\mathbf{z}) = \mathcal{N}(0, \mathrm{Id}_K)$
+* **Modèle conditionnel :** $\mathbb{P}(\mathbf{x}|\mathbf{z}) = \mathcal{N}(W\mathbf{z} + \mu, \sigma^2 \mathrm{Id}_D)$
+
+**Avantages :**
+
+* Modélisation explicite du bruit
+* Mode génératif
+* Estimation par Maximum de Vraisemblance ou EM
+
+### PCA à Noyau (Kernel PCA)
+
+Extension non-linéaire par **trick du noyau** :
+
+* **Mapping implicite :** $\Phi(\mathbf{x}_i)$ via noyau $k(\mathbf{x}_i, \mathbf{x}_j)$
+* **PCA dans l'espace de features :** $\mathbf{k}(x_i, x_j) = \Phi(x_i)^\top \Phi(x_j)$
+
+### PCA Local
+
+PCA appliquée localement sur des voisinages de données pour capturer la **dimensionnalité intrinsèque locale**.
+
+### Limitations computationnelles
+
+La décomposition de $\Sigma$ a une complexité $O(D^3)$, ce qui peut être prohibitif pour de grandes dimensions.
+
+## Synthèse et conclusions
+
+* **PCA** fait partie des modèles latents **linéaires**
+* Il s'applique sur données **centrées** et utilise la **variance** comme critère
+* C'est une décomposition **exacte** en composantes **décorrélées**
+* Il suppose une distribution **normale** des données
+* Il peut être formulé comme une **régression** quadratique
+* Il offre une stratégie de **réduction dimensionnelle** basée sur l'approximation de bas rang
+* Il peut être utilisé pour le **débruitage** (modèle gaussien)
+* Il est équivalent à un **AutoEncodeur Linéaire**
+* Il admet des formulations **stochastiques** et des extensions **non-linéaires**
+
+## Questions d'approfondissement
+
+* Expliquez comment PCA utilise la variance comme critère
+* Montrez l'équivalence entre maximisation de variance et minimisation d'erreur
+* Expliquez l'utilisation du théorème d'Eckart-Young dans PCA
+* Décrivez les étapes pratiques pour appliquer PCA sur un jeu de données
+* Quelles informations PCA fournit-il sur les données ?
+* Comment reconstruire des données avec $K < D$ composantes ?
+* Quelles stratégies pour sélectionner le nombre de composantes à conserver ?
+* PCA est-elle applicable à tout type de données ?
+* Est-il pertinent d'appliquer PCA sur des données clusterisées ?
+* Démontrez l'équivalence entre PCA et AutoEncodeur Linéaire

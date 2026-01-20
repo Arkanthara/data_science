@@ -1,0 +1,198 @@
+# Questions
+
+### 1. Décrire formellement le clustering
+
+**Intuition :**
+
+Le clustering est une technique d'apprentissage non supervisé qui regroupe des points de données similaires sur la base de leurs caractéristiques, sans utiliser d'étiquettes prédéfinies. Le but est de découvrir des regroupements naturels ou des motifs dans les données.
+
+**Réponse détaillée :**
+
+Formellement, étant donné un jeu de données $X = \{x_1, \dots, x_N\}$ où $x_i \in \mathbb{R}^D$, le clustering vise à partitionner $X$ en $K$ sous-ensembles (clusters) $C_1, C_2, \dots, C_K$ tels que :
+
+1. $C_k \neq \emptyset$ pour tout $k = 1, \dots, K$ (clusters non vides)
+2. $\bigcup_{k=1}^K C_k = X$ (chaque point appartient à un cluster)
+3. $C_k \cap C_{k'} = \emptyset$ pour $k \neq k'$ (les clusters sont disjoints)
+
+De plus, nous voulons souvent que les points au sein d'un même cluster soient plus similaires entre eux qu'aux points d'autres clusters. La qualité d'un clustering est généralement mesurée par une fonction objectif, comme minimiser la somme des carrés des distances intra-cluster (dans k-means) ou maximiser la séparation inter-cluster.
+
+Dans le contexte de k-means, le clustering est formalisé comme un problème d'optimisation : trouver les représentants de clusters $\mu_1, \dots, \mu_K$ et les variables d'affectation binaires $z_{ik}$ qui minimisent :
+
+$$
+L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2
+$$
+
+sous contrainte que $z_{ik} \in \{0,1\}$ et $\sum_{k=1}^K z_{ik} = 1$ pour tout $i$.
+
+---
+
+### 2. En quel sens est-ce une technique non supervisée ?
+
+**Intuition :**
+
+Le clustering est non supervisé car il n'utilise pas de données étiquetées ou de sorties cibles. L'algorithme doit découvrir la structure et les regroupements dans les données par lui-même, sans guidance de catégories prédéfinies.
+
+**Réponse détaillée :**
+
+Dans l'apprentissage supervisé, nous avons des paires entrée-sortie $(x_i, y_i)$ où $y_i$ est une étiquette ou une valeur cible. L'algorithme apprend une mapping des entrées vers les sorties. En revanche, le clustering est non supervisé car :
+
+1. **Aucune étiquette :** Nous avons seulement les données d'entrée $X = \{x_1, \dots, x_N\}$ sans aucune valeur cible correspondante $y_i$.
+2. **Auto-découverte :** L'algorithme doit identifier les motifs, similarités et regroupements uniquement à partir des données d'entrée elles-mêmes.
+3. **Guidé par un objectif :** Au lieu de minimiser l'erreur de prédiction par rapport à des étiquettes connues, les algorithmes de clustering optimisent des critères internes comme la similarité intra-cluster ou la séparation inter-cluster.
+4. **Nature exploratoire :** Le clustering est souvent utilisé pour l'analyse exploratoire de données pour découvrir des structures inconnues, plutôt que pour la prédiction.
+
+L'algorithme k-means illustre l'apprentissage non supervisé : il partitionne les données basé sur la proximité aux centres de clusters, sans aucune guidance externe sur l'apparence des clusters ou quels points doivent être regroupés.
+
+---
+
+### 3. Expliquer pourquoi k-means est intrinsèquement lié à la métrique euclidienne ?
+
+**Intuition :**
+
+k-means utilise la distance euclidienne au carré dans sa fonction objectif, et les étapes de mise à jour de l'algorithme reposent sur des propriétés spécifiques à la géométrie euclidienne, notamment que la moyenne (centroïde) minimise la somme des distances euclidiennes au carré.
+
+**Réponse détaillée :**
+
+k-means est intrinsèquement lié à la métrique euclidienne pour plusieurs raisons :
+
+1. **Fonction objectif :** La fonction de perte est $L = \sum_{i=1}^N \sum_{k=1}^K z_{ik} \|x_i - \mu_k\|_2^2$, où $\|\cdot\|_2$ est la norme euclidienne. Cela utilise explicitement la distance euclidienne au carré.
+
+2. **Étape d'affectation :** Chaque point est assigné au cluster dont le centroïde est le plus proche, où "le plus proche" est mesuré par la distance euclidienne.
+
+3. **Étape de mise à jour :** Le centroïde du cluster $\mu_k$ est mis à jour vers la moyenne des points assignés au cluster $k$ : $\mu_k = \frac{1}{N_k} \sum_{i: z_{ik}=1} x_i$. Cette formule apparaît parce que la moyenne minimise la somme des distances euclidiennes au carré :
+
+   $$
+   \mu_k = \arg\min_{\mu} \sum_{i: z_{ik}=1} \|x_i - \mu\|_2^2
+   $$
+
+4. **Interprétation géométrique :** L'algorithme partitionne l'espace en cellules de Voronoi basées sur la distance euclidienne aux centres de clusters.
+
+Si nous utilisions une métrique différente (par exemple, la distance de Manhattan), la moyenne ne serait plus le minimiseur de la somme des distances, et l'algorithme devrait être modifié (conduisant à k-medoids ou d'autres variantes). Ainsi, k-means est fondamentalement conçu pour l'espace euclidien.
+
+---
+
+### 4. Pourquoi dit-on que k-means considère un modèle gaussien pour les clusters ?
+
+**Intuition :**
+
+k-means peut être dérivé comme un cas spécial d'un modèle de mélange gaussien (GMM) où chaque cluster a une distribution gaussienne avec des matrices de covariance égales et sphériques, et où nous prenons la limite lorsque la variance tend vers zéro.
+
+**Réponse détaillée :**
+
+Considérons un modèle de mélange gaussien avec $K$ composantes, où chaque composante $k$ a :
+
+- Poids $\pi_k$
+- Moyenne $\mu_k$
+- Matrice de covariance $\Sigma_k = \sigma^2 I$ (sphérique, variance égale)
+
+L'algorithme EM pour ce GMM implique :
+
+- **E-step :** Calculer les responsabilités $\gamma_{ik} = \frac{\pi_k \mathcal{N}(x_i|\mu_k, \sigma^2 I)}{\sum_{j=1}^K \pi_j \mathcal{N}(x_i|\mu_j, \sigma^2 I)}$
+- **M-step :** Mettre à jour les paramètres en utilisant des statistiques pondérées
+
+Maintenant, considérons la limite $\sigma^2 \to 0$ :
+
+1. La distribution gaussienne devient fortement pic autour de sa moyenne.
+2. Les responsabilités $\gamma_{ik}$ deviennent binaires : $\gamma_{ik} = 1$ pour le $\mu_k$ le plus proche, et $0$ sinon (affectation hard).
+3. La mise à jour du M-step pour $\mu_k$ devient la moyenne des points assignés au cluster $k$.
+
+Ceci est exactement l'algorithme k-means. Par conséquent, k-means suppose implicitement que chaque cluster suit une distribution gaussienne avec :
+
+- Covariances sphériques égales ($\Sigma_k = \sigma^2 I$)
+- Poids de mélange égaux ($\pi_k = 1/K$)
+- Variance infinitésimale ($\sigma^2 \to 0$)
+
+Ainsi, bien que k-means ne modélise pas explicitement les probabilités, il correspond à un cas limite d'un modèle de mélange gaussien.
+
+---
+
+### 5. L'algorithme k-means est-il exact ?
+
+**Intuition :**
+
+Non, k-means n'est pas un algorithme d'optimisation exact. Il trouve un optimum local plutôt que l'optimum global, et sa solution dépend fortement de l'initialisation.
+
+**Réponse détaillée :**
+
+k-means n'est **pas exact** de plusieurs manières importantes :
+
+1. **Problème NP-difficile :** Minimiser la fonction objectif de k-means (somme des carrés des distances) est NP-difficile en général. Il n'existe pas d'algorithme en temps polynomial connu qui garantit de trouver l'optimum global.
+
+2. **Optimum local :** L'algorithme k-means (descente de coordonnées) converge vers un minimum local de la fonction objectif. Différentes initialisations peuvent conduire à différents minima locaux.
+
+3. **Sensibilité à l'initialisation :** La qualité du clustering final dépend critique-ment du choix initial des centres de clusters. Une mauvaise initialisation peut conduire à des résultats sous-optimaux.
+
+4. **Garanties d'approximation :** Bien que k-means lui-même n'ait pas de garanties d'approximation, il existe des algorithmes (comme l'initialisation k-means++) qui fournissent des bornes d'approximation prouvées pour le problème k-means.
+
+5. **Convergence vers un minimum local :** L'algorithme est garanti de converger, mais seulement vers un minimum local. Il n'y a pas de garantie que ce minimum local soit proche du minimum global.
+
+Ainsi, en pratique, k-means est typiquement exécuté plusieurs fois avec différentes initialisations, et le meilleur résultat (plus faible perte) est sélectionné.
+
+---
+
+### 6. Quels sont les principes pour initialiser k-means ?
+
+**Intuition :**
+
+Une bonne initialisation vise à disperser les centres de clusters à travers l'espace des données pour capturer différentes régions de densité, ce qui conduit à une convergence plus rapide et de meilleures solutions.
+
+**Réponse détaillée :**
+
+Plusieurs principes d'initialisation existent pour k-means :
+
+1. **Initialisation aléatoire :** Sélectionner aléatoirement $K$ points de données comme centres initiaux. C'est simple mais peut conduire à de mauvais résultats si les centres sont proches les uns des autres.
+
+2. **k-means++ :** Une méthode d'initialisation intelligente qui disperse les centres initiaux :
+
+   - Étape 1 : Choisir le premier centre uniformément au hasard parmi les points de données.
+   - Étape 2 : Pour chaque point de données $x_i$, calculer $D(x_i)$, la distance au centre déjà choisi le plus proche.
+   - Étape 3 : Choisir le centre suivant parmi les points de données avec une probabilité proportionnelle à $D(x_i)^2$.
+   - Étape 4 : Répéter les étapes 2-3 jusqu'à ce que $K$ centres soient sélectionnés.
+
+   Cela encourage les centres à être éloignés les uns des autres et à couvrir différentes parties du jeu de données.
+
+3. **Initialisation basée sur la densité :** Choisir les centres dans les régions de haute densité des données.
+
+4. **Parcours du plus éloigné d'abord :** Sélectionner les centres qui sont maximalement éloignés les uns des autres.
+
+5. **Utilisation de connaissances du domaine :** Si une information préalable sur les emplacements des clusters est disponible, l'utiliser pour initialiser les centres.
+
+k-means++ est largement utilisé car il fournit des garanties théoriques (ratio d'approximation borné) et fonctionne bien en pratique.
+
+---
+
+### 7. Qu'est-ce que l'algorithme de descente de coordonnées ?
+
+**Intuition :**
+
+La descente de coordonnées est un algorithme d'optimisation qui minimise une fonction en optimisant itérativement le long d'une coordonnée (variable) à la fois, tout en gardant les autres coordonnées fixes.
+
+**Réponse détaillée :**
+
+La descente de coordonnées, également connue sous le nom de minimisation alternée, est une technique d'optimisation itérative pour minimiser une fonction $f(x_1, x_2, \dots, x_n)$. L'idée de base est :
+
+1. Initialiser $x = (x_1, \dots, x_n)$.
+2. Pour $t = 1, 2, \dots$ jusqu'à convergence :
+   - Pour $i = 1, \dots, n$ :
+     - Mettre à jour $x_i$ pour minimiser $f(x_1, \dots, x_{i-1}, \cdot, x_{i+1}, \dots, x_n)$ tout en gardant les autres coordonnées fixes.
+
+Mathématiquement, à l'itération $t$ pour la coordonnée $i$ :
+
+$$
+x_i^{(t+1)} = \arg\min_{y} f(x_1^{(t+1)}, \dots, x_{i-1}^{(t+1)}, y, x_{i+1}^{(t)}, \dots, x_n^{(t)})
+$$
+
+**Propriétés :**
+
+- Simple à implémenter si les minimisations à une variable sont faciles.
+- Peut converger lentement si les variables sont hautement corrélées.
+- Garanti de converger pour les fonctions convexes et différentiables.
+
+**Application à k-means :**
+
+Dans k-means, nous utilisons la descente de coordonnées par blocs avec deux blocs : les affectations $Z$ et les centres $M$.
+
+- **Minimiser par rapport à $Z$ (étape d'affectation) :** Fixer $M$, assigner chaque point au centre le plus proche.
+- **Minimiser par rapport à $M$ (étape de mise à jour) :** Fixer $Z$, mettre à jour chaque centre vers la moyenne de ses points assignés.
+
+Cette minimisation alternée garantit que la fonction de perte diminue à chaque étape et converge vers un minimum local.
