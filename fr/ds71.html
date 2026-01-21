@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds7q – ISS</title>
+<title>ds71 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -313,7 +313,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7q.html">Questions</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds71.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds71.html">Algorithme k-means et estimation de facteurs latents discrets</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -348,12 +348,6 @@ window.Quarto = {
  <span class="menu-text">Représentations en Haute Dimension en Data Science</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exam question</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -369,12 +363,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./ds31.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cours : Analyse en Composantes Principales (PCA)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds31q.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation</span></a>
   </div>
 </li>
       </ul>
@@ -394,12 +382,6 @@ window.Quarto = {
  <span class="menu-text">Cours : Analyse Discriminante Linéaire (LDA)</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds51q.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Relation entre l’Analyse Discriminante Linéaire (LDA) et la modélisation conditionnelle pour la classification</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -413,20 +395,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cours détaillé</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds7q.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Questions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds7s.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">L’essentiel</span></a>
+  <a href="./ds71.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Algorithme k-means et estimation de facteurs latents discrets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -448,20 +418,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cours détaillé</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds6q.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Questions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ds6s.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">L’essentiel</span></a>
+  <a href="./ds61.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Science: Expectation-Maximization for Density Modelling &amp; Latent Factor Estimation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -482,183 +440,242 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#questions" id="toc-questions" class="nav-link active" data-scroll-target="#questions">Questions</a>
+  <li><a href="#algorithme-k-means-et-estimation-de-facteurs-latents-discrets" id="toc-algorithme-k-means-et-estimation-de-facteurs-latents-discrets" class="nav-link active" data-scroll-target="#algorithme-k-means-et-estimation-de-facteurs-latents-discrets">Algorithme k-means et estimation de facteurs latents discrets</a>
   <ul class="collapse">
-  <li><a href="#décrire-formellement-le-clustering" id="toc-décrire-formellement-le-clustering" class="nav-link" data-scroll-target="#décrire-formellement-le-clustering">1. Décrire formellement le clustering</a></li>
-  <li><a href="#en-quel-sens-est-ce-une-technique-non-supervisée" id="toc-en-quel-sens-est-ce-une-technique-non-supervisée" class="nav-link" data-scroll-target="#en-quel-sens-est-ce-une-technique-non-supervisée">2. En quel sens est-ce une technique non supervisée ?</a></li>
-  <li><a href="#expliquer-pourquoi-k-means-est-intrinsèquement-lié-à-la-métrique-euclidienne" id="toc-expliquer-pourquoi-k-means-est-intrinsèquement-lié-à-la-métrique-euclidienne" class="nav-link" data-scroll-target="#expliquer-pourquoi-k-means-est-intrinsèquement-lié-à-la-métrique-euclidienne">3. Expliquer pourquoi k-means est intrinsèquement lié à la métrique euclidienne ?</a></li>
-  <li><a href="#pourquoi-dit-on-que-k-means-considère-un-modèle-gaussien-pour-les-clusters" id="toc-pourquoi-dit-on-que-k-means-considère-un-modèle-gaussien-pour-les-clusters" class="nav-link" data-scroll-target="#pourquoi-dit-on-que-k-means-considère-un-modèle-gaussien-pour-les-clusters">4. Pourquoi dit-on que k-means considère un modèle gaussien pour les clusters ?</a></li>
-  <li><a href="#lalgorithme-k-means-est-il-exact" id="toc-lalgorithme-k-means-est-il-exact" class="nav-link" data-scroll-target="#lalgorithme-k-means-est-il-exact">5. L’algorithme k-means est-il exact ?</a></li>
-  <li><a href="#quels-sont-les-principes-pour-initialiser-k-means" id="toc-quels-sont-les-principes-pour-initialiser-k-means" class="nav-link" data-scroll-target="#quels-sont-les-principes-pour-initialiser-k-means">6. Quels sont les principes pour initialiser k-means ?</a></li>
-  <li><a href="#quest-ce-que-lalgorithme-de-descente-de-coordonnées" id="toc-quest-ce-que-lalgorithme-de-descente-de-coordonnées" class="nav-link" data-scroll-target="#quest-ce-que-lalgorithme-de-descente-de-coordonnées">7. Qu’est-ce que l’algorithme de descente de coordonnées ?</a></li>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a>
+  <ul class="collapse">
+  <li><a href="#méthodes-de-clustering" id="toc-méthodes-de-clustering" class="nav-link" data-scroll-target="#méthodes-de-clustering">Méthodes de clustering</a></li>
+  <li><a href="#clustering-hiérarchique-agglomératif" id="toc-clustering-hiérarchique-agglomératif" class="nav-link" data-scroll-target="#clustering-hiérarchique-agglomératif">Clustering hiérarchique agglomératif</a></li>
+  </ul></li>
+  <li><a href="#k-means" id="toc-k-means" class="nav-link" data-scroll-target="#k-means">k-means</a>
+  <ul class="collapse">
+  <li><a href="#stratégie" id="toc-stratégie" class="nav-link" data-scroll-target="#stratégie">Stratégie</a></li>
+  <li><a href="#fonction-de-coût" id="toc-fonction-de-coût" class="nav-link" data-scroll-target="#fonction-de-coût">Fonction de coût</a></li>
+  </ul></li>
+  <li><a href="#descente-de-coordonnées" id="toc-descente-de-coordonnées" class="nav-link" data-scroll-target="#descente-de-coordonnées">Descente de coordonnées</a></li>
+  <li><a href="#application-à-k-means" id="toc-application-à-k-means" class="nav-link" data-scroll-target="#application-à-k-means">Application à k-means</a>
+  <ul class="collapse">
+  <li><a href="#algorithme-k-means" id="toc-algorithme-k-means" class="nav-link" data-scroll-target="#algorithme-k-means">Algorithme k-means</a></li>
+  <li><a href="#propriétés" id="toc-propriétés" class="nav-link" data-scroll-target="#propriétés">Propriétés</a></li>
+  <li><a href="#k-means-1" id="toc-k-means-1" class="nav-link" data-scroll-target="#k-means-1">k-means++</a></li>
+  </ul></li>
+  <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé">Résumé</a></li>
+  <li><a href="#exemples-de-questions" id="toc-exemples-de-questions" class="nav-link" data-scroll-target="#exemples-de-questions">Exemples de questions</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds7q.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds71.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7q.html">Questions</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds71.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds71.html">Algorithme k-means et estimation de facteurs latents discrets</a></li></ol></nav></header>
 
 
 
 
 
-<section id="questions" class="level1">
-<h1>Questions</h1>
-<section id="décrire-formellement-le-clustering" class="level3">
-<h3 class="anchored" data-anchor-id="décrire-formellement-le-clustering">1. Décrire formellement le clustering</h3>
-<p><strong>Intuition :</strong></p>
-<p>Le clustering est une technique d’apprentissage non supervisé qui regroupe des points de données similaires sur la base de leurs caractéristiques, sans utiliser d’étiquettes prédéfinies. Le but est de découvrir des regroupements naturels ou des motifs dans les données.</p>
-<p><strong>Réponse détaillée :</strong></p>
-<p>Formellement, étant donné un jeu de données <span class="math inline">\(X = \{x_1, \dots, x_N\}\)</span> où <span class="math inline">\(x_i \in \mathbb{R}^D\)</span>, le clustering vise à partitionner <span class="math inline">\(X\)</span> en <span class="math inline">\(K\)</span> sous-ensembles (clusters) <span class="math inline">\(C_1, C_2, \dots, C_K\)</span> tels que :</p>
+<section id="algorithme-k-means-et-estimation-de-facteurs-latents-discrets" class="level1">
+<h1>Algorithme k-means et estimation de facteurs latents discrets</h1>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>Comprendre les propriétés géométriques et statistiques des données, les analyser et développer des outils pour cette analyse. Ici, nous nous intéressons particulièrement à l’approche non supervisée du <strong>clustering</strong>.</p>
+<hr>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<p>Le clustering est une méthode non supervisée qui vise à découvrir des groupes cohérents dans les données, correspondant aux pics de densité.</p>
+<p>Un synonyme souvent utilisé est la <strong>Quantification Vectorielle (VQ)</strong>.</p>
+<section id="méthodes-de-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="méthodes-de-clustering">Méthodes de clustering</h3>
+<p>Il existe de nombreuses méthodes de clustering :</p>
+<ul>
+<li>Clustering hiérarchique agglomératif<br>
+</li>
+<li><strong>k-means</strong> (algorithme de Lloyd)<br>
+</li>
+<li>Clustering spectral<br>
+</li>
+<li>Détection de communautés<br>
+</li>
+<li>Clustering en haute dimension<br>
+</li>
+<li>Cartes auto-organisatrices (SOM)<br>
+</li>
+<li>Neural Gas</li>
+</ul>
+<p>La recherche sur le clustering est active depuis au moins 50 ans.</p>
+<hr>
+</section>
+<section id="clustering-hiérarchique-agglomératif" class="level3">
+<h3 class="anchored" data-anchor-id="clustering-hiérarchique-agglomératif">Clustering hiérarchique agglomératif</h3>
+<p>Processus itératif :</p>
 <ol type="1">
-<li><span class="math inline">\(C_k \neq \emptyset\)</span> pour tout <span class="math inline">\(k = 1, \dots, K\)</span> (clusters non vides)</li>
-<li><span class="math inline">\(\bigcup_{k=1}^K C_k = X\)</span> (chaque point appartient à un cluster)</li>
-<li><span class="math inline">\(C_k \cap C_{k'} = \emptyset\)</span> pour <span class="math inline">\(k \neq k'\)</span> (les clusters sont disjoints)</li>
+<li>Initialisation : chaque donnée est un cluster<br>
+</li>
+<li>Trouver la paire de clusters la plus proche<br>
+</li>
+<li>Fusionner ces deux clusters<br>
+</li>
+<li>Itérer depuis l’étape 2 jusqu’à la fin</li>
 </ol>
-<p>De plus, nous voulons souvent que les points au sein d’un même cluster soient plus similaires entre eux qu’aux points d’autres clusters. La qualité d’un clustering est généralement mesurée par une fonction objectif, comme minimiser la somme des carrés des distances intra-cluster (dans k-means) ou maximiser la séparation inter-cluster.</p>
-<p>Dans le contexte de k-means, le clustering est formalisé comme un problème d’optimisation : trouver les représentants de clusters <span class="math inline">\(\mu_1, \dots, \mu_K\)</span> et les variables d’affectation binaires <span class="math inline">\(z_{ik}\)</span> qui minimisent :</p>
+<p>On obtient un <strong>dendrogramme</strong>.</p>
+<p>La distance entre clusters peut être définie par :</p>
+<ul>
+<li>Distance entre centres<br>
+</li>
+<li>Distance maximale<br>
+</li>
+<li>Distance minimale</li>
+</ul>
+<p>Le nombre de clusters est <strong>inconnu à priori</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="k-means" class="level2">
+<h2 class="anchored" data-anchor-id="k-means">k-means</h2>
+<section id="stratégie" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie">Stratégie</h3>
+<p>Le <strong>k-means</strong> postule un espace métrique (euclidien) sur les données.<br>
+C’est un algorithme d’affectation <strong>binaire</strong> : chaque donnée appartient à un et un seul cluster.</p>
+<section id="modèle" class="level4">
+<h4 class="anchored" data-anchor-id="modèle">Modèle</h4>
+<p>Données :<br>
+<span class="math inline">\(\mathcal{X} = \{ \mathbf{x}_i \}_{i \in [M]} \subset \Omega \subseteq \mathbb{R}^D\)</span><br>
+Nombre de clusters : <span class="math inline">\(K \in \mathbb{N}^*\)</span></p>
+<p>Variables d’affectation binaires latentes :<br>
+<span class="math inline">\(\mathbf{Z} = \{ z_{ik} \}\)</span> avec <span class="math inline">\(z_{ik} \in \{0, 1\}\)</span></p>
+<p>Représentants des clusters :<br>
+<span class="math inline">\(\mathbf{M} = \{ \mu_k \}_{k \in [K]}\)</span> avec <span class="math inline">\(\mu_k \in \mathbb{R}^D\)</span></p>
+<p>Paramètres :<br>
+<span class="math inline">\(\theta = [M, Z]\)</span></p>
+<hr>
+</section>
+</section>
+<section id="fonction-de-coût" class="level3">
+<h3 class="anchored" data-anchor-id="fonction-de-coût">Fonction de coût</h3>
+<p>Le k-means cherche à minimiser :</p>
 <p><span class="math display">\[
-L(\theta, X) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|x_i - \mu_k\|_2^2
+\hat{\theta} = [\hat{M}, \hat{Z}] = \underset{\theta = [M, Z]}{\mathrm{argmin}} \mathcal{L}(\theta, \mathcal{X})
 \]</span></p>
-<p>sous contrainte que <span class="math inline">\(z_{ik} \in \{0,1\}\)</span> et <span class="math inline">\(\sum_{k=1}^K z_{ik} = 1\)</span> pour tout <span class="math inline">\(i\)</span>.</p>
-<hr>
-</section>
-<section id="en-quel-sens-est-ce-une-technique-non-supervisée" class="level3">
-<h3 class="anchored" data-anchor-id="en-quel-sens-est-ce-une-technique-non-supervisée">2. En quel sens est-ce une technique non supervisée ?</h3>
-<p><strong>Intuition :</strong></p>
-<p>Le clustering est non supervisé car il n’utilise pas de données étiquetées ou de sorties cibles. L’algorithme doit découvrir la structure et les regroupements dans les données par lui-même, sans guidance de catégories prédéfinies.</p>
-<p><strong>Réponse détaillée :</strong></p>
-<p>Dans l’apprentissage supervisé, nous avons des paires entrée-sortie <span class="math inline">\((x_i, y_i)\)</span> où <span class="math inline">\(y_i\)</span> est une étiquette ou une valeur cible. L’algorithme apprend une mapping des entrées vers les sorties. En revanche, le clustering est non supervisé car :</p>
-<ol type="1">
-<li><strong>Aucune étiquette :</strong> Nous avons seulement les données d’entrée <span class="math inline">\(X = \{x_1, \dots, x_N\}\)</span> sans aucune valeur cible correspondante <span class="math inline">\(y_i\)</span>.</li>
-<li><strong>Auto-découverte :</strong> L’algorithme doit identifier les motifs, similarités et regroupements uniquement à partir des données d’entrée elles-mêmes.</li>
-<li><strong>Guidé par un objectif :</strong> Au lieu de minimiser l’erreur de prédiction par rapport à des étiquettes connues, les algorithmes de clustering optimisent des critères internes comme la similarité intra-cluster ou la séparation inter-cluster.</li>
-<li><strong>Nature exploratoire :</strong> Le clustering est souvent utilisé pour l’analyse exploratoire de données pour découvrir des structures inconnues, plutôt que pour la prédiction.</li>
-</ol>
-<p>L’algorithme k-means illustre l’apprentissage non supervisé : il partitionne les données basé sur la proximité aux centres de clusters, sans aucune guidance externe sur l’apparence des clusters ou quels points doivent être regroupés.</p>
-<hr>
-</section>
-<section id="expliquer-pourquoi-k-means-est-intrinsèquement-lié-à-la-métrique-euclidienne" class="level3">
-<h3 class="anchored" data-anchor-id="expliquer-pourquoi-k-means-est-intrinsèquement-lié-à-la-métrique-euclidienne">3. Expliquer pourquoi k-means est intrinsèquement lié à la métrique euclidienne ?</h3>
-<p><strong>Intuition :</strong></p>
-<p>k-means utilise la distance euclidienne au carré dans sa fonction objectif, et les étapes de mise à jour de l’algorithme reposent sur des propriétés spécifiques à la géométrie euclidienne, notamment que la moyenne (centroïde) minimise la somme des distances euclidiennes au carré.</p>
-<p><strong>Réponse détaillée :</strong></p>
-<p>k-means est intrinsèquement lié à la métrique euclidienne pour plusieurs raisons :</p>
-<ol type="1">
-<li><p><strong>Fonction objectif :</strong> La fonction de perte est <span class="math inline">\(L = \sum_{i=1}^N \sum_{k=1}^K z_{ik} \|x_i - \mu_k\|_2^2\)</span>, où <span class="math inline">\(\|\cdot\|_2\)</span> est la norme euclidienne. Cela utilise explicitement la distance euclidienne au carré.</p></li>
-<li><p><strong>Étape d’affectation :</strong> Chaque point est assigné au cluster dont le centroïde est le plus proche, où “le plus proche” est mesuré par la distance euclidienne.</p></li>
-<li><p><strong>Étape de mise à jour :</strong> Le centroïde du cluster <span class="math inline">\(\mu_k\)</span> est mis à jour vers la moyenne des points assignés au cluster <span class="math inline">\(k\)</span> : <span class="math inline">\(\mu_k = \frac{1}{N_k} \sum_{i: z_{ik}=1} x_i\)</span>. Cette formule apparaît parce que la moyenne minimise la somme des distances euclidiennes au carré :</p>
+<p>avec :</p>
 <p><span class="math display">\[
-\mu_k = \arg\min_{\mu} \sum_{i: z_{ik}=1} \|x_i - \mu\|_2^2
-\]</span></p></li>
-<li><p><strong>Interprétation géométrique :</strong> L’algorithme partitionne l’espace en cellules de Voronoi basées sur la distance euclidienne aux centres de clusters.</p></li>
-</ol>
-<p>Si nous utilisions une métrique différente (par exemple, la distance de Manhattan), la moyenne ne serait plus le minimiseur de la somme des distances, et l’algorithme devrait être modifié (conduisant à k-medoids ou d’autres variantes). Ainsi, k-means est fondamentalement conçu pour l’espace euclidien.</p>
-<hr>
-</section>
-<section id="pourquoi-dit-on-que-k-means-considère-un-modèle-gaussien-pour-les-clusters" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-dit-on-que-k-means-considère-un-modèle-gaussien-pour-les-clusters">4. Pourquoi dit-on que k-means considère un modèle gaussien pour les clusters ?</h3>
-<p><strong>Intuition :</strong></p>
-<p>k-means peut être dérivé comme un cas spécial d’un modèle de mélange gaussien (GMM) où chaque cluster a une distribution gaussienne avec des matrices de covariance égales et sphériques, et où nous prenons la limite lorsque la variance tend vers zéro.</p>
-<p><strong>Réponse détaillée :</strong></p>
-<p>Considérons un modèle de mélange gaussien avec <span class="math inline">\(K\)</span> composantes, où chaque composante <span class="math inline">\(k\)</span> a :</p>
-<ul>
-<li>Poids <span class="math inline">\(\pi_k\)</span></li>
-<li>Moyenne <span class="math inline">\(\mu_k\)</span></li>
-<li>Matrice de covariance <span class="math inline">\(\Sigma_k = \sigma^2 I\)</span> (sphérique, variance égale)</li>
-</ul>
-<p>L’algorithme EM pour ce GMM implique :</p>
-<ul>
-<li><strong>E-step :</strong> Calculer les responsabilités <span class="math inline">\(\gamma_{ik} = \frac{\pi_k \mathcal{N}(x_i|\mu_k, \sigma^2 I)}{\sum_{j=1}^K \pi_j \mathcal{N}(x_i|\mu_j, \sigma^2 I)}\)</span></li>
-<li><strong>M-step :</strong> Mettre à jour les paramètres en utilisant des statistiques pondérées</li>
-</ul>
-<p>Maintenant, considérons la limite <span class="math inline">\(\sigma^2 \to 0\)</span> :</p>
-<ol type="1">
-<li>La distribution gaussienne devient fortement pic autour de sa moyenne.</li>
-<li>Les responsabilités <span class="math inline">\(\gamma_{ik}\)</span> deviennent binaires : <span class="math inline">\(\gamma_{ik} = 1\)</span> pour le <span class="math inline">\(\mu_k\)</span> le plus proche, et <span class="math inline">\(0\)</span> sinon (affectation hard).</li>
-<li>La mise à jour du M-step pour <span class="math inline">\(\mu_k\)</span> devient la moyenne des points assignés au cluster <span class="math inline">\(k\)</span>.</li>
-</ol>
-<p>Ceci est exactement l’algorithme k-means. Par conséquent, k-means suppose implicitement que chaque cluster suit une distribution gaussienne avec :</p>
-<ul>
-<li>Covariances sphériques égales (<span class="math inline">\(\Sigma_k = \sigma^2 I\)</span>)</li>
-<li>Poids de mélange égaux (<span class="math inline">\(\pi_k = 1/K\)</span>)</li>
-<li>Variance infinitésimale (<span class="math inline">\(\sigma^2 \to 0\)</span>)</li>
-</ul>
-<p>Ainsi, bien que k-means ne modélise pas explicitement les probabilités, il correspond à un cas limite d’un modèle de mélange gaussien.</p>
-<hr>
-</section>
-<section id="lalgorithme-k-means-est-il-exact" class="level3">
-<h3 class="anchored" data-anchor-id="lalgorithme-k-means-est-il-exact">5. L’algorithme k-means est-il exact ?</h3>
-<p><strong>Intuition :</strong></p>
-<p>Non, k-means n’est pas un algorithme d’optimisation exact. Il trouve un optimum local plutôt que l’optimum global, et sa solution dépend fortement de l’initialisation.</p>
-<p><strong>Réponse détaillée :</strong></p>
-<p>k-means n’est <strong>pas exact</strong> de plusieurs manières importantes :</p>
-<ol type="1">
-<li><p><strong>Problème NP-difficile :</strong> Minimiser la fonction objectif de k-means (somme des carrés des distances) est NP-difficile en général. Il n’existe pas d’algorithme en temps polynomial connu qui garantit de trouver l’optimum global.</p></li>
-<li><p><strong>Optimum local :</strong> L’algorithme k-means (descente de coordonnées) converge vers un minimum local de la fonction objectif. Différentes initialisations peuvent conduire à différents minima locaux.</p></li>
-<li><p><strong>Sensibilité à l’initialisation :</strong> La qualité du clustering final dépend critique-ment du choix initial des centres de clusters. Une mauvaise initialisation peut conduire à des résultats sous-optimaux.</p></li>
-<li><p><strong>Garanties d’approximation :</strong> Bien que k-means lui-même n’ait pas de garanties d’approximation, il existe des algorithmes (comme l’initialisation k-means++) qui fournissent des bornes d’approximation prouvées pour le problème k-means.</p></li>
-<li><p><strong>Convergence vers un minimum local :</strong> L’algorithme est garanti de converger, mais seulement vers un minimum local. Il n’y a pas de garantie que ce minimum local soit proche du minimum global.</p></li>
-</ol>
-<p>Ainsi, en pratique, k-means est typiquement exécuté plusieurs fois avec différentes initialisations, et le meilleur résultat (plus faible perte) est sélectionné.</p>
-<hr>
-</section>
-<section id="quels-sont-les-principes-pour-initialiser-k-means" class="level3">
-<h3 class="anchored" data-anchor-id="quels-sont-les-principes-pour-initialiser-k-means">6. Quels sont les principes pour initialiser k-means ?</h3>
-<p><strong>Intuition :</strong></p>
-<p>Une bonne initialisation vise à disperser les centres de clusters à travers l’espace des données pour capturer différentes régions de densité, ce qui conduit à une convergence plus rapide et de meilleures solutions.</p>
-<p><strong>Réponse détaillée :</strong></p>
-<p>Plusieurs principes d’initialisation existent pour k-means :</p>
-<ol type="1">
-<li><p><strong>Initialisation aléatoire :</strong> Sélectionner aléatoirement <span class="math inline">\(K\)</span> points de données comme centres initiaux. C’est simple mais peut conduire à de mauvais résultats si les centres sont proches les uns des autres.</p></li>
-<li><p><strong>k-means++ :</strong> Une méthode d’initialisation intelligente qui disperse les centres initiaux :</p>
-<ul>
-<li>Étape 1 : Choisir le premier centre uniformément au hasard parmi les points de données.</li>
-<li>Étape 2 : Pour chaque point de données <span class="math inline">\(x_i\)</span>, calculer <span class="math inline">\(D(x_i)\)</span>, la distance au centre déjà choisi le plus proche.</li>
-<li>Étape 3 : Choisir le centre suivant parmi les points de données avec une probabilité proportionnelle à <span class="math inline">\(D(x_i)^2\)</span>.</li>
-<li>Étape 4 : Répéter les étapes 2-3 jusqu’à ce que <span class="math inline">\(K\)</span> centres soient sélectionnés.</li>
-</ul>
-<p>Cela encourage les centres à être éloignés les uns des autres et à couvrir différentes parties du jeu de données.</p></li>
-<li><p><strong>Initialisation basée sur la densité :</strong> Choisir les centres dans les régions de haute densité des données.</p></li>
-<li><p><strong>Parcours du plus éloigné d’abord :</strong> Sélectionner les centres qui sont maximalement éloignés les uns des autres.</p></li>
-<li><p><strong>Utilisation de connaissances du domaine :</strong> Si une information préalable sur les emplacements des clusters est disponible, l’utiliser pour initialiser les centres.</p></li>
-</ol>
-<p>k-means++ est largement utilisé car il fournit des garanties théoriques (ratio d’approximation borné) et fonctionne bien en pratique.</p>
-<hr>
-</section>
-<section id="quest-ce-que-lalgorithme-de-descente-de-coordonnées" class="level3">
-<h3 class="anchored" data-anchor-id="quest-ce-que-lalgorithme-de-descente-de-coordonnées">7. Qu’est-ce que l’algorithme de descente de coordonnées ?</h3>
-<p><strong>Intuition :</strong></p>
-<p>La descente de coordonnées est un algorithme d’optimisation qui minimise une fonction en optimisant itérativement le long d’une coordonnée (variable) à la fois, tout en gardant les autres coordonnées fixes.</p>
-<p><strong>Réponse détaillée :</strong></p>
-<p>La descente de coordonnées, également connue sous le nom de minimisation alternée, est une technique d’optimisation itérative pour minimiser une fonction <span class="math inline">\(f(x_1, x_2, \dots, x_n)\)</span>. L’idée de base est :</p>
-<ol type="1">
-<li>Initialiser <span class="math inline">\(x = (x_1, \dots, x_n)\)</span>.</li>
-<li>Pour <span class="math inline">\(t = 1, 2, \dots\)</span> jusqu’à convergence :
-<ul>
-<li>Pour <span class="math inline">\(i = 1, \dots, n\)</span> :
-<ul>
-<li>Mettre à jour <span class="math inline">\(x_i\)</span> pour minimiser <span class="math inline">\(f(x_1, \dots, x_{i-1}, \cdot, x_{i+1}, \dots, x_n)\)</span> tout en gardant les autres coordonnées fixes.</li>
-</ul></li>
-</ul></li>
-</ol>
-<p>Mathématiquement, à l’itération <span class="math inline">\(t\)</span> pour la coordonnée <span class="math inline">\(i\)</span> :</p>
-<p><span class="math display">\[
-x_i^{(t+1)} = \arg\min_{y} f(x_1^{(t+1)}, \dots, x_{i-1}^{(t+1)}, y, x_{i+1}^{(t)}, \dots, x_n^{(t)})
+\mathcal{L}(\theta, \mathcal{X}) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \| \mathbf{x}_i - \mu_k \|_2^2
 \]</span></p>
-<p><strong>Propriétés :</strong></p>
+<p>L’optimisation exacte est <strong>NP-difficile</strong> → on utilise une <strong>descente de coordonnées</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="descente-de-coordonnées" class="level2">
+<h2 class="anchored" data-anchor-id="descente-de-coordonnées">Descente de coordonnées</h2>
+<p>Algorithme de minimisation alternée :</p>
+<p>Soit <span class="math inline">\(f : \mathbb{R}^D \mapsto \mathbb{R}\)</span>, on cherche :</p>
+<p><span class="math display">\[
+x^* = \arg \min_{x \in \mathbb{R}^D} f(x)
+\]</span></p>
+<p>On définit pour <span class="math inline">\(d \in [D]\)</span> :</p>
+<p><span class="math display">\[
+f_d(x, y) = f([x_{(1)}, \dots, x_{(d-1)}, y, x_{(d+1)}, \dots, x_{(D)}]^\top)
+\]</span></p>
+<p>On minimise alternativement :</p>
+<p><span class="math display">\[
+x^{(t+1)}_{(d)} = \underset{y}{\arg \min} f_d(x^{(t)}, y)
+\]</span></p>
+<hr>
+</section>
+<section id="application-à-k-means" class="level2">
+<h2 class="anchored" data-anchor-id="application-à-k-means">Application à k-means</h2>
+<p>On alterne l’optimisation de <span class="math inline">\(Z\)</span> et <span class="math inline">\(M\)</span>.</p>
+<p>Pour un <span class="math inline">\(Z\)</span> fixé, le représentant optimal d’un cluster est le <strong>centre de masse</strong> :</p>
+<p><span class="math display">\[
+\mu_k = \frac{\sum_{i=1}^{N} z_{ik} \mathbf{x}_i}{\sum_{i=1}^{N} z_{ik}}
+\]</span></p>
+<p>Pour un <span class="math inline">\(M\)</span> fixé, on affecte chaque donnée au cluster le plus proche :</p>
+<p><span class="math display">\[
+z_{ik} = 1 \quad \text{si } k = \arg \min_j \| \mathbf{x}_i - \mu_j \|_2^2
+\]</span></p>
+<hr>
+<section id="algorithme-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="algorithme-k-means">Algorithme k-means</h3>
+<ol type="1">
+<li>Initialiser les représentants <span class="math inline">\(M^{(0)}\)</span><br>
+</li>
+<li><strong>Étape d’affectation</strong> : étant donné <span class="math inline">\(M^{(t)}\)</span>, affecter chaque donnée au représentant le plus proche → <span class="math inline">\(Z^{(t)}\)</span><br>
+</li>
+<li><strong>Étape de mise à jour</strong> : étant donné <span class="math inline">\(Z^{(t)}\)</span>, calculer les nouveaux représentants <span class="math inline">\(M^{(t+1)}\)</span> comme centres de masse<br>
+</li>
+<li>Répéter jusqu’à convergence (centres stables ou affectation stable)</li>
+</ol>
+<p>L’étape 2 est similaire à une <strong>étape E</strong> (Expectation), l’étape 3 à une <strong>étape M</strong> (Maximisation), en affectation dure (cf.&nbsp;EM).</p>
+<hr>
+</section>
+<section id="propriétés" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés">Propriétés</h3>
 <ul>
-<li>Simple à implémenter si les minimisations à une variable sont faciles.</li>
-<li>Peut converger lentement si les variables sont hautement corrélées.</li>
-<li>Garanti de converger pour les fonctions convexes et différentiables.</li>
+<li>La perte décroît à chaque itération (minimisation alternée de fonctions convexes)<br>
+</li>
+<li>Nombre d’itérations fini (nombre fini d’affectations)<br>
+</li>
+<li>Étape d’affectation = construction du <strong>diagramme de Voronoi</strong> discret<br>
+</li>
+<li>Résultat = <strong>optimum local</strong> (problème NP-dur)<br>
+</li>
+<li>Sensible à l’initialisation</li>
 </ul>
-<p><strong>Application à k-means :</strong></p>
-<p>Dans k-means, nous utilisons la descente de coordonnées par blocs avec deux blocs : les affectations <span class="math inline">\(Z\)</span> et les centres <span class="math inline">\(M\)</span>.</p>
+<hr>
+</section>
+<section id="k-means-1" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-1">k-means++</h3>
+<p>Initialisation des représentants pour les <strong>maximiser éloignés</strong> :</p>
+<ol type="1">
+<li>Choisir <span class="math inline">\(\mu_1^0\)</span> aléatoirement parmi les données<br>
+</li>
+<li>Pour chaque donnée non sélectionnée, calculer la distance au représentant le plus proche déjà choisi :<br>
+<span class="math inline">\(\Delta_j = \min_{m} \| \mathbf{x}_j - \mu_m^0 \|_2^2\)</span><br>
+</li>
+<li>Choisir le prochain représentant avec une probabilité proportionnelle à <span class="math inline">\(\Delta_j\)</span><br>
+</li>
+<li>Répéter jusqu’à avoir <span class="math inline">\(K\)</span> représentants</li>
+</ol>
+<p>Cette méthode améliore la qualité des clusters et accélère la convergence.</p>
+<hr>
+</section>
+</section>
+<section id="résumé" class="level2">
+<h2 class="anchored" data-anchor-id="résumé">Résumé</h2>
 <ul>
-<li><strong>Minimiser par rapport à <span class="math inline">\(Z\)</span> (étape d’affectation) :</strong> Fixer <span class="math inline">\(M\)</span>, assigner chaque point au centre le plus proche.</li>
-<li><strong>Minimiser par rapport à <span class="math inline">\(M\)</span> (étape de mise à jour) :</strong> Fixer <span class="math inline">\(Z\)</span>, mettre à jour chaque centre vers la moyenne de ses points assignés.</li>
+<li>Le clustering fait partie des méthodes <strong>non supervisées</strong><br>
+</li>
+<li><strong>k-means</strong> est l’une des techniques les plus populaires<br>
+</li>
+<li>Affectation <strong>binaire</strong> (dure)<br>
+</li>
+<li>Critère d’optimisation NP-dur → solution approchée par <strong>descente de coordonnées</strong><br>
+</li>
+<li>Résultat dépend de l’initialisation<br>
+</li>
+<li><strong>k-means++</strong> : initialisation heuristique efficace<br>
+</li>
+<li>Le clustering peut être <strong>contraint</strong> (liens MUST/CANNOT)</li>
 </ul>
-<p>Cette minimisation alternée garantit que la fonction de perte diminue à chaque étape et converge vers un minimum local.</p>
+<hr>
+</section>
+<section id="exemples-de-questions" class="level2">
+<h2 class="anchored" data-anchor-id="exemples-de-questions">Exemples de questions</h2>
+<ul>
+<li>Décrire formellement le clustering<br>
+</li>
+<li>En quoi est-ce une technique non supervisée ?<br>
+</li>
+<li>Pourquoi k-means est-il lié à la métrique euclidienne ?<br>
+</li>
+<li>Pourquoi dit-on que k-means suppose un modèle gaussien pour les clusters ?<br>
+</li>
+<li>L’algorithme k-means est-il exact ?<br>
+</li>
+<li>Quels sont les principes d’initialisation de k-means ?<br>
+</li>
+<li>Qu’est-ce que la descente de coordonnées ?</li>
+</ul>
+<p>Il est fortement conseillé de maîtriser l’algèbre présentée dans ce chapitre.</p>
 
 
 </section>
