@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds7s1 – ISS</title>
+<title>ds31 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -107,10 +72,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -322,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds3.html">Principal Component Analysis</a></li><li class="breadcrumb-item"><a href="./ds31.html">Cours : Analyse en Composantes Principales (PCA)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -406,7 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds31.html" class="sidebar-item-text sidebar-link">
+  <a href="./ds31.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Cours : Analyse en Composantes Principales (PCA)</span></a>
   </div>
 </li>
@@ -488,7 +479,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Intuition</span></a>
   </div>
 </li>
@@ -539,404 +530,393 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intuition" id="toc-intuition" class="nav-link active" data-scroll-target="#intuition">Intuition</a>
+  <li><a href="#cours-analyse-en-composantes-principales-pca" id="toc-cours-analyse-en-composantes-principales-pca" class="nav-link active" data-scroll-target="#cours-analyse-en-composantes-principales-pca">Cours : Analyse en Composantes Principales (PCA)</a>
   <ul class="collapse">
-  <li><a href="#le-problème-fondamental-regrouper-sans-guide" id="toc-le-problème-fondamental-regrouper-sans-guide" class="nav-link" data-scroll-target="#le-problème-fondamental-regrouper-sans-guide">1. Le Problème Fondamental : Regrouper sans Guide</a></li>
-  <li><a href="#lintuition-géométrique-le-jeu-des-chaises-musicales" id="toc-lintuition-géométrique-le-jeu-des-chaises-musicales" class="nav-link" data-scroll-target="#lintuition-géométrique-le-jeu-des-chaises-musicales">2. L’Intuition Géométrique : Le Jeu des Chaises Musicales</a></li>
-  <li><a href="#la-formulation-mathématique-minimiser-lénergie" id="toc-la-formulation-mathématique-minimiser-lénergie" class="nav-link" data-scroll-target="#la-formulation-mathématique-minimiser-lénergie">3. La Formulation Mathématique : Minimiser l’Énergie</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#formalisation" id="toc-formalisation" class="nav-link" data-scroll-target="#formalisation">Formalisation</a>
   <ul class="collapse">
-  <li><a href="#le-critère-à-minimiser" id="toc-le-critère-à-minimiser" class="nav-link" data-scroll-target="#le-critère-à-minimiser">Le Critère à Minimiser</a></li>
-  <li><a href="#les-deux-équations-magiques" id="toc-les-deux-équations-magiques" class="nav-link" data-scroll-target="#les-deux-équations-magiques">Les Deux Équations Magiques</a></li>
+  <li><a href="#maximisation-de-la-variance" id="toc-maximisation-de-la-variance" class="nav-link" data-scroll-target="#maximisation-de-la-variance">Maximisation de la variance</a></li>
+  <li><a href="#formalisation-mathématique" id="toc-formalisation-mathématique" class="nav-link" data-scroll-target="#formalisation-mathématique">Formalisation mathématique</a></li>
+  <li><a href="#solution-par-optimisation-contrainte" id="toc-solution-par-optimisation-contrainte" class="nav-link" data-scroll-target="#solution-par-optimisation-contrainte">Solution par optimisation contrainte</a></li>
+  <li><a href="#dualité-variance-erreur" id="toc-dualité-variance-erreur" class="nav-link" data-scroll-target="#dualité-variance-erreur">Dualité variance-erreur</a></li>
   </ul></li>
-  <li><a href="#le-problème-de-linitialisation-où-placer-les-premières-chaises" id="toc-le-problème-de-linitialisation-où-placer-les-premières-chaises" class="nav-link" data-scroll-target="#le-problème-de-linitialisation-où-placer-les-premières-chaises">4. Le Problème de l’Initialisation : Où Placer les Premières Chaises ?</a>
+  <li><a href="#interprétation-physique" id="toc-interprétation-physique" class="nav-link" data-scroll-target="#interprétation-physique">Interprétation physique</a></li>
+  <li><a href="#structure-de-lespace-latent" id="toc-structure-de-lespace-latent" class="nav-link" data-scroll-target="#structure-de-lespace-latent">Structure de l’espace latent</a>
   <ul class="collapse">
-  <li><a href="#le-dilemme" id="toc-le-dilemme" class="nav-link" data-scroll-target="#le-dilemme">Le Dilemme</a></li>
-  <li><a href="#k-means-la-solution-intelligente" id="toc-k-means-la-solution-intelligente" class="nav-link" data-scroll-target="#k-means-la-solution-intelligente">K-means++ : La Solution Intelligente</a></li>
+  <li><a href="#propriétés-fondamentales" id="toc-propriétés-fondamentales" class="nav-link" data-scroll-target="#propriétés-fondamentales">Propriétés fondamentales</a></li>
+  <li><a href="#transformation-des-données" id="toc-transformation-des-données" class="nav-link" data-scroll-target="#transformation-des-données">Transformation des données</a></li>
   </ul></li>
-  <li><a href="#le-choix-de-k-combien-de-chaises" id="toc-le-choix-de-k-combien-de-chaises" class="nav-link" data-scroll-target="#le-choix-de-k-combien-de-chaises">5. Le Choix de K : Combien de Chaises ?</a>
+  <li><a href="#structure-du-modèle" id="toc-structure-du-modèle" class="nav-link" data-scroll-target="#structure-du-modèle">Structure du modèle</a>
   <ul class="collapse">
-  <li><a href="#le-problème-principal" id="toc-le-problème-principal" class="nav-link" data-scroll-target="#le-problème-principal">Le Problème Principal</a></li>
-  <li><a href="#méthodes-pour-choisir-k" id="toc-méthodes-pour-choisir-k" class="nav-link" data-scroll-target="#méthodes-pour-choisir-k">Méthodes pour Choisir K</a></li>
+  <li><a href="#hypothèse-sous-jacente" id="toc-hypothèse-sous-jacente" class="nav-link" data-scroll-target="#hypothèse-sous-jacente">Hypothèse sous-jacente</a></li>
+  <li><a href="#transformation-exacte" id="toc-transformation-exacte" class="nav-link" data-scroll-target="#transformation-exacte">Transformation exacte</a></li>
   </ul></li>
-  <li><a href="#k-means-vs-gmm-le-duel-des-clusters" id="toc-k-means-vs-gmm-le-duel-des-clusters" class="nav-link" data-scroll-target="#k-means-vs-gmm-le-duel-des-clusters">6. K-means vs GMM : Le Duel des Clusters</a></li>
-  <li><a href="#les-pièges-de-k-means-et-comment-les-éviter" id="toc-les-pièges-de-k-means-et-comment-les-éviter" class="nav-link" data-scroll-target="#les-pièges-de-k-means-et-comment-les-éviter">7. Les Pièges de K-means et Comment les Éviter</a>
+  <li><a href="#pca-pour-la-réduction-de-dimension" id="toc-pca-pour-la-réduction-de-dimension" class="nav-link" data-scroll-target="#pca-pour-la-réduction-de-dimension">PCA pour la réduction de dimension</a>
   <ul class="collapse">
-  <li><a href="#piège-1-les-clusters-non-sphériques" id="toc-piège-1-les-clusters-non-sphériques" class="nav-link" data-scroll-target="#piège-1-les-clusters-non-sphériques">Piège 1 : Les Clusters Non Sphériques</a></li>
-  <li><a href="#piège-2-les-clusters-de-tailles-très-différentes" id="toc-piège-2-les-clusters-de-tailles-très-différentes" class="nav-link" data-scroll-target="#piège-2-les-clusters-de-tailles-très-différentes">Piège 2 : Les Clusters de Tailles Très Différentes</a></li>
-  <li><a href="#piège-3-la-sensibilité-aux-outliers" id="toc-piège-3-la-sensibilité-aux-outliers" class="nav-link" data-scroll-target="#piège-3-la-sensibilité-aux-outliers">Piège 3 : La Sensibilité aux Outliers</a></li>
-  <li><a href="#piège-4-linterprétation-des-résultats" id="toc-piège-4-linterprétation-des-résultats" class="nav-link" data-scroll-target="#piège-4-linterprétation-des-résultats">Piège 4 : L’Interprétation des Résultats</a></li>
+  <li><a href="#approximation-de-bas-rang" id="toc-approximation-de-bas-rang" class="nav-link" data-scroll-target="#approximation-de-bas-rang">Approximation de bas rang</a></li>
+  <li><a href="#géométrie-de-pca" id="toc-géométrie-de-pca" class="nav-link" data-scroll-target="#géométrie-de-pca">Géométrie de PCA</a></li>
   </ul></li>
-  <li><a href="#en-pratique-la-recette-complète" id="toc-en-pratique-la-recette-complète" class="nav-link" data-scroll-target="#en-pratique-la-recette-complète">8. En Pratique : La Recette Complète</a>
+  <li><a href="#pca-pratique-mode-demploi" id="toc-pca-pratique-mode-demploi" class="nav-link" data-scroll-target="#pca-pratique-mode-demploi">PCA pratique : mode d’emploi</a>
   <ul class="collapse">
-  <li><a href="#étape-1-préparation-des-données" id="toc-étape-1-préparation-des-données" class="nav-link" data-scroll-target="#étape-1-préparation-des-données">Étape 1 : Préparation des Données</a></li>
-  <li><a href="#étape-2-choix-de-k" id="toc-étape-2-choix-de-k" class="nav-link" data-scroll-target="#étape-2-choix-de-k">Étape 2 : Choix de K</a></li>
-  <li><a href="#étape-3-exécution" id="toc-étape-3-exécution" class="nav-link" data-scroll-target="#étape-3-exécution">Étape 3 : Exécution</a></li>
-  <li><a href="#étape-4-validation" id="toc-étape-4-validation" class="nav-link" data-scroll-target="#étape-4-validation">Étape 4 : Validation</a></li>
+  <li><a href="#algorithme-étape-par-étape" id="toc-algorithme-étape-par-étape" class="nav-link" data-scroll-target="#algorithme-étape-par-étape">Algorithme étape par étape</a></li>
+  <li><a href="#stratégies-de-sélection-de-k" id="toc-stratégies-de-sélection-de-k" class="nav-link" data-scroll-target="#stratégies-de-sélection-de-k">Stratégies de sélection de <span class="math inline">\(K\)</span></a></li>
   </ul></li>
-  <li><a href="#les-variantes-de-k-means" id="toc-les-variantes-de-k-means" class="nav-link" data-scroll-target="#les-variantes-de-k-means">9. Les Variantes de K-means</a>
+  <li><a href="#pca-et-autoencodeurs-linéaires" id="toc-pca-et-autoencodeurs-linéaires" class="nav-link" data-scroll-target="#pca-et-autoencodeurs-linéaires">PCA et AutoEncodeurs Linéaires</a>
   <ul class="collapse">
-  <li><a href="#k-medoids" id="toc-k-medoids" class="nav-link" data-scroll-target="#k-medoids">K-medoids</a></li>
-  <li><a href="#mini-batch-k-means" id="toc-mini-batch-k-means" class="nav-link" data-scroll-target="#mini-batch-k-means">Mini-batch K-means</a></li>
-  <li><a href="#fuzzy-c-means" id="toc-fuzzy-c-means" class="nav-link" data-scroll-target="#fuzzy-c-means">Fuzzy C-means</a></li>
+  <li><a href="#architecture-dun-autoencodeur-linéaire" id="toc-architecture-dun-autoencodeur-linéaire" class="nav-link" data-scroll-target="#architecture-dun-autoencodeur-linéaire">Architecture d’un AutoEncodeur Linéaire</a></li>
+  <li><a href="#fonction-de-coût" id="toc-fonction-de-coût" class="nav-link" data-scroll-target="#fonction-de-coût">Fonction de coût</a></li>
+  <li><a href="#équivalence-avec-pca" id="toc-équivalence-avec-pca" class="nav-link" data-scroll-target="#équivalence-avec-pca">Équivalence avec PCA</a></li>
+  <li><a href="#généralisations" id="toc-généralisations" class="nav-link" data-scroll-target="#généralisations">Généralisations</a></li>
   </ul></li>
-  <li><a href="#fiche-de-révision-express" id="toc-fiche-de-révision-express" class="nav-link" data-scroll-target="#fiche-de-révision-express">10. Fiche de Révision Express</a></li>
-  <li><a href="#pour-loral-lhistoire-à-raconter" id="toc-pour-loral-lhistoire-à-raconter" class="nav-link" data-scroll-target="#pour-loral-lhistoire-à-raconter">11. Pour l’Oral : L’Histoire à Raconter</a></li>
-  <li><a href="#questions-fréquentes-à-lexamen" id="toc-questions-fréquentes-à-lexamen" class="nav-link" data-scroll-target="#questions-fréquentes-à-lexamen">12. Questions Fréquentes à l’Examen</a></li>
-  <li><a href="#le-mot-de-la-fin" id="toc-le-mot-de-la-fin" class="nav-link" data-scroll-target="#le-mot-de-la-fin">13. Le Mot de la Fin</a></li>
+  <li><a href="#alternatives-et-extensions" id="toc-alternatives-et-extensions" class="nav-link" data-scroll-target="#alternatives-et-extensions">Alternatives et extensions</a>
+  <ul class="collapse">
+  <li><a href="#pca-probabiliste" id="toc-pca-probabiliste" class="nav-link" data-scroll-target="#pca-probabiliste">PCA Probabiliste</a></li>
+  <li><a href="#pca-à-noyau-kernel-pca" id="toc-pca-à-noyau-kernel-pca" class="nav-link" data-scroll-target="#pca-à-noyau-kernel-pca">PCA à Noyau (Kernel PCA)</a></li>
+  <li><a href="#pca-local" id="toc-pca-local" class="nav-link" data-scroll-target="#pca-local">PCA Local</a></li>
+  <li><a href="#limitations-computationnelles" id="toc-limitations-computationnelles" class="nav-link" data-scroll-target="#limitations-computationnelles">Limitations computationnelles</a></li>
+  </ul></li>
+  <li><a href="#synthèse-et-conclusions" id="toc-synthèse-et-conclusions" class="nav-link" data-scroll-target="#synthèse-et-conclusions">Synthèse et conclusions</a></li>
+  <li><a href="#questions-dapprofondissement" id="toc-questions-dapprofondissement" class="nav-link" data-scroll-target="#questions-dapprofondissement">Questions d’approfondissement</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds7s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds31.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds3.html">Principal Component Analysis</a></li><li class="breadcrumb-item"><a href="./ds31.html">Cours : Analyse en Composantes Principales (PCA)</a></li></ol></nav></header>
 
 
 
 
 
-<section id="intuition" class="level1">
-<h1>Intuition</h1>
-<section id="le-problème-fondamental-regrouper-sans-guide" class="level2">
-<h2 class="anchored" data-anchor-id="le-problème-fondamental-regrouper-sans-guide">1. Le Problème Fondamental : Regrouper sans Guide</h2>
-<p><strong>Imaginez :</strong> On vous donne 1000 photos d’animaux non étiquetées et on vous demande : “Combien y a-t-il de types d’animaux différents, et quelles photos vont ensemble ?” C’est exactement le problème du clustering !</p>
-<p><strong>K-means</strong> répond à cette question en faisant <strong>une hypothèse simplificatrice</strong> : chaque type d’animal peut être représenté par une <strong>image moyenne</strong> (prototype), et chaque photo est proche de l’un de ces prototypes.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Concept Clé : Apprentissage non supervisé</strong> Le clustering est <strong>non supervisé</strong> : pas d’étiquettes, pas de professeur pour dire “ceci est un chat”. L’algorithme doit découvrir la structure par lui-même.</p>
-</div>
-</div>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Données non étiquetées] --&gt; B{Problème de clustering}
-    B --&gt; C[Approche k-means :&lt;br/&gt;trouver K centres&lt;br/&gt;et assigner chaque point&lt;br/&gt;au centre le plus proche]
-    B --&gt; D[Approche hiérarchique :&lt;br/&gt;construire un arbre&lt;br/&gt;de regroupements]
-    C --&gt; E[Avantage : simple, rapide]
-    D --&gt; F[Avantage : visualisation&lt;br/&gt;par dendrogramme]
-    
-    style E fill:#e6f3ff
-    style F fill:#e6ffe6
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="cours-analyse-en-composantes-principales-pca" class="level1">
+<h1>Cours : Analyse en Composantes Principales (PCA)</h1>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>Les données brutes sont souvent représentées dans un espace de grande dimension, mais cette représentation n’est pas toujours optimale pour l’analyse ou la modélisation.</p>
+<ul>
+<li>Les représentations de base peuvent ne pas être optimales</li>
+<li>Les modèles latents permettent de révéler les facteurs sous-jacents (latents) qui gouvernent le processus étudié</li>
+<li>Cette approche utilise la corrélation statistique pour identifier des facteurs latents <strong>linéaires</strong></li>
+<li>Cela permet une simplification des données par réduction dimensionnelle raisonnée</li>
+</ul>
+<p>Nous allons explorer plusieurs interprétations de cette méthode fondamentale.</p>
+<p><strong>Lecture recommandée :</strong> [1] (chapitre 12) et [3] (chapitres 3 et 10.3)</p>
 </section>
-<section id="lintuition-géométrique-le-jeu-des-chaises-musicales" class="level2">
-<h2 class="anchored" data-anchor-id="lintuition-géométrique-le-jeu-des-chaises-musicales">2. L’Intuition Géométrique : Le Jeu des Chaises Musicales</h2>
-<p><strong>Analogie :</strong> Imaginez un jeu de chaises musicales avec K chaises (clusters) et N joueurs (points de données). Quand la musique s’arrête : 1. Chaque joueur court vers la chaise la plus proche <strong>(assignation)</strong> 2. On déplace chaque chaise au centre des joueurs qui l’entourent <strong>(mise à jour)</strong> 3. On recommence jusqu’à ce que les chaises ne bougent plus</p>
-<p><strong>C’est exactement k-means !</strong></p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[K chaises placées&lt;br/&gt;au hasard] --&gt; B[Musique s'arrête :&lt;br/&gt;chaque joueur court&lt;br/&gt;vers la chaise la plus proche]
-    B --&gt; C[On déplace chaque chaise&lt;br/&gt;au centre des joueurs&lt;br/&gt;qui l'entourent]
-    C --&gt; D{Les chaises ont-elles&lt;br/&gt;beaucoup bougé ?}
-    D --&gt;|Oui, recommencer| B
-    D --&gt;|Non, fin du jeu| E[Résultat : K groupes&lt;br/&gt;de joueurs]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="la-formulation-mathématique-minimiser-lénergie" class="level2">
-<h2 class="anchored" data-anchor-id="la-formulation-mathématique-minimiser-lénergie">3. La Formulation Mathématique : Minimiser l’Énergie</h2>
-<section id="le-critère-à-minimiser" class="level3">
-<h3 class="anchored" data-anchor-id="le-critère-à-minimiser">Le Critère à Minimiser</h3>
-<p>K-means cherche à minimiser :</p>
-<pre><code>L = somme sur tous les points de (distance au centre de son cluster)²</code></pre>
-<p><strong>Pourquoi au carré ?</strong> Deux raisons : 1. <strong>Mathématique</strong> : rend le problème plus facile à résoudre 2. <strong>Géométrique</strong> : pénalise plus les points très éloignés</p>
-</section>
-<section id="les-deux-équations-magiques" class="level3">
-<h3 class="anchored" data-anchor-id="les-deux-équations-magiques">Les Deux Équations Magiques</h3>
-<p><strong>Étape d’assignation (E-like) :</strong> Pour chaque point <code>x_i</code>, trouver le centre <code>μ_k</code> le plus proche :</p>
-<pre><code>Assigner x_i au cluster k qui minimise ||x_i - μ_k||²</code></pre>
-<p><strong>Étape de mise à jour (M-like) :</strong> Pour chaque cluster <code>k</code>, recalculer son centre :</p>
-<pre><code>μ_k = moyenne de tous les points assignés au cluster k</code></pre>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Pourquoi ça converge ?</strong> Chaque étape ne peut qu’améliorer (ou laisser inchangé) le critère. Comme il y a un nombre fini d’assignations possibles, l’algorithme doit terminer.</p>
-</div>
-</div>
+<section id="formalisation" class="level2">
+<h2 class="anchored" data-anchor-id="formalisation">Formalisation</h2>
+<section id="maximisation-de-la-variance" class="level3">
+<h3 class="anchored" data-anchor-id="maximisation-de-la-variance">Maximisation de la variance</h3>
+<section id="intuition-géométrique" class="level4">
+<h4 class="anchored" data-anchor-id="intuition-géométrique">Intuition géométrique</h4>
+<p>Étant donné un ensemble de données <span class="math inline">\(X \subset \Omega\)</span>, nous cherchons à décomposer <span class="math inline">\(\Omega\)</span> en sous-espaces tels que la projection de <span class="math inline">\(X\)</span> sur ces sous-espaces conserve le maximum d’<strong>information</strong>.</p>
+<p><strong>Question cruciale :</strong> Quelle information devrions-nous conserver ?</p>
+<ul>
+<li>Imaginez que <span class="math inline">\(X\)</span> soit presque contenu dans un plan 2D au sein d’un espace 3D</li>
+<li>Un choix pertinent serait de choisir comme sous-espace ce plan, avec une base <span class="math inline">\(\{ \mathbf{u}_1, \mathbf{u}_2 \}\)</span></li>
+</ul>
+<p><strong>Caractéristiques clés d’une bonne base :</strong></p>
+<ul>
+<li>Les données varient <strong>maximum</strong> le long de ces directions</li>
+<li>Les données varient <strong>minimum</strong> orthogonalement à ces directions (ex: <span class="math inline">\(\mathbf{u}_3\)</span>)</li>
+</ul>
 </section>
 </section>
-<section id="le-problème-de-linitialisation-où-placer-les-premières-chaises" class="level2">
-<h2 class="anchored" data-anchor-id="le-problème-de-linitialisation-où-placer-les-premières-chaises">4. Le Problème de l’Initialisation : Où Placer les Premières Chaises ?</h2>
-<section id="le-dilemme" class="level3">
-<h3 class="anchored" data-anchor-id="le-dilemme">Le Dilemme</h3>
-<p>Si toutes les chaises commencent dans le même coin, le jeu sera très long et donnera un mauvais résultat. <strong>K-means est très sensible à l’initialisation !</strong></p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Choix d'initialisation] --&gt; B[Mauvaise initialisation]
-    A --&gt; C[Bonne initialisation]
-    B --&gt; D[Convergence lente&lt;br/&gt;Clusters de mauvaise qualité&lt;br/&gt;Maximum local]
-    C --&gt; E[Convergence rapide&lt;br/&gt;Clusters de bonne qualité&lt;br/&gt;Maximum global (ou bon)]
-    
-    style D fill:#ffcccc
-    style E fill:#ccffcc
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="k-means-la-solution-intelligente" class="level3">
-<h3 class="anchored" data-anchor-id="k-means-la-solution-intelligente">K-means++ : La Solution Intelligente</h3>
-<p><strong>Principe :</strong> Éloigner les centres initiaux les uns des autres.</p>
-<p><strong>Algorithme :</strong> 1. Choisir un premier centre au hasard 2. Pour chaque point, calculer sa distance <code>D(x)</code> au centre le plus proche 3. Choisir le prochain centre avec une probabilité proportionnelle à <code>D(x)²</code> 4. Répéter jusqu’à avoir K centres</p>
-<p><strong>Pourquoi ça marche ?</strong> En favorisant les points éloignés, on couvre mieux l’espace des données.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Astuce pratique :</strong> Toujours utiliser k-means++ ou lancer k-means plusieurs fois avec différentes initialisations aléatoires et garder le meilleur résultat.</p>
-</div>
-</div>
+<section id="formalisation-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="formalisation-mathématique">Formalisation mathématique</h3>
+<p>Soit <span class="math inline">\(\mathcal{X}\)</span> nos données, et <span class="math inline">\(\{ \mathbf{u}_i \}_{i \in [D]}\)</span> une nouvelle base orthonormale de <span class="math inline">\(\mathbb{R}^D\)</span>.</p>
+<ul>
+<li>La <strong>Première Composante Principale</strong> <span class="math inline">\(\mathbf{u}_1\)</span> est choisie pour maximiser la variance des données projetées</li>
+<li><span class="math inline">\(\mathbf{u}_2\)</span> est ensuite choisie orthogonalement à <span class="math inline">\(\mathbf{u}_1\)</span>, et ainsi de suite</li>
+</ul>
+<section id="modèle-statistique" class="level4">
+<h4 class="anchored" data-anchor-id="modèle-statistique">Modèle statistique</h4>
+<p>Pour <span class="math inline">\(\mathcal{X}\)</span>, nous définissons :</p>
+<ul>
+<li><p><strong>Moyenne empirique :</strong></p>
+<p><span class="math display">\[
+\overline{\mathcal{X}} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i
+\]</span></p></li>
+<li><p><strong>Variance projetée sur <span class="math inline">\(\mathbf{u}_1\)</span> :</strong></p>
+<p><span class="math display">\[
+v_{\mathbf{u}_1} = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{u}_1^T \mathbf{x}_i - \mathbf{u}_1^T \overline{\mathcal{X}})^2 = \mathbf{u}_1^T \Sigma \mathbf{u}_1
+\]</span></p></li>
+</ul>
+<p>où <span class="math inline">\(\Sigma = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{x}_i - \overline{\mathbf{x}})(\mathbf{x}_i - \overline{\mathbf{x}})^T\)</span> est la <strong>matrice de covariance</strong>.</p>
+<p>Nous cherchons donc :</p>
+<p><span class="math display">\[
+\mathbf{u}_1 = \arg\max_{\mathbf{u}} \mathbf{u}^T \Sigma \mathbf{u} \quad \text{sous} \quad \mathbf{u}^T \mathbf{u} = 1
+\]</span></p>
 </section>
 </section>
-<section id="le-choix-de-k-combien-de-chaises" class="level2">
-<h2 class="anchored" data-anchor-id="le-choix-de-k-combien-de-chaises">5. Le Choix de K : Combien de Chaises ?</h2>
-<section id="le-problème-principal" class="level3">
-<h3 class="anchored" data-anchor-id="le-problème-principal">Le Problème Principal</h3>
-<p>K-means a besoin qu’on lui dise combien de clusters chercher. Mais dans la vraie vie, <strong>on ne sait pas à l’avance</strong> !</p>
+<section id="solution-par-optimisation-contrainte" class="level3">
+<h3 class="anchored" data-anchor-id="solution-par-optimisation-contrainte">Solution par optimisation contrainte</h3>
+<p>Nous formons le lagrangien :</p>
+<p><span class="math display">\[
+J(\mathbf{u}) = \mathbf{u}^T \Sigma \mathbf{u} + \lambda (1 - \mathbf{u}^T \mathbf{u})
+\]</span></p>
+<p>Les conditions d’optimalité donnent :</p>
+<p><span class="math display">\[
+\frac{\partial J(\mathbf{u})}{\partial \mathbf{u}} = 0 \quad \text{et} \quad \frac{\partial J(\mathbf{u})}{\partial \lambda} = 0
+\]</span></p>
+<p>Ce qui conduit à :</p>
+<p><span class="math display">\[
+\Sigma \mathbf{u}_1 = \lambda_1 \mathbf{u}_1 \quad \Rightarrow \quad v_{\mathbf{u}_1} = \mathbf{u}_1^T \Sigma \mathbf{u}_1 = \lambda_1
+\]</span></p>
+<p><strong>Interprétation clé :</strong> <span class="math inline">\((\mathbf{u}_1, \lambda_1)\)</span> est une <strong>paire propre</strong> de <span class="math inline">\(\Sigma\)</span>.</p>
+<p>En poursuivant le processus, nous obtenons toutes les composantes principales comme les paires propres <span class="math inline">\(\{(\mathbf{u}_i, \lambda_i)\}_{i \in [D]}\)</span>.</p>
+<p>Nous pouvons écrire de manière compacte :</p>
+<p><span class="math display">\[
+\Lambda = \mathbf{U}^\top \Sigma \mathbf{U}
+\]</span></p>
+<p>avec <span class="math inline">\(\Lambda = \text{diag}(\lambda_1, \dots, \lambda_D)\)</span> et <span class="math inline">\(\mathbf{U} = [\mathbf{u}_1, \dots, \mathbf{u}_D]\)</span>.</p>
 </section>
-<section id="méthodes-pour-choisir-k" class="level3">
-<h3 class="anchored" data-anchor-id="méthodes-pour-choisir-k">Méthodes pour Choisir K</h3>
-<section id="méthode-du-coude-elbow-method" class="level4">
-<h4 class="anchored" data-anchor-id="méthode-du-coude-elbow-method">1. Méthode du Coude (Elbow Method)</h4>
-<p><strong>Principe :</strong> Tracer l’erreur (inertie) en fonction de K.</p>
-<pre><code>Erreur(K) = somme des distances² des points à leur centre</code></pre>
-<p>Quand K augmente, l’erreur diminue. On cherche le “coude” où l’amélioration ralentit.</p>
-</section>
-<section id="score-de-silhouette" class="level4">
-<h4 class="anchored" data-anchor-id="score-de-silhouette">2. Score de Silhouette</h4>
-<p><strong>Principe :</strong> Mesure combien un point est bien dans son cluster vs hors de son cluster.</p>
-<pre><code>s(i) = (b(i) - a(i)) / max(a(i), b(i))</code></pre>
-<p>où <code>a(i)</code> = distance moyenne aux autres points du même cluster,<br>
-<code>b(i)</code> = distance moyenne aux points du cluster le plus proche.</p>
-<p><strong>Interprétation :</strong> <code>s(i) ≈ 1</code> = bien classé, <code>≈ 0</code> = à la frontière, <code>≈ -1</code> = mal classé.</p>
-</section>
-<section id="règle-pratique" class="level4">
-<h4 class="anchored" data-anchor-id="règle-pratique">3. Règle Pratique</h4>
-<p>Pour N points : <code>K ≈ √(N/2)</code> (très grossier, à utiliser avec prudence).</p>
-</section>
-</section>
-</section>
-<section id="k-means-vs-gmm-le-duel-des-clusters" class="level2">
-<h2 class="anchored" data-anchor-id="k-means-vs-gmm-le-duel-des-clusters">6. K-means vs GMM : Le Duel des Clusters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 30%">
-<col style="width: 43%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Aspect</th>
-<th>K-means</th>
-<th>GMM avec EM</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Philosophie</strong></td>
-<td>Géométrique (distance)</td>
-<td>Probabiliste (densité)</td>
-</tr>
-<tr class="even">
-<td><strong>Appartenance</strong></td>
-<td>Dure (0 ou 1)</td>
-<td>Douce (probabilité)</td>
-</tr>
-<tr class="odd">
-<td><strong>Forme clusters</strong></td>
-<td>Sphères (toutes mêmes tailles)</td>
-<td>Ellipses (tailles/orientations variables)</td>
-</tr>
-<tr class="even">
-<td><strong>Modèle</strong></td>
-<td>Minimise distance</td>
-<td>Maximise vraisemblance</td>
-</tr>
-<tr class="odd">
-<td><strong>Vitesse</strong></td>
-<td>Rapide (O(NKT))</td>
-<td>Plus lent (plus de calculs)</td>
-</tr>
-<tr class="even">
-<td><strong>Cas limite</strong></td>
-<td>-</td>
-<td>K-means = GMM avec σ→0 et covariances sphériques</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>K-means est un cas particulier de GMM !</strong> Quand on prend un mélange de gaussiennes avec : - Covariances sphériques et identiques : <code>Σ_k = σ²I</code> - Et qu’on fait tendre <code>σ → 0</code> Alors l’assignation douce devient dure, et on retrouve k-means.</p>
-</div>
-</div>
-</section>
-<section id="les-pièges-de-k-means-et-comment-les-éviter" class="level2">
-<h2 class="anchored" data-anchor-id="les-pièges-de-k-means-et-comment-les-éviter">7. Les Pièges de K-means et Comment les Éviter</h2>
-<section id="piège-1-les-clusters-non-sphériques" class="level3">
-<h3 class="anchored" data-anchor-id="piège-1-les-clusters-non-sphériques">Piège 1 : Les Clusters Non Sphériques</h3>
-<p><strong>Problème :</strong> K-means suppose des clusters sphériques. S’ils sont allongés ou de formes bizarres, ça échoue.</p>
-<p><strong>Solution :</strong> - Standardiser les données (centrer-réduire) - Utiliser une autre méthode (GMM, spectral clustering) - Transformer les données (PCA d’abord)</p>
-</section>
-<section id="piège-2-les-clusters-de-tailles-très-différentes" class="level3">
-<h3 class="anchored" data-anchor-id="piège-2-les-clusters-de-tailles-très-différentes">Piège 2 : Les Clusters de Tailles Très Différentes</h3>
-<p><strong>Problème :</strong> K-means tend à créer des clusters de taille similaire, même si la réalité est différente.</p>
-<p><strong>Solution :</strong> Ajuster K, ou utiliser une méthode qui gère ça (GMM).</p>
-</section>
-<section id="piège-3-la-sensibilité-aux-outliers" class="level3">
-<h3 class="anchored" data-anchor-id="piège-3-la-sensibilité-aux-outliers">Piège 3 : La Sensibilité aux Outliers</h3>
-<p><strong>Problème :</strong> Un point très éloigné tire le centre de son cluster vers lui.</p>
-<p><strong>Solution :</strong> - Détecter et enlever les outliers avant - Utiliser k-medoids (plus robuste) - Standardiser pour réduire l’influence</p>
-</section>
-<section id="piège-4-linterprétation-des-résultats" class="level3">
-<h3 class="anchored" data-anchor-id="piège-4-linterprétation-des-résultats">Piège 4 : L’Interprétation des Résultats</h3>
-<p><strong>Problème :</strong> K-means trouve toujours K clusters, même si les données n’ont pas de structure.</p>
-<p><strong>Solution :</strong> Toujours valider avec des méthodes objectives (silhouette, gap statistic).</p>
+<section id="dualité-variance-erreur" class="level3">
+<h3 class="anchored" data-anchor-id="dualité-variance-erreur">Dualité variance-erreur</h3>
+<p>La variance projetée s’exprime comme :</p>
+<p><span class="math display">\[
+\nu_{\mathbf{u}_1} = \frac{1}{N}\sum_{i = 1}^N (\mathbf{u}_1^T (\mathbf{x}_i - \overline{\mathbf{x}}))^2
+\]</span></p>
+<p><strong>Maximiser cette variance équivaut à minimiser l’erreur d’approximation quadratique :</strong></p>
+<p><span class="math display">\[
+\mathbf{u}_1 = \underset{\mathbf{u}^T \mathbf{u} = 1}{\arg \min} \sum_{i = 1}^N \| (\mathbf{x}_i - \overline{\mathbf{x}}) - [\mathbf{u}^T (\mathbf{x}_i - \overline{\mathbf{x}})] \mathbf{u} \|_2^2
+\]</span></p>
+<p><strong>Équivalence fondamentale :</strong> Maximisation de variance <span class="math inline">\(\Leftrightarrow\)</span> Minimisation d’erreur.</p>
 </section>
 </section>
-<section id="en-pratique-la-recette-complète" class="level2">
-<h2 class="anchored" data-anchor-id="en-pratique-la-recette-complète">8. En Pratique : La Recette Complète</h2>
-<section id="étape-1-préparation-des-données" class="level3">
-<h3 class="anchored" data-anchor-id="étape-1-préparation-des-données">Étape 1 : Préparation des Données</h3>
+<section id="interprétation-physique" class="level2">
+<h2 class="anchored" data-anchor-id="interprétation-physique">Interprétation physique</h2>
+<p>Considérons un système physique <span class="math inline">\(\mathcal{X}\)</span> avec des masses unitaires aux positions <span class="math inline">\(\mathbf{x}_i\)</span>.</p>
+<ul>
+<li><p><strong>Inertie par rapport à un point <span class="math inline">\(\mathbf{a}\)</span> :</strong></p>
+<p><span class="math display">\[
+\mathrm{I}_{\mathbf{a}}(\mathcal{X}) = \sum_{i = 1}^{N} \mathrm{d}^{2}(\mathbf{a},\mathbf{x}_{i})
+\]</span></p></li>
+<li><p><strong>Théorème de Huygens :</strong> Si <span class="math inline">\(\mathbf{g}\)</span> est le centre de masse, alors</p>
+<p><span class="math display">\[
+\mathrm{I}_{\mathbf{a}}(\mathcal{X}) = \mathrm{d}^{2}(\mathbf{a},\mathbf{g}) + \mathrm{I}_{\mathbf{g}}(\mathcal{X})
+\]</span></p></li>
+</ul>
+<p>Pour un sous-espace <span class="math inline">\(\mathcal{J}\)</span> passant par <span class="math inline">\(\mathbf{g}\)</span> :</p>
+<p><span class="math display">\[
+\mathrm{I}_{\mathcal{J}}(\mathcal{X}) = \sum_{i = 1}^{N} \mathrm{d}^{2}(\mathcal{J},\mathbf{x}_{i})
+\]</span></p>
+<p>où <span class="math inline">\(\mathrm{d}(\mathcal{J},\mathbf{x}_{i}) = \| \mathbf{x}_{i} - \mathrm{Proj}_{\mathcal{J}}(\mathbf{x}_{i})\|\)</span>.</p>
+<p><strong>Conclusion physique :</strong> Une Composante Principale est un <strong>sous-espace d’inertie minimale</strong>.</p>
+</section>
+<section id="structure-de-lespace-latent" class="level2">
+<h2 class="anchored" data-anchor-id="structure-de-lespace-latent">Structure de l’espace latent</h2>
+<section id="propriétés-fondamentales" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-fondamentales">Propriétés fondamentales</h3>
+<p>La base <span class="math inline">\(\{ \mathbf{u}_1, \dots, \mathbf{u}_D \}\)</span> de l’espace latent possède :</p>
+<ul>
+<li><strong>Valeurs propres ordonnées :</strong> <span class="math inline">\(\lambda_1 \geqslant \lambda_2 \geqslant \dots \geqslant \lambda_D\)</span></li>
+<li><strong>Variance totale :</strong> <span class="math inline">\(\sum_{d = 1}^{D}\lambda_d = \mathrm{Tr}(\Sigma)\)</span></li>
+<li><strong>Décorrélation :</strong> <span class="math inline">\(\mathbf{u}_d^\top \mathbf{u}_{d'} = 0\)</span> (orthogonalité)</li>
+<li><strong>Matrice de covariance diagonale :</strong> <span class="math inline">\(\Lambda\)</span> est diagonale</li>
+</ul>
+</section>
+<section id="transformation-des-données" class="level3">
+<h3 class="anchored" data-anchor-id="transformation-des-données">Transformation des données</h3>
+<p>Les coordonnées latentes <span class="math inline">\(\mathbf{y}_i\)</span> sont obtenues par :</p>
+<p><span class="math display">\[
+y_i(d) = \mathbf{u}_d^\top (\mathbf{x}_i - \overline{\mathbf{x}}) \quad \Rightarrow \quad \mathbf{y}_i = \mathbf{U}^\top (\mathbf{x}_i - \overline{\mathbf{x}})
+\]</span></p>
+<p>Cette transformation linéaire combine trois opérations :</p>
 <ol type="1">
-<li><strong>Nettoyer</strong> : gérer les valeurs manquantes</li>
-<li><strong>Standardiser</strong> : centrer et réduire chaque variable</li>
-<li><strong>Visualiser</strong> (si possible en 2D/3D) pour avoir une idée</li>
-</ol>
-</section>
-<section id="étape-2-choix-de-k" class="level3">
-<h3 class="anchored" data-anchor-id="étape-2-choix-de-k">Étape 2 : Choix de K</h3>
-<ol type="1">
-<li><strong>Méthode du coude</strong> : tracer inertie vs K</li>
-<li><strong>Score de silhouette</strong> : moyenne sur tous les points</li>
-<li><strong>Connaissance du domaine</strong> : parfois on sait combien de clusters on cherche</li>
-</ol>
-</section>
-<section id="étape-3-exécution" class="level3">
-<h3 class="anchored" data-anchor-id="étape-3-exécution">Étape 3 : Exécution</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialiser K centres avec k<span class="op">-</span>means<span class="op">++</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Répéter:</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   a. Assigner chaque point au centre le plus proche</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculer les centres comme moyennes</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   c. Si les centres bougent peu, arrêter</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Évaluer avec score de silhouette</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Si doute, relancer avec différentes initialisations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="étape-4-validation" class="level3">
-<h3 class="anchored" data-anchor-id="étape-4-validation">Étape 4 : Validation</h3>
-<ol type="1">
-<li><strong>Interne</strong> : scores (silhouette, Davies-Bouldin)</li>
-<li><strong>Externe</strong> : si on a quelques étiquettes, comparer</li>
-<li><strong>Manuelle</strong> : visualisation, bon sens</li>
+<li><strong>Centrage</strong> sur <span class="math inline">\(\overline{\mathbf{x}}\)</span></li>
+<li><strong>Rotation</strong> via <span class="math inline">\(\mathbf{U}\)</span></li>
+<li><strong>Mise à l’échelle</strong> via <span class="math inline">\(\Lambda^{1/2}\)</span> (blanchiment)</li>
 </ol>
 </section>
 </section>
-<section id="les-variantes-de-k-means" class="level2">
-<h2 class="anchored" data-anchor-id="les-variantes-de-k-means">9. Les Variantes de K-means</h2>
-<section id="k-medoids" class="level3">
-<h3 class="anchored" data-anchor-id="k-medoids">K-medoids</h3>
-<p><strong>Différence</strong> : Les centres sont des points réels des données (pas des moyennes).</p>
-<p><strong>Avantage</strong> : Plus robuste aux outliers, fonctionne avec n’importe quelle distance.</p>
+<section id="structure-du-modèle" class="level2">
+<h2 class="anchored" data-anchor-id="structure-du-modèle">Structure du modèle</h2>
+<section id="hypothèse-sous-jacente" class="level3">
+<h3 class="anchored" data-anchor-id="hypothèse-sous-jacente">Hypothèse sous-jacente</h3>
+<p>L’espace latent préserve la variance des données centrées, ce qui suppose un modèle :</p>
+<p><span class="math display">\[
+X_i \sim \mathcal{N}(\overline{\mathbf{x}}, \Sigma)
+\]</span></p>
+<p><strong>Conséquence importante :</strong> PCA sera moins pertinent pour des données non-gaussiennes (ex: données clusterisées).</p>
 </section>
-<section id="mini-batch-k-means" class="level3">
-<h3 class="anchored" data-anchor-id="mini-batch-k-means">Mini-batch K-means</h3>
-<p><strong>Différence</strong> : Utilise des sous-échantillons des données à chaque itération.</p>
-<p><strong>Avantage</strong> : Beaucoup plus rapide pour les grandes données.</p>
-</section>
-<section id="fuzzy-c-means" class="level3">
-<h3 class="anchored" data-anchor-id="fuzzy-c-means">Fuzzy C-means</h3>
-<p><strong>Différence</strong> : Assignation douce (comme GMM) mais avec un critère géométrique.</p>
-<p><strong>Avantage</strong> : Points frontières appartiennent partiellement à plusieurs clusters.</p>
+<section id="transformation-exacte" class="level3">
+<h3 class="anchored" data-anchor-id="transformation-exacte">Transformation exacte</h3>
+<p>À ce stade, PCA est une transformation <strong>exacte</strong> et <strong>inversible</strong> :</p>
+<p><span class="math display">\[
+\mathbf{y}_i = \mathbf{U}^\top (\mathbf{x}_i - \overline{\mathbf{x}}) \quad \Leftrightarrow \quad \mathbf{x}_i = \overline{\mathbf{x}} + \mathbf{U} \mathbf{y}_i
+\]</span></p>
+<p>L’étude du <strong>spectre</strong> <span class="math inline">\(\{ \lambda_1 \geqslant \lambda_2 \geqslant \dots \geqslant \lambda_D \}\)</span> est cruciale.</p>
 </section>
 </section>
-<section id="fiche-de-révision-express" class="level2">
-<h2 class="anchored" data-anchor-id="fiche-de-révision-express">10. Fiche de Révision Express</h2>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>En 30 secondes pour l’oral :</strong></p>
+<section id="pca-pour-la-réduction-de-dimension" class="level2">
+<h2 class="anchored" data-anchor-id="pca-pour-la-réduction-de-dimension">PCA pour la réduction de dimension</h2>
+<section id="approximation-de-bas-rang" class="level3">
+<h3 class="anchored" data-anchor-id="approximation-de-bas-rang">Approximation de bas rang</h3>
+<p>D’après le <strong>théorème d’Eckart-Young</strong>, pour <span class="math inline">\(K &lt; D\)</span> :</p>
+<ul>
+<li><strong>Approximation optimale :</strong> <span class="math inline">\(\Sigma_K = \sum_{d = 1}^{K} \lambda_d \mathbf{u}_d \mathbf{u}_d^\top\)</span></li>
+<li><strong>Erreur minimale :</strong> <span class="math inline">\(\| \Sigma - \Sigma_K \|_F^2 = \sum_{d = K + 1}^{D} \lambda_d\)</span></li>
+</ul>
+<p>Par troncation :</p>
+<p><span class="math display">\[
+\Sigma_K = \mathbf{U}_K \Lambda_K \mathbf{U}_K^\top
+\]</span></p>
+<p>Les données transformées et reconstruites deviennent :</p>
+<ul>
+<li><strong>Représentation réduite :</strong> <span class="math inline">\(\tilde{\mathbf{y}}_i = \mathbf{U}_K^\top \mathbf{x}_i \in \mathbb{R}^K\)</span></li>
+<li><strong>Reconstruction :</strong> <span class="math inline">\(\tilde{\mathbf{x}}_i = \mathbf{U}_K \mathbf{U}_K^\top \mathbf{x}_i + \overline{\mathbf{x}}\)</span></li>
+</ul>
+</section>
+<section id="géométrie-de-pca" class="level3">
+<h3 class="anchored" data-anchor-id="géométrie-de-pca">Géométrie de PCA</h3>
+<section id="mesures-de-qualité" class="level4">
+<h4 class="anchored" data-anchor-id="mesures-de-qualité">Mesures de qualité</h4>
+<ul>
+<li><p><strong>Contribution variance :</strong></p>
+<p><span class="math display">\[
+c_d = \frac{\lambda_d}{\sum_{k} \lambda_k}
+\]</span></p></li>
+<li><p><strong>Alignement des données :</strong></p>
+<p><span class="math display">\[
+\rho_d(\mathbf{x}_i) = \frac{(\mathbf{u}_d^\top \mathbf{x}_i)^2}{\|\mathbf{x}_i\|^2} = \cos^2 (\angle (\mathbf{u}_d, \mathbf{x}_i))
+\]</span></p></li>
+</ul>
+</section>
+<section id="normalisation-des-échelles" class="level4">
+<h4 class="anchored" data-anchor-id="normalisation-des-échelles">Normalisation des échelles</h4>
+<p>Chaque dimension originale a sa propre échelle (variance <span class="math inline">\(\sigma_d^2\)</span>). PCA est plus efficace quand toutes les échelles sont comparables.</p>
+<p><strong>Solution :</strong> Utiliser la <strong>matrice de corrélation</strong> plutôt que la covariance :</p>
+<ul>
+<li><strong>Matrice de mise à l’échelle :</strong> <span class="math inline">\(\mathbf{S} = \mathrm{diag}[\sigma_1^2, \dots, \sigma_D^2]\)</span></li>
+<li><strong>Métrique associée :</strong> <span class="math inline">\(\mathrm{d}_S^2(\mathbf{x}, \mathbf{y}) = (\mathbf{x} - \mathbf{y})^\top \mathbf{S}^{-1} (\mathbf{x} - \mathbf{y})\)</span></li>
+<li><strong>PCA sur données normalisées :</strong> Utiliser <span class="math inline">\(\Sigma_S\)</span> (matrice de corrélation)</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="pca-pratique-mode-demploi" class="level2">
+<h2 class="anchored" data-anchor-id="pca-pratique-mode-demploi">PCA pratique : mode d’emploi</h2>
+<section id="algorithme-étape-par-étape" class="level3">
+<h3 class="anchored" data-anchor-id="algorithme-étape-par-étape">Algorithme étape par étape</h3>
 <ol type="1">
-<li><strong>K-means</strong> = clustering par minimisation de distance</li>
-<li><strong>Deux étapes</strong> : assignation (points → centre plus proche) et mise à jour (recalcul des centres)</li>
-<li><strong>Problèmes</strong> : choix de K, initialisation, clusters sphériques</li>
-<li><strong>Solutions</strong> : k-means++, méthode du coude, standardisation</li>
-<li><strong>Parenté</strong> : cas particulier des GMM avec σ→0</li>
-<li><strong>Applications</strong> : segmentation, regroupement, réduction de dimension</li>
+<li><strong>Calculer</strong> la moyenne empirique <span class="math inline">\(\overline{\mathbf{x}}\)</span></li>
+<li><strong>Centrer</strong> les données : <span class="math inline">\(\mathbf{x}_i \leftarrow (\mathbf{x}_i - \overline{\mathbf{x}})\)</span></li>
+<li><strong>Former</strong> la matrice centrée <span class="math inline">\(\mathbf{X}\)</span></li>
+<li><strong>Calculer</strong> <span class="math inline">\(\Sigma = \frac{1}{N} \mathbf{X} \mathbf{X}^\top\)</span></li>
+<li><strong>Décomposer</strong> <span class="math inline">\(\Sigma = \mathbf{U} \Lambda \mathbf{U}^\top\)</span></li>
+<li><strong>Sélectionner</strong> <span class="math inline">\(K\)</span> composantes</li>
+<li><strong>Projeter</strong> et/ou <strong>reconstruire</strong> les données</li>
 </ol>
-</div>
-</div>
 </section>
-<section id="pour-loral-lhistoire-à-raconter" class="level2">
-<h2 class="anchored" data-anchor-id="pour-loral-lhistoire-à-raconter">11. Pour l’Oral : L’Histoire à Raconter</h2>
-<p>“Imaginez organiser une fête avec des invités dispersés dans un parc. Vous voulez créer K groupes de discussion. Vous placez K animateurs au hasard (initialisation), chaque invité rejoint l’animateur le plus proche (assignation), puis les animateurs se déplacent au centre de leur groupe (mise à jour). On recommence jusqu’à ce que les animateurs ne bougent plus. C’est exactement k-means !”</p>
+<section id="stratégies-de-sélection-de-k" class="level3">
+<h3 class="anchored" data-anchor-id="stratégies-de-sélection-de-k">Stratégies de sélection de <span class="math inline">\(K\)</span></h3>
+<ul>
+<li><p><strong>Dimension cible :</strong> <span class="math inline">\(K = d\)</span> (dimension souhaitée)</p></li>
+<li><p><strong>Variance conservée :</strong> Choisir <span class="math inline">\(K\)</span> tel que</p>
+<p><span class="math display">\[
+\frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d} \geq \tau
+\]</span></p>
+<p>(ex: <span class="math inline">\(\tau = 0.95\)</span> pour 95% de variance)</p></li>
+<li><p><strong>Erreur de reconstruction :</strong> Choisir <span class="math inline">\(K\)</span> tel que</p>
+<p><span class="math display">\[
+\mathcal{L}(\mathbf{x}) = \sum_i \| \mathbf{x}_i - \tilde{\mathbf{x}}_i \|^2 \leq \epsilon
+\]</span></p></li>
+</ul>
 </section>
-<section id="questions-fréquentes-à-lexamen" class="level2">
-<h2 class="anchored" data-anchor-id="questions-fréquentes-à-lexamen">12. Questions Fréquentes à l’Examen</h2>
-<p><strong>Q : “Pourquoi k-means est-il sensible à l’initialisation ?”</strong> R : “Parce que le critère à minimiser a plusieurs minima locaux. Selon où on commence, on peut rester coincé dans un mauvais minimum.”</p>
-<p><strong>Q : “Comment choisir K si on n’a aucune idée ?”</strong> R : “Utilisez la méthode du coude pour voir où l’amélioration ralentit, et validez avec le score de silhouette. Testez plusieurs K et regardez ce qui a du sens pour vos données.”</p>
-<p><strong>Q : “Quand ne pas utiliser k-means ?”</strong> R : “Quand vos clusters ne sont pas sphériques, ou ont des tailles très différentes, ou quand vous avez beaucoup de bruit/outliers.”</p>
 </section>
-<section id="le-mot-de-la-fin" class="level2">
-<h2 class="anchored" data-anchor-id="le-mot-de-la-fin">13. Le Mot de la Fin</h2>
-<p>K-means est comme un couteau suisse du clustering : <strong>simple, rapide, utile dans beaucoup de situations</strong>. Mais comme tout outil simple, il faut connaître ses limites. L’essentiel est de toujours : 1. <strong>Préparer</strong> ses données (nettoyer, standardiser) 2. <strong>Choisir K intelligemment</strong> (méthode du coude, silhouette) 3. <strong>Initialiser proprement</strong> (k-means++) 4. <strong>Valider</strong> les résultats (visualisation, scores)</p>
-<p><strong>En résumé :</strong> K-means est votre premier outil pour explorer la structure de données non étiquetées. Pas le plus sophistiqué, mais souvent le plus pratique pour commencer.</p>
+<section id="pca-et-autoencodeurs-linéaires" class="level2">
+<h2 class="anchored" data-anchor-id="pca-et-autoencodeurs-linéaires">PCA et AutoEncodeurs Linéaires</h2>
+<section id="architecture-dun-autoencodeur-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-dun-autoencodeur-linéaire">Architecture d’un AutoEncodeur Linéaire</h3>
+<ul>
+<li><strong>Encodeur :</strong> <span class="math inline">\(\mathbf{z}(\mathbf{x}_i) = W_{\mathrm{enc}} \mathbf{x}_i\)</span></li>
+<li><strong>Décodeur :</strong> <span class="math inline">\(\tilde{\mathbf{x}}_i = W_{\mathrm{dec}} \mathbf{z}(\mathbf{x}_i)\)</span></li>
+</ul>
+</section>
+<section id="fonction-de-coût" class="level3">
+<h3 class="anchored" data-anchor-id="fonction-de-coût">Fonction de coût</h3>
+<p><span class="math display">\[
+\theta^{*} = \arg\min_{W_{\mathrm{enc}}, W_{\mathrm{dec}}} \sum_{i=1}^{N} \| \mathbf{x}_i - \tilde{\mathbf{x}}_i \|^2
+\]</span></p>
+</section>
+<section id="équivalence-avec-pca" class="level3">
+<h3 class="anchored" data-anchor-id="équivalence-avec-pca">Équivalence avec PCA</h3>
+<p><strong>Théorème :</strong> Un AutoEncodeur Linéaire entraîné sur des données <strong>centrées</strong> réalise exactement une PCA.</p>
+<ul>
+<li><strong>Encodeur :</strong> <span class="math inline">\(W_{\mathrm{enc}} = \mathbf{U}_K^\top\)</span></li>
+<li><strong>Décodeur :</strong> <span class="math inline">\(W_{\mathrm{dec}} = \mathbf{U}_K\)</span></li>
+</ul>
+</section>
+<section id="généralisations" class="level3">
+<h3 class="anchored" data-anchor-id="généralisations">Généralisations</h3>
+<ul>
+<li><strong>AutoEncodeurs Non-Linéaires :</strong> Ajout de couches cachées</li>
+<li><strong>AutoEncodeurs Variationnels (VAE) :</strong> Modification de la fonction de coût (ELBO)</li>
+<li><strong>AutoEncodeurs parcimonieux :</strong> Contraintes de régularisation</li>
+</ul>
+</section>
+</section>
+<section id="alternatives-et-extensions" class="level2">
+<h2 class="anchored" data-anchor-id="alternatives-et-extensions">Alternatives et extensions</h2>
+<section id="pca-probabiliste" class="level3">
+<h3 class="anchored" data-anchor-id="pca-probabiliste">PCA Probabiliste</h3>
+<p>Reformulation probabiliste avec :</p>
+<ul>
+<li><strong>Distribution latente :</strong> <span class="math inline">\(\mathbb{P}(\mathbf{z}) = \mathcal{N}(0, \mathrm{Id}_K)\)</span></li>
+<li><strong>Modèle conditionnel :</strong> <span class="math inline">\(\mathbb{P}(\mathbf{x}|\mathbf{z}) = \mathcal{N}(W\mathbf{z} + \mu, \sigma^2 \mathrm{Id}_D)\)</span></li>
+</ul>
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Modélisation explicite du bruit</li>
+<li>Mode génératif</li>
+<li>Estimation par Maximum de Vraisemblance ou EM</li>
+</ul>
+</section>
+<section id="pca-à-noyau-kernel-pca" class="level3">
+<h3 class="anchored" data-anchor-id="pca-à-noyau-kernel-pca">PCA à Noyau (Kernel PCA)</h3>
+<p>Extension non-linéaire par <strong>trick du noyau</strong> :</p>
+<ul>
+<li><strong>Mapping implicite :</strong> <span class="math inline">\(\Phi(\mathbf{x}_i)\)</span> via noyau <span class="math inline">\(k(\mathbf{x}_i, \mathbf{x}_j)\)</span></li>
+<li><strong>PCA dans l’espace de features :</strong> <span class="math inline">\(\mathbf{k}(x_i, x_j) = \Phi(x_i)^\top \Phi(x_j)\)</span></li>
+</ul>
+</section>
+<section id="pca-local" class="level3">
+<h3 class="anchored" data-anchor-id="pca-local">PCA Local</h3>
+<p>PCA appliquée localement sur des voisinages de données pour capturer la <strong>dimensionnalité intrinsèque locale</strong>.</p>
+</section>
+<section id="limitations-computationnelles" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-computationnelles">Limitations computationnelles</h3>
+<p>La décomposition de <span class="math inline">\(\Sigma\)</span> a une complexité <span class="math inline">\(O(D^3)\)</span>, ce qui peut être prohibitif pour de grandes dimensions.</p>
+</section>
+</section>
+<section id="synthèse-et-conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="synthèse-et-conclusions">Synthèse et conclusions</h2>
+<ul>
+<li><strong>PCA</strong> fait partie des modèles latents <strong>linéaires</strong></li>
+<li>Il s’applique sur données <strong>centrées</strong> et utilise la <strong>variance</strong> comme critère</li>
+<li>C’est une décomposition <strong>exacte</strong> en composantes <strong>décorrélées</strong></li>
+<li>Il suppose une distribution <strong>normale</strong> des données</li>
+<li>Il peut être formulé comme une <strong>régression</strong> quadratique</li>
+<li>Il offre une stratégie de <strong>réduction dimensionnelle</strong> basée sur l’approximation de bas rang</li>
+<li>Il peut être utilisé pour le <strong>débruitage</strong> (modèle gaussien)</li>
+<li>Il est équivalent à un <strong>AutoEncodeur Linéaire</strong></li>
+<li>Il admet des formulations <strong>stochastiques</strong> et des extensions <strong>non-linéaires</strong></li>
+</ul>
+</section>
+<section id="questions-dapprofondissement" class="level2">
+<h2 class="anchored" data-anchor-id="questions-dapprofondissement">Questions d’approfondissement</h2>
+<ul>
+<li>Expliquez comment PCA utilise la variance comme critère</li>
+<li>Montrez l’équivalence entre maximisation de variance et minimisation d’erreur</li>
+<li>Expliquez l’utilisation du théorème d’Eckart-Young dans PCA</li>
+<li>Décrivez les étapes pratiques pour appliquer PCA sur un jeu de données</li>
+<li>Quelles informations PCA fournit-il sur les données ?</li>
+<li>Comment reconstruire des données avec <span class="math inline">\(K &lt; D\)</span> composantes ?</li>
+<li>Quelles stratégies pour sélectionner le nombre de composantes à conserver ?</li>
+<li>PCA est-elle applicable à tout type de données ?</li>
+<li>Est-il pertinent d’appliquer PCA sur des données clusterisées ?</li>
+<li>Démontrez l’équivalence entre PCA et AutoEncodeur Linéaire</li>
+</ul>
 
 
 </section>

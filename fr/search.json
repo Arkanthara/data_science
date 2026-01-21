@@ -1195,6 +1195,204 @@
     ]
   },
   {
+    "objectID": "ds31q.html",
+    "href": "ds31q.html",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Expliquez en détail la méthode d’analyse en composantes principales (ACP), y compris les hypothèses, le calcul et l’interprétation de cette technique.\n\n\n\nL’Analyse en Composantes Principales (PCA) est une méthode de réduction de dimensionnalité qui transforme un ensemble de variables potentiellement corrélées en un ensemble de variables linéairement non corrélées appelées composantes principales.\n\n\n\nRéduire la dimensionnalité des données tout en conservant l’information maximale\nIdentifier les directions de plus grande variance dans les données\nDécorréler les variables\nVisualiser des données multidimensionnelles\n\n\n\n\n\n\n\n\nLinéarité : Les relations entre variables sont linéaires\nDistribution Normale : Les données suivent approximativement une distribution gaussienne multivariée\n\\[\nX_i \\sim \\mathcal{N}(\\overline{\\mathbf{x}}, \\Sigma)\n\\]\nImportance de la Variance : La variance est une mesure appropriée de l’information contenue dans les données\nOrthogonalité : Les composantes principales sont orthogonales entre elles\n\n\n\n\n\nLes données doivent être centrées (moyenne nulle)\nLes échelles des variables doivent être comparables (normalisation recommandée)\nPas de valeurs manquantes significatives\n\n\n\n\n\n\n\nCentrage : Soustraire la moyenne de chaque variable\n\\[\n\\mathbf{x}_i^{\\text{centré}} = \\mathbf{x}_i - \\overline{\\mathbf{x}}, \\quad \\text{où} \\quad \\overline{\\mathbf{x}} = \\frac{1}{N} \\sum_{i=1}^{N} \\mathbf{x}_i\n\\]\nNormalisation (optionnelle mais recommandée) : Diviser par l’écart-type\n\\[\n\\mathbf{x}_i^{\\text{norm}} = \\frac{\\mathbf{x}_i^{\\text{centré}}}{\\sigma}, \\quad \\text{où} \\quad \\sigma = \\sqrt{\\frac{1}{N} \\sum_{i=1}^{N} (x_i - \\overline{x})^2}\n\\]\n\n\n\nPour \\(N\\) observations avec \\(D\\) variables, la matrice de covariance \\(\\Sigma\\) est :\n\\[\n\\Sigma = \\frac{1}{N} \\sum_{i=1}^{N} (\\mathbf{x}_i - \\overline{\\mathbf{x}})(\\mathbf{x}_i - \\overline{\\mathbf{x}})^\\top\n\\]\nPropriétés de \\(\\Sigma\\) :\n\nSymétrique : \\(\\Sigma = \\Sigma^\\top\\)\nSemi-définie positive : \\(\\mathbf{v}^\\top \\Sigma \\mathbf{v} \\geq 0\\) pour tout \\(\\mathbf{v}\\)\nÉléments diagonaux : variances des variables\nÉléments hors-diagonaux : covariances entre variables\n\n\n\n\nNous cherchons les paires propres \\((\\lambda_d, \\mathbf{u}_d)\\) telles que :\n\\[\n\\Sigma \\mathbf{u}_d = \\lambda_d \\mathbf{u}_d, \\quad d = 1, \\dots, D\n\\]\nOrdre des valeurs propres : \\(\\lambda_1 \\geq \\lambda_2 \\geq \\dots \\geq \\lambda_D \\geq 0\\)\nMatrice des vecteurs propres : \\(\\mathbf{U} = [\\mathbf{u}_1, \\mathbf{u}_2, \\dots, \\mathbf{u}_D]\\)\n\n\n\n\nÉtape 1 : Variance projetée\nSoit \\(\\mathbf{u}\\) un vecteur unitaire. La projection d’une observation \\(\\mathbf{x}_i\\) sur \\(\\mathbf{u}\\) est :\n\\[\np_i = \\mathbf{u}^\\top \\mathbf{x}_i\n\\]\nÉtape 2 : Calcul de la variance\nLa moyenne des projections (pour données centrées) est nulle :\n\\[\n\\bar{p} = \\mathbf{u}^\\top \\bar{\\mathbf{x}} = 0\n\\]\nLa variance des projections est donc :\n\\[\n\\text{Var}(\\mathbf{u}) = \\frac{1}{N} \\sum_{i=1}^N (p_i)^2 = \\frac{1}{N} \\sum_{i=1}^N (\\mathbf{u}^\\top \\mathbf{x}_i)^2\n\\]\nÉtape 3 : Formulation matricielle\n\\[\n\\text{Var}(\\mathbf{u}) = \\frac{1}{N} \\sum_{i=1}^N \\mathbf{u}^\\top \\mathbf{x}_i \\mathbf{x}_i^\\top \\mathbf{u} = \\mathbf{u}^\\top \\left( \\frac{1}{N} \\sum_{i=1}^N \\mathbf{x}_i \\mathbf{x}_i^\\top \\right) \\mathbf{u}\n\\]\nOr \\(\\frac{1}{N} \\sum_{i=1}^N \\mathbf{x}_i \\mathbf{x}_i^\\top = \\Sigma\\)\nDonc :\n\\[\n\\text{Var}(\\mathbf{u}) = \\mathbf{u}^\\top \\Sigma \\mathbf{u}\n\\]\nÉtape 4 : Maximisation sous contrainte\nNous cherchons \\(\\mathbf{u}_1\\) maximisant \\(\\mathbf{u}^\\top \\Sigma \\mathbf{u}\\) sous \\(\\|\\mathbf{u}\\| = 1\\).\nLagrangien :\n\\[\n\\mathcal{L}(\\mathbf{u}, \\lambda) = \\mathbf{u}^\\top \\Sigma \\mathbf{u} - \\lambda(\\mathbf{u}^\\top \\mathbf{u} - 1)\n\\]\nCondition d’optimalité :\n\\[\n\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{u}} = 2\\Sigma \\mathbf{u} - 2\\lambda \\mathbf{u} = 0\n\\]\nSoit :\n\\[\n\\Sigma \\mathbf{u} = \\lambda \\mathbf{u}\n\\]\nÉtape 5 : Interprétation\nPour un vecteur propre \\(\\mathbf{u}_d\\) satisfaisant \\(\\Sigma \\mathbf{u}_d = \\lambda_d \\mathbf{u}_d\\) :\n\\[\n\\text{Var}(\\mathbf{u}_d) = \\mathbf{u}_d^\\top \\Sigma \\mathbf{u}_d = \\mathbf{u}_d^\\top (\\lambda_d \\mathbf{u}_d) = \\lambda_d \\mathbf{u}_d^\\top \\mathbf{u}_d = \\lambda_d\n\\]\nCar \\(\\mathbf{u}_d^\\top \\mathbf{u}_d = \\|\\mathbf{u}_d\\|^2 = 1\\).\n\n\n\nChaque valeur propre \\(\\lambda_d\\) est exactement la variance des données projetées sur le vecteur propre correspondant \\(\\mathbf{u}_d\\).\n\n\n\n\nNous ordonnons par valeurs propres décroissantes :\n\\[\n\\lambda_1 \\geq \\lambda_2 \\geq \\dots \\geq \\lambda_D \\geq 0\n\\]\nAinsi : * \\(\\mathbf{u}_1\\) : direction de variance maximale * \\(\\mathbf{u}_2\\) : direction orthogonale de variance maximale restante\n\n\n\n\n\n\nVariance totale :\n\\[\n\\text{Variance Totale} = \\sum_{d=1}^D \\lambda_d = \\text{Tr}(\\Sigma)\n\\]\nLa variance expliquée par la composante \\(d\\) est :\n\\[\n\\text{VarExpliquée}_d = \\frac{\\lambda_d}{\\sum_{k=1}^{D} \\lambda_k}\n\\]\nLa variance cumulée expliquée pour \\(K\\) composantes est :\n\\[\n\\text{VarCumulée}_K = \\frac{\\sum_{d=1}^{K} \\lambda_d}{\\sum_{d=1}^{D} \\lambda_d}\n\\]\n\n\n\n\nRègle du coude (Elbow Method) : Observer le “coude” dans le graphique des valeurs propres\nSeuil de variance : Conserver suffisamment de composantes pour expliquer 70-95% de la variance totale\nCritère de Kaiser : Conserver les composantes avec valeur propre &gt; 1 (si données normalisées)\n\n\n\n\n\nLa projection des données originales sur les \\(K\\) premières composantes est :\n\\[\n\\mathbf{y}_i = \\mathbf{U}_K^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}})\n\\]\noù \\(\\mathbf{U}_K = [\\mathbf{u}_1, \\dots, \\mathbf{u}_K]\\) contient les \\(K\\) premiers vecteurs propres.\n\n\n\n\n\n\n\nComposante Principale 1 : Direction de plus grande variance dans les données\nComposante Principale 2 : Direction de plus grande variance orthogonale à la première\nEspace latent : Nouveau système de coordonnées optimisé pour la variance\n\n\n\n\nLes éléments des vecteurs propres \\(\\mathbf{u}_d\\) sont les charges (loadings) :\n\nGrande valeur absolue : La variable contribue fortement à la composante\nSigne positif/négatif : Indique la direction de la corrélation\nInterprétation : Les charges permettent de comprendre quelles variables originales définissent chaque composante\n\n\n\n\nLes coordonnées \\(\\mathbf{y}_i\\) dans l’espace latent sont les scores :\n\nPosition relative : Observations avec des scores similaires sont similaires dans l’espace original\nVisualisation : Plot 2D/3D des deux/trois premières composantes\n\n\n\n\nPour les données normalisées, on peut représenter :\n\nVariables : Vecteurs dont la longueur représente la qualité de représentation\nAngles entre vecteurs : Corrélations entre variables\nProjection sur axes : Corrélation avec les composantes\n\n\n\n\n\n\n\nObjectif : Passer de \\(D\\) dimensions à \\(K &lt; D\\) dimensions avec perte minimale d’information\nFormule de reconstruction :\n\\[\n\\tilde{\\mathbf{x}}_i = \\overline{\\mathbf{x}} + \\mathbf{U}_K \\mathbf{y}_i\n\\]\nErreur de reconstruction :\n\\[\n\\mathcal{L} = \\sum_{i=1}^{N} \\|\\mathbf{x}_i - \\tilde{\\mathbf{x}}_i\\|^2 = \\sum_{d=K+1}^{D} \\lambda_d\n\\]\n\n\n\n\nProjection 2D/3D pour exploration visuelle\nIdentification de clusters ou de structures\nDétection d’observations atypiques (outliers)\n\n\n\n\nSi le bruit est de faible variance par rapport au signal, PCA peut séparer :\n\nSignal : Capturé par les premières composantes\nBruit : Capturé par les dernières composantes\n\n\n\n\n\nAccélération d’algorithmes (moins de dimensions)\nAmélioration de performances (élimination de colinéarités)\nRéduction du surapprentissage (overfitting)\n\n\n\n\n\n\n\n\nLinéarité : Ne capture pas les relations non-linéaires\nSensibilité aux outliers : La variance est sensible aux valeurs extrêmes\nInterprétation difficile quand les composantes sont des combinaisons complexes de variables originales\nÉchelle des variables : Requiert une normalisation préalable\nDistribution non-gaussienne : Moins efficace pour des distributions non-normales\n\n\n\n\n\nKernel PCA pour des relations non-linéaires\nt-SNE, UMAP pour visualisation non-linéaire\nAutoEncodeurs pour réduction non-linéaire\nFactor Analysis pour modèles avec bruit explicite\n\n\n\n\n\n\n\nSoit une matrice de données \\(\\mathbf{X}\\) de taille \\(N \\times D\\)\n\n\n\n# Pseudocode pour illustration\nX_centered = X - mean(X, axis=0)\nX_normalized = X_centered / std(X_centered, axis=0)\n\n\n\n\\[\n\\Sigma = \\frac{1}{N} \\mathbf{X}_{\\text{norm}}^\\top \\mathbf{X}_{\\text{norm}}\n\\]\n\n\n\nRésoudre \\(\\Sigma \\mathbf{u}_d = \\lambda_d \\mathbf{u}_d\\)\n\n\n\nTableau de variance expliquée :\n\n\n\nComposante\nValeur Propre\nVariance Expliquée\nVariance Cumulée\n\n\n\n\nPC1\n\\(\\lambda_1\\)\n\\(v_1\\)%\n\\(v_1\\)%\n\n\nPC2\n\\(\\lambda_2\\)\n\\(v_2\\)%\n\\(v_1+v_2\\)%\n\n\n…\n…\n…\n…\n\n\n\n\n\n\n\nGraphique des valeurs propres (scree plot)\nSeuil de variance cumulée (ex: 80%)\nAnalyse des charges pour interprétabilité\n\n\n\n\n\nCalcul des scores \\(\\mathbf{Y} = \\mathbf{X}_{\\text{norm}} \\mathbf{U}_K\\)\nVisualisation des scores\nAnalyse des charges pour nommer les composantes\n\n\n\n\n\nL’Analyse en Composantes Principales est une méthode puissante mais avec des hypothèses spécifiques :\n\nForte puissance pour les données linéaires et gaussiennes\nInterprétation géométrique claire (maximisation de variance)\nCalcul efficace via décomposition en valeurs propres\nLarge applicabilité en pré-traitement et visualisation\n\nRecommandations d’usage :\n\nToujours visualiser les données avant et après PCA\nVérifier les hypothèses (linéarité, normalité approximative)\nNormaliser les variables si elles sont sur des échelles différentes\nInterpréter les composantes via les charges\nValider les résultats sur des données de test\n\nLa compréhension approfondie de PCA fournit une base solide pour aborder des méthodes plus avancées de réduction de dimensionnalité et d’analyse de données.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#question",
+    "href": "ds31q.html#question",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Expliquez en détail la méthode d’analyse en composantes principales (ACP), y compris les hypothèses, le calcul et l’interprétation de cette technique.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#introduction-et-objectifs",
+    "href": "ds31q.html#introduction-et-objectifs",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "L’Analyse en Composantes Principales (PCA) est une méthode de réduction de dimensionnalité qui transforme un ensemble de variables potentiellement corrélées en un ensemble de variables linéairement non corrélées appelées composantes principales.\n\n\n\nRéduire la dimensionnalité des données tout en conservant l’information maximale\nIdentifier les directions de plus grande variance dans les données\nDécorréler les variables\nVisualiser des données multidimensionnelles",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#hypothèses-fondamentales",
+    "href": "ds31q.html#hypothèses-fondamentales",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Linéarité : Les relations entre variables sont linéaires\nDistribution Normale : Les données suivent approximativement une distribution gaussienne multivariée\n\\[\nX_i \\sim \\mathcal{N}(\\overline{\\mathbf{x}}, \\Sigma)\n\\]\nImportance de la Variance : La variance est une mesure appropriée de l’information contenue dans les données\nOrthogonalité : Les composantes principales sont orthogonales entre elles\n\n\n\n\n\nLes données doivent être centrées (moyenne nulle)\nLes échelles des variables doivent être comparables (normalisation recommandée)\nPas de valeurs manquantes significatives",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#calcul-des-composantes-principales",
+    "href": "ds31q.html#calcul-des-composantes-principales",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Centrage : Soustraire la moyenne de chaque variable\n\\[\n\\mathbf{x}_i^{\\text{centré}} = \\mathbf{x}_i - \\overline{\\mathbf{x}}, \\quad \\text{où} \\quad \\overline{\\mathbf{x}} = \\frac{1}{N} \\sum_{i=1}^{N} \\mathbf{x}_i\n\\]\nNormalisation (optionnelle mais recommandée) : Diviser par l’écart-type\n\\[\n\\mathbf{x}_i^{\\text{norm}} = \\frac{\\mathbf{x}_i^{\\text{centré}}}{\\sigma}, \\quad \\text{où} \\quad \\sigma = \\sqrt{\\frac{1}{N} \\sum_{i=1}^{N} (x_i - \\overline{x})^2}\n\\]\n\n\n\nPour \\(N\\) observations avec \\(D\\) variables, la matrice de covariance \\(\\Sigma\\) est :\n\\[\n\\Sigma = \\frac{1}{N} \\sum_{i=1}^{N} (\\mathbf{x}_i - \\overline{\\mathbf{x}})(\\mathbf{x}_i - \\overline{\\mathbf{x}})^\\top\n\\]\nPropriétés de \\(\\Sigma\\) :\n\nSymétrique : \\(\\Sigma = \\Sigma^\\top\\)\nSemi-définie positive : \\(\\mathbf{v}^\\top \\Sigma \\mathbf{v} \\geq 0\\) pour tout \\(\\mathbf{v}\\)\nÉléments diagonaux : variances des variables\nÉléments hors-diagonaux : covariances entre variables\n\n\n\n\nNous cherchons les paires propres \\((\\lambda_d, \\mathbf{u}_d)\\) telles que :\n\\[\n\\Sigma \\mathbf{u}_d = \\lambda_d \\mathbf{u}_d, \\quad d = 1, \\dots, D\n\\]\nOrdre des valeurs propres : \\(\\lambda_1 \\geq \\lambda_2 \\geq \\dots \\geq \\lambda_D \\geq 0\\)\nMatrice des vecteurs propres : \\(\\mathbf{U} = [\\mathbf{u}_1, \\mathbf{u}_2, \\dots, \\mathbf{u}_D]\\)\n\n\n\n\nÉtape 1 : Variance projetée\nSoit \\(\\mathbf{u}\\) un vecteur unitaire. La projection d’une observation \\(\\mathbf{x}_i\\) sur \\(\\mathbf{u}\\) est :\n\\[\np_i = \\mathbf{u}^\\top \\mathbf{x}_i\n\\]\nÉtape 2 : Calcul de la variance\nLa moyenne des projections (pour données centrées) est nulle :\n\\[\n\\bar{p} = \\mathbf{u}^\\top \\bar{\\mathbf{x}} = 0\n\\]\nLa variance des projections est donc :\n\\[\n\\text{Var}(\\mathbf{u}) = \\frac{1}{N} \\sum_{i=1}^N (p_i)^2 = \\frac{1}{N} \\sum_{i=1}^N (\\mathbf{u}^\\top \\mathbf{x}_i)^2\n\\]\nÉtape 3 : Formulation matricielle\n\\[\n\\text{Var}(\\mathbf{u}) = \\frac{1}{N} \\sum_{i=1}^N \\mathbf{u}^\\top \\mathbf{x}_i \\mathbf{x}_i^\\top \\mathbf{u} = \\mathbf{u}^\\top \\left( \\frac{1}{N} \\sum_{i=1}^N \\mathbf{x}_i \\mathbf{x}_i^\\top \\right) \\mathbf{u}\n\\]\nOr \\(\\frac{1}{N} \\sum_{i=1}^N \\mathbf{x}_i \\mathbf{x}_i^\\top = \\Sigma\\)\nDonc :\n\\[\n\\text{Var}(\\mathbf{u}) = \\mathbf{u}^\\top \\Sigma \\mathbf{u}\n\\]\nÉtape 4 : Maximisation sous contrainte\nNous cherchons \\(\\mathbf{u}_1\\) maximisant \\(\\mathbf{u}^\\top \\Sigma \\mathbf{u}\\) sous \\(\\|\\mathbf{u}\\| = 1\\).\nLagrangien :\n\\[\n\\mathcal{L}(\\mathbf{u}, \\lambda) = \\mathbf{u}^\\top \\Sigma \\mathbf{u} - \\lambda(\\mathbf{u}^\\top \\mathbf{u} - 1)\n\\]\nCondition d’optimalité :\n\\[\n\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{u}} = 2\\Sigma \\mathbf{u} - 2\\lambda \\mathbf{u} = 0\n\\]\nSoit :\n\\[\n\\Sigma \\mathbf{u} = \\lambda \\mathbf{u}\n\\]\nÉtape 5 : Interprétation\nPour un vecteur propre \\(\\mathbf{u}_d\\) satisfaisant \\(\\Sigma \\mathbf{u}_d = \\lambda_d \\mathbf{u}_d\\) :\n\\[\n\\text{Var}(\\mathbf{u}_d) = \\mathbf{u}_d^\\top \\Sigma \\mathbf{u}_d = \\mathbf{u}_d^\\top (\\lambda_d \\mathbf{u}_d) = \\lambda_d \\mathbf{u}_d^\\top \\mathbf{u}_d = \\lambda_d\n\\]\nCar \\(\\mathbf{u}_d^\\top \\mathbf{u}_d = \\|\\mathbf{u}_d\\|^2 = 1\\).\n\n\n\nChaque valeur propre \\(\\lambda_d\\) est exactement la variance des données projetées sur le vecteur propre correspondant \\(\\mathbf{u}_d\\).\n\n\n\n\nNous ordonnons par valeurs propres décroissantes :\n\\[\n\\lambda_1 \\geq \\lambda_2 \\geq \\dots \\geq \\lambda_D \\geq 0\n\\]\nAinsi : * \\(\\mathbf{u}_1\\) : direction de variance maximale * \\(\\mathbf{u}_2\\) : direction orthogonale de variance maximale restante\n\n\n\n\n\n\nVariance totale :\n\\[\n\\text{Variance Totale} = \\sum_{d=1}^D \\lambda_d = \\text{Tr}(\\Sigma)\n\\]\nLa variance expliquée par la composante \\(d\\) est :\n\\[\n\\text{VarExpliquée}_d = \\frac{\\lambda_d}{\\sum_{k=1}^{D} \\lambda_k}\n\\]\nLa variance cumulée expliquée pour \\(K\\) composantes est :\n\\[\n\\text{VarCumulée}_K = \\frac{\\sum_{d=1}^{K} \\lambda_d}{\\sum_{d=1}^{D} \\lambda_d}\n\\]\n\n\n\n\nRègle du coude (Elbow Method) : Observer le “coude” dans le graphique des valeurs propres\nSeuil de variance : Conserver suffisamment de composantes pour expliquer 70-95% de la variance totale\nCritère de Kaiser : Conserver les composantes avec valeur propre &gt; 1 (si données normalisées)\n\n\n\n\n\nLa projection des données originales sur les \\(K\\) premières composantes est :\n\\[\n\\mathbf{y}_i = \\mathbf{U}_K^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}})\n\\]\noù \\(\\mathbf{U}_K = [\\mathbf{u}_1, \\dots, \\mathbf{u}_K]\\) contient les \\(K\\) premiers vecteurs propres.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#interprétation-des-résultats",
+    "href": "ds31q.html#interprétation-des-résultats",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Composante Principale 1 : Direction de plus grande variance dans les données\nComposante Principale 2 : Direction de plus grande variance orthogonale à la première\nEspace latent : Nouveau système de coordonnées optimisé pour la variance\n\n\n\n\nLes éléments des vecteurs propres \\(\\mathbf{u}_d\\) sont les charges (loadings) :\n\nGrande valeur absolue : La variable contribue fortement à la composante\nSigne positif/négatif : Indique la direction de la corrélation\nInterprétation : Les charges permettent de comprendre quelles variables originales définissent chaque composante\n\n\n\n\nLes coordonnées \\(\\mathbf{y}_i\\) dans l’espace latent sont les scores :\n\nPosition relative : Observations avec des scores similaires sont similaires dans l’espace original\nVisualisation : Plot 2D/3D des deux/trois premières composantes\n\n\n\n\nPour les données normalisées, on peut représenter :\n\nVariables : Vecteurs dont la longueur représente la qualité de représentation\nAngles entre vecteurs : Corrélations entre variables\nProjection sur axes : Corrélation avec les composantes",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#applications-et-utilisations",
+    "href": "ds31q.html#applications-et-utilisations",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Objectif : Passer de \\(D\\) dimensions à \\(K &lt; D\\) dimensions avec perte minimale d’information\nFormule de reconstruction :\n\\[\n\\tilde{\\mathbf{x}}_i = \\overline{\\mathbf{x}} + \\mathbf{U}_K \\mathbf{y}_i\n\\]\nErreur de reconstruction :\n\\[\n\\mathcal{L} = \\sum_{i=1}^{N} \\|\\mathbf{x}_i - \\tilde{\\mathbf{x}}_i\\|^2 = \\sum_{d=K+1}^{D} \\lambda_d\n\\]\n\n\n\n\nProjection 2D/3D pour exploration visuelle\nIdentification de clusters ou de structures\nDétection d’observations atypiques (outliers)\n\n\n\n\nSi le bruit est de faible variance par rapport au signal, PCA peut séparer :\n\nSignal : Capturé par les premières composantes\nBruit : Capturé par les dernières composantes\n\n\n\n\n\nAccélération d’algorithmes (moins de dimensions)\nAmélioration de performances (élimination de colinéarités)\nRéduction du surapprentissage (overfitting)",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#limitations-et-précautions",
+    "href": "ds31q.html#limitations-et-précautions",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Linéarité : Ne capture pas les relations non-linéaires\nSensibilité aux outliers : La variance est sensible aux valeurs extrêmes\nInterprétation difficile quand les composantes sont des combinaisons complexes de variables originales\nÉchelle des variables : Requiert une normalisation préalable\nDistribution non-gaussienne : Moins efficace pour des distributions non-normales\n\n\n\n\n\nKernel PCA pour des relations non-linéaires\nt-SNE, UMAP pour visualisation non-linéaire\nAutoEncodeurs pour réduction non-linéaire\nFactor Analysis pour modèles avec bruit explicite",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#exemple-dapplication-pas-à-pas",
+    "href": "ds31q.html#exemple-dapplication-pas-à-pas",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "Soit une matrice de données \\(\\mathbf{X}\\) de taille \\(N \\times D\\)\n\n\n\n# Pseudocode pour illustration\nX_centered = X - mean(X, axis=0)\nX_normalized = X_centered / std(X_centered, axis=0)\n\n\n\n\\[\n\\Sigma = \\frac{1}{N} \\mathbf{X}_{\\text{norm}}^\\top \\mathbf{X}_{\\text{norm}}\n\\]\n\n\n\nRésoudre \\(\\Sigma \\mathbf{u}_d = \\lambda_d \\mathbf{u}_d\\)\n\n\n\nTableau de variance expliquée :\n\n\n\nComposante\nValeur Propre\nVariance Expliquée\nVariance Cumulée\n\n\n\n\nPC1\n\\(\\lambda_1\\)\n\\(v_1\\)%\n\\(v_1\\)%\n\n\nPC2\n\\(\\lambda_2\\)\n\\(v_2\\)%\n\\(v_1+v_2\\)%\n\n\n…\n…\n…\n…\n\n\n\n\n\n\n\nGraphique des valeurs propres (scree plot)\nSeuil de variance cumulée (ex: 80%)\nAnalyse des charges pour interprétabilité\n\n\n\n\n\nCalcul des scores \\(\\mathbf{Y} = \\mathbf{X}_{\\text{norm}} \\mathbf{U}_K\\)\nVisualisation des scores\nAnalyse des charges pour nommer les composantes",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#conclusion-1",
+    "href": "ds31q.html#conclusion-1",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "",
+    "text": "L’Analyse en Composantes Principales est une méthode puissante mais avec des hypothèses spécifiques :\n\nForte puissance pour les données linéaires et gaussiennes\nInterprétation géométrique claire (maximisation de variance)\nCalcul efficace via décomposition en valeurs propres\nLarge applicabilité en pré-traitement et visualisation\n\nRecommandations d’usage :\n\nToujours visualiser les données avant et après PCA\nVérifier les hypothèses (linéarité, normalité approximative)\nNormaliser les variables si elles sont sur des échelles différentes\nInterpréter les composantes via les charges\nValider les résultats sur des données de test\n\nLa compréhension approfondie de PCA fournit une base solide pour aborder des méthodes plus avancées de réduction de dimensionnalité et d’analyse de données.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#question-1",
+    "href": "ds31q.html#question-1",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Question",
+    "text": "Question\nLorsqu’on effectue une analyse en composantes principales (PCA), comment choisir le nombre de vecteurs propres à conserver ? Expliquez pourquoi et discutez des implications sur la reconstruction.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#introduction-au-problème-de-sélection",
+    "href": "ds31q.html#introduction-au-problème-de-sélection",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Introduction au Problème de Sélection",
+    "text": "Introduction au Problème de Sélection\nLorsque nous réalisons une Analyse en Composantes Principales, une question cruciale se pose : combien de composantes principales devons-nous conserver ? Ce choix représente un compromis fondamental entre :\n\nLa réduction de dimensionnalité (objectif principal)\nLa conservation de l’information (mesurée par la variance expliquée)\nLa qualité de reconstruction des données originales",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#critères-de-sélection-principaux",
+    "href": "ds31q.html#critères-de-sélection-principaux",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Critères de Sélection Principaux",
+    "text": "Critères de Sélection Principaux\n\nBasé sur la Variance Expliquée\n\nSeuil de Variance Cumulée\nLa méthode la plus courante consiste à conserver suffisamment de composantes pour expliquer un pourcentage prédéfini de la variance totale.\nCalcul :\nSi nous avons \\(D\\) valeurs propres \\(\\lambda_1 \\geq \\lambda_2 \\geq \\dots \\geq \\lambda_D\\), la variance totale est :\n\\[\n\\text{Variance Totale} = \\sum_{d=1}^D \\lambda_d\n\\]\nLa variance expliquée par les \\(K\\) premières composantes est :\n\\[\n\\text{Variance Expliquée}(K) = \\sum_{d=1}^K \\lambda_d\n\\]\nLa proportion de variance expliquée est :\n\\[\n\\text{PVE}(K) = \\frac{\\sum_{d=1}^K \\lambda_d}{\\sum_{d=1}^D \\lambda_d}\n\\]\nRègle pratique : Choisir \\(K\\) tel que \\(\\text{PVE}(K) \\geq \\tau\\), où \\(\\tau\\) est un seuil typiquement entre 70% et 95%.\nAvantages :\n\nSimple à comprendre et à implémenter\nGarantit une conservation minimale d’information\nStandardisé et reproductible\n\nInconvénients :\n\nLe choix du seuil \\(\\tau\\) est arbitraire\nNe tient pas compte de la structure spécifique des données\n\n\n\n\nAnalyse du Graphique des Valeurs Propres (Scree Plot)\n\nMéthode du “Coude”\nCette méthode visuelle consiste à tracer les valeurs propres en fonction de leur ordre.\nProcédure :\n\nTracer \\(\\lambda_d\\) en fonction de \\(d\\) (pour \\(d = 1, 2, \\dots, D\\))\nIdentifier le point où la courbe forme un “coude” (angle prononcé)\nConserver les composantes avant le coude\n\nInterprétation :\n\nLes composantes avant le coude capturent le “signal” principal\nLes composantes après le coude capturent principalement du “bruit”\n\nAvantages :\n\nMéthode intuitive et visuelle\nPrend en compte la décroissance relative des valeurs propres\n\nInconvénients :\n\nSubjectif (différentes personnes peuvent identifier des coudes différents)\nPeut être ambigu pour certaines distributions de valeurs propres\n\n\n\n\nRègle de Kaiser (pour Données Standardisées)\n\nSeuil des Valeurs Propres &gt; 1\nLorsque les données sont standardisées (moyenne 0, variance 1), chaque variable originale contribue 1 à la variance totale.\nRègle : Conserver les composantes dont la valeur propre \\(\\lambda_d &gt; 1\\).\nJustification : Une composante devrait expliquer au moins autant de variance qu’une variable originale unique.\nLimitations :\n\nNe s’applique qu’aux données standardisées\nPeut être trop conservateur (trop de composantes) ou trop laxiste (trop peu)\n\n\n\n\nMéthode Basée sur l’Erreur de Reconstruction\n\nMinimisation de l’Erreur Quadratique\nUne approche plus formelle consiste à choisir \\(K\\) qui minimise l’erreur de reconstruction sous une contrainte.\nErreur de reconstruction : Pour chaque observation \\(\\mathbf{x}_i\\), la reconstruction utilisant \\(K\\) composantes est :\n\\[\n\\tilde{\\mathbf{x}}_i = \\overline{\\mathbf{x}} + \\sum_{d=1}^K (\\mathbf{u}_d^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}})) \\mathbf{u}_d\n\\]\nL’erreur quadratique totale est :\n\\[\n\\mathcal{L}(K) = \\sum_{i=1}^N \\|\\mathbf{x}_i - \\tilde{\\mathbf{x}}_i\\|^2 = \\sum_{d=K+1}^D \\lambda_d\n\\]\nRelation importante : L’erreur de reconstruction est exactement la somme des valeurs propres des composantes non conservées.\nApproche : Choisir \\(K\\) tel que \\(\\mathcal{L}(K) \\leq \\epsilon\\), où \\(\\epsilon\\) est un seuil d’erreur acceptable.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#implications-sur-la-reconstruction",
+    "href": "ds31q.html#implications-sur-la-reconstruction",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Implications sur la Reconstruction",
+    "text": "Implications sur la Reconstruction\n\nRelation Exacte entre Nombre de Composantes et Qualité\n\nThéorème d’Eckart-Young\nCe théorème fondamental établit que l’approximation de rang \\(K\\) par PCA est optimale au sens des moindres carrés.\nFormalisation : Soit \\(\\mathbf{X}\\) la matrice centrée des données. La décomposition en valeurs singulières (SVD) donne \\(\\mathbf{X} = \\mathbf{U}\\boldsymbol{\\Sigma}\\mathbf{V}^\\top\\). L’approximation de rang \\(K\\) :\n\\[\n\\mathbf{X}_K = \\mathbf{U}_K \\boldsymbol{\\Sigma}_K \\mathbf{V}_K^\\top\n\\]\nminimise \\(\\|\\mathbf{X} - \\mathbf{X}_K\\|_F^2\\) parmi toutes les matrices de rang \\(K\\).\nImplication : PCA fournit la meilleure approximation de rang \\(K\\) pour les données centrées.\n\n\n\nCompromis Dimension-Réconstruction\n\nCas Extrêmes\n\n\\(K = D\\) : Reconstruction parfaite\n\n\\(\\tilde{\\mathbf{x}}_i = \\mathbf{x}_i\\) exactement\nAucune réduction de dimension\nConservation de 100% de la variance\n\n\\(K = 0\\) : Reconstruction par la moyenne seule\n\n\\(\\tilde{\\mathbf{x}}_i = \\overline{\\mathbf{x}}\\)\nErreur maximale : \\(\\mathcal{L}(0) = \\sum_{d=1}^D \\lambda_d\\)\nAucune information sur la variabilité individuelle\n\n\n\n\nComportement Typique\nLa relation entre \\(K\\) et la qualité de reconstruction suit généralement une loi des rendements décroissants :\n\nLes premières composantes améliorent considérablement la reconstruction\nLes améliorations deviennent progressivement plus faibles\nAu-delà d’un certain point, les gains sont négligeables\n\n\n\n\nImpact sur les Applications\n\nVisualisation\nPour la visualisation en 2D ou 3D :\n\n\\(K = 2\\) ou \\(3\\) : Permet une visualisation directe\nImplication : Perte importante d’information si les deux premières composantes n’expliquent pas suffisamment de variance\nSolution : Examiner plusieurs paires de composantes si nécessaire\n\n\n\nDébruitage\nPCA peut servir à séparer signal et bruit :\n\nSignal : Capturé par les premières composantes (valeurs propres élevées)\nBruit : Capturé par les dernières composantes (valeurs propres faibles)\nChoix de \\(K\\) : Doit être suffisant pour capturer le signal mais exclure le bruit\n\n\n\nCompression\nPour la compression de données :\n\nTaux de compression : \\(\\frac{K}{D} \\times 100\\%\\)\nDistortion : Mesurée par \\(\\frac{\\sum_{d=K+1}^D \\lambda_d}{\\sum_{d=1}^D \\lambda_d} \\times 100\\%\\)\nCompromis : Taux de compression vs qualité de reconstruction",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#approches-avancées-et-considérations",
+    "href": "ds31q.html#approches-avancées-et-considérations",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Approches Avancées et Considérations",
+    "text": "Approches Avancées et Considérations\n\nValidation Croisée\n\nMéthode de Validation\nPour éviter le surajustement, on peut utiliser la validation croisée :\n\nDiviser les données en ensembles d’entraînement et de test\nCalculer PCA sur l’ensemble d’entraînement\nÉvaluer l’erreur de reconstruction sur l’ensemble de test\nChoisir \\(K\\) qui minimise l’erreur de test\n\nAvantage : Plus robuste, surtout pour de petits échantillons\n\n\n\nCritères d’Information\n\nCritère d’Akaike (AIC) et BIC\nPour des données normalement distribuées, on peut utiliser des critères d’information :\n\nAIC : Équilibre entre qualité d’ajustement et complexité\nBIC : Pénalise plus fortement la complexité\n\nCes critères formulent le choix de \\(K\\) comme un problème de sélection de modèle.\n\n\n\nConsidérations du Domaine d’Application\n\nConnaissances Métier\nParfois, des considérations externes guident le choix de \\(K\\) :\n\nInterprétabilité : Se limiter à un nombre de composantes facile à interpréter\nContraintes techniques : Limitations de stockage ou de traitement\nExigences applicatives : Certaines applications nécessitent un nombre spécifique de dimensions",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#exemple-pratique",
+    "href": "ds31q.html#exemple-pratique",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Exemple Pratique",
+    "text": "Exemple Pratique\n\nScénario Typique\nSupposons une analyse sur des données avec \\(D = 50\\) variables et \\(N = 1000\\) observations.\nValeurs propres : \\(\\lambda_1 = 15.2\\), \\(\\lambda_2 = 8.1\\), \\(\\lambda_3 = 4.3\\), \\(\\lambda_4 = 2.1\\), \\(\\lambda_5 = 1.8\\), … \\(\\lambda_{50} = 0.05\\)\nCalculs :\n\nVariance totale : \\(\\sum \\lambda_d = 50.0\\) (car données standardisées)\nPVE(1) : \\(15.2/50.0 = 30.4\\%\\)\nPVE(2) : \\((15.2+8.1)/50.0 = 46.6\\%\\)\nPVE(3) : \\((15.2+8.1+4.3)/50.0 = 55.2\\%\\)\nPVE(4) : \\((15.2+8.1+4.3+2.1)/50.0 = 59.4\\%\\)\nPVE(5) : \\((15.2+8.1+4.3+2.1+1.8)/50.0 = 63.0\\%\\)\n\nDécisions possibles :\n\nSeuil 80% : Nécessiterait environ 10 composantes (calcul supplémentaire nécessaire)\nRègle de Kaiser : 5 composantes (\\(\\lambda_5 = 1.8 &gt; 1\\), \\(\\lambda_6 = 0.9 &lt; 1\\))\nScree plot : Coude probable après la 3ème ou 4ème composante\nErreur reconstruction &lt; 40% : \\(K\\) tel que \\(\\sum_{d=K+1}^{50} \\lambda_d &lt; 20\\) (40% de 50)",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#recommandations-générales",
+    "href": "ds31q.html#recommandations-générales",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Recommandations Générales",
+    "text": "Recommandations Générales\n\nDémarche Conseillée\n\nCommencez par standardiser les données si les variables ont des échelles différentes\nExaminez le scree plot pour une intuition visuelle\nCalculez la variance cumulée expliquée pour différents \\(K\\)\nConsidérez la règle de Kaiser si les données sont standardisées\nÉvaluez les besoins de votre application en termes de compression et qualité\nTestez la robustesse par validation croisée si possible\nVérifiez l’interprétabilité des composantes retenues\n\n\n\nPièges à Éviter\n\nTrop peu de composantes : Perte d’information importante, reconstruction médiocre\nTrop de composantes : Réduction de dimension insuffisante, capture du bruit\nIgnorer le contexte : Le choix optimal dépend de l’application finale\nOublier la validation : Sur des petits échantillons, risque de surajustement",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
+    "objectID": "ds31q.html#conclusion-2",
+    "href": "ds31q.html#conclusion-2",
+    "title": "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation",
+    "section": "Conclusion",
+    "text": "Conclusion\nLe choix du nombre de composantes en PCA est une décision cruciale qui influence directement la qualité de la reconstruction et l’utilité de l’analyse. Aucune méthode n’est universellement meilleure ; une approche combinant plusieurs critères est généralement recommandée.\nRappel fondamental : L’erreur de reconstruction est exactement la somme des valeurs propres des composantes exclues. Ce lien direct entre valeurs propres et qualité d’approximation fournit une base théorique solide pour guider la sélection.\nEn pratique, ce choix représente toujours un compromis entre simplicité (peu de dimensions) et fidélité (reconstruction précise), et doit être adapté aux objectifs spécifiques de l’analyse.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Analyse en Composantes Principales (PCA) : Méthode, Calcul et Interprétation"
+    ]
+  },
+  {
     "objectID": "ds3.html",
     "href": "ds3.html",
     "title": "Cours détaillé",
@@ -1305,6 +1503,83 @@
     ]
   },
   {
+    "objectID": "ds21q.html",
+    "href": "ds21q.html",
+    "title": "Exam question",
+    "section": "",
+    "text": "Expliquez les aspects « parcimonie » et « concentration » de la malédiction de la dimensionnalité, leur justification théorique et leur impact pratique.\nDonnez des exemples de bénédiction de la dimensionnalité et expliquez comment ils sont utilisés dans la pratique (vous pouvez rechercher d’autres exemples que ceux présentés dans les cours ou les travaux pratiques).\n\n\n\nLe concept de malédiction de la dimension décrit les défis qui émergent lorsqu’on travaille avec des données en haute dimension. Cette notion fondamentale en data science présente deux aspects principaux : la sparsity (parcimonie) et la concentration, chacun ayant des justifications théoriques solides et des implications pratiques importantes.\nCurieusement, cette même haute dimension offre également des avantages, regroupés sous le terme de bénédiction de la dimension, qui peuvent être exploités dans diverses applications pratiques.\n\n\n\n\n\n\n\n\nLa sparsity fait référence à l’extrême dilution des données dans les espaces de haute dimension. Alors que le volume de l’espace croît exponentiellement avec la dimension, le nombre de points de données reste limité, créant des régions vides immenses.\n\n\n\n\nConsidérons un hypercube unité \\([0,1]^D\\). Si nous divisons chaque dimension en \\(k\\) intervalles égaux, nous obtenons \\(k^D\\) cellules. Cette croissance exponentielle signifie que pour maintenir une densité constante de points, nous aurions besoin d’un nombre exponentiel d’échantillons.\nFormellement, si nous souhaitons avoir en moyenne au moins un point par cellule :\n\\[ N \\geq k^D \\]\nPour \\(D = 100\\) et \\(k = 10\\), cela nécessiterait \\(10^{100}\\) points, ce qui illustre l’impossibilité pratique de remplir uniformément l’espace.\n\n\n\n\nUn résultat particulièrement contre-intuitif concerne le rapport entre le volume d’une hypersphère et celui de l’hypercube qui la contient.\nPour une hypersphère \\(B_D(r)\\) de rayon \\(r\\) centrée à l’origine, inscrite dans un hypercube \\(C_D(r) = [-r, r]^D\\) :\nVolume de l’hypersphère : \\[ \\text{vol}(B_D(r)) = \\frac{2r^D \\pi^{D/2}}{D\\Gamma(D/2)} \\]\nVolume de l’hypercube : \\[ \\text{vol}(C_D(r)) = (2r)^D \\]\nRatio sphère/cube : \\[ \\frac{\\text{vol}(B_D(r))}{\\text{vol}(C_D(r))} = \\frac{\\pi^{D/2}}{D 2^{D-1} \\Gamma(D/2)} \\]\nLe résultat clé : \\[ \\lim_{D \\to \\infty} \\frac{\\text{vol}(B_D(r))}{\\text{vol}(C_D(r))} = 0 \\]\nCette limite montre qu’en haute dimension, presque tout le volume du cube se situe dans ses coins, laissant la sphère centrale essentiellement vide.\n\n\n\n\nEstimation de densité impossible : Pour estimer une densité de probabilité en dimension \\(D\\) avec une précision donnée, le nombre d’échantillons requis croît exponentiellement, rendant l’estimation non paramétrique impraticable.\nAlgorithme des k-plus proches voisins inefficace : Les “plus proches” voisins sont en réalité très éloignés, réduisant l’efficacité de cette méthode.\nRisque accru de sur-apprentissage : Avec peu de données par rapport au nombre de dimensions, les modèles tendent à capturer le bruit plutôt que le signal sous-jacent.\nProblème en recherche d’information : La similarité entre documents représentés par de nombreux termes devient difficile à évaluer de manière fiable.\n\n\n\n\n\n\n\nLa concentration désigne le phénomène selon lequel certaines quantités, comme les distances entre points, se concentrent autour de valeurs typiques en haute dimension, perdant ainsi leur pouvoir discriminant.\n\n\n\n\nSoit un ensemble de données \\(X \\subset \\Omega\\), un point \\(x\\) et ses \\(k\\) plus proches voisins. Notons \\(D_{\\min}\\) et \\(D_{\\max}\\) les distances aux voisins les plus proches et les plus éloignés.\nThéorème (Beyer et al.) : Si \\(\\lim_{D \\to \\infty} \\text{Var}\\left( \\frac{d(x,y)^p}{d(x,y)^p} \\right) = 0\\) pour \\(0 &lt; p &lt; \\infty\\), alors pour tout \\(\\varepsilon &gt; 0\\) :\n\\[ \\lim_{D \\to \\infty} P \\left[ \\frac{D_{\\max} - D_{\\min}}{D_{\\min}} \\le \\varepsilon \\right] = 1 \\]\nCe résultat formel montre qu’en haute dimension, toutes les distances entre voisins deviennent relativement similaires, rendant difficile la distinction entre “proche” et “loin”.\n\n\n\n\nPour des variables indépendantes et identiquement distribuées (i.i.d.) \\(X_i \\sim N(0,1)\\), considérons la norme euclidienne \\(R = \\|X\\|_2\\). On a :\n\\[ R^2 = \\sum_{i=1}^D X_i^2 \\sim \\chi^2(D) \\]\nAinsi : \\[ \\mathbb{E}[R^2] = D \\quad \\text{et} \\quad \\text{Var}(R^2) = 2D \\]\nLe coefficient de variation : \\[ \\frac{\\sqrt{\\text{Var}(R^2)}}{\\mathbb{E}[R^2]} = \\frac{\\sqrt{2D}}{D} = \\sqrt{\\frac{2}{D}} \\to 0 \\quad \\text{quand } D \\to \\infty \\]\nCette convergence, garantie par la Loi des Grands Nombres, explique pourquoi les points gaussiens se concentrent sur une coquille sphérique de rayon \\(\\sqrt{D}\\).\n\n\n\n\nInégalité de Hoeffding : Pour des variables aléatoires indépendantes \\(X_1, \\ldots, X_D\\) telles que \\(a \\leq X_i \\leq b\\) presque sûrement, et pour tout \\(\\epsilon &gt; 0\\) :\n\\[ P(|\\bar{X} - \\mathbb{E}[\\bar{X}]| &gt; \\epsilon) \\leq 2\\exp\\left(-\\frac{2D\\epsilon^2}{(b-a)^2}\\right) \\]\noù \\(\\bar{X} = \\frac{1}{D}\\sum_{i=1}^D X_i\\).\nCette inégalité montre que la moyenne empirique converge exponentiellement vite vers son espérance, ce qui explique la concentration des mesures en haute dimension.\nInégalité de Chebyshev : Pour une variable aléatoire \\(X\\) d’espérance \\(\\mu\\) et de variance \\(\\sigma^2\\) :\n\\[ P(|X - \\mu| \\geq \\epsilon) \\leq \\frac{\\sigma^2}{\\epsilon^2} \\]\nQuand la variance relative décroît avec \\(D\\) (comme c’est souvent le cas), la probabilité d’écart à la moyenne diminue.\n\n\n\n\nPerte de discrimination spatiale : Dans les algorithmes de clustering (k-means) et de recherche de similarité, la concentration des distances rend difficile la distinction entre groupes naturels.\nInefficacité des index spatiaux : Les structures d’indexation comme les k-d trees nécessitent d’explorer une grande partie de l’espace, conduisant à une complexité proche de \\(O(N)\\).\nPhénomène de Hubness : Certains points deviennent des “hubs”, apparaissant comme plus proches voisins d’un nombre disproportionné d’autres points, biaisant ainsi les systèmes de recommandation.\nDifficulté en classification : Les frontières entre classes deviennent moins nettes lorsque les distances perdent leur pouvoir discriminant.\n\n\n\n\n\n\n\n\n\n\nLoi Faible des Grands Nombres : Pour des variables i.i.d. \\(X_1, \\ldots, X_D\\) d’espérance \\(\\mu\\), pour tout \\(\\varepsilon &gt; 0\\) :\n\\[ \\lim_{D \\to \\infty} P(|\\bar{X} - \\mu| &lt; \\varepsilon) = 1 \\]\nCette loi assure que la moyenne empirique converge en probabilité vers l’espérance théorique.\nThéorème Central Limite (version multidimensionnelle) : Pour des vecteurs aléatoires i.i.d. \\(X_1, \\ldots, X_D\\) dans \\(\\mathbb{R}^p\\) d’espérance \\(\\mu\\) et de matrice de covariance \\(\\Sigma\\), on a :\n\\[ \\sqrt{D}(\\bar{X}_D - \\mu) \\xrightarrow[d]{} N(0, \\Sigma) \\quad \\text{quand } D \\to \\infty \\]\nCe théorème fournit non seulement la convergence, mais aussi la distribution limite, permettant de construire des intervalles de confiance.\n\n\n\n\nLes méthodes d’apprentissage par agrégation exploitent ces théorèmes. Par exemple, les forêts aléatoires combinent de nombreux arbres de décision faiblement corrélés. Chaque arbre est un estimateur peu précis, mais leur moyenne bénéficie de la réduction de variance prédite par le théorème central limite.\nExemple en bioinformatique : Avec des milliers de gènes (dimensions) et seulement des centaines de patients, les forêts aléatoires fournissent des classifieurs robustes pour le diagnostic médical.\n\n\n\n\n\n\n\nÉnoncé du lemme : Pour tout ensemble \\(X\\) de \\(N\\) points dans \\(\\mathbb{R}^D\\) et tout \\(0 &lt; \\varepsilon &lt; 1\\), il existe une application linéaire \\(f : \\mathbb{R}^D \\to \\mathbb{R}^d\\) avec \\(d = O(\\varepsilon^{-2} \\log N)\\) telle que pour tout \\(x, y \\in X\\) :\n\\[ (1-\\varepsilon)\\|x-y\\|^2 \\leq \\|f(x)-f(y)\\|^2 \\leq (1+\\varepsilon)\\|x-y\\|^2 \\]\nLa dimension \\(d\\) est indépendante de \\(D\\) et ne dépend que logarithmiquement de \\(N\\).\nPreuve intuitive : La preuve utilise des matrices aléatoires dont les entrées sont i.i.d. selon une loi normale, et exploite la concentration des mesures (via l’inégalité de Hoeffding) pour montrer que les distances sont préservées avec haute probabilité.\n\n\n\n\nRecherche approximative de plus proches voisins : Les algorithmes de Locality-Sensitive Hashing (LSH) utilisent des projections aléatoires pour indexer rapidement des milliards de points en haute dimension.\nCompression de données : Les techniques de compressed sensing permettent de reconstruire des signaux à partir de peu de mesures en exploitant la parcimonie naturelle des signaux réels.\nExemple concret : Les systèmes de recommandation de YouTube utilisent des variantes de LSH pour trouver rapidement des vidéos similaires parmi des milliards de possibilités.\n\n\n\n\n\n\n\nEn haute dimension, des vecteurs aléatoires tendent à être presque orthogonaux. Pour deux vecteurs aléatoires unitaires \\(u, v\\) sur la sphère en dimension \\(D\\), la distribution de leur produit scalaire se concentre autour de 0.\nJustification par la loi des grands nombres : Si les composantes sont i.i.d. de moyenne nulle, alors \\(\\langle u, v \\rangle = \\frac{1}{D}\\sum_{i=1}^D u_i v_i\\) converge vers 0.\n\n\n\n\nLe kernel trick permet de projeter implicitement les données dans un espace de très haute dimension où elles deviennent linéairement séparables, sans calcul explicite de la transformation.\nExemple en vision par ordinateur : Pour la reconnaissance d’objets, les SVM avec noyau RBF séparent des classes non linéairement séparables dans l’espace d’origine.\n\n\n\n\nLes modèles comme Word2Vec projettent les mots dans des espaces de dimension 100 à 300 où les relations sémantiques deviennent linéairement représentables. Par exemple :\n\\[ \\text{\"roi\"} - \\text{\"homme\"} + \\text{\"femme\"} \\approx \\text{\"reine\"} \\]\nCette propriété émerge naturellement en haute dimension grâce à la quasi-orthogonalité des vecteurs de mots différents.\n\n\n\n\n\n\n\nContrairement à la intuition classique, augmenter la capacité d’un modèle (nombre de paramètres) au-delà d’un certain point peut améliorer la généralisation, un phénomène observé dans les réseaux de neurones profonds.\nExplication théorique : En très haute dimension, les modèles bénéficient d’une régularisation implicite due à la concentration des mesures et à la géométrie particulière des espaces de haute dimension.\n\n\n\n\nLes réseaux de neurones avec des millions de paramètres généralisent souvent mieux que des modèles plus petits, en particulier lorsqu’ils sont combinés avec des techniques de régularisation appropriées.\nExemple : Les modèles de langage à grande échelle comme GPT-3, avec 175 milliards de paramètres, atteignent des performances remarquables en compréhension et génération de texte.\n\n\n\n\n\n\n\n\nCes deux aspects ne sont pas contradictoires mais complémentaires. La clé réside dans la compréhension des conditions sous lesquelles chaque phénomène domine :\n\nLa malédiction prédomine lorsque les données sont uniformément réparties et que les dimensions sont indépendantes\nLa bénédiction émerge lorsque les données possèdent une structure sous-jacente (parcimonie, variétés de faible dimension) que l’on peut exploiter\n\n\n\n\n\n\n\n\nRéduction de dimension (ACP, t-SNE, UMAP)\nRégularisation (ridge, lasso) pour éviter le sur-apprentissage\nSélection de caractéristiques pour conserver seulement les dimensions pertinentes\nAlgorithmes spécifiques conçus pour la haute dimension (forêts d’isolement, one-class SVM)\n\n\n\n\n\nProjections aléatoires pour l’indexation et la compression\nMéthodes à noyau pour la séparabilité linéaire\nAgrégation de modèles pour la robustesse statistique\nApprentissage de représentations pour découvrir la structure sous-jacente\n\n\n\n\n\n\nPour la malédiction :\n\nCroissance exponentielle du volume (sparsity)\nThéorème de concentration des distances (Beyer et al.)\nConcentration des normes gaussiennes (Loi des Grands Nombres)\nInégalités de concentration (Hoeffding, Chebyshev)\n\nPour la bénédiction :\n\nLoi des Grands Nombres et Théorème Central Limite\nLemme de Johnson-Lindenstrauss (préservation des distances)\nQuasi-orthogonalité des vecteurs aléatoires\nSéparabilité linéaire en haute dimension\n\n\n\n\n\n\nLa haute dimension présente un paysage complexe où coexistent des défis redoutables et des opportunités précieuses. La sparsity et la concentration, bien que problématiques pour de nombreuses méthodes classiques, peuvent devenir des alliées lorsqu’elles sont comprises et exploitées judicieusement.\nLe data scientist moderne doit naviguer cette dualité en mobilisant à la fois une compréhension théorique profonde (théorèmes de concentration, lois des grands nombres, propriétés géométriques) et un arsenal de techniques pratiques (réduction de dimension, régularisation, méthodes adaptées).\nLa leçon essentielle est que la dimension n’est pas une fatalité mais une caractéristique du problème dont il faut comprendre les implications pour transformer les obstacles en opportunités. Cette compréhension duale est cruciale pour concevoir des systèmes qui prospèrent dans les espaces de haute dimension qui caractérisent de plus en plus les données contemporaines.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Exam question"
+    ]
+  },
+  {
+    "objectID": "ds21q.html#question",
+    "href": "ds21q.html#question",
+    "title": "Exam question",
+    "section": "",
+    "text": "Expliquez les aspects « parcimonie » et « concentration » de la malédiction de la dimensionnalité, leur justification théorique et leur impact pratique.\nDonnez des exemples de bénédiction de la dimensionnalité et expliquez comment ils sont utilisés dans la pratique (vous pouvez rechercher d’autres exemples que ceux présentés dans les cours ou les travaux pratiques).",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Exam question"
+    ]
+  },
+  {
+    "objectID": "ds21q.html#introduction-aux-phénomènes-dimensionnels",
+    "href": "ds21q.html#introduction-aux-phénomènes-dimensionnels",
+    "title": "Exam question",
+    "section": "",
+    "text": "Le concept de malédiction de la dimension décrit les défis qui émergent lorsqu’on travaille avec des données en haute dimension. Cette notion fondamentale en data science présente deux aspects principaux : la sparsity (parcimonie) et la concentration, chacun ayant des justifications théoriques solides et des implications pratiques importantes.\nCurieusement, cette même haute dimension offre également des avantages, regroupés sous le terme de bénédiction de la dimension, qui peuvent être exploités dans diverses applications pratiques.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Exam question"
+    ]
+  },
+  {
+    "objectID": "ds21q.html#première-partie-la-malédiction-de-la-dimension",
+    "href": "ds21q.html#première-partie-la-malédiction-de-la-dimension",
+    "title": "Exam question",
+    "section": "",
+    "text": "La sparsity fait référence à l’extrême dilution des données dans les espaces de haute dimension. Alors que le volume de l’espace croît exponentiellement avec la dimension, le nombre de points de données reste limité, créant des régions vides immenses.\n\n\n\n\nConsidérons un hypercube unité \\([0,1]^D\\). Si nous divisons chaque dimension en \\(k\\) intervalles égaux, nous obtenons \\(k^D\\) cellules. Cette croissance exponentielle signifie que pour maintenir une densité constante de points, nous aurions besoin d’un nombre exponentiel d’échantillons.\nFormellement, si nous souhaitons avoir en moyenne au moins un point par cellule :\n\\[ N \\geq k^D \\]\nPour \\(D = 100\\) et \\(k = 10\\), cela nécessiterait \\(10^{100}\\) points, ce qui illustre l’impossibilité pratique de remplir uniformément l’espace.\n\n\n\n\nUn résultat particulièrement contre-intuitif concerne le rapport entre le volume d’une hypersphère et celui de l’hypercube qui la contient.\nPour une hypersphère \\(B_D(r)\\) de rayon \\(r\\) centrée à l’origine, inscrite dans un hypercube \\(C_D(r) = [-r, r]^D\\) :\nVolume de l’hypersphère : \\[ \\text{vol}(B_D(r)) = \\frac{2r^D \\pi^{D/2}}{D\\Gamma(D/2)} \\]\nVolume de l’hypercube : \\[ \\text{vol}(C_D(r)) = (2r)^D \\]\nRatio sphère/cube : \\[ \\frac{\\text{vol}(B_D(r))}{\\text{vol}(C_D(r))} = \\frac{\\pi^{D/2}}{D 2^{D-1} \\Gamma(D/2)} \\]\nLe résultat clé : \\[ \\lim_{D \\to \\infty} \\frac{\\text{vol}(B_D(r))}{\\text{vol}(C_D(r))} = 0 \\]\nCette limite montre qu’en haute dimension, presque tout le volume du cube se situe dans ses coins, laissant la sphère centrale essentiellement vide.\n\n\n\n\nEstimation de densité impossible : Pour estimer une densité de probabilité en dimension \\(D\\) avec une précision donnée, le nombre d’échantillons requis croît exponentiellement, rendant l’estimation non paramétrique impraticable.\nAlgorithme des k-plus proches voisins inefficace : Les “plus proches” voisins sont en réalité très éloignés, réduisant l’efficacité de cette méthode.\nRisque accru de sur-apprentissage : Avec peu de données par rapport au nombre de dimensions, les modèles tendent à capturer le bruit plutôt que le signal sous-jacent.\nProblème en recherche d’information : La similarité entre documents représentés par de nombreux termes devient difficile à évaluer de manière fiable.\n\n\n\n\n\n\n\nLa concentration désigne le phénomène selon lequel certaines quantités, comme les distances entre points, se concentrent autour de valeurs typiques en haute dimension, perdant ainsi leur pouvoir discriminant.\n\n\n\n\nSoit un ensemble de données \\(X \\subset \\Omega\\), un point \\(x\\) et ses \\(k\\) plus proches voisins. Notons \\(D_{\\min}\\) et \\(D_{\\max}\\) les distances aux voisins les plus proches et les plus éloignés.\nThéorème (Beyer et al.) : Si \\(\\lim_{D \\to \\infty} \\text{Var}\\left( \\frac{d(x,y)^p}{d(x,y)^p} \\right) = 0\\) pour \\(0 &lt; p &lt; \\infty\\), alors pour tout \\(\\varepsilon &gt; 0\\) :\n\\[ \\lim_{D \\to \\infty} P \\left[ \\frac{D_{\\max} - D_{\\min}}{D_{\\min}} \\le \\varepsilon \\right] = 1 \\]\nCe résultat formel montre qu’en haute dimension, toutes les distances entre voisins deviennent relativement similaires, rendant difficile la distinction entre “proche” et “loin”.\n\n\n\n\nPour des variables indépendantes et identiquement distribuées (i.i.d.) \\(X_i \\sim N(0,1)\\), considérons la norme euclidienne \\(R = \\|X\\|_2\\). On a :\n\\[ R^2 = \\sum_{i=1}^D X_i^2 \\sim \\chi^2(D) \\]\nAinsi : \\[ \\mathbb{E}[R^2] = D \\quad \\text{et} \\quad \\text{Var}(R^2) = 2D \\]\nLe coefficient de variation : \\[ \\frac{\\sqrt{\\text{Var}(R^2)}}{\\mathbb{E}[R^2]} = \\frac{\\sqrt{2D}}{D} = \\sqrt{\\frac{2}{D}} \\to 0 \\quad \\text{quand } D \\to \\infty \\]\nCette convergence, garantie par la Loi des Grands Nombres, explique pourquoi les points gaussiens se concentrent sur une coquille sphérique de rayon \\(\\sqrt{D}\\).\n\n\n\n\nInégalité de Hoeffding : Pour des variables aléatoires indépendantes \\(X_1, \\ldots, X_D\\) telles que \\(a \\leq X_i \\leq b\\) presque sûrement, et pour tout \\(\\epsilon &gt; 0\\) :\n\\[ P(|\\bar{X} - \\mathbb{E}[\\bar{X}]| &gt; \\epsilon) \\leq 2\\exp\\left(-\\frac{2D\\epsilon^2}{(b-a)^2}\\right) \\]\noù \\(\\bar{X} = \\frac{1}{D}\\sum_{i=1}^D X_i\\).\nCette inégalité montre que la moyenne empirique converge exponentiellement vite vers son espérance, ce qui explique la concentration des mesures en haute dimension.\nInégalité de Chebyshev : Pour une variable aléatoire \\(X\\) d’espérance \\(\\mu\\) et de variance \\(\\sigma^2\\) :\n\\[ P(|X - \\mu| \\geq \\epsilon) \\leq \\frac{\\sigma^2}{\\epsilon^2} \\]\nQuand la variance relative décroît avec \\(D\\) (comme c’est souvent le cas), la probabilité d’écart à la moyenne diminue.\n\n\n\n\nPerte de discrimination spatiale : Dans les algorithmes de clustering (k-means) et de recherche de similarité, la concentration des distances rend difficile la distinction entre groupes naturels.\nInefficacité des index spatiaux : Les structures d’indexation comme les k-d trees nécessitent d’explorer une grande partie de l’espace, conduisant à une complexité proche de \\(O(N)\\).\nPhénomène de Hubness : Certains points deviennent des “hubs”, apparaissant comme plus proches voisins d’un nombre disproportionné d’autres points, biaisant ainsi les systèmes de recommandation.\nDifficulté en classification : Les frontières entre classes deviennent moins nettes lorsque les distances perdent leur pouvoir discriminant.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Exam question"
+    ]
+  },
+  {
+    "objectID": "ds21q.html#deuxième-partie-la-bénédiction-de-la-dimension",
+    "href": "ds21q.html#deuxième-partie-la-bénédiction-de-la-dimension",
+    "title": "Exam question",
+    "section": "",
+    "text": "Loi Faible des Grands Nombres : Pour des variables i.i.d. \\(X_1, \\ldots, X_D\\) d’espérance \\(\\mu\\), pour tout \\(\\varepsilon &gt; 0\\) :\n\\[ \\lim_{D \\to \\infty} P(|\\bar{X} - \\mu| &lt; \\varepsilon) = 1 \\]\nCette loi assure que la moyenne empirique converge en probabilité vers l’espérance théorique.\nThéorème Central Limite (version multidimensionnelle) : Pour des vecteurs aléatoires i.i.d. \\(X_1, \\ldots, X_D\\) dans \\(\\mathbb{R}^p\\) d’espérance \\(\\mu\\) et de matrice de covariance \\(\\Sigma\\), on a :\n\\[ \\sqrt{D}(\\bar{X}_D - \\mu) \\xrightarrow[d]{} N(0, \\Sigma) \\quad \\text{quand } D \\to \\infty \\]\nCe théorème fournit non seulement la convergence, mais aussi la distribution limite, permettant de construire des intervalles de confiance.\n\n\n\n\nLes méthodes d’apprentissage par agrégation exploitent ces théorèmes. Par exemple, les forêts aléatoires combinent de nombreux arbres de décision faiblement corrélés. Chaque arbre est un estimateur peu précis, mais leur moyenne bénéficie de la réduction de variance prédite par le théorème central limite.\nExemple en bioinformatique : Avec des milliers de gènes (dimensions) et seulement des centaines de patients, les forêts aléatoires fournissent des classifieurs robustes pour le diagnostic médical.\n\n\n\n\n\n\n\nÉnoncé du lemme : Pour tout ensemble \\(X\\) de \\(N\\) points dans \\(\\mathbb{R}^D\\) et tout \\(0 &lt; \\varepsilon &lt; 1\\), il existe une application linéaire \\(f : \\mathbb{R}^D \\to \\mathbb{R}^d\\) avec \\(d = O(\\varepsilon^{-2} \\log N)\\) telle que pour tout \\(x, y \\in X\\) :\n\\[ (1-\\varepsilon)\\|x-y\\|^2 \\leq \\|f(x)-f(y)\\|^2 \\leq (1+\\varepsilon)\\|x-y\\|^2 \\]\nLa dimension \\(d\\) est indépendante de \\(D\\) et ne dépend que logarithmiquement de \\(N\\).\nPreuve intuitive : La preuve utilise des matrices aléatoires dont les entrées sont i.i.d. selon une loi normale, et exploite la concentration des mesures (via l’inégalité de Hoeffding) pour montrer que les distances sont préservées avec haute probabilité.\n\n\n\n\nRecherche approximative de plus proches voisins : Les algorithmes de Locality-Sensitive Hashing (LSH) utilisent des projections aléatoires pour indexer rapidement des milliards de points en haute dimension.\nCompression de données : Les techniques de compressed sensing permettent de reconstruire des signaux à partir de peu de mesures en exploitant la parcimonie naturelle des signaux réels.\nExemple concret : Les systèmes de recommandation de YouTube utilisent des variantes de LSH pour trouver rapidement des vidéos similaires parmi des milliards de possibilités.\n\n\n\n\n\n\n\nEn haute dimension, des vecteurs aléatoires tendent à être presque orthogonaux. Pour deux vecteurs aléatoires unitaires \\(u, v\\) sur la sphère en dimension \\(D\\), la distribution de leur produit scalaire se concentre autour de 0.\nJustification par la loi des grands nombres : Si les composantes sont i.i.d. de moyenne nulle, alors \\(\\langle u, v \\rangle = \\frac{1}{D}\\sum_{i=1}^D u_i v_i\\) converge vers 0.\n\n\n\n\nLe kernel trick permet de projeter implicitement les données dans un espace de très haute dimension où elles deviennent linéairement séparables, sans calcul explicite de la transformation.\nExemple en vision par ordinateur : Pour la reconnaissance d’objets, les SVM avec noyau RBF séparent des classes non linéairement séparables dans l’espace d’origine.\n\n\n\n\nLes modèles comme Word2Vec projettent les mots dans des espaces de dimension 100 à 300 où les relations sémantiques deviennent linéairement représentables. Par exemple :\n\\[ \\text{\"roi\"} - \\text{\"homme\"} + \\text{\"femme\"} \\approx \\text{\"reine\"} \\]\nCette propriété émerge naturellement en haute dimension grâce à la quasi-orthogonalité des vecteurs de mots différents.\n\n\n\n\n\n\n\nContrairement à la intuition classique, augmenter la capacité d’un modèle (nombre de paramètres) au-delà d’un certain point peut améliorer la généralisation, un phénomène observé dans les réseaux de neurones profonds.\nExplication théorique : En très haute dimension, les modèles bénéficient d’une régularisation implicite due à la concentration des mesures et à la géométrie particulière des espaces de haute dimension.\n\n\n\n\nLes réseaux de neurones avec des millions de paramètres généralisent souvent mieux que des modèles plus petits, en particulier lorsqu’ils sont combinés avec des techniques de régularisation appropriées.\nExemple : Les modèles de langage à grande échelle comme GPT-3, avec 175 milliards de paramètres, atteignent des performances remarquables en compréhension et génération de texte.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Exam question"
+    ]
+  },
+  {
+    "objectID": "ds21q.html#synthèse-et-perspectives",
+    "href": "ds21q.html#synthèse-et-perspectives",
+    "title": "Exam question",
+    "section": "",
+    "text": "Ces deux aspects ne sont pas contradictoires mais complémentaires. La clé réside dans la compréhension des conditions sous lesquelles chaque phénomène domine :\n\nLa malédiction prédomine lorsque les données sont uniformément réparties et que les dimensions sont indépendantes\nLa bénédiction émerge lorsque les données possèdent une structure sous-jacente (parcimonie, variétés de faible dimension) que l’on peut exploiter\n\n\n\n\n\n\n\n\nRéduction de dimension (ACP, t-SNE, UMAP)\nRégularisation (ridge, lasso) pour éviter le sur-apprentissage\nSélection de caractéristiques pour conserver seulement les dimensions pertinentes\nAlgorithmes spécifiques conçus pour la haute dimension (forêts d’isolement, one-class SVM)\n\n\n\n\n\nProjections aléatoires pour l’indexation et la compression\nMéthodes à noyau pour la séparabilité linéaire\nAgrégation de modèles pour la robustesse statistique\nApprentissage de représentations pour découvrir la structure sous-jacente\n\n\n\n\n\n\nPour la malédiction :\n\nCroissance exponentielle du volume (sparsity)\nThéorème de concentration des distances (Beyer et al.)\nConcentration des normes gaussiennes (Loi des Grands Nombres)\nInégalités de concentration (Hoeffding, Chebyshev)\n\nPour la bénédiction :\n\nLoi des Grands Nombres et Théorème Central Limite\nLemme de Johnson-Lindenstrauss (préservation des distances)\nQuasi-orthogonalité des vecteurs aléatoires\nSéparabilité linéaire en haute dimension",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Exam question"
+    ]
+  },
+  {
+    "objectID": "ds21q.html#conclusion",
+    "href": "ds21q.html#conclusion",
+    "title": "Exam question",
+    "section": "",
+    "text": "La haute dimension présente un paysage complexe où coexistent des défis redoutables et des opportunités précieuses. La sparsity et la concentration, bien que problématiques pour de nombreuses méthodes classiques, peuvent devenir des alliées lorsqu’elles sont comprises et exploitées judicieusement.\nLe data scientist moderne doit naviguer cette dualité en mobilisant à la fois une compréhension théorique profonde (théorèmes de concentration, lois des grands nombres, propriétés géométriques) et un arsenal de techniques pratiques (réduction de dimension, régularisation, méthodes adaptées).\nLa leçon essentielle est que la dimension n’est pas une fatalité mais une caractéristique du problème dont il faut comprendre les implications pour transformer les obstacles en opportunités. Cette compréhension duale est cruciale pour concevoir des systèmes qui prospèrent dans les espaces de haute dimension qui caractérisent de plus en plus les données contemporaines.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Exam question"
+    ]
+  },
+  {
     "objectID": "ds2.html",
     "href": "ds2.html",
     "title": "Cours détailé",
@@ -1379,6 +1654,270 @@
     "crumbs": [
       "Espaces de Représentation en Haute Dimension",
       "Cours détailé"
+    ]
+  },
+  {
+    "objectID": "ds21.html",
+    "href": "ds21.html",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "",
+    "text": "La Data Science consiste à modéliser des phénomènes sous forme de données numériques, à comprendre les propriétés géométriques et statistiques de ces données, et à développer des outils pour les analyser.\n\n\n\n\n\nLa Data Science implique :\n\nLa modélisation de phénomènes en données numériques quantitatives\nLa compréhension des propriétés géométriques et statistiques des données\nL’analyse de l’espace dans lequel ces données existent\nLe développement d’outils d’analyse avec compréhension de leurs hypothèses sous-jacentes\n\n\n\n\n\nLa Data Science et le Machine Learning sont étroitement liés :\n\nData Science : étude des espaces de représentation\nMachine Learning : opérations dans ces espaces de représentation\n\nLes deux domaines sont complémentaires et souvent synonymes dans la pratique.\n\n\n\n\n\n\n\n\n\ngraph LR\n    A[Capteurs/Sources] --&gt; B[Données brutes]\n    B --&gt; C[Représentation]\n    C --&gt; D[Matrice de données]\n    \n    subgraph Exemples\n        E[Caméra] --&gt; F[Pixels]\n        G[Population] --&gt; H[Résultats de sondage]\n        I[Documents texte] --&gt; J[Occurrences de mots]\n    end\n\n\n\n\n\n\n\n\n\n\nL’espace de représentation \\(\\Omega\\) est généralement un sous-ensemble de \\(\\mathbb{R}^D\\) où \\(D\\) est la dimension.\nCet espace possède plusieurs propriétés importantes :\n\nC’est un espace vectoriel qui peut être muni d’un produit scalaire\nLe produit scalaire \\(\\langle\\cdot,\\cdot\\rangle\\) induit une norme \\(\\|\\cdot\\|\\)\nLa norme induit une distance \\(d(\\cdot,\\cdot)\\)\n\\((\\Omega, d)\\) forme un espace métrique où l’apprentissage est possible\n\nQuestions fondamentales :\n\nQue se passe-t-il quand \\(D\\) augmente ?\nQuel impact sur la modélisation des données ?\nComment cela affecte-t-il l’apprentissage ?\n\nCes questions mènent au concept de malédiction de la dimension.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#la-malédiction-et-la-bénédiction-de-la-dimension",
+    "href": "ds21.html#la-malédiction-et-la-bénédiction-de-la-dimension",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "",
+    "text": "La Data Science consiste à modéliser des phénomènes sous forme de données numériques, à comprendre les propriétés géométriques et statistiques de ces données, et à développer des outils pour les analyser.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#quest-ce-que-la-data-science",
+    "href": "ds21.html#quest-ce-que-la-data-science",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "",
+    "text": "La Data Science implique :\n\nLa modélisation de phénomènes en données numériques quantitatives\nLa compréhension des propriétés géométriques et statistiques des données\nL’analyse de l’espace dans lequel ces données existent\nLe développement d’outils d’analyse avec compréhension de leurs hypothèses sous-jacentes",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#relation-avec-le-machine-learning",
+    "href": "ds21.html#relation-avec-le-machine-learning",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "",
+    "text": "La Data Science et le Machine Learning sont étroitement liés :\n\nData Science : étude des espaces de représentation\nMachine Learning : opérations dans ces espaces de représentation\n\nLes deux domaines sont complémentaires et souvent synonymes dans la pratique.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#flux-typique-de-données",
+    "href": "ds21.html#flux-typique-de-données",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "",
+    "text": "graph LR\n    A[Capteurs/Sources] --&gt; B[Données brutes]\n    B --&gt; C[Représentation]\n    C --&gt; D[Matrice de données]\n    \n    subgraph Exemples\n        E[Caméra] --&gt; F[Pixels]\n        G[Population] --&gt; H[Résultats de sondage]\n        I[Documents texte] --&gt; J[Occurrences de mots]\n    end",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#propriétés-des-espaces-de-représentation",
+    "href": "ds21.html#propriétés-des-espaces-de-représentation",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "",
+    "text": "L’espace de représentation \\(\\Omega\\) est généralement un sous-ensemble de \\(\\mathbb{R}^D\\) où \\(D\\) est la dimension.\nCet espace possède plusieurs propriétés importantes :\n\nC’est un espace vectoriel qui peut être muni d’un produit scalaire\nLe produit scalaire \\(\\langle\\cdot,\\cdot\\rangle\\) induit une norme \\(\\|\\cdot\\|\\)\nLa norme induit une distance \\(d(\\cdot,\\cdot)\\)\n\\((\\Omega, d)\\) forme un espace métrique où l’apprentissage est possible\n\nQuestions fondamentales :\n\nQue se passe-t-il quand \\(D\\) augmente ?\nQuel impact sur la modélisation des données ?\nComment cela affecte-t-il l’apprentissage ?\n\nCes questions mènent au concept de malédiction de la dimension.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#comprendre-le-phénomène",
+    "href": "ds21.html#comprendre-le-phénomène",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Comprendre le phénomène",
+    "text": "Comprendre le phénomène\nEn dimension élevée, notre intuition géométrique basée sur les dimensions 2D et 3D devient trompeuse. Des phénomènes contre-intuitifs émergent.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#sphère-vide-et-cube-épineux",
+    "href": "ds21.html#sphère-vide-et-cube-épineux",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Sphère vide et cube “épineux”",
+    "text": "Sphère vide et cube “épineux”\n\nLe paradoxe de la sphère en haute dimension\nConsidérons une hypersphère \\(B_D(r)\\) de rayon \\(r\\) centrée à l’origine, inscrite dans un hypercube \\(C_D(r) = [-r, r]^D\\).\nLe volume de l’hypersphère est donné par :\n\\[ \\text{vol}(B_D(r)) = \\frac{2r^D \\pi^{D/2}}{D\\Gamma(D/2)} \\]\nLe volume de l’hypercube est :\n\\[ \\text{vol}(C_D(r)) = (2r)^D \\]\nLe ratio volume sphère/volume cube décroît rapidement avec \\(D\\) :\n\\[ \\text{Ratio} = \\frac{\\text{vol}(B_D(r))}{\\text{vol}(C_D(r))} = \\frac{\\pi^{D/2}}{D 2^{D-1} \\Gamma(D/2)} \\]\nLe résultat surprenant :\n\\[ \\lim_{D \\to \\infty} \\frac{\\text{vol}(B_D(r))}{\\text{vol}(C_D(r))} = 0 \\]\n\n\n\nInterprétation intuitive\nImaginez que vous tirez des points au hasard uniformément dans le cube :\n\nEn dimension 2, environ 78.5% des points tombent dans le cercle inscrit\nEn dimension 3, ce pourcentage descend à environ 52.4%\nEn dimension 10, il n’est plus que de 0.025%\nEn dimension 100, il est infinitésimal\n\nConséquence pratique : Si vous échantillonnez uniformément dans un hypercube, la sphère inscrite sera essentiellement vide. Le volume se concentre dans les “coins” du cube.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#distribution-du-volume-lœuf-gaussien",
+    "href": "ds21.html#distribution-du-volume-lœuf-gaussien",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Distribution du volume : “l’œuf gaussien”",
+    "text": "Distribution du volume : “l’œuf gaussien”\n\nConcentration gaussienne en haute dimension\nPour une distribution normale \\(N(\\mu, \\Sigma)\\) en dimension \\(D\\), considérons la densité le long d’un rayon \\(r\\).\nSi les coordonnées sont des variables aléatoires i.i.d. \\(X_i \\sim N(0,1)\\), alors :\n\\[ R^2 = \\|X\\|_2^2 = \\sum_{i=1}^{D} X_i^2 \\sim \\chi^2(D) \\]\nL’espérance de \\(R^2\\) est :\n\\[ \\mathbb{E}[R^2] = D \\]\nImplication importante : La plupart de la masse de probabilité se concentre sur une coquille sphérique de rayon \\(\\sigma\\sqrt{D}\\).\n\n\n\nVisualisation du phénomène\n\n\n\n\n\ngraph TD\n    A[Distribution gaussienne&lt;br/&gt;en haute dimension] --&gt; B{Caractéristiques}\n    B --&gt; C[Concentration sur une coquille]\n    B --&gt; D[Peu de densité au centre]\n    B --&gt; E[Peu de densité très loin]\n    \n    C --&gt; F[Rayon typique: σ√D]\n    D --&gt; G[\"Centre 'vide'\"]\n    E --&gt; H[Queue très fine]",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#concentration-des-distances",
+    "href": "ds21.html#concentration-des-distances",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Concentration des distances",
+    "text": "Concentration des distances\n\nLe théorème de Beyer et al.\nSoit un ensemble de données \\(X \\subset \\Omega\\), un point \\(x\\) et ses \\(k\\) plus proches voisins \\(V_X^k(x)\\). Notons \\(D_{\\min}\\) et \\(D_{\\max}\\) les distances aux voisins les plus proches et les plus éloignés.\nThéorème : Si \\(\\lim_{D \\to \\infty} \\text{Var} \\left( \\frac{d(x,y)^p}{d(x,y)^p} \\right) = 0\\) pour \\(0 &lt; p &lt; \\infty\\), alors pour tout \\(\\varepsilon &gt; 0\\) :\n\\[ \\lim_{D \\to \\infty} P \\left[ \\frac{D_{\\max} - D_{\\min}}{D_{\\min}} \\le \\varepsilon \\right] = 1 \\]\n\n\n\nImplications pratiques\nCe résultat a des conséquences importantes :\n\nPerte de pouvoir discriminant : Tous les voisins apparaissent à peu près à la même distance\nStructures de voisinage sans signification : Les structures \\(k\\)-NN et \\(\\varepsilon\\)-NN perdent leur utilité\nDifficulté pour les algorithmes : La discrimination basée sur la distance devient presque impossible\n\nExemple concret : En classification, si tous les points sont équidistants, distinguer différentes classes par proximité devient très difficile.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#quasi-orthogonalité",
+    "href": "ds21.html#quasi-orthogonalité",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Quasi-orthogonalité",
+    "text": "Quasi-orthogonalité\n\nConcentration des angles\nEn haute dimension, les vecteurs aléatoires tendent à être presque orthogonaux.\nPour trois points \\(X, Y, Z\\) tirés indépendamment, l’angle \\(\\theta\\) entre \\((X-Y)\\) et \\((Z-Y)\\) satisfait :\n\\[ \\mathbb{E} \\cos(\\theta) = \\frac{1}{2} \\]\nCe qui implique \\(\\theta \\approx \\frac{\\pi}{3}\\) (60°).\nInterprétation : Tout triangle aléatoire en haute dimension est presque équilatéral.\n\n\n\nImpact sur la sphère unité\nPour la sphère unité \\(B_D\\), si \\(X\\) est un point aléatoire sur sa surface :\n\nSi \\(Y\\) est échantillonné sur la sphère : \\(\\mathbb{E} \\cos(\\theta) = \\frac{1}{2}\\) ⇒ \\(\\theta \\approx \\frac{\\pi}{3}\\)\nSi \\(Y\\) est échantillonné dans la boule : \\(\\mathbb{E} \\cos(\\theta) = 0\\) ⇒ \\(\\theta \\approx \\frac{\\pi}{2}\\)\n\nConséquence géométrique : Le volume de la sphère est concentré à son équateur, quelle que soit la direction considérée comme “nord”.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#hubness-le-phénomène-des-hubs",
+    "href": "ds21.html#hubness-le-phénomène-des-hubs",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Hubness : le phénomène des “hubs”",
+    "text": "Hubness : le phénomène des “hubs”\n\nDéfinition et mécanisme\nEn haute dimension, certains points (appelés “hubs”) deviennent les plus proches voisins d’un nombre disproportionné d’autres points.\nPourquoi cela se produit :\n\nLa concentration des distances rend les distances relatives peu discriminantes\nCertains points se retrouvent par hasard à des distances “moyennes” de beaucoup d’autres points\nCes points apparaissent donc fréquemment dans les listes de plus proches voisins\n\n\n\n\nImplications négatives\nLe phénomène de hubness pose plusieurs problèmes :\n\nBiais dans les algorithmes : Les hubs dominent les résultats des recherches de voisinage\nProblèmes en classification : Les hubs peuvent apparaître comme représentants de plusieurs classes\nDifficulté d’interprétation : Les relations de voisinage deviennent difficiles à interpréter",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#inégalités-de-concentration",
+    "href": "ds21.html#inégalités-de-concentration",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Inégalités de concentration",
+    "text": "Inégalités de concentration\n\nOutils théoriques fondamentaux\nLes inégalités de concentration quantifient comment les mesures se concentrent autour de leur moyenne en haute dimension.\n\n\nInégalité de Markov\nPour une variable aléatoire non-négative \\(X\\) :\n\\[ P(X &gt; \\epsilon) \\le \\frac{\\mathbb{E}X}{\\epsilon} \\]\nIntuition : Plus l’espérance est petite, moins il est probable que \\(X\\) dépasse un grand seuil.\n\n\n\nInégalité de Chebyshev\nPour une variable aléatoire de moyenne \\(\\mu\\) et variance \\(\\sigma^2\\) :\n\\[ P(|X - \\mu| &gt; \\epsilon) \\le \\frac{\\sigma^2}{\\epsilon^2} \\]\nApplication : En haute dimension, les distances ont souvent une variance qui diminue, expliquant leur concentration.\n\n\n\nInégalité de Hoeffding\nPour des variables indépendantes \\(X_i \\in [a, b]\\) :\n\\[ P(|\\bar{X} - \\mu| &gt; \\epsilon) \\le 2e^{-2D\\epsilon^2/(b-a)^2} \\]\noù \\(\\bar{X} = \\frac{1}{D} \\sum_{i=1}^{D} X_i\\).\nImportance : Cette inégalité explique la convergence rapide des moyennes en haute dimension.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#aspects-positifs-de-la-haute-dimension",
+    "href": "ds21.html#aspects-positifs-de-la-haute-dimension",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Aspects positifs de la haute dimension",
+    "text": "Aspects positifs de la haute dimension\nContre-intuitivement, la haute dimension offre également des avantages que l’on peut exploiter.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#lois-des-grands-nombres",
+    "href": "ds21.html#lois-des-grands-nombres",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Lois des grands nombres",
+    "text": "Lois des grands nombres\n\nLoi faible des grands nombres\nPour un ensemble de \\(D\\) variables i.i.d. \\(\\{X_l\\}_{l\\in[D]}\\) avec \\(\\mathbb{E}X_l = \\mu\\), pour tout \\(\\varepsilon &gt; 0\\) :\n\\[ \\lim_{D \\to \\infty} P(|\\overline{X} - \\mu| &lt; \\varepsilon) = 1 \\]\noù \\(\\overline{X} = \\frac{1}{D} \\sum_{l=1}^{D} X_l\\).\n\n\n\nImplications importantes\n\nConvergence garantie : Les estimateurs convergent vers leur vraie valeur\nFondement de l’estimation : Base théorique solide pour l’estimation statistique\nStabilité : Les résultats deviennent plus stables avec l’augmentation de la dimension\n\nThéorème central limite : La vitesse de convergence est donnée par :\n\\[ Z_D = \\frac{\\sqrt{D}}{\\sigma} (\\overline{X} - \\mu) \\sim N(0, 1) \\]\nsi \\(\\text{Var}(X_l) = \\sigma^2\\).",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#projections-aléatoires",
+    "href": "ds21.html#projections-aléatoires",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Projections aléatoires",
+    "text": "Projections aléatoires\n\nLe lemme de Johnson-Lindenstrauss\nÉnoncé : Étant donné \\(X \\subset \\Omega\\), il existe une application linéaire \\(p : \\mathbb{R}^D \\to \\mathbb{R}^d\\) telle que pour tout \\(0 &lt; \\varepsilon &lt; 1\\) et pour tous \\(i, j \\in [N]\\) :\n\\[ (1 - \\varepsilon) \\|x_i - x_j\\| \\le \\|p(x_i) - p(x_j)\\| \\le (1 + \\varepsilon) \\|x_i - x_j\\| \\]\navec :\n\\[ d = O\\left(\\frac{\\log N}{\\varepsilon^2}\\right) \\]\nPoint crucial : La dimension réduite \\(d\\) ne dépend pas de \\(D\\) !\n\n\n\nApplications pratiques\n\nRéduction de dimension efficace : Réduire la dimension sans perdre trop d’information\nRecherche approximative de plus proches voisins : Méthodes de hachage sensible à la localité (LSH)\nCompression : Stockage et traitement plus efficaces des données\n\nAvantage clé : En exploitant la quasi-orthogonalité des vecteurs en haute dimension, on peut créer des bases aléatoires qui préservent les distances.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#impact-sur-les-méthodes-pratiques",
+    "href": "ds21.html#impact-sur-les-méthodes-pratiques",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Impact sur les méthodes pratiques",
+    "text": "Impact sur les méthodes pratiques\nLa compréhension des phénomènes en haute dimension est cruciale pour concevoir des algorithmes efficaces.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#échantillonnage",
+    "href": "ds21.html#échantillonnage",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Échantillonnage",
+    "text": "Échantillonnage\n\nDéfis principaux\n\nParcimonie des données : Il faut un nombre exponentiel d’échantillons pour couvrir l’espace\nEstimation de densité : Les inégalités de concentration guident la précision des estimateurs\nRejet élevé : Dans des méthodes comme l’échantillonnage par rejet, le taux de rejet approche 100%\n\nConséquence : Les méthodes d’échantillonnage naïves deviennent impraticables en haute dimension.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#indexation-et-recherche",
+    "href": "ds21.html#indexation-et-recherche",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Indexation et recherche",
+    "text": "Indexation et recherche\n\nProblèmes des structures spatiales\nLes structures de partition de l’espace (comme les kd-trees) rencontrent des difficultés :\n\nDisparition de la structure : Si tous les voisins sont équidistants, la partition perd son sens\nCellules trop grandes : Pour couvrir l’espace, les cellules doivent atteindre la taille de la sphère englobante\nRecherche exhaustive : La complexité devient \\(O(N)\\) au lieu de \\(O(\\log N)\\)\n\n\n\n\n\n\ngraph TD\n    A[Indexation en haute dimension] --&gt; B{Problèmes}\n    B --&gt; C[Partition spatiale inefficace]\n    B --&gt; D[Recherche devenant exhaustive]\n    B --&gt; E[Phénomène de hubness]\n    \n    C --&gt; F[Complexité O(N)]\n    D --&gt; G[Performance médiocre]\n    E --&gt; H[Biais dans les résultats]",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#faut-il-abandonner-la-data-science-en-haute-dimension",
+    "href": "ds21.html#faut-il-abandonner-la-data-science-en-haute-dimension",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Faut-il abandonner la Data Science en haute dimension ?",
+    "text": "Faut-il abandonner la Data Science en haute dimension ?\n\nPourquoi les méthodes fonctionnent quand même\nContre toute attente, les méthodes de Data Science fonctionnent en pratique malgré la malédiction de la dimension :\n\nLes données réelles ne sont pas uniformes : Elles occupent des sous-espaces de dimension inférieure\nLes caractéristiques sont corrélées : L’hypothèse d’indépendance est rarement vraie\nStructure sous-jacente : Les données vivent souvent sur des variétés de faible dimension\n\n\n\n\nStratégies pour surmonter la malédiction\n\nRéduction de dimension : PCA, autoencodeurs, t-SNE\nSélection de caractéristiques : Identifier les dimensions pertinentes\nApprentissage de métriques : Apprendre une distance adaptée aux données\nMéthodes spécifiques : Conçues pour la haute dimension (comme les forêts d’isolement)",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#points-clés-à-retenir",
+    "href": "ds21.html#points-clés-à-retenir",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Points clés à retenir",
+    "text": "Points clés à retenir\n\nLa géométrie change radicalement : Notre intuition 2D/3D ne s’applique pas\nLes données deviennent clairsemées : Nécessité d’échantillons exponentiels\nLes distances se concentrent : Tous les points semblent équidistants\nLa quasi-orthogonalité émerge : Les directions aléatoires sont presque orthogonales\nLe phénomène de hubness apparaît : Certains points dominent les recherches de voisinage",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#bilan-équilibré",
+    "href": "ds21.html#bilan-équilibré",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Bilan équilibré",
+    "text": "Bilan équilibré\nMalédiction :\n\nDifficultés pour l’échantillonnage, l’indexation, la recherche\nPerte de pouvoir discriminant\nNécessité d’énormes quantités de données\n\nBénédiction :\n\nConvergence rapide des estimateurs\nPossibilité de projections aléatoires efficaces\nStabilité statistique améliorée",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#questions-dapprofondissement",
+    "href": "ds21.html#questions-dapprofondissement",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Questions d’approfondissement",
+    "text": "Questions d’approfondissement\n\nConceptuelles :\n\nQu’est-ce que la dimension intrinsèque d’un ensemble de données ?\nComment la malédiction de la dimension affecte-t-elle les méthodes de clustering ?\n\nTechniques :\n\nComment le lemme de Johnson-Lindenstrauss permet-il de contourner la malédiction ?\nQuelles méthodes sont robustes à la haute dimension ?\n\nPratiques :\n\nComment détecter si vos données souffrent de la malédiction de la dimension ?\nQuelles stratégies adopter face à des données en très haute dimension ?",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
+    ]
+  },
+  {
+    "objectID": "ds21.html#perspectives-futures",
+    "href": "ds21.html#perspectives-futures",
+    "title": "Représentations en Haute Dimension en Data Science",
+    "section": "Perspectives futures",
+    "text": "Perspectives futures\nLa recherche continue sur :\n\nLes méthodes de réduction de dimension non-linéaire\nLes algorithmes spécialisés pour la haute dimension\nL’apprentissage sur des variétés de faible dimension\nLes approches probabilistes robustes à la dimension\n\nLeçon finale : La haute dimension n’est pas une fatalité, mais elle nécessite une compréhension fine des phénomènes en jeu et des méthodes adaptées.",
+    "crumbs": [
+      "Espaces de Représentation en Haute Dimension",
+      "Représentations en Haute Dimension en Data Science"
     ]
   },
   {
@@ -1467,6 +2006,138 @@
     "crumbs": [
       "Espaces de Représentation en Haute Dimension",
       "L'essentiel"
+    ]
+  },
+  {
+    "objectID": "ds31.html",
+    "href": "ds31.html",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Les données brutes sont souvent représentées dans un espace de grande dimension, mais cette représentation n’est pas toujours optimale pour l’analyse ou la modélisation.\n\nLes représentations de base peuvent ne pas être optimales\nLes modèles latents permettent de révéler les facteurs sous-jacents (latents) qui gouvernent le processus étudié\nCette approche utilise la corrélation statistique pour identifier des facteurs latents linéaires\nCela permet une simplification des données par réduction dimensionnelle raisonnée\n\nNous allons explorer plusieurs interprétations de cette méthode fondamentale.\nLecture recommandée : [1] (chapitre 12) et [3] (chapitres 3 et 10.3)\n\n\n\n\n\n\n\nÉtant donné un ensemble de données \\(X \\subset \\Omega\\), nous cherchons à décomposer \\(\\Omega\\) en sous-espaces tels que la projection de \\(X\\) sur ces sous-espaces conserve le maximum d’information.\nQuestion cruciale : Quelle information devrions-nous conserver ?\n\nImaginez que \\(X\\) soit presque contenu dans un plan 2D au sein d’un espace 3D\nUn choix pertinent serait de choisir comme sous-espace ce plan, avec une base \\(\\{ \\mathbf{u}_1, \\mathbf{u}_2 \\}\\)\n\nCaractéristiques clés d’une bonne base :\n\nLes données varient maximum le long de ces directions\nLes données varient minimum orthogonalement à ces directions (ex: \\(\\mathbf{u}_3\\))\n\n\n\n\n\nSoit \\(\\mathcal{X}\\) nos données, et \\(\\{ \\mathbf{u}_i \\}_{i \\in [D]}\\) une nouvelle base orthonormale de \\(\\mathbb{R}^D\\).\n\nLa Première Composante Principale \\(\\mathbf{u}_1\\) est choisie pour maximiser la variance des données projetées\n\\(\\mathbf{u}_2\\) est ensuite choisie orthogonalement à \\(\\mathbf{u}_1\\), et ainsi de suite\n\n\n\nPour \\(\\mathcal{X}\\), nous définissons :\n\nMoyenne empirique :\n\\[\n\\overline{\\mathcal{X}} = \\frac{1}{N} \\sum_{i=1}^{N} \\mathbf{x}_i\n\\]\nVariance projetée sur \\(\\mathbf{u}_1\\) :\n\\[\nv_{\\mathbf{u}_1} = \\frac{1}{N} \\sum_{i=1}^{N} (\\mathbf{u}_1^T \\mathbf{x}_i - \\mathbf{u}_1^T \\overline{\\mathcal{X}})^2 = \\mathbf{u}_1^T \\Sigma \\mathbf{u}_1\n\\]\n\noù \\(\\Sigma = \\frac{1}{N} \\sum_{i=1}^{N} (\\mathbf{x}_i - \\overline{\\mathbf{x}})(\\mathbf{x}_i - \\overline{\\mathbf{x}})^T\\) est la matrice de covariance.\nNous cherchons donc :\n\\[\n\\mathbf{u}_1 = \\arg\\max_{\\mathbf{u}} \\mathbf{u}^T \\Sigma \\mathbf{u} \\quad \\text{sous} \\quad \\mathbf{u}^T \\mathbf{u} = 1\n\\]\n\n\n\n\nNous formons le lagrangien :\n\\[\nJ(\\mathbf{u}) = \\mathbf{u}^T \\Sigma \\mathbf{u} + \\lambda (1 - \\mathbf{u}^T \\mathbf{u})\n\\]\nLes conditions d’optimalité donnent :\n\\[\n\\frac{\\partial J(\\mathbf{u})}{\\partial \\mathbf{u}} = 0 \\quad \\text{et} \\quad \\frac{\\partial J(\\mathbf{u})}{\\partial \\lambda} = 0\n\\]\nCe qui conduit à :\n\\[\n\\Sigma \\mathbf{u}_1 = \\lambda_1 \\mathbf{u}_1 \\quad \\Rightarrow \\quad v_{\\mathbf{u}_1} = \\mathbf{u}_1^T \\Sigma \\mathbf{u}_1 = \\lambda_1\n\\]\nInterprétation clé : \\((\\mathbf{u}_1, \\lambda_1)\\) est une paire propre de \\(\\Sigma\\).\nEn poursuivant le processus, nous obtenons toutes les composantes principales comme les paires propres \\(\\{(\\mathbf{u}_i, \\lambda_i)\\}_{i \\in [D]}\\).\nNous pouvons écrire de manière compacte :\n\\[\n\\Lambda = \\mathbf{U}^\\top \\Sigma \\mathbf{U}\n\\]\navec \\(\\Lambda = \\text{diag}(\\lambda_1, \\dots, \\lambda_D)\\) et \\(\\mathbf{U} = [\\mathbf{u}_1, \\dots, \\mathbf{u}_D]\\).\n\n\n\nLa variance projetée s’exprime comme :\n\\[\n\\nu_{\\mathbf{u}_1} = \\frac{1}{N}\\sum_{i = 1}^N (\\mathbf{u}_1^T (\\mathbf{x}_i - \\overline{\\mathbf{x}}))^2\n\\]\nMaximiser cette variance équivaut à minimiser l’erreur d’approximation quadratique :\n\\[\n\\mathbf{u}_1 = \\underset{\\mathbf{u}^T \\mathbf{u} = 1}{\\arg \\min} \\sum_{i = 1}^N \\| (\\mathbf{x}_i - \\overline{\\mathbf{x}}) - [\\mathbf{u}^T (\\mathbf{x}_i - \\overline{\\mathbf{x}})] \\mathbf{u} \\|_2^2\n\\]\nÉquivalence fondamentale : Maximisation de variance \\(\\Leftrightarrow\\) Minimisation d’erreur.\n\n\n\n\nConsidérons un système physique \\(\\mathcal{X}\\) avec des masses unitaires aux positions \\(\\mathbf{x}_i\\).\n\nInertie par rapport à un point \\(\\mathbf{a}\\) :\n\\[\n\\mathrm{I}_{\\mathbf{a}}(\\mathcal{X}) = \\sum_{i = 1}^{N} \\mathrm{d}^{2}(\\mathbf{a},\\mathbf{x}_{i})\n\\]\nThéorème de Huygens : Si \\(\\mathbf{g}\\) est le centre de masse, alors\n\\[\n\\mathrm{I}_{\\mathbf{a}}(\\mathcal{X}) = \\mathrm{d}^{2}(\\mathbf{a},\\mathbf{g}) + \\mathrm{I}_{\\mathbf{g}}(\\mathcal{X})\n\\]\n\nPour un sous-espace \\(\\mathcal{J}\\) passant par \\(\\mathbf{g}\\) :\n\\[\n\\mathrm{I}_{\\mathcal{J}}(\\mathcal{X}) = \\sum_{i = 1}^{N} \\mathrm{d}^{2}(\\mathcal{J},\\mathbf{x}_{i})\n\\]\noù \\(\\mathrm{d}(\\mathcal{J},\\mathbf{x}_{i}) = \\| \\mathbf{x}_{i} - \\mathrm{Proj}_{\\mathcal{J}}(\\mathbf{x}_{i})\\|\\).\nConclusion physique : Une Composante Principale est un sous-espace d’inertie minimale.\n\n\n\n\n\nLa base \\(\\{ \\mathbf{u}_1, \\dots, \\mathbf{u}_D \\}\\) de l’espace latent possède :\n\nValeurs propres ordonnées : \\(\\lambda_1 \\geqslant \\lambda_2 \\geqslant \\dots \\geqslant \\lambda_D\\)\nVariance totale : \\(\\sum_{d = 1}^{D}\\lambda_d = \\mathrm{Tr}(\\Sigma)\\)\nDécorrélation : \\(\\mathbf{u}_d^\\top \\mathbf{u}_{d'} = 0\\) (orthogonalité)\nMatrice de covariance diagonale : \\(\\Lambda\\) est diagonale\n\n\n\n\nLes coordonnées latentes \\(\\mathbf{y}_i\\) sont obtenues par :\n\\[\ny_i(d) = \\mathbf{u}_d^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}}) \\quad \\Rightarrow \\quad \\mathbf{y}_i = \\mathbf{U}^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}})\n\\]\nCette transformation linéaire combine trois opérations :\n\nCentrage sur \\(\\overline{\\mathbf{x}}\\)\nRotation via \\(\\mathbf{U}\\)\nMise à l’échelle via \\(\\Lambda^{1/2}\\) (blanchiment)\n\n\n\n\n\n\n\nL’espace latent préserve la variance des données centrées, ce qui suppose un modèle :\n\\[\nX_i \\sim \\mathcal{N}(\\overline{\\mathbf{x}}, \\Sigma)\n\\]\nConséquence importante : PCA sera moins pertinent pour des données non-gaussiennes (ex: données clusterisées).\n\n\n\nÀ ce stade, PCA est une transformation exacte et inversible :\n\\[\n\\mathbf{y}_i = \\mathbf{U}^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}}) \\quad \\Leftrightarrow \\quad \\mathbf{x}_i = \\overline{\\mathbf{x}} + \\mathbf{U} \\mathbf{y}_i\n\\]\nL’étude du spectre \\(\\{ \\lambda_1 \\geqslant \\lambda_2 \\geqslant \\dots \\geqslant \\lambda_D \\}\\) est cruciale.\n\n\n\n\n\n\nD’après le théorème d’Eckart-Young, pour \\(K &lt; D\\) :\n\nApproximation optimale : \\(\\Sigma_K = \\sum_{d = 1}^{K} \\lambda_d \\mathbf{u}_d \\mathbf{u}_d^\\top\\)\nErreur minimale : \\(\\| \\Sigma - \\Sigma_K \\|_F^2 = \\sum_{d = K + 1}^{D} \\lambda_d\\)\n\nPar troncation :\n\\[\n\\Sigma_K = \\mathbf{U}_K \\Lambda_K \\mathbf{U}_K^\\top\n\\]\nLes données transformées et reconstruites deviennent :\n\nReprésentation réduite : \\(\\tilde{\\mathbf{y}}_i = \\mathbf{U}_K^\\top \\mathbf{x}_i \\in \\mathbb{R}^K\\)\nReconstruction : \\(\\tilde{\\mathbf{x}}_i = \\mathbf{U}_K \\mathbf{U}_K^\\top \\mathbf{x}_i + \\overline{\\mathbf{x}}\\)\n\n\n\n\n\n\n\nContribution variance :\n\\[\nc_d = \\frac{\\lambda_d}{\\sum_{k} \\lambda_k}\n\\]\nAlignement des données :\n\\[\n\\rho_d(\\mathbf{x}_i) = \\frac{(\\mathbf{u}_d^\\top \\mathbf{x}_i)^2}{\\|\\mathbf{x}_i\\|^2} = \\cos^2 (\\angle (\\mathbf{u}_d, \\mathbf{x}_i))\n\\]\n\n\n\n\nChaque dimension originale a sa propre échelle (variance \\(\\sigma_d^2\\)). PCA est plus efficace quand toutes les échelles sont comparables.\nSolution : Utiliser la matrice de corrélation plutôt que la covariance :\n\nMatrice de mise à l’échelle : \\(\\mathbf{S} = \\mathrm{diag}[\\sigma_1^2, \\dots, \\sigma_D^2]\\)\nMétrique associée : \\(\\mathrm{d}_S^2(\\mathbf{x}, \\mathbf{y}) = (\\mathbf{x} - \\mathbf{y})^\\top \\mathbf{S}^{-1} (\\mathbf{x} - \\mathbf{y})\\)\nPCA sur données normalisées : Utiliser \\(\\Sigma_S\\) (matrice de corrélation)\n\n\n\n\n\n\n\n\n\nCalculer la moyenne empirique \\(\\overline{\\mathbf{x}}\\)\nCentrer les données : \\(\\mathbf{x}_i \\leftarrow (\\mathbf{x}_i - \\overline{\\mathbf{x}})\\)\nFormer la matrice centrée \\(\\mathbf{X}\\)\nCalculer \\(\\Sigma = \\frac{1}{N} \\mathbf{X} \\mathbf{X}^\\top\\)\nDécomposer \\(\\Sigma = \\mathbf{U} \\Lambda \\mathbf{U}^\\top\\)\nSélectionner \\(K\\) composantes\nProjeter et/ou reconstruire les données\n\n\n\n\n\nDimension cible : \\(K = d\\) (dimension souhaitée)\nVariance conservée : Choisir \\(K\\) tel que\n\\[\n\\frac{\\sum_{d=1}^{K} \\lambda_d}{\\sum_{d=1}^{D} \\lambda_d} \\geq \\tau\n\\]\n(ex: \\(\\tau = 0.95\\) pour 95% de variance)\nErreur de reconstruction : Choisir \\(K\\) tel que\n\\[\n\\mathcal{L}(\\mathbf{x}) = \\sum_i \\| \\mathbf{x}_i - \\tilde{\\mathbf{x}}_i \\|^2 \\leq \\epsilon\n\\]\n\n\n\n\n\n\n\n\nEncodeur : \\(\\mathbf{z}(\\mathbf{x}_i) = W_{\\mathrm{enc}} \\mathbf{x}_i\\)\nDécodeur : \\(\\tilde{\\mathbf{x}}_i = W_{\\mathrm{dec}} \\mathbf{z}(\\mathbf{x}_i)\\)\n\n\n\n\n\\[\n\\theta^{*} = \\arg\\min_{W_{\\mathrm{enc}}, W_{\\mathrm{dec}}} \\sum_{i=1}^{N} \\| \\mathbf{x}_i - \\tilde{\\mathbf{x}}_i \\|^2\n\\]\n\n\n\nThéorème : Un AutoEncodeur Linéaire entraîné sur des données centrées réalise exactement une PCA.\n\nEncodeur : \\(W_{\\mathrm{enc}} = \\mathbf{U}_K^\\top\\)\nDécodeur : \\(W_{\\mathrm{dec}} = \\mathbf{U}_K\\)\n\n\n\n\n\nAutoEncodeurs Non-Linéaires : Ajout de couches cachées\nAutoEncodeurs Variationnels (VAE) : Modification de la fonction de coût (ELBO)\nAutoEncodeurs parcimonieux : Contraintes de régularisation\n\n\n\n\n\n\n\nReformulation probabiliste avec :\n\nDistribution latente : \\(\\mathbb{P}(\\mathbf{z}) = \\mathcal{N}(0, \\mathrm{Id}_K)\\)\nModèle conditionnel : \\(\\mathbb{P}(\\mathbf{x}|\\mathbf{z}) = \\mathcal{N}(W\\mathbf{z} + \\mu, \\sigma^2 \\mathrm{Id}_D)\\)\n\nAvantages :\n\nModélisation explicite du bruit\nMode génératif\nEstimation par Maximum de Vraisemblance ou EM\n\n\n\n\nExtension non-linéaire par trick du noyau :\n\nMapping implicite : \\(\\Phi(\\mathbf{x}_i)\\) via noyau \\(k(\\mathbf{x}_i, \\mathbf{x}_j)\\)\nPCA dans l’espace de features : \\(\\mathbf{k}(x_i, x_j) = \\Phi(x_i)^\\top \\Phi(x_j)\\)\n\n\n\n\nPCA appliquée localement sur des voisinages de données pour capturer la dimensionnalité intrinsèque locale.\n\n\n\nLa décomposition de \\(\\Sigma\\) a une complexité \\(O(D^3)\\), ce qui peut être prohibitif pour de grandes dimensions.\n\n\n\n\n\nPCA fait partie des modèles latents linéaires\nIl s’applique sur données centrées et utilise la variance comme critère\nC’est une décomposition exacte en composantes décorrélées\nIl suppose une distribution normale des données\nIl peut être formulé comme une régression quadratique\nIl offre une stratégie de réduction dimensionnelle basée sur l’approximation de bas rang\nIl peut être utilisé pour le débruitage (modèle gaussien)\nIl est équivalent à un AutoEncodeur Linéaire\nIl admet des formulations stochastiques et des extensions non-linéaires\n\n\n\n\n\nExpliquez comment PCA utilise la variance comme critère\nMontrez l’équivalence entre maximisation de variance et minimisation d’erreur\nExpliquez l’utilisation du théorème d’Eckart-Young dans PCA\nDécrivez les étapes pratiques pour appliquer PCA sur un jeu de données\nQuelles informations PCA fournit-il sur les données ?\nComment reconstruire des données avec \\(K &lt; D\\) composantes ?\nQuelles stratégies pour sélectionner le nombre de composantes à conserver ?\nPCA est-elle applicable à tout type de données ?\nEst-il pertinent d’appliquer PCA sur des données clusterisées ?\nDémontrez l’équivalence entre PCA et AutoEncodeur Linéaire",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#motivation",
+    "href": "ds31.html#motivation",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Les données brutes sont souvent représentées dans un espace de grande dimension, mais cette représentation n’est pas toujours optimale pour l’analyse ou la modélisation.\n\nLes représentations de base peuvent ne pas être optimales\nLes modèles latents permettent de révéler les facteurs sous-jacents (latents) qui gouvernent le processus étudié\nCette approche utilise la corrélation statistique pour identifier des facteurs latents linéaires\nCela permet une simplification des données par réduction dimensionnelle raisonnée\n\nNous allons explorer plusieurs interprétations de cette méthode fondamentale.\nLecture recommandée : [1] (chapitre 12) et [3] (chapitres 3 et 10.3)",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#formalisation",
+    "href": "ds31.html#formalisation",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Étant donné un ensemble de données \\(X \\subset \\Omega\\), nous cherchons à décomposer \\(\\Omega\\) en sous-espaces tels que la projection de \\(X\\) sur ces sous-espaces conserve le maximum d’information.\nQuestion cruciale : Quelle information devrions-nous conserver ?\n\nImaginez que \\(X\\) soit presque contenu dans un plan 2D au sein d’un espace 3D\nUn choix pertinent serait de choisir comme sous-espace ce plan, avec une base \\(\\{ \\mathbf{u}_1, \\mathbf{u}_2 \\}\\)\n\nCaractéristiques clés d’une bonne base :\n\nLes données varient maximum le long de ces directions\nLes données varient minimum orthogonalement à ces directions (ex: \\(\\mathbf{u}_3\\))\n\n\n\n\n\nSoit \\(\\mathcal{X}\\) nos données, et \\(\\{ \\mathbf{u}_i \\}_{i \\in [D]}\\) une nouvelle base orthonormale de \\(\\mathbb{R}^D\\).\n\nLa Première Composante Principale \\(\\mathbf{u}_1\\) est choisie pour maximiser la variance des données projetées\n\\(\\mathbf{u}_2\\) est ensuite choisie orthogonalement à \\(\\mathbf{u}_1\\), et ainsi de suite\n\n\n\nPour \\(\\mathcal{X}\\), nous définissons :\n\nMoyenne empirique :\n\\[\n\\overline{\\mathcal{X}} = \\frac{1}{N} \\sum_{i=1}^{N} \\mathbf{x}_i\n\\]\nVariance projetée sur \\(\\mathbf{u}_1\\) :\n\\[\nv_{\\mathbf{u}_1} = \\frac{1}{N} \\sum_{i=1}^{N} (\\mathbf{u}_1^T \\mathbf{x}_i - \\mathbf{u}_1^T \\overline{\\mathcal{X}})^2 = \\mathbf{u}_1^T \\Sigma \\mathbf{u}_1\n\\]\n\noù \\(\\Sigma = \\frac{1}{N} \\sum_{i=1}^{N} (\\mathbf{x}_i - \\overline{\\mathbf{x}})(\\mathbf{x}_i - \\overline{\\mathbf{x}})^T\\) est la matrice de covariance.\nNous cherchons donc :\n\\[\n\\mathbf{u}_1 = \\arg\\max_{\\mathbf{u}} \\mathbf{u}^T \\Sigma \\mathbf{u} \\quad \\text{sous} \\quad \\mathbf{u}^T \\mathbf{u} = 1\n\\]\n\n\n\n\nNous formons le lagrangien :\n\\[\nJ(\\mathbf{u}) = \\mathbf{u}^T \\Sigma \\mathbf{u} + \\lambda (1 - \\mathbf{u}^T \\mathbf{u})\n\\]\nLes conditions d’optimalité donnent :\n\\[\n\\frac{\\partial J(\\mathbf{u})}{\\partial \\mathbf{u}} = 0 \\quad \\text{et} \\quad \\frac{\\partial J(\\mathbf{u})}{\\partial \\lambda} = 0\n\\]\nCe qui conduit à :\n\\[\n\\Sigma \\mathbf{u}_1 = \\lambda_1 \\mathbf{u}_1 \\quad \\Rightarrow \\quad v_{\\mathbf{u}_1} = \\mathbf{u}_1^T \\Sigma \\mathbf{u}_1 = \\lambda_1\n\\]\nInterprétation clé : \\((\\mathbf{u}_1, \\lambda_1)\\) est une paire propre de \\(\\Sigma\\).\nEn poursuivant le processus, nous obtenons toutes les composantes principales comme les paires propres \\(\\{(\\mathbf{u}_i, \\lambda_i)\\}_{i \\in [D]}\\).\nNous pouvons écrire de manière compacte :\n\\[\n\\Lambda = \\mathbf{U}^\\top \\Sigma \\mathbf{U}\n\\]\navec \\(\\Lambda = \\text{diag}(\\lambda_1, \\dots, \\lambda_D)\\) et \\(\\mathbf{U} = [\\mathbf{u}_1, \\dots, \\mathbf{u}_D]\\).\n\n\n\nLa variance projetée s’exprime comme :\n\\[\n\\nu_{\\mathbf{u}_1} = \\frac{1}{N}\\sum_{i = 1}^N (\\mathbf{u}_1^T (\\mathbf{x}_i - \\overline{\\mathbf{x}}))^2\n\\]\nMaximiser cette variance équivaut à minimiser l’erreur d’approximation quadratique :\n\\[\n\\mathbf{u}_1 = \\underset{\\mathbf{u}^T \\mathbf{u} = 1}{\\arg \\min} \\sum_{i = 1}^N \\| (\\mathbf{x}_i - \\overline{\\mathbf{x}}) - [\\mathbf{u}^T (\\mathbf{x}_i - \\overline{\\mathbf{x}})] \\mathbf{u} \\|_2^2\n\\]\nÉquivalence fondamentale : Maximisation de variance \\(\\Leftrightarrow\\) Minimisation d’erreur.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#interprétation-physique",
+    "href": "ds31.html#interprétation-physique",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Considérons un système physique \\(\\mathcal{X}\\) avec des masses unitaires aux positions \\(\\mathbf{x}_i\\).\n\nInertie par rapport à un point \\(\\mathbf{a}\\) :\n\\[\n\\mathrm{I}_{\\mathbf{a}}(\\mathcal{X}) = \\sum_{i = 1}^{N} \\mathrm{d}^{2}(\\mathbf{a},\\mathbf{x}_{i})\n\\]\nThéorème de Huygens : Si \\(\\mathbf{g}\\) est le centre de masse, alors\n\\[\n\\mathrm{I}_{\\mathbf{a}}(\\mathcal{X}) = \\mathrm{d}^{2}(\\mathbf{a},\\mathbf{g}) + \\mathrm{I}_{\\mathbf{g}}(\\mathcal{X})\n\\]\n\nPour un sous-espace \\(\\mathcal{J}\\) passant par \\(\\mathbf{g}\\) :\n\\[\n\\mathrm{I}_{\\mathcal{J}}(\\mathcal{X}) = \\sum_{i = 1}^{N} \\mathrm{d}^{2}(\\mathcal{J},\\mathbf{x}_{i})\n\\]\noù \\(\\mathrm{d}(\\mathcal{J},\\mathbf{x}_{i}) = \\| \\mathbf{x}_{i} - \\mathrm{Proj}_{\\mathcal{J}}(\\mathbf{x}_{i})\\|\\).\nConclusion physique : Une Composante Principale est un sous-espace d’inertie minimale.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#structure-de-lespace-latent",
+    "href": "ds31.html#structure-de-lespace-latent",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "La base \\(\\{ \\mathbf{u}_1, \\dots, \\mathbf{u}_D \\}\\) de l’espace latent possède :\n\nValeurs propres ordonnées : \\(\\lambda_1 \\geqslant \\lambda_2 \\geqslant \\dots \\geqslant \\lambda_D\\)\nVariance totale : \\(\\sum_{d = 1}^{D}\\lambda_d = \\mathrm{Tr}(\\Sigma)\\)\nDécorrélation : \\(\\mathbf{u}_d^\\top \\mathbf{u}_{d'} = 0\\) (orthogonalité)\nMatrice de covariance diagonale : \\(\\Lambda\\) est diagonale\n\n\n\n\nLes coordonnées latentes \\(\\mathbf{y}_i\\) sont obtenues par :\n\\[\ny_i(d) = \\mathbf{u}_d^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}}) \\quad \\Rightarrow \\quad \\mathbf{y}_i = \\mathbf{U}^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}})\n\\]\nCette transformation linéaire combine trois opérations :\n\nCentrage sur \\(\\overline{\\mathbf{x}}\\)\nRotation via \\(\\mathbf{U}\\)\nMise à l’échelle via \\(\\Lambda^{1/2}\\) (blanchiment)",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#structure-du-modèle",
+    "href": "ds31.html#structure-du-modèle",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "L’espace latent préserve la variance des données centrées, ce qui suppose un modèle :\n\\[\nX_i \\sim \\mathcal{N}(\\overline{\\mathbf{x}}, \\Sigma)\n\\]\nConséquence importante : PCA sera moins pertinent pour des données non-gaussiennes (ex: données clusterisées).\n\n\n\nÀ ce stade, PCA est une transformation exacte et inversible :\n\\[\n\\mathbf{y}_i = \\mathbf{U}^\\top (\\mathbf{x}_i - \\overline{\\mathbf{x}}) \\quad \\Leftrightarrow \\quad \\mathbf{x}_i = \\overline{\\mathbf{x}} + \\mathbf{U} \\mathbf{y}_i\n\\]\nL’étude du spectre \\(\\{ \\lambda_1 \\geqslant \\lambda_2 \\geqslant \\dots \\geqslant \\lambda_D \\}\\) est cruciale.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#pca-pour-la-réduction-de-dimension",
+    "href": "ds31.html#pca-pour-la-réduction-de-dimension",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "D’après le théorème d’Eckart-Young, pour \\(K &lt; D\\) :\n\nApproximation optimale : \\(\\Sigma_K = \\sum_{d = 1}^{K} \\lambda_d \\mathbf{u}_d \\mathbf{u}_d^\\top\\)\nErreur minimale : \\(\\| \\Sigma - \\Sigma_K \\|_F^2 = \\sum_{d = K + 1}^{D} \\lambda_d\\)\n\nPar troncation :\n\\[\n\\Sigma_K = \\mathbf{U}_K \\Lambda_K \\mathbf{U}_K^\\top\n\\]\nLes données transformées et reconstruites deviennent :\n\nReprésentation réduite : \\(\\tilde{\\mathbf{y}}_i = \\mathbf{U}_K^\\top \\mathbf{x}_i \\in \\mathbb{R}^K\\)\nReconstruction : \\(\\tilde{\\mathbf{x}}_i = \\mathbf{U}_K \\mathbf{U}_K^\\top \\mathbf{x}_i + \\overline{\\mathbf{x}}\\)\n\n\n\n\n\n\n\nContribution variance :\n\\[\nc_d = \\frac{\\lambda_d}{\\sum_{k} \\lambda_k}\n\\]\nAlignement des données :\n\\[\n\\rho_d(\\mathbf{x}_i) = \\frac{(\\mathbf{u}_d^\\top \\mathbf{x}_i)^2}{\\|\\mathbf{x}_i\\|^2} = \\cos^2 (\\angle (\\mathbf{u}_d, \\mathbf{x}_i))\n\\]\n\n\n\n\nChaque dimension originale a sa propre échelle (variance \\(\\sigma_d^2\\)). PCA est plus efficace quand toutes les échelles sont comparables.\nSolution : Utiliser la matrice de corrélation plutôt que la covariance :\n\nMatrice de mise à l’échelle : \\(\\mathbf{S} = \\mathrm{diag}[\\sigma_1^2, \\dots, \\sigma_D^2]\\)\nMétrique associée : \\(\\mathrm{d}_S^2(\\mathbf{x}, \\mathbf{y}) = (\\mathbf{x} - \\mathbf{y})^\\top \\mathbf{S}^{-1} (\\mathbf{x} - \\mathbf{y})\\)\nPCA sur données normalisées : Utiliser \\(\\Sigma_S\\) (matrice de corrélation)",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#pca-pratique-mode-demploi",
+    "href": "ds31.html#pca-pratique-mode-demploi",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Calculer la moyenne empirique \\(\\overline{\\mathbf{x}}\\)\nCentrer les données : \\(\\mathbf{x}_i \\leftarrow (\\mathbf{x}_i - \\overline{\\mathbf{x}})\\)\nFormer la matrice centrée \\(\\mathbf{X}\\)\nCalculer \\(\\Sigma = \\frac{1}{N} \\mathbf{X} \\mathbf{X}^\\top\\)\nDécomposer \\(\\Sigma = \\mathbf{U} \\Lambda \\mathbf{U}^\\top\\)\nSélectionner \\(K\\) composantes\nProjeter et/ou reconstruire les données\n\n\n\n\n\nDimension cible : \\(K = d\\) (dimension souhaitée)\nVariance conservée : Choisir \\(K\\) tel que\n\\[\n\\frac{\\sum_{d=1}^{K} \\lambda_d}{\\sum_{d=1}^{D} \\lambda_d} \\geq \\tau\n\\]\n(ex: \\(\\tau = 0.95\\) pour 95% de variance)\nErreur de reconstruction : Choisir \\(K\\) tel que\n\\[\n\\mathcal{L}(\\mathbf{x}) = \\sum_i \\| \\mathbf{x}_i - \\tilde{\\mathbf{x}}_i \\|^2 \\leq \\epsilon\n\\]",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#pca-et-autoencodeurs-linéaires",
+    "href": "ds31.html#pca-et-autoencodeurs-linéaires",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Encodeur : \\(\\mathbf{z}(\\mathbf{x}_i) = W_{\\mathrm{enc}} \\mathbf{x}_i\\)\nDécodeur : \\(\\tilde{\\mathbf{x}}_i = W_{\\mathrm{dec}} \\mathbf{z}(\\mathbf{x}_i)\\)\n\n\n\n\n\\[\n\\theta^{*} = \\arg\\min_{W_{\\mathrm{enc}}, W_{\\mathrm{dec}}} \\sum_{i=1}^{N} \\| \\mathbf{x}_i - \\tilde{\\mathbf{x}}_i \\|^2\n\\]\n\n\n\nThéorème : Un AutoEncodeur Linéaire entraîné sur des données centrées réalise exactement une PCA.\n\nEncodeur : \\(W_{\\mathrm{enc}} = \\mathbf{U}_K^\\top\\)\nDécodeur : \\(W_{\\mathrm{dec}} = \\mathbf{U}_K\\)\n\n\n\n\n\nAutoEncodeurs Non-Linéaires : Ajout de couches cachées\nAutoEncodeurs Variationnels (VAE) : Modification de la fonction de coût (ELBO)\nAutoEncodeurs parcimonieux : Contraintes de régularisation",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#alternatives-et-extensions",
+    "href": "ds31.html#alternatives-et-extensions",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Reformulation probabiliste avec :\n\nDistribution latente : \\(\\mathbb{P}(\\mathbf{z}) = \\mathcal{N}(0, \\mathrm{Id}_K)\\)\nModèle conditionnel : \\(\\mathbb{P}(\\mathbf{x}|\\mathbf{z}) = \\mathcal{N}(W\\mathbf{z} + \\mu, \\sigma^2 \\mathrm{Id}_D)\\)\n\nAvantages :\n\nModélisation explicite du bruit\nMode génératif\nEstimation par Maximum de Vraisemblance ou EM\n\n\n\n\nExtension non-linéaire par trick du noyau :\n\nMapping implicite : \\(\\Phi(\\mathbf{x}_i)\\) via noyau \\(k(\\mathbf{x}_i, \\mathbf{x}_j)\\)\nPCA dans l’espace de features : \\(\\mathbf{k}(x_i, x_j) = \\Phi(x_i)^\\top \\Phi(x_j)\\)\n\n\n\n\nPCA appliquée localement sur des voisinages de données pour capturer la dimensionnalité intrinsèque locale.\n\n\n\nLa décomposition de \\(\\Sigma\\) a une complexité \\(O(D^3)\\), ce qui peut être prohibitif pour de grandes dimensions.",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#synthèse-et-conclusions",
+    "href": "ds31.html#synthèse-et-conclusions",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "PCA fait partie des modèles latents linéaires\nIl s’applique sur données centrées et utilise la variance comme critère\nC’est une décomposition exacte en composantes décorrélées\nIl suppose une distribution normale des données\nIl peut être formulé comme une régression quadratique\nIl offre une stratégie de réduction dimensionnelle basée sur l’approximation de bas rang\nIl peut être utilisé pour le débruitage (modèle gaussien)\nIl est équivalent à un AutoEncodeur Linéaire\nIl admet des formulations stochastiques et des extensions non-linéaires",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
+    ]
+  },
+  {
+    "objectID": "ds31.html#questions-dapprofondissement",
+    "href": "ds31.html#questions-dapprofondissement",
+    "title": "Cours : Analyse en Composantes Principales (PCA)",
+    "section": "",
+    "text": "Expliquez comment PCA utilise la variance comme critère\nMontrez l’équivalence entre maximisation de variance et minimisation d’erreur\nExpliquez l’utilisation du théorème d’Eckart-Young dans PCA\nDécrivez les étapes pratiques pour appliquer PCA sur un jeu de données\nQuelles informations PCA fournit-il sur les données ?\nComment reconstruire des données avec \\(K &lt; D\\) composantes ?\nQuelles stratégies pour sélectionner le nombre de composantes à conserver ?\nPCA est-elle applicable à tout type de données ?\nEst-il pertinent d’appliquer PCA sur des données clusterisées ?\nDémontrez l’équivalence entre PCA et AutoEncodeur Linéaire",
+    "crumbs": [
+      "Principal Component Analysis",
+      "Cours : Analyse en Composantes Principales (PCA)"
     ]
   },
   {

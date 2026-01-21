@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds7s1 – ISS</title>
+<title>ds21q – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -107,10 +72,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -322,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds21q.html">Exam question</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -365,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
+  <a href="./ds21q.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Exam question</span></a>
   </div>
 </li>
@@ -488,7 +479,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ds7s1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Intuition</span></a>
   </div>
 </li>
@@ -539,404 +530,269 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intuition" id="toc-intuition" class="nav-link active" data-scroll-target="#intuition">Intuition</a>
+  <li><a href="#exam-question" id="toc-exam-question" class="nav-link active" data-scroll-target="#exam-question">Exam question</a>
   <ul class="collapse">
-  <li><a href="#le-problème-fondamental-regrouper-sans-guide" id="toc-le-problème-fondamental-regrouper-sans-guide" class="nav-link" data-scroll-target="#le-problème-fondamental-regrouper-sans-guide">1. Le Problème Fondamental : Regrouper sans Guide</a></li>
-  <li><a href="#lintuition-géométrique-le-jeu-des-chaises-musicales" id="toc-lintuition-géométrique-le-jeu-des-chaises-musicales" class="nav-link" data-scroll-target="#lintuition-géométrique-le-jeu-des-chaises-musicales">2. L’Intuition Géométrique : Le Jeu des Chaises Musicales</a></li>
-  <li><a href="#la-formulation-mathématique-minimiser-lénergie" id="toc-la-formulation-mathématique-minimiser-lénergie" class="nav-link" data-scroll-target="#la-formulation-mathématique-minimiser-lénergie">3. La Formulation Mathématique : Minimiser l’Énergie</a>
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#introduction-aux-phénomènes-dimensionnels" id="toc-introduction-aux-phénomènes-dimensionnels" class="nav-link" data-scroll-target="#introduction-aux-phénomènes-dimensionnels">Introduction aux phénomènes dimensionnels</a></li>
+  <li><a href="#première-partie-la-malédiction-de-la-dimension" id="toc-première-partie-la-malédiction-de-la-dimension" class="nav-link" data-scroll-target="#première-partie-la-malédiction-de-la-dimension">Première Partie : La Malédiction de la Dimension</a>
   <ul class="collapse">
-  <li><a href="#le-critère-à-minimiser" id="toc-le-critère-à-minimiser" class="nav-link" data-scroll-target="#le-critère-à-minimiser">Le Critère à Minimiser</a></li>
-  <li><a href="#les-deux-équations-magiques" id="toc-les-deux-équations-magiques" class="nav-link" data-scroll-target="#les-deux-équations-magiques">Les Deux Équations Magiques</a></li>
+  <li><a href="#la-sparsité-des-données" id="toc-la-sparsité-des-données" class="nav-link" data-scroll-target="#la-sparsité-des-données">La Sparsité des Données</a></li>
+  <li><a href="#la-concentration-des-mesures" id="toc-la-concentration-des-mesures" class="nav-link" data-scroll-target="#la-concentration-des-mesures">La Concentration des Mesures</a></li>
   </ul></li>
-  <li><a href="#le-problème-de-linitialisation-où-placer-les-premières-chaises" id="toc-le-problème-de-linitialisation-où-placer-les-premières-chaises" class="nav-link" data-scroll-target="#le-problème-de-linitialisation-où-placer-les-premières-chaises">4. Le Problème de l’Initialisation : Où Placer les Premières Chaises ?</a>
+  <li><a href="#deuxième-partie-la-bénédiction-de-la-dimension" id="toc-deuxième-partie-la-bénédiction-de-la-dimension" class="nav-link" data-scroll-target="#deuxième-partie-la-bénédiction-de-la-dimension">Deuxième Partie : La Bénédiction de la Dimension</a>
   <ul class="collapse">
-  <li><a href="#le-dilemme" id="toc-le-dilemme" class="nav-link" data-scroll-target="#le-dilemme">Le Dilemme</a></li>
-  <li><a href="#k-means-la-solution-intelligente" id="toc-k-means-la-solution-intelligente" class="nav-link" data-scroll-target="#k-means-la-solution-intelligente">K-means++ : La Solution Intelligente</a></li>
+  <li><a href="#convergence-robuste-des-estimateurs" id="toc-convergence-robuste-des-estimateurs" class="nav-link" data-scroll-target="#convergence-robuste-des-estimateurs">Convergence robuste des estimateurs</a></li>
+  <li><a href="#projections-aléatoires-et-préservation-des-distances" id="toc-projections-aléatoires-et-préservation-des-distances" class="nav-link" data-scroll-target="#projections-aléatoires-et-préservation-des-distances">Projections aléatoires et préservation des distances</a></li>
+  <li><a href="#quasi-orthogonalité-et-séparabilité-linéaire" id="toc-quasi-orthogonalité-et-séparabilité-linéaire" class="nav-link" data-scroll-target="#quasi-orthogonalité-et-séparabilité-linéaire">Quasi-orthogonalité et séparabilité linéaire</a></li>
+  <li><a href="#robustesse-statistique-et-régularisation-implicite" id="toc-robustesse-statistique-et-régularisation-implicite" class="nav-link" data-scroll-target="#robustesse-statistique-et-régularisation-implicite">Robustesse statistique et régularisation implicite</a></li>
   </ul></li>
-  <li><a href="#le-choix-de-k-combien-de-chaises" id="toc-le-choix-de-k-combien-de-chaises" class="nav-link" data-scroll-target="#le-choix-de-k-combien-de-chaises">5. Le Choix de K : Combien de Chaises ?</a>
+  <li><a href="#synthèse-et-perspectives" id="toc-synthèse-et-perspectives" class="nav-link" data-scroll-target="#synthèse-et-perspectives">Synthèse et Perspectives</a>
   <ul class="collapse">
-  <li><a href="#le-problème-principal" id="toc-le-problème-principal" class="nav-link" data-scroll-target="#le-problème-principal">Le Problème Principal</a></li>
-  <li><a href="#méthodes-pour-choisir-k" id="toc-méthodes-pour-choisir-k" class="nav-link" data-scroll-target="#méthodes-pour-choisir-k">Méthodes pour Choisir K</a></li>
+  <li><a href="#dialectique-entre-malédiction-et-bénédiction" id="toc-dialectique-entre-malédiction-et-bénédiction" class="nav-link" data-scroll-target="#dialectique-entre-malédiction-et-bénédiction">Dialectique entre malédiction et bénédiction</a></li>
+  <li><a href="#implications-pour-la-pratique-du-data-science" id="toc-implications-pour-la-pratique-du-data-science" class="nav-link" data-scroll-target="#implications-pour-la-pratique-du-data-science">Implications pour la pratique du data science</a></li>
+  <li><a href="#récapitulatif-des-fondements-théoriques" id="toc-récapitulatif-des-fondements-théoriques" class="nav-link" data-scroll-target="#récapitulatif-des-fondements-théoriques">Récapitulatif des fondements théoriques</a></li>
   </ul></li>
-  <li><a href="#k-means-vs-gmm-le-duel-des-clusters" id="toc-k-means-vs-gmm-le-duel-des-clusters" class="nav-link" data-scroll-target="#k-means-vs-gmm-le-duel-des-clusters">6. K-means vs GMM : Le Duel des Clusters</a></li>
-  <li><a href="#les-pièges-de-k-means-et-comment-les-éviter" id="toc-les-pièges-de-k-means-et-comment-les-éviter" class="nav-link" data-scroll-target="#les-pièges-de-k-means-et-comment-les-éviter">7. Les Pièges de K-means et Comment les Éviter</a>
-  <ul class="collapse">
-  <li><a href="#piège-1-les-clusters-non-sphériques" id="toc-piège-1-les-clusters-non-sphériques" class="nav-link" data-scroll-target="#piège-1-les-clusters-non-sphériques">Piège 1 : Les Clusters Non Sphériques</a></li>
-  <li><a href="#piège-2-les-clusters-de-tailles-très-différentes" id="toc-piège-2-les-clusters-de-tailles-très-différentes" class="nav-link" data-scroll-target="#piège-2-les-clusters-de-tailles-très-différentes">Piège 2 : Les Clusters de Tailles Très Différentes</a></li>
-  <li><a href="#piège-3-la-sensibilité-aux-outliers" id="toc-piège-3-la-sensibilité-aux-outliers" class="nav-link" data-scroll-target="#piège-3-la-sensibilité-aux-outliers">Piège 3 : La Sensibilité aux Outliers</a></li>
-  <li><a href="#piège-4-linterprétation-des-résultats" id="toc-piège-4-linterprétation-des-résultats" class="nav-link" data-scroll-target="#piège-4-linterprétation-des-résultats">Piège 4 : L’Interprétation des Résultats</a></li>
-  </ul></li>
-  <li><a href="#en-pratique-la-recette-complète" id="toc-en-pratique-la-recette-complète" class="nav-link" data-scroll-target="#en-pratique-la-recette-complète">8. En Pratique : La Recette Complète</a>
-  <ul class="collapse">
-  <li><a href="#étape-1-préparation-des-données" id="toc-étape-1-préparation-des-données" class="nav-link" data-scroll-target="#étape-1-préparation-des-données">Étape 1 : Préparation des Données</a></li>
-  <li><a href="#étape-2-choix-de-k" id="toc-étape-2-choix-de-k" class="nav-link" data-scroll-target="#étape-2-choix-de-k">Étape 2 : Choix de K</a></li>
-  <li><a href="#étape-3-exécution" id="toc-étape-3-exécution" class="nav-link" data-scroll-target="#étape-3-exécution">Étape 3 : Exécution</a></li>
-  <li><a href="#étape-4-validation" id="toc-étape-4-validation" class="nav-link" data-scroll-target="#étape-4-validation">Étape 4 : Validation</a></li>
-  </ul></li>
-  <li><a href="#les-variantes-de-k-means" id="toc-les-variantes-de-k-means" class="nav-link" data-scroll-target="#les-variantes-de-k-means">9. Les Variantes de K-means</a>
-  <ul class="collapse">
-  <li><a href="#k-medoids" id="toc-k-medoids" class="nav-link" data-scroll-target="#k-medoids">K-medoids</a></li>
-  <li><a href="#mini-batch-k-means" id="toc-mini-batch-k-means" class="nav-link" data-scroll-target="#mini-batch-k-means">Mini-batch K-means</a></li>
-  <li><a href="#fuzzy-c-means" id="toc-fuzzy-c-means" class="nav-link" data-scroll-target="#fuzzy-c-means">Fuzzy C-means</a></li>
-  </ul></li>
-  <li><a href="#fiche-de-révision-express" id="toc-fiche-de-révision-express" class="nav-link" data-scroll-target="#fiche-de-révision-express">10. Fiche de Révision Express</a></li>
-  <li><a href="#pour-loral-lhistoire-à-raconter" id="toc-pour-loral-lhistoire-à-raconter" class="nav-link" data-scroll-target="#pour-loral-lhistoire-à-raconter">11. Pour l’Oral : L’Histoire à Raconter</a></li>
-  <li><a href="#questions-fréquentes-à-lexamen" id="toc-questions-fréquentes-à-lexamen" class="nav-link" data-scroll-target="#questions-fréquentes-à-lexamen">12. Questions Fréquentes à l’Examen</a></li>
-  <li><a href="#le-mot-de-la-fin" id="toc-le-mot-de-la-fin" class="nav-link" data-scroll-target="#le-mot-de-la-fin">13. Le Mot de la Fin</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds7s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds21q.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds7.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds7s1.html">Intuition</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds2.html">Espaces de Représentation en Haute Dimension</a></li><li class="breadcrumb-item"><a href="./ds21q.html">Exam question</a></li></ol></nav></header>
 
 
 
 
 
-<section id="intuition" class="level1">
-<h1>Intuition</h1>
-<section id="le-problème-fondamental-regrouper-sans-guide" class="level2">
-<h2 class="anchored" data-anchor-id="le-problème-fondamental-regrouper-sans-guide">1. Le Problème Fondamental : Regrouper sans Guide</h2>
-<p><strong>Imaginez :</strong> On vous donne 1000 photos d’animaux non étiquetées et on vous demande : “Combien y a-t-il de types d’animaux différents, et quelles photos vont ensemble ?” C’est exactement le problème du clustering !</p>
-<p><strong>K-means</strong> répond à cette question en faisant <strong>une hypothèse simplificatrice</strong> : chaque type d’animal peut être représenté par une <strong>image moyenne</strong> (prototype), et chaque photo est proche de l’un de ces prototypes.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Concept Clé : Apprentissage non supervisé</strong> Le clustering est <strong>non supervisé</strong> : pas d’étiquettes, pas de professeur pour dire “ceci est un chat”. L’algorithme doit découvrir la structure par lui-même.</p>
-</div>
-</div>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Données non étiquetées] --&gt; B{Problème de clustering}
-    B --&gt; C[Approche k-means :&lt;br/&gt;trouver K centres&lt;br/&gt;et assigner chaque point&lt;br/&gt;au centre le plus proche]
-    B --&gt; D[Approche hiérarchique :&lt;br/&gt;construire un arbre&lt;br/&gt;de regroupements]
-    C --&gt; E[Avantage : simple, rapide]
-    D --&gt; F[Avantage : visualisation&lt;br/&gt;par dendrogramme]
-    
-    style E fill:#e6f3ff
-    style F fill:#e6ffe6
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="exam-question" class="level1">
+<h1>Exam question</h1>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Expliquez les aspects « parcimonie » et « concentration » de la malédiction de la dimensionnalité, leur justification théorique et leur impact pratique.</p>
+<p>Donnez des exemples de bénédiction de la dimensionnalité et expliquez comment ils sont utilisés dans la pratique (vous pouvez rechercher d’autres exemples que ceux présentés dans les cours ou les travaux pratiques).</p>
 </section>
-<section id="lintuition-géométrique-le-jeu-des-chaises-musicales" class="level2">
-<h2 class="anchored" data-anchor-id="lintuition-géométrique-le-jeu-des-chaises-musicales">2. L’Intuition Géométrique : Le Jeu des Chaises Musicales</h2>
-<p><strong>Analogie :</strong> Imaginez un jeu de chaises musicales avec K chaises (clusters) et N joueurs (points de données). Quand la musique s’arrête : 1. Chaque joueur court vers la chaise la plus proche <strong>(assignation)</strong> 2. On déplace chaque chaise au centre des joueurs qui l’entourent <strong>(mise à jour)</strong> 3. On recommence jusqu’à ce que les chaises ne bougent plus</p>
-<p><strong>C’est exactement k-means !</strong></p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[K chaises placées&lt;br/&gt;au hasard] --&gt; B[Musique s'arrête :&lt;br/&gt;chaque joueur court&lt;br/&gt;vers la chaise la plus proche]
-    B --&gt; C[On déplace chaque chaise&lt;br/&gt;au centre des joueurs&lt;br/&gt;qui l'entourent]
-    C --&gt; D{Les chaises ont-elles&lt;br/&gt;beaucoup bougé ?}
-    D --&gt;|Oui, recommencer| B
-    D --&gt;|Non, fin du jeu| E[Résultat : K groupes&lt;br/&gt;de joueurs]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="introduction-aux-phénomènes-dimensionnels" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-aux-phénomènes-dimensionnels">Introduction aux phénomènes dimensionnels</h2>
+<p>Le concept de <strong>malédiction de la dimension</strong> décrit les défis qui émergent lorsqu’on travaille avec des données en haute dimension. Cette notion fondamentale en data science présente deux aspects principaux : la <strong>sparsity</strong> (parcimonie) et la <strong>concentration</strong>, chacun ayant des justifications théoriques solides et des implications pratiques importantes.</p>
+<p>Curieusement, cette même haute dimension offre également des avantages, regroupés sous le terme de <strong>bénédiction de la dimension</strong>, qui peuvent être exploités dans diverses applications pratiques.</p>
+<hr>
 </section>
-<section id="la-formulation-mathématique-minimiser-lénergie" class="level2">
-<h2 class="anchored" data-anchor-id="la-formulation-mathématique-minimiser-lénergie">3. La Formulation Mathématique : Minimiser l’Énergie</h2>
-<section id="le-critère-à-minimiser" class="level3">
-<h3 class="anchored" data-anchor-id="le-critère-à-minimiser">Le Critère à Minimiser</h3>
-<p>K-means cherche à minimiser :</p>
-<pre><code>L = somme sur tous les points de (distance au centre de son cluster)²</code></pre>
-<p><strong>Pourquoi au carré ?</strong> Deux raisons : 1. <strong>Mathématique</strong> : rend le problème plus facile à résoudre 2. <strong>Géométrique</strong> : pénalise plus les points très éloignés</p>
+<section id="première-partie-la-malédiction-de-la-dimension" class="level2">
+<h2 class="anchored" data-anchor-id="première-partie-la-malédiction-de-la-dimension">Première Partie : La Malédiction de la Dimension</h2>
+<section id="la-sparsité-des-données" class="level3">
+<h3 class="anchored" data-anchor-id="la-sparsité-des-données">La Sparsité des Données</h3>
+<section id="concept-fondamental" class="level4">
+<h4 class="anchored" data-anchor-id="concept-fondamental">Concept fondamental</h4>
+<p>La <strong>sparsity</strong> fait référence à l’extrême dilution des données dans les espaces de haute dimension. Alors que le volume de l’espace croît exponentiellement avec la dimension, le nombre de points de données reste limité, créant des régions vides immenses.</p>
+<hr>
 </section>
-<section id="les-deux-équations-magiques" class="level3">
-<h3 class="anchored" data-anchor-id="les-deux-équations-magiques">Les Deux Équations Magiques</h3>
-<p><strong>Étape d’assignation (E-like) :</strong> Pour chaque point <code>x_i</code>, trouver le centre <code>μ_k</code> le plus proche :</p>
-<pre><code>Assigner x_i au cluster k qui minimise ||x_i - μ_k||²</code></pre>
-<p><strong>Étape de mise à jour (M-like) :</strong> Pour chaque cluster <code>k</code>, recalculer son centre :</p>
-<pre><code>μ_k = moyenne de tous les points assignés au cluster k</code></pre>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Pourquoi ça converge ?</strong> Chaque étape ne peut qu’améliorer (ou laisser inchangé) le critère. Comme il y a un nombre fini d’assignations possibles, l’algorithme doit terminer.</p>
-</div>
-</div>
+<section id="justification-théorique-par-le-volume-exponentiel" class="level4">
+<h4 class="anchored" data-anchor-id="justification-théorique-par-le-volume-exponentiel">Justification théorique par le volume exponentiel</h4>
+<p>Considérons un hypercube unité <span class="math inline">\([0,1]^D\)</span>. Si nous divisons chaque dimension en <span class="math inline">\(k\)</span> intervalles égaux, nous obtenons <span class="math inline">\(k^D\)</span> cellules. Cette croissance exponentielle signifie que pour maintenir une densité constante de points, nous aurions besoin d’un nombre exponentiel d’échantillons.</p>
+<p><strong>Formellement</strong>, si nous souhaitons avoir en moyenne au moins un point par cellule :</p>
+<p><span class="math display">\[ N \geq k^D \]</span></p>
+<p>Pour <span class="math inline">\(D = 100\)</span> et <span class="math inline">\(k = 10\)</span>, cela nécessiterait <span class="math inline">\(10^{100}\)</span> points, ce qui illustre l’impossibilité pratique de remplir uniformément l’espace.</p>
+<hr>
+</section>
+<section id="le-paradoxe-de-la-sphère-vide" class="level4">
+<h4 class="anchored" data-anchor-id="le-paradoxe-de-la-sphère-vide">Le paradoxe de la sphère vide</h4>
+<p>Un résultat particulièrement contre-intuitif concerne le rapport entre le volume d’une hypersphère et celui de l’hypercube qui la contient.</p>
+<p>Pour une hypersphère <span class="math inline">\(B_D(r)\)</span> de rayon <span class="math inline">\(r\)</span> centrée à l’origine, inscrite dans un hypercube <span class="math inline">\(C_D(r) = [-r, r]^D\)</span> :</p>
+<p><strong>Volume de l’hypersphère :</strong> <span class="math display">\[ \text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D\Gamma(D/2)} \]</span></p>
+<p><strong>Volume de l’hypercube :</strong> <span class="math display">\[ \text{vol}(C_D(r)) = (2r)^D \]</span></p>
+<p><strong>Ratio sphère/cube :</strong> <span class="math display">\[ \frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D 2^{D-1} \Gamma(D/2)} \]</span></p>
+<p><strong>Le résultat clé :</strong> <span class="math display">\[ \lim_{D \to \infty} \frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = 0 \]</span></p>
+<p>Cette limite montre qu’en haute dimension, presque tout le volume du cube se situe dans ses coins, laissant la sphère centrale essentiellement vide.</p>
+<hr>
+</section>
+<section id="impact-pratique-de-la-sparsity" class="level4">
+<h4 class="anchored" data-anchor-id="impact-pratique-de-la-sparsity">Impact pratique de la sparsity</h4>
+<p><strong>Estimation de densité impossible :</strong> Pour estimer une densité de probabilité en dimension <span class="math inline">\(D\)</span> avec une précision donnée, le nombre d’échantillons requis croît exponentiellement, rendant l’estimation non paramétrique impraticable.</p>
+<p><strong>Algorithme des k-plus proches voisins inefficace :</strong> Les “plus proches” voisins sont en réalité très éloignés, réduisant l’efficacité de cette méthode.</p>
+<p><strong>Risque accru de sur-apprentissage :</strong> Avec peu de données par rapport au nombre de dimensions, les modèles tendent à capturer le bruit plutôt que le signal sous-jacent.</p>
+<p><strong>Problème en recherche d’information :</strong> La similarité entre documents représentés par de nombreux termes devient difficile à évaluer de manière fiable.</p>
+<hr>
 </section>
 </section>
-<section id="le-problème-de-linitialisation-où-placer-les-premières-chaises" class="level2">
-<h2 class="anchored" data-anchor-id="le-problème-de-linitialisation-où-placer-les-premières-chaises">4. Le Problème de l’Initialisation : Où Placer les Premières Chaises ?</h2>
-<section id="le-dilemme" class="level3">
-<h3 class="anchored" data-anchor-id="le-dilemme">Le Dilemme</h3>
-<p>Si toutes les chaises commencent dans le même coin, le jeu sera très long et donnera un mauvais résultat. <strong>K-means est très sensible à l’initialisation !</strong></p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Choix d'initialisation] --&gt; B[Mauvaise initialisation]
-    A --&gt; C[Bonne initialisation]
-    B --&gt; D[Convergence lente&lt;br/&gt;Clusters de mauvaise qualité&lt;br/&gt;Maximum local]
-    C --&gt; E[Convergence rapide&lt;br/&gt;Clusters de bonne qualité&lt;br/&gt;Maximum global (ou bon)]
-    
-    style D fill:#ffcccc
-    style E fill:#ccffcc
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="la-concentration-des-mesures" class="level3">
+<h3 class="anchored" data-anchor-id="la-concentration-des-mesures">La Concentration des Mesures</h3>
+<section id="concept-fondamental-1" class="level4">
+<h4 class="anchored" data-anchor-id="concept-fondamental-1">Concept fondamental</h4>
+<p>La <strong>concentration</strong> désigne le phénomène selon lequel certaines quantités, comme les distances entre points, se concentrent autour de valeurs typiques en haute dimension, perdant ainsi leur pouvoir discriminant.</p>
+<hr>
 </section>
-<section id="k-means-la-solution-intelligente" class="level3">
-<h3 class="anchored" data-anchor-id="k-means-la-solution-intelligente">K-means++ : La Solution Intelligente</h3>
-<p><strong>Principe :</strong> Éloigner les centres initiaux les uns des autres.</p>
-<p><strong>Algorithme :</strong> 1. Choisir un premier centre au hasard 2. Pour chaque point, calculer sa distance <code>D(x)</code> au centre le plus proche 3. Choisir le prochain centre avec une probabilité proportionnelle à <code>D(x)²</code> 4. Répéter jusqu’à avoir K centres</p>
-<p><strong>Pourquoi ça marche ?</strong> En favorisant les points éloignés, on couvre mieux l’espace des données.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Astuce pratique :</strong> Toujours utiliser k-means++ ou lancer k-means plusieurs fois avec différentes initialisations aléatoires et garder le meilleur résultat.</p>
-</div>
-</div>
+<section id="justification-théorique-par-le-théorème-de-concentration-des-distances" class="level4">
+<h4 class="anchored" data-anchor-id="justification-théorique-par-le-théorème-de-concentration-des-distances">Justification théorique par le théorème de concentration des distances</h4>
+<p>Soit un ensemble de données <span class="math inline">\(X \subset \Omega\)</span>, un point <span class="math inline">\(x\)</span> et ses <span class="math inline">\(k\)</span> plus proches voisins. Notons <span class="math inline">\(D_{\min}\)</span> et <span class="math inline">\(D_{\max}\)</span> les distances aux voisins les plus proches et les plus éloignés.</p>
+<p><strong>Théorème (Beyer et al.) :</strong> Si <span class="math inline">\(\lim_{D \to \infty} \text{Var}\left( \frac{d(x,y)^p}{d(x,y)^p} \right) = 0\)</span> pour <span class="math inline">\(0 &lt; p &lt; \infty\)</span>, alors pour tout <span class="math inline">\(\varepsilon &gt; 0\)</span> :</p>
+<p><span class="math display">\[ \lim_{D \to \infty} P \left[ \frac{D_{\max} - D_{\min}}{D_{\min}} \le \varepsilon \right] = 1 \]</span></p>
+<p>Ce résultat formel montre qu’en haute dimension, toutes les distances entre voisins deviennent relativement similaires, rendant difficile la distinction entre “proche” et “loin”.</p>
+<hr>
 </section>
+<section id="justification-par-la-distribution-gaussienne-et-le-théorème-central-limite" class="level4">
+<h4 class="anchored" data-anchor-id="justification-par-la-distribution-gaussienne-et-le-théorème-central-limite">Justification par la distribution gaussienne et le théorème central limite</h4>
+<p>Pour des variables indépendantes et identiquement distribuées (i.i.d.) <span class="math inline">\(X_i \sim N(0,1)\)</span>, considérons la norme euclidienne <span class="math inline">\(R = \|X\|_2\)</span>. On a :</p>
+<p><span class="math display">\[ R^2 = \sum_{i=1}^D X_i^2 \sim \chi^2(D) \]</span></p>
+<p>Ainsi : <span class="math display">\[ \mathbb{E}[R^2] = D \quad \text{et} \quad \text{Var}(R^2) = 2D \]</span></p>
+<p>Le coefficient de variation : <span class="math display">\[ \frac{\sqrt{\text{Var}(R^2)}}{\mathbb{E}[R^2]} = \frac{\sqrt{2D}}{D} = \sqrt{\frac{2}{D}} \to 0 \quad \text{quand } D \to \infty \]</span></p>
+<p>Cette convergence, garantie par la <strong>Loi des Grands Nombres</strong>, explique pourquoi les points gaussiens se concentrent sur une coquille sphérique de rayon <span class="math inline">\(\sqrt{D}\)</span>.</p>
+<hr>
 </section>
-<section id="le-choix-de-k-combien-de-chaises" class="level2">
-<h2 class="anchored" data-anchor-id="le-choix-de-k-combien-de-chaises">5. Le Choix de K : Combien de Chaises ?</h2>
-<section id="le-problème-principal" class="level3">
-<h3 class="anchored" data-anchor-id="le-problème-principal">Le Problème Principal</h3>
-<p>K-means a besoin qu’on lui dise combien de clusters chercher. Mais dans la vraie vie, <strong>on ne sait pas à l’avance</strong> !</p>
+<section id="justification-par-les-inégalités-de-concentration" class="level4">
+<h4 class="anchored" data-anchor-id="justification-par-les-inégalités-de-concentration">Justification par les inégalités de concentration</h4>
+<p><strong>Inégalité de Hoeffding :</strong> Pour des variables aléatoires indépendantes <span class="math inline">\(X_1, \ldots, X_D\)</span> telles que <span class="math inline">\(a \leq X_i \leq b\)</span> presque sûrement, et pour tout <span class="math inline">\(\epsilon &gt; 0\)</span> :</p>
+<p><span class="math display">\[ P(|\bar{X} - \mathbb{E}[\bar{X}]| &gt; \epsilon) \leq 2\exp\left(-\frac{2D\epsilon^2}{(b-a)^2}\right) \]</span></p>
+<p>où <span class="math inline">\(\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i\)</span>.</p>
+<p>Cette inégalité montre que la moyenne empirique converge exponentiellement vite vers son espérance, ce qui explique la concentration des mesures en haute dimension.</p>
+<p><strong>Inégalité de Chebyshev :</strong> Pour une variable aléatoire <span class="math inline">\(X\)</span> d’espérance <span class="math inline">\(\mu\)</span> et de variance <span class="math inline">\(\sigma^2\)</span> :</p>
+<p><span class="math display">\[ P(|X - \mu| \geq \epsilon) \leq \frac{\sigma^2}{\epsilon^2} \]</span></p>
+<p>Quand la variance relative décroît avec <span class="math inline">\(D\)</span> (comme c’est souvent le cas), la probabilité d’écart à la moyenne diminue.</p>
+<hr>
 </section>
-<section id="méthodes-pour-choisir-k" class="level3">
-<h3 class="anchored" data-anchor-id="méthodes-pour-choisir-k">Méthodes pour Choisir K</h3>
-<section id="méthode-du-coude-elbow-method" class="level4">
-<h4 class="anchored" data-anchor-id="méthode-du-coude-elbow-method">1. Méthode du Coude (Elbow Method)</h4>
-<p><strong>Principe :</strong> Tracer l’erreur (inertie) en fonction de K.</p>
-<pre><code>Erreur(K) = somme des distances² des points à leur centre</code></pre>
-<p>Quand K augmente, l’erreur diminue. On cherche le “coude” où l’amélioration ralentit.</p>
-</section>
-<section id="score-de-silhouette" class="level4">
-<h4 class="anchored" data-anchor-id="score-de-silhouette">2. Score de Silhouette</h4>
-<p><strong>Principe :</strong> Mesure combien un point est bien dans son cluster vs hors de son cluster.</p>
-<pre><code>s(i) = (b(i) - a(i)) / max(a(i), b(i))</code></pre>
-<p>où <code>a(i)</code> = distance moyenne aux autres points du même cluster,<br>
-<code>b(i)</code> = distance moyenne aux points du cluster le plus proche.</p>
-<p><strong>Interprétation :</strong> <code>s(i) ≈ 1</code> = bien classé, <code>≈ 0</code> = à la frontière, <code>≈ -1</code> = mal classé.</p>
-</section>
-<section id="règle-pratique" class="level4">
-<h4 class="anchored" data-anchor-id="règle-pratique">3. Règle Pratique</h4>
-<p>Pour N points : <code>K ≈ √(N/2)</code> (très grossier, à utiliser avec prudence).</p>
+<section id="impact-pratique-de-la-concentration" class="level4">
+<h4 class="anchored" data-anchor-id="impact-pratique-de-la-concentration">Impact pratique de la concentration</h4>
+<p><strong>Perte de discrimination spatiale :</strong> Dans les algorithmes de clustering (k-means) et de recherche de similarité, la concentration des distances rend difficile la distinction entre groupes naturels.</p>
+<p><strong>Inefficacité des index spatiaux :</strong> Les structures d’indexation comme les <strong>k-d trees</strong> nécessitent d’explorer une grande partie de l’espace, conduisant à une complexité proche de <span class="math inline">\(O(N)\)</span>.</p>
+<p><strong>Phénomène de Hubness :</strong> Certains points deviennent des “hubs”, apparaissant comme plus proches voisins d’un nombre disproportionné d’autres points, biaisant ainsi les systèmes de recommandation.</p>
+<p><strong>Difficulté en classification :</strong> Les frontières entre classes deviennent moins nettes lorsque les distances perdent leur pouvoir discriminant.</p>
+<hr>
 </section>
 </section>
 </section>
-<section id="k-means-vs-gmm-le-duel-des-clusters" class="level2">
-<h2 class="anchored" data-anchor-id="k-means-vs-gmm-le-duel-des-clusters">6. K-means vs GMM : Le Duel des Clusters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 30%">
-<col style="width: 43%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Aspect</th>
-<th>K-means</th>
-<th>GMM avec EM</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Philosophie</strong></td>
-<td>Géométrique (distance)</td>
-<td>Probabiliste (densité)</td>
-</tr>
-<tr class="even">
-<td><strong>Appartenance</strong></td>
-<td>Dure (0 ou 1)</td>
-<td>Douce (probabilité)</td>
-</tr>
-<tr class="odd">
-<td><strong>Forme clusters</strong></td>
-<td>Sphères (toutes mêmes tailles)</td>
-<td>Ellipses (tailles/orientations variables)</td>
-</tr>
-<tr class="even">
-<td><strong>Modèle</strong></td>
-<td>Minimise distance</td>
-<td>Maximise vraisemblance</td>
-</tr>
-<tr class="odd">
-<td><strong>Vitesse</strong></td>
-<td>Rapide (O(NKT))</td>
-<td>Plus lent (plus de calculs)</td>
-</tr>
-<tr class="even">
-<td><strong>Cas limite</strong></td>
-<td>-</td>
-<td>K-means = GMM avec σ→0 et covariances sphériques</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>K-means est un cas particulier de GMM !</strong> Quand on prend un mélange de gaussiennes avec : - Covariances sphériques et identiques : <code>Σ_k = σ²I</code> - Et qu’on fait tendre <code>σ → 0</code> Alors l’assignation douce devient dure, et on retrouve k-means.</p>
-</div>
-</div>
+<section id="deuxième-partie-la-bénédiction-de-la-dimension" class="level2">
+<h2 class="anchored" data-anchor-id="deuxième-partie-la-bénédiction-de-la-dimension">Deuxième Partie : La Bénédiction de la Dimension</h2>
+<section id="convergence-robuste-des-estimateurs" class="level3">
+<h3 class="anchored" data-anchor-id="convergence-robuste-des-estimateurs">Convergence robuste des estimateurs</h3>
+<section id="loi-des-grands-nombres-et-théorème-central-limite" class="level4">
+<h4 class="anchored" data-anchor-id="loi-des-grands-nombres-et-théorème-central-limite">Loi des Grands Nombres et Théorème Central Limite</h4>
+<p><strong>Loi Faible des Grands Nombres :</strong> Pour des variables i.i.d. <span class="math inline">\(X_1, \ldots, X_D\)</span> d’espérance <span class="math inline">\(\mu\)</span>, pour tout <span class="math inline">\(\varepsilon &gt; 0\)</span> :</p>
+<p><span class="math display">\[ \lim_{D \to \infty} P(|\bar{X} - \mu| &lt; \varepsilon) = 1 \]</span></p>
+<p>Cette loi assure que la moyenne empirique converge en probabilité vers l’espérance théorique.</p>
+<p><strong>Théorème Central Limite (version multidimensionnelle) :</strong> Pour des vecteurs aléatoires i.i.d. <span class="math inline">\(X_1, \ldots, X_D\)</span> dans <span class="math inline">\(\mathbb{R}^p\)</span> d’espérance <span class="math inline">\(\mu\)</span> et de matrice de covariance <span class="math inline">\(\Sigma\)</span>, on a :</p>
+<p><span class="math display">\[ \sqrt{D}(\bar{X}_D - \mu) \xrightarrow[d]{} N(0, \Sigma) \quad \text{quand } D \to \infty \]</span></p>
+<p>Ce théorème fournit non seulement la convergence, mais aussi la distribution limite, permettant de construire des intervalles de confiance.</p>
+<hr>
 </section>
-<section id="les-pièges-de-k-means-et-comment-les-éviter" class="level2">
-<h2 class="anchored" data-anchor-id="les-pièges-de-k-means-et-comment-les-éviter">7. Les Pièges de K-means et Comment les Éviter</h2>
-<section id="piège-1-les-clusters-non-sphériques" class="level3">
-<h3 class="anchored" data-anchor-id="piège-1-les-clusters-non-sphériques">Piège 1 : Les Clusters Non Sphériques</h3>
-<p><strong>Problème :</strong> K-means suppose des clusters sphériques. S’ils sont allongés ou de formes bizarres, ça échoue.</p>
-<p><strong>Solution :</strong> - Standardiser les données (centrer-réduire) - Utiliser une autre méthode (GMM, spectral clustering) - Transformer les données (PCA d’abord)</p>
-</section>
-<section id="piège-2-les-clusters-de-tailles-très-différentes" class="level3">
-<h3 class="anchored" data-anchor-id="piège-2-les-clusters-de-tailles-très-différentes">Piège 2 : Les Clusters de Tailles Très Différentes</h3>
-<p><strong>Problème :</strong> K-means tend à créer des clusters de taille similaire, même si la réalité est différente.</p>
-<p><strong>Solution :</strong> Ajuster K, ou utiliser une méthode qui gère ça (GMM).</p>
-</section>
-<section id="piège-3-la-sensibilité-aux-outliers" class="level3">
-<h3 class="anchored" data-anchor-id="piège-3-la-sensibilité-aux-outliers">Piège 3 : La Sensibilité aux Outliers</h3>
-<p><strong>Problème :</strong> Un point très éloigné tire le centre de son cluster vers lui.</p>
-<p><strong>Solution :</strong> - Détecter et enlever les outliers avant - Utiliser k-medoids (plus robuste) - Standardiser pour réduire l’influence</p>
-</section>
-<section id="piège-4-linterprétation-des-résultats" class="level3">
-<h3 class="anchored" data-anchor-id="piège-4-linterprétation-des-résultats">Piège 4 : L’Interprétation des Résultats</h3>
-<p><strong>Problème :</strong> K-means trouve toujours K clusters, même si les données n’ont pas de structure.</p>
-<p><strong>Solution :</strong> Toujours valider avec des méthodes objectives (silhouette, gap statistic).</p>
+<section id="application-pratique-agrégation-de-modèles" class="level4">
+<h4 class="anchored" data-anchor-id="application-pratique-agrégation-de-modèles">Application pratique : Agrégation de modèles</h4>
+<p>Les méthodes d’<strong>apprentissage par agrégation</strong> exploitent ces théorèmes. Par exemple, les <strong>forêts aléatoires</strong> combinent de nombreux arbres de décision faiblement corrélés. Chaque arbre est un estimateur peu précis, mais leur moyenne bénéficie de la réduction de variance prédite par le théorème central limite.</p>
+<p><strong>Exemple en bioinformatique :</strong> Avec des milliers de gènes (dimensions) et seulement des centaines de patients, les forêts aléatoires fournissent des classifieurs robustes pour le diagnostic médical.</p>
+<hr>
 </section>
 </section>
-<section id="en-pratique-la-recette-complète" class="level2">
-<h2 class="anchored" data-anchor-id="en-pratique-la-recette-complète">8. En Pratique : La Recette Complète</h2>
-<section id="étape-1-préparation-des-données" class="level3">
-<h3 class="anchored" data-anchor-id="étape-1-préparation-des-données">Étape 1 : Préparation des Données</h3>
-<ol type="1">
-<li><strong>Nettoyer</strong> : gérer les valeurs manquantes</li>
-<li><strong>Standardiser</strong> : centrer et réduire chaque variable</li>
-<li><strong>Visualiser</strong> (si possible en 2D/3D) pour avoir une idée</li>
-</ol>
+<section id="projections-aléatoires-et-préservation-des-distances" class="level3">
+<h3 class="anchored" data-anchor-id="projections-aléatoires-et-préservation-des-distances">Projections aléatoires et préservation des distances</h3>
+<section id="lemme-de-johnson-lindenstrauss" class="level4">
+<h4 class="anchored" data-anchor-id="lemme-de-johnson-lindenstrauss">Lemme de Johnson-Lindenstrauss</h4>
+<p><strong>Énoncé du lemme :</strong> Pour tout ensemble <span class="math inline">\(X\)</span> de <span class="math inline">\(N\)</span> points dans <span class="math inline">\(\mathbb{R}^D\)</span> et tout <span class="math inline">\(0 &lt; \varepsilon &lt; 1\)</span>, il existe une application linéaire <span class="math inline">\(f : \mathbb{R}^D \to \mathbb{R}^d\)</span> avec <span class="math inline">\(d = O(\varepsilon^{-2} \log N)\)</span> telle que pour tout <span class="math inline">\(x, y \in X\)</span> :</p>
+<p><span class="math display">\[ (1-\varepsilon)\|x-y\|^2 \leq \|f(x)-f(y)\|^2 \leq (1+\varepsilon)\|x-y\|^2 \]</span></p>
+<p>La dimension <span class="math inline">\(d\)</span> est <strong>indépendante</strong> de <span class="math inline">\(D\)</span> et ne dépend que logarithmiquement de <span class="math inline">\(N\)</span>.</p>
+<p><strong>Preuve intuitive :</strong> La preuve utilise des matrices aléatoires dont les entrées sont i.i.d. selon une loi normale, et exploite la concentration des mesures (via l’inégalité de Hoeffding) pour montrer que les distances sont préservées avec haute probabilité.</p>
+<hr>
 </section>
-<section id="étape-2-choix-de-k" class="level3">
-<h3 class="anchored" data-anchor-id="étape-2-choix-de-k">Étape 2 : Choix de K</h3>
-<ol type="1">
-<li><strong>Méthode du coude</strong> : tracer inertie vs K</li>
-<li><strong>Score de silhouette</strong> : moyenne sur tous les points</li>
-<li><strong>Connaissance du domaine</strong> : parfois on sait combien de clusters on cherche</li>
-</ol>
-</section>
-<section id="étape-3-exécution" class="level3">
-<h3 class="anchored" data-anchor-id="étape-3-exécution">Étape 3 : Exécution</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pseudocode</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Initialiser K centres avec k<span class="op">-</span>means<span class="op">++</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> Répéter:</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   a. Assigner chaque point au centre le plus proche</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   b. Recalculer les centres comme moyennes</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   c. Si les centres bougent peu, arrêter</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> Évaluer avec score de silhouette</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fl">4.</span> Si doute, relancer avec différentes initialisations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="étape-4-validation" class="level3">
-<h3 class="anchored" data-anchor-id="étape-4-validation">Étape 4 : Validation</h3>
-<ol type="1">
-<li><strong>Interne</strong> : scores (silhouette, Davies-Bouldin)</li>
-<li><strong>Externe</strong> : si on a quelques étiquettes, comparer</li>
-<li><strong>Manuelle</strong> : visualisation, bon sens</li>
-</ol>
+<section id="application-pratique-réduction-de-dimension-efficace" class="level4">
+<h4 class="anchored" data-anchor-id="application-pratique-réduction-de-dimension-efficace">Application pratique : Réduction de dimension efficace</h4>
+<p><strong>Recherche approximative de plus proches voisins :</strong> Les algorithmes de <strong>Locality-Sensitive Hashing (LSH)</strong> utilisent des projections aléatoires pour indexer rapidement des milliards de points en haute dimension.</p>
+<p><strong>Compression de données :</strong> Les techniques de <strong>compressed sensing</strong> permettent de reconstruire des signaux à partir de peu de mesures en exploitant la parcimonie naturelle des signaux réels.</p>
+<p><strong>Exemple concret :</strong> Les systèmes de recommandation de YouTube utilisent des variantes de LSH pour trouver rapidement des vidéos similaires parmi des milliards de possibilités.</p>
+<hr>
 </section>
 </section>
-<section id="les-variantes-de-k-means" class="level2">
-<h2 class="anchored" data-anchor-id="les-variantes-de-k-means">9. Les Variantes de K-means</h2>
-<section id="k-medoids" class="level3">
-<h3 class="anchored" data-anchor-id="k-medoids">K-medoids</h3>
-<p><strong>Différence</strong> : Les centres sont des points réels des données (pas des moyennes).</p>
-<p><strong>Avantage</strong> : Plus robuste aux outliers, fonctionne avec n’importe quelle distance.</p>
+<section id="quasi-orthogonalité-et-séparabilité-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="quasi-orthogonalité-et-séparabilité-linéaire">Quasi-orthogonalité et séparabilité linéaire</h3>
+<section id="phénomène-de-quasi-orthogonalité" class="level4">
+<h4 class="anchored" data-anchor-id="phénomène-de-quasi-orthogonalité">Phénomène de quasi-orthogonalité</h4>
+<p>En haute dimension, des vecteurs aléatoires tendent à être presque orthogonaux. Pour deux vecteurs aléatoires unitaires <span class="math inline">\(u, v\)</span> sur la sphère en dimension <span class="math inline">\(D\)</span>, la distribution de leur produit scalaire se concentre autour de 0.</p>
+<p><strong>Justification par la loi des grands nombres :</strong> Si les composantes sont i.i.d. de moyenne nulle, alors <span class="math inline">\(\langle u, v \rangle = \frac{1}{D}\sum_{i=1}^D u_i v_i\)</span> converge vers 0.</p>
+<hr>
 </section>
-<section id="mini-batch-k-means" class="level3">
-<h3 class="anchored" data-anchor-id="mini-batch-k-means">Mini-batch K-means</h3>
-<p><strong>Différence</strong> : Utilise des sous-échantillons des données à chaque itération.</p>
-<p><strong>Avantage</strong> : Beaucoup plus rapide pour les grandes données.</p>
+<section id="application-pratique-machines-à-vecteurs-de-support-svm" class="level4">
+<h4 class="anchored" data-anchor-id="application-pratique-machines-à-vecteurs-de-support-svm">Application pratique : Machines à vecteurs de support (SVM)</h4>
+<p>Le <strong>kernel trick</strong> permet de projeter implicitement les données dans un espace de très haute dimension où elles deviennent linéairement séparables, sans calcul explicite de la transformation.</p>
+<p><strong>Exemple en vision par ordinateur :</strong> Pour la reconnaissance d’objets, les SVM avec noyau RBF séparent des classes non linéairement séparables dans l’espace d’origine.</p>
+<hr>
 </section>
-<section id="fuzzy-c-means" class="level3">
-<h3 class="anchored" data-anchor-id="fuzzy-c-means">Fuzzy C-means</h3>
-<p><strong>Différence</strong> : Assignation douce (comme GMM) mais avec un critère géométrique.</p>
-<p><strong>Avantage</strong> : Points frontières appartiennent partiellement à plusieurs clusters.</p>
+<section id="application-pratique-word-embeddings" class="level4">
+<h4 class="anchored" data-anchor-id="application-pratique-word-embeddings">Application pratique : Word embeddings</h4>
+<p>Les modèles comme <strong>Word2Vec</strong> projettent les mots dans des espaces de dimension 100 à 300 où les relations sémantiques deviennent linéairement représentables. Par exemple :</p>
+<p><span class="math display">\[ \text{"roi"} - \text{"homme"} + \text{"femme"} \approx \text{"reine"} \]</span></p>
+<p>Cette propriété émerge naturellement en haute dimension grâce à la quasi-orthogonalité des vecteurs de mots différents.</p>
+<hr>
 </section>
 </section>
-<section id="fiche-de-révision-express" class="level2">
-<h2 class="anchored" data-anchor-id="fiche-de-révision-express">10. Fiche de Révision Express</h2>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>En 30 secondes pour l’oral :</strong></p>
-<ol type="1">
-<li><strong>K-means</strong> = clustering par minimisation de distance</li>
-<li><strong>Deux étapes</strong> : assignation (points → centre plus proche) et mise à jour (recalcul des centres)</li>
-<li><strong>Problèmes</strong> : choix de K, initialisation, clusters sphériques</li>
-<li><strong>Solutions</strong> : k-means++, méthode du coude, standardisation</li>
-<li><strong>Parenté</strong> : cas particulier des GMM avec σ→0</li>
-<li><strong>Applications</strong> : segmentation, regroupement, réduction de dimension</li>
-</ol>
-</div>
-</div>
+<section id="robustesse-statistique-et-régularisation-implicite" class="level3">
+<h3 class="anchored" data-anchor-id="robustesse-statistique-et-régularisation-implicite">Robustesse statistique et régularisation implicite</h3>
+<section id="phénomène-de-double-descente" class="level4">
+<h4 class="anchored" data-anchor-id="phénomène-de-double-descente">Phénomène de double descente</h4>
+<p>Contrairement à la intuition classique, augmenter la capacité d’un modèle (nombre de paramètres) au-delà d’un certain point peut améliorer la généralisation, un phénomène observé dans les réseaux de neurones profonds.</p>
+<p><strong>Explication théorique :</strong> En très haute dimension, les modèles bénéficient d’une régularisation implicite due à la concentration des mesures et à la géométrie particulière des espaces de haute dimension.</p>
+<hr>
 </section>
-<section id="pour-loral-lhistoire-à-raconter" class="level2">
-<h2 class="anchored" data-anchor-id="pour-loral-lhistoire-à-raconter">11. Pour l’Oral : L’Histoire à Raconter</h2>
-<p>“Imaginez organiser une fête avec des invités dispersés dans un parc. Vous voulez créer K groupes de discussion. Vous placez K animateurs au hasard (initialisation), chaque invité rejoint l’animateur le plus proche (assignation), puis les animateurs se déplacent au centre de leur groupe (mise à jour). On recommence jusqu’à ce que les animateurs ne bougent plus. C’est exactement k-means !”</p>
+<section id="application-pratique-apprentissage-profond" class="level4">
+<h4 class="anchored" data-anchor-id="application-pratique-apprentissage-profond">Application pratique : Apprentissage profond</h4>
+<p>Les réseaux de neurones avec des millions de paramètres généralisent souvent mieux que des modèles plus petits, en particulier lorsqu’ils sont combinés avec des techniques de régularisation appropriées.</p>
+<p><strong>Exemple :</strong> Les modèles de langage à grande échelle comme GPT-3, avec 175 milliards de paramètres, atteignent des performances remarquables en compréhension et génération de texte.</p>
+<hr>
 </section>
-<section id="questions-fréquentes-à-lexamen" class="level2">
-<h2 class="anchored" data-anchor-id="questions-fréquentes-à-lexamen">12. Questions Fréquentes à l’Examen</h2>
-<p><strong>Q : “Pourquoi k-means est-il sensible à l’initialisation ?”</strong> R : “Parce que le critère à minimiser a plusieurs minima locaux. Selon où on commence, on peut rester coincé dans un mauvais minimum.”</p>
-<p><strong>Q : “Comment choisir K si on n’a aucune idée ?”</strong> R : “Utilisez la méthode du coude pour voir où l’amélioration ralentit, et validez avec le score de silhouette. Testez plusieurs K et regardez ce qui a du sens pour vos données.”</p>
-<p><strong>Q : “Quand ne pas utiliser k-means ?”</strong> R : “Quand vos clusters ne sont pas sphériques, ou ont des tailles très différentes, ou quand vous avez beaucoup de bruit/outliers.”</p>
 </section>
-<section id="le-mot-de-la-fin" class="level2">
-<h2 class="anchored" data-anchor-id="le-mot-de-la-fin">13. Le Mot de la Fin</h2>
-<p>K-means est comme un couteau suisse du clustering : <strong>simple, rapide, utile dans beaucoup de situations</strong>. Mais comme tout outil simple, il faut connaître ses limites. L’essentiel est de toujours : 1. <strong>Préparer</strong> ses données (nettoyer, standardiser) 2. <strong>Choisir K intelligemment</strong> (méthode du coude, silhouette) 3. <strong>Initialiser proprement</strong> (k-means++) 4. <strong>Valider</strong> les résultats (visualisation, scores)</p>
-<p><strong>En résumé :</strong> K-means est votre premier outil pour explorer la structure de données non étiquetées. Pas le plus sophistiqué, mais souvent le plus pratique pour commencer.</p>
+</section>
+<section id="synthèse-et-perspectives" class="level2">
+<h2 class="anchored" data-anchor-id="synthèse-et-perspectives">Synthèse et Perspectives</h2>
+<section id="dialectique-entre-malédiction-et-bénédiction" class="level3">
+<h3 class="anchored" data-anchor-id="dialectique-entre-malédiction-et-bénédiction">Dialectique entre malédiction et bénédiction</h3>
+<p>Ces deux aspects ne sont pas contradictoires mais complémentaires. La clé réside dans la compréhension des conditions sous lesquelles chaque phénomène domine :</p>
+<ul>
+<li>La <strong>malédiction</strong> prédomine lorsque les données sont uniformément réparties et que les dimensions sont indépendantes</li>
+<li>La <strong>bénédiction</strong> émerge lorsque les données possèdent une structure sous-jacente (parcimonie, variétés de faible dimension) que l’on peut exploiter</li>
+</ul>
+<hr>
+</section>
+<section id="implications-pour-la-pratique-du-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="implications-pour-la-pratique-du-data-science">Implications pour la pratique du data science</h3>
+<section id="stratégies-pour-mitiger-la-malédiction" class="level4">
+<h4 class="anchored" data-anchor-id="stratégies-pour-mitiger-la-malédiction">Stratégies pour mitiger la malédiction</h4>
+<ul>
+<li><strong>Réduction de dimension</strong> (ACP, t-SNE, UMAP)</li>
+<li><strong>Régularisation</strong> (ridge, lasso) pour éviter le sur-apprentissage</li>
+<li><strong>Sélection de caractéristiques</strong> pour conserver seulement les dimensions pertinentes</li>
+<li><strong>Algorithmes spécifiques</strong> conçus pour la haute dimension (forêts d’isolement, one-class SVM)</li>
+</ul>
+</section>
+<section id="stratégies-pour-exploiter-la-bénédiction" class="level4">
+<h4 class="anchored" data-anchor-id="stratégies-pour-exploiter-la-bénédiction">Stratégies pour exploiter la bénédiction</h4>
+<ul>
+<li><strong>Projections aléatoires</strong> pour l’indexation et la compression</li>
+<li><strong>Méthodes à noyau</strong> pour la séparabilité linéaire</li>
+<li><strong>Agrégation de modèles</strong> pour la robustesse statistique</li>
+<li><strong>Apprentissage de représentations</strong> pour découvrir la structure sous-jacente</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="récapitulatif-des-fondements-théoriques" class="level3">
+<h3 class="anchored" data-anchor-id="récapitulatif-des-fondements-théoriques">Récapitulatif des fondements théoriques</h3>
+<p><strong>Pour la malédiction :</strong></p>
+<ul>
+<li>Croissance exponentielle du volume (sparsity)</li>
+<li>Théorème de concentration des distances (Beyer et al.)</li>
+<li>Concentration des normes gaussiennes (Loi des Grands Nombres)</li>
+<li>Inégalités de concentration (Hoeffding, Chebyshev)</li>
+</ul>
+<p><strong>Pour la bénédiction :</strong></p>
+<ul>
+<li>Loi des Grands Nombres et Théorème Central Limite</li>
+<li>Lemme de Johnson-Lindenstrauss (préservation des distances)</li>
+<li>Quasi-orthogonalité des vecteurs aléatoires</li>
+<li>Séparabilité linéaire en haute dimension</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>La haute dimension présente un paysage complexe où coexistent des défis redoutables et des opportunités précieuses. La <strong>sparsity</strong> et la <strong>concentration</strong>, bien que problématiques pour de nombreuses méthodes classiques, peuvent devenir des alliées lorsqu’elles sont comprises et exploitées judicieusement.</p>
+<p>Le data scientist moderne doit naviguer cette dualité en mobilisant à la fois une compréhension théorique profonde (théorèmes de concentration, lois des grands nombres, propriétés géométriques) et un arsenal de techniques pratiques (réduction de dimension, régularisation, méthodes adaptées).</p>
+<p>La leçon essentielle est que la dimension n’est pas une fatalité mais une caractéristique du problème dont il faut comprendre les implications pour transformer les obstacles en opportunités. Cette compréhension duale est cruciale pour concevoir des systèmes qui prospèrent dans les espaces de haute dimension qui caractérisent de plus en plus les données contemporaines.</p>
 
 
 </section>
