@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ds6s1 – ISS</title>
+<title>ds51 – ISS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,10 +72,36 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -287,7 +313,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds6.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds6s1.html">Intuition</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds51.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds51.html">Cours : Analyse Discriminante Linéaire (LDA)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -364,7 +390,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds51.html" class="sidebar-item-text sidebar-link">
+  <a href="./ds51.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Cours : Analyse Discriminante Linéaire (LDA)</span></a>
   </div>
 </li>
@@ -440,7 +466,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ds6s1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ds6s1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Intuition</span></a>
   </div>
 </li>
@@ -456,376 +482,235 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intuition" id="toc-intuition" class="nav-link active" data-scroll-target="#intuition">Intuition</a>
+  <li><a href="#cours-analyse-discriminante-linéaire-lda" id="toc-cours-analyse-discriminante-linéaire-lda" class="nav-link active" data-scroll-target="#cours-analyse-discriminante-linéaire-lda">Cours : Analyse Discriminante Linéaire (LDA)</a>
   <ul class="collapse">
-  <li><a href="#le-problème-fondamental-séparer-les-sources-mélangées" id="toc-le-problème-fondamental-séparer-les-sources-mélangées" class="nav-link" data-scroll-target="#le-problème-fondamental-séparer-les-sources-mélangées">1. Le Problème Fondamental : Séparer les Sources Mélangées</a></li>
-  <li><a href="#les-modèles-de-mélange-gaussien-la-mathématique-du-paysage" id="toc-les-modèles-de-mélange-gaussien-la-mathématique-du-paysage" class="nav-link" data-scroll-target="#les-modèles-de-mélange-gaussien-la-mathématique-du-paysage">2. Les Modèles de Mélange Gaussien : La Mathématique du “Paysage”</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#apprentissage-supervisé" id="toc-apprentissage-supervisé" class="nav-link" data-scroll-target="#apprentissage-supervisé">Apprentissage supervisé</a></li>
+  <li><a href="#analyse-discriminante-linéaire-lda" id="toc-analyse-discriminante-linéaire-lda" class="nav-link" data-scroll-target="#analyse-discriminante-linéaire-lda">Analyse Discriminante Linéaire (LDA)</a>
   <ul class="collapse">
-  <li><a href="#lidée-géométrique" id="toc-lidée-géométrique" class="nav-link" data-scroll-target="#lidée-géométrique">L’idée géométrique</a></li>
+  <li><a href="#direction-discriminante-cas-à-2-classes" id="toc-direction-discriminante-cas-à-2-classes" class="nav-link" data-scroll-target="#direction-discriminante-cas-à-2-classes">Direction discriminante (cas à 2 classes)</a></li>
+  <li><a href="#critère-inter-classe" id="toc-critère-inter-classe" class="nav-link" data-scroll-target="#critère-inter-classe">Critère inter-classe</a></li>
+  <li><a href="#critère-intra-classe" id="toc-critère-intra-classe" class="nav-link" data-scroll-target="#critère-intra-classe">Critère intra-classe</a></li>
+  <li><a href="#critère-de-fisher-combinaison-des-critères" id="toc-critère-de-fisher-combinaison-des-critères" class="nav-link" data-scroll-target="#critère-de-fisher-combinaison-des-critères">Critère de Fisher (combinaison des critères)</a></li>
+  <li><a href="#généralisation-à-plusieurs-classes" id="toc-généralisation-à-plusieurs-classes" class="nav-link" data-scroll-target="#généralisation-à-plusieurs-classes">Généralisation à plusieurs classes</a></li>
+  <li><a href="#sous-espaces-discriminants" id="toc-sous-espaces-discriminants" class="nav-link" data-scroll-target="#sous-espaces-discriminants">Sous-espaces discriminants</a></li>
+  <li><a href="#cas-particulier-m-2" id="toc-cas-particulier-m-2" class="nav-link" data-scroll-target="#cas-particulier-m-2">Cas particulier : <span class="math inline">\(M = 2\)</span></a></li>
   </ul></li>
-  <li><a href="#lalgorithme-em-la-danse-en-deux-temps" id="toc-lalgorithme-em-la-danse-en-deux-temps" class="nav-link" data-scroll-target="#lalgorithme-em-la-danse-en-deux-temps">3. L’Algorithme EM : La Danse en Deux Temps</a>
+  <li><a href="#exemples" id="toc-exemples" class="nav-link" data-scroll-target="#exemples">Exemples</a></li>
+  <li><a href="#inférence-et-modélisation-conditionnelle" id="toc-inférence-et-modélisation-conditionnelle" class="nav-link" data-scroll-target="#inférence-et-modélisation-conditionnelle">Inférence et modélisation conditionnelle</a>
   <ul class="collapse">
-  <li><a href="#le-principe-général" id="toc-le-principe-général" class="nav-link" data-scroll-target="#le-principe-général">Le Principe Général</a></li>
-  <li><a href="#étape-e-expectation-attribuer-les-points" id="toc-étape-e-expectation-attribuer-les-points" class="nav-link" data-scroll-target="#étape-e-expectation-attribuer-les-points">Étape E (Expectation) : “Attribuer les points”</a></li>
-  <li><a href="#étape-m-maximization-mettre-à-jour-les-paramètres" id="toc-étape-m-maximization-mettre-à-jour-les-paramètres" class="nav-link" data-scroll-target="#étape-m-maximization-mettre-à-jour-les-paramètres">Étape M (Maximization) : “Mettre à jour les paramètres”</a></li>
+  <li><a href="#modélisation-gaussienne" id="toc-modélisation-gaussienne" class="nav-link" data-scroll-target="#modélisation-gaussienne">Modélisation gaussienne</a></li>
+  <li><a href="#décision-de-classification" id="toc-décision-de-classification" class="nav-link" data-scroll-target="#décision-de-classification">Décision de classification</a></li>
   </ul></li>
-  <li><a href="#les-détails-pratiques-cruciaux" id="toc-les-détails-pratiques-cruciaux" class="nav-link" data-scroll-target="#les-détails-pratiques-cruciaux">4. Les Détails Pratiques Cruciaux</a>
-  <ul class="collapse">
-  <li><a href="#linitialisation-le-point-de-départ-est-capital" id="toc-linitialisation-le-point-de-départ-est-capital" class="nav-link" data-scroll-target="#linitialisation-le-point-de-départ-est-capital">L’Initialisation : Le Point de Départ est Capital</a></li>
-  <li><a href="#le-choix-de-k-combien-de-composantes" id="toc-le-choix-de-k-combien-de-composantes" class="nav-link" data-scroll-target="#le-choix-de-k-combien-de-composantes">Le Choix de K : Combien de Composantes ?</a></li>
-  <li><a href="#la-forme-des-matrices-de-covariance" id="toc-la-forme-des-matrices-de-covariance" class="nav-link" data-scroll-target="#la-forme-des-matrices-de-covariance">La Forme des Matrices de Covariance</a></li>
-  </ul></li>
-  <li><a href="#lem-en-action-exemple-complet" id="toc-lem-en-action-exemple-complet" class="nav-link" data-scroll-target="#lem-en-action-exemple-complet">5. L’EM en Action : Exemple Complet</a>
-  <ul class="collapse">
-  <li><a href="#scénario-segmentation-dimage" id="toc-scénario-segmentation-dimage" class="nav-link" data-scroll-target="#scénario-segmentation-dimage">Scénario : Segmentation d’Image</a></li>
-  <li><a href="#visualisation-de-la-convergence" id="toc-visualisation-de-la-convergence" class="nav-link" data-scroll-target="#visualisation-de-la-convergence">Visualisation de la Convergence</a></li>
-  </ul></li>
-  <li><a href="#em-vs-k-means-la-différence-profonde" id="toc-em-vs-k-means-la-différence-profonde" class="nav-link" data-scroll-target="#em-vs-k-means-la-différence-profonde">6. EM vs K-means : La Différence Profonde</a></li>
-  <li><a href="#pièges-à-éviter-et-bonnes-pratiques" id="toc-pièges-à-éviter-et-bonnes-pratiques" class="nav-link" data-scroll-target="#pièges-à-éviter-et-bonnes-pratiques">7. Pièges à Éviter et Bonnes Pratiques</a>
-  <ul class="collapse">
-  <li><a href="#piège-1-les-composantes-fantômes" id="toc-piège-1-les-composantes-fantômes" class="nav-link" data-scroll-target="#piège-1-les-composantes-fantômes">Piège 1 : Les “Composantes Fantômes”</a></li>
-  <li><a href="#piège-2-la-convergence-prématurée" id="toc-piège-2-la-convergence-prématurée" class="nav-link" data-scroll-target="#piège-2-la-convergence-prématurée">Piège 2 : La Convergence Prématurée</a></li>
-  <li><a href="#piège-3-linterprétation-abusive" id="toc-piège-3-linterprétation-abusive" class="nav-link" data-scroll-target="#piège-3-linterprétation-abusive">Piège 3 : L’Interprétation Abusive</a></li>
-  </ul></li>
-  <li><a href="#fiche-de-révision-synthétique" id="toc-fiche-de-révision-synthétique" class="nav-link" data-scroll-target="#fiche-de-révision-synthétique">8. Fiche de Révision Synthétique</a></li>
-  <li><a href="#pour-répondre-aux-questions-de-lexaminateur" id="toc-pour-répondre-aux-questions-de-lexaminateur" class="nav-link" data-scroll-target="#pour-répondre-aux-questions-de-lexaminateur">9. Pour Répondre aux Questions de l’Examinateur</a></li>
-  <li><a href="#en-résumé-la-philosophie-de-lem" id="toc-en-résumé-la-philosophie-de-lem" class="nav-link" data-scroll-target="#en-résumé-la-philosophie-de-lem">10. En Résumé : La Philosophie de l’EM</a></li>
+  <li><a href="#optimalité-et-limites" id="toc-optimalité-et-limites" class="nav-link" data-scroll-target="#optimalité-et-limites">Optimalité et limites</a></li>
+  <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé">Résumé</a></li>
+  <li><a href="#questions-dexemple" id="toc-questions-dexemple" class="nav-link" data-scroll-target="#questions-dexemple">Questions d’exemple</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds6s1.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds51.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds6.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds6s1.html">Intuition</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds51.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds51.html">Cours : Analyse Discriminante Linéaire (LDA)</a></li></ol></nav></header>
 
 
 
 
 
-<section id="intuition" class="level1">
-<h1>Intuition</h1>
-<section id="le-problème-fondamental-séparer-les-sources-mélangées" class="level2">
-<h2 class="anchored" data-anchor-id="le-problème-fondamental-séparer-les-sources-mélangées">1. Le Problème Fondamental : Séparer les Sources Mélangées</h2>
-<p><strong>Imaginez cette situation :</strong> Vous enregistrez le son d’une salle où plusieurs instruments jouent ensemble. Vous avez le mélange final, mais vous voulez isoler chaque instrument. Comment faire sans savoir quelle note appartient à quel instrument ?</p>
-<p>C’est <strong>exactement</strong> le problème que résout l’algorithme EM pour les modèles de mélange gaussien.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Mélange de sources&lt;br/&gt;instruments + bruits] --&gt; B{Problème}
-    B --&gt; C[Approche naïve :&lt;br/&gt;chercher à séparer directement]
-    B --&gt; D[Approche EM :&lt;br/&gt;alterner entre deux questions]
-    C --&gt; E[Échec - manque d'information]
-    D --&gt; F[Succès - estimation progressive]
-    
-    style E fill:#ffcccc
-    style F fill:#ccffcc
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Le cœur du problème :</strong> Avec les modèles de mélange, nous avons <strong>deux types d’inconnues</strong> qui dépendent l’une de l’autre : 1. <strong>Les paramètres</strong> de chaque composante (moyenne, variance) 2. <strong>L’origine</strong> de chaque point (quelle composante l’a généré)</p>
-<p>C’est un <strong>cercle vicieux</strong> : pour connaître l’un, il faut connaître l’autre.</p>
-</div>
-</div>
+<section id="cours-analyse-discriminante-linéaire-lda" class="level1">
+<h1>Cours : Analyse Discriminante Linéaire (LDA)</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Ce cours introduit l’<strong>Analyse Discriminante Linéaire (LDA)</strong>, une méthode supervisée de modélisation de données conditionnelles et de classification.<br>
+L’objectif est de présenter une définition supervisée des facteurs latents, de proposer une modélisation conditionnelle des données et de réaliser la classification d’éléments non étiquetés..</p>
+<hr>
 </section>
-<section id="les-modèles-de-mélange-gaussien-la-mathématique-du-paysage" class="level2">
-<h2 class="anchored" data-anchor-id="les-modèles-de-mélange-gaussien-la-mathématique-du-paysage">2. Les Modèles de Mélange Gaussien : La Mathématique du “Paysage”</h2>
-<section id="lidée-géométrique" class="level3">
-<h3 class="anchored" data-anchor-id="lidée-géométrique">L’idée géométrique</h3>
-<p>Imaginez que vos données forment un <strong>paysage de montagnes</strong>. Chaque montagne représente un groupe naturel dans vos données. Un modèle de mélange gaussien (GMM) représente ce paysage comme une <strong>superposition de collines gaussiennes</strong>.</p>
-<p><strong>Formule du GMM :</strong></p>
-<pre><code>f(x) = π₁·N(x|µ₁,Σ₁) + π₂·N(x|µ₂,Σ₂) + ... + πₖ·N(x|µₖ,Σₖ)</code></pre>
-<p><strong>Où :</strong> - <strong>πⱼ</strong> = “hauteur relative” de la colline j (poids du mélange) - <strong>N(x|µⱼ,Σⱼ)</strong> = forme de la colline (gaussienne centrée en µⱼ, forme Σⱼ)</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Pourquoi des gaussiennes ?</strong> 1. <strong>Théorème central limite</strong> : beaucoup de phénomènes naturels sont gaussiens 2. <strong>Universalité</strong> : un mélange de gaussiennes peut approximer n’importe quelle densité 3. <strong>Calculabilité</strong> : les formules sont mathématiquement maniables</p>
-</div>
-</div>
+<section id="apprentissage-supervisé" class="level2">
+<h2 class="anchored" data-anchor-id="apprentissage-supervisé">Apprentissage supervisé</h2>
+<p>Étant donné des données <span class="math inline">\(X \subset \Omega \subset \mathbb{R}^D\)</span> associées à des étiquettes de classe <span class="math inline">\(y = [M] \subset \mathbb{N}\)</span>, l’apprentissage supervisé consiste à trouver (apprendre) les paramètres <span class="math inline">\(\theta\)</span> d’un apprenant (fonction) <span class="math inline">\(\phi_\theta\)</span> de manière à minimiser la perte <span class="math inline">\(\mathcal{L}_{X \times y}(\theta)\)</span> encourue lors de la prédiction des étiquettes de classe à l’aide de <span class="math inline">\(\phi_\theta\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\phi_\theta : &amp; \quad \Omega \to y \\
+&amp; x_t \mapsto \phi_\theta(x_t) = \tilde{y}_t
+\end{aligned}
+\]</span></p>
+<p><strong>Exemples :</strong><br>
+- <span class="math inline">\(\phi_\theta\)</span> est une régression logistique avec paramètres <span class="math inline">\(\theta\)</span>.<br>
+- <span class="math inline">\(\phi_\theta\)</span> est un réseau de neurones avec poids <span class="math inline">\(\theta\)</span>.<br>
+- <span class="math inline">\(\mathcal{L}_{X \times y}(\theta) = \sum_x \|\phi_\theta(x_t) - y_t\|^2_{\text{some}}\)</span>.</p>
+<hr>
 </section>
+<section id="analyse-discriminante-linéaire-lda" class="level2">
+<h2 class="anchored" data-anchor-id="analyse-discriminante-linéaire-lda">Analyse Discriminante Linéaire (LDA)</h2>
+<p><strong>Problème :</strong> Étant donné des données multivariées <span class="math inline">\(X\)</span> associées à des étiquettes <span class="math inline">\(y\)</span>, nous cherchons un modèle pour ces données.</p>
+<hr>
+<section id="direction-discriminante-cas-à-2-classes" class="level3">
+<h3 class="anchored" data-anchor-id="direction-discriminante-cas-à-2-classes">Direction discriminante (cas à 2 classes)</h3>
+<p>Nous cherchons une direction <span class="math inline">\(a \in \mathbb{R}^D\)</span> telle que la projection des données sur cette direction <span class="math inline">\(\hat{X} = \text{Proj}_a(X)\)</span> présente des propriétés optimales pour la discrimination entre classes.</p>
+<hr>
 </section>
-<section id="lalgorithme-em-la-danse-en-deux-temps" class="level2">
-<h2 class="anchored" data-anchor-id="lalgorithme-em-la-danse-en-deux-temps">3. L’Algorithme EM : La Danse en Deux Temps</h2>
-<section id="le-principe-général" class="level3">
-<h3 class="anchored" data-anchor-id="le-principe-général">Le Principe Général</h3>
-<p>Plutôt que de chercher une solution parfaite d’un coup (impossible), l’EM procède par <strong>approximations successives</strong> en alternant deux questions :</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A[Initialisation] --&gt; B["E-step :&lt;br/&gt;Si les paramètres étaient connus,&lt;br/&gt;quelle serait l'origine la plus probable ?"]
-    B --&gt; C["M-step :&lt;br/&gt;Si les origines étaient connues,&lt;br/&gt;quels seraient les meilleurs paramètres ?"]
-    C --&gt; D{Convergence ?}
-    D --&gt;|Non, améliorer| B
-    D --&gt;|Oui, stop| E[Solution finale]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="critère-inter-classe" class="level3">
+<h3 class="anchored" data-anchor-id="critère-inter-classe">Critère inter-classe</h3>
+<p>Si les projections des classes sont bien séparées, elles peuvent être facilement discriminées.<br>
+Nous cherchons donc une direction <span class="math inline">\(a\)</span> qui maximise la discrimination inter-classe.</p>
+<p>Il est clair que <span class="math inline">\(a\)</span> doit être colinéaire à la droite <span class="math inline">\(\mu_1 - \mu_2\)</span> reliant les centres de masse des classes, car :</p>
+<p><span class="math display">\[
+\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \frac{1}{\|a\|^2} (a^T(\mu_1 - \mu_2))^2
+\]</span></p>
+<p>est maximale lorsque <span class="math inline">\(a = \lambda(\mu_1 - \mu_2)\)</span>.</p>
+<p><strong>Note :</strong> Les données originales (<span class="math inline">\(x_i \in X\)</span>) ne changent pas. Seules les données projetées (<span class="math inline">\(\hat{x}_i \in \hat{X}\)</span>) changent lorsque l’on fait varier <span class="math inline">\(a\)</span>.<br>
+Le centre de masse des données projetées est la projection du centre de masse des données originales.</p>
+<hr>
 </section>
-<section id="étape-e-expectation-attribuer-les-points" class="level3">
-<h3 class="anchored" data-anchor-id="étape-e-expectation-attribuer-les-points">Étape E (Expectation) : “Attribuer les points”</h3>
-<p><strong>Question :</strong> Étant donné les paramètres actuels, quelle est la probabilité que chaque point vienne de chaque composante ?</p>
-<p><strong>Calcul des “responsabilités” :</strong></p>
-<pre><code>γᵢⱼ = P(point i vient de la composante j | paramètres actuels)
-      = [πⱼ·N(xᵢ|µⱼ,Σⱼ)] / [∑ₖ πₖ·N(xᵢ|µₖ,Σₖ)]</code></pre>
-<p><strong>Interprétation :</strong> C’est une <strong>attribution douce</strong> (soft assignment). Contrairement au K-means qui dit “ce point est à 100% dans ce cluster”, l’EM dit “ce point est à 60% dans le cluster A, 30% dans B, 10% dans C”.</p>
+<section id="critère-intra-classe" class="level3">
+<h3 class="anchored" data-anchor-id="critère-intra-classe">Critère intra-classe</h3>
+<p>Nous cherchons également à minimiser la variance intra-classe des données projetées.<br>
+Le critère de Fisher maximise :</p>
+<p><span class="math display">\[
+\underset{a}{\operatorname{argmax}} \frac{\|\hat{\mu}_1 - \hat{\mu}_2\|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}
+\]</span></p>
+<p>où <span class="math inline">\(\hat{\sigma}_k\)</span> est la variance normalisée de la projection de la classe <span class="math inline">\(k\)</span> :</p>
+<p><span class="math display">\[
+\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{y_k = k} (\hat{x}_k - \hat{\mu}_k)^T (\hat{x}_k - \hat{\mu}_k)
+\]</span></p>
+<hr>
 </section>
-<section id="étape-m-maximization-mettre-à-jour-les-paramètres" class="level3">
-<h3 class="anchored" data-anchor-id="étape-m-maximization-mettre-à-jour-les-paramètres">Étape M (Maximization) : “Mettre à jour les paramètres”</h3>
-<p><strong>Question :</strong> Étant donné ces probabilités d’appartenance, quelles sont les meilleures estimations des paramètres ?</p>
-<p><strong>Formules de mise à jour :</strong></p>
-<pre><code>µⱼ = [∑ᵢ γᵢⱼ·xᵢ] / [∑ᵢ γᵢⱼ]           (moyenne pondérée)
-Σⱼ = [∑ᵢ γᵢⱼ·(xᵢ-µⱼ)(xᵢ-µⱼ)ᵀ] / [∑ᵢ γᵢⱼ]  (covariance pondérée)
-πⱼ = [∑ᵢ γᵢⱼ] / N                  (proportion de la composante)</code></pre>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Pourquoi ça marche ?</strong> Chaque étape améliore la <strong>vraisemblance</strong> des données (probabilité d’observer ces données avec le modèle courant). C’est un algorithme <strong>“hill-climbing”</strong> : à chaque itération, on monte la colline de vraisemblance.</p>
-</div>
-</div>
+<section id="critère-de-fisher-combinaison-des-critères" class="level3">
+<h3 class="anchored" data-anchor-id="critère-de-fisher-combinaison-des-critères">Critère de Fisher (combinaison des critères)</h3>
+<p>Le critère de Fisher combine les critères inter et intra-classe :</p>
+<p><span class="math display">\[
+\arg\max_a \mathcal{L}(a) = \arg\max_a \frac{a^\top \Sigma_b a}{a^\top \Sigma_w a}
+\]</span></p>
+<p>où <span class="math inline">\(\Sigma_b\)</span> est la matrice de covariance inter-classes et <span class="math inline">\(\Sigma_w\)</span> la matrice de covariance intra-classes.</p>
+<p>La solution est obtenue en annulant la dérivée :</p>
+<p><span class="math display">\[
+\frac{\partial \mathcal{L}(a)}{\partial a} = \frac{\Sigma_b a(a^\top \Sigma_w a) - \Sigma_w a(a^\top \Sigma_b a)}{(a^\top \Sigma_w a)^2} = 0
+\]</span></p>
+<p>Ce qui conduit au système généralisé de valeurs propres :</p>
+<p><span class="math display">\[
+\Sigma_b a = \mathcal{L}(a) \Sigma_w a
+\]</span></p>
+<p>Ainsi, <span class="math inline">\(a\)</span> est le premier vecteur propre de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (avec valeur propre <span class="math inline">\(\lambda_1 = \mathcal{L}(a)\)</span>).</p>
+<hr>
 </section>
-</section>
-<section id="les-détails-pratiques-cruciaux" class="level2">
-<h2 class="anchored" data-anchor-id="les-détails-pratiques-cruciaux">4. Les Détails Pratiques Cruciaux</h2>
-<section id="linitialisation-le-point-de-départ-est-capital" class="level3">
-<h3 class="anchored" data-anchor-id="linitialisation-le-point-de-départ-est-capital">L’Initialisation : Le Point de Départ est Capital</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Choix d'initialisation] --&gt; B{Méthode}
-    B --&gt; C[Aléatoire simple]
-    B --&gt; D[K-means]
-    B --&gt; E[K-means++]
-    
-    C --&gt; F[Risque : convergence lente&lt;br/&gt;ou maximum local]
-    D --&gt; G[Amélioration : point de départ&lt;br/&gt;plus intelligent]
-    E --&gt; H[Meilleur : éloigne les centres&lt;br/&gt;initiaux]
-    
-    style F fill:#ffcccc
-    style G fill:#ffffcc
-    style H fill:#ccffcc
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Pourquoi c’est important ?</strong> L’EM peut converger vers des <strong>maxima locaux</strong> (petits sommets) au lieu du maximum global (plus haut sommet).</p>
-</section>
-<section id="le-choix-de-k-combien-de-composantes" class="level3">
-<h3 class="anchored" data-anchor-id="le-choix-de-k-combien-de-composantes">Le Choix de K : Combien de Composantes ?</h3>
-<p><strong>Le dilemme classique :</strong> - <strong>K trop petit</strong> = sous-ajustement = modèle trop simple - <strong>K trop grand</strong> = sur-ajustement = modèle trop complexe</p>
-<p><strong>Solution : Le critère BIC (Bayesian Information Criterion)</strong></p>
-<pre><code>BIC = -2·log(vraisemblance) + n_paramètres·log(n_points)</code></pre>
-<p><strong>On choisit le K qui minimise le BIC</strong> (équilibre entre qualité d’ajustement et complexité).</p>
-</section>
-<section id="la-forme-des-matrices-de-covariance" class="level3">
-<h3 class="anchored" data-anchor-id="la-forme-des-matrices-de-covariance">La Forme des Matrices de Covariance</h3>
-<p><strong>Trois options principales :</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 15%">
-<col style="width: 42%">
-<col style="width: 28%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Forme</th>
-<th>Nombre paramètres</th>
-<th>Utilisation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Sphérique</strong></td>
-<td>Σ = σ²I</td>
-<td>1 par composante</td>
-<td>Données isotropes, clusters sphériques</td>
-</tr>
-<tr class="even">
-<td><strong>Diagonale</strong></td>
-<td>Σ = diag(σ₁²,…,σ_D²)</td>
-<td>D par composante</td>
-<td>Axes alignés avec les axes principaux</td>
-</tr>
-<tr class="odd">
-<td><strong>Complète</strong></td>
-<td>Σ complète</td>
-<td>D(D+1)/2 par composante</td>
-<td>Clusters de forme ellipsoïdale libre</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Attention à la sur-paramétrisation !</strong> Avec D=256 dimensions et K=10 composantes, une covariance complète nécessite ≈ 330,000 paramètres ! Souvent, on réduit d’abord la dimension avec PCA.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="lem-en-action-exemple-complet" class="level2">
-<h2 class="anchored" data-anchor-id="lem-en-action-exemple-complet">5. L’EM en Action : Exemple Complet</h2>
-<section id="scénario-segmentation-dimage" class="level3">
-<h3 class="anchored" data-anchor-id="scénario-segmentation-dimage">Scénario : Segmentation d’Image</h3>
-<ol type="1">
-<li><strong>Données</strong> : Pixels d’une image (3 dimensions : R, V, B)</li>
-<li><strong>Objectif</strong> : Séparer l’image en régions homogènes (ciel, terre, végétation…)</li>
-<li><strong>Procédure EM</strong> :
+<section id="généralisation-à-plusieurs-classes" class="level3">
+<h3 class="anchored" data-anchor-id="généralisation-à-plusieurs-classes">Généralisation à plusieurs classes</h3>
+<p>Pour <span class="math inline">\(M\)</span> classes, on définit :</p>
 <ul>
-<li>Initialisation : K=3 (hypothèse de 3 régions principales)</li>
-<li>Étape E : Pour chaque pixel, calculer sa probabilité d’appartenir à chaque région</li>
-<li>Étape M : Recalculer les couleurs moyennes et variances de chaque région</li>
-<li>Répéter jusqu’à convergence (≈ 10-20 itérations)</li>
-</ul></li>
-<li><strong>Résultat</strong> : Carte de segmentation probabiliste</li>
-</ol>
+<li>La matrice des centres centrés : <span class="math inline">\(B = [\mu_1 - \mu, \ldots, \mu_M - \mu]\)</span> (où <span class="math inline">\(\mu = \frac{1}{N} \sum_N x_i\)</span> et <span class="math inline">\(N = \sum_k N_k\)</span>).<br>
+</li>
+<li>La matrice de covariance inter-classes : <span class="math inline">\(\Sigma_b = \frac{1}{M} BB^T\)</span>.<br>
+</li>
+<li>On maximise sur <span class="math inline">\(a \in \mathbb{R}^D\)</span> :</li>
+</ul>
+<p><span class="math display">\[
+\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{\|a\|^2} a^T \Sigma_b a
+\]</span></p>
+<hr>
 </section>
-<section id="visualisation-de-la-convergence" class="level3">
-<h3 class="anchored" data-anchor-id="visualisation-de-la-convergence">Visualisation de la Convergence</h3>
-<pre><code>Itération 0 : vraisemblance = -15230.4
-Itération 1 : vraisemblance = -12456.2  (+ amélioration)
-Itération 2 : vraisemblance = -11234.5  (+ amélioration)
-...
-Itération 15 : vraisemblance = -9823.1   (convergence)
-Itération 16 : vraisemblance = -9823.0   (très faible amélioration → stop)</code></pre>
+<section id="sous-espaces-discriminants" class="level3">
+<h3 class="anchored" data-anchor-id="sous-espaces-discriminants">Sous-espaces discriminants</h3>
+<p>Les vecteurs propres correspondant aux plus grandes valeurs propres <span class="math inline">\(\lambda_i\)</span> sont les dimensions les plus discriminantes :<br>
+<span class="math inline">\(a_1, a_2, \ldots a_p\)</span> avec <span class="math inline">\(\lambda_1 &gt; \lambda_2 &gt; \ldots &gt; \lambda_p\)</span>.</p>
+<p>Pour <span class="math inline">\(M\)</span> classes, on peut discriminer dans un sous-espace de dimension au plus <span class="math inline">\(M-1\)</span> (projections itératives).<br>
+Il n’y a donc que <span class="math inline">\(M-1\)</span> valeurs propres non nulles.</p>
+<hr>
 </section>
-</section>
-<section id="em-vs-k-means-la-différence-profonde" class="level2">
-<h2 class="anchored" data-anchor-id="em-vs-k-means-la-différence-profonde">6. EM vs K-means : La Différence Profonde</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Clustering] --&gt; B{K-means}
-    A --&gt; C{GMM avec EM}
-    
-    B --&gt; D[Modèle géométrique&lt;br/&gt;Distance euclidienne]
-    B --&gt; E[Assignation dure&lt;br/&gt;0 ou 1]
-    B --&gt; F[Formes sphériques&lt;br/&gt;contraintes]
-    
-    C --&gt; G[Modèle probabiliste&lt;br/&gt;Densité de probabilité]
-    C --&gt; H[Assignation douce&lt;br/&gt;probabilités]
-    C --&gt; I[Formes flexibles&lt;br/&gt;ellipsoïdales]
-    
-    D --&gt; J[Avantage : simple, rapide]
-    E --&gt; J
-    F --&gt; J
-    
-    G --&gt; K[Avantage : riche, robuste]
-    H --&gt; K
-    I --&gt; K
-    
-    style J fill:#e6f3ff
-    style K fill:#e6ffe6
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Point clé :</strong> K-means est <strong>un cas particulier</strong> de l’EM ! Quand les covariances sont sphériques et qu’on force les probabilités à 0 ou 1, on retrouve K-means.</p>
-</section>
-<section id="pièges-à-éviter-et-bonnes-pratiques" class="level2">
-<h2 class="anchored" data-anchor-id="pièges-à-éviter-et-bonnes-pratiques">7. Pièges à Éviter et Bonnes Pratiques</h2>
-<section id="piège-1-les-composantes-fantômes" class="level3">
-<h3 class="anchored" data-anchor-id="piège-1-les-composantes-fantômes">Piège 1 : Les “Composantes Fantômes”</h3>
-<p><strong>Problème :</strong> L’EM peut créer des composantes avec très peu de points (πⱼ ≈ 0) qui capturent du bruit. <strong>Solution :</strong> Regarder les poids πⱼ après convergence, fusionner ou éliminer les composantes trop petites.</p>
-</section>
-<section id="piège-2-la-convergence-prématurée" class="level3">
-<h3 class="anchored" data-anchor-id="piège-2-la-convergence-prématurée">Piège 2 : La Convergence Prématurée</h3>
-<p><strong>Problème :</strong> L’algorithme semble converger mais reste dans un maximum local médiocre. <strong>Solution :</strong> Multiples essais avec initialisations différentes, monitoring de la vraisemblance.</p>
-</section>
-<section id="piège-3-linterprétation-abusive" class="level3">
-<h3 class="anchored" data-anchor-id="piège-3-linterprétation-abusive">Piège 3 : L’Interprétation Abusive</h3>
-<p><strong>Problème :</strong> Penser que les composantes trouvées correspondent forcément à des “classes réelles”. <strong>Solution :</strong> L’EM trouve des <strong>groupes statistiques</strong>, pas nécessairement des catégories sémantiques. Valider avec des connaissances du domaine.</p>
+<section id="cas-particulier-m-2" class="level3">
+<h3 class="anchored" data-anchor-id="cas-particulier-m-2">Cas particulier : <span class="math inline">\(M = 2\)</span></h3>
+<p>Dans ce cas :</p>
+<p><span class="math display">\[
+BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T
+\]</span></p>
+<p>Ainsi, <span class="math inline">\(BB^T a\)</span> est un vecteur dans la direction <span class="math inline">\((\mu_1 - \mu_2)\)</span>, et :</p>
+<p><span class="math display">\[
+a = \lambda \Sigma_w^{-1}(\mu_1 - \mu_2)
+\]</span></p>
+<hr>
 </section>
 </section>
-<section id="fiche-de-révision-synthétique" class="level2">
-<h2 class="anchored" data-anchor-id="fiche-de-révision-synthétique">8. Fiche de Révision Synthétique</h2>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>À retenir absolument pour l’oral :</strong></p>
+<section id="exemples" class="level2">
+<h2 class="anchored" data-anchor-id="exemples">Exemples</h2>
+<p>LDA trouve le sous-espace optimal pour séparer linéairement les données selon les étiquettes <span class="math inline">\(y_i\)</span>.</p>
+<p><strong>Exemple concret :</strong> 7291 images <span class="math inline">\(16 \times 16\)</span> (8 bits) de chiffres de 0 à 9, soit <span class="math inline">\(x_i \in \mathbb{R}^{256}\)</span> et <span class="math inline">\(y_i \in [10]\)</span>.</p>
+<hr>
+</section>
+<section id="inférence-et-modélisation-conditionnelle" class="level2">
+<h2 class="anchored" data-anchor-id="inférence-et-modélisation-conditionnelle">Inférence et modélisation conditionnelle</h2>
+<section id="modélisation-gaussienne" class="level3">
+<h3 class="anchored" data-anchor-id="modélisation-gaussienne">Modélisation gaussienne</h3>
+<p>Chaque classe est modélisée par <span class="math inline">\(P(x|C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)\)</span>.<br>
+On suppose un prior uniforme : <span class="math inline">\(P(C = k) = 1/M\)</span>.<br>
+L’évidence <span class="math inline">\(P(x_j)\)</span> est ignorée (car constante pour tous les <span class="math inline">\(k\)</span>).<br>
+On utilise alors le maximum de vraisemblance :</p>
+<p><span class="math display">\[
+P(x|C = k) \simeq \exp\left( -(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k) \right)
+\]</span></p>
+<hr>
+</section>
+<section id="décision-de-classification" class="level3">
+<h3 class="anchored" data-anchor-id="décision-de-classification">Décision de classification</h3>
+<p>La règle de décision est :</p>
+<p><span class="math display">\[
+\delta(x) = \arg\max_k P(x|C = k)
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="optimalité-et-limites" class="level2">
+<h2 class="anchored" data-anchor-id="optimalité-et-limites">Optimalité et limites</h2>
+<ul>
+<li>LDA est optimal lorsque les <span class="math inline">\(M\)</span> classes sont chacune distribuées selon une loi gaussienne (critère de discrimination basé sur <span class="math inline">\(\Sigma_w\)</span> et <span class="math inline">\(\Sigma_b\)</span>).<br>
+</li>
+<li>LDA ne prend pas en compte les relations non linéaires entre variables (discrimination linéaire).<br>
+</li>
+<li>Pour des problèmes non linéaires, il faut utiliser des méthodes de classification non linéaires.</li>
+</ul>
+<hr>
+</section>
+<section id="résumé" class="level2">
+<h2 class="anchored" data-anchor-id="résumé">Résumé</h2>
+<ul>
+<li>LDA est une technique supervisée.<br>
+</li>
+<li>LDA trouve les facteurs latents linéaires optimaux expliquant la discrimination (linéaire).<br>
+</li>
+<li>Le critère de Fisher combine la dispersion intra-classe et inter-classes.<br>
+</li>
+<li>LDA est résolu en trouvant les valeurs propres de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span>.<br>
+</li>
+<li>Ces facteurs latents peuvent être utilisés pour la visualisation (en tenant compte des étiquettes).<br>
+</li>
+<li>LDA (comme classification) est un exemple de modélisation conditionnelle : chaque classe suit une loi normale.</li>
+</ul>
+<hr>
+</section>
+<section id="questions-dexemple" class="level2">
+<h2 class="anchored" data-anchor-id="questions-dexemple">Questions d’exemple</h2>
 <ol type="1">
-<li><strong>EM</strong> = algorithme pour modèles avec variables latentes</li>
-<li><strong>Deux étapes alternées</strong> : E (responsabilités) → M (paramètres)</li>
-<li><strong>GMM</strong> = mélange de gaussiennes, modélise densité des données</li>
-<li><strong>Initialisation cruciale</strong> → utiliser K-means ou K-means++</li>
-<li><strong>Choix de K</strong> avec BIC ou validation croisée</li>
-<li><strong>Forme covariance</strong> : commencer simple (sphérique), complexifier si besoin</li>
-<li><strong>Avantage principal</strong> : modèle probabiliste avec assignations douces</li>
-<li><strong>Parenté</strong> : généralise K-means (cas particulier)</li>
-<li><strong>Applications</strong> : segmentation, séparation de sources, clustering avancé</li>
-<li><strong>Vérification</strong> : toujours visualiser et valider les résultats</li>
+<li>Expliquer dans le cadre de l’apprentissage supervisé : pourquoi LDA est une méthode linéaire ?<br>
+</li>
+<li>Qu’est-ce qui caractérise une direction discriminante ? Que représente <span class="math inline">\(a\)</span> ?<br>
+</li>
+<li>Quel est le critère de Fisher ?<br>
+</li>
+<li>Qu’est-ce que le critère inter-classes ? Expliquer son principe.<br>
+</li>
+<li>Comment calculer la matrice de covariance inter-classes ?<br>
+</li>
+<li>Qu’est-ce que le critère intra-classes ? Expliquer son principe.<br>
+</li>
+<li>Comment calculer la matrice de covariance intra-classes ?<br>
+</li>
+<li>Comment ces deux critères sont-ils combinés ?<br>
+</li>
+<li>Pouvez-vous justifier et expliquer la dérivation du maximum pour <span class="math inline">\(a\)</span> ?<br>
+</li>
+<li>Décrire la situation multidimensionnelle (<span class="math inline">\(D &gt; 2\)</span>).<br>
+</li>
+<li>Comment faire de l’inférence avec LDA ?<br>
+</li>
+<li>Donner un exemple de modèle conditionnel de données utilisant LDA.</li>
 </ol>
-</div>
-</div>
-</section>
-<section id="pour-répondre-aux-questions-de-lexaminateur" class="level2">
-<h2 class="anchored" data-anchor-id="pour-répondre-aux-questions-de-lexaminateur">9. Pour Répondre aux Questions de l’Examinateur</h2>
-<p><strong>Q : “Pourquoi l’EM converge-t-il toujours ?”</strong> R : “L’EM garantit que la vraisemblance ne diminue jamais (monotonie). Il converge vers un maximum local, mais pas nécessairement global.”</p>
-<p><strong>Q : “Comment choisir entre EM et K-means ?”</strong> R : “K-means si on veut un clustering simple et rapide avec des clusters sphériques. EM si on veut un modèle probabiliste, des formes flexibles, ou gérer l’incertitude.”</p>
-<p><strong>Q : “Que faire si l’EM donne des résultats différents à chaque lancement ?”</strong> R : “C’est normal ! L’EM dépend de l’initialisation. Il faut le lancer plusieurs fois et garder la solution avec la plus haute vraisemblance, ou utiliser une initialisation intelligente (K-means++).”</p>
-</section>
-<section id="en-résumé-la-philosophie-de-lem" class="level2">
-<h2 class="anchored" data-anchor-id="en-résumé-la-philosophie-de-lem">10. En Résumé : La Philosophie de l’EM</h2>
-<p>L’algorithme EM nous enseigne une leçon profonde : <strong>face à l’incomplétude, l’itération et l’alternance sont puissantes</strong>. Au lieu de chercher la solution parfaite d’un coup (mission impossible), on fait des allers-retours entre estimation des causes et estimation des effets, chaque étape s’appuyant sur la précédente.</p>
-<p><strong>Pour finir :</strong> L’EM ne prétend pas trouver la Vérité, mais la <strong>meilleure explication probabiliste</strong> étant donné les observations et le modèle choisi. C’est un outil d’humilité mathématique qui reconnaît et gère l’incertitude.</p>
 
 
 </section>
