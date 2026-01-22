@@ -710,6 +710,28 @@ p_i = \mathbf{u}^\top \mathbf{x}_i
 <p><span class="math display">\[
 \mathcal{L}(\mathbf{u}, \lambda) = \mathbf{u}^\top \Sigma \mathbf{u} - \lambda(\mathbf{u}^\top \mathbf{u} - 1)
 \]</span></p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>Explication concise du rôle de <span class="math inline">\(\lambda\)</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Dans la PCA, on maximise <span class="math inline">\(\mathbf{u}^T\Sigma\mathbf{u}\)</span> sous la contrainte <span class="math inline">\(\mathbf{u}^T\mathbf{u} = 1\)</span>.</p>
+<p>Le <span class="math inline">\(\lambda\)</span> apparaît naturellement lorsqu’on utilise la <strong>méthode des multiplicateurs de Lagrange</strong> pour résoudre ce problème d’optimisation contrainte.</p>
+<p>La fonction de Lagrange s’écrit : <span class="math display">\[
+\mathcal{L}(\mathbf{u}, \lambda) = \mathbf{u}^T\Sigma\mathbf{u} - \lambda(\mathbf{u}^T\mathbf{u} - 1)
+\]</span></p>
+<p>Le terme <span class="math inline">\(-\lambda(\mathbf{u}^T\mathbf{u} - 1)\)</span> permet d’<strong>incorporer la contrainte directement dans la fonction objectif</strong>. Le multiplicateur <span class="math inline">\(\lambda\)</span> sert de <strong>paramètre de pénalité</strong> qui garantit que la solution respecte la contrainte de norme unitaire.</p>
+<p>Ainsi, <span class="math inline">\(\lambda\)</span> est essentiellement un <strong>artifice mathématique</strong> qui nous permet de transformer un problème d’optimisation avec contrainte en un problème sans contrainte équivalent.</p>
+</div>
+</div>
+</div>
 <p>Condition d’optimalité :</p>
 <p><span class="math display">\[
 \frac{\partial \mathcal{L}}{\partial \mathbf{u}} = 2\Sigma \mathbf{u} - 2\lambda \mathbf{u} = 0
@@ -736,7 +758,11 @@ p_i = \mathbf{u}^\top \mathbf{x}_i
 <p><span class="math display">\[
 \lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_D \geq 0
 \]</span></p>
-<p>Ainsi : * <span class="math inline">\(\mathbf{u}_1\)</span> : direction de variance maximale * <span class="math inline">\(\mathbf{u}_2\)</span> : direction orthogonale de variance maximale restante</p>
+<p>Ainsi :</p>
+<ul>
+<li><span class="math inline">\(\mathbf{u}_1\)</span> : direction de variance maximale</li>
+<li><span class="math inline">\(\mathbf{u}_2\)</span> : direction orthogonale de variance maximale restante</li>
+</ul>
 </section>
 </section>
 <section id="étape-4-sélection-des-composantes" class="level3">
