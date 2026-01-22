@@ -110,7 +110,7 @@ Cette convergence, garantie par la **Loi des Grands Nombres**, explique pourquoi
 
 **Inégalité de Hoeffding :** Pour des variables aléatoires indépendantes $X_1, \ldots, X_D$ telles que $a \leq X_i \leq b$ presque sûrement, et pour tout $\epsilon > 0$ :
 
-$$ P(|\bar{X} - \mathbb{E}[\bar{X}]| > \epsilon) \leq 2\exp\left(-\frac{2D\epsilon^2}{(b-a)^2}\right) $$
+$$ P(|\bar{X} - \mathbb{E}[X]| > \epsilon) \leq 2\exp\left(-\frac{2D\epsilon^2}{(b-a)^2}\right) $$
 
 où $\bar{X} = \frac{1}{D}\sum_{i=1}^D X_i$.
 
@@ -154,6 +154,266 @@ $$ \sqrt{D}(\bar{X}_D - \mu) \xrightarrow[d]{} N(0, \Sigma) \quad \text{quand } 
 
 Ce théorème fournit non seulement la convergence, mais aussi la distribution limite, permettant de construire des intervalles de confiance.
 
+::: {.callout collapse="true"}
+# Pourquoi $\sqrt D$ ?
+
+## 1. Mise en place (notations claires)
+
+On considère des vecteurs aléatoires
+$$
+X_1, \dots, X_D \in \mathbb{R}^p
+$$
+
+Ils sont :
+
+* i.i.d.
+* d’espérance
+$$
+\mathbb{E}[X_i] = \mu
+$$
+
+* de matrice de covariance
+$$
+\text{Cov}(X_i) = \Sigma
+$$
+
+---
+
+## Moyenne empirique
+
+La moyenne empirique est définie par
+$$
+\bar X_D = \frac{1}{D} \sum_{i=1}^D X_i
+$$
+
+---
+
+## 2. Calcul détaillé de l’espérance
+
+Par linéarité de l’espérance,
+$$
+\mathbb{E}[\bar X_D]
+= \frac{1}{D} \sum_{i=1}^D \mathbb{E}[X_i]
+= \frac{1}{D} \cdot D \mu
+= \mu
+$$
+
+➡️ **Pas de surprise**.
+
+---
+
+## 3. Calcul détaillé de la covariance de $\bar X_D$
+
+### Définition de la covariance matricielle
+
+Pour un vecteur aléatoire $Y \in \mathbb{R}^p$,
+$$
+\text{Cov}(Y)
+= \mathbb{E}\left[(Y - \mathbb{E}[Y])(Y - \mathbb{E}[Y])^\top\right]
+$$
+
+---
+
+### Étape 1 : écrire $\bar X_D - \mu$
+
+$$
+\bar X_D - \mu
+= \frac{1}{D} \sum_{i=1}^D (X_i - \mu)
+$$
+
+---
+
+### Étape 2 : développer la covariance
+
+$$
+\text{Cov}(\bar{X_D})
+=
+\mathbb{E}\left[
+\left(
+\frac{1}{D} \sum_{i=1}^D (X_i - \mu)
+\right)
+\left(
+\frac{1}{D} \sum_{j=1}^D (X_j - \mu)
+\right)^\top
+\right]
+$$
+
+On factorise :
+
+$$
+\text{Cov}(\bar{X_D})
+=
+\frac{1}{D^2}
+\sum_{i=1}^D \sum_{j=1}^D
+\mathbb{E}\left[(X_i - \mu)(X_j - \mu)^\top\right]
+$$
+
+---
+
+### Étape 3 : utiliser l’indépendance
+
+* si $i = j$ :
+  $$
+  \mathbb{E}\left[(X_i - \mu)(X_i - \mu)^\top\right] = \Sigma
+  $$
+
+* si $i \neq j$ :
+  $$
+  \mathbb{E}\left[(X_i - \mu)(X_j - \mu)^\top\right] = 0
+  $$
+  (car indépendance)
+
+---
+
+### Étape 4 : compter les termes
+
+Il y a :
+
+* $D$ termes diagonaux
+* $D(D-1)$ termes nuls
+
+Donc :
+$$
+\text{Cov}(\bar X_D)
+=
+\frac{1}{D^2} \cdot D \Sigma
+=
+\frac{1}{D}\Sigma
+$$
+
+---
+
+## 4. Conséquence cruciale
+
+$$
+\boxed{
+\text{Cov}(\bar X_D) = \frac{1}{D}\Sigma
+}
+$$
+
+Les fluctuations de $\bar X_D$ sont donc de taille
+$$
+\sqrt{\frac{1}{D}} = \frac{1}{\sqrt{D}}
+$$
+
+---
+
+## 5. Pourquoi on multiplie par $\sqrt{D}$
+
+On considère
+$$
+\sqrt{D}(\bar X_D - \mu)
+$$
+
+Alors :
+$$
+\text{Cov}!\left(\sqrt{D}(\bar X_D - \mu)\right)
+= D \cdot \text{Cov}(\bar X_D)
+= D \cdot \frac{1}{D}\Sigma
+= \Sigma
+$$
+
+➡️ **Covariance non dégénérée**, stable quand $D \to \infty$.
+
+Sans ce facteur,
+$$
+\bar X_D - \mu \to 0
+$$
+trivialement.
+
+---
+
+## 6. Pourquoi pas $D$, ni $D^{1/3}$, ni autre chose
+
+* multiplier par $D$ → la covariance explose
+* multiplier par $D^\alpha$, $\alpha < \tfrac12$ → covariance $\to 0$
+* multiplier par $D^\alpha$, $\alpha > \tfrac12$ → covariance $\to \infty$
+
+👉 **$\sqrt{D}$ est l’unique échelle correcte**.
+
+---
+
+## 7. Formulation alternative du TCL (espérance & covariance)
+
+### Version générale
+
+Soit
+$$
+S_D = \sum_{i=1}^D X_i
+$$
+
+Alors :
+$$
+\mathbb{E}[S_D] = D\mu,
+\qquad
+\text{Cov}(S_D) = D\Sigma
+$$
+
+Le TCL s’écrit :
+$$
+\boxed{
+\text{Cov}(S_D)^{-1/2}
+\big(S_D - \mathbb{E}[S_D]\big)
+\xrightarrow{d}
+\mathcal N(0, I_p)
+}
+$$
+
+---
+
+### Version pour la moyenne
+
+Comme
+$$
+\bar X_D = \frac{1}{D} S_D
+$$
+
+on obtient :
+$$
+\boxed{
+\text{Cov}(\bar X_D)^{-1/2}
+\big(\bar X_D - \mathbb{E}[\bar X_D]\big)
+\xrightarrow{d}
+\mathcal N(0, I_p)
+}
+$$
+
+avec
+$$
+\text{Cov}(\bar X_D) = \frac{1}{D}\Sigma
+$$
+
+---
+
+## 8. Interprétation profonde
+
+Le TCL affirme que :
+
+> Après recentrage par l’espérance et renormalisation par la racine de la
+> covariance, la somme (ou la moyenne) d’observations indépendantes devient
+> asymptotiquement gaussienne.
+
+---
+
+## 9. Résumé ultra-clair
+
+1. La moyenne a une variance $1/D$
+2. Les fluctuations sont d’ordre $1/\sqrt{D}$
+3. $\sqrt{D}$ remet les fluctuations à l’échelle
+4. Le TCL décrit leur loi limite
+5. Cette échelle est **unique**
+
+---
+
+## Phrase finale à savoir expliquer
+
+> Le facteur $\sqrt{D}$ apparaît parce que la covariance de la moyenne empirique
+> décroît comme $1/D$. Multiplier par $\sqrt{D}$ est la seule renormalisation
+> qui donne une limite non dégénérée, et conduit à une loi gaussienne de covariance
+> $\Sigma$.
+
+:::
+
 ---
 
 #### Application pratique : Agrégation de modèles
@@ -161,6 +421,104 @@ Ce théorème fournit non seulement la convergence, mais aussi la distribution l
 Les méthodes d'**apprentissage par agrégation** exploitent ces théorèmes. Par exemple, les **forêts aléatoires** combinent de nombreux arbres de décision faiblement corrélés. Chaque arbre est un estimateur peu précis, mais leur moyenne bénéficie de la réduction de variance prédite par le théorème central limite.
 
 **Exemple en bioinformatique :** Avec des milliers de gènes (dimensions) et seulement des centaines de patients, les forêts aléatoires fournissent des classifieurs robustes pour le diagnostic médical.
+
+::: {.callout collapse="true"}
+### Forêts aléatoires en génomique médicale - L'art de l'agrégation intelligente
+
+#### Le contexte du problème
+
+En génomique du cancer, nous avons souvent :
+
+- 20 000 à 60 000 gènes (dimensions)
+- 100 à 500 échantillons de patients
+- Un déséquilibre majeur : $D \gg N$
+
+**Le paradoxe :** Comment pouvons-nous apprendre quelque chose de fiable avec si peu d'échantillons par rapport au nombre de dimensions ?
+
+---
+
+#### La solution par forêts aléatoires
+
+**Première étape : Création de la diversité**
+
+Chaque arbre de décision est entraîné sur :
+
+- Un échantillon bootstrap (67% des patients, aléatoirement choisis)
+- Un sous-ensemble aléatoire de gènes (typiquement $\sqrt{D} \approx 150$ gènes)
+
+**Deuxième étape : L'agrégation par sagesse des foules**
+
+Pour un nouveau patient :
+
+1. Chaque arbre examine ses 150 gènes assignés
+2. Chaque arbre vote "cancer" ou "non-cancer"
+3. La décision finale est le vote majoritaire
+
+---
+
+#### L'intuition dimensionnelle profonde
+
+**Pourquoi cela fonctionne si bien :**
+
+1. **Réduction de dimension locale :** Chaque arbre ne voit que 150 gènes sur 20 000 - il opère dans un sous-espace de dimension réduite
+2. **Indépendance partielle :** Les arbres sont décorrélés car ils voient différents gènes
+3. **Loi des grands nombres :** Avec 500 arbres, l'erreur moyenne converge vers zéro
+
+**L'analogie :** Imaginez 500 médecins examinant un patient, chacun avec une spécialité différente (cardiologie, neurologie, etc.). Aucun seul ne peut poser un diagnostic parfait, mais leur consensus est extrêmement fiable.
+
+**Résultat concret :** Dans les compétitions de diagnostic du cancer par machine learning, les forêts aléatoires battent souvent les méthodes plus complexes comme les réseaux de neurones profonds, car elles exploitent mieux la parcimonie des données.
+:::
+
+::: {.callout collapse="true"}
+### Détection de fraude par Isolation Forest - L'art de l'isolement
+
+#### Le problème des transactions frauduleuses
+
+Dans les transactions bancaires :
+
+- 99,9% des transactions sont légitimes
+- 0,1% sont frauduleuses
+- Chaque transaction a 100+ caractéristiques (montant, lieu, heure, type de commerce...)
+
+**Le défi :** Trouver les aiguilles dans la botte de foin.
+
+---
+
+#### Le principe d'Isolation Forest
+
+**Idée contre-intuitive :** Au lieu de modéliser ce qui est normal, modélisez ce qui est facile à isoler.
+
+**En haute dimension :** Les anomalies sont plus faciles à "isoler" car elles sont différentes de la masse sur plusieurs dimensions simultanément.
+
+---
+
+#### Algorithme pas à pas
+
+1. **Sous-échantillonnage :** Prendre 256 transactions au hasard
+2. **Construction d'arbre :**
+   - Choisir une dimension aléatoire
+   - Choisir une valeur de coupure aléatoire entre min et max
+   - Séparer les transactions
+   - Répéter jusqu'à ce que chaque transaction soit isolée
+3. **Score d'anomalie :** Plus une transaction est isolée rapidement (peu de coupures nécessaires), plus elle est anormale
+
+---
+
+#### L'intuition dimensionnelle
+
+Imaginez une foule de gens dans un parc (transactions normales). Maintenant, quelqu'un se met à crier et agiter les bras (anomalie).
+
+**En basse dimension :** Difficile à repérer dans la foule
+**En haute dimension :** La personne est différente sur plusieurs axes simultanément (position, volume, mouvement...), donc facile à isoler
+
+**Pourquoi cela fonctionne en haute dimension :**
+
+- Une transaction normale est "moyenne" sur toutes les dimensions
+- Une fraude est "extrême" sur au moins une dimension
+- En haute dimension, la probabilité qu'une transaction soit extrême sur plusieurs dimensions est très faible... sauf pour les fraudes
+
+**Résultat :** Détection de fraudes avec 95% de précision, tout en examinant moins de 0,1% des transactions manuellement.
+:::
 
 ---
 
@@ -185,6 +543,53 @@ La dimension $d$ est **indépendante** de $D$ et ne dépend que logarithmiquemen
 **Compression de données :** Les techniques de **compressed sensing** permettent de reconstruire des signaux à partir de peu de mesures en exploitant la parcimonie naturelle des signaux réels.
 
 **Exemple concret :** Les systèmes de recommandation de YouTube utilisent des variantes de LSH pour trouver rapidement des vidéos similaires parmi des milliards de possibilités.
+
+::: {.callout collapse="true"}
+### Recommandation YouTube et Locality-Sensitive Hashing - La magie des projections aléatoires
+
+#### Le défi technique
+
+YouTube doit trouver des vidéos similaires parmi :
+
+- 800 millions de vidéos
+- Chaque vidéo représentée par 1000 à 5000 caractéristiques (métadonnées, embeddings de contenu)
+- Requêtes en temps réel (moins de 100ms)
+
+**Le problème de recherche :** Trouver les 10 vidéos les plus similaires parmi 800 millions en 100ms.
+
+---
+
+#### La solution par LSH et projections aléatoires
+
+**Fondement théorique : Lemme de Johnson-Lindenstrauss**
+
+Pour tout ensemble de $N$ points en dimension $D$, on peut les projeter en dimension $d = O(\log N)$ tout en préservant les distances.
+
+**Implémentation pratique :**
+
+1. **Projection aléatoire :** Chaque vidéo (vecteur en $\mathbb{R}^{1000}$) est multipliée par une matrice aléatoire $R \in \mathbb{R}^{1000 \times 50}$
+2. **Quantification :** Le vecteur projeté est converti en code binaire (hash)
+3. **Indexation :** Les vidéos avec codes similaires sont stockées dans les mêmes "buckets"
+
+---
+
+#### L'intuition géométrique
+
+**Pourquoi les projections aléatoires préservent-elles les similarités ?**
+
+Considérons deux vidéos $A$ et $B$ très similaires (petite distance). Après projection aléatoire :
+
+- Leurs vecteurs projetés restent proches (avec haute probabilité)
+- Car la projection aléatoire préserve approximativement les distances
+
+**L'analogie :** Imaginez que vous projetez des objets 3D sur un mur avec une lampe torche. Si deux objets sont proches dans l'espace 3D, leurs ombres seront proches sur le mur, quelle que soit la direction de la lumière.
+
+**Le gain de performance :**
+
+- Sans LSH : Comparer avec 800 millions de vidéos → 800 millions de calculs de similarité
+- Avec LSH : Comparer avec ~1000 vidéos dans le même bucket → 1000 calculs
+- **Accélération : 800 000x**
+:::
 
 ---
 
@@ -213,6 +618,58 @@ Les modèles comme **Word2Vec** projettent les mots dans des espaces de dimensio
 $$ \text{"roi"} - \text{"homme"} + \text{"femme"} \approx \text{"reine"} $$
 
 Cette propriété émerge naturellement en haute dimension grâce à la quasi-orthogonalité des vecteurs de mots différents.
+
+::: {.callout collapse="true"}
+### Word Embeddings et la magie de l'arithmétique sémantique
+
+#### Le phénomène contre-intuitif
+
+Dans les espaces vectoriels de mots (Word2Vec, GloVe), on observe que :
+
+$$ \text{"roi"} - \text{"homme"} + \text{"femme"} \approx \text{"reine"} $$
+
+Comment est-ce possible dans un espace de 300 dimensions ?
+
+---
+
+#### Explication par la géométrie en haute dimension
+
+**Construction des embeddings :**
+
+1. Chaque mot est initialisé comme vecteur aléatoire en $\mathbb{R}^{300}$
+2. L'entraînement ajuste les vecteurs pour que les mots apparaissant dans des contextes similaires aient des vecteurs similaires
+3. Après entraînement, les relations sémantiques émergent comme relations vectorielles
+
+**Pourquoi cela fonctionne en haute dimension :**
+
+1. **Quasi-orthogonalité :** Les vecteurs de mots différents sont presque orthogonaux
+2. **Espace suffisant :** 300 dimensions offrent assez de "place" pour encoder des milliers de relations
+3. **Linéarité des relations :** Les transformations sémantiques deviennent approximativement linéaires
+
+---
+
+#### L'intuition géométrique concrète
+
+Imaginez que chaque dimension représente un "concept" abstrait :
+
+- Dimension 1 : "royauté"
+- Dimension 2 : "genre masculin"
+- Dimension 3 : "genre féminin"
+- Dimension 4 : "autorité"
+- ...
+
+Alors :
+
+- "roi" = [1.0, 0.9, 0.1, 0.8, ...]
+- "homme" = [0.1, 0.9, 0.1, 0.3, ...]
+- "femme" = [0.1, 0.1, 0.9, 0.3, ...]
+
+Le calcul : [1.0, 0.9, 0.1, 0.8] - [0.1, 0.9, 0.1, 0.3] + [0.1, 0.1, 0.9, 0.3] = [1.0, 0.1, 0.9, 0.8]
+
+Ce qui correspond à "reine" = [1.0, 0.1, 0.9, 0.8, ...]
+
+**L'application réelle :** Google Translate utilise cette propriété pour traduire entre langues sans dictionnaire explicite, en alignant les espaces vectoriels de différentes langues.
+:::
 
 ---
 
@@ -260,6 +717,29 @@ Ces deux aspects ne sont pas contradictoires mais complémentaires. La clé rés
 - **Méthodes à noyau** pour la séparabilité linéaire
 - **Agrégation de modèles** pour la robustesse statistique
 - **Apprentissage de représentations** pour découvrir la structure sous-jacente
+
+#### Les principes unificateurs
+
+##### Le paradoxe résolu
+
+La "bénédiction" émerge lorsque nous arrêtons de combattre la haute dimension et commençons à l'exploiter :
+
+1. **La parcimonie devient une force :** Compressed Sensing
+2. **La concentration devient une garantie :** Projections aléatoires
+3. **La loi des grands nombres devient un accélérateur :** Forêts aléatoires
+4. **La quasi-orthogonalité devient une organisation :** Word embeddings
+
+##### Le changement de paradigme
+
+Au lieu de : "Comment réduire la dimension pour éviter les problèmes ?"
+
+Nous adoptons : "Comment exploiter la haute dimension pour résoudre les problèmes ?"
+
+##### L'essence de la bénédiction
+
+**En une phrase :** La haute dimension nous offre assez d'espace pour que les structures cachées deviennent linéaires, séparables et exploitables par des algorithmes simples mais massivement parallèles.
+
+Cette compréhension transforme la malédiction en opportunité, ouvrant la voie à des solutions élégantes à certains des problèmes les plus complexes de la science des données moderne.
 
 ---
 

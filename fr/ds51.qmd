@@ -1,206 +1,665 @@
 # Cours : Analyse Discriminante Linéaire (LDA)
 
-## Introduction
+## Introduction à la LDA
 
-Ce cours introduit l'**Analyse Discriminante Linéaire (LDA)**, une méthode supervisée de modélisation de données conditionnelles et de classification.  
-L'objectif est de présenter une définition supervisée des facteurs latents, de proposer une modélisation conditionnelle des données et de réaliser la classification d'éléments non étiquetés..
+L'**Analyse Discriminante Linéaire (LDA)** est une méthode statistique supervisée qui remplit deux objectifs principaux :
 
----
+- La **réduction de dimension** en trouvant les directions les plus discriminantes
+- La **classification** par modélisation probabiliste des classes
 
-## Apprentissage supervisé
-
-Étant donné des données $X \subset \Omega \subset \mathbb{R}^D$ associées à des étiquettes de classe $y = [M] \subset \mathbb{N}$, l'apprentissage supervisé consiste à trouver (apprendre) les paramètres $\theta$ d'un apprenant (fonction) $\phi_\theta$ de manière à minimiser la perte $\mathcal{L}_{X \times y}(\theta)$ encourue lors de la prédiction des étiquettes de classe à l'aide de $\phi_\theta$.
-
-$$
-\begin{aligned}
-\phi_\theta : & \quad \Omega \to y \\
-& x_t \mapsto \phi_\theta(x_t) = \tilde{y}_t
-\end{aligned}
-$$
-
-**Exemples :**  
-- $\phi_\theta$ est une régression logistique avec paramètres $\theta$.  
-- $\phi_\theta$ est un réseau de neurones avec poids $\theta$.  
-- $\mathcal{L}_{X \times y}(\theta) = \sum_x \|\phi_\theta(x_t) - y_t\|^2_{\text{some}}$.
+Contrairement à l'Analyse en Composantes Principales (PCA) qui est non supervisée, la LDA utilise les étiquettes de classe pour trouver les directions qui maximisent la séparation entre groupes.
 
 ---
 
-## Analyse Discriminante Linéaire (LDA)
+## Contexte d'Apprentissage Supervisé
 
-**Problème :** Étant donné des données multivariées $X$ associées à des étiquettes $y$, nous cherchons un modèle pour ces données.
+### Définition Formelle
 
----
+Dans un problème d'apprentissage supervisé, nous disposons de :
 
-### Direction discriminante (cas à 2 classes)
+- Données $X \subset \Omega \subset \mathbb{R}^D$
+- Étiquettes de classe $y = [M] \subset \mathbb{N}$
 
-Nous cherchons une direction $a \in \mathbb{R}^D$ telle que la projection des données sur cette direction $\hat{X} = \text{Proj}_a(X)$ présente des propriétés optimales pour la discrimination entre classes.
+Nous cherchons à apprendre une fonction $\phi_\theta$ qui minimise une perte $\mathcal{L}_{X \times y}(\theta)$ lorsqu'elle prédit les étiquettes.
 
----
+### Exemples de Méthodes Supervisées
 
-### Critère inter-classe
+- Régression logistique
+- Réseaux de neurones
+- Machines à vecteurs de support (SVM)
 
-Si les projections des classes sont bien séparées, elles peuvent être facilement discriminées.  
-Nous cherchons donc une direction $a$ qui maximise la discrimination inter-classe.
-
-Il est clair que $a$ doit être colinéaire à la droite $\mu_1 - \mu_2$ reliant les centres de masse des classes, car :
-
-$$
-\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \frac{1}{\|a\|^2} (a^T(\mu_1 - \mu_2))^2
-$$
-
-est maximale lorsque $a = \lambda(\mu_1 - \mu_2)$.
-
-**Note :** Les données originales ($x_i \in X$) ne changent pas. Seules les données projetées ($\hat{x}_i \in \hat{X}$) changent lorsque l'on fait varier $a$.  
-Le centre de masse des données projetées est la projection du centre de masse des données originales.
+La LDA se distingue par son approche **génératrice** : elle modélise la distribution des données dans chaque classe.
 
 ---
 
-### Critère intra-classe
+## Intuition Géométrique de la LDA
 
-Nous cherchons également à minimiser la variance intra-classe des données projetées.  
-Le critère de Fisher maximise :
+### Le Problème Fondamental
 
-$$
-\underset{a}{\operatorname{argmax}} \frac{\|\hat{\mu}_1 - \hat{\mu}_2\|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}
-$$
+Imaginons des points en deux dimensions appartenant à deux classes.  
+Comment trouver la **meilleure droite** sur laquelle projeter ces points pour les séparer le plus possible ?
 
-où $\hat{\sigma}_k$ est la variance normalisée de la projection de la classe $k$ :
+La LDA répond à cette question en cherchant une direction qui :
 
-$$
-\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{y_k = k} (\hat{x}_k - \hat{\mu}_k)^T (\hat{x}_k - \hat{\mu}_k)
-$$
+1. **Éloigne les centres** des classes (maximise la distance entre moyennes)
+2. **Rapproche les points** à l'intérieur de chaque classe (minimise la variance intra-classe)
 
 ---
 
-### Critère de Fisher (combinaison des critères)
+## Concepts Clés : Critère Inter-Classe et Intra-Classe
 
-Le critère de Fisher combine les critères inter et intra-classe :
+#### Notations de Base
 
-$$
-\arg\max_a \mathcal{L}(a) = \arg\max_a \frac{a^\top \Sigma_b a}{a^\top \Sigma_w a}
-$$
+Pour $K$ classes :
 
-où $\Sigma_b$ est la matrice de covariance inter-classes et $\Sigma_w$ la matrice de covariance intra-classes.
-
-La solution est obtenue en annulant la dérivée :
-
-$$
-\frac{\partial \mathcal{L}(a)}{\partial a} = \frac{\Sigma_b a(a^\top \Sigma_w a) - \Sigma_w a(a^\top \Sigma_b a)}{(a^\top \Sigma_w a)^2} = 0
-$$
-
-Ce qui conduit au système généralisé de valeurs propres :
-
-$$
-\Sigma_b a = \mathcal{L}(a) \Sigma_w a
-$$
-
-Ainsi, $a$ est le premier vecteur propre de $\Sigma_w^{-1} \Sigma_b$ (avec valeur propre $\lambda_1 = \mathcal{L}(a)$).
+- $N_k$ : nombre d'observations dans la classe $k$
+- $\mu_k$ : moyenne de la classe $k$ (vecteur de dimension $D$)
+- $\mu$ : moyenne globale
+- $x_i^{(k)}$ : la $i$-ème observation de la classe $k$
 
 ---
 
-### Généralisation à plusieurs classes
+### Critère Inter-Classe (Between-Class)
 
-Pour $M$ classes, on définit :
+#### Intuition
 
-- La matrice des centres centrés : $B = [\mu_1 - \mu, \ldots, \mu_M - \mu]$ (où $\mu = \frac{1}{N} \sum_N x_i$ et $N = \sum_k N_k$).  
-- La matrice de covariance inter-classes : $\Sigma_b = \frac{1}{M} BB^T$.  
-- On maximise sur $a \in \mathbb{R}^D$ :
+Le critère inter-classe mesure **à quel point les centres des classes sont éloignés les uns des autres**.  
+Plus les moyennes des classes sont distantes, plus il sera facile de les discriminer.
+
+#### Formulation Mathématique
+
+**Distance entre deux classes (cas binaire) :**  
+Pour deux classes avec moyennes $\mu_1$ et $\mu_2$, la distance carrée entre leurs projections sur une direction $a$ est :
 
 $$
-\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{\|a\|^2} a^T \Sigma_b a
+\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \frac{(a^T(\mu_1 - \mu_2))^2}{\|a\|^2}
+$$
+
+où $\hat{\mu}_k = \frac{a^T \mu_k}{\|a\|}$ est la projection de la moyenne de la classe $k$.
+
+#### Cas général
+
+La matrice capture la covariance des centres des classes par rapport à la moyenne globale.
+
+##### Version Normale (Sommatoire)
+
+###### Formulation Pondérée
+$$
+\Sigma_b = \sum_{k=1}^K N_k (\mu_k - \mu)(\mu_k - \mu)^T
+$$
+
+###### Formulation Non Pondérée
+$$
+\Sigma_b = \frac{1}{K} \sum_{k=1}^K (\mu_k - \mu)(\mu_k - \mu)^T
 $$
 
 ---
 
-### Sous-espaces discriminants
+##### Version Matricielle
 
-Les vecteurs propres correspondant aux plus grandes valeurs propres $\lambda_i$ sont les dimensions les plus discriminantes :  
-$a_1, a_2, \ldots a_p$ avec $\lambda_1 > \lambda_2 > \ldots > \lambda_p$.
+###### Formulation Pondérée
 
-Pour $M$ classes, on peut discriminer dans un sous-espace de dimension au plus $M-1$ (projections itératives).  
-Il n'y a donc que $M-1$ valeurs propres non nulles.
-
----
-
-### Cas particulier : $M = 2$
-
-Dans ce cas :
+Soit $M$ la matrice $D \times K$ où chaque colonne $k$ est $\sqrt{N_k}(\mu_k - \mu)$ :
 
 $$
-BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T
+M = \begin{bmatrix}
+\sqrt{N_1}(\mu_1 - \mu) & \sqrt{N_2}(\mu_2 - \mu) & \cdots & \sqrt{N_K}(\mu_K - \mu)
+\end{bmatrix}
 $$
 
-Ainsi, $BB^T a$ est un vecteur dans la direction $(\mu_1 - \mu_2)$, et :
+Alors :
 
 $$
-a = \lambda \Sigma_w^{-1}(\mu_1 - \mu_2)
+\Sigma_b = MM^T
 $$
 
----
+###### Formulation Non Pondérée
 
-## Exemples
-
-LDA trouve le sous-espace optimal pour séparer linéairement les données selon les étiquettes $y_i$.
-
-**Exemple concret :** 7291 images $16 \times 16$ (8 bits) de chiffres de 0 à 9, soit $x_i \in \mathbb{R}^{256}$ et $y_i \in [10]$.
-
----
-
-## Inférence et modélisation conditionnelle
-
-### Modélisation gaussienne
-
-Chaque classe est modélisée par $P(x|C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)$.  
-On suppose un prior uniforme : $P(C = k) = 1/M$.  
-L'évidence $P(x_j)$ est ignorée (car constante pour tous les $k$).  
-On utilise alors le maximum de vraisemblance :
+Soit $M'$ la matrice $D \times K$ où chaque colonne $k$ est $(\mu_k - \mu)$ :
 
 $$
-P(x|C = k) \simeq \exp\left( -(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k) \right)
+M' = \begin{bmatrix}
+(\mu_1 - \mu) & (\mu_2 - \mu) & \cdots & (\mu_K - \mu)
+\end{bmatrix}
+$$
+
+Alors :
+
+$$
+\Sigma_b = \frac{1}{K} M'M'^T
 $$
 
 ---
 
-### Décision de classification
+##### Équivalence entre les Formulations
 
-La règle de décision est :
+###### Relation
+Les deux formulations donnent la même matrice à un facteur d'échelle près :
 
 $$
-\delta(x) = \arg\max_k P(x|C = k)
+MM^T = \left(\sum_{k=1}^K N_k\right) \cdot \frac{1}{K} M'M'^T
+$$
+
+quand $N_1 = N_2 = \cdots = N_K$ (classes équilibrées).
+
+###### Pour la LDA
+
+Cette différence d'échelle n'affecte pas les directions discriminantes, seulement leur amplitude dans le critère de Fisher.
+
+#### Interprétation Géométrique
+
+$\Sigma_b$ est une matrice $D \times D$ qui mesure :
+
+- Comment les centres des classes varient autour de la moyenne globale
+- La dispersion "entre" les différentes classes
+
+La quantité $a^T \Sigma_b a$ représente la **variance inter-classes projetée** sur la direction $a$.
+
+#### Propriété Importante
+
+Pour $K$ classes, la matrice $\Sigma_b$ a un rang au plus $K-1$.  
+Cela signifie qu'il existe au plus $K-1$ directions indépendantes qui séparent les classes.
+
+---
+
+### Critère Intra-Classe (Within-Class)
+
+#### Intuition
+
+Le critère intra-classe mesure **à quel point les points d'une même classe sont regroupés**.  
+Plus les points d'une classe sont concentrés, plus la classe est homogène et facile à identifier.
+
+#### Formulation Mathématique
+
+Pour chaque classe $k$, on définit sa matrice de covariance :
+
+$$
+\Sigma_k = \frac{1}{N_k} \sum_{i=1}^{N_k} (x_i^{(k)} - \mu_k)(x_i^{(k)} - \mu_k)^T
+$$
+
+**Matrice de dispersion intra-classes totale :**
+
+$$
+\Sigma_w = \sum_{k=1}^K \Sigma_k = \sum_{k=1}^K \sum_{i=1}^{N_k} (x_i^{(k)} - \mu_k)(x_i^{(k)} - \mu_k)^T
+$$
+
+#### Interprétation
+
+$\Sigma_w$ mesure la **dispersion globale à l'intérieur de toutes les classes**.  
+Une petite valeur de $a^T \Sigma_w a$ indique que les projections des points sont regroupées autour de leur moyenne de classe.
+
+---
+
+### Le Critère de Fisher : Combinaison des Deux Critères
+
+#### Principe
+
+Nous cherchons une direction $a$ qui :
+
+- Maximise la dispersion inter-classes : $a^T \Sigma_b a$ (grand)
+- Minimise la dispersion intra-classes : $a^T \Sigma_w a$ (petit)
+
+Le **critère de Fisher** combine ces deux objectifs en un seul ratio :
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+#### Interprétation du Ratio
+
+$J(a)$ représente le **rapport signal/bruit** pour la discrimination :
+
+- **Numérateur** : "signal" = séparation entre classes
+- **Dénominateur** : "bruit" = variabilité à l'intérieur des classes
+
+Plus $J(a)$ est grand, meilleure est la direction $a$ pour discriminer les classes.
+
+#### Optimisation
+
+Nous cherchons la direction $a^*$ qui maximise $J(a)$ :
+
+$$
+a^* = \arg\max_a \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+Ce problème d'optimisation a une solution analytique.
+
+::: {.callout collapse="true"}
+#### Projection des Critères Inter et Intra-Classes
+
+Lorsqu'on projette sur une direction $a$ (non nécessairement unitaire), les statistiques projetées comportent un facteur de normalisation.
+
+---
+
+#### Projection des Centres
+
+Pour une direction $a$, la projection d'un vecteur $v$ est donnée par :
+
+$$
+\hat{v} = \frac{a^T v}{\|a\|}
+$$
+
+Les moyennes projetées des classes deviennent :
+
+$$
+\hat{\mu}_k = \frac{a^T \mu_k}{\|a\|}, \quad \hat{\mu} = \frac{a^T \mu}{\|a\|}
 $$
 
 ---
 
-## Optimalité et limites
+#### Critère Inter-Classes Projeté
 
-- LDA est optimal lorsque les $M$ classes sont chacune distribuées selon une loi gaussienne (critère de discrimination basé sur $\Sigma_w$ et $\Sigma_b$).  
-- LDA ne prend pas en compte les relations non linéaires entre variables (discrimination linéaire).  
-- Pour des problèmes non linéaires, il faut utiliser des méthodes de classification non linéaires.
+La variance inter-classes **projetée** s'exprime comme :
 
----
+$$
+\frac{1}{M} \sum_{k=1}^M (\hat{\mu}_k - \hat{\mu})^2 = \frac{1}{\|a\|^2} a^T \left[ \frac{1}{M} \sum_{k=1}^M (\mu_k - \mu)(\mu_k - \mu)^T \right] a
+$$
 
-## Résumé
+Soit simplement :
 
-- LDA est une technique supervisée.  
-- LDA trouve les facteurs latents linéaires optimaux expliquant la discrimination (linéaire).  
-- Le critère de Fisher combine la dispersion intra-classe et inter-classes.  
-- LDA est résolu en trouvant les valeurs propres de $\Sigma_w^{-1} \Sigma_b$.  
-- Ces facteurs latents peuvent être utilisés pour la visualisation (en tenant compte des étiquettes).  
-- LDA (comme classification) est un exemple de modélisation conditionnelle : chaque classe suit une loi normale.
+$$
+\frac{1}{M} \sum_{k=1}^M (\hat{\mu}_k - \hat{\mu})^2 = \frac{1}{\|a\|^2} a^T \Sigma_b a
+$$
 
 ---
 
-## Questions d'exemple
+#### Critère Intra-Classes Projeté
 
-1. Expliquer dans le cadre de l'apprentissage supervisé : pourquoi LDA est une méthode linéaire ?  
-2. Qu'est-ce qui caractérise une direction discriminante ? Que représente $a$ ?  
-3. Quel est le critère de Fisher ?  
-4. Qu'est-ce que le critère inter-classes ? Expliquer son principe.  
-5. Comment calculer la matrice de covariance inter-classes ?  
-6. Qu'est-ce que le critère intra-classes ? Expliquer son principe.  
-7. Comment calculer la matrice de covariance intra-classes ?  
-8. Comment ces deux critères sont-ils combinés ?  
-9. Pouvez-vous justifier et expliquer la dérivation du maximum pour $a$ ?  
-10. Décrire la situation multidimensionnelle ($D > 2$).  
-11. Comment faire de l'inférence avec LDA ?  
-12. Donner un exemple de modèle conditionnel de données utilisant LDA.
+Pour une classe $k$, la variance **projetée** est :
+
+$$
+\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{i=1}^{N_k} (\hat{x}_i^{(k)} - \hat{\mu}_k)^2 = \frac{1}{\|a\|^2} a^T \Sigma_k a
+$$
+
+La variance intra-classes totale **projetée** devient :
+
+$$
+\sum_{k=1}^M \hat{\sigma}_k^2 = \frac{1}{\|a\|^2} a^T \left( \sum_{k=1}^M \Sigma_k \right) a = \frac{1}{\|a\|^2} a^T \Sigma_w a
+$$
+
+---
+
+### Conséquence pour le Critère de Fisher
+
+Le ratio de Fisher **projeté** s'écrit :
+
+$$
+J(a) = \frac{\text{Variance inter-classes projetée}}{\text{Variance intra-classes projetée}} = \frac{\frac{1}{\|a\|^2} a^T \Sigma_b a}{\frac{1}{\|a\|^2} a^T \Sigma_w a}
+$$
+
+Les facteurs $\frac{1}{\|a\|^2}$ s'annulent :
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+**Conclusion :** Le critère de Fisher ne dépend que de la **direction** de $a$, pas de sa norme.
+
+On peut donc chercher $a$ sans contrainte de normalisation, puis le normaliser si nécessaire.
+:::
+
+---
+
+### Solution du Problème d'Optimisation
+
+#### Dérivation Mathématique
+
+Pour maximiser $J(a)$, nous annulons son gradient :
+
+$$
+\frac{\partial J(a)}{\partial a} = \frac{2\Sigma_b a (a^T \Sigma_w a) - 2\Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0
+$$
+
+Ce qui implique :
+
+$$
+\Sigma_b a = \frac{a^T \Sigma_b a}{a^T \Sigma_w a} \Sigma_w a
+$$
+
+En notant $\lambda = \frac{a^T \Sigma_b a}{a^T \Sigma_w a} = J(a)$, nous obtenons :
+
+$$
+\Sigma_b a = \lambda \Sigma_w a
+$$
+
+C'est un **problème généralisé de valeurs propres**.
+
+#### Solution par Valeurs Propres
+
+La solution est donnée par les vecteurs propres de $\Sigma_w^{-1} \Sigma_b$ :
+
+$$
+\Sigma_w^{-1} \Sigma_b a = \lambda a
+$$
+
+**Propriétés importantes :**
+
+- Il y a au plus $K-1$ valeurs propres non nulles
+- Les vecteurs propres correspondant aux plus grandes valeurs propres sont les directions les plus discriminantes
+- La plus grande valeur propre $\lambda_1$ donne le maximum de $J(a)$
+
+#### Cas Particulier : Deux Classes
+
+Pour $K=2$, il n'y a qu'une seule direction discriminante :
+
+$$
+a \propto \Sigma_w^{-1} (\mu_1 - \mu_2)
+$$
+
+Cette direction est proportionnelle à la différence des moyennes, "corrigée" par la covariance inverse.
+
+---
+
+### Généralisation à Plusieurs Dimensions
+
+#### Sous-Espaces Discriminants
+
+Pour $K$ classes, nous pouvons obtenir jusqu'à $K-1$ directions discriminantes :
+
+- $a_1$ : direction la plus discriminante (plus grande valeur propre $\lambda_1$)
+- $a_2$ : deuxième direction la plus discriminante ($\lambda_2 < \lambda_1$)
+- ...
+- $a_{K-1}$ : dernière direction discriminante
+
+#### Projection sur le Sous-Espace Discriminant
+
+La matrice de projection $W = [a_1, a_2, ..., a_{K-1}]$ permet de réduire la dimension des données de $D$ à $K-1$ :
+
+$$
+Y = XW
+$$
+
+où $Y$ sont les données projetées dans le nouvel espace.
+
+#### Interprétation des Valeurs Propres
+
+La valeur propre $\lambda_i$ mesure le **pouvoir discriminant** de la direction $a_i$ :
+
+- $\lambda_i$ grand : forte séparation entre classes le long de $a_i$
+- $\lambda_i$ petit : faible séparation
+
+Le pourcentage de discrimination totale expliquée par la direction $a_i$ est :
+
+$$
+\text{PVE}_i = \frac{\lambda_i}{\sum_{j=1}^{K-1} \lambda_j} \times 100\%
+$$
+
+---
+
+## Visualisation des Concepts
+
+### Exemple en Deux Dimensions
+
+Considérons deux classes avec distributions gaussiennes :
+
+```{mermaid}
+graph TD
+    A[Données originales en 2D] --> B{Problème}
+    B --> C[Trouver la meilleure<br>direction de projection]
+    C --> D[Critère inter-classe:<br>max distance entre moyennes]
+    C --> E[Critère intra-classe:<br>min variance dans chaque classe]
+    D --> F[Combinaison: Ratio de Fisher]
+    E --> F
+    F --> G[Solution: Vecteur propre de Σ_w⁻¹Σ_b]
+    G --> H[Projection sur 1D]
+    H --> I[Séparation optimale]
+```
+
+### Interprétation Géométrique
+
+La direction optimale $a$ est celle qui, lorsque les données sont projetées dessus, produit :
+
+- Des histogrammes séparés pour chaque classe
+- Des distributions avec peu de recouvrement
+- Un maximum de distance entre moyennes par rapport à la variabilité interne
+
+---
+
+Voici une reformulation structurée et clarifiée de votre texte, avec une mise en forme améliorée et des ajustements pour une meilleure fluidité et précision :
+
+---
+
+## Modélisation conditionnelle en classification supervisée
+
+Dans les problèmes de **classification supervisée**, l'objectif est de prédire l'étiquette de classe $y$ associée à une observation $x$.
+
+Une approche fondamentale consiste à modéliser la **probabilité conditionnelle** $P(y \mid x)$, c'est-à-dire la probabilité qu'une observation $x$ appartienne à une classe $y$ donnée.
+
+---
+
+### Cadre bayésien pour la classification
+
+#### Règle de Bayes et décision optimale
+
+Le théorème de Bayes permet d'exprimer la **probabilité postérieure** qu'une observation $x$ appartienne à une classe $k$ comme suit :
+
+$$
+P(C = k \mid x) = \frac{P(x \mid C = k) \cdot P(C = k)}{P(x)}
+$$
+
+**Notations :**
+
+- $P(C = k)$ : **Probabilité a priori** de la classe $k$.
+- $P(x \mid C = k)$ : **Vraisemblance** de $x$ sachant la classe $k$.
+- $P(x)$ : **Probabilité marginale** de $x$ (constante pour toutes les classes).
+
+La **règle de décision optimale** (minimisant le taux d'erreur) consiste à attribuer $x$ à la classe $k$ maximisant la probabilité postérieure :
+
+$$
+\delta(x) = \arg\max_k P(C = k \mid x)
+$$
+
+Puisque $P(x)$ est constante, cette règle se simplifie en :
+
+$$
+\delta(x) = \arg\max_k \left[ P(x \mid C = k) \cdot P(C = k) \right]
+$$
+
+---
+
+### L'Analyse Discriminante Linéaire (LDA) comme modèle génératif conditionnel
+
+#### Hypothèses fondamentales de la LDA
+
+L'**Analyse Discriminante Linéaire (LDA)** repose sur trois hypothèses clés :
+
+1. **Distribution gaussienne par classe** :
+
+   Chaque classe suit une loi normale multivariée :
+   $$
+   P(x \mid C = k) \sim \mathcal{N}(\mu_k, \Sigma)
+   $$
+   où $\mu_k$ est le vecteur moyen de la classe $k$, et $\Sigma$ la matrice de covariance.
+
+2. **Matrice de covariance commune** :
+
+   Toutes les classes partagent la **même matrice de covariance** $\Sigma$.
+
+3. **Probabilités a priori** :
+
+   Les classes sont caractérisées par des probabilités a priori $P(C = k)$, souvent estimées par les proportions observées dans l'échantillon.
+
+#### Formulation explicite du modèle LDA
+
+Sous ces hypothèses, la densité de probabilité pour la classe $k$ s'écrit :
+
+$$
+P(x \mid C = k) = \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2}} \exp\left( -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) \right)
+$$
+
+où :
+
+- $D$ : Dimension des données.
+- $\mu_k$ : Vecteur moyen de la classe $k$.
+- $\Sigma$ : Matrice de covariance commune.
+
+---
+
+### Dérivation de la fonction discriminante linéaire
+
+#### Passage à la fonction de décision
+
+En appliquant la règle de décision bayésienne et en prenant le **logarithme** (qui préserve les maxima), on obtient :
+
+$$
+\delta(x) = \arg\max_k \left[ \ln P(x \mid C = k) + \ln P(C = k) \right]
+$$
+
+En développant le terme quadratique et en éliminant les constantes indépendantes de $k$, la fonction discriminante se simplifie en :
+
+$$
+\delta(x) = \arg\max_k \left[ x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k) \right]
+$$
+
+#### Forme linéaire de la frontière de décision
+
+La fonction discriminante pour la classe $k$ peut s'exprimer comme une **fonction linéaire** en $x$ :
+
+$$
+g_k(x) = w_k^T x + b_k
+$$
+
+où :
+
+- $w_k = \Sigma^{-1} \mu_k$ : Vecteur de poids pour la classe $k$.
+- $b_k = -\frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k)$ : Terme de biais.
+
+**Frontière de décision linéaire** :
+
+La frontière entre deux classes $k$ et $l$ est définie par l'équation :
+
+$$
+\{ x \mid g_k(x) = g_l(x) \} \quad \Rightarrow \quad (w_k - w_l)^T x + (b_k - b_l) = 0
+$$
+
+
+## Avantages et Limitations
+
+### Avantages de la LDA
+
+- **Fondements théoriques solides** basés sur la statistique bayésienne
+- **Solution analytique** (pas d'optimisation itérative)
+- **Efficace** lorsque les hypothèses sont respectées
+- **Interprétable** : les directions discriminantes ont une signification claire
+- **Double usage** : réduction de dimension et classification
+
+### Limitations
+
+- **Hypothèse de normalité** : nécessite des données approximativement gaussiennes
+- **Homoscédasticité** : suppose la même covariance pour toutes les classes
+- **Sensibilité aux valeurs aberrantes**
+- **Linéarité** : ne capture pas les relations non linéaires
+- **Problèmes en haute dimension** lorsque $D > N$
+
+### Alternatives et Extensions
+
+**QDA (Quadratic Discriminant Analysis)**  
+
+Relâche l'hypothèse de covariance commune, permettant des frontières de décision quadratiques.
+
+**LDA Régularisée**  
+
+Ajoute une régularisation pour stabiliser l'estimation de $\Sigma^{-1}$ en haute dimension.
+
+**LDA par Noyaux** 
+
+Utilise des fonctions noyau pour capturer des relations non linéaires.
+
+**Analyse Discriminante Flexibles**  
+
+Modélise les distributions conditionnelles par des méthodes non paramétriques.
+
+---
+
+## Comparaison avec d'Autres Méthodes
+
+### LDA vs PCA
+
+| Aspect | LDA | PCA |
+|--------|-----|-----|
+| **Supervision** | Supervisée (utilise les étiquettes) | Non supervisée |
+| **Objectif** | Maximiser la séparation entre classes | Maximiser la variance totale |
+| **Directions** | Directions de discrimination | Directions de variance maximale |
+| **Interprétation** | Séparation des groupes | Structure de variabilité |
+
+### LDA vs Régression Logistique
+
+| Aspect | LDA | Régression Logistique |
+|--------|-----|----------------------|
+| **Approche** | Modèle génératif | Modèle discriminant |
+| **Hypothèses** | Normale avec covariance commune | Aucune sur la distribution de $x$ |
+| **Stabilité** | Plus stable avec peu de données | Peut nécessiter plus de données |
+| **Frontières** | Toujours linéaire sous ses hypothèses | Linéaire par construction |
+
+---
+
+## Applications Pratiques
+
+### Domaines d'Application
+
+**Biologie et Médecine**
+
+- Classification de cellules cancéreuses
+- Diagnostic à partir d'images médicales
+- Analyse de données génomiques
+
+**Finance**
+
+- Scoring de crédit
+- Détection de fraude
+- Classification de clients
+
+**Vision par Ordinateur**
+
+- Reconnaissance faciale
+- Classification d'images
+- Reconnaissance d'écriture manuscrite
+
+**Marketing**
+
+- Segmentation de clientèle
+- Analyse de préférences
+- Recommandation de produits
+
+### Bonnes Pratiques
+
+**Validation des hypothèses**
+
+- Tester la normalité des données (test de Shapiro-Wilk, QQ-plots)
+- Vérifier l'homogénéité des covariances (test de Box)
+- Examiner les valeurs aberrantes
+
+**Pré-traitement des données**
+
+- Standardisation des variables
+- Gestion des valeurs manquantes
+- Équilibrage des classes si nécessaire
+
+**Validation du modèle**
+
+- Validation croisée
+- Mesures de performance adaptées (matrice de confusion, AUC, etc.)
+- Comparaison avec des méthodes de référence
+
+---
+
+## Conclusion
+
+L'Analyse Discriminante Linéaire est une méthode **élégante et puissante** qui repose sur des principes statistiques solides.  
+Son cœur réside dans l'optimisation conjointe de deux critères :
+
+**Critère inter-classe**  
+Maximiser la séparation entre les centres des classes, rendant les classes aussi distinctes que possible.
+
+**Critère intra-classe**  
+Minimiser la dispersion à l'intérieur de chaque classe, rendant chaque classe aussi cohérente que possible.
+
+La combinaison de ces deux objectifs via le **critère de Fisher** permet de trouver les directions optimales pour discriminer les classes tout en réduisant la dimension des données.
+
+Bien que reposant sur des hypothèses parfois restrictives, la LDA reste un outil précieux dans la boîte à outils du data scientist, particulièrement utile pour :
+
+- L'exploration et la visualisation de données étiquetées
+- La classification lorsque les hypothèses sont raisonnablement vérifiées
+- La compréhension des variables discriminantes dans un problème
+
+Son interprétabilité et sa simplicité conceptuelle en font une excellente introduction aux méthodes de classification et de réduction de dimension supervisée.

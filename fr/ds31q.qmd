@@ -130,6 +130,24 @@ $$
 \mathcal{L}(\mathbf{u}, \lambda) = \mathbf{u}^\top \Sigma \mathbf{u} - \lambda(\mathbf{u}^\top \mathbf{u} - 1)
 $$
 
+::: {.callout collapse="true"}
+### Explication concise du rôle de $\lambda$
+
+Dans la PCA, on maximise $\mathbf{u}^T\Sigma\mathbf{u}$ sous la contrainte $\mathbf{u}^T\mathbf{u} = 1$.
+
+Le $\lambda$ apparaît naturellement lorsqu'on utilise la **méthode des multiplicateurs de Lagrange** pour résoudre ce problème d'optimisation contrainte.
+
+La fonction de Lagrange s'écrit :
+$$
+\mathcal{L}(\mathbf{u}, \lambda) = \mathbf{u}^T\Sigma\mathbf{u} - \lambda(\mathbf{u}^T\mathbf{u} - 1)
+$$
+
+Le terme $-\lambda(\mathbf{u}^T\mathbf{u} - 1)$ permet d'**incorporer la contrainte directement dans la fonction objectif**.
+Le multiplicateur $\lambda$ sert de **paramètre de pénalité** qui garantit que la solution respecte la contrainte de norme unitaire.
+
+Ainsi, $\lambda$ est essentiellement un **artifice mathématique** qui nous permet de transformer un problème d'optimisation avec contrainte en un problème sans contrainte équivalent.
+:::
+
 Condition d'optimalité :
 
 $$
@@ -165,6 +183,7 @@ $$
 $$
 
 Ainsi :
+
 * $\mathbf{u}_1$ : direction de variance maximale
 * $\mathbf{u}_2$ : direction orthogonale de variance maximale restante
 
@@ -172,24 +191,46 @@ Ainsi :
 
 #### Critère de Variance Expliquée
 
+##### Variance Totale
 
-**Variance totale :**
+- Représente **toute l'information** contenue dans les données originales
+- C'est la **référence** : 100% de l'information disponible
 
 $$
 \text{Variance Totale} = \sum_{d=1}^D \lambda_d = \text{Tr}(\Sigma)
 $$
 
-La **variance expliquée** par la composante $d$ est :
+##### Variance Expliquée
 
-$$
-\text{VarExpliquée}_d = \frac{\lambda_d}{\sum_{k=1}^{D} \lambda_k}
-$$
+- Quantifie **l'information capturée** par chaque composante principale
+- Correspond directement aux **valeurs propres** $\lambda_d$ de $\Sigma$
+- Plus $\lambda_d$ est grand, plus la composante explique de variance
+- La **variance expliquée** par la composante $d$ est :
+  $$
+  \text{VarExpliquée}_d = \frac{\lambda_d}{\sum_{k=1}^{D} \lambda_k}
+  $$
 
-La **variance cumulée expliquée** pour $K$ composantes est :
+##### Variance Cumulée
 
-$$
-\text{VarCumulée}_K = \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d}
-$$
+- Somme progressive des variances expliquées composante après composante
+- Montre **combien d'information** on garde en sélectionnant $K$ composantes
+- Formule : $\frac{\lambda_1 + \lambda_2 + \cdots + \lambda_k}{\text{Variance totale}}$
+- Mathématiquement, la **variance cumulée expliquée** pour $K$ composantes est :
+  $$
+  \text{VarCumulée}_K = \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d}
+  $$
+
+
+##### Utilité pratique
+
+- **Choix du nombre de composantes** : On garde assez de composantes pour expliquer disons 80-95% de la variance totale
+- **Réduction de dimension** : Conserver l'essentiel de l'information avec moins de variables
+- **Interprétation** : Comprendre quelles composantes portent le plus d'information
+
+**Exemple visuel** : Si PC1 explique 60% et PC2 explique 20%, alors avec 2 composantes on capture 80% de l'information totale.
+
+
+
 
 #### Règles de Sélection Courantes
 
