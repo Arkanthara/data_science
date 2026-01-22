@@ -769,18 +769,47 @@ p_i = \mathbf{u}^\top \mathbf{x}_i
 <h3 class="anchored" data-anchor-id="étape-4-sélection-des-composantes">Étape 4 : Sélection des Composantes</h3>
 <section id="critère-de-variance-expliquée" class="level4">
 <h4 class="anchored" data-anchor-id="critère-de-variance-expliquée">Critère de Variance Expliquée</h4>
-<p><strong>Variance totale :</strong></p>
+<section id="variance-totale" class="level5">
+<h5 class="anchored" data-anchor-id="variance-totale">Variance Totale</h5>
+<ul>
+<li>Représente <strong>toute l’information</strong> contenue dans les données originales</li>
+<li>C’est la <strong>référence</strong> : 100% de l’information disponible</li>
+</ul>
 <p><span class="math display">\[
 \text{Variance Totale} = \sum_{d=1}^D \lambda_d = \text{Tr}(\Sigma)
 \]</span></p>
-<p>La <strong>variance expliquée</strong> par la composante <span class="math inline">\(d\)</span> est :</p>
-<p><span class="math display">\[
+</section>
+<section id="variance-expliquée" class="level5">
+<h5 class="anchored" data-anchor-id="variance-expliquée">Variance Expliquée</h5>
+<ul>
+<li>Quantifie <strong>l’information capturée</strong> par chaque composante principale</li>
+<li>Correspond directement aux <strong>valeurs propres</strong> <span class="math inline">\(\lambda_d\)</span> de <span class="math inline">\(\Sigma\)</span></li>
+<li>Plus <span class="math inline">\(\lambda_d\)</span> est grand, plus la composante explique de variance</li>
+<li>La <strong>variance expliquée</strong> par la composante <span class="math inline">\(d\)</span> est : <span class="math display">\[
 \text{VarExpliquée}_d = \frac{\lambda_d}{\sum_{k=1}^{D} \lambda_k}
-\]</span></p>
-<p>La <strong>variance cumulée expliquée</strong> pour <span class="math inline">\(K\)</span> composantes est :</p>
-<p><span class="math display">\[
+\]</span></li>
+</ul>
+</section>
+<section id="variance-cumulée" class="level5">
+<h5 class="anchored" data-anchor-id="variance-cumulée">Variance Cumulée</h5>
+<ul>
+<li>Somme progressive des variances expliquées composante après composante</li>
+<li>Montre <strong>combien d’information</strong> on garde en sélectionnant <span class="math inline">\(K\)</span> composantes</li>
+<li>Formule : <span class="math inline">\(\frac{\lambda_1 + \lambda_2 + \cdots + \lambda_k}{\text{Variance totale}}\)</span></li>
+<li>Mathématiquement, la <strong>variance cumulée expliquée</strong> pour <span class="math inline">\(K\)</span> composantes est : <span class="math display">\[
 \text{VarCumulée}_K = \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d}
-\]</span></p>
+\]</span></li>
+</ul>
+</section>
+<section id="utilité-pratique" class="level5">
+<h5 class="anchored" data-anchor-id="utilité-pratique">Utilité pratique</h5>
+<ul>
+<li><strong>Choix du nombre de composantes</strong> : On garde assez de composantes pour expliquer disons 80-95% de la variance totale</li>
+<li><strong>Réduction de dimension</strong> : Conserver l’essentiel de l’information avec moins de variables</li>
+<li><strong>Interprétation</strong> : Comprendre quelles composantes portent le plus d’information</li>
+</ul>
+<p><strong>Exemple visuel</strong> : Si PC1 explique 60% et PC2 explique 20%, alors avec 2 composantes on capture 80% de l’information totale.</p>
+</section>
 </section>
 <section id="règles-de-sélection-courantes" class="level4">
 <h4 class="anchored" data-anchor-id="règles-de-sélection-courantes">Règles de Sélection Courantes</h4>
