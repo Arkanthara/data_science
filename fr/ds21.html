@@ -718,7 +718,7 @@ window.Quarto = {
 <section id="le-théorème-de-beyer-et-al." class="level3">
 <h3 class="anchored" data-anchor-id="le-théorème-de-beyer-et-al.">Le théorème de Beyer et al.</h3>
 <p>Soit un ensemble de données <span class="math inline">\(X \subset \Omega\)</span>, un point <span class="math inline">\(x\)</span> et ses <span class="math inline">\(k\)</span> plus proches voisins <span class="math inline">\(V_X^k(x)\)</span>. Notons <span class="math inline">\(D_{\min}\)</span> et <span class="math inline">\(D_{\max}\)</span> les distances aux voisins les plus proches et les plus éloignés.</p>
-<p><strong>Théorème :</strong> Si <span class="math inline">\(\lim_{D \to \infty} \text{Var} \left( \frac{d(x,y)^p}{d(x,y)^p} \right) = 0\)</span> pour <span class="math inline">\(0 &lt; p &lt; \infty\)</span>, alors pour tout <span class="math inline">\(\varepsilon &gt; 0\)</span> :</p>
+<p><strong>Théorème :</strong> Si <span class="math inline">\(\lim_{D \to \infty} \text{Var} \left( \frac{d(x,y)^p}{\mathbb{E}(d(x,y)^p)} \right) = 0\)</span> pour <span class="math inline">\(0 &lt; p &lt; \infty\)</span>, alors pour tout <span class="math inline">\(\varepsilon &gt; 0\)</span> :</p>
 <p><span class="math display">\[ \lim_{D \to \infty} P \left[ \frac{D_{\max} - D_{\min}}{D_{\min}} \le \varepsilon \right] = 1 \]</span></p>
 <hr>
 </section>
