@@ -82,7 +82,7 @@ La **concentration** désigne le phénomène selon lequel certaines quantités, 
 
 Soit un ensemble de données $X \subset \Omega$, un point $x$ et ses $k$ plus proches voisins. Notons $D_{\min}$ et $D_{\max}$ les distances aux voisins les plus proches et les plus éloignés.
 
-**Théorème (Beyer et al.) :** Si $\lim_{D \to \infty} \text{Var}\left( \frac{d(x,y)^p}{d(x,y)^p} \right) = 0$ pour $0 < p < \infty$, alors pour tout $\varepsilon > 0$ :
+**Théorème (Beyer et al.) :** Si $\lim_{D \to \infty} \text{Var}\left( \frac{d(x,y)^p}{\mathbb{E}(d(x,y)^p)} \right) = 0$ pour $0 < p < \infty$, alors pour tout $\varepsilon > 0$ :
 
 $$ \lim_{D \to \infty} P \left[ \frac{D_{\max} - D_{\min}}{D_{\min}} \le \varepsilon \right] = 1 $$
 
