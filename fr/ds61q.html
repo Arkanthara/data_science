@@ -316,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds61.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds61q.html">Explication pédagogique du Modèle de Mélange Gaussien (Gaussian Mixture Model - GMM)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds61.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds61q.html">Le Modèle de Mélange Gaussien (GMM) : Un Guide Complet et Intuitif</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -446,13 +446,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds61.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Science: Expectation-Maximization for Density Modelling &amp; Latent Factor Estimation</span></a>
+ <span class="menu-text">Cours complet : Modèles de Mélange Gaussien et Algorithme EM</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds61q.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Explication pédagogique du Modèle de Mélange Gaussien (Gaussian Mixture Model - GMM)</span></a>
+ <span class="menu-text">Le Modèle de Mélange Gaussien (GMM) : Un Guide Complet et Intuitif</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -473,225 +473,513 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#explication-pédagogique-du-modèle-de-mélange-gaussien-gaussian-mixture-model---gmm" id="toc-explication-pédagogique-du-modèle-de-mélange-gaussien-gaussian-mixture-model---gmm" class="nav-link active" data-scroll-target="#explication-pédagogique-du-modèle-de-mélange-gaussien-gaussian-mixture-model---gmm">Explication pédagogique du Modèle de Mélange Gaussien (Gaussian Mixture Model - GMM)</a>
+  <li><a href="#le-modèle-de-mélange-gaussien-gmm-un-guide-complet-et-intuitif" id="toc-le-modèle-de-mélange-gaussien-gmm-un-guide-complet-et-intuitif" class="nav-link active" data-scroll-target="#le-modèle-de-mélange-gaussien-gmm-un-guide-complet-et-intuitif">Le Modèle de Mélange Gaussien (GMM) : Un Guide Complet et Intuitif</a>
   <ul class="collapse">
   <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
-  <li><a href="#quest-ce-quun-modèle-de-mélange-gaussien" id="toc-quest-ce-quun-modèle-de-mélange-gaussien" class="nav-link" data-scroll-target="#quest-ce-quun-modèle-de-mélange-gaussien">Qu’est-ce qu’un Modèle de Mélange Gaussien ?</a></li>
-  <li><a href="#hypothèses-fondamentales-du-gmm" id="toc-hypothèses-fondamentales-du-gmm" class="nav-link" data-scroll-target="#hypothèses-fondamentales-du-gmm">Hypothèses fondamentales du GMM</a>
+  <li><a href="#introduction-lidée-fondamentale" id="toc-introduction-lidée-fondamentale" class="nav-link" data-scroll-target="#introduction-lidée-fondamentale">Introduction : L’Idée Fondamentale</a></li>
+  <li><a href="#quest-ce-quun-modèle-de-mélange-gaussien" id="toc-quest-ce-quun-modèle-de-mélange-gaussien" class="nav-link" data-scroll-target="#quest-ce-quun-modèle-de-mélange-gaussien">1. Qu’est-ce qu’un Modèle de Mélange Gaussien ?</a>
   <ul class="collapse">
-  <li><a href="#structure-du-mélange" id="toc-structure-du-mélange" class="nav-link" data-scroll-target="#structure-du-mélange">1. Structure du mélange</a></li>
-  <li><a href="#forme-des-composantes" id="toc-forme-des-composantes" class="nav-link" data-scroll-target="#forme-des-composantes">2. Forme des composantes</a></li>
-  <li><a href="#indépendance-conditionnelle" id="toc-indépendance-conditionnelle" class="nav-link" data-scroll-target="#indépendance-conditionnelle">3. Indépendance conditionnelle</a></li>
+  <li><a href="#définition-simple" id="toc-définition-simple" class="nav-link" data-scroll-target="#définition-simple">Définition Simple</a></li>
+  <li><a href="#formulation-mathématique" id="toc-formulation-mathématique" class="nav-link" data-scroll-target="#formulation-mathématique">Formulation Mathématique</a></li>
   </ul></li>
-  <li><a href="#paramètres-du-modèle" id="toc-paramètres-du-modèle" class="nav-link" data-scroll-target="#paramètres-du-modèle">Paramètres du modèle</a>
+  <li><a href="#les-trois-hypothèses-fondamentales" id="toc-les-trois-hypothèses-fondamentales" class="nav-link" data-scroll-target="#les-trois-hypothèses-fondamentales">2. Les Trois Hypothèses Fondamentales</a>
   <ul class="collapse">
-  <li><a href="#les-poids-de-mélange-pi_j" id="toc-les-poids-de-mélange-pi_j" class="nav-link" data-scroll-target="#les-poids-de-mélange-pi_j">1. Les poids de mélange (<span class="math inline">\(\pi_j\)</span>)</a></li>
-  <li><a href="#les-moyennes-mu_j" id="toc-les-moyennes-mu_j" class="nav-link" data-scroll-target="#les-moyennes-mu_j">2. Les moyennes (<span class="math inline">\(\mu_j\)</span>)</a></li>
-  <li><a href="#les-matrices-de-covariance-sigma_j" id="toc-les-matrices-de-covariance-sigma_j" class="nav-link" data-scroll-target="#les-matrices-de-covariance-sigma_j">3. Les matrices de covariance (<span class="math inline">\(\Sigma_j\)</span>)</a></li>
+  <li><a href="#hypothèse-1-structure-de-mélange" id="toc-hypothèse-1-structure-de-mélange" class="nav-link" data-scroll-target="#hypothèse-1-structure-de-mélange">Hypothèse 1 : Structure de Mélange</a></li>
+  <li><a href="#hypothèse-2-forme-gaussienne-des-composantes" id="toc-hypothèse-2-forme-gaussienne-des-composantes" class="nav-link" data-scroll-target="#hypothèse-2-forme-gaussienne-des-composantes">Hypothèse 2 : Forme Gaussienne des Composantes</a></li>
+  <li><a href="#hypothèse-3-indépendance-conditionnelle" id="toc-hypothèse-3-indépendance-conditionnelle" class="nav-link" data-scroll-target="#hypothèse-3-indépendance-conditionnelle">Hypothèse 3 : Indépendance Conditionnelle</a></li>
   </ul></li>
-  <li><a href="#formulation-mathématique" id="toc-formulation-mathématique" class="nav-link" data-scroll-target="#formulation-mathématique">Formulation mathématique</a></li>
-  <li><a href="#interprétation-probabiliste" id="toc-interprétation-probabiliste" class="nav-link" data-scroll-target="#interprétation-probabiliste">Interprétation probabiliste</a>
+  <li><a href="#les-paramètres-du-modèle" id="toc-les-paramètres-du-modèle" class="nav-link" data-scroll-target="#les-paramètres-du-modèle">3. Les Paramètres du Modèle</a>
   <ul class="collapse">
-  <li><a href="#vue-comme-modèle-génératif" id="toc-vue-comme-modèle-génératif" class="nav-link" data-scroll-target="#vue-comme-modèle-génératif">Vue comme modèle génératif</a></li>
-  <li><a href="#responsabilités-soft-assignments" id="toc-responsabilités-soft-assignments" class="nav-link" data-scroll-target="#responsabilités-soft-assignments">Responsabilités (soft assignments)</a></li>
+  <li><a href="#les-poids-pi_j-mixing-weights" id="toc-les-poids-pi_j-mixing-weights" class="nav-link" data-scroll-target="#les-poids-pi_j-mixing-weights">1. Les Poids <span class="math inline">\(\pi_j\)</span> (Mixing Weights)</a></li>
+  <li><a href="#les-moyennes-mu_j-means" id="toc-les-moyennes-mu_j-means" class="nav-link" data-scroll-target="#les-moyennes-mu_j-means">2. Les Moyennes <span class="math inline">\(\mu_j\)</span> (Means)</a></li>
+  <li><a href="#les-matrices-de-covariance-sigma_j-covariance-matrices" id="toc-les-matrices-de-covariance-sigma_j-covariance-matrices" class="nav-link" data-scroll-target="#les-matrices-de-covariance-sigma_j-covariance-matrices">3. Les Matrices de Covariance <span class="math inline">\(\Sigma_j\)</span> (Covariance Matrices)</a></li>
   </ul></li>
-  <li><a href="#optimisation-des-paramètres-lalgorithme-em" id="toc-optimisation-des-paramètres-lalgorithme-em" class="nav-link" data-scroll-target="#optimisation-des-paramètres-lalgorithme-em">Optimisation des paramètres : l’algorithme EM</a>
+  <li><a href="#calcul-et-interprétation" id="toc-calcul-et-interprétation" class="nav-link" data-scroll-target="#calcul-et-interprétation">4. Calcul et Interprétation</a>
   <ul class="collapse">
-  <li><a href="#problème-de-la-vraisemblance" id="toc-problème-de-la-vraisemblance" class="nav-link" data-scroll-target="#problème-de-la-vraisemblance">Problème de la vraisemblance</a></li>
-  <li><a href="#présentation-de-lalgorithme-em" id="toc-présentation-de-lalgorithme-em" class="nav-link" data-scroll-target="#présentation-de-lalgorithme-em">Présentation de l’algorithme EM</a></li>
-  <li><a href="#détail-des-étapes" id="toc-détail-des-étapes" class="nav-link" data-scroll-target="#détail-des-étapes">Détail des étapes</a></li>
+  <li><a href="#comment-calcule-t-on-la-densité" id="toc-comment-calcule-t-on-la-densité" class="nav-link" data-scroll-target="#comment-calcule-t-on-la-densité">Comment Calcule-t-on la Densité ?</a></li>
+  <li><a href="#interprétation-visuelle" id="toc-interprétation-visuelle" class="nav-link" data-scroll-target="#interprétation-visuelle">Interprétation Visuelle</a></li>
   </ul></li>
-  <li><a href="#considérations-pratiques" id="toc-considérations-pratiques" class="nav-link" data-scroll-target="#considérations-pratiques">Considérations pratiques</a>
+  <li><a href="#variables-latentes-la-clé-de-linterprétation" id="toc-variables-latentes-la-clé-de-linterprétation" class="nav-link" data-scroll-target="#variables-latentes-la-clé-de-linterprétation">5. Variables Latentes : La Clé de l’Interprétation</a>
   <ul class="collapse">
-  <li><a href="#initialisation-et-problèmes-locaux" id="toc-initialisation-et-problèmes-locaux" class="nav-link" data-scroll-target="#initialisation-et-problèmes-locaux">Initialisation et problèmes locaux</a></li>
-  <li><a href="#choix-du-nombre-de-composantes-c" id="toc-choix-du-nombre-de-composantes-c" class="nav-link" data-scroll-target="#choix-du-nombre-de-composantes-c">Choix du nombre de composantes (<span class="math inline">\(c\)</span>)</a></li>
-  <li><a href="#forme-des-matrices-de-covariance" id="toc-forme-des-matrices-de-covariance" class="nav-link" data-scroll-target="#forme-des-matrices-de-covariance">Forme des matrices de covariance</a></li>
+  <li><a href="#le-problème-des-étiquettes-manquantes" id="toc-le-problème-des-étiquettes-manquantes" class="nav-link" data-scroll-target="#le-problème-des-étiquettes-manquantes">Le Problème des Étiquettes Manquantes</a></li>
+  <li><a href="#reformulation-probabiliste" id="toc-reformulation-probabiliste" class="nav-link" data-scroll-target="#reformulation-probabiliste">Reformulation Probabiliste</a></li>
   </ul></li>
-  <li><a href="#interprétation-des-résultats" id="toc-interprétation-des-résultats" class="nav-link" data-scroll-target="#interprétation-des-résultats">Interprétation des résultats</a>
+  <li><a href="#optimisation-des-paramètres-lalgorithme-em" id="toc-optimisation-des-paramètres-lalgorithme-em" class="nav-link" data-scroll-target="#optimisation-des-paramètres-lalgorithme-em">6. Optimisation des Paramètres : L’Algorithme EM</a>
   <ul class="collapse">
-  <li><a href="#visualisation-des-composantes" id="toc-visualisation-des-composantes" class="nav-link" data-scroll-target="#visualisation-des-composantes">Visualisation des composantes</a></li>
-  <li><a href="#attribution-des-points" id="toc-attribution-des-points" class="nav-link" data-scroll-target="#attribution-des-points">Attribution des points</a></li>
-  <li><a href="#génération-de-nouvelles-données" id="toc-génération-de-nouvelles-données" class="nav-link" data-scroll-target="#génération-de-nouvelles-données">Génération de nouvelles données</a></li>
+  <li><a href="#le-défi" id="toc-le-défi" class="nav-link" data-scroll-target="#le-défi">Le Défi</a></li>
+  <li><a href="#la-solution-algorithme-em-expectation-maximization" id="toc-la-solution-algorithme-em-expectation-maximization" class="nav-link" data-scroll-target="#la-solution-algorithme-em-expectation-maximization">La Solution : Algorithme EM (Expectation-Maximization)</a></li>
   </ul></li>
-  <li><a href="#limites-et-extensions" id="toc-limites-et-extensions" class="nav-link" data-scroll-target="#limites-et-extensions">Limites et extensions</a>
+  <li><a href="#pourquoi-ça-marche-lintuition" id="toc-pourquoi-ça-marche-lintuition" class="nav-link" data-scroll-target="#pourquoi-ça-marche-lintuition">7. Pourquoi Ça Marche ? L’Intuition</a>
   <ul class="collapse">
-  <li><a href="#limitations-du-gmm" id="toc-limitations-du-gmm" class="nav-link" data-scroll-target="#limitations-du-gmm">Limitations du GMM</a></li>
-  <li><a href="#extensions-courantes" id="toc-extensions-courantes" class="nav-link" data-scroll-target="#extensions-courantes">Extensions courantes</a></li>
+  <li><a href="#lanalogie-du-professeur-et-des-élèves" id="toc-lanalogie-du-professeur-et-des-élèves" class="nav-link" data-scroll-target="#lanalogie-du-professeur-et-des-élèves">L’Analogie du Professeur et des Élèves</a></li>
+  <li><a href="#la-magie-des-responsabilités-douces" id="toc-la-magie-des-responsabilités-douces" class="nav-link" data-scroll-target="#la-magie-des-responsabilités-douces">La Magie des Responsabilités “Douces”</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#exemple-concret-pas-à-pas" id="toc-exemple-concret-pas-à-pas" class="nav-link" data-scroll-target="#exemple-concret-pas-à-pas">8. Exemple Concret Pas à Pas</a>
+  <ul class="collapse">
+  <li><a href="#données-tailles-danimaux" id="toc-données-tailles-danimaux" class="nav-link" data-scroll-target="#données-tailles-danimaux">Données : Tailles d’animaux</a></li>
+  <li><a href="#étape-par-étape-avec-em" id="toc-étape-par-étape-avec-em" class="nav-link" data-scroll-target="#étape-par-étape-avec-em">Étape par Étape avec EM</a></li>
   </ul></li>
-  <li><a href="#lalgorithme-em-et-sa-relation-avec-le-modèle-de-mélange-gaussien-le-concept-de-responsabilité" id="toc-lalgorithme-em-et-sa-relation-avec-le-modèle-de-mélange-gaussien-le-concept-de-responsabilité" class="nav-link" data-scroll-target="#lalgorithme-em-et-sa-relation-avec-le-modèle-de-mélange-gaussien-le-concept-de-responsabilité">L’Algorithme EM et sa Relation avec le Modèle de Mélange Gaussien : Le Concept de Responsabilité</a>
+  <li><a href="#aspects-pratiques-importants" id="toc-aspects-pratiques-importants" class="nav-link" data-scroll-target="#aspects-pratiques-importants">9. Aspects Pratiques Importants</a>
+  <ul class="collapse">
+  <li><a href="#choix-du-nombre-de-composantes-c" id="toc-choix-du-nombre-de-composantes-c" class="nav-link" data-scroll-target="#choix-du-nombre-de-composantes-c">Choix du Nombre de Composantes (<span class="math inline">\(c\)</span>)</a></li>
+  <li><a href="#problèmes-dinitialisation" id="toc-problèmes-dinitialisation" class="nav-link" data-scroll-target="#problèmes-dinitialisation">Problèmes d’Initialisation</a></li>
+  <li><a href="#types-de-matrices-de-covariance" id="toc-types-de-matrices-de-covariance" class="nav-link" data-scroll-target="#types-de-matrices-de-covariance">Types de Matrices de Covariance</a></li>
+  </ul></li>
+  <li><a href="#applications-concrètes" id="toc-applications-concrètes" class="nav-link" data-scroll-target="#applications-concrètes">10. Applications Concrètes</a>
+  <ul class="collapse">
+  <li><a href="#segmentation-dimages" id="toc-segmentation-dimages" class="nav-link" data-scroll-target="#segmentation-dimages">1. Segmentation d’Images</a></li>
+  <li><a href="#reconnaissance-vocale" id="toc-reconnaissance-vocale" class="nav-link" data-scroll-target="#reconnaissance-vocale">2. Reconnaissance Vocale</a></li>
+  <li><a href="#détection-danomalies" id="toc-détection-danomalies" class="nav-link" data-scroll-target="#détection-danomalies">3. Détection d’Anomalies</a></li>
+  <li><a href="#compression-de-données" id="toc-compression-de-données" class="nav-link" data-scroll-target="#compression-de-données">4. Compression de Données</a></li>
+  </ul></li>
+  <li><a href="#conclusion-la-puissance-du-gmm" id="toc-conclusion-la-puissance-du-gmm" class="nav-link" data-scroll-target="#conclusion-la-puissance-du-gmm">Conclusion : La Puissance du GMM</a></li>
+  </ul></li>
+  <li><a href="#lalgorithme-em-et-le-modèle-de-mélange-gaussien-le-secret-des-responsabilités" id="toc-lalgorithme-em-et-le-modèle-de-mélange-gaussien-le-secret-des-responsabilités" class="nav-link" data-scroll-target="#lalgorithme-em-et-le-modèle-de-mélange-gaussien-le-secret-des-responsabilités">L’Algorithme EM et le Modèle de Mélange Gaussien : Le Secret des Responsabilités</a>
   <ul class="collapse">
   <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question</a></li>
-  <li><a href="#introduction-à-lalgorithme-em" id="toc-introduction-à-lalgorithme-em" class="nav-link" data-scroll-target="#introduction-à-lalgorithme-em">Introduction à l’Algorithme EM</a></li>
-  <li><a href="#le-problème-du-gmm-sans-variables-latentes" id="toc-le-problème-du-gmm-sans-variables-latentes" class="nav-link" data-scroll-target="#le-problème-du-gmm-sans-variables-latentes">Le Problème du GMM sans Variables Latentes</a></li>
-  <li><a href="#variables-latentes-et-vraisemblance-complète" id="toc-variables-latentes-et-vraisemblance-complète" class="nav-link" data-scroll-target="#variables-latentes-et-vraisemblance-complète">Variables Latentes et Vraisemblance Complète</a></li>
-  <li><a href="#le-concept-de-responsabilité-cœur-de-létape-e" id="toc-le-concept-de-responsabilité-cœur-de-létape-e" class="nav-link" data-scroll-target="#le-concept-de-responsabilité-cœur-de-létape-e">Le Concept de Responsabilité : Cœur de l’Étape E</a>
+  <li><a href="#introduction-le-problème-des-données-incomplètes" id="toc-introduction-le-problème-des-données-incomplètes" class="nav-link" data-scroll-target="#introduction-le-problème-des-données-incomplètes">Introduction : Le Problème des Données Incomplètes</a></li>
+  <li><a href="#quest-ce-que-lalgorithme-em" id="toc-quest-ce-que-lalgorithme-em" class="nav-link" data-scroll-target="#quest-ce-que-lalgorithme-em">1. Qu’est-ce que l’Algorithme EM ?</a>
   <ul class="collapse">
-  <li><a href="#interprétation-de-la-responsabilité" id="toc-interprétation-de-la-responsabilité" class="nav-link" data-scroll-target="#interprétation-de-la-responsabilité">Interprétation de la Responsabilité</a></li>
-  <li><a href="#propriétés-mathématiques" id="toc-propriétés-mathématiques" class="nav-link" data-scroll-target="#propriétés-mathématiques">Propriétés Mathématiques</a></li>
+  <li><a href="#définition-simple-1" id="toc-définition-simple-1" class="nav-link" data-scroll-target="#définition-simple-1">Définition Simple</a></li>
+  <li><a href="#le-problème-fondamental-résolu-par-em" id="toc-le-problème-fondamental-résolu-par-em" class="nav-link" data-scroll-target="#le-problème-fondamental-résolu-par-em">Le Problème Fondamental Résolu par EM</a></li>
   </ul></li>
-  <li><a href="#lalgorithme-em-pour-le-gmm-processus-complet" id="toc-lalgorithme-em-pour-le-gmm-processus-complet" class="nav-link" data-scroll-target="#lalgorithme-em-pour-le-gmm-processus-complet">L’Algorithme EM pour le GMM : Processus Complet</a>
+  <li><a href="#le-rapport-entre-em-et-le-modèle-de-mélange-gaussien" id="toc-le-rapport-entre-em-et-le-modèle-de-mélange-gaussien" class="nav-link" data-scroll-target="#le-rapport-entre-em-et-le-modèle-de-mélange-gaussien">2. Le Rapport Entre EM et le Modèle de Mélange Gaussien</a>
   <ul class="collapse">
-  <li><a href="#initialisation-1" id="toc-initialisation-1" class="nav-link" data-scroll-target="#initialisation-1">Initialisation</a></li>
-  <li><a href="#étape-e-expectation-calcul-des-responsabilités" id="toc-étape-e-expectation-calcul-des-responsabilités" class="nav-link" data-scroll-target="#étape-e-expectation-calcul-des-responsabilités">Étape E (Expectation) : Calcul des Responsabilités</a></li>
-  <li><a href="#étape-m-maximization-mise-à-jour-des-paramètres" id="toc-étape-m-maximization-mise-à-jour-des-paramètres" class="nav-link" data-scroll-target="#étape-m-maximization-mise-à-jour-des-paramètres">Étape M (Maximization) : Mise à Jour des Paramètres</a></li>
-  <li><a href="#convergence" id="toc-convergence" class="nav-link" data-scroll-target="#convergence">Convergence</a></li>
+  <li><a href="#le-gmm-un-cas-parfait-pour-em" id="toc-le-gmm-un-cas-parfait-pour-em" class="nav-link" data-scroll-target="#le-gmm-un-cas-parfait-pour-em">Le GMM : Un Cas Parfait pour EM</a></li>
+  <li><a href="#la-synergie-em-gmm" id="toc-la-synergie-em-gmm" class="nav-link" data-scroll-target="#la-synergie-em-gmm">La Synergie EM-GMM</a></li>
   </ul></li>
-  <li><a href="#relation-profonde-entre-em-et-gmm" id="toc-relation-profonde-entre-em-et-gmm" class="nav-link" data-scroll-target="#relation-profonde-entre-em-et-gmm">Relation Profonde entre EM et GMM</a>
+  <li><a href="#le-cœur-de-lalgorithme-le-concept-de-responsabilité" id="toc-le-cœur-de-lalgorithme-le-concept-de-responsabilité" class="nav-link" data-scroll-target="#le-cœur-de-lalgorithme-le-concept-de-responsabilité">3. Le Cœur de l’Algorithme : Le Concept de Responsabilité</a>
   <ul class="collapse">
-  <li><a href="#em-comme-solution-naturelle-pour-gmm" id="toc-em-comme-solution-naturelle-pour-gmm" class="nav-link" data-scroll-target="#em-comme-solution-naturelle-pour-gmm">1. EM comme Solution Naturelle pour GMM</a></li>
-  <li><a href="#les-responsabilités-comme-variables-latentes-souples" id="toc-les-responsabilités-comme-variables-latentes-souples" class="nav-link" data-scroll-target="#les-responsabilités-comme-variables-latentes-souples">2. Les Responsabilités comme “Variables Latentes Souples”</a></li>
-  <li><a href="#interprétation-géométrique" id="toc-interprétation-géométrique" class="nav-link" data-scroll-target="#interprétation-géométrique">3. Interprétation Géométrique</a></li>
-  <li><a href="#avantages-par-rapport-aux-méthodes-à-assignation-dure" id="toc-avantages-par-rapport-aux-méthodes-à-assignation-dure" class="nav-link" data-scroll-target="#avantages-par-rapport-aux-méthodes-à-assignation-dure">4. Avantages par rapport aux Méthodes à Assignation Dure</a></li>
+  <li><a href="#définition-intuitive" id="toc-définition-intuitive" class="nav-link" data-scroll-target="#définition-intuitive">Définition Intuitive</a></li>
+  <li><a href="#définition-mathématique" id="toc-définition-mathématique" class="nav-link" data-scroll-target="#définition-mathématique">Définition Mathématique</a></li>
+  <li><a href="#propriétés-essentielles-des-responsabilités" id="toc-propriétés-essentielles-des-responsabilités" class="nav-link" data-scroll-target="#propriétés-essentielles-des-responsabilités">Propriétés Essentielles des Responsabilités</a></li>
   </ul></li>
-  <li><a href="#exemple-concret-dapplication-des-responsabilités" id="toc-exemple-concret-dapplication-des-responsabilités" class="nav-link" data-scroll-target="#exemple-concret-dapplication-des-responsabilités">Exemple Concret d’Application des Responsabilités</a></li>
-  <li><a href="#limitations-et-considérations" id="toc-limitations-et-considérations" class="nav-link" data-scroll-target="#limitations-et-considérations">Limitations et Considérations</a>
+  <li><a href="#comment-fonctionne-lalgorithme-em-pour-le-gmm" id="toc-comment-fonctionne-lalgorithme-em-pour-le-gmm" class="nav-link" data-scroll-target="#comment-fonctionne-lalgorithme-em-pour-le-gmm">4. Comment Fonctionne l’Algorithme EM pour le GMM ?</a>
   <ul class="collapse">
-  <li><a href="#sensibilité-à-linitialisation" id="toc-sensibilité-à-linitialisation" class="nav-link" data-scroll-target="#sensibilité-à-linitialisation">Sensibilité à l’Initialisation</a></li>
+  <li><a href="#le-principe-en-deux-étapes" id="toc-le-principe-en-deux-étapes" class="nav-link" data-scroll-target="#le-principe-en-deux-étapes">Le Principe en Deux Étapes</a></li>
+  <li><a href="#étape-par-étape" id="toc-étape-par-étape" class="nav-link" data-scroll-target="#étape-par-étape">Étape par Étape</a></li>
+  </ul></li>
+  <li><a href="#visualisation-du-processus-em" id="toc-visualisation-du-processus-em" class="nav-link" data-scroll-target="#visualisation-du-processus-em">5. Visualisation du Processus EM</a>
+  <ul class="collapse">
+  <li><a href="#premier-cycle" id="toc-premier-cycle" class="nav-link" data-scroll-target="#premier-cycle">Premier Cycle</a></li>
+  <li><a href="#convergence-progressive" id="toc-convergence-progressive" class="nav-link" data-scroll-target="#convergence-progressive">Convergence Progressive</a></li>
+  </ul></li>
+  <li><a href="#pourquoi-les-responsabilités-sont-elles-si-importantes" id="toc-pourquoi-les-responsabilités-sont-elles-si-importantes" class="nav-link" data-scroll-target="#pourquoi-les-responsabilités-sont-elles-si-importantes">6. Pourquoi les Responsabilités Sont-elles si Importantes ?</a>
+  <ul class="collapse">
+  <li><a href="#elles-transforment-un-problème-difficile-en-problème-simple" id="toc-elles-transforment-un-problème-difficile-en-problème-simple" class="nav-link" data-scroll-target="#elles-transforment-un-problème-difficile-en-problème-simple">Elles Transforment un Problème Difficile en Problème Simple</a></li>
+  <li><a href="#elles-permettent-lassignation-douce" id="toc-elles-permettent-lassignation-douce" class="nav-link" data-scroll-target="#elles-permettent-lassignation-douce">Elles Permettent l’Assignation “Douce”</a></li>
+  </ul></li>
+  <li><a href="#exemple-concret-séparation-de-deux-espèces-danimaux" id="toc-exemple-concret-séparation-de-deux-espèces-danimaux" class="nav-link" data-scroll-target="#exemple-concret-séparation-de-deux-espèces-danimaux">7. Exemple Concret : Séparation de Deux Espèces d’Animaux</a>
+  <ul class="collapse">
+  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
+  <li><a href="#application-dem" id="toc-application-dem" class="nav-link" data-scroll-target="#application-dem">Application d’EM</a></li>
+  <li><a href="#interprétation-biologique" id="toc-interprétation-biologique" class="nav-link" data-scroll-target="#interprétation-biologique">Interprétation Biologique</a></li>
+  </ul></li>
+  <li><a href="#la-relation-profonde-em-gmm" id="toc-la-relation-profonde-em-gmm" class="nav-link" data-scroll-target="#la-relation-profonde-em-gmm">8. La Relation Profonde EM-GMM</a>
+  <ul class="collapse">
+  <li><a href="#em-comme-moteur-du-gmm" id="toc-em-comme-moteur-du-gmm" class="nav-link" data-scroll-target="#em-comme-moteur-du-gmm">EM comme “Moteur” du GMM</a></li>
+  <li><a href="#la-boucle-vertueuse" id="toc-la-boucle-vertueuse" class="nav-link" data-scroll-target="#la-boucle-vertueuse">La Boucle Vertueuse</a></li>
+  <li><a href="#différence-avec-k-means" id="toc-différence-avec-k-means" class="nav-link" data-scroll-target="#différence-avec-k-means">Différence avec K-means</a></li>
+  </ul></li>
+  <li><a href="#applications-pratiques-de-lem-avec-gmm" id="toc-applications-pratiques-de-lem-avec-gmm" class="nav-link" data-scroll-target="#applications-pratiques-de-lem-avec-gmm">9. Applications Pratiques de l’EM avec GMM</a>
+  <ul class="collapse">
+  <li><a href="#reconnaissance-vocale-1" id="toc-reconnaissance-vocale-1" class="nav-link" data-scroll-target="#reconnaissance-vocale-1">1. Reconnaissance Vocale</a></li>
+  <li><a href="#segmentation-dimages-1" id="toc-segmentation-dimages-1" class="nav-link" data-scroll-target="#segmentation-dimages-1">2. Segmentation d’Images</a></li>
+  <li><a href="#détection-de-fraude" id="toc-détection-de-fraude" class="nav-link" data-scroll-target="#détection-de-fraude">3. Détection de Fraude</a></li>
+  </ul></li>
+  <li><a href="#limitations-et-solutions" id="toc-limitations-et-solutions" class="nav-link" data-scroll-target="#limitations-et-solutions">10. Limitations et Solutions</a>
+  <ul class="collapse">
+  <li><a href="#problème-dinitialisation" id="toc-problème-dinitialisation" class="nav-link" data-scroll-target="#problème-dinitialisation">Problème d’Initialisation</a></li>
   <li><a href="#choix-du-nombre-de-composantes" id="toc-choix-du-nombre-de-composantes" class="nav-link" data-scroll-target="#choix-du-nombre-de-composantes">Choix du Nombre de Composantes</a></li>
   <li><a href="#complexité-calculatoire" id="toc-complexité-calculatoire" class="nav-link" data-scroll-target="#complexité-calculatoire">Complexité Calculatoire</a></li>
   </ul></li>
-  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1">Conclusion</a></li>
+  <li><a href="#conclusion-lélégance-de-lapproche-em" id="toc-conclusion-lélégance-de-lapproche-em" class="nav-link" data-scroll-target="#conclusion-lélégance-de-lapproche-em">Conclusion : L’Élégance de l’Approche EM</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds61q.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds61.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds61q.html">Explication pédagogique du Modèle de Mélange Gaussien (Gaussian Mixture Model - GMM)</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds61.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds61q.html">Le Modèle de Mélange Gaussien (GMM) : Un Guide Complet et Intuitif</a></li></ol></nav></header>
 
 
 
 
 
-<section id="explication-pédagogique-du-modèle-de-mélange-gaussien-gaussian-mixture-model---gmm" class="level1">
-<h1>Explication pédagogique du Modèle de Mélange Gaussien (Gaussian Mixture Model - GMM)</h1>
+<section id="le-modèle-de-mélange-gaussien-gmm-un-guide-complet-et-intuitif" class="level1">
+<h1>Le Modèle de Mélange Gaussien (GMM) : Un Guide Complet et Intuitif</h1>
 <section id="question" class="level2">
 <h2 class="anchored" data-anchor-id="question">Question</h2>
 <p>Expliquez le modèle de mélange gaussien, y compris les hypothèses, le calcul et l’interprétation du modèle. Quels sont ses paramètres ? Expliquez comment les optimiser à partir de certaines données.</p>
 </section>
+<section id="introduction-lidée-fondamentale" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-lidée-fondamentale">Introduction : L’Idée Fondamentale</h2>
+<p>Imaginez que vous regardez un ciel étoilé. Certaines étoiles semblent se regrouper en constellations, d’autres sont isolées. Le <strong>Modèle de Mélange Gaussien</strong> (Gaussian Mixture Model - GMM) est comme une tentative mathématique de décrire ce ciel : il modélise les données comme provenant de plusieurs “constellations” (les composantes gaussiennes) qui se chevauchent plus ou moins.</p>
+</section>
 <section id="quest-ce-quun-modèle-de-mélange-gaussien" class="level2">
-<h2 class="anchored" data-anchor-id="quest-ce-quun-modèle-de-mélange-gaussien">Qu’est-ce qu’un Modèle de Mélange Gaussien ?</h2>
-<p>Un <strong>Modèle de Mélange Gaussien</strong> (GMM) est un modèle probabiliste utilisé pour modéliser des distributions de données complexes en les représentant comme une combinaison pondérée de plusieurs distributions gaussiennes (normales) sous-jacentes.</p>
-<p>C’est un outil puissant pour :</p>
+<h2 class="anchored" data-anchor-id="quest-ce-quun-modèle-de-mélange-gaussien">1. Qu’est-ce qu’un Modèle de Mélange Gaussien ?</h2>
+<section id="définition-simple" class="level3">
+<h3 class="anchored" data-anchor-id="définition-simple">Définition Simple</h3>
+<p>Un GMM est un <strong>modèle probabiliste</strong> qui représente une distribution de données complexe comme une combinaison (un “mélange”) de plusieurs distributions gaussiennes (normales) plus simples.</p>
+<p><strong>Analogie culinaire</strong> : Imaginez une pâte à cookie avec deux types de pépites de chocolat (noir et blanc). Un GMM essaierait de modéliser cette pâte comme : - 60% de pâte avec des pépites noires (une gaussienne) - 40% de pâte avec des pépites blanches (une autre gaussienne)</p>
+</section>
+<section id="formulation-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-mathématique">Formulation Mathématique</h3>
+<p>Un GMM avec <span class="math inline">\(c\)</span> composantes s’écrit :</p>
+<p><span class="math display">\[
+f(x) = \sum_{j=1}^{c} \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)
+\]</span></p>
+<p>Décomposons chaque élément :</p>
 <ul>
-<li>L’estimation de densité non paramétrique</li>
-<li>La classification non supervisée (clustering)</li>
-<li>La découverte de structures latentes dans les données</li>
+<li><span class="math inline">\(f(x)\)</span> : La densité de probabilité totale au point <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(\sum_{j=1}^{c}\)</span> : La somme sur toutes les composantes <span class="math inline">\(c\)</span></li>
+<li><span class="math inline">\(\pi_j\)</span> : Le poids de la composante <span class="math inline">\(j\)</span> (sa proportion dans le mélange)</li>
+<li><span class="math inline">\(\mathcal{N}(x|\mu_j, \Sigma_j)\)</span> : Une distribution gaussienne (normale)</li>
 </ul>
 </section>
-<section id="hypothèses-fondamentales-du-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="hypothèses-fondamentales-du-gmm">Hypothèses fondamentales du GMM</h2>
-<p>Le GMM repose sur trois hypothèses principales :</p>
-<section id="structure-du-mélange" class="level3">
-<h3 class="anchored" data-anchor-id="structure-du-mélange">1. Structure du mélange</h3>
-<p>Les données sont générées par un processus en deux étapes :</p>
+</section>
+<section id="les-trois-hypothèses-fondamentales" class="level2">
+<h2 class="anchored" data-anchor-id="les-trois-hypothèses-fondamentales">2. Les Trois Hypothèses Fondamentales</h2>
+<section id="hypothèse-1-structure-de-mélange" class="level3">
+<h3 class="anchored" data-anchor-id="hypothèse-1-structure-de-mélange">Hypothèse 1 : Structure de Mélange</h3>
+<p>Les données sont générées par un processus en deux étapes : 1. <strong>Tirage d’une composante</strong> : On choisit aléatoirement une composante <span class="math inline">\(j\)</span> avec probabilité <span class="math inline">\(\pi_j\)</span> 2. <strong>Génération d’un point</strong> : On génère <span class="math inline">\(x\)</span> selon la gaussienne <span class="math inline">\(\mathcal{N}(\mu_j, \Sigma_j)\)</span></p>
+<p><strong>Analogie</strong> : Pour choisir un bonbon dans un sac : 1. On choisit d’abord le type de bonbon (60% chance d’être rouge, 40% d’être bleu) 2. On tire ensuite un bonbon de ce type</p>
+</section>
+<section id="hypothèse-2-forme-gaussienne-des-composantes" class="level3">
+<h3 class="anchored" data-anchor-id="hypothèse-2-forme-gaussienne-des-composantes">Hypothèse 2 : Forme Gaussienne des Composantes</h3>
+<p>Chaque composante suit une <strong>distribution normale multivariée</strong> :</p>
+<p><span class="math display">\[
+\mathcal{N}(x|\mu_j, \Sigma_j) = \frac{1}{(2\pi)^{D/2}|\Sigma_j|^{1/2}} \exp\left(-\frac{1}{2}(x - \mu_j)^T \Sigma_j^{-1}(x - \mu_j)\right)
+\]</span></p>
+<p>Où : * <span class="math inline">\(D\)</span> est la dimension des données * <span class="math inline">\(|\Sigma_j|\)</span> est le déterminant de la matrice <span class="math inline">\(\Sigma_j\)</span> * <span class="math inline">\((x - \mu_j)^T \Sigma_j^{-1}(x - \mu_j)\)</span> est la distance de Mahalanobis</p>
+</section>
+<section id="hypothèse-3-indépendance-conditionnelle" class="level3">
+<h3 class="anchored" data-anchor-id="hypothèse-3-indépendance-conditionnelle">Hypothèse 3 : Indépendance Conditionnelle</h3>
+<p>Les observations sont indépendantes les unes des autres <strong>étant donné</strong> les composantes auxquelles elles appartiennent.</p>
+</section>
+</section>
+<section id="les-paramètres-du-modèle" class="level2">
+<h2 class="anchored" data-anchor-id="les-paramètres-du-modèle">3. Les Paramètres du Modèle</h2>
+<p>Un GMM a <strong>trois types de paramètres</strong> à apprendre :</p>
+<section id="les-poids-pi_j-mixing-weights" class="level3">
+<h3 class="anchored" data-anchor-id="les-poids-pi_j-mixing-weights">1. Les Poids <span class="math inline">\(\pi_j\)</span> (Mixing Weights)</h3>
+<ul>
+<li><strong>Ce que c’est</strong> : La proportion de chaque composante dans le mélange</li>
+<li><strong>Contraintes</strong> :
+<ul>
+<li><span class="math inline">\(\sum_{j=1}^c \pi_j = 1\)</span> (la somme fait 100%)</li>
+<li><span class="math inline">\(\pi_j \geq 0\)</span> pour tout <span class="math inline">\(j\)</span> (pas de poids négatifs)</li>
+</ul></li>
+<li><strong>Interprétation</strong> : Si <span class="math inline">\(\pi_1 = 0.6\)</span>, cela signifie que 60% des données (en probabilité) viennent de la première composante</li>
+</ul>
+</section>
+<section id="les-moyennes-mu_j-means" class="level3">
+<h3 class="anchored" data-anchor-id="les-moyennes-mu_j-means">2. Les Moyennes <span class="math inline">\(\mu_j\)</span> (Means)</h3>
+<ul>
+<li><strong>Ce que c’est</strong> : Le centre de chaque gaussienne</li>
+<li><strong>Dimension</strong> : <span class="math inline">\(\mu_j \in \mathbb{R}^D\)</span> (un vecteur de <span class="math inline">\(D\)</span> valeurs)</li>
+<li><strong>Interprétation</strong> : Le point “typique” de la composante <span class="math inline">\(j\)</span></li>
+</ul>
+</section>
+<section id="les-matrices-de-covariance-sigma_j-covariance-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="les-matrices-de-covariance-sigma_j-covariance-matrices">3. Les Matrices de Covariance <span class="math inline">\(\Sigma_j\)</span> (Covariance Matrices)</h3>
+<ul>
+<li><strong>Ce que c’est</strong> : Décrit la forme, l’orientation et la dispersion de chaque gaussienne</li>
+<li><strong>Propriétés</strong> :
+<ul>
+<li>Matrice <span class="math inline">\(D \times D\)</span> (carrée)</li>
+<li>Symétrique : <span class="math inline">\(\Sigma_j = \Sigma_j^T\)</span></li>
+<li>Définie positive (toutes les valeurs propres &gt; 0)</li>
+</ul></li>
+<li><strong>Interprétation géométrique</strong> :
+<ul>
+<li>La diagonale : les variances dans chaque direction</li>
+<li>Les éléments hors-diagonale : les covariances (corrélations entre dimensions)</li>
+</ul></li>
+</ul>
+<p><strong>L’ensemble des paramètres</strong> : <span class="math inline">\(\theta = \{\pi_j, \mu_j, \Sigma_j\}_{j=1}^c\)</span></p>
+</section>
+</section>
+<section id="calcul-et-interprétation" class="level2">
+<h2 class="anchored" data-anchor-id="calcul-et-interprétation">4. Calcul et Interprétation</h2>
+<section id="comment-calcule-t-on-la-densité" class="level3">
+<h3 class="anchored" data-anchor-id="comment-calcule-t-on-la-densité">Comment Calcule-t-on la Densité ?</h3>
+<p>Pour un point <span class="math inline">\(x\)</span>, la densité selon le GMM est :</p>
 <ol type="1">
-<li>Sélection aléatoire d’une composante gaussienne <span class="math inline">\(j\)</span> avec probabilité <span class="math inline">\(\pi_j\)</span></li>
-<li>Génération d’un point de données <span class="math inline">\(x\)</span> à partir de la distribution gaussienne <span class="math inline">\(\mathcal{N}(\mu_j, \Sigma_j)\)</span></li>
+<li><strong>Pour chaque composante <span class="math inline">\(j\)</span></strong> :
+<ul>
+<li>Calculer <span class="math inline">\(\mathcal{N}(x|\mu_j, \Sigma_j)\)</span> : la “hauteur” de la gaussienne <span class="math inline">\(j\)</span> au point <span class="math inline">\(x\)</span></li>
+<li>Multiplier par <span class="math inline">\(\pi_j\)</span> : pondérer par l’importance de la composante</li>
+</ul></li>
+<li><strong>Sommer sur toutes les composantes</strong> :
+<ul>
+<li><span class="math inline">\(f(x) = \pi_1 \times \text{hauteur}_1 + \pi_2 \times \text{hauteur}_2 + ... + \pi_c \times \text{hauteur}_c\)</span></li>
+</ul></li>
 </ol>
 </section>
-<section id="forme-des-composantes" class="level3">
-<h3 class="anchored" data-anchor-id="forme-des-composantes">2. Forme des composantes</h3>
-<p>Chaque composante sous-jacente suit une distribution gaussienne multivariée :</p>
-<p><span class="math display">\[
-\phi(x, \theta_j) = \mathcal{N}(x|\mu_j, \Sigma_j) = \frac{1}{(2\pi)^{D/2}|\Sigma_j|^{1/2}} \exp\left(-\frac{1}{2}(x - \mu_j)^T \Sigma_j^{-1}(x - \mu_j)\right)
-\]</span></p>
-<p>où <span class="math inline">\(D\)</span> est la dimension des données.</p>
-</section>
-<section id="indépendance-conditionnelle" class="level3">
-<h3 class="anchored" data-anchor-id="indépendance-conditionnelle">3. Indépendance conditionnelle</h3>
-<p>Les observations sont indépendantes et identiquement distribuées (i.i.d.) étant donné les paramètres du modèle.</p>
+<section id="interprétation-visuelle" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-visuelle">Interprétation Visuelle</h3>
+<p>Imaginez un paysage de montagnes : * Chaque gaussienne est une montagne * <span class="math inline">\(\mu_j\)</span> est le sommet de la montagne * <span class="math inline">\(\Sigma_j\)</span> décrit comment la montagne s’étale (est-elle ronde ? allongée ?) * <span class="math inline">\(\pi_j\)</span> est la hauteur relative de la montagne * <span class="math inline">\(f(x)\)</span> est l’altitude totale à la position <span class="math inline">\(x\)</span></p>
 </section>
 </section>
-<section id="paramètres-du-modèle" class="level2">
-<h2 class="anchored" data-anchor-id="paramètres-du-modèle">Paramètres du modèle</h2>
-<p>Un GMM à <span class="math inline">\(c\)</span> composantes possède trois types de paramètres :</p>
-<section id="les-poids-de-mélange-pi_j" class="level3">
-<h3 class="anchored" data-anchor-id="les-poids-de-mélange-pi_j">1. Les poids de mélange (<span class="math inline">\(\pi_j\)</span>)</h3>
+<section id="variables-latentes-la-clé-de-linterprétation" class="level2">
+<h2 class="anchored" data-anchor-id="variables-latentes-la-clé-de-linterprétation">5. Variables Latentes : La Clé de l’Interprétation</h2>
+<section id="le-problème-des-étiquettes-manquantes" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-des-étiquettes-manquantes">Le Problème des Étiquettes Manquantes</h3>
+<p>Dans un problème réel, <strong>nous ne savons pas</strong> quelle composante a généré chaque point. C’est l’information manquante que nous appelons <strong>variable latente</strong>.</p>
+<p>Notons <span class="math inline">\(z_i\)</span> la variable latente pour le point <span class="math inline">\(x_i\)</span> : * <span class="math inline">\(z_i = j\)</span> signifie “<span class="math inline">\(x_i\)</span> vient de la composante <span class="math inline">\(j\)</span>” * Nous n’observons pas les <span class="math inline">\(z_i\)</span>, seulement les <span class="math inline">\(x_i\)</span></p>
+</section>
+<section id="reformulation-probabiliste" class="level3">
+<h3 class="anchored" data-anchor-id="reformulation-probabiliste">Reformulation Probabiliste</h3>
+<p>Avec les variables latentes, le modèle devient :</p>
 <ul>
-<li>Représentent la proportion de données attribuée à chaque composante</li>
-<li>Doivent satisfaire : <span class="math inline">\(\sum_{j=1}^c \pi_j = 1\)</span> et <span class="math inline">\(\pi_j \geq 0\)</span></li>
-<li>Interprétation : probabilité a priori qu’un point soit généré par la composante <span class="math inline">\(j\)</span></li>
+<li><strong>Probabilité a priori</strong> : <span class="math inline">\(\mathbb{P}(z = j) = \pi_j\)</span></li>
+<li><strong>Probabilité conditionnelle</strong> : <span class="math inline">\(\mathbb{P}(x|z = j) = \mathcal{N}(x|\mu_j, \Sigma_j)\)</span></li>
+<li><strong>Probabilité jointe</strong> : <span class="math inline">\(\mathbb{P}(x, z = j) = \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)\)</span></li>
+<li><strong>Probabilité marginale</strong> (celle qu’on observe) : <span class="math inline">\(\mathbb{P}(x) = \sum_j \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)\)</span></li>
 </ul>
-</section>
-<section id="les-moyennes-mu_j" class="level3">
-<h3 class="anchored" data-anchor-id="les-moyennes-mu_j">2. Les moyennes (<span class="math inline">\(\mu_j\)</span>)</h3>
-<ul>
-<li>Centres des distributions gaussiennes</li>
-<li><span class="math inline">\(\mu_j \in \mathbb{R}^D\)</span> pour chaque composante <span class="math inline">\(j\)</span></li>
-</ul>
-</section>
-<section id="les-matrices-de-covariance-sigma_j" class="level3">
-<h3 class="anchored" data-anchor-id="les-matrices-de-covariance-sigma_j">3. Les matrices de covariance (<span class="math inline">\(\Sigma_j\)</span>)</h3>
-<ul>
-<li>Décrivent la forme, l’orientation et la dispersion de chaque composante</li>
-<li><span class="math inline">\(\Sigma_j \in \mathbb{R}^{D \times D}\)</span> (matrice symétrique définie positive)</li>
-<li>Peuvent être contraintes (diagonale, sphérique) pour réduire le nombre de paramètres</li>
-</ul>
-<p>L’ensemble complet des paramètres est noté : <span class="math inline">\(\theta = \{\pi_j, \mu_j, \Sigma_j\}_{j=1}^c\)</span></p>
-</section>
-</section>
-<section id="formulation-mathématique" class="level2">
-<h2 class="anchored" data-anchor-id="formulation-mathématique">Formulation mathématique</h2>
-<p>La densité de probabilité d’un GMM s’écrit comme une somme pondérée de densités gaussiennes :</p>
-<p><span class="math display">\[
-f(x|\theta) = \sum_{j=1}^{c} \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)
-\]</span></p>
-<p>Cette formulation permet d’approximer des distributions complexes et multimodales.</p>
-</section>
-<section id="interprétation-probabiliste" class="level2">
-<h2 class="anchored" data-anchor-id="interprétation-probabiliste">Interprétation probabiliste</h2>
-<section id="vue-comme-modèle-génératif" class="level3">
-<h3 class="anchored" data-anchor-id="vue-comme-modèle-génératif">Vue comme modèle génératif</h3>
-<p>Le GMM peut être interprété comme un <strong>modèle génératif</strong> :</p>
-<ol type="1">
-<li>Choisir une composante <span class="math inline">\(j\)</span> avec probabilité <span class="math inline">\(\pi_j\)</span></li>
-<li>Générer <span class="math inline">\(x\)</span> à partir de <span class="math inline">\(\mathcal{N}(\mu_j, \Sigma_j)\)</span></li>
-</ol>
-<p>Mathématiquement, si on introduit une variable latente <span class="math inline">\(z\)</span> indiquant la composante d’origine :</p>
-<p><span class="math display">\[
-\mathbb{P}(z = j) = \pi_j
-\]</span> <span class="math display">\[
-\mathbb{P}(x|z = j, \theta) = \mathcal{N}(x|\mu_j, \Sigma_j)
-\]</span></p>
-</section>
-<section id="responsabilités-soft-assignments" class="level3">
-<h3 class="anchored" data-anchor-id="responsabilités-soft-assignments">Responsabilités (soft assignments)</h3>
-<p>Pour un point de données <span class="math inline">\(x_i\)</span>, la <strong>responsabilité</strong> <span class="math inline">\(\gamma_{ij}\)</span> représente la probabilité postérieure que <span class="math inline">\(x_i\)</span> provienne de la composante <span class="math inline">\(j\)</span> :</p>
-<p><span class="math display">\[
-\gamma_{ij} = \mathbb{P}(z_i = j | x_i, \theta) = \frac{\pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)}{\sum_{k=1}^c \pi_k \mathcal{N}(x_i|\mu_k, \Sigma_k)}
-\]</span></p>
-<p>Contrairement au K-means qui effectue des <strong>assignations dures</strong> (chaque point à un seul cluster), le GMM réalise des <strong>assignations douces</strong> où chaque point appartient partiellement à tous les clusters.</p>
 </section>
 </section>
 <section id="optimisation-des-paramètres-lalgorithme-em" class="level2">
-<h2 class="anchored" data-anchor-id="optimisation-des-paramètres-lalgorithme-em">Optimisation des paramètres : l’algorithme EM</h2>
-<p>L’estimation des paramètres <span class="math inline">\(\theta\)</span> se fait par <strong>maximisation de la vraisemblance</strong> (MLE) via l’algorithme <strong>Expectation-Maximization</strong> (EM).</p>
-<section id="problème-de-la-vraisemblance" class="level3">
-<h3 class="anchored" data-anchor-id="problème-de-la-vraisemblance">Problème de la vraisemblance</h3>
-<p>Étant donné <span class="math inline">\(N\)</span> observations <span class="math inline">\(\mathcal{X} = \{x_1, ..., x_N\}\)</span>, la log-vraisemblance est :</p>
+<h2 class="anchored" data-anchor-id="optimisation-des-paramètres-lalgorithme-em">6. Optimisation des Paramètres : L’Algorithme EM</h2>
+<section id="le-défi" class="level3">
+<h3 class="anchored" data-anchor-id="le-défi">Le Défi</h3>
+<p>Nous voulons trouver les paramètres <span class="math inline">\(\theta\)</span> qui <strong>maximisent la vraisemblance</strong> des données observées :</p>
 <p><span class="math display">\[
-\mathcal{L}(\theta|\mathcal{X}) = \sum_{i=1}^N \log \sum_{j=1}^c \pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)
+\mathcal{L}(\theta) = \prod_{i=1}^N f(x_i|\theta) = \prod_{i=1}^N \sum_{j=1}^{c} \pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)
 \]</span></p>
-<p>La somme à l’intérieur du logarithme rend l’optimisation directe difficile.</p>
+<p>Le problème est le <strong>logarithme d’une somme</strong> dans la log-vraisemblance :</p>
+<p><span class="math display">\[
+\log \mathcal{L}(\theta) = \sum_{i=1}^N \log \left( \sum_{j=1}^{c} \pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j) \right)
+\]</span></p>
+<p>Difficile à optimiser directement !</p>
 </section>
-<section id="présentation-de-lalgorithme-em" class="level3">
-<h3 class="anchored" data-anchor-id="présentation-de-lalgorithme-em">Présentation de l’algorithme EM</h3>
-<p>EM est un algorithme itératif qui procède en deux étapes alternées :</p>
+<section id="la-solution-algorithme-em-expectation-maximization" class="level3">
+<h3 class="anchored" data-anchor-id="la-solution-algorithme-em-expectation-maximization">La Solution : Algorithme EM (Expectation-Maximization)</h3>
+<p>EM résout ce problème par une <strong>approche itérative en deux étapes</strong> :</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph TD
-    A[Initialisation des paramètres θ⁽⁰⁾] --&gt; B{E-step};
-    B --&gt; C[Calcul des responsabilités γᵢⱼ];
-    C --&gt; D{M-step};
-    D --&gt; E[Mise à jour des paramètres θ⁽ᵏ⁺¹⁾];
-    E --&gt; F{Convergence?};
-    F -- Non --&gt; B;
-    F -- Oui --&gt; G[θ optimal];
+    A[Initialisation aléatoire] --&gt; B[Étape E: Calcul des responsabilités];
+    B --&gt; C[Étape M: Mise à jour des paramètres];
+    C --&gt; D{Convergence?};
+    D -- Non --&gt; B;
+    D -- Oui --&gt; E[Paramètres optimaux];
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="étape-0-initialisation" class="level4">
+<h4 class="anchored" data-anchor-id="étape-0-initialisation">Étape 0 : Initialisation</h4>
+<p>Nous commençons avec des paramètres initiaux : * <span class="math inline">\(\pi_j^{(0)} = 1/c\)</span> (poids égaux) * <span class="math inline">\(\mu_j^{(0)}\)</span> choisis aléatoirement parmi les données * <span class="math inline">\(\Sigma_j^{(0)} = I\)</span> (matrice identité)</p>
+</section>
+<section id="étape-e-expectation-le-calcul-des-responsabilités" class="level4">
+<h4 class="anchored" data-anchor-id="étape-e-expectation-le-calcul-des-responsabilités">Étape E (Expectation) : Le Calcul des Responsabilités</h4>
+<p>C’est l’étape cruciale ! Nous calculons pour chaque point <span class="math inline">\(x_i\)</span> et chaque composante <span class="math inline">\(j\)</span> :</p>
+<p><span class="math display">\[
+\gamma_{ij} = \mathbb{P}(z_i = j | x_i, \theta) = \frac{\pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)}{\sum_{k=1}^c \pi_k \mathcal{N}(x_i|\mu_k, \Sigma_k)}
+\]</span></p>
+<p><strong>Interprétation intuitive</strong> : <span class="math inline">\(\gamma_{ij}\)</span> répond à la question : “Si je vois le point <span class="math inline">\(x_i\)</span>, quelle est la probabilité qu’il vienne de la composante <span class="math inline">\(j\)</span> ?”</p>
+<p><strong>Propriété importante</strong> : <span class="math inline">\(\sum_{j=1}^c \gamma_{ij} = 1\)</span> pour tout <span class="math inline">\(i\)</span>. Chaque point est “distribué” entre les composantes.</p>
+</section>
+<section id="étape-m-maximization-mise-à-jour-des-paramètres" class="level4">
+<h4 class="anchored" data-anchor-id="étape-m-maximization-mise-à-jour-des-paramètres">Étape M (Maximization) : Mise à Jour des Paramètres</h4>
+<p>Maintenant, nous utilisons les responsabilités pour mettre à jour les paramètres :</p>
+<ol type="1">
+<li><p><strong>Nouveaux poids</strong> :</p>
+<p><span class="math display">\[
+\pi_j^{\text{nouveau}} = \frac{1}{N} \sum_{i=1}^N \gamma_{ij}
+\]</span></p>
+<p><strong>Interprétation</strong> : La proportion moyenne de responsabilité attribuée à la composante <span class="math inline">\(j\)</span>.</p></li>
+<li><p><strong>Nouvelles moyennes</strong> :</p>
+<p><span class="math display">\[
+\mu_j^{\text{nouveau}} = \frac{\sum_{i=1}^N \gamma_{ij} x_i}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interprétation</strong> : La moyenne pondérée des points, avec <span class="math inline">\(\gamma_{ij}\)</span> comme poids.</p></li>
+<li><p><strong>Nouvelles covariances</strong> :</p>
+<p><span class="math display">\[
+\Sigma_j^{\text{nouveau}} = \frac{\sum_{i=1}^N \gamma_{ij} (x_i - \mu_j^{\text{nouveau}})(x_i - \mu_j^{\text{nouveau}})^T}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interprétation</strong> : La covariance pondérée autour de la nouvelle moyenne.</p></li>
+</ol>
+</section>
+<section id="itération-jusquà-convergence" class="level4">
+<h4 class="anchored" data-anchor-id="itération-jusquà-convergence">Itération jusqu’à Convergence</h4>
+<p>Nous répétons les étapes E et M jusqu’à ce que : * Les paramètres changent très peu * La vraisemblance ne s’améliore plus significativement</p>
+</section>
+</section>
+</section>
+<section id="pourquoi-ça-marche-lintuition" class="level2">
+<h2 class="anchored" data-anchor-id="pourquoi-ça-marche-lintuition">7. Pourquoi Ça Marche ? L’Intuition</h2>
+<section id="lanalogie-du-professeur-et-des-élèves" class="level3">
+<h3 class="anchored" data-anchor-id="lanalogie-du-professeur-et-des-élèves">L’Analogie du Professeur et des Élèves</h3>
+<p>Imaginez un professeur qui veut comprendre deux groupes d’élèves dans sa classe (les “matheux” et les “littéraires”), mais il ne sait pas qui appartient à quel groupe.</p>
+<ol type="1">
+<li><p><strong>Initialisation</strong> : Le professeur fait une première hypothèse sur les caractéristiques de chaque groupe.</p></li>
+<li><p><strong>Étape E</strong> : Pour chaque élève, le professeur estime la probabilité qu’il soit “matheux” ou “littéraire” selon ses notes actuelles.</p></li>
+<li><p><strong>Étape M</strong> : Maintenant, le professeur redéfinit ce qu’est un “matheux” et un “littéraire” en regardant les élèves probablement dans chaque groupe.</p></li>
+<li><p><strong>Répétition</strong> : Avec ces nouvelles définitions, il réévalue les probabilités, et ainsi de suite.</p></li>
+</ol>
+</section>
+<section id="la-magie-des-responsabilités-douces" class="level3">
+<h3 class="anchored" data-anchor-id="la-magie-des-responsabilités-douces">La Magie des Responsabilités “Douces”</h3>
+<p>Contrairement au K-means qui dit “cet élève est soit matheux, soit littéraire”, EM dit “cet élève est peut-être 70% matheux et 30% littéraire”. Cette <strong>assignation douce</strong> permet une modélisation plus nuancée.</p>
+</section>
+</section>
+<section id="exemple-concret-pas-à-pas" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-concret-pas-à-pas">8. Exemple Concret Pas à Pas</h2>
+<section id="données-tailles-danimaux" class="level3">
+<h3 class="anchored" data-anchor-id="données-tailles-danimaux">Données : Tailles d’animaux</h3>
+<p>Supposons que nous mesurions des animaux et obtenions ces tailles (en cm) : [10, 12, 14, 90, 95, 100]</p>
+<p>Il semble y avoir deux groupes : petits animaux (10-14 cm) et grands animaux (90-100 cm).</p>
+</section>
+<section id="étape-par-étape-avec-em" class="level3">
+<h3 class="anchored" data-anchor-id="étape-par-étape-avec-em">Étape par Étape avec EM</h3>
+<ol type="1">
+<li><strong>Initialisation</strong> :
+<ul>
+<li><span class="math inline">\(c = 2\)</span> (deux composantes)</li>
+<li><span class="math inline">\(\pi_1 = \pi_2 = 0.5\)</span></li>
+<li><span class="math inline">\(\mu_1 = 12\)</span>, <span class="math inline">\(\mu_2 = 95\)</span> (choisis approximativement)</li>
+<li><span class="math inline">\(\Sigma_1 = \Sigma_2 = 1\)</span> (variance unitaire)</li>
+</ul></li>
+<li><strong>Première Étape E</strong> :
+<ul>
+<li>Pour <span class="math inline">\(x = 10\)</span> : <span class="math inline">\(\gamma_{11} \approx 0.95\)</span>, <span class="math inline">\(\gamma_{12} \approx 0.05\)</span></li>
+<li>Pour <span class="math inline">\(x = 95\)</span> : <span class="math inline">\(\gamma_{21} \approx 0.01\)</span>, <span class="math inline">\(\gamma_{22} \approx 0.99\)</span></li>
+</ul></li>
+<li><strong>Première Étape M</strong> :
+<ul>
+<li><span class="math inline">\(\pi_1^{\text{nouveau}} = (0.95+0.8+0.6+0.05+0.01+0.01)/6 \approx 0.40\)</span></li>
+<li><span class="math inline">\(\pi_2^{\text{nouveau}} \approx 0.60\)</span></li>
+<li><span class="math inline">\(\mu_1^{\text{nouveau}} \approx 12.5\)</span>, <span class="math inline">\(\mu_2^{\text{nouveau}} \approx 94.5\)</span></li>
+</ul></li>
+<li><strong>Itérations suivantes</strong> : Les paramètres se raffinent à chaque itération.</li>
+</ol>
+</section>
+</section>
+<section id="aspects-pratiques-importants" class="level2">
+<h2 class="anchored" data-anchor-id="aspects-pratiques-importants">9. Aspects Pratiques Importants</h2>
+<section id="choix-du-nombre-de-composantes-c" class="level3">
+<h3 class="anchored" data-anchor-id="choix-du-nombre-de-composantes-c">Choix du Nombre de Composantes (<span class="math inline">\(c\)</span>)</h3>
+<p>Comment décider combien de gaussiennes utiliser ?</p>
+<p><strong>Méthodes</strong> : 1. <strong>Critère d’Information Bayésien (BIC)</strong> : Pénalise les modèles trop complexes</p>
+<p><span class="math display">\[
+   \text{BIC} = -2 \log \mathcal{L} + k \log N
+   \]</span></p>
+<p>où <span class="math inline">\(k\)</span> est le nombre de paramètres, <span class="math inline">\(N\)</span> le nombre de points.</p>
+<ol start="2" type="1">
+<li><strong>Validation croisée</strong></li>
+<li><strong>Examen visuel</strong> (quand c’est possible en 2D/3D)</li>
+</ol>
+</section>
+<section id="problèmes-dinitialisation" class="level3">
+<h3 class="anchored" data-anchor-id="problèmes-dinitialisation">Problèmes d’Initialisation</h3>
+<p>EM converge vers un <strong>optimum local</strong>. Une mauvaise initialisation donne de mauvais résultats.</p>
+<p><strong>Solutions</strong> : * Faire plusieurs essais avec différentes initialisations * Utiliser K-means pour initialiser intelligemment * K-means++ pour une meilleure dispersion des centres initiaux</p>
+</section>
+<section id="types-de-matrices-de-covariance" class="level3">
+<h3 class="anchored" data-anchor-id="types-de-matrices-de-covariance">Types de Matrices de Covariance</h3>
+<ol type="1">
+<li><strong>Sphérique</strong> : <span class="math inline">\(\Sigma = \sigma^2 I\)</span> (toutes directions égales)</li>
+<li><strong>Diagonale</strong> : <span class="math inline">\(\Sigma = \text{diag}(\sigma_1^2, ..., \sigma_D^2)\)</span> (directions indépendantes)</li>
+<li><strong>Pleine</strong> : <span class="math inline">\(\Sigma\)</span> complète (avec corrélations)</li>
+</ol>
+<p><strong>Choix</strong> : Plus la matrice est contrainte, moins il y a de paramètres, mais moins le modèle est flexible.</p>
+</section>
+</section>
+<section id="applications-concrètes" class="level2">
+<h2 class="anchored" data-anchor-id="applications-concrètes">10. Applications Concrètes</h2>
+<section id="segmentation-dimages" class="level3">
+<h3 class="anchored" data-anchor-id="segmentation-dimages">1. Segmentation d’Images</h3>
+<p>Séparer le premier plan de l’arrière-plan dans une photo.</p>
+</section>
+<section id="reconnaissance-vocale" class="level3">
+<h3 class="anchored" data-anchor-id="reconnaissance-vocale">2. Reconnaissance Vocale</h3>
+<p>Modéliser les différentes composantes fréquentielles de la voix.</p>
+</section>
+<section id="détection-danomalies" class="level3">
+<h3 class="anchored" data-anchor-id="détection-danomalies">3. Détection d’Anomalies</h3>
+<p>Les points avec faible densité selon le GMM sont potentiellement des anomalies.</p>
+</section>
+<section id="compression-de-données" class="level3">
+<h3 class="anchored" data-anchor-id="compression-de-données">4. Compression de Données</h3>
+<p>Représenter une distribution complexe avec quelques gaussiennes.</p>
+</section>
+</section>
+<section id="conclusion-la-puissance-du-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-la-puissance-du-gmm">Conclusion : La Puissance du GMM</h2>
+<p>Le Modèle de Mélange Gaussien est un outil remarquablement flexible qui :</p>
+<ol type="1">
+<li><strong>Modélise la complexité</strong> : Peut approximer presque n’importe quelle distribution</li>
+<li><strong>Fournit des incertitudes</strong> : Donne des probabilités, pas juste des décisions binaires</li>
+<li><strong>S’interprète bien</strong> : Chaque paramètre a une signification intuitive</li>
+<li><strong>S’optimise efficacement</strong> : Grâce à l’algorithme EM</li>
+</ol>
+<p>Le concept clé à retenir est celui de <strong>responsabilité</strong> (<span class="math inline">\(\gamma_{ij}\)</span>) : c’est ce qui permet de transformer un problème d’optimisation difficile en une procédure itérative élégante où chaque point participe partiellement à l’apprentissage de toutes les composantes.</p>
+<p>Comme le disait le statisticien George Box : “Tous les modèles sont faux, mais certains sont utiles.” Le GMM est certainement l’un des plus utiles pour modéliser la complexité du monde réel.</p>
+</section>
+</section>
+<section id="lalgorithme-em-et-le-modèle-de-mélange-gaussien-le-secret-des-responsabilités" class="level1">
+<h1>L’Algorithme EM et le Modèle de Mélange Gaussien : Le Secret des Responsabilités</h1>
+<section id="question-1" class="level2">
+<h2 class="anchored" data-anchor-id="question-1">Question</h2>
+<p>Qu’est-ce que l’algorithme EM et quel est son rapport avec le modèle de mélange gaussien ? Expliquez en particulier le concept de responsabilité.</p>
+</section>
+<section id="introduction-le-problème-des-données-incomplètes" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-le-problème-des-données-incomplètes">Introduction : Le Problème des Données Incomplètes</h2>
+<p>Imaginez que vous héritez de plusieurs sacs de pièces de monnaie mélangées. Certaines pièces sont en or, d’autres en argent, mais elles sont toutes dans le même sac. Votre mission : déterminer la composition moyenne des pièces d’or et d’argent <strong>sans pouvoir les séparer physiquement</strong>.</p>
+<p>C’est exactement le type de problème que résout l’<strong>algorithme EM</strong> (Expectation-Maximization), et le <strong>Modèle de Mélange Gaussien</strong> (GMM) est son application la plus célèbre.</p>
+</section>
+<section id="quest-ce-que-lalgorithme-em" class="level2">
+<h2 class="anchored" data-anchor-id="quest-ce-que-lalgorithme-em">1. Qu’est-ce que l’Algorithme EM ?</h2>
+<section id="définition-simple-1" class="level3">
+<h3 class="anchored" data-anchor-id="définition-simple-1">Définition Simple</h3>
+<p>L’algorithme EM est une <strong>méthode itérative intelligente</strong> pour trouver les paramètres optimaux d’un modèle statistique quand certaines informations sont manquantes.</p>
+<p><strong>Analogie médicale</strong> : Imaginez un médecin qui veut diagnostiquer deux maladies rares. Les symptômes se chevauchent, et il n’est jamais sûr à 100% de la maladie. L’algorithme EM serait sa méthode pour :</p>
+<ol type="1">
+<li>Estimer la probabilité de chaque maladie pour chaque patient (étape E)</li>
+<li>Mettre à jour la description des maladies basée sur ces probabilités (étape M)</li>
+<li>Répéter jusqu’à ce que le diagnostic soit stable</li>
+</ol>
+</section>
+<section id="le-problème-fondamental-résolu-par-em" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-fondamental-résolu-par-em">Le Problème Fondamental Résolu par EM</h3>
+<p>Dans de nombreux problèmes réels, nous avons :</p>
+<ul>
+<li><strong>Des données observées</strong> : Ce que nous mesurons</li>
+<li><strong>Des données manquantes/latentes</strong> : Ce que nous ne voyons pas mais qui influence les observations</li>
+</ul>
+<p>Le défi : Comment estimer un modèle quand une partie cruciale de l’information est cachée ?</p>
+</section>
+</section>
+<section id="le-rapport-entre-em-et-le-modèle-de-mélange-gaussien" class="level2">
+<h2 class="anchored" data-anchor-id="le-rapport-entre-em-et-le-modèle-de-mélange-gaussien">2. Le Rapport Entre EM et le Modèle de Mélange Gaussien</h2>
+<section id="le-gmm-un-cas-parfait-pour-em" class="level3">
+<h3 class="anchored" data-anchor-id="le-gmm-un-cas-parfait-pour-em">Le GMM : Un Cas Parfait pour EM</h3>
+<p>Le Modèle de Mélange Gaussien modélise les données comme provenant de plusieurs sous-groupes (les composantes gaussiennes). Le problème : <strong>nous ne savons pas à quel sous-groupe appartient chaque point</strong>.</p>
+<p>C’est exactement la situation où brille l’algorithme EM !</p>
+</section>
+<section id="la-synergie-em-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="la-synergie-em-gmm">La Synergie EM-GMM</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Données mélangées] --&gt; B[GMM: Modèle avec composantes cachées]
+    B --&gt; C[EM: Algorithme pour estimer les paramètres]
+    C --&gt; D[Résultat: Groupes découverts]
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -699,310 +987,283 @@ f(x|\theta) = \sum_{j=1}^{c} \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)
 </div>
 </div>
 </section>
-<section id="détail-des-étapes" class="level3">
-<h3 class="anchored" data-anchor-id="détail-des-étapes">Détail des étapes</h3>
-<section id="initialisation" class="level4">
-<h4 class="anchored" data-anchor-id="initialisation">Initialisation</h4>
+</section>
+<section id="le-cœur-de-lalgorithme-le-concept-de-responsabilité" class="level2">
+<h2 class="anchored" data-anchor-id="le-cœur-de-lalgorithme-le-concept-de-responsabilité">3. Le Cœur de l’Algorithme : Le Concept de Responsabilité</h2>
+<section id="définition-intuitive" class="level3">
+<h3 class="anchored" data-anchor-id="définition-intuitive">Définition Intuitive</h3>
+<p>La <strong>responsabilité</strong> (notée <span class="math inline">\(\gamma_{ij}\)</span>) est la <strong>probabilité</strong> qu’un point de données <span class="math inline">\(x_i\)</span> ait été généré par la composante <span class="math inline">\(j\)</span> du mélange.</p>
+<p><strong>Analogie sociale</strong> : Imaginez une fête avec plusieurs groupes de conversation. La responsabilité <span class="math inline">\(\gamma_{ij}\)</span> répond à la question : “Si je regarde une personne <span class="math inline">\(x_i\)</span>, quelle est la probabilité qu’elle appartienne au groupe de conversation <span class="math inline">\(j\)</span> ?”</p>
+</section>
+<section id="définition-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="définition-mathématique">Définition Mathématique</h3>
+<p>Formellement, pour un GMM avec paramètres <span class="math inline">\(\theta = \{\pi_j, \mu_j, \Sigma_j\}\)</span> :</p>
+<p><span class="math display">\[
+\gamma_{ij} = \frac{\pi_j \cdot \mathcal{N}(x_i|\mu_j, \Sigma_j)}{\sum_{k=1}^c \pi_k \cdot \mathcal{N}(x_i|\mu_k, \Sigma_k)}
+\]</span></p>
+<p>Où :</p>
 <ul>
-<li>Choix du nombre de composantes <span class="math inline">\(c\)</span></li>
-<li>Initialisation des paramètres :
+<li><span class="math inline">\(\pi_j\)</span> est le poids (l’importance) de la composante <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\mathcal{N}(x_i|\mu_j, \Sigma_j)\)</span> est la “vraisemblance” que <span class="math inline">\(x_i\)</span> vienne de la composante <span class="math inline">\(j\)</span></li>
+<li>Le dénominateur assure que <span class="math inline">\(\sum_j \gamma_{ij} = 1\)</span> (la somme des probabilités fait 1)</li>
+</ul>
+</section>
+<section id="propriétés-essentielles-des-responsabilités" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-essentielles-des-responsabilités">Propriétés Essentielles des Responsabilités</h3>
+<ol type="1">
+<li><strong>Normalisation</strong> : Pour chaque point <span class="math inline">\(i\)</span>, <span class="math inline">\(\sum_{j=1}^c \gamma_{ij} = 1\)</span>
 <ul>
-<li><span class="math inline">\(\pi_j^{(0)} = 1/c\)</span></li>
-<li><span class="math inline">\(\mu_j^{(0)}\)</span> : souvent choisis aléatoirement parmi les données ou via K-means</li>
-<li><span class="math inline">\(\Sigma_j^{(0)} = \mathbf{I}\)</span> (matrice identité)</li>
+<li>Chaque point est “distribué” entre toutes les composantes</li>
 </ul></li>
-</ul>
-</section>
-<section id="étape-e-expectation" class="level4">
-<h4 class="anchored" data-anchor-id="étape-e-expectation">Étape E (Expectation)</h4>
-<p>À l’itération <span class="math inline">\(t\)</span>, avec les paramètres courants <span class="math inline">\(\theta^{(t)}\)</span>, on calcule les responsabilités :</p>
-<p><span class="math display">\[
-\gamma_{ij}^{(t)} = \frac{\pi_j^{(t)} \mathcal{N}(x_i|\mu_j^{(t)}, \Sigma_j^{(t)})}{\sum_{k=1}^c \pi_k^{(t)} \mathcal{N}(x_i|\mu_k^{(t)}, \Sigma_k^{(t)})}
-\]</span></p>
-<p>Ces valeurs représentent notre “meilleure estimation” des assignations latentes étant donné les paramètres courants.</p>
-</section>
-<section id="étape-m-maximisation" class="level4">
-<h4 class="anchored" data-anchor-id="étape-m-maximisation">Étape M (Maximisation)</h4>
-<p>On met à jour les paramètres pour maximiser l’espérance de la log-vraisemblance complète :</p>
+<li><strong>Continuité</strong> : <span class="math inline">\(\gamma_{ij} \in [0, 1]\)</span> (une vraie probabilité)
 <ul>
-<li><strong>Poids</strong> : <span class="math inline">\(\pi_j^{(t+1)} = \frac{1}{N} \sum_{i=1}^N \gamma_{ij}^{(t)}\)</span></li>
-<li><strong>Moyennes</strong> : <span class="math inline">\(\mu_j^{(t+1)} = \frac{\sum_{i=1}^N \gamma_{ij}^{(t)} x_i}{\sum_{i=1}^N \gamma_{ij}^{(t)}}\)</span></li>
-<li><strong>Covariances</strong> : <span class="math inline">\(\Sigma_j^{(t+1)} = \frac{\sum_{i=1}^N \gamma_{ij}^{(t)} (x_i - \mu_j^{(t+1)})(x_i - \mu_j^{(t+1)})^T}{\sum_{i=1}^N \gamma_{ij}^{(t)}}\)</span></li>
-</ul>
-</section>
-<section id="critère-darrêt" class="level4">
-<h4 class="anchored" data-anchor-id="critère-darrêt">Critère d’arrêt</h4>
-<p>L’algorithme s’arrête lorsque :</p>
-<ul>
-<li>La variation de log-vraisemblance entre deux itérations est inférieure à un seuil</li>
-<li>Un nombre maximum d’itérations est atteint</li>
-<li>La convergence des paramètres est observée</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="considérations-pratiques" class="level2">
-<h2 class="anchored" data-anchor-id="considérations-pratiques">Considérations pratiques</h2>
-<section id="initialisation-et-problèmes-locaux" class="level3">
-<h3 class="anchored" data-anchor-id="initialisation-et-problèmes-locaux">Initialisation et problèmes locaux</h3>
-<ul>
-<li>EM converge vers un optimum <strong>local</strong> de la vraisemblance</li>
-<li>La qualité de la solution finale dépend fortement de l’initialisation</li>
-<li>Stratégies courantes :
-<ul>
-<li>Multiples initialisations aléatoires</li>
-<li>Utilisation de K-means pour une initialisation intelligente</li>
-<li>Algorithme K-means++ pour une meilleure dispersion des centres initiaux</li>
+<li>Contrairement à K-means qui donne 0 ou 1</li>
 </ul></li>
-</ul>
-</section>
-<section id="choix-du-nombre-de-composantes-c" class="level3">
-<h3 class="anchored" data-anchor-id="choix-du-nombre-de-composantes-c">Choix du nombre de composantes (<span class="math inline">\(c\)</span>)</h3>
-<ul>
-<li>Critère d’information bayésien (BIC) : pénalise la complexité</li>
-<li>Validation croisée</li>
-<li>Critères heuristiques (par exemple, arrêter quand l’ajout d’une composante n’améliore plus significativement la vraisemblance)</li>
-</ul>
-</section>
-<section id="forme-des-matrices-de-covariance" class="level3">
-<h3 class="anchored" data-anchor-id="forme-des-matrices-de-covariance">Forme des matrices de covariance</h3>
-<ul>
-<li><strong>Sphérique</strong> : <span class="math inline">\(\Sigma_j = \sigma_j^2 \mathbf{I}\)</span> (1 paramètre)</li>
-<li><strong>Diagonale</strong> : <span class="math inline">\(\Sigma_j = \text{diag}(\sigma_{j1}^2, ..., \sigma_{jD}^2)\)</span> (<span class="math inline">\(D\)</span> paramètres)</li>
-<li><strong>Pleine</strong> : <span class="math inline">\(\Sigma_j\)</span> symétrique définie positive (<span class="math inline">\(D(D+1)/2\)</span> paramètres)</li>
-</ul>
-<p>Le choix dépend du compromis flexibilité/estimation : plus la matrice est contrainte, moins il y a de paramètres à estimer, mais moins le modèle est flexible.</p>
-</section>
-</section>
-<section id="interprétation-des-résultats" class="level2">
-<h2 class="anchored" data-anchor-id="interprétation-des-résultats">Interprétation des résultats</h2>
-<section id="visualisation-des-composantes" class="level3">
-<h3 class="anchored" data-anchor-id="visualisation-des-composantes">Visualisation des composantes</h3>
-<p>Chaque composante gaussienne peut être visualisée comme :</p>
-<ul>
-<li>Un “nuage” ellipsoïdal dans l’espace des données</li>
-<li>Dont la forme est déterminée par <span class="math inline">\(\Sigma_j\)</span></li>
-<li>Dont la densité décroît exponentiellement avec la distance à <span class="math inline">\(\mu_j\)</span></li>
-</ul>
-</section>
-<section id="attribution-des-points" class="level3">
-<h3 class="anchored" data-anchor-id="attribution-des-points">Attribution des points</h3>
-<p>La responsabilité <span class="math inline">\(\gamma_{ij}\)</span> permet :</p>
-<ul>
-<li>D’assigner chaque point au cluster pour lequel <span class="math inline">\(\gamma_{ij}\)</span> est maximal (classification “dure”)</li>
-<li>De quantifier l’incertitude de l’assignation</li>
-<li>D’identifier les points ambigus (responsabilités similaires pour plusieurs clusters)</li>
-</ul>
-</section>
-<section id="génération-de-nouvelles-données" class="level3">
-<h3 class="anchored" data-anchor-id="génération-de-nouvelles-données">Génération de nouvelles données</h3>
-<p>À partir d’un GMM estimé, on peut générer de nouvelles données réalistes :</p>
-<ol type="1">
-<li>Tirer une composante <span class="math inline">\(j\)</span> selon les poids <span class="math inline">\(\pi_j\)</span></li>
-<li>Tirer <span class="math inline">\(x\)</span> selon <span class="math inline">\(\mathcal{N}(\mu_j, \Sigma_j)\)</span></li>
+<li><strong>Interprétation comme poids</strong> : Plus <span class="math inline">\(\gamma_{ij}\)</span> est proche de 1, plus le point <span class="math inline">\(i\)</span> “appartient” à la composante <span class="math inline">\(j\)</span></li>
 </ol>
 </section>
 </section>
-<section id="limites-et-extensions" class="level2">
-<h2 class="anchored" data-anchor-id="limites-et-extensions">Limites et extensions</h2>
-<section id="limitations-du-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="limitations-du-gmm">Limitations du GMM</h3>
+<section id="comment-fonctionne-lalgorithme-em-pour-le-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="comment-fonctionne-lalgorithme-em-pour-le-gmm">4. Comment Fonctionne l’Algorithme EM pour le GMM ?</h2>
+<section id="le-principe-en-deux-étapes" class="level3">
+<h3 class="anchored" data-anchor-id="le-principe-en-deux-étapes">Le Principe en Deux Étapes</h3>
+<p>L’algorithme EM fonctionne comme un dialogue entre deux experts :</p>
 <ul>
-<li>Sensibilité à l’initialisation</li>
-<li>Difficulté avec des données de très haute dimension (malédiction de la dimension)</li>
-<li>Hypothèse gaussienne parfois trop restrictive</li>
-<li>Nécessité de spécifier <span class="math inline">\(c\)</span> a priori</li>
+<li><strong>L’expert des assignations</strong> (étape E) : “Étant donné les paramètres actuels, quelles sont les probabilités d’appartenance ?”</li>
+<li><strong>L’expert des paramètres</strong> (étape M) : “Étant donné ces probabilités, quels sont les meilleurs paramètres ?”</li>
 </ul>
 </section>
-<section id="extensions-courantes" class="level3">
-<h3 class="anchored" data-anchor-id="extensions-courantes">Extensions courantes</h3>
+<section id="étape-par-étape" class="level3">
+<h3 class="anchored" data-anchor-id="étape-par-étape">Étape par Étape</h3>
+<section id="étape-0-initialisation-1" class="level4">
+<h4 class="anchored" data-anchor-id="étape-0-initialisation-1">Étape 0 : Initialisation</h4>
+<p>Nous commençons avec une estimation initiale des paramètres. C’est comme faire une première hypothèse sur les groupes.</p>
+<p><strong>Stratégies d’initialisation courantes</strong> :</p>
 <ul>
-<li><strong>GMM à covariances contraintes</strong> : pour limiter le nombre de paramètres</li>
-<li><strong>GMM bayésien</strong> : incorporation de priors sur les paramètres</li>
-<li><strong>GMM avec sélection automatique du nombre de composantes</strong> (par exemple via Dirichlet Process)</li>
+<li>Initialiser les poids uniformément : <span class="math inline">\(\pi_j^{(0)} = 1/c\)</span></li>
+<li>Choisir les moyennes <span class="math inline">\(\mu_j^{(0)}\)</span> au hasard parmi les données</li>
+<li>Initialiser les covariances à la matrice identité : <span class="math inline">\(\Sigma_j^{(0)} = I\)</span></li>
 </ul>
 </section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>Le Modèle de Mélange Gaussien est un outil fondamental en apprentissage non supervisé qui combine flexibilité (capacité à modéliser des distributions complexes) et interprétabilité probabiliste. Son optimisation via l’algorithme EM, bien qu’itérative et sujette aux optima locaux, fournit un cadre robuste pour découvrir la structure sous-jacente des données sans supervision.</p>
-<p>La clé de son succès réside dans l’équilibre entre la simplicité des composantes individuelles (gaussiennes) et la complexité globale permise par leur combinaison, ainsi que dans l’interprétation naturelle des paramètres en termes de probabilités.</p>
-</section>
-</section>
-<section id="lalgorithme-em-et-sa-relation-avec-le-modèle-de-mélange-gaussien-le-concept-de-responsabilité" class="level1">
-<h1>L’Algorithme EM et sa Relation avec le Modèle de Mélange Gaussien : Le Concept de Responsabilité</h1>
-<section id="question-1" class="level2">
-<h2 class="anchored" data-anchor-id="question-1">Question</h2>
-<p>Qu’est-ce que l’algorithme EM et quel est son rapport avec le modèle de mélange gaussien ? Expliquez en particulier le concept de responsabilité.</p>
-</section>
-<section id="introduction-à-lalgorithme-em" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-à-lalgorithme-em">Introduction à l’Algorithme EM</h2>
-<p>L’<strong>algorithme Expectation-Maximization (EM)</strong> est une méthode itérative fondamentale en apprentissage statistique, conçue pour estimer les paramètres de modèles probabilistes lorsqu’il existe des <strong>variables latentes</strong> - c’est-à-dire des variables non observées qui influencent les données mais que nous ne pouvons pas mesurer directement.</p>
-<p>L’idée centrale de l’algorithme EM est de procéder en deux étapes répétées :</p>
+<section id="étape-e-expectation-le-calcul-des-responsabilités-1" class="level4">
+<h4 class="anchored" data-anchor-id="étape-e-expectation-le-calcul-des-responsabilités-1">Étape E (Expectation) : Le Calcul des Responsabilités</h4>
+<p>C’est l’étape “Expectation” (espérance). Pour chaque point <span class="math inline">\(x_i\)</span> et chaque composante <span class="math inline">\(j\)</span> :</p>
 <ol type="1">
-<li><strong>Étape E (Expectation)</strong> : Estimer les variables latentes étant donné les paramètres courants</li>
-<li><strong>Étape M (Maximization)</strong> : Mettre à jour les paramètres pour maximiser la vraisemblance complète</li>
-</ol>
-<p>Cette approche est particulièrement adaptée au <strong>Modèle de Mélange Gaussien (GMM)</strong>, car dans un GMM, nous ne savons pas à quelle composante gaussienne appartient chaque point de données.</p>
-</section>
-<section id="le-problème-du-gmm-sans-variables-latentes" class="level2">
-<h2 class="anchored" data-anchor-id="le-problème-du-gmm-sans-variables-latentes">Le Problème du GMM sans Variables Latentes</h2>
-<p>Considérons un GMM avec <span class="math inline">\(c\)</span> composantes. La densité de probabilité d’un point <span class="math inline">\(x\)</span> s’écrit :</p>
+<li><p><strong>Calculer l’affinité</strong> : À quel point <span class="math inline">\(x_i\)</span> ressemble-t-il à la composante <span class="math inline">\(j\)</span> ?</p>
 <p><span class="math display">\[
-f(x|\theta) = \sum_{j=1}^{c} \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)
-\]</span></p>
-<p>où <span class="math inline">\(\theta = \{\pi_j, \mu_j, \Sigma_j\}_{j=1}^c\)</span> sont les paramètres à estimer.</p>
-<p>Si nous avions les <strong>étiquettes</strong> indiquant quelle composante a généré chaque point, l’estimation des paramètres serait simple : pour chaque composante <span class="math inline">\(j\)</span>, nous calculerions la moyenne et la covariance des points qui lui sont attribués.</p>
-<p>Le problème est justement que ces étiquettes sont <strong>inconnues</strong> - ce sont nos variables latentes.</p>
-</section>
-<section id="variables-latentes-et-vraisemblance-complète" class="level2">
-<h2 class="anchored" data-anchor-id="variables-latentes-et-vraisemblance-complète">Variables Latentes et Vraisemblance Complète</h2>
-<p>Introduisons formellement les variables latentes <span class="math inline">\(z_i\)</span> pour chaque point <span class="math inline">\(x_i\)</span>, où <span class="math inline">\(z_i = j\)</span> signifie que <span class="math inline">\(x_i\)</span> provient de la composante <span class="math inline">\(j\)</span>.</p>
-<p>La <strong>vraisemblance complète</strong> (incluant les variables latentes) s’écrit :</p>
-<p><span class="math display">\[
-\mathcal{L}_c(\theta|\mathcal{X}, \mathcal{Z}) = \prod_{i=1}^N \pi_{z_i} \mathcal{N}(x_i|\mu_{z_i}, \Sigma_{z_i})
-\]</span></p>
-<p>Et la log-vraisemblance complète :</p>
-<p><span class="math display">\[
-\log \mathcal{L}_c(\theta|\mathcal{X}, \mathcal{Z}) = \sum_{i=1}^N \log \left( \pi_{z_i} \mathcal{N}(x_i|\mu_{z_i}, \Sigma_{z_i}) \right)
-\]</span></p>
-<p>Cette expression serait facile à maximiser si nous connaissions les <span class="math inline">\(z_i\)</span>. Mais comme nous ne les connaissons pas, nous devons travailler avec la <strong>vraisemblance marginale</strong> (intégrant sur les variables latentes) :</p>
-<p><span class="math display">\[
-\mathcal{L}(\theta|\mathcal{X}) = \prod_{i=1}^N \sum_{j=1}^c \pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)
-\]</span></p>
-<p>C’est cette somme à l’intérieur du produit (et du logarithme) qui rend le problème d’optimisation difficile.</p>
-</section>
-<section id="le-concept-de-responsabilité-cœur-de-létape-e" class="level2">
-<h2 class="anchored" data-anchor-id="le-concept-de-responsabilité-cœur-de-létape-e">Le Concept de Responsabilité : Cœur de l’Étape E</h2>
-<p>La <strong>responsabilité</strong> <span class="math inline">\(\gamma_{ij}\)</span> est le concept clé qui permet de résoudre ce problème. Elle représente la <strong>probabilité postérieure</strong> que le point <span class="math inline">\(x_i\)</span> ait été généré par la composante <span class="math inline">\(j\)</span>, étant donné les paramètres courants du modèle.</p>
-<p>Mathématiquement :</p>
-<p><span class="math display">\[
-\gamma_{ij} = \mathbb{P}(z_i = j | x_i, \theta) = \frac{\pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)}{\sum_{k=1}^c \pi_k \mathcal{N}(x_i|\mu_k, \Sigma_k)}
-\]</span></p>
-<section id="interprétation-de-la-responsabilité" class="level3">
-<h3 class="anchored" data-anchor-id="interprétation-de-la-responsabilité">Interprétation de la Responsabilité</h3>
-<p>La responsabilité <span class="math inline">\(\gamma_{ij}\)</span> peut être interprétée de plusieurs façons :</p>
-<ol type="1">
-<li><p><strong>Mesure d’appartenance partielle</strong> : Contrairement au K-means où chaque point appartient entièrement à un cluster (assignation dure), dans EM chaque point appartient partiellement à tous les clusters, avec les responsabilités <span class="math inline">\(\gamma_{ij}\)</span> comme poids.</p></li>
-<li><p><strong>Probabilité conditionnelle</strong> : C’est la probabilité que, sachant le point <span class="math inline">\(x_i\)</span> et les paramètres courants <span class="math inline">\(\theta\)</span>, ce point ait été généré par la composante <span class="math inline">\(j\)</span>.</p></li>
-<li><p><strong>Pondération naturelle</strong> : Dans l’étape M, les responsabilités servent de poids pour la mise à jour des paramètres.</p></li>
-</ol>
-</section>
-<section id="propriétés-mathématiques" class="level3">
-<h3 class="anchored" data-anchor-id="propriétés-mathématiques">Propriétés Mathématiques</h3>
-<p>Les responsabilités possèdent deux propriétés importantes :</p>
-<ol type="1">
-<li><p><strong>Normalisation</strong> : Pour chaque point <span class="math inline">\(i\)</span>, la somme des responsabilités sur toutes les composantes vaut 1 :</p>
-<p><span class="math display">\[
-\sum_{j=1}^c \gamma_{ij} = 1 \quad \forall i
+\text{affinité} = \pi_j \times \text{hauteur de la gaussienne } j \text{ au point } x_i
 \]</span></p></li>
-<li><p><strong>Continuité</strong> : <span class="math inline">\(\gamma_{ij} \in [0, 1]\)</span>, ce qui contraste avec les indicateurs binaires <span class="math inline">\(\{0, 1\}\)</span> du K-means.</p></li>
+<li><p><strong>Normaliser</strong> : Transformer ces affinités en probabilités</p></li>
+</ol>
+<p><strong>Exemple concret</strong> : Pour un point situé exactement entre deux gaussiennes de même poids :</p>
+<ul>
+<li><span class="math inline">\(\gamma_{i1} = 0.5\)</span> (50% chance d’être dans le groupe 1)</li>
+<li><span class="math inline">\(\gamma_{i2} = 0.5\)</span> (50% chance d’être dans le groupe 2)</li>
+</ul>
+</section>
+<section id="étape-m-maximization-la-mise-à-jour-des-paramètres" class="level4">
+<h4 class="anchored" data-anchor-id="étape-m-maximization-la-mise-à-jour-des-paramètres">Étape M (Maximization) : La Mise à Jour des Paramètres</h4>
+<p>Maintenant, nous utilisons les responsabilités comme <strong>poids</strong> pour recalculer les paramètres :</p>
+<ol type="1">
+<li><p><strong>Nouvelles moyennes (<span class="math inline">\(\mu_j\)</span>)</strong> :</p>
+<p><span class="math display">\[
+\mu_j^{\text{nouveau}} = \frac{\sum_{i=1}^N \gamma_{ij} \cdot x_i}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interprétation</strong> : La moyenne pondérée de tous les points, où chaque point <span class="math inline">\(x_i\)</span> est pondéré par sa responsabilité <span class="math inline">\(\gamma_{ij}\)</span>.</p></li>
+<li><p><strong>Nouvelles covariances (<span class="math inline">\(\Sigma_j\)</span>)</strong> :</p>
+<p><span class="math display">\[
+\Sigma_j^{\text{nouveau}} = \frac{\sum_{i=1}^N \gamma_{ij} \cdot (x_i - \mu_j^{\text{nouveau}})(x_i - \mu_j^{\text{nouveau}})^T}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interprétation</strong> : Comment les points sont dispersés autour de la nouvelle moyenne, pondéré par leurs responsabilités.</p></li>
+<li><p><strong>Nouveaux poids (<span class="math inline">\(\pi_j\)</span>)</strong> :</p>
+<p><span class="math display">\[
+\pi_j^{\text{nouveau}} = \frac{1}{N} \sum_{i=1}^N \gamma_{ij}
+\]</span></p>
+<p><strong>Interprétation</strong> : La proportion moyenne de responsabilité attribuée à la composante <span class="math inline">\(j\)</span>.</p></li>
+</ol>
+</section>
+<section id="itération-jusquà-convergence-1" class="level4">
+<h4 class="anchored" data-anchor-id="itération-jusquà-convergence-1">Itération jusqu’à Convergence</h4>
+<p>Nous répétons E → M → E → M jusqu’à ce que :</p>
+<ul>
+<li>Les paramètres ne changent presque plus</li>
+<li>Les responsabilités se stabilisent</li>
+<li>La vraisemblance des données n’augmente plus</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="visualisation-du-processus-em" class="level2">
+<h2 class="anchored" data-anchor-id="visualisation-du-processus-em">5. Visualisation du Processus EM</h2>
+<section id="premier-cycle" class="level3">
+<h3 class="anchored" data-anchor-id="premier-cycle">Premier Cycle</h3>
+<p>État initial :</p>
+<ul>
+<li>2 gaussiennes mal placées</li>
+<li>Frontières floues</li>
+</ul>
+<p>Après Étape E :</p>
+<ul>
+<li>Chaque point reçoit des responsabilités (ex: [0.7, 0.3], [0.2, 0.8], etc.)</li>
+<li>Les points au centre ont des responsabilités plus extrêmes</li>
+<li>Les points à la frontière ont des responsabilités équilibrées</li>
+</ul>
+<p>Après Étape M :</p>
+<ul>
+<li>Les gaussiennes se déplacent vers les points qui leur “appartiennent”</li>
+<li>Elles changent de forme pour mieux s’adapter à “leurs” points</li>
+<li>Les poids s’ajustent selon la proportion de points attribués</li>
+</ul>
+</section>
+<section id="convergence-progressive" class="level3">
+<h3 class="anchored" data-anchor-id="convergence-progressive">Convergence Progressive</h3>
+<p>À chaque itération :</p>
+<ol type="1">
+<li>Les responsabilités deviennent plus <strong>certaines</strong> (proches de 0 ou 1)</li>
+<li>Les gaussiennes se <strong>séparent</strong> mieux</li>
+<li>Le modèle <strong>s’améliore</strong> pour expliquer les données</li>
 </ol>
 </section>
 </section>
-<section id="lalgorithme-em-pour-le-gmm-processus-complet" class="level2">
-<h2 class="anchored" data-anchor-id="lalgorithme-em-pour-le-gmm-processus-complet">L’Algorithme EM pour le GMM : Processus Complet</h2>
-<section id="initialisation-1" class="level3">
-<h3 class="anchored" data-anchor-id="initialisation-1">Initialisation</h3>
-<p>L’algorithme commence par une initialisation des paramètres <span class="math inline">\(\theta^{(0)} = \{\pi_j^{(0)}, \mu_j^{(0)}, \Sigma_j^{(0)}\}\)</span>. Cette initialisation est cruciale car EM converge vers un optimum local.</p>
-</section>
-<section id="étape-e-expectation-calcul-des-responsabilités" class="level3">
-<h3 class="anchored" data-anchor-id="étape-e-expectation-calcul-des-responsabilités">Étape E (Expectation) : Calcul des Responsabilités</h3>
-<p>À l’itération <span class="math inline">\(t\)</span>, avec les paramètres courants <span class="math inline">\(\theta^{(t)}\)</span>, nous calculons pour chaque point <span class="math inline">\(x_i\)</span> et chaque composante <span class="math inline">\(j\)</span> :</p>
-<p><span class="math display">\[
-\gamma_{ij}^{(t)} = \frac{\pi_j^{(t)} \mathcal{N}(x_i|\mu_j^{(t)}, \Sigma_j^{(t)})}{\sum_{k=1}^c \pi_k^{(t)} \mathcal{N}(x_i|\mu_k^{(t)}, \Sigma_k^{(t)})}
-\]</span></p>
-<p>Ce calcul est appelé étape “Expectation” car nous calculons l’espérance des variables latentes <span class="math inline">\(z_i\)</span> étant donné les données et les paramètres courants.</p>
-</section>
-<section id="étape-m-maximization-mise-à-jour-des-paramètres" class="level3">
-<h3 class="anchored" data-anchor-id="étape-m-maximization-mise-à-jour-des-paramètres">Étape M (Maximization) : Mise à Jour des Paramètres</h3>
-<p>Maintenant que nous avons les responsabilités, nous pouvons mettre à jour les paramètres en maximisant l’espérance de la log-vraisemblance complète :</p>
+<section id="pourquoi-les-responsabilités-sont-elles-si-importantes" class="level2">
+<h2 class="anchored" data-anchor-id="pourquoi-les-responsabilités-sont-elles-si-importantes">6. Pourquoi les Responsabilités Sont-elles si Importantes ?</h2>
+<section id="elles-transforment-un-problème-difficile-en-problème-simple" class="level3">
+<h3 class="anchored" data-anchor-id="elles-transforment-un-problème-difficile-en-problème-simple">Elles Transforment un Problème Difficile en Problème Simple</h3>
+<p><strong>Sans responsabilités</strong> (problème difficile) :</p>
 <ul>
-<li><p><strong>Poids des composantes</strong> :</p>
-<p><span class="math display">\[
-\pi_j^{(t+1)} = \frac{1}{N} \sum_{i=1}^N \gamma_{ij}^{(t)}
-\]</span></p>
-<p>Le nouveau poids <span class="math inline">\(\pi_j\)</span> est simplement la proportion moyenne de responsabilité attribuée à la composante <span class="math inline">\(j\)</span>.</p></li>
-<li><p><strong>Moyennes</strong> :</p>
-<p><span class="math display">\[
-\mu_j^{(t+1)} = \frac{\sum_{i=1}^N \gamma_{ij}^{(t)} x_i}{\sum_{i=1}^N \gamma_{ij}^{(t)}}
-\]</span></p>
-<p>La nouvelle moyenne <span class="math inline">\(\mu_j\)</span> est la moyenne pondérée de tous les points, avec les responsabilités <span class="math inline">\(\gamma_{ij}\)</span> comme poids.</p></li>
-<li><p><strong>Matrices de covariance</strong> :</p>
-<p><span class="math display">\[
-\Sigma_j^{(t+1)} = \frac{\sum_{i=1}^N \gamma_{ij}^{(t)} (x_i - \mu_j^{(t+1)})(x_i - \mu_j^{(t+1)})^T}{\sum_{i=1}^N \gamma_{ij}^{(t)}}
-\]</span></p>
-<p>De même, la covariance est estimée comme la covariance pondérée des points autour de la nouvelle moyenne.</p></li>
+<li>Log-vraisemblance : <span class="math inline">\(\sum_i \log(\sum_j ...)\)</span></li>
+<li>Impossible à optimiser directement</li>
+</ul>
+<p><strong>Avec responsabilités</strong> (problème simple) :</p>
+<ul>
+<li>Nous traitons chaque point comme appartenant partiellement à tous les clusters</li>
+<li>L’optimisation devient une moyenne pondérée</li>
 </ul>
 </section>
-<section id="convergence" class="level3">
-<h3 class="anchored" data-anchor-id="convergence">Convergence</h3>
-<p>Les étapes E et M sont répétées jusqu’à convergence. L’algorithme garantit que la log-vraisemblance des données observées ne décroît jamais à chaque itération, ce qui assure la convergence vers un optimum local.</p>
+<section id="elles-permettent-lassignation-douce" class="level3">
+<h3 class="anchored" data-anchor-id="elles-permettent-lassignation-douce">Elles Permettent l’Assignation “Douce”</h3>
+<p>Contrairement au K-means qui dit “ce point est dans CE cluster”, EM dit “ce point est à 70% dans le cluster A et 30% dans le cluster B”. Cette nuance est cruciale pour :</p>
+<ol type="1">
+<li><strong>Les points frontières</strong> : Un point entre deux clusters aura des responsabilités équilibrées</li>
+<li><strong>L’incertitude</strong> : Nous savons quand nous ne sommes pas sûrs</li>
+<li><strong>La robustesse</strong> : Moins sensible aux initialisations aléatoires</li>
+</ol>
 </section>
 </section>
-<section id="relation-profonde-entre-em-et-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="relation-profonde-entre-em-et-gmm">Relation Profonde entre EM et GMM</h2>
-<p>La relation entre EM et GMM est profonde et symbiotique :</p>
-<section id="em-comme-solution-naturelle-pour-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="em-comme-solution-naturelle-pour-gmm">1. EM comme Solution Naturelle pour GMM</h3>
-<p>Le GMM pose un problème d’optimisation difficile à cause de la somme dans le logarithme de la vraisemblance. L’algorithme EM transforme ce problème en une série de problèmes plus simples en introduisant les responsabilités.</p>
+<section id="exemple-concret-séparation-de-deux-espèces-danimaux" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-concret-séparation-de-deux-espèces-danimaux">7. Exemple Concret : Séparation de Deux Espèces d’Animaux</h2>
+<section id="données" class="level3">
+<h3 class="anchored" data-anchor-id="données">Données</h3>
+<p>Nous mesurons la taille et le poids d’animaux. Visuellement, nous voyons deux groupes mais avec recouvrement.</p>
 </section>
-<section id="les-responsabilités-comme-variables-latentes-souples" class="level3">
-<h3 class="anchored" data-anchor-id="les-responsabilités-comme-variables-latentes-souples">2. Les Responsabilités comme “Variables Latentes Souples”</h3>
-<p>Les responsabilités <span class="math inline">\(\gamma_{ij}\)</span> peuvent être vues comme une version “adoucie” des variables latentes binaires <span class="math inline">\(z_i\)</span>. Au lieu de dire “le point <span class="math inline">\(i\)</span> appartient au cluster <span class="math inline">\(j\)</span>” (0 ou 1), nous disons “le point <span class="math inline">\(i\)</span> appartient au cluster <span class="math inline">\(j\)</span> avec probabilité <span class="math inline">\(\gamma_{ij}\)</span>”.</p>
-</section>
-<section id="interprétation-géométrique" class="level3">
-<h3 class="anchored" data-anchor-id="interprétation-géométrique">3. Interprétation Géométrique</h3>
-<p>Visuellement, à chaque itération :</p>
+<section id="application-dem" class="level3">
+<h3 class="anchored" data-anchor-id="application-dem">Application d’EM</h3>
+<p><strong>Itération 1</strong> :</p>
 <ul>
-<li>L’étape E dessine des frontières “floues” entre les clusters basées sur les paramètres courants</li>
-<li>L’étape M ajuste les gaussiennes pour mieux correspondre à ces frontières floues</li>
+<li>Un animal de taille moyenne : <span class="math inline">\(\gamma = [0.6, 0.4]\)</span> (plutôt groupe 1)</li>
+<li>Les gaussiennes sont mal ajustées</li>
+</ul>
+<p><strong>Itération 5</strong> :</p>
+<ul>
+<li>Le même animal : <span class="math inline">\(\gamma = [0.8, 0.2]\)</span> (plus confiant)</li>
+<li>Les gaussiennes se sont séparées</li>
+</ul>
+<p><strong>Itération 10</strong> (convergence) :</p>
+<ul>
+<li>L’animal : <span class="math inline">\(\gamma = [0.95, 0.05]\)</span> (très confiant)</li>
+<li>Les gaussiennes sont bien séparées et ajustées</li>
 </ul>
 </section>
-<section id="avantages-par-rapport-aux-méthodes-à-assignation-dure" class="level3">
-<h3 class="anchored" data-anchor-id="avantages-par-rapport-aux-méthodes-à-assignation-dure">4. Avantages par rapport aux Méthodes à Assignation Dure</h3>
-<p>Contrairement au K-means qui effectue des assignations dures, EM avec ses responsabilités permet :</p>
+<section id="interprétation-biologique" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-biologique">Interprétation Biologique</h3>
+<p>Les responsabilités nous disent :</p>
 <ul>
-<li>De modéliser des clusters qui se chevauchent</li>
-<li>De quantifier l’incertitude sur l’appartenance d’un point</li>
-<li>D’être plus robuste aux initialisations et aux outliers</li>
+<li>Quels animaux sont des <strong>hybrides</strong> potentiels (responsabilités équilibrées)</li>
+<li>Quels animaux sont des <strong>représentants typiques</strong> de leur espèce (responsabilités extrêmes)</li>
+<li>Où sont les <strong>zones de recouvrement</strong> entre espèces</li>
 </ul>
 </section>
 </section>
-<section id="exemple-concret-dapplication-des-responsabilités" class="level2">
-<h2 class="anchored" data-anchor-id="exemple-concret-dapplication-des-responsabilités">Exemple Concret d’Application des Responsabilités</h2>
-<p>Imaginons un GMM avec deux composantes gaussiennes. Pour un point <span class="math inline">\(x_i\)</span> situé exactement à mi-chemin entre les deux moyennes, avec des covariances identiques et des poids égaux, nous aurons :</p>
-<p><span class="math display">\[
-\gamma_{i1} = \gamma_{i2} = 0.5
-\]</span></p>
-<p>Ce point contribue donc également aux deux composantes lors de la mise à jour des paramètres. En revanche, un point très proche de <span class="math inline">\(\mu_1\)</span> aura <span class="math inline">\(\gamma_{i1} \approx 1\)</span> et <span class="math inline">\(\gamma_{i2} \approx 0\)</span>.</p>
-<p>Cette flexibilité permet au GMM de modéliser des situations réalistes où les frontières entre clusters ne sont pas nettes.</p>
+<section id="la-relation-profonde-em-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="la-relation-profonde-em-gmm">8. La Relation Profonde EM-GMM</h2>
+<section id="em-comme-moteur-du-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="em-comme-moteur-du-gmm">EM comme “Moteur” du GMM</h3>
+<p>Le GMM définit <strong>la structure</strong> : “les données viennent de plusieurs gaussiennes” L’algorithme EM fournit <strong>la méthode</strong> : “comment trouver ces gaussiennes”</p>
 </section>
-<section id="limitations-et-considérations" class="level2">
-<h2 class="anchored" data-anchor-id="limitations-et-considérations">Limitations et Considérations</h2>
-<section id="sensibilité-à-linitialisation" class="level3">
-<h3 class="anchored" data-anchor-id="sensibilité-à-linitialisation">Sensibilité à l’Initialisation</h3>
-<p>Comme EM est un algorithme de “montée de colline”, il converge vers un optimum local. La qualité de la solution dépend donc fortement de l’initialisation des paramètres.</p>
+<section id="la-boucle-vertueuse" class="level3">
+<h3 class="anchored" data-anchor-id="la-boucle-vertueuse">La Boucle Vertueuse</h3>
+<p>Boucle EM :</p>
+<ol type="1">
+<li>Meilleures paramètres → Responsabilités plus précises</li>
+<li>Responsabilités plus précises → Paramètres encore meilleurs</li>
+<li>Répéter jusqu’à perfection</li>
+</ol>
+</section>
+<section id="différence-avec-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="différence-avec-k-means">Différence avec K-means</h3>
+<p>K-means est comme EM avec une <strong>vision binaire</strong> :</p>
+<ul>
+<li>K-means : “Ce point est DANS ou HORS du cluster”</li>
+<li>EM : “Ce point est à X% dans le cluster A, Y% dans B, …”</li>
+</ul>
+</section>
+</section>
+<section id="applications-pratiques-de-lem-avec-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="applications-pratiques-de-lem-avec-gmm">9. Applications Pratiques de l’EM avec GMM</h2>
+<section id="reconnaissance-vocale-1" class="level3">
+<h3 class="anchored" data-anchor-id="reconnaissance-vocale-1">1. Reconnaissance Vocale</h3>
+<ul>
+<li>Chaque phonème est modélisé par un GMM</li>
+<li>EM trouve les paramètres de chaque phonème</li>
+<li>Les responsabilités aident à identifier les transitions entre phonèmes</li>
+</ul>
+</section>
+<section id="segmentation-dimages-1" class="level3">
+<h3 class="anchored" data-anchor-id="segmentation-dimages-1">2. Segmentation d’Images</h3>
+<ul>
+<li>Différentes régions de l’image = différentes composantes</li>
+<li>EM segmente l’image en régions cohérentes</li>
+<li>Les responsabilités donnent des frontières floues (plus réalistes)</li>
+</ul>
+</section>
+<section id="détection-de-fraude" class="level3">
+<h3 class="anchored" data-anchor-id="détection-de-fraude">3. Détection de Fraude</h3>
+<ul>
+<li>Comportements normaux = une composante</li>
+<li>Comportements anormaux = autre composante</li>
+<li>Les responsabilités indiquent le degré d’anormalité</li>
+</ul>
+</section>
+</section>
+<section id="limitations-et-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-et-solutions">10. Limitations et Solutions</h2>
+<section id="problème-dinitialisation" class="level3">
+<h3 class="anchored" data-anchor-id="problème-dinitialisation">Problème d’Initialisation</h3>
+<p>EM converge vers un <strong>optimum local</strong>. Une mauvaise initialisation donne de mauvais résultats.</p>
+<p><strong>Solution</strong> : Multiples essais avec différentes initialisations, ou utiliser K-means pour initialiser.</p>
 </section>
 <section id="choix-du-nombre-de-composantes" class="level3">
 <h3 class="anchored" data-anchor-id="choix-du-nombre-de-composantes">Choix du Nombre de Composantes</h3>
-<p>EM ne détermine pas automatiquement le nombre optimal de composantes <span class="math inline">\(c\)</span>. Des critères comme le BIC (Bayesian Information Criterion) sont souvent utilisés pour sélectionner <span class="math inline">\(c\)</span>.</p>
+<p>EM ne nous dit pas combien de composantes utiliser.</p>
+<p><strong>Solution</strong> : Utiliser le critère BIC qui pénalise les modèles trop complexes.</p>
 </section>
 <section id="complexité-calculatoire" class="level3">
 <h3 class="anchored" data-anchor-id="complexité-calculatoire">Complexité Calculatoire</h3>
-<p>Le calcul des responsabilités à l’étape E peut être coûteux pour de grands jeux de données ou un grand nombre de composantes.</p>
+<p>Le calcul de toutes les responsabilités peut être coûteux pour de grands datasets.</p>
+<p><strong>Solution</strong> : Approximations, ou traitement par mini-batch.</p>
 </section>
 </section>
-<section id="conclusion-1" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion-1">Conclusion</h2>
-<p>L’algorithme EM et le concept de responsabilité forment un cadre élégant et puissant pour l’estimation des paramètres du Modèle de Mélange Gaussien. Les responsabilités, en particulier, jouent un rôle central en permettant :</p>
+<section id="conclusion-lélégance-de-lapproche-em" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-lélégance-de-lapproche-em">Conclusion : L’Élégance de l’Approche EM</h2>
+<p>L’algorithme EM, avec son concept central de <strong>responsabilité</strong>, résout élégamment un problème apparemment insoluble : comment apprendre d’un mélange quand on ne peut pas séparer les ingrédients.</p>
+<p>La beauté de cette approche réside dans sa <strong>réflexivité</strong> :</p>
 <ol type="1">
-<li><strong>Une modélisation probabiliste</strong> des appartenances aux clusters</li>
-<li><strong>Une optimisation itérative</strong> qui transforme un problème complexe en une série de problèmes simples</li>
-<li><strong>Une interprétation naturelle</strong> en termes de probabilités conditionnelles</li>
+<li>Nous utilisons les paramètres pour estimer les responsabilités</li>
+<li>Nous utilisons les responsabilités pour améliorer les paramètres</li>
+<li>Chaque cycle améliore les deux</li>
 </ol>
-<p>La beauté de cette approche réside dans sa capacité à transformer l’incertitude (nous ne savons pas à quel cluster appartient chaque point) en une information utile (les responsabilités) qui guide l’estimation des paramètres.</p>
-<p>C’est cette synergie entre l’étape E (qui calcule les responsabilités) et l’étape M (qui utilise ces responsabilités pour mettre à jour les paramètres) qui fait de l’algorithme EM une méthode si efficace pour l’apprentissage non supervisé avec modèles à variables latentes.</p>
+<p>Le GMM n’est qu’une application de l’algorithme EM, mais c’est une application particulièrement élégante qui montre toute la puissance du concept de responsabilité. En permettant aux points d’appartenir partiellement à plusieurs clusters, EM capture la <strong>nuance</strong> et l’<strong>incertitude</strong> inhérentes aux données réelles.</p>
+<p>Comme le disait le statisticien George Box : “Tous les modèles sont faux, mais certains sont utiles.” Le duo EM-GMM est non seulement utile, mais aussi remarquablement intuitif une fois qu’on comprend le concept de responsabilité.</p>
 
 
 </section>
