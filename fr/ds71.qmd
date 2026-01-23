@@ -1,193 +1,422 @@
-# Algorithme k-means et estimation de facteurs latents discrets
+# Cours pédagogique : Clustering et algorithme k-means
 
-## Motivation
+## Comprendre le problème du clustering
 
-Comprendre les propriétés géométriques et statistiques des données, les analyser et développer des outils pour cette analyse. Ici, nous nous intéressons particulièrement à l’approche non supervisée du **clustering**.
+### La métaphore du "regroupement naturel"
 
----
+Imaginez que vous regardez le ciel étoilé. Certaines étoiles semblent naturellement regroupées en **constellations**. Personne ne vous a dit quelles étoiles forment la Grande Ourse - vous le voyez par vous-même.
 
-## Clustering
-
-Le clustering est une méthode non supervisée qui vise à découvrir des groupes cohérents dans les données, correspondant aux pics de densité.
-
-Un synonyme souvent utilisé est la **Quantification Vectorielle (VQ)**.
-
-### Méthodes de clustering
-
-Il existe de nombreuses méthodes de clustering :
-
-- Clustering hiérarchique agglomératif  
-- **k-means** (algorithme de Lloyd)  
-- Clustering spectral  
-- Détection de communautés  
-- Clustering en haute dimension  
-- Cartes auto-organisatrices (SOM)  
-- Neural Gas
-
-La recherche sur le clustering est active depuis au moins 50 ans.
+C'est exactement le **clustering** : découvrir des groupes naturels dans les données, sans guide préalable.
 
 ---
 
-### Clustering hiérarchique agglomératif
+## L'essence de k-means
 
-Processus itératif :
+### La double mission
 
-1. Initialisation : chaque donnée est un cluster  
-2. Trouver la paire de clusters la plus proche  
-3. Fusionner ces deux clusters  
-4. Itérer depuis l’étape 2 jusqu’à la fin  
+k-means cherche à accomplir **deux objectifs simultanés** :
 
-On obtient un **dendrogramme**.
+1. **Trouver K centres** représentatifs
+2. **Affecter chaque point** au centre le plus proche
 
-La distance entre clusters peut être définie par :
-
-- Distance entre centres  
-- Distance maximale  
-- Distance minimale  
-
-Le nombre de clusters est **inconnu à priori**.
+Mais comment juger si on a bien réussi ?
 
 ---
 
-## k-means
+## La fonction objectif : le cœur mathématique
 
-### Stratégie
+### L'idée intuitive
 
-Le **k-means** postule un espace métrique (euclidien) sur les données.  
-C’est un algorithme d’affectation **binaire** : chaque donnée appartient à un et un seul cluster.
+Mesurons à quel point chaque point est **éloigné** du centre de son groupe. Plus cette distance est petite, meilleur est le regroupement.
 
-#### Modèle
+Pour l'ensemble des données, nous calculons :
 
-Données :  
-$\mathcal{X} = \{ \mathbf{x}_i \}_{i \in [M]} \subset \Omega \subseteq \mathbb{R}^D$  
-Nombre de clusters : $K \in \mathbb{N}^*$
+$$
+\text{Erreur totale} = \sum_{\text{tous les points}} (\text{distance au centre de son groupe})^2
+$$
 
-Variables d’affectation binaires latentes :  
-$\mathbf{Z} = \{ z_{ik} \}$ avec $z_{ik} \in \{0, 1\}$
+### Formalisation mathématique
 
-Représentants des clusters :  
-$\mathbf{M} = \{ \mu_k \}_{k \in [K]}$ avec $\mu_k \in \mathbb{R}^D$
+Définissons précisément :
 
-Paramètres :  
-$\theta = [M, Z]$
+- **Données** : $N$ points $\mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_N$ dans un espace à $D$ dimensions
+- **Clusters** : $K$ groupes (nombre choisi à l'avance)
+- **Centres** : $\mu_1, \mu_2, ..., \mu_K$ (à déterminer)
+- **Affectation** : Pour chaque point $i$ et cluster $k$, $z_{ik} = 1$ si le point $i$ est dans le cluster $k$, $0$ sinon
+
+### La fonction à minimiser
+
+La fonction objectif (ou fonction coût) est :
+
+$$
+J = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|\mathbf{x}_i - \mu_k\|^2
+$$
+
+Décomposons cette formule :
+
+| Symbole | Signification | Rôle dans la formule |
+|---------|--------------|----------------------|
+| $z_{ik}$ | Indicateur d'appartenance | Sélectionne seulement le cluster auquel le point appartient |
+| $\|\mathbf{x}_i - \mu_k\|^2$ | Distance au carré | Mesure combien le point est éloigné du centre |
+| $\sum_{i=1}^{N}$ | Somme sur tous les points | Accumule l'erreur pour l'ensemble des données |
+| $\sum_{k=1}^{K}$ | Somme sur tous les clusters | Considère tous les clusters possibles |
+
+**En pratique** : Puisque chaque point n'appartient qu'à un seul cluster, pour un point $\mathbf{x}_i$, un seul $z_{ik}$ vaut 1, les autres valent 0. Donc pour chaque point, on ne compte que la distance à son propre centre.
 
 ---
 
-### Fonction de coût
+## Pourquoi minimiser CETTE fonction spécifique ?
 
-Le k-means cherche à minimiser :
+### Raison 1 : L'interprétation géométrique
 
-$$
-\hat{\theta} = [\hat{M}, \hat{Z}] = \underset{\theta = [M, Z]}{\mathrm{argmin}} \mathcal{L}(\theta, \mathcal{X})
-$$
-
-avec :
+Si nous fixons les affectations $z_{ik}$, alors pour chaque cluster $k$ :
 
 $$
-\mathcal{L}(\theta, \mathcal{X}) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \| \mathbf{x}_i - \mu_k \|_2^2
+J_k = \sum_{i: z_{ik}=1} \|\mathbf{x}_i - \mu_k\|^2
 $$
 
-L’optimisation exacte est **NP-difficile** → on utilise une **descente de coordonnées**.
+C'est exactement la **variance** des points du cluster $k$, multipliée par le nombre de points.
+
+**Minimiser $J$** = **Minimiser la variance intra-cluster** = **Rendre les clusters plus compacts**
+
+### Raison 2 : La solution analytique existe
+
+Si on dérive $J$ par rapport à $\mu_k$ :
+
+$$
+\frac{\partial J}{\partial \mu_k} = -2 \sum_{i=1}^{N} z_{ik} (\mathbf{x}_i - \mu_k)
+$$
+
+En posant la dérivée égale à zéro :
+
+$$
+\sum_{i=1}^{N} z_{ik} (\mathbf{x}_i - \mu_k) = 0
+$$
+
+$$
+\Rightarrow \mu_k = \frac{\sum_{i=1}^{N} z_{ik} \mathbf{x}_i}{\sum_{i=1}^{N} z_{ik}}
+$$
+
+**Interprétation** : Le centre optimal est la **moyenne** (centre de gravité) des points du cluster.
+
+### Raison 3 : Connexion avec les statistiques
+
+Cette fonction correspond à la **log-vraisemblance** d'un modèle où chaque cluster est une gaussienne sphérique de même variance.
 
 ---
 
-## Descente de coordonnées
+## L'optimisation : comment minimiser cette fonction ?
 
-Algorithme de minimisation alternée :
+### Le défi
 
-Soit $f : \mathbb{R}^D \mapsto \mathbb{R}$, on cherche :
+Nous avons deux types de variables :
 
-$$
-x^* = \arg \min_{x \in \mathbb{R}^D} f(x)
-$$
+1. Les **affectations** $z_{ik}$ (variables discrètes, binaires)
+2. Les **centres** $\mu_k$ (variables continues)
 
-On définit pour $d \in [D]$ :
+Le problème combinatoire est **NP-difficile** : impossible de tester toutes les combinaisons.
 
-$$
-f_d(x, y) = f([x_{(1)}, \dots, x_{(d-1)}, y, x_{(d+1)}, \dots, x_{(D)}]^\top)
-$$
+### La stratégie : Descente de coordonnées
 
-On minimise alternativement :
+Au lieu d'optimiser simultanément sur toutes les variables, nous alternons :
 
-$$
-x^{(t+1)}_{(d)} = \underset{y}{\arg \min} f_d(x^{(t)}, y)
-$$
+1. **Optimiser les affectations** en fixant les centres
+2. **Optimiser les centres** en fixant les affectations
+
+````{mermaid}
+flowchart TD
+    A[Initialisation des centres] --> B
+    
+    subgraph B [Étape E : Affectation optimale]
+        B1[Centres fixés] --> B2[Pour chaque point]
+        B2 --> B3[Trouver le centre le plus proche]
+        B3 --> B4[Affecter le point à ce centre]
+    end
+    
+    B --> C
+    
+    subgraph C [Étape M : Mise à jour des centres]
+        C1[Affectations fixées] --> C2[Pour chaque cluster]
+        C2 --> C3[Calculer la moyenne des points]
+        C3 --> C4[Déplacer le centre à cette moyenne]
+    end
+    
+    C --> D{Convergence ?}
+    D -- Non --> B
+    D -- Oui --> E[Résultat final]
+````
 
 ---
 
-## Application à k-means
+## Détail des deux étapes d'optimisation
 
-On alterne l’optimisation de $Z$ et $M$.
+### Étape 1 : Optimisation des affectations (E)
 
-Pour un $Z$ fixé, le représentant optimal d’un cluster est le **centre de masse** :
+**Hypothèse** : Les centres $\mu_1, ..., \mu_K$ sont fixés.
+
+**Objectif** : Choisir les $z_{ik}$ pour minimiser $J$.
+
+**Observation** : La fonction $J$ est une somme de termes positifs. Pour minimiser une somme, on minimise chaque terme individuellement.
+
+Pour un point $\mathbf{x}_i$ donné, nous devons choisir un seul $k$ tel que $z_{ik} = 1$. Le terme correspondant est $\|\mathbf{x}_i - \mu_k\|^2$.
+
+**Solution optimale** : Affecter $\mathbf{x}_i$ au centre le plus proche !
+
+Formellement :
+
+$$
+z_{ik} = 
+\begin{cases}
+1 & \text{si } k = \arg\min_{j} \|\mathbf{x}_i - \mu_j\|^2 \\
+0 & \text{sinon}
+\end{cases}
+$$
+
+**Complexité** : Pour chaque point (N), comparer avec chaque centre (K) → $O(N \times K \times D)$ opérations.
+
+### Étape 2 : Optimisation des centres (M)
+
+**Hypothèse** : Les affectations $z_{ik}$ sont fixées.
+
+**Objectif** : Choisir les $\mu_k$ pour minimiser $J$.
+
+**Calcul** : Comme vu précédemment, en dérivant par rapport à $\mu_k$ :
 
 $$
 \mu_k = \frac{\sum_{i=1}^{N} z_{ik} \mathbf{x}_i}{\sum_{i=1}^{N} z_{ik}}
 $$
 
-Pour un $M$ fixé, on affecte chaque donnée au cluster le plus proche :
+**Interprétation** : Le nouveau centre du cluster $k$ est la **moyenne** (barycentre) de tous les points qui lui sont affectés.
+
+**Complexité** : Pour chaque cluster (K), moyenner ses points → $O(N \times D)$ opérations.
+
+---
+
+## Preuve que cette alternance diminue toujours l'erreur
+
+### Un argument visuel
+
+````{mermaid}
+graph LR
+    A[Itération t] --> B[Étape E: meilleure affectation]
+    B --> C[Erreur diminue ou reste égale]
+    C --> D[Étape M: meilleurs centres]
+    D --> E[Erreur diminue ou reste égale]
+    E --> F[Itération t+1 avec erreur ≤ erreur précédente]
+    
+    style C fill:#dfd
+    style E fill:#dfd
+````
+
+### Preuve mathématique
+
+1. **Étape E** : Pour des centres fixés $\mu_k^{(t)}$, choisir $z_{ik}^{(t+1)}$ comme l'affectation optimale garantit :
+   $$
+   J(\mu^{(t)}, z^{(t+1)}) \leq J(\mu^{(t)}, z^{(t)})
+   $$
+   (strictement inférieur si une affectation change)
+
+2. **Étape M** : Pour des affectations fixées $z_{ik}^{(t+1)}$, choisir $\mu_k^{(t+1)}$ comme les moyennes optimales garantit :
+   $$
+   J(\mu^{(t+1)}, z^{(t+1)}) \leq J(\mu^{(t)}, z^{(t+1)})
+   $$
+   (strictement inférieur si un centre change)
+
+3. **Conclusion** : À chaque itération complète (E puis M), l'erreur ne peut que décroître :
+   $$
+   J^{(t+1)} \leq J^{(t)}
+   $$
+
+### Conséquence importante
+
+Puisque l'erreur est toujours positive et décroît à chaque itération, l'algorithme **converge nécessairement**.
+
+---
+
+## Le piège des minima locaux
+
+### L'analogie montagnarde
+
+Imaginez que vous cherchez le point le plus bas d'une région montagneuse, les yeux bandés. Vous descendez toujours. Vous finirez dans une vallée, mais pas nécessairement dans la vallée la plus basse !
+
+C'est exactement ce qui arrive à k-means :
+
+````{mermaid}
+graph TD
+    A[Départ aléatoire] --> B{Quelle vallée ?}
+    B --> C[Vallée profonde<br>Optimum global]
+    B --> D[Vallée moins profonde<br>Minimum local]
+    
+    C --> E[Bonne solution]
+    D --> F[Mauvaise solution]
+    
+    style C fill:#9f9
+    style D fill:#f99
+````
+
+### Pourquoi cela arrive-t-il ?
+
+La fonction $J$ n'est pas **convexe** par rapport à l'ensemble des variables. Elle a plusieurs "vallées" (minima locaux).
+
+**Exemple concret** : Avec 4 points formant un carré, et K=2, il y a deux solutions équivalentes :
+
+- Solution 1 : Cluster {(1,2)}, Cluster {(3,4)}
+- Solution 2 : Cluster {(1,3)}, Cluster {(2,4)}
+
+Les deux donnent la même valeur de $J$, mais ce sont des minima locaux différents.
+
+---
+
+## L'initialisation intelligente : k-means++
+
+### Le principe
+
+Plutôt que de choisir les centres initiaux au hasard, choisissons-les de manière à "couvrir" l'espace des données.
+
+### Algorithme détaillé
+
+1. **Premier centre** : Choisi uniformément au hasard parmi tous les points
+   
+2. **Pour chaque centre suivant** :
+
+   a. Pour chaque point $\mathbf{x}_i$, calculer :
+      $$
+      D(\mathbf{x}_i) = \min_{\text{centres déjà choisis}} \|\mathbf{x}_i - \mu_j\|^2
+      $$
+      (Distance au carré au centre le plus proche déjà choisi)
+   
+   b. Choisir le prochain centre avec probabilité proportionnelle à $D(\mathbf{x}_i)^2$
+      $$
+      P(\text{choisir } \mathbf{x}_i) = \frac{D(\mathbf{x}_i)^2}{\sum_{j=1}^{N} D(\mathbf{x}_j)^2}
+      $$
+
+3. **Répéter** jusqu'à avoir K centres
+
+### Pourquoi ça marche ?
+
+- Les points éloignés des centres existants ont une plus grande probabilité d'être choisis
+- Cela garantit que les centres initiaux sont **répartis** dans tout l'espace
+- En pratique, cela donne de meilleurs résultats que l'initialisation purement aléatoire
+
+---
+
+## Relation avec les modèles gaussien
+
+### L'hypothèse implicite
+
+k-means suppose que chaque cluster suit approximativement une **distribution normale** (gaussienne) avec :
+
+1. **Forme sphérique** : La covariance est $\sigma^2 I$ (identique dans toutes les directions)
+2. **Même variance** : Tous les clusters ont la même "dispersion"
+3. **Centres différents** : Chaque cluster a son propre centre $\mu_k$
+
+### Le modèle probabiliste correspondant
+
+Si chaque cluster $k$ est modélisé par une gaussienne $\mathcal{N}(\mu_k, \sigma^2 I)$, alors la densité de probabilité est :
 
 $$
-z_{ik} = 1 \quad \text{si } k = \arg \min_j \| \mathbf{x}_i - \mu_j \|_2^2
+p(\mathbf{x} | \text{cluster } k) = \frac{1}{(2\pi\sigma^2)^{D/2}} \exp\left(-\frac{\|\mathbf{x} - \mu_k\|^2}{2\sigma^2}\right)
 $$
 
----
+### Le lien mathématique
 
-### Algorithme k-means
+Considérons la **log-vraisemblance** des données :
 
-1. Initialiser les représentants $M^{(0)}$  
-2. **Étape d’affectation** : étant donné $M^{(t)}$, affecter chaque donnée au représentant le plus proche → $Z^{(t)}$  
-3. **Étape de mise à jour** : étant donné $Z^{(t)}$, calculer les nouveaux représentants $M^{(t+1)}$ comme centres de masse  
-4. Répéter jusqu’à convergence (centres stables ou affectation stable)
+$$
+\log p(\mathcal{X} | \{\mu_k\}) = \sum_{i=1}^{N} \log\left(\sum_{k=1}^{K} \pi_k p(\mathbf{x}_i | \mu_k, \sigma^2 I)\right)
+$$
 
-L’étape 2 est similaire à une **étape E** (Expectation), l’étape 3 à une **étape M** (Maximisation), en affectation dure (cf. EM).
+Avec $\pi_k = 1/K$ (clusters équiprobables).
 
----
+**Cas limite** : Quand $\sigma^2 \to 0$ (distributions très "pointues"), le terme dominant dans la somme est celui du cluster le plus proche.
 
-### Propriétés
+On obtient alors approximativement :
 
-- La perte décroît à chaque itération (minimisation alternée de fonctions convexes)  
-- Nombre d’itérations fini (nombre fini d’affectations)  
-- Étape d’affectation = construction du **diagramme de Voronoi** discret  
-- Résultat = **optimum local** (problème NP-dur)  
-- Sensible à l’initialisation
+$$
+\log p(\mathcal{X} | \{\mu_k\}) \approx \text{constante} - \frac{1}{2\sigma^2} \sum_{i=1}^{N} \min_k \|\mathbf{x}_i - \mu_k\|^2
+$$
 
----
+**Maximiser cette vraisemblance** équivaut à **minimiser** :
 
-### k-means++
+$$
+\sum_{i=1}^{N} \min_k \|\mathbf{x}_i - \mu_k\|^2
+$$
 
-Initialisation des représentants pour les **maximiser éloignés** :
+Ce qui est exactement la fonction $J$ de k-means !
 
-1. Choisir $\mu_1^0$ aléatoirement parmi les données  
-2. Pour chaque donnée non sélectionnée, calculer la distance au représentant le plus proche déjà choisi :  
-   $\Delta_j = \min_{m} \| \mathbf{x}_j - \mu_m^0 \|_2^2$  
-3. Choisir le prochain représentant avec une probabilité proportionnelle à $\Delta_j$  
-4. Répéter jusqu’à avoir $K$ représentants
+### Conclusion du lien
 
-Cette méthode améliore la qualité des clusters et accélère la convergence.
+k-means peut être vu comme un **algorithme EM** pour un mélange de gaussiennes sphériques de même variance, en prenant la limite où les distributions sont infiniment "pointues" (affectation dure).
 
 ---
 
-## Résumé
+## Synthèse pédagogique
 
-- Le clustering fait partie des méthodes **non supervisées**  
-- **k-means** est l’une des techniques les plus populaires  
-- Affectation **binaire** (dure)  
-- Critère d’optimisation NP-dur → solution approchée par **descente de coordonnées**  
-- Résultat dépend de l’initialisation  
-- **k-means++** : initialisation heuristique efficace  
-- Le clustering peut être **contraint** (liens MUST/CANNOT)
+### Ce qu'il faut retenir
+
+1. **k-means minimise** : La somme des carrés des distances entre chaque point et le centre de son cluster
+   
+2. **Méthode d'optimisation** : Alternance entre deux étapes simples :
+
+   - **Affectation** : Chaque point rejoint le centre le plus proche
+   - **Mise à jour** : Chaque centre devient la moyenne de ses points
+   
+3. **Propriété garantie** : L'erreur diminue à chaque itération jusqu'à convergence
+
+4. **Limite principale** : Converge vers un minimum local, pas nécessairement global
+
+5. **Amélioration clé** : k-means++ pour une meilleure initialisation
+
+### Pour résumer visuellement
+
+````{mermaid}
+mindmap
+  root((k-means))
+    Objectif
+      :Minimiser la variance intra-cluster
+      ::Formule: Σ Σ z_ik·||x_i - μ_k||²
+    Méthode
+      :Descente de coordonnées
+      ::Étape E: Affectation optimale
+      ::Étape M: Moyenne optimale
+    Propriétés
+      :Convergence garantie
+      :Minimum local seulement
+      :Rapide et simple
+    Hypothèses
+      :Clusters sphériques
+      :Tailles similaires
+      :Modèle gaussien implicite
+    Astuces pratiques
+      :Standardiser les données
+      :Utiliser k-means++
+      :Exécuter plusieurs fois
+````
+
+## Pour aller plus loin
+
+### Questions pour approfondir
+
+1. **Que se passe-t-il si on change la métrique** ? (Passer de la distance euclidienne à la distance de Manhattan)
+   
+2. **Comment adapter k-means** pour des clusters de densités différentes ?
+   
+3. **Pourquoi ne pas minimiser la somme des distances** (pas au carré) ?
+
+### Exploration interactive suggérée
+
+Essayez mentalement cet exercice :
+
+- Prenez 6 points formant deux triangles équilatéraux
+- Appliquez k-means avec K=2
+- Observez comment l'initialisation influence le résultat final
 
 ---
 
-## Exemples de questions
+## Le mot de la fin
 
-- Décrire formellement le clustering  
-- En quoi est-ce une technique non supervisée ?  
-- Pourquoi k-means est-il lié à la métrique euclidienne ?  
-- Pourquoi dit-on que k-means suppose un modèle gaussien pour les clusters ?  
-- L’algorithme k-means est-il exact ?  
-- Quels sont les principes d’initialisation de k-means ?  
-- Qu’est-ce que la descente de coordonnées ?
+k-means est comme un **chef d'orchestre** qui organise les musiciens (les points) en sections (clusters) en plaçant chaque musicien près du chef de section (centre) tout en éloignant les sections les unes des autres.
 
-Il est fortement conseillé de maîtriser l’algèbre présentée dans ce chapitre.
+La beauté de l'algorithme réside dans sa **simplicité** : une idée simple (minimiser les distances), une méthode efficace (alternance), et des résultats interprétables.
+
+**Rappel** : Comprendre la fonction objectif et son optimisation est la clé pour utiliser k-means judicieusement et interpréter correctement ses résultats !
