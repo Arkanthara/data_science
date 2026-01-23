@@ -72,6 +72,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -313,7 +316,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds71.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds71q.html">Explication du problème du clustering et de l’algorithme k-means</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds71.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds71q.html">Explication complète du clustering et de l’algorithme k-means</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -414,13 +417,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds71.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Algorithme k-means et estimation de facteurs latents discrets</span></a>
+ <span class="menu-text">Cours pédagogique : Clustering et algorithme k-means</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ds71q.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Explication du problème du clustering et de l’algorithme k-means</span></a>
+ <span class="menu-text">Explication complète du clustering et de l’algorithme k-means</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -470,247 +473,556 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#explication-du-problème-du-clustering-et-de-lalgorithme-k-means" id="toc-explication-du-problème-du-clustering-et-de-lalgorithme-k-means" class="nav-link active" data-scroll-target="#explication-du-problème-du-clustering-et-de-lalgorithme-k-means">Explication du problème du clustering et de l’algorithme k-means</a>
+  <li><a href="#explication-complète-du-clustering-et-de-lalgorithme-k-means" id="toc-explication-complète-du-clustering-et-de-lalgorithme-k-means" class="nav-link active" data-scroll-target="#explication-complète-du-clustering-et-de-lalgorithme-k-means">Explication complète du clustering et de l’algorithme k-means</a>
   <ul class="collapse">
   <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
-  <li><a href="#le-problème-du-clustering" id="toc-le-problème-du-clustering" class="nav-link" data-scroll-target="#le-problème-du-clustering">Le problème du clustering</a>
+  <li><a href="#le-problème-fondamental-du-clustering" id="toc-le-problème-fondamental-du-clustering" class="nav-link" data-scroll-target="#le-problème-fondamental-du-clustering">Le problème fondamental du clustering</a>
   <ul class="collapse">
-  <li><a href="#pourquoi-le-clustering-est-il-nécessaire" id="toc-pourquoi-le-clustering-est-il-nécessaire" class="nav-link" data-scroll-target="#pourquoi-le-clustering-est-il-nécessaire">Pourquoi le clustering est-il nécessaire ?</a></li>
-  <li><a href="#définition-formelle" id="toc-définition-formelle" class="nav-link" data-scroll-target="#définition-formelle">Définition formelle</a></li>
+  <li><a href="#la-recherche-de-structure-dans-le-chaos" id="toc-la-recherche-de-structure-dans-le-chaos" class="nav-link" data-scroll-target="#la-recherche-de-structure-dans-le-chaos">La recherche de structure dans le chaos</a></li>
+  <li><a href="#définition-mathématique-formelle" id="toc-définition-mathématique-formelle" class="nav-link" data-scroll-target="#définition-mathématique-formelle">Définition mathématique formelle</a></li>
   </ul></li>
-  <li><a href="#lalgorithme-k-means" id="toc-lalgorithme-k-means" class="nav-link" data-scroll-target="#lalgorithme-k-means">L’algorithme k-means</a>
+  <li><a href="#lalgorithme-k-means-une-idée-géniale-dans-sa-simplicité" id="toc-lalgorithme-k-means-une-idée-géniale-dans-sa-simplicité" class="nav-link" data-scroll-target="#lalgorithme-k-means-une-idée-géniale-dans-sa-simplicité">L’algorithme k-means : une idée géniale dans sa simplicité</a>
   <ul class="collapse">
-  <li><a href="#principe-fondamental" id="toc-principe-fondamental" class="nav-link" data-scroll-target="#principe-fondamental">Principe fondamental</a></li>
-  <li><a href="#modélisation-mathématique" id="toc-modélisation-mathématique" class="nav-link" data-scroll-target="#modélisation-mathématique">Modélisation mathématique</a></li>
-  <li><a href="#pourquoi-cette-fonction-de-coût" id="toc-pourquoi-cette-fonction-de-coût" class="nav-link" data-scroll-target="#pourquoi-cette-fonction-de-coût">Pourquoi cette fonction de coût ?</a></li>
+  <li><a href="#lanalogie-des-représentants-élus" id="toc-lanalogie-des-représentants-élus" class="nav-link" data-scroll-target="#lanalogie-des-représentants-élus">L’analogie des représentants élus</a></li>
   </ul></li>
-  <li><a href="#lalgorithme-doptimisation" id="toc-lalgorithme-doptimisation" class="nav-link" data-scroll-target="#lalgorithme-doptimisation">L’algorithme d’optimisation</a>
+  <li><a href="#le-cœur-mathématique-la-fonction-objectif" id="toc-le-cœur-mathématique-la-fonction-objectif" class="nav-link" data-scroll-target="#le-cœur-mathématique-la-fonction-objectif">Le cœur mathématique : la fonction objectif</a>
   <ul class="collapse">
-  <li><a href="#descente-de-coordonnées" id="toc-descente-de-coordonnées" class="nav-link" data-scroll-target="#descente-de-coordonnées">Descente de coordonnées</a></li>
-  <li><a href="#algorithme-complet" id="toc-algorithme-complet" class="nav-link" data-scroll-target="#algorithme-complet">Algorithme complet</a></li>
+  <li><a href="#formalisation-précise" id="toc-formalisation-précise" class="nav-link" data-scroll-target="#formalisation-précise">Formalisation précise</a></li>
+  <li><a href="#la-fonction-à-minimiser" id="toc-la-fonction-à-minimiser" class="nav-link" data-scroll-target="#la-fonction-à-minimiser">La fonction à minimiser</a></li>
+  <li><a href="#détail-de-la-notation" id="toc-détail-de-la-notation" class="nav-link" data-scroll-target="#détail-de-la-notation">Détail de la notation</a></li>
   </ul></li>
-  <li><a href="#relation-avec-un-modèle-gaussien" id="toc-relation-avec-un-modèle-gaussien" class="nav-link" data-scroll-target="#relation-avec-un-modèle-gaussien">Relation avec un modèle gaussien</a>
+  <li><a href="#optimisation-par-descente-de-coordonnées" id="toc-optimisation-par-descente-de-coordonnées" class="nav-link" data-scroll-target="#optimisation-par-descente-de-coordonnées">Optimisation par descente de coordonnées</a>
   <ul class="collapse">
-  <li><a href="#hypothèse-sous-jacente" id="toc-hypothèse-sous-jacente" class="nav-link" data-scroll-target="#hypothèse-sous-jacente">Hypothèse sous-jacente</a></li>
-  <li><a href="#modèle-de-mélange-de-gaussiennes-gmm" id="toc-modèle-de-mélange-de-gaussiennes-gmm" class="nav-link" data-scroll-target="#modèle-de-mélange-de-gaussiennes-gmm">Modèle de mélange de gaussiennes (GMM)</a></li>
-  <li><a href="#log-vraisemblance-et-k-means" id="toc-log-vraisemblance-et-k-means" class="nav-link" data-scroll-target="#log-vraisemblance-et-k-means">Log-vraisemblance et k-means</a></li>
-  <li><a href="#interprétation-probabiliste" id="toc-interprétation-probabiliste" class="nav-link" data-scroll-target="#interprétation-probabiliste">Interprétation probabiliste</a></li>
+  <li><a href="#le-problème-combinatoire" id="toc-le-problème-combinatoire" class="nav-link" data-scroll-target="#le-problème-combinatoire">Le problème combinatoire</a></li>
+  <li><a href="#stratégie-optimiser-alternativement" id="toc-stratégie-optimiser-alternativement" class="nav-link" data-scroll-target="#stratégie-optimiser-alternativement">Stratégie : optimiser alternativement</a></li>
+  <li><a href="#étape-e-optimisation-des-affectations" id="toc-étape-e-optimisation-des-affectations" class="nav-link" data-scroll-target="#étape-e-optimisation-des-affectations">Étape E : Optimisation des affectations</a></li>
+  <li><a href="#étape-m-optimisation-des-centres" id="toc-étape-m-optimisation-des-centres" class="nav-link" data-scroll-target="#étape-m-optimisation-des-centres">Étape M : Optimisation des centres</a></li>
   </ul></li>
-  <li><a href="#propriétés-et-limitations" id="toc-propriétés-et-limitations" class="nav-link" data-scroll-target="#propriétés-et-limitations">Propriétés et limitations</a>
+  <li><a href="#preuve-de-convergence" id="toc-preuve-de-convergence" class="nav-link" data-scroll-target="#preuve-de-convergence">Preuve de convergence</a>
   <ul class="collapse">
-  <li><a href="#avantages" id="toc-avantages" class="nav-link" data-scroll-target="#avantages">Avantages</a></li>
-  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
-  <li><a href="#solutions-courantes" id="toc-solutions-courantes" class="nav-link" data-scroll-target="#solutions-courantes">Solutions courantes</a></li>
+  <li><a href="#monotonie-de-la-descente" id="toc-monotonie-de-la-descente" class="nav-link" data-scroll-target="#monotonie-de-la-descente">Monotonie de la descente</a></li>
+  <li><a href="#conséquence" id="toc-conséquence" class="nav-link" data-scroll-target="#conséquence">Conséquence</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#relation-profonde-avec-les-modèles-gaussiens" id="toc-relation-profonde-avec-les-modèles-gaussiens" class="nav-link" data-scroll-target="#relation-profonde-avec-les-modèles-gaussiens">Relation profonde avec les modèles gaussiens</a>
+  <ul class="collapse">
+  <li><a href="#de-lalgorithme-em-à-k-means" id="toc-de-lalgorithme-em-à-k-means" class="nav-link" data-scroll-target="#de-lalgorithme-em-à-k-means">De l’algorithme EM à k-means</a></li>
+  <li><a href="#lalgorithme-em-pour-gmm" id="toc-lalgorithme-em-pour-gmm" class="nav-link" data-scroll-target="#lalgorithme-em-pour-gmm">L’algorithme EM pour GMM</a></li>
+  <li><a href="#passage-à-k-means-hypothèses-simplificatrices" id="toc-passage-à-k-means-hypothèses-simplificatrices" class="nav-link" data-scroll-target="#passage-à-k-means-hypothèses-simplificatrices">Passage à k-means : hypothèses simplificatrices</a></li>
+  <li><a href="#dérivation-de-la-fonction-objectif-k-means" id="toc-dérivation-de-la-fonction-objectif-k-means" class="nav-link" data-scroll-target="#dérivation-de-la-fonction-objectif-k-means">Dérivation de la fonction objectif k-means</a></li>
+  <li><a href="#tableau-récapitulatif-em-k-means" id="toc-tableau-récapitulatif-em-k-means" class="nav-link" data-scroll-target="#tableau-récapitulatif-em-k-means">Tableau récapitulatif : EM → k-means</a></li>
+  </ul></li>
+  <li><a href="#implications-pratiques-de-cette-connexion" id="toc-implications-pratiques-de-cette-connexion" class="nav-link" data-scroll-target="#implications-pratiques-de-cette-connexion">Implications pratiques de cette connexion</a>
+  <ul class="collapse">
+  <li><a href="#ce-que-cela-nous-apprend-sur-k-means" id="toc-ce-que-cela-nous-apprend-sur-k-means" class="nav-link" data-scroll-target="#ce-que-cela-nous-apprend-sur-k-means">Ce que cela nous apprend sur k-means</a></li>
+  <li><a href="#conséquences-pour-lapplication" id="toc-conséquences-pour-lapplication" class="nav-link" data-scroll-target="#conséquences-pour-lapplication">Conséquences pour l’application</a></li>
+  </ul></li>
+  <li><a href="#version-intuitive-finale" id="toc-version-intuitive-finale" class="nav-link" data-scroll-target="#version-intuitive-finale">Version intuitive finale</a>
+  <ul class="collapse">
+  <li><a href="#lessence-en-une-image" id="toc-lessence-en-une-image" class="nav-link" data-scroll-target="#lessence-en-une-image">L’essence en une image</a></li>
+  <li><a href="#message-à-retenir" id="toc-message-à-retenir" class="nav-link" data-scroll-target="#message-à-retenir">Message à retenir</a></li>
+  </ul></li>
+  <li><a href="#pour-les-plus-curieux-approfondissements" id="toc-pour-les-plus-curieux-approfondissements" class="nav-link" data-scroll-target="#pour-les-plus-curieux-approfondissements">Pour les plus curieux : approfondissements</a>
+  <ul class="collapse">
+  <li><a href="#généralisations-possibles" id="toc-généralisations-possibles" class="nav-link" data-scroll-target="#généralisations-possibles">Généralisations possibles</a></li>
+  <li><a href="#défis-ouverts" id="toc-défis-ouverts" class="nav-link" data-scroll-target="#défis-ouverts">Défis ouverts</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds71q.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds71.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds71q.html">Explication du problème du clustering et de l’algorithme k-means</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ds71.html">k-Means</a></li><li class="breadcrumb-item"><a href="./ds71q.html">Explication complète du clustering et de l’algorithme k-means</a></li></ol></nav></header>
 
 
 
 
 
-<section id="explication-du-problème-du-clustering-et-de-lalgorithme-k-means" class="level1">
-<h1>Explication du problème du clustering et de l’algorithme k-means</h1>
+<section id="explication-complète-du-clustering-et-de-lalgorithme-k-means" class="level1">
+<h1>Explication complète du clustering et de l’algorithme k-means</h1>
 <section id="question" class="level2">
 <h2 class="anchored" data-anchor-id="question">Question</h2>
 <p>Expliquez le problème du regroupement et décrivez l’algorithme de regroupement k-means. En particulier, discutez de la fonction qu’il minimise et de sa relation avec un modèle gaussien.</p>
 </section>
-<section id="le-problème-du-clustering" class="level2">
-<h2 class="anchored" data-anchor-id="le-problème-du-clustering">Le problème du clustering</h2>
-<p>Le <strong>clustering</strong> (ou regroupement) est une tâche fondamentale en analyse de données non supervisée. Son objectif est d’organiser un ensemble de données en <strong>groupes homogènes</strong> sans avoir recours à des étiquettes préexistantes.</p>
-<section id="pourquoi-le-clustering-est-il-nécessaire" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-le-clustering-est-il-nécessaire">Pourquoi le clustering est-il nécessaire ?</h3>
-<p>Les données réelles présentent rarement une distribution uniforme :</p>
-<ul>
-<li>Elles tendent à se regrouper en <strong>régions de haute densité</strong> séparées par des régions de faible densité</li>
-<li>Ces regroupements naturels correspondent souvent à des <strong>sous-populations</strong> ou <strong>catégories intrinsèques</strong></li>
-<li>Le clustering permet de découvrir cette <strong>structure latente</strong> sans supervision</li>
-</ul>
+<section id="le-problème-fondamental-du-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="le-problème-fondamental-du-clustering">Le problème fondamental du clustering</h2>
+<section id="la-recherche-de-structure-dans-le-chaos" class="level3">
+<h3 class="anchored" data-anchor-id="la-recherche-de-structure-dans-le-chaos">La recherche de structure dans le chaos</h3>
+<p>Imaginez que vous avez un sac de bonbons de formes et couleurs variées, mélangés aléatoirement. Votre cerveau fait naturellement ceci : il <strong>regroupe</strong> les bonbons similaires. Les ronds avec les ronds, les carrés avec les carrés, les rouges avec les rouges.</p>
+<p>Le <strong>clustering</strong> (regroupement) est exactement cette capacité, mais pour des données. C’est une méthode <strong>non supervisée</strong> - personne ne vous dit comment regrouper, vous devez découvrir la structure par vous-même.</p>
 </section>
-<section id="définition-formelle" class="level3">
-<h3 class="anchored" data-anchor-id="définition-formelle">Définition formelle</h3>
-<p>Étant donné un ensemble de données <span class="math inline">\(\mathcal{X} = \{ \mathbf{x}_i \}_{i=1}^N\)</span> avec <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^D\)</span>, le clustering cherche à :</p>
+<section id="définition-mathématique-formelle" class="level3">
+<h3 class="anchored" data-anchor-id="définition-mathématique-formelle">Définition mathématique formelle</h3>
+<p>Étant donné un ensemble de données <span class="math inline">\(\mathcal{X} = \{\mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_N\}\)</span> avec <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^D\)</span>, le clustering cherche une partition de <span class="math inline">\(\mathcal{X}\)</span> en <span class="math inline">\(K\)</span> sous-ensembles <span class="math inline">\(C_1, C_2, ..., C_K\)</span> tels que :</p>
 <ol type="1">
-<li>Partitionner les données en <span class="math inline">\(K\)</span> groupes (clusters)</li>
-<li>Maximiser la <strong>similarité intra-cluster</strong> (données d’un même groupe se ressemblent)</li>
-<li>Maximiser la <strong>dissimilarité inter-clusters</strong> (groupes différents sont distincts)</li>
+<li><strong>Exhaustivité</strong> : <span class="math inline">\(\bigcup_{k=1}^K C_k = \mathcal{X}\)</span></li>
+<li><strong>Exclusivité</strong> : <span class="math inline">\(C_i \cap C_j = \emptyset\)</span> pour <span class="math inline">\(i \neq j\)</span> (pour le clustering dur)</li>
+<li><strong>Cohésion</strong> : Les points d’un même cluster se ressemblent</li>
+<li><strong>Séparation</strong> : Les points de clusters différents sont dissimilaires</li>
 </ol>
 <hr>
 </section>
 </section>
-<section id="lalgorithme-k-means" class="level2">
-<h2 class="anchored" data-anchor-id="lalgorithme-k-means">L’algorithme k-means</h2>
-<p>Le <strong>k-means</strong> est l’algorithme de clustering le plus populaire en raison de sa simplicité et efficacité.</p>
-<section id="principe-fondamental" class="level3">
-<h3 class="anchored" data-anchor-id="principe-fondamental">Principe fondamental</h3>
-<p>k-means postule que les données existent dans un <strong>espace métrique euclidien</strong> et que chaque cluster peut être représenté par son <strong>centre</strong> (moyenne des points du cluster).</p>
-<p>L’algorithme effectue une <strong>affectation dure</strong> : chaque donnée appartient à un et un seul cluster.</p>
+<section id="lalgorithme-k-means-une-idée-géniale-dans-sa-simplicité" class="level2">
+<h2 class="anchored" data-anchor-id="lalgorithme-k-means-une-idée-géniale-dans-sa-simplicité">L’algorithme k-means : une idée géniale dans sa simplicité</h2>
+<section id="lanalogie-des-représentants-élus" class="level3">
+<h3 class="anchored" data-anchor-id="lanalogie-des-représentants-élus">L’analogie des représentants élus</h3>
+<p>Imaginez une région avec plusieurs villages. Pour réduire les temps de trajet, on veut construire <span class="math inline">\(K\)</span> centres administratifs. Comment les placer optimalement ?</p>
+<ol type="1">
+<li><strong>Initialisation</strong> : Placez <span class="math inline">\(K\)</span> centres au hasard</li>
+<li><strong>Affectation</strong> : Chaque village choisit le centre le plus proche</li>
+<li><strong>Réajustement</strong> : Chaque centre se déplace au barycentre des villages qui l’ont choisi</li>
+<li><strong>Itération</strong> : Répétez jusqu’à stabilité</li>
+</ol>
+<p>C’est l’essence de <strong>k-means</strong> !</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    Start[Début avec K centres initiaux] --&gt; Assign
+    
+    subgraph Assign [Phase d'affectation]
+        A1[Pour chaque point x_i]
+        A2[Trouver le centre μ_k le plus proche]
+        A3[Affecter x_i à ce cluster]
+    end
+    
+    Assign --&gt; Update
+    
+    subgraph Update [Phase de mise à jour]
+        U1[Pour chaque cluster k]
+        U2[Calculer la moyenne de tous ses points]
+        U3[Déplacer μ_k à cette position]
+    end
+    
+    Update --&gt; Check{Convergence ?}
+    Check -- Non --&gt; Assign
+    Check -- Oui --&gt; End[Solution finale obtenue]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
 </section>
-<section id="modélisation-mathématique" class="level3">
-<h3 class="anchored" data-anchor-id="modélisation-mathématique">Modélisation mathématique</h3>
-<section id="variables" class="level4">
-<h4 class="anchored" data-anchor-id="variables">Variables</h4>
+</section>
+<section id="le-cœur-mathématique-la-fonction-objectif" class="level2">
+<h2 class="anchored" data-anchor-id="le-cœur-mathématique-la-fonction-objectif">Le cœur mathématique : la fonction objectif</h2>
+<section id="formalisation-précise" class="level3">
+<h3 class="anchored" data-anchor-id="formalisation-précise">Formalisation précise</h3>
+<p>Soient :</p>
 <ul>
-<li><strong>Données</strong> : <span class="math inline">\(\mathcal{X} = \{ \mathbf{x}_i \}_{i=1}^N \subset \mathbb{R}^D\)</span></li>
-<li><strong>Nombre de clusters</strong> : <span class="math inline">\(K \in \mathbb{N}^*\)</span> (fixé a priori)</li>
-<li><strong>Variables d’affectation latentes</strong> : <span class="math inline">\(\mathbf{Z} = \{ z_{ik} \}\)</span> où <span class="math inline">\(z_{ik} \in \{0, 1\}\)</span> avec <span class="math inline">\(\sum_{k=1}^K z_{ik} = 1\)</span></li>
-<li><strong>Représentants des clusters</strong> : <span class="math inline">\(\mathbf{M} = \{ \mu_k \}_{k=1}^K \subset \mathbb{R}^D\)</span></li>
+<li><strong>Données</strong> : <span class="math inline">\(\mathcal{X} = \{\mathbf{x}_i\}_{i=1}^N\)</span>, <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^D\)</span></li>
+<li><strong>Nombre de clusters</strong> : <span class="math inline">\(K\)</span> (fixé a priori)</li>
+<li><strong>Centres des clusters</strong> : <span class="math inline">\(\mathbf{M} = \{\mu_k\}_{k=1}^K\)</span>, <span class="math inline">\(\mu_k \in \mathbb{R}^D\)</span></li>
+<li><strong>Variables d’affectation</strong> : <span class="math inline">\(\mathbf{Z} = \{z_{ik}\}\)</span>, où <span class="math inline">\(z_{ik} \in \{0, 1\}\)</span> et <span class="math inline">\(\sum_{k=1}^K z_{ik} = 1\)</span></li>
 </ul>
 </section>
-<section id="fonction-de-coût-loss-function" class="level4">
-<h4 class="anchored" data-anchor-id="fonction-de-coût-loss-function">Fonction de coût (loss function)</h4>
-<p>k-means minimise la <strong>somme des carrés des distances</strong> entre chaque point et le centre de son cluster :</p>
+<section id="la-fonction-à-minimiser" class="level3">
+<h3 class="anchored" data-anchor-id="la-fonction-à-minimiser">La fonction à minimiser</h3>
+<p>k-means minimise la <strong>somme des carrés des distances intra-cluster</strong> :</p>
 <p><span class="math display">\[
-\mathcal{L}(\mathbf{M}, \mathbf{Z}; \mathcal{X}) = \sum_{i=1}^N \sum_{k=1}^K z_{ik} \| \mathbf{x}_i - \mu_k \|_2^2
+J(\mathbf{M}, \mathbf{Z}) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2
 \]</span></p>
-<p>Cette fonction mesure la <strong>compacité</strong> des clusters : plus la valeur est faible, plus les points sont proches de leur centre.</p>
+<p>Où <span class="math inline">\(\|\cdot\|_2\)</span> est la norme euclidienne : <span class="math inline">\(\|\mathbf{x}\|_2 = \sqrt{\sum_{d=1}^D x_d^2}\)</span></p>
 </section>
-</section>
-<section id="pourquoi-cette-fonction-de-coût" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-cette-fonction-de-coût">Pourquoi cette fonction de coût ?</h3>
-<ol type="1">
-<li><strong>Interprétation géométrique</strong> : Minimiser la variance intra-cluster</li>
-<li><strong>Propriété statistique</strong> : Avec la distance euclidienne, le centre optimal est la moyenne (preuve par dérivation)</li>
-<li><strong>Convexité par morceaux</strong> : Convexe en <span class="math inline">\(\mathbf{M}\)</span> pour <span class="math inline">\(\mathbf{Z}\)</span> fixé, et convexe en <span class="math inline">\(\mathbf{Z}\)</span> pour <span class="math inline">\(\mathbf{M}\)</span> fixé</li>
-</ol>
+<section id="détail-de-la-notation" class="level3">
+<h3 class="anchored" data-anchor-id="détail-de-la-notation">Détail de la notation</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 43%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Terme</th>
+<th>Signification</th>
+<th>Dimension</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(z_{ik}\)</span></td>
+<td>Variable binaire : 1 si <span class="math inline">\(\mathbf{x}_i\)</span> ∈ cluster <span class="math inline">\(k\)</span>, 0 sinon</td>
+<td>Scalaire</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{x}_i\)</span></td>
+<td>Point de données <span class="math inline">\(i\)</span></td>
+<td><span class="math inline">\(\mathbb{R}^D\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mu_k\)</span></td>
+<td>Centre du cluster <span class="math inline">\(k\)</span></td>
+<td><span class="math inline">\(\mathbb{R}^D\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\|\mathbf{x}_i - \mu_k\|_2^2\)</span></td>
+<td>Distance euclidienne au carré</td>
+<td>Scalaire</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observation cruciale</strong> : Pour un point <span class="math inline">\(\mathbf{x}_i\)</span> donné, un seul <span class="math inline">\(z_{ik}\)</span> vaut 1 (celui du cluster auquel il appartient), les autres valent 0. Donc pour chaque point, on ne compte que sa distance au centre de son propre cluster.</p>
 <hr>
 </section>
 </section>
-<section id="lalgorithme-doptimisation" class="level2">
-<h2 class="anchored" data-anchor-id="lalgorithme-doptimisation">L’algorithme d’optimisation</h2>
-<section id="descente-de-coordonnées" class="level3">
-<h3 class="anchored" data-anchor-id="descente-de-coordonnées">Descente de coordonnées</h3>
-<p>Le problème d’optimisation combinatoire est <strong>NP-dur</strong>. k-means utilise une <strong>descente de coordonnées</strong> (optimisation alternée) :</p>
-<section id="étape-e-expectation---affectation" class="level4">
-<h4 class="anchored" data-anchor-id="étape-e-expectation---affectation">Étape E (Expectation - Affectation)</h4>
-<p>Pour des centres <span class="math inline">\(\mathbf{M}^{(t)}\)</span> fixés, on affecte chaque point à son cluster le plus proche :</p>
+<section id="optimisation-par-descente-de-coordonnées" class="level2">
+<h2 class="anchored" data-anchor-id="optimisation-par-descente-de-coordonnées">Optimisation par descente de coordonnées</h2>
+<section id="le-problème-combinatoire" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-combinatoire">Le problème combinatoire</h3>
+<p>Minimiser <span class="math inline">\(J\)</span> simultanément sur <span class="math inline">\(\mathbf{M}\)</span> et <span class="math inline">\(\mathbf{Z}\)</span> est <strong>NP-dur</strong> : il y a <span class="math inline">\(K^N\)</span> affectations possibles !</p>
+</section>
+<section id="stratégie-optimiser-alternativement" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-optimiser-alternativement">Stratégie : optimiser alternativement</h3>
+<p>On utilise une <strong>descente de coordonnées</strong> :</p>
+<ol type="1">
+<li><strong>Fixer <span class="math inline">\(\mathbf{M}\)</span></strong>, optimiser sur <span class="math inline">\(\mathbf{Z}\)</span> (étape E)</li>
+<li><strong>Fixer <span class="math inline">\(\mathbf{Z}\)</span></strong>, optimiser sur <span class="math inline">\(\mathbf{M}\)</span> (étape M)</li>
+<li><strong>Répéter</strong> jusqu’à convergence</li>
+</ol>
+</section>
+<section id="étape-e-optimisation-des-affectations" class="level3">
+<h3 class="anchored" data-anchor-id="étape-e-optimisation-des-affectations">Étape E : Optimisation des affectations</h3>
+<p>Avec <span class="math inline">\(\mathbf{M}\)</span> fixé, le problème devient :</p>
+<p>Pour chaque <span class="math inline">\(i = 1, ..., N\)</span>, choisir <span class="math inline">\(z_{ik}\)</span> pour minimiser :</p>
 <p><span class="math display">\[
-z_{ik}^{(t+1)} =
+\sum_{k=1}^K z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2
+\]</span></p>
+<p>Sous contrainte : <span class="math inline">\(\sum_{k=1}^K z_{ik} = 1\)</span>, <span class="math inline">\(z_{ik} \in \{0, 1\}\)</span></p>
+<p><strong>Solution</strong> : Affecter <span class="math inline">\(\mathbf{x}_i\)</span> au cluster dont le centre est le plus proche !</p>
+<p>Formellement :</p>
+<p><span class="math display">\[
+z_{ik} =
 \begin{cases}
-1 &amp; \text{si } k = \arg\min_j \| \mathbf{x}_i - \mu_j^{(t)} \|_2^2 \\
+1 &amp; \text{si } k = \arg\min_{j} \|\mathbf{x}_i - \mu_j\|_2^2 \\
 0 &amp; \text{sinon}
 \end{cases}
 \]</span></p>
 </section>
-<section id="étape-m-maximization---mise-à-jour-des-centres" class="level4">
-<h4 class="anchored" data-anchor-id="étape-m-maximization---mise-à-jour-des-centres">Étape M (Maximization - Mise à jour des centres)</h4>
-<p>Pour une affectation <span class="math inline">\(\mathbf{Z}^{(t+1)}\)</span> fixée, on recalcule les centres comme moyennes :</p>
+<section id="étape-m-optimisation-des-centres" class="level3">
+<h3 class="anchored" data-anchor-id="étape-m-optimisation-des-centres">Étape M : Optimisation des centres</h3>
+<p>Avec <span class="math inline">\(\mathbf{Z}\)</span> fixé, le problème devient :</p>
+<p>Pour chaque <span class="math inline">\(k = 1, ..., K\)</span>, trouver <span class="math inline">\(\mu_k\)</span> minimisant :</p>
 <p><span class="math display">\[
-\mu_k^{(t+1)} = \frac{\sum_{i=1}^N z_{ik}^{(t+1)} \mathbf{x}_i}{\sum_{i=1}^N z_{ik}^{(t+1)}}
+\sum_{i=1}^N z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2
+\]</span></p>
+<section id="calcul-du-gradient" class="level4">
+<h4 class="anchored" data-anchor-id="calcul-du-gradient">Calcul du gradient</h4>
+<p><span class="math display">\[
+\nabla_{\mu_k} \left( \sum_{i=1}^N z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2 \right) = -2 \sum_{i=1}^N z_{ik} (\mathbf{x}_i - \mu_k)
 \]</span></p>
 </section>
+<section id="condition-doptimalité" class="level4">
+<h4 class="anchored" data-anchor-id="condition-doptimalité">Condition d’optimalité</h4>
+<p>En annulant le gradient :</p>
+<p><span class="math display">\[
+\sum_{i=1}^N z_{ik} (\mathbf{x}_i - \mu_k) = 0
+\]</span></p>
+<p><span class="math display">\[
+\Rightarrow \mu_k = \frac{\sum_{i=1}^N z_{ik} \mathbf{x}_i}{\sum_{i=1}^N z_{ik}}
+\]</span></p>
+<p><strong>Interprétation</strong> : Le centre optimal est la <strong>moyenne</strong> (centre de masse) des points du cluster.</p>
+<hr>
 </section>
-<section id="algorithme-complet" class="level3">
-<h3 class="anchored" data-anchor-id="algorithme-complet">Algorithme complet</h3>
+</section>
+</section>
+<section id="preuve-de-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="preuve-de-convergence">Preuve de convergence</h2>
+<section id="monotonie-de-la-descente" class="level3">
+<h3 class="anchored" data-anchor-id="monotonie-de-la-descente">Monotonie de la descente</h3>
+<p>Soit <span class="math inline">\(J^{(t)} = J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t)})\)</span></p>
 <ol type="1">
-<li><strong>Initialisation</strong> : Choisir <span class="math inline">\(K\)</span> centres initiaux (aléatoirement ou par k-means++)</li>
-<li><strong>Étape d’affectation</strong> : Assigner chaque point au centre le plus proche</li>
-<li><strong>Étape de mise à jour</strong> : Recalculer les centres comme moyennes des points assignés</li>
-<li><strong>Itération</strong> : Répéter étapes 2-3 jusqu’à convergence
-<ul>
-<li>Critère d’arrêt : Les centres ne bougent plus ou l’affectation est stable</li>
-</ul></li>
+<li><p><strong>Étape E</strong> : On choisit <span class="math inline">\(\mathbf{Z}^{(t+1)}\)</span> optimal pour <span class="math inline">\(\mathbf{M}^{(t)}\)</span> fixé :</p>
+<p><span class="math display">\[
+J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t+1)}) \leq J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t)})
+\]</span></p>
+<p>(inégalité stricte si au moins une affectation change)</p></li>
+<li><p><strong>Étape M</strong> : On choisit <span class="math inline">\(\mathbf{M}^{(t+1)}\)</span> optimal pour <span class="math inline">\(\mathbf{Z}^{(t+1)}\)</span> fixé :</p>
+<p><span class="math display">\[
+J(\mathbf{M}^{(t+1)}, \mathbf{Z}^{(t+1)}) \leq J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t+1)})
+\]</span></p>
+<p>(inégalité stricte si au moins un centre change)</p></li>
+<li><p><strong>Transitivité</strong> :</p>
+<p><span class="math display">\[
+J^{(t+1)} = J(\mathbf{M}^{(t+1)}, \mathbf{Z}^{(t+1)}) \leq J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t)}) = J^{(t)}
+\]</span></p></li>
 </ol>
+</section>
+<section id="conséquence" class="level3">
+<h3 class="anchored" data-anchor-id="conséquence">Conséquence</h3>
+<p>La séquence <span class="math inline">\(\{J^{(t)}\}_{t=0}^\infty\)</span> est <strong>décroissante</strong> et <strong>minorée</strong> par 0, donc elle converge.</p>
+<p><strong>Attention</strong> : Elle converge vers un <strong>minimum local</strong>, pas nécessairement global !</p>
 <hr>
 </section>
 </section>
-<section id="relation-avec-un-modèle-gaussien" class="level2">
-<h2 class="anchored" data-anchor-id="relation-avec-un-modèle-gaussien">Relation avec un modèle gaussien</h2>
-<section id="hypothèse-sous-jacente" class="level3">
-<h3 class="anchored" data-anchor-id="hypothèse-sous-jacente">Hypothèse sous-jacente</h3>
-<p>k-means suppose implicitement que chaque cluster suit une <strong>distribution gaussienne isotrope</strong> avec :</p>
+<section id="relation-profonde-avec-les-modèles-gaussiens" class="level2">
+<h2 class="anchored" data-anchor-id="relation-profonde-avec-les-modèles-gaussiens">Relation profonde avec les modèles gaussiens</h2>
+<section id="de-lalgorithme-em-à-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="de-lalgorithme-em-à-k-means">De l’algorithme EM à k-means</h3>
+<p>Pour comprendre le lien, partons d’un <strong>modèle de mélange de gaussiennes</strong> (GMM).</p>
+<section id="modèle-de-mélange-de-gaussiennes" class="level4">
+<h4 class="anchored" data-anchor-id="modèle-de-mélange-de-gaussiennes">Modèle de mélange de gaussiennes</h4>
+<p>On suppose que les données sont générées par <span class="math inline">\(K\)</span> gaussiennes :</p>
+<p><span class="math display">\[
+p(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x} | \mu_k, \Sigma_k)
+\]</span></p>
+<p>Où :</p>
 <ul>
-<li><strong>Même covariance</strong> : <span class="math inline">\(\Sigma_k = \sigma^2 I\)</span> pour tous les clusters</li>
-<li><strong>Centres différents</strong> : <span class="math inline">\(\mu_k\)</span> spécifiques à chaque cluster</li>
-<li><strong>Égale probabilité a priori</strong> : <span class="math inline">\(P(\text{cluster } k) = 1/K\)</span></li>
+<li><span class="math inline">\(\pi_k\)</span> est le poids du cluster <span class="math inline">\(k\)</span> (<span class="math inline">\(\pi_k \geq 0\)</span>, <span class="math inline">\(\sum_k \pi_k = 1\)</span>)</li>
+<li><span class="math inline">\(\mathcal{N}(\mathbf{x} | \mu_k, \Sigma_k)\)</span> est une gaussienne multivariée</li>
 </ul>
 </section>
-<section id="modèle-de-mélange-de-gaussiennes-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="modèle-de-mélange-de-gaussiennes-gmm">Modèle de mélange de gaussiennes (GMM)</h3>
-<p>Considérons un <strong>mélange de gaussiennes</strong> avec covariance sphérique :</p>
-<p><span class="math display">\[
-p(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x} | \mu_k, \sigma^2 I)
-\]</span></p>
-<p>où <span class="math inline">\(\pi_k = 1/K\)</span> sont les poids des clusters.</p>
+<section id="variables-latentes" class="level4">
+<h4 class="anchored" data-anchor-id="variables-latentes">Variables latentes</h4>
+<p>Introduisons des variables latentes <span class="math inline">\(\mathbf{z}_i = [z_{i1}, ..., z_{iK}]\)</span> avec <span class="math inline">\(z_{ik} \in \{0, 1\}\)</span> et <span class="math inline">\(\sum_k z_{ik} = 1\)</span>, indiquant à quel cluster appartient <span class="math inline">\(\mathbf{x}_i\)</span>.</p>
 </section>
-<section id="log-vraisemblance-et-k-means" class="level3">
-<h3 class="anchored" data-anchor-id="log-vraisemblance-et-k-means">Log-vraisemblance et k-means</h3>
-<p>La log-vraisemblance des données sous ce modèle est :</p>
+<section id="modèle-complet" class="level4">
+<h4 class="anchored" data-anchor-id="modèle-complet">Modèle complet</h4>
+<p>La distribution jointe s’écrit :</p>
 <p><span class="math display">\[
-\log p(\mathcal{X} | \mathbf{M}, \sigma) = \sum_{i=1}^N \log \left( \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x}_i | \mu_k, \sigma^2 I) \right)
+p(\mathbf{x}_i, \mathbf{z}_i) = \prod_{k=1}^K [\pi_k \mathcal{N}(\mathbf{x}_i | \mu_k, \Sigma_k)]^{z_{ik}}
 \]</span></p>
-<section id="approximation-hard-assignment" class="level4">
-<h4 class="anchored" data-anchor-id="approximation-hard-assignment">Approximation “hard assignment”</h4>
-<p>k-means correspond à deux approximations :</p>
+</section>
+</section>
+<section id="lalgorithme-em-pour-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="lalgorithme-em-pour-gmm">L’algorithme EM pour GMM</h3>
+<p>EM maximise la log-vraisemblance des données observées par rapport aux paramètres <span class="math inline">\(\theta = \{\pi_k, \mu_k, \Sigma_k\}\)</span>.</p>
+<section id="étape-e-expectation" class="level4">
+<h4 class="anchored" data-anchor-id="étape-e-expectation">Étape E (Expectation)</h4>
+<p>On calcule la responsabilité (postérieure) :</p>
+<p><span class="math display">\[
+\gamma(z_{ik}) = \frac{\pi_k \mathcal{N}(\mathbf{x}_i | \mu_k, \Sigma_k)}{\sum_{j=1}^K \pi_j \mathcal{N}(\mathbf{x}_i | \mu_j, \Sigma_j)}
+\]</span></p>
+<p>C’est une <strong>affectation douce</strong> : <span class="math inline">\(\gamma(z_{ik}) \in [0, 1]\)</span>, <span class="math inline">\(\sum_k \gamma(z_{ik}) = 1\)</span>.</p>
+</section>
+<section id="étape-m-maximization" class="level4">
+<h4 class="anchored" data-anchor-id="étape-m-maximization">Étape M (Maximization)</h4>
+<p>On maximise l’espérance de la log-vraisemblance complète :</p>
+<p><span class="math display">\[
+Q(\theta, \theta^{\text{old}}) = \sum_{i=1}^N \sum_{k=1}^K \gamma(z_{ik}) \left[ \log \pi_k + \log \mathcal{N}(\mathbf{x}_i | \mu_k, \Sigma_k) \right]
+\]</span></p>
+<p>Les mises à jour sont :</p>
+<p><span class="math display">\[
+\mu_k^{\text{new}} = \frac{\sum_{i=1}^N \gamma(z_{ik}) \mathbf{x}_i}{\sum_{i=1}^N \gamma(z_{ik})}
+\]</span></p>
+<p><span class="math display">\[
+\Sigma_k^{\text{new}} = \frac{\sum_{i=1}^N \gamma(z_{ik}) (\mathbf{x}_i - \mu_k^{\text{new}})(\mathbf{x}_i - \mu_k^{\text{new}})^\top}{\sum_{i=1}^N \gamma(z_{ik})}
+\]</span></p>
+<p><span class="math display">\[
+\pi_k^{\text{new}} = \frac{\sum_{i=1}^N \gamma(z_{ik})}{N}
+\]</span></p>
+</section>
+</section>
+<section id="passage-à-k-means-hypothèses-simplificatrices" class="level3">
+<h3 class="anchored" data-anchor-id="passage-à-k-means-hypothèses-simplificatrices">Passage à k-means : hypothèses simplificatrices</h3>
+<section id="hypothèse-1-covariances-sphériques-et-égales" class="level4">
+<h4 class="anchored" data-anchor-id="hypothèse-1-covariances-sphériques-et-égales">Hypothèse 1 : Covariances sphériques et égales</h4>
+<p>Supposons <span class="math inline">\(\Sigma_k = \sigma^2 I\)</span> pour tout <span class="math inline">\(k\)</span>, avec <span class="math inline">\(\sigma^2\)</span> fixé et identique pour tous les clusters.</p>
+<p>La densité gaussienne devient :</p>
+<p><span class="math display">\[
+\mathcal{N}(\mathbf{x}_i | \mu_k, \sigma^2 I) = \frac{1}{(2\pi\sigma^2)^{D/2}} \exp\left(-\frac{\|\mathbf{x}_i - \mu_k\|^2}{2\sigma^2}\right)
+\]</span></p>
+</section>
+<section id="hypothèse-2-limite-de-variance-nulle" class="level4">
+<h4 class="anchored" data-anchor-id="hypothèse-2-limite-de-variance-nulle">Hypothèse 2 : Limite de variance nulle</h4>
+<p>Considérons la limite quand <span class="math inline">\(\sigma^2 \to 0\)</span> (distributions très “pointues”).</p>
+<p>Dans ce cas, <span class="math inline">\(\exp\left(-\frac{\|\mathbf{x}_i - \mu_k\|^2}{2\sigma^2}\right)\)</span> décroît très rapidement avec la distance.</p>
+</section>
+<section id="hypothèse-3-poids-égaux" class="level4">
+<h4 class="anchored" data-anchor-id="hypothèse-3-poids-égaux">Hypothèse 3 : Poids égaux</h4>
+<p>Supposons <span class="math inline">\(\pi_k = 1/K\)</span> pour tout <span class="math inline">\(k\)</span> (clusters équiprobables a priori).</p>
+</section>
+</section>
+<section id="dérivation-de-la-fonction-objectif-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="dérivation-de-la-fonction-objectif-k-means">Dérivation de la fonction objectif k-means</h3>
+<section id="étape-e-en-limite-dure" class="level4">
+<h4 class="anchored" data-anchor-id="étape-e-en-limite-dure">Étape E en limite dure</h4>
+<p>Quand <span class="math inline">\(\sigma^2 \to 0\)</span>, la responsabilité <span class="math inline">\(\gamma(z_{ik})\)</span> devient :</p>
+<p><span class="math display">\[
+\gamma(z_{ik}) \to
+\begin{cases}
+1 &amp; \text{si } k = \arg\min_j \|\mathbf{x}_i - \mu_j\|^2 \\
+0 &amp; \text{sinon}
+\end{cases}
+\]</span></p>
+<p>C’est exactement une <strong>affectation dure</strong> comme dans k-means !</p>
+</section>
+<section id="étape-m-simplifiée" class="level4">
+<h4 class="anchored" data-anchor-id="étape-m-simplifiée">Étape M simplifiée</h4>
+<p>Avec ces hypothèses, l’espérance <span class="math inline">\(Q\)</span> devient (à une constante additive près) :</p>
+<p><span class="math display">\[
+Q(\theta, \theta^{\text{old}}) \approx -\frac{1}{2\sigma^2} \sum_{i=1}^N \sum_{k=1}^K \gamma(z_{ik}) \|\mathbf{x}_i - \mu_k\|^2 + \text{constante}
+\]</span></p>
+<p>Maximiser <span class="math inline">\(Q\)</span> équivaut alors à <strong>minimiser</strong> :</p>
+<p><span class="math display">\[
+\sum_{i=1}^N \sum_{k=1}^K \gamma(z_{ik}) \|\mathbf{x}_i - \mu_k\|^2
+\]</span></p>
+<p>Avec l’affectation dure <span class="math inline">\(\gamma(z_{ik}) = z_{ik}\)</span>, on retrouve exactement la fonction <span class="math inline">\(J\)</span> de k-means !</p>
+</section>
+</section>
+<section id="tableau-récapitulatif-em-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="tableau-récapitulatif-em-k-means">Tableau récapitulatif : EM → k-means</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 41%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>EM pour GMM général</th>
+<th>k-means (cas limite)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Affectation</strong></td>
+<td>Douce (probabiliste)</td>
+<td>Dure (déterministe)</td>
+</tr>
+<tr class="even">
+<td><strong>Covariances</strong></td>
+<td><span class="math inline">\(\Sigma_k\)</span> quelconques</td>
+<td><span class="math inline">\(\Sigma_k = \sigma^2 I\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Variance</strong></td>
+<td>Apprise des données</td>
+<td><span class="math inline">\(\sigma^2 \to 0\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Poids</strong></td>
+<td><span class="math inline">\(\pi_k\)</span> appris</td>
+<td><span class="math inline">\(\pi_k = 1/K\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Fonction objectif</strong></td>
+<td>Log-vraisemblance</td>
+<td>Somme des distances au carré</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Algorithme EM pour GMM] --&gt; B[Hypothèse 1: Σ_k = σ²I]
+    A --&gt; C[Hypothèse 2: σ² → 0]
+    A --&gt; D[Hypothèse 3: π_k = 1/K]
+    A --&gt; E[Hypothèse 4: Affectation dure]
+    B --&gt; F[Algorithme k-means]
+    C --&gt; F
+    D --&gt; F
+    E --&gt; F
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="implications-pratiques-de-cette-connexion" class="level2">
+<h2 class="anchored" data-anchor-id="implications-pratiques-de-cette-connexion">Implications pratiques de cette connexion</h2>
+<section id="ce-que-cela-nous-apprend-sur-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="ce-que-cela-nous-apprend-sur-k-means">Ce que cela nous apprend sur k-means</h3>
 <ol type="1">
-<li><strong>Affectation dure</strong> : Au lieu d’affectations probabilistes, chaque point appartient entièrement à un cluster</li>
-<li><strong>Limite de variance nulle</strong> : Quand <span class="math inline">\(\sigma^2 \to 0\)</span>, la vraisemblance est dominée par le cluster le plus proche</li>
+<li><p><strong>Hypothèse de sphéricité</strong> : k-means suppose des clusters <strong>sphériques</strong> (même variance dans toutes les directions)</p></li>
+<li><p><strong>Sensibilité aux échelles</strong> : Comme les gaussiennes ont même covariance, k-means est sensible à la normalisation des données</p></li>
+<li><p><strong>Hypothèse d’égalité de variance</strong> : Tous les clusters sont supposés avoir la même “dispersion”</p></li>
+<li><p><strong>Limite de faible recouvrement</strong> : k-means fonctionne mieux quand les clusters sont bien séparés</p></li>
 </ol>
-<p>Dans cette limite, maximiser la log-vraisemblance équivaut à <strong>minimiser</strong> :</p>
-<p><span class="math display">\[
-\sum_{i=1}^N \min_k \| \mathbf{x}_i - \mu_k \|_2^2
-\]</span></p>
-<p>Ce qui est exactement la fonction de coût de k-means !</p>
 </section>
-</section>
-<section id="interprétation-probabiliste" class="level3">
-<h3 class="anchored" data-anchor-id="interprétation-probabiliste">Interprétation probabiliste</h3>
+<section id="conséquences-pour-lapplication" class="level3">
+<h3 class="anchored" data-anchor-id="conséquences-pour-lapplication">Conséquences pour l’application</h3>
 <ul>
-<li><strong>k-means</strong> ≈ <strong>EM pour GMM avec covariance sphérique et affectation dure</strong></li>
-<li><strong>Étape E</strong> : Affectation au cluster le plus probable (mode de la distribution postérieure)</li>
-<li><strong>Étape M</strong> : Maximisation de la vraisemblance pour chaque cluster</li>
-</ul>
-<p>Cette connexion explique pourquoi k-means :</p>
-<ul>
-<li>Fonctionne bien quand les clusters sont <strong>sphériques</strong> et de <strong>taille similaire</strong></li>
-<li>Est sensible aux <strong>outliers</strong> (les gaussiennes décroissent exponentiellement)</li>
-<li>Suppose une <strong>même échelle</strong> dans toutes les dimensions (covariance isotrope)</li>
+<li><strong>Normalisation nécessaire</strong> : Toujours normaliser les données avant d’appliquer k-means</li>
+<li><strong>Forme des clusters</strong> : k-means détecte mal les clusters allongés ou de formes complexes</li>
+<li><strong>Choix de K</strong> : Plus difficile quand les clusters ont des variances très différentes</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="propriétés-et-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="propriétés-et-limitations">Propriétés et limitations</h2>
-<section id="avantages" class="level3">
-<h3 class="anchored" data-anchor-id="avantages">Avantages</h3>
-<ul>
-<li><strong>Simple et efficace</strong> : Complexité linéaire en <span class="math inline">\(N\)</span> par itération</li>
-<li><strong>Interprétable</strong> : Les centres sont des “prototypes” des clusters</li>
-<li><strong>Convergence garantie</strong> : La fonction de coût décroît à chaque itération</li>
-</ul>
+<section id="version-intuitive-finale" class="level2">
+<h2 class="anchored" data-anchor-id="version-intuitive-finale">Version intuitive finale</h2>
+<section id="lessence-en-une-image" class="level3">
+<h3 class="anchored" data-anchor-id="lessence-en-une-image">L’essence en une image</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">mindmap
+  root((k-means))
+    Quoi ?
+      :Regroupement non supervisé
+      ::Trouver K groupes dans les données
+      ::Chaque groupe = un centre + ses points
+    Comment ?
+      :Minimiser J = Σ distances²
+      ::Alterner 2 étapes
+      :::1. Affecter aux centres proches
+      :::2. Recentrer sur les moyennes
+    Pourquoi ça marche ?
+      :EM avec hypothèses fortes
+      ::Gaussiennes sphériques identiques
+      ::Affectation dure en limite
+    Pièges
+      :Minimums locaux
+      :Initialisation cruciale
+      :Forme sphérique assumée
+    Astuces
+      :k-means++ pour l'init
+      :Exécuter plusieurs fois
+      :Standardiser les données
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="limitations" class="level3">
-<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<section id="message-à-retenir" class="level3">
+<h3 class="anchored" data-anchor-id="message-à-retenir">Message à retenir</h3>
+<p><strong>k-means est un cas particulier d’EM</strong> où l’on suppose que chaque cluster est une gaussienne sphérique de même variance, et où l’on prend la limite où ces gaussiennes sont infiniment “pointues” (faible variance).</p>
+<p>Cette compréhension théorique explique :</p>
 <ul>
-<li><strong>Nombre de clusters <span class="math inline">\(K\)</span></strong> : Doit être spécifié a priori</li>
-<li><strong>Initialisation sensible</strong> : Converge vers un optimum local</li>
-<li><strong>Forme des clusters</strong> : Suppose des clusters convexes et sphériques</li>
-<li><strong>Métrique euclidienne</strong> : Peut ne pas convenir à tous les types de données</li>
+<li><strong>Pourquoi</strong> k-means fonctionne si bien sur certains problèmes</li>
+<li><strong>Quand</strong> l’utiliser (clusters compacts et sphériques)</li>
+<li><strong>Comment</strong> l’améliorer (bonne initialisation, normalisation)</li>
 </ul>
-</section>
-<section id="solutions-courantes" class="level3">
-<h3 class="anchored" data-anchor-id="solutions-courantes">Solutions courantes</h3>
-<ul>
-<li><strong>k-means++</strong> : Initialisation intelligente pour de meilleurs résultats</li>
-<li><strong>Exécutions multiples</strong> : Lancer l’algorithme plusieurs fois avec différentes initialisations</li>
-<li><strong>Standardisation</strong> : Mettre les données à même échelle avant application</li>
-</ul>
+<p>Le génie de k-means est d’avoir <strong>simplifié au maximum</strong> un problème complexe pour obtenir un algorithme rapide, simple et efficace dans de nombreux cas pratiques.</p>
 <hr>
 </section>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>Le <strong>clustering</strong> adresse le problème fondamental de découvrir la structure sous-jacente dans des données non étiquetées.</p>
-<p>L’<strong>algorithme k-means</strong> offre une solution efficace en minimisant la somme des carrés des distances intra-cluster via une descente de coordonnées alternée.</p>
-<p>Son lien avec un <strong>modèle gaussien</strong> révèle que k-means suppose implicitement des clusters sphériques de variance égale, correspondant à un mélange de gaussiennes isotropes en limite d’affectation dure.</p>
-<p>Cette compréhension théorique guide son application pratique : k-means excelle quand les données forment naturellement des groupes compacts et sphériques, mais nécessite des adaptations (comme k-means++ ou le choix judicieux de <span class="math inline">\(K\)</span>) pour des cas plus complexes.</p>
+<section id="pour-les-plus-curieux-approfondissements" class="level2">
+<h2 class="anchored" data-anchor-id="pour-les-plus-curieux-approfondissements">Pour les plus curieux : approfondissements</h2>
+<section id="généralisations-possibles" class="level3">
+<h3 class="anchored" data-anchor-id="généralisations-possibles">Généralisations possibles</h3>
+<ol type="1">
+<li><strong>k-medoids</strong> : Utilise un point réel comme centre (moins sensible aux outliers)</li>
+<li><strong>Fuzzy C-means</strong> : Affectation probabiliste comme EM</li>
+<li><strong>k-means avec métriques différentes</strong> : Distance de Manhattan, cosinus…</li>
+</ol>
+</section>
+<section id="défis-ouverts" class="level3">
+<h3 class="anchored" data-anchor-id="défis-ouverts">Défis ouverts</h3>
+<ul>
+<li><strong>Choix automatique de K</strong> : Méthode du coude, critères d’information…</li>
+<li><strong>Clusters de densités variables</strong> : DBSCAN comme alternative</li>
+<li><strong>Grandes dimensions</strong> : Malédiction de la dimensionnalité</li>
+</ul>
+<p>La beauté de k-means réside dans son équilibre entre <strong>simplicité mathématique</strong>, <strong>efficacité computationnelle</strong> et <strong>interprétabilité intuitive</strong> - une combinaison rare et puissante en science des données.</p>
 
 
+</section>
 </section>
 </section>
 
