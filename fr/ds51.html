@@ -72,6 +72,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -472,27 +475,80 @@ window.Quarto = {
   <ul>
   <li><a href="#cours-analyse-discriminante-linéaire-lda" id="toc-cours-analyse-discriminante-linéaire-lda" class="nav-link active" data-scroll-target="#cours-analyse-discriminante-linéaire-lda">Cours : Analyse Discriminante Linéaire (LDA)</a>
   <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#apprentissage-supervisé" id="toc-apprentissage-supervisé" class="nav-link" data-scroll-target="#apprentissage-supervisé">Apprentissage supervisé</a></li>
-  <li><a href="#analyse-discriminante-linéaire-lda" id="toc-analyse-discriminante-linéaire-lda" class="nav-link" data-scroll-target="#analyse-discriminante-linéaire-lda">Analyse Discriminante Linéaire (LDA)</a>
+  <li><a href="#introduction-à-la-lda" id="toc-introduction-à-la-lda" class="nav-link" data-scroll-target="#introduction-à-la-lda">Introduction à la LDA</a></li>
+  <li><a href="#contexte-dapprentissage-supervisé" id="toc-contexte-dapprentissage-supervisé" class="nav-link" data-scroll-target="#contexte-dapprentissage-supervisé">Contexte d’Apprentissage Supervisé</a>
   <ul class="collapse">
-  <li><a href="#direction-discriminante-cas-à-2-classes" id="toc-direction-discriminante-cas-à-2-classes" class="nav-link" data-scroll-target="#direction-discriminante-cas-à-2-classes">Direction discriminante (cas à 2 classes)</a></li>
-  <li><a href="#critère-inter-classe" id="toc-critère-inter-classe" class="nav-link" data-scroll-target="#critère-inter-classe">Critère inter-classe</a></li>
-  <li><a href="#critère-intra-classe" id="toc-critère-intra-classe" class="nav-link" data-scroll-target="#critère-intra-classe">Critère intra-classe</a></li>
-  <li><a href="#critère-de-fisher-combinaison-des-critères" id="toc-critère-de-fisher-combinaison-des-critères" class="nav-link" data-scroll-target="#critère-de-fisher-combinaison-des-critères">Critère de Fisher (combinaison des critères)</a></li>
-  <li><a href="#généralisation-à-plusieurs-classes" id="toc-généralisation-à-plusieurs-classes" class="nav-link" data-scroll-target="#généralisation-à-plusieurs-classes">Généralisation à plusieurs classes</a></li>
-  <li><a href="#sous-espaces-discriminants" id="toc-sous-espaces-discriminants" class="nav-link" data-scroll-target="#sous-espaces-discriminants">Sous-espaces discriminants</a></li>
-  <li><a href="#cas-particulier-m-2" id="toc-cas-particulier-m-2" class="nav-link" data-scroll-target="#cas-particulier-m-2">Cas particulier : <span class="math inline">\(M = 2\)</span></a></li>
+  <li><a href="#définition-formelle" id="toc-définition-formelle" class="nav-link" data-scroll-target="#définition-formelle">Définition Formelle</a></li>
+  <li><a href="#exemples-de-méthodes-supervisées" id="toc-exemples-de-méthodes-supervisées" class="nav-link" data-scroll-target="#exemples-de-méthodes-supervisées">Exemples de Méthodes Supervisées</a></li>
   </ul></li>
-  <li><a href="#exemples" id="toc-exemples" class="nav-link" data-scroll-target="#exemples">Exemples</a></li>
-  <li><a href="#inférence-et-modélisation-conditionnelle" id="toc-inférence-et-modélisation-conditionnelle" class="nav-link" data-scroll-target="#inférence-et-modélisation-conditionnelle">Inférence et modélisation conditionnelle</a>
+  <li><a href="#intuition-géométrique-de-la-lda" id="toc-intuition-géométrique-de-la-lda" class="nav-link" data-scroll-target="#intuition-géométrique-de-la-lda">Intuition Géométrique de la LDA</a>
   <ul class="collapse">
-  <li><a href="#modélisation-gaussienne" id="toc-modélisation-gaussienne" class="nav-link" data-scroll-target="#modélisation-gaussienne">Modélisation gaussienne</a></li>
-  <li><a href="#décision-de-classification" id="toc-décision-de-classification" class="nav-link" data-scroll-target="#décision-de-classification">Décision de classification</a></li>
+  <li><a href="#le-problème-fondamental" id="toc-le-problème-fondamental" class="nav-link" data-scroll-target="#le-problème-fondamental">Le Problème Fondamental</a></li>
   </ul></li>
-  <li><a href="#optimalité-et-limites" id="toc-optimalité-et-limites" class="nav-link" data-scroll-target="#optimalité-et-limites">Optimalité et limites</a></li>
-  <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé">Résumé</a></li>
-  <li><a href="#questions-dexemple" id="toc-questions-dexemple" class="nav-link" data-scroll-target="#questions-dexemple">Questions d’exemple</a></li>
+  <li><a href="#concepts-clés-critère-inter-classe-et-intra-classe" id="toc-concepts-clés-critère-inter-classe-et-intra-classe" class="nav-link" data-scroll-target="#concepts-clés-critère-inter-classe-et-intra-classe">Concepts Clés : Critère Inter-Classe et Intra-Classe</a>
+  <ul class="collapse">
+  <li><a href="#notations-de-base" id="toc-notations-de-base" class="nav-link" data-scroll-target="#notations-de-base">Notations de Base</a></li>
+  </ul></li>
+  <li><a href="#critère-inter-classe-between-class" id="toc-critère-inter-classe-between-class" class="nav-link" data-scroll-target="#critère-inter-classe-between-class">Critère Inter-Classe (Between-Class)</a>
+  <ul class="collapse">
+  <li><a href="#intuition" id="toc-intuition" class="nav-link" data-scroll-target="#intuition">Intuition</a></li>
+  <li><a href="#formulation-mathématique" id="toc-formulation-mathématique" class="nav-link" data-scroll-target="#formulation-mathématique">Formulation Mathématique</a></li>
+  <li><a href="#cas-général" id="toc-cas-général" class="nav-link" data-scroll-target="#cas-général">Cas général</a></li>
+  <li><a href="#interprétation-géométrique" id="toc-interprétation-géométrique" class="nav-link" data-scroll-target="#interprétation-géométrique">Interprétation Géométrique</a></li>
+  <li><a href="#propriété-importante" id="toc-propriété-importante" class="nav-link" data-scroll-target="#propriété-importante">Propriété Importante</a></li>
+  </ul></li>
+  <li><a href="#critère-intra-classe-within-class" id="toc-critère-intra-classe-within-class" class="nav-link" data-scroll-target="#critère-intra-classe-within-class">Critère Intra-Classe (Within-Class)</a>
+  <ul class="collapse">
+  <li><a href="#intuition-1" id="toc-intuition-1" class="nav-link" data-scroll-target="#intuition-1">Intuition</a></li>
+  <li><a href="#formulation-mathématique-1" id="toc-formulation-mathématique-1" class="nav-link" data-scroll-target="#formulation-mathématique-1">Formulation Mathématique</a></li>
+  <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
+  </ul></li>
+  <li><a href="#le-critère-de-fisher-combinaison-des-deux-critères" id="toc-le-critère-de-fisher-combinaison-des-deux-critères" class="nav-link" data-scroll-target="#le-critère-de-fisher-combinaison-des-deux-critères">Le Critère de Fisher : Combinaison des Deux Critères</a>
+  <ul class="collapse">
+  <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe">Principe</a></li>
+  <li><a href="#interprétation-du-ratio" id="toc-interprétation-du-ratio" class="nav-link" data-scroll-target="#interprétation-du-ratio">Interprétation du Ratio</a></li>
+  <li><a href="#optimisation" id="toc-optimisation" class="nav-link" data-scroll-target="#optimisation">Optimisation</a></li>
+  </ul></li>
+  <li><a href="#solution-du-problème-doptimisation" id="toc-solution-du-problème-doptimisation" class="nav-link" data-scroll-target="#solution-du-problème-doptimisation">Solution du Problème d’Optimisation</a>
+  <ul class="collapse">
+  <li><a href="#dérivation-mathématique" id="toc-dérivation-mathématique" class="nav-link" data-scroll-target="#dérivation-mathématique">Dérivation Mathématique</a></li>
+  <li><a href="#solution-par-valeurs-propres" id="toc-solution-par-valeurs-propres" class="nav-link" data-scroll-target="#solution-par-valeurs-propres">Solution par Valeurs Propres</a></li>
+  <li><a href="#cas-particulier-deux-classes" id="toc-cas-particulier-deux-classes" class="nav-link" data-scroll-target="#cas-particulier-deux-classes">Cas Particulier : Deux Classes</a></li>
+  </ul></li>
+  <li><a href="#généralisation-à-plusieurs-dimensions" id="toc-généralisation-à-plusieurs-dimensions" class="nav-link" data-scroll-target="#généralisation-à-plusieurs-dimensions">Généralisation à Plusieurs Dimensions</a>
+  <ul class="collapse">
+  <li><a href="#sous-espaces-discriminants" id="toc-sous-espaces-discriminants" class="nav-link" data-scroll-target="#sous-espaces-discriminants">Sous-Espaces Discriminants</a></li>
+  <li><a href="#projection-sur-le-sous-espace-discriminant" id="toc-projection-sur-le-sous-espace-discriminant" class="nav-link" data-scroll-target="#projection-sur-le-sous-espace-discriminant">Projection sur le Sous-Espace Discriminant</a></li>
+  <li><a href="#interprétation-des-valeurs-propres" id="toc-interprétation-des-valeurs-propres" class="nav-link" data-scroll-target="#interprétation-des-valeurs-propres">Interprétation des Valeurs Propres</a></li>
+  </ul></li>
+  <li><a href="#visualisation-des-concepts" id="toc-visualisation-des-concepts" class="nav-link" data-scroll-target="#visualisation-des-concepts">Visualisation des Concepts</a>
+  <ul class="collapse">
+  <li><a href="#exemple-en-deux-dimensions" id="toc-exemple-en-deux-dimensions" class="nav-link" data-scroll-target="#exemple-en-deux-dimensions">Exemple en Deux Dimensions</a></li>
+  <li><a href="#interprétation-géométrique-1" id="toc-interprétation-géométrique-1" class="nav-link" data-scroll-target="#interprétation-géométrique-1">Interprétation Géométrique</a></li>
+  </ul></li>
+  <li><a href="#modélisation-conditionnelle-en-classification" id="toc-modélisation-conditionnelle-en-classification" class="nav-link" data-scroll-target="#modélisation-conditionnelle-en-classification">Modélisation conditionnelle en classification</a>
+  <ul class="collapse">
+  <li><a href="#le-cadre-bayésien-pour-la-classification" id="toc-le-cadre-bayésien-pour-la-classification" class="nav-link" data-scroll-target="#le-cadre-bayésien-pour-la-classification">Le cadre bayésien pour la classification</a></li>
+  <li><a href="#lda-comme-modèle-génératif-conditionnel" id="toc-lda-comme-modèle-génératif-conditionnel" class="nav-link" data-scroll-target="#lda-comme-modèle-génératif-conditionnel">LDA comme modèle génératif conditionnel</a></li>
+  <li><a href="#de-la-modélisation-conditionnelle-à-la-fonction-discriminante-linéaire" id="toc-de-la-modélisation-conditionnelle-à-la-fonction-discriminante-linéaire" class="nav-link" data-scroll-target="#de-la-modélisation-conditionnelle-à-la-fonction-discriminante-linéaire">De la modélisation conditionnelle à la fonction discriminante linéaire</a></li>
+  </ul></li>
+  <li><a href="#avantages-et-limitations" id="toc-avantages-et-limitations" class="nav-link" data-scroll-target="#avantages-et-limitations">Avantages et Limitations</a>
+  <ul class="collapse">
+  <li><a href="#avantages-de-la-lda" id="toc-avantages-de-la-lda" class="nav-link" data-scroll-target="#avantages-de-la-lda">Avantages de la LDA</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#alternatives-et-extensions" id="toc-alternatives-et-extensions" class="nav-link" data-scroll-target="#alternatives-et-extensions">Alternatives et Extensions</a></li>
+  </ul></li>
+  <li><a href="#comparaison-avec-dautres-méthodes" id="toc-comparaison-avec-dautres-méthodes" class="nav-link" data-scroll-target="#comparaison-avec-dautres-méthodes">Comparaison avec d’Autres Méthodes</a>
+  <ul class="collapse">
+  <li><a href="#lda-vs-pca" id="toc-lda-vs-pca" class="nav-link" data-scroll-target="#lda-vs-pca">LDA vs PCA</a></li>
+  <li><a href="#lda-vs-régression-logistique" id="toc-lda-vs-régression-logistique" class="nav-link" data-scroll-target="#lda-vs-régression-logistique">LDA vs Régression Logistique</a></li>
+  </ul></li>
+  <li><a href="#applications-pratiques" id="toc-applications-pratiques" class="nav-link" data-scroll-target="#applications-pratiques">Applications Pratiques</a>
+  <ul class="collapse">
+  <li><a href="#domaines-dapplication" id="toc-domaines-dapplication" class="nav-link" data-scroll-target="#domaines-dapplication">Domaines d’Application</a></li>
+  <li><a href="#bonnes-pratiques" id="toc-bonnes-pratiques" class="nav-link" data-scroll-target="#bonnes-pratiques">Bonnes Pratiques</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds51.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -506,199 +562,674 @@ window.Quarto = {
 
 <section id="cours-analyse-discriminante-linéaire-lda" class="level1">
 <h1>Cours : Analyse Discriminante Linéaire (LDA)</h1>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Ce cours introduit l’<strong>Analyse Discriminante Linéaire (LDA)</strong>, une méthode supervisée de modélisation de données conditionnelles et de classification.<br>
-L’objectif est de présenter une définition supervisée des facteurs latents, de proposer une modélisation conditionnelle des données et de réaliser la classification d’éléments non étiquetés..</p>
+<section id="introduction-à-la-lda" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-à-la-lda">Introduction à la LDA</h2>
+<p>L’<strong>Analyse Discriminante Linéaire (LDA)</strong> est une méthode statistique supervisée qui remplit deux objectifs principaux :</p>
+<ul>
+<li>La <strong>réduction de dimension</strong> en trouvant les directions les plus discriminantes</li>
+<li>La <strong>classification</strong> par modélisation probabiliste des classes</li>
+</ul>
+<p>Contrairement à l’Analyse en Composantes Principales (PCA) qui est non supervisée, la LDA utilise les étiquettes de classe pour trouver les directions qui maximisent la séparation entre groupes.</p>
 <hr>
 </section>
-<section id="apprentissage-supervisé" class="level2">
-<h2 class="anchored" data-anchor-id="apprentissage-supervisé">Apprentissage supervisé</h2>
-<p>Étant donné des données <span class="math inline">\(X \subset \Omega \subset \mathbb{R}^D\)</span> associées à des étiquettes de classe <span class="math inline">\(y = [M] \subset \mathbb{N}\)</span>, l’apprentissage supervisé consiste à trouver (apprendre) les paramètres <span class="math inline">\(\theta\)</span> d’un apprenant (fonction) <span class="math inline">\(\phi_\theta\)</span> de manière à minimiser la perte <span class="math inline">\(\mathcal{L}_{X \times y}(\theta)\)</span> encourue lors de la prédiction des étiquettes de classe à l’aide de <span class="math inline">\(\phi_\theta\)</span>.</p>
+<section id="contexte-dapprentissage-supervisé" class="level2">
+<h2 class="anchored" data-anchor-id="contexte-dapprentissage-supervisé">Contexte d’Apprentissage Supervisé</h2>
+<section id="définition-formelle" class="level3">
+<h3 class="anchored" data-anchor-id="définition-formelle">Définition Formelle</h3>
+<p>Dans un problème d’apprentissage supervisé, nous disposons de :</p>
+<ul>
+<li>Données <span class="math inline">\(X \subset \Omega \subset \mathbb{R}^D\)</span></li>
+<li>Étiquettes de classe <span class="math inline">\(y = [M] \subset \mathbb{N}\)</span></li>
+</ul>
+<p>Nous cherchons à apprendre une fonction <span class="math inline">\(\phi_\theta\)</span> qui minimise une perte <span class="math inline">\(\mathcal{L}_{X \times y}(\theta)\)</span> lorsqu’elle prédit les étiquettes.</p>
+</section>
+<section id="exemples-de-méthodes-supervisées" class="level3">
+<h3 class="anchored" data-anchor-id="exemples-de-méthodes-supervisées">Exemples de Méthodes Supervisées</h3>
+<ul>
+<li>Régression logistique</li>
+<li>Réseaux de neurones</li>
+<li>Machines à vecteurs de support (SVM)</li>
+</ul>
+<p>La LDA se distingue par son approche <strong>génératrice</strong> : elle modélise la distribution des données dans chaque classe.</p>
+<hr>
+</section>
+</section>
+<section id="intuition-géométrique-de-la-lda" class="level2">
+<h2 class="anchored" data-anchor-id="intuition-géométrique-de-la-lda">Intuition Géométrique de la LDA</h2>
+<section id="le-problème-fondamental" class="level3">
+<h3 class="anchored" data-anchor-id="le-problème-fondamental">Le Problème Fondamental</h3>
+<p>Imaginons des points en deux dimensions appartenant à deux classes.<br>
+Comment trouver la <strong>meilleure droite</strong> sur laquelle projeter ces points pour les séparer le plus possible ?</p>
+<p>La LDA répond à cette question en cherchant une direction qui :</p>
+<ol type="1">
+<li><strong>Éloigne les centres</strong> des classes (maximise la distance entre moyennes)</li>
+<li><strong>Rapproche les points</strong> à l’intérieur de chaque classe (minimise la variance intra-classe)</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="concepts-clés-critère-inter-classe-et-intra-classe" class="level2">
+<h2 class="anchored" data-anchor-id="concepts-clés-critère-inter-classe-et-intra-classe">Concepts Clés : Critère Inter-Classe et Intra-Classe</h2>
+<section id="notations-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="notations-de-base">Notations de Base</h3>
+<p>Pour <span class="math inline">\(K\)</span> classes :</p>
+<ul>
+<li><span class="math inline">\(N_k\)</span> : nombre d’observations dans la classe <span class="math inline">\(k\)</span></li>
+<li><span class="math inline">\(\mu_k\)</span> : moyenne de la classe <span class="math inline">\(k\)</span> (vecteur de dimension <span class="math inline">\(D\)</span>)</li>
+<li><span class="math inline">\(\mu\)</span> : moyenne globale</li>
+<li><span class="math inline">\(x_i^{(k)}\)</span> : la <span class="math inline">\(i\)</span>-ème observation de la classe <span class="math inline">\(k\)</span></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="critère-inter-classe-between-class" class="level2">
+<h2 class="anchored" data-anchor-id="critère-inter-classe-between-class">Critère Inter-Classe (Between-Class)</h2>
+<section id="intuition" class="level3">
+<h3 class="anchored" data-anchor-id="intuition">Intuition</h3>
+<p>Le critère inter-classe mesure <strong>à quel point les centres des classes sont éloignés les uns des autres</strong>.<br>
+Plus les moyennes des classes sont distantes, plus il sera facile de les discriminer.</p>
+</section>
+<section id="formulation-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-mathématique">Formulation Mathématique</h3>
+<p><strong>Distance entre deux classes (cas binaire) :</strong><br>
+Pour deux classes avec moyennes <span class="math inline">\(\mu_1\)</span> et <span class="math inline">\(\mu_2\)</span>, la distance carrée entre leurs projections sur une direction <span class="math inline">\(a\)</span> est :</p>
+<p><span class="math display">\[
+\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \frac{(a^T(\mu_1 - \mu_2))^2}{\|a\|^2}
+\]</span></p>
+<p>où <span class="math inline">\(\hat{\mu}_k = \frac{a^T \mu_k}{\|a\|}\)</span> est la projection de la moyenne de la classe <span class="math inline">\(k\)</span>.</p>
+</section>
+<section id="cas-général" class="level3">
+<h3 class="anchored" data-anchor-id="cas-général">Cas général</h3>
+<p>La matrice capture la covariance des centres des classes par rapport à la moyenne globale.</p>
+<section id="version-normale-sommatoire" class="level4">
+<h4 class="anchored" data-anchor-id="version-normale-sommatoire">Version Normale (Sommatoire)</h4>
+<section id="formulation-pondérée" class="level5">
+<h5 class="anchored" data-anchor-id="formulation-pondérée">Formulation Pondérée</h5>
+<p><span class="math display">\[
+\Sigma_b = \sum_{k=1}^K N_k (\mu_k - \mu)(\mu_k - \mu)^T
+\]</span></p>
+</section>
+<section id="formulation-non-pondérée" class="level5">
+<h5 class="anchored" data-anchor-id="formulation-non-pondérée">Formulation Non Pondérée</h5>
+<p><span class="math display">\[
+\Sigma_b = \frac{1}{K} \sum_{k=1}^K (\mu_k - \mu)(\mu_k - \mu)^T
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="version-matricielle" class="level4">
+<h4 class="anchored" data-anchor-id="version-matricielle">Version Matricielle</h4>
+<section id="formulation-pondérée-1" class="level5">
+<h5 class="anchored" data-anchor-id="formulation-pondérée-1">Formulation Pondérée</h5>
+<p>Soit <span class="math inline">\(M\)</span> la matrice <span class="math inline">\(D \times K\)</span> où chaque colonne <span class="math inline">\(k\)</span> est <span class="math inline">\(\sqrt{N_k}(\mu_k - \mu)\)</span> :</p>
+<p><span class="math display">\[
+M = \begin{bmatrix}
+\sqrt{N_1}(\mu_1 - \mu) &amp; \sqrt{N_2}(\mu_2 - \mu) &amp; \cdots &amp; \sqrt{N_K}(\mu_K - \mu)
+\end{bmatrix}
+\]</span></p>
+<p>Alors :</p>
+<p><span class="math display">\[
+\Sigma_b = MM^T
+\]</span></p>
+</section>
+<section id="formulation-non-pondérée-1" class="level5">
+<h5 class="anchored" data-anchor-id="formulation-non-pondérée-1">Formulation Non Pondérée</h5>
+<p>Soit <span class="math inline">\(M'\)</span> la matrice <span class="math inline">\(D \times K\)</span> où chaque colonne <span class="math inline">\(k\)</span> est <span class="math inline">\((\mu_k - \mu)\)</span> :</p>
+<p><span class="math display">\[
+M' = \begin{bmatrix}
+(\mu_1 - \mu) &amp; (\mu_2 - \mu) &amp; \cdots &amp; (\mu_K - \mu)
+\end{bmatrix}
+\]</span></p>
+<p>Alors :</p>
+<p><span class="math display">\[
+\Sigma_b = \frac{1}{K} M'M'^T
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="équivalence-entre-les-formulations" class="level4">
+<h4 class="anchored" data-anchor-id="équivalence-entre-les-formulations">Équivalence entre les Formulations</h4>
+<section id="relation" class="level5">
+<h5 class="anchored" data-anchor-id="relation">Relation</h5>
+<p>Les deux formulations donnent la même matrice à un facteur d’échelle près :</p>
+<p><span class="math display">\[
+MM^T = \left(\sum_{k=1}^K N_k\right) \cdot \frac{1}{K} M'M'^T
+\]</span></p>
+<p>quand <span class="math inline">\(N_1 = N_2 = \cdots = N_K\)</span> (classes équilibrées).</p>
+</section>
+<section id="pour-la-lda" class="level5">
+<h5 class="anchored" data-anchor-id="pour-la-lda">Pour la LDA</h5>
+<p>Cette différence d’échelle n’affecte pas les directions discriminantes, seulement leur amplitude dans le critère de Fisher.</p>
+</section>
+</section>
+</section>
+<section id="interprétation-géométrique" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-géométrique">Interprétation Géométrique</h3>
+<p><span class="math inline">\(\Sigma_b\)</span> est une matrice <span class="math inline">\(D \times D\)</span> qui mesure :</p>
+<ul>
+<li>Comment les centres des classes varient autour de la moyenne globale</li>
+<li>La dispersion “entre” les différentes classes</li>
+</ul>
+<p>La quantité <span class="math inline">\(a^T \Sigma_b a\)</span> représente la <strong>variance inter-classes projetée</strong> sur la direction <span class="math inline">\(a\)</span>.</p>
+</section>
+<section id="propriété-importante" class="level3">
+<h3 class="anchored" data-anchor-id="propriété-importante">Propriété Importante</h3>
+<p>Pour <span class="math inline">\(K\)</span> classes, la matrice <span class="math inline">\(\Sigma_b\)</span> a un rang au plus <span class="math inline">\(K-1\)</span>.<br>
+Cela signifie qu’il existe au plus <span class="math inline">\(K-1\)</span> directions indépendantes qui séparent les classes.</p>
+<hr>
+</section>
+</section>
+<section id="critère-intra-classe-within-class" class="level2">
+<h2 class="anchored" data-anchor-id="critère-intra-classe-within-class">Critère Intra-Classe (Within-Class)</h2>
+<section id="intuition-1" class="level3">
+<h3 class="anchored" data-anchor-id="intuition-1">Intuition</h3>
+<p>Le critère intra-classe mesure <strong>à quel point les points d’une même classe sont regroupés</strong>.<br>
+Plus les points d’une classe sont concentrés, plus la classe est homogène et facile à identifier.</p>
+</section>
+<section id="formulation-mathématique-1" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-mathématique-1">Formulation Mathématique</h3>
+<p>Pour chaque classe <span class="math inline">\(k\)</span>, on définit sa matrice de covariance :</p>
+<p><span class="math display">\[
+\Sigma_k = \frac{1}{N_k} \sum_{i=1}^{N_k} (x_i^{(k)} - \mu_k)(x_i^{(k)} - \mu_k)^T
+\]</span></p>
+<p><strong>Matrice de dispersion intra-classes totale :</strong></p>
+<p><span class="math display">\[
+\Sigma_w = \sum_{k=1}^K \Sigma_k = \sum_{k=1}^K \sum_{i=1}^{N_k} (x_i^{(k)} - \mu_k)(x_i^{(k)} - \mu_k)^T
+\]</span></p>
+</section>
+<section id="interprétation" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation">Interprétation</h3>
+<p><span class="math inline">\(\Sigma_w\)</span> mesure la <strong>dispersion globale à l’intérieur de toutes les classes</strong>.<br>
+Une petite valeur de <span class="math inline">\(a^T \Sigma_w a\)</span> indique que les projections des points sont regroupées autour de leur moyenne de classe.</p>
+<hr>
+</section>
+</section>
+<section id="le-critère-de-fisher-combinaison-des-deux-critères" class="level2">
+<h2 class="anchored" data-anchor-id="le-critère-de-fisher-combinaison-des-deux-critères">Le Critère de Fisher : Combinaison des Deux Critères</h2>
+<section id="principe" class="level3">
+<h3 class="anchored" data-anchor-id="principe">Principe</h3>
+<p>Nous cherchons une direction <span class="math inline">\(a\)</span> qui :</p>
+<ul>
+<li>Maximise la dispersion inter-classes : <span class="math inline">\(a^T \Sigma_b a\)</span> (grand)</li>
+<li>Minimise la dispersion intra-classes : <span class="math inline">\(a^T \Sigma_w a\)</span> (petit)</li>
+</ul>
+<p>Le <strong>critère de Fisher</strong> combine ces deux objectifs en un seul ratio :</p>
+<p><span class="math display">\[
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+\]</span></p>
+</section>
+<section id="interprétation-du-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-du-ratio">Interprétation du Ratio</h3>
+<p><span class="math inline">\(J(a)\)</span> représente le <strong>rapport signal/bruit</strong> pour la discrimination :</p>
+<ul>
+<li><strong>Numérateur</strong> : “signal” = séparation entre classes</li>
+<li><strong>Dénominateur</strong> : “bruit” = variabilité à l’intérieur des classes</li>
+</ul>
+<p>Plus <span class="math inline">\(J(a)\)</span> est grand, meilleure est la direction <span class="math inline">\(a\)</span> pour discriminer les classes.</p>
+</section>
+<section id="optimisation" class="level3">
+<h3 class="anchored">Optimisation</h3>
+<p>Nous cherchons la direction <span class="math inline">\(a^*\)</span> qui maximise <span class="math inline">\(J(a)\)</span> :</p>
+<p><span class="math display">\[
+a^* = \arg\max_a \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+\]</span></p>
+<p>Ce problème d’optimisation a une solution analytique.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">None</span>Projection des Critères Inter et Intra-Classes
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Lorsqu’on projette sur une direction <span class="math inline">\(a\)</span> (non nécessairement unitaire), les statistiques projetées comportent un facteur de normalisation.</p>
+<hr>
+<section id="projection-des-centres" class="level3">
+<h3 class="anchored" data-anchor-id="projection-des-centres">Projection des Centres</h3>
+<p>Pour une direction <span class="math inline">\(a\)</span>, la projection d’un vecteur <span class="math inline">\(v\)</span> est donnée par :</p>
+<p><span class="math display">\[
+\hat{v} = \frac{a^T v}{\|a\|}
+\]</span></p>
+<p>Les moyennes projetées des classes deviennent :</p>
+<p><span class="math display">\[
+\hat{\mu}_k = \frac{a^T \mu_k}{\|a\|}, \quad \hat{\mu} = \frac{a^T \mu}{\|a\|}
+\]</span></p>
+<hr>
+</section>
+<section id="critère-inter-classes-projeté" class="level3">
+<h3 class="anchored" data-anchor-id="critère-inter-classes-projeté">Critère Inter-Classes Projeté</h3>
+<p>La variance inter-classes <strong>projetée</strong> s’exprime comme :</p>
+<p><span class="math display">\[
+\frac{1}{M} \sum_{k=1}^M (\hat{\mu}_k - \hat{\mu})^2 = \frac{1}{\|a\|^2} a^T \left[ \frac{1}{M} \sum_{k=1}^M (\mu_k - \mu)(\mu_k - \mu)^T \right] a
+\]</span></p>
+<p>Soit simplement :</p>
+<p><span class="math display">\[
+\frac{1}{M} \sum_{k=1}^M (\hat{\mu}_k - \hat{\mu})^2 = \frac{1}{\|a\|^2} a^T \Sigma_b a
+\]</span></p>
+<hr>
+</section>
+<section id="critère-intra-classes-projeté" class="level3">
+<h3 class="anchored" data-anchor-id="critère-intra-classes-projeté">Critère Intra-Classes Projeté</h3>
+<p>Pour une classe <span class="math inline">\(k\)</span>, la variance <strong>projetée</strong> est :</p>
+<p><span class="math display">\[
+\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{i=1}^{N_k} (\hat{x}_i^{(k)} - \hat{\mu}_k)^2 = \frac{1}{\|a\|^2} a^T \Sigma_k a
+\]</span></p>
+<p>La variance intra-classes totale <strong>projetée</strong> devient :</p>
+<p><span class="math display">\[
+\sum_{k=1}^M \hat{\sigma}_k^2 = \frac{1}{\|a\|^2} a^T \left( \sum_{k=1}^M \Sigma_k \right) a = \frac{1}{\|a\|^2} a^T \Sigma_w a
+\]</span></p>
+<hr>
+</section>
+<section id="conséquence-pour-le-critère-de-fisher" class="level2">
+<h2 class="anchored" data-anchor-id="conséquence-pour-le-critère-de-fisher">Conséquence pour le Critère de Fisher</h2>
+<p>Le ratio de Fisher <strong>projeté</strong> s’écrit :</p>
+<p><span class="math display">\[
+J(a) = \frac{\text{Variance inter-classes projetée}}{\text{Variance intra-classes projetée}} = \frac{\frac{1}{\|a\|^2} a^T \Sigma_b a}{\frac{1}{\|a\|^2} a^T \Sigma_w a}
+\]</span></p>
+<p>Les facteurs <span class="math inline">\(\frac{1}{\|a\|^2}\)</span> s’annulent :</p>
+<p><span class="math display">\[
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+\]</span></p>
+<p><strong>Conclusion :</strong> Le critère de Fisher ne dépend que de la <strong>direction</strong> de <span class="math inline">\(a\)</span>, pas de sa norme.</p>
+<p>On peut donc chercher <span class="math inline">\(a\)</span> sans contrainte de normalisation, puis le normaliser si nécessaire.</p>
+</section>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="solution-du-problème-doptimisation" class="level2">
+<h2 class="anchored" data-anchor-id="solution-du-problème-doptimisation">Solution du Problème d’Optimisation</h2>
+<section id="dérivation-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="dérivation-mathématique">Dérivation Mathématique</h3>
+<p>Pour maximiser <span class="math inline">\(J(a)\)</span>, nous annulons son gradient :</p>
+<p><span class="math display">\[
+\frac{\partial J(a)}{\partial a} = \frac{2\Sigma_b a (a^T \Sigma_w a) - 2\Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0
+\]</span></p>
+<p>Ce qui implique :</p>
+<p><span class="math display">\[
+\Sigma_b a = \frac{a^T \Sigma_b a}{a^T \Sigma_w a} \Sigma_w a
+\]</span></p>
+<p>En notant <span class="math inline">\(\lambda = \frac{a^T \Sigma_b a}{a^T \Sigma_w a} = J(a)\)</span>, nous obtenons :</p>
+<p><span class="math display">\[
+\Sigma_b a = \lambda \Sigma_w a
+\]</span></p>
+<p>C’est un <strong>problème généralisé de valeurs propres</strong>.</p>
+</section>
+<section id="solution-par-valeurs-propres" class="level3">
+<h3 class="anchored" data-anchor-id="solution-par-valeurs-propres">Solution par Valeurs Propres</h3>
+<p>La solution est donnée par les vecteurs propres de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> :</p>
+<p><span class="math display">\[
+\Sigma_w^{-1} \Sigma_b a = \lambda a
+\]</span></p>
+<p><strong>Propriétés importantes :</strong></p>
+<ul>
+<li>Il y a au plus <span class="math inline">\(K-1\)</span> valeurs propres non nulles</li>
+<li>Les vecteurs propres correspondant aux plus grandes valeurs propres sont les directions les plus discriminantes</li>
+<li>La plus grande valeur propre <span class="math inline">\(\lambda_1\)</span> donne le maximum de <span class="math inline">\(J(a)\)</span></li>
+</ul>
+</section>
+<section id="cas-particulier-deux-classes" class="level3">
+<h3 class="anchored" data-anchor-id="cas-particulier-deux-classes">Cas Particulier : Deux Classes</h3>
+<p>Pour <span class="math inline">\(K=2\)</span>, il n’y a qu’une seule direction discriminante :</p>
+<p><span class="math display">\[
+a \propto \Sigma_w^{-1} (\mu_1 - \mu_2)
+\]</span></p>
+<p>Cette direction est proportionnelle à la différence des moyennes, “corrigée” par la covariance inverse.</p>
+<hr>
+</section>
+</section>
+<section id="généralisation-à-plusieurs-dimensions" class="level2">
+<h2 class="anchored" data-anchor-id="généralisation-à-plusieurs-dimensions">Généralisation à Plusieurs Dimensions</h2>
+<section id="sous-espaces-discriminants" class="level3">
+<h3 class="anchored" data-anchor-id="sous-espaces-discriminants">Sous-Espaces Discriminants</h3>
+<p>Pour <span class="math inline">\(K\)</span> classes, nous pouvons obtenir jusqu’à <span class="math inline">\(K-1\)</span> directions discriminantes :</p>
+<ul>
+<li><span class="math inline">\(a_1\)</span> : direction la plus discriminante (plus grande valeur propre <span class="math inline">\(\lambda_1\)</span>)</li>
+<li><span class="math inline">\(a_2\)</span> : deuxième direction la plus discriminante (<span class="math inline">\(\lambda_2 &lt; \lambda_1\)</span>)</li>
+<li>…</li>
+<li><span class="math inline">\(a_{K-1}\)</span> : dernière direction discriminante</li>
+</ul>
+</section>
+<section id="projection-sur-le-sous-espace-discriminant" class="level3">
+<h3 class="anchored" data-anchor-id="projection-sur-le-sous-espace-discriminant">Projection sur le Sous-Espace Discriminant</h3>
+<p>La matrice de projection <span class="math inline">\(W = [a_1, a_2, ..., a_{K-1}]\)</span> permet de réduire la dimension des données de <span class="math inline">\(D\)</span> à <span class="math inline">\(K-1\)</span> :</p>
+<p><span class="math display">\[
+Y = XW
+\]</span></p>
+<p>où <span class="math inline">\(Y\)</span> sont les données projetées dans le nouvel espace.</p>
+</section>
+<section id="interprétation-des-valeurs-propres" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-des-valeurs-propres">Interprétation des Valeurs Propres</h3>
+<p>La valeur propre <span class="math inline">\(\lambda_i\)</span> mesure le <strong>pouvoir discriminant</strong> de la direction <span class="math inline">\(a_i\)</span> :</p>
+<ul>
+<li><span class="math inline">\(\lambda_i\)</span> grand : forte séparation entre classes le long de <span class="math inline">\(a_i\)</span></li>
+<li><span class="math inline">\(\lambda_i\)</span> petit : faible séparation</li>
+</ul>
+<p>Le pourcentage de discrimination totale expliquée par la direction <span class="math inline">\(a_i\)</span> est :</p>
+<p><span class="math display">\[
+\text{PVE}_i = \frac{\lambda_i}{\sum_{j=1}^{K-1} \lambda_j} \times 100\%
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="visualisation-des-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="visualisation-des-concepts">Visualisation des Concepts</h2>
+<section id="exemple-en-deux-dimensions" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-en-deux-dimensions">Exemple en Deux Dimensions</h3>
+<p>Considérons deux classes avec distributions gaussiennes :</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Données originales en 2D] --&gt; B{Problème}
+    B --&gt; C[Trouver la meilleure&lt;br&gt;direction de projection]
+    C --&gt; D[Critère inter-classe:&lt;br&gt;max distance entre moyennes]
+    C --&gt; E[Critère intra-classe:&lt;br&gt;min variance dans chaque classe]
+    D --&gt; F[Combinaison: Ratio de Fisher]
+    E --&gt; F
+    F --&gt; G[Solution: Vecteur propre de Σ_w⁻¹Σ_b]
+    G --&gt; H[Projection sur 1D]
+    H --&gt; I[Séparation optimale]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="interprétation-géométrique-1" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-géométrique-1">Interprétation Géométrique</h3>
+<p>La direction optimale <span class="math inline">\(a\)</span> est celle qui, lorsque les données sont projetées dessus, produit :</p>
+<ul>
+<li>Des histogrammes séparés pour chaque classe</li>
+<li>Des distributions avec peu de recouvrement</li>
+<li>Un maximum de distance entre moyennes par rapport à la variabilité interne</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="modélisation-conditionnelle-en-classification" class="level2">
+<h2 class="anchored" data-anchor-id="modélisation-conditionnelle-en-classification">Modélisation conditionnelle en classification</h2>
+<p>Dans les problèmes de classification supervisée, nous cherchons à prédire l’étiquette de classe <span class="math inline">\(y\)</span> d’une observation <span class="math inline">\(x\)</span>.<br>
+Une approche fondamentale consiste à modéliser la <strong>probabilité conditionnelle</strong> <span class="math inline">\(P(y|x)\)</span>, c’est-à-dire la probabilité qu’une observation <span class="math inline">\(x\)</span> appartienne à une classe <span class="math inline">\(y\)</span> donnée.</p>
+<hr>
+<section id="le-cadre-bayésien-pour-la-classification" class="level3">
+<h3 class="anchored" data-anchor-id="le-cadre-bayésien-pour-la-classification">Le cadre bayésien pour la classification</h3>
+<section id="règle-de-bayes-pour-la-décision-optimale" class="level4">
+<h4 class="anchored" data-anchor-id="règle-de-bayes-pour-la-décision-optimale">Règle de Bayes pour la décision optimale</h4>
+<p>Selon le théorème de Bayes, la probabilité postérieure qu’une observation <span class="math inline">\(x\)</span> appartienne à la classe <span class="math inline">\(k\)</span> est :</p>
+<p><span class="math display">\[
+P(C = k | x) = \frac{P(x | C = k) \cdot P(C = k)}{P(x)}
+\]</span></p>
+<p>Où :</p>
+<ul>
+<li><span class="math inline">\(P(C = k)\)</span> est la <strong>probabilité a priori</strong> de la classe <span class="math inline">\(k\)</span></li>
+<li><span class="math inline">\(P(x | C = k)\)</span> est la <strong>vraisemblance</strong> de <span class="math inline">\(x\)</span> sachant la classe <span class="math inline">\(k\)</span></li>
+<li><span class="math inline">\(P(x)\)</span> est la probabilité marginale de <span class="math inline">\(x\)</span> (constante pour toutes les classes)</li>
+</ul>
+<p>La règle de décision optimale (minimisant le taux d’erreur) consiste à attribuer <span class="math inline">\(x\)</span> à la classe <span class="math inline">\(k\)</span> qui maximise la probabilité postérieure :</p>
+<p><span class="math display">\[
+\delta(x) = \arg\max_k P(C = k | x)
+\]</span></p>
+<p>Puisque <span class="math inline">\(P(x)\)</span> est constante, cette règle équivaut à :</p>
+<p><span class="math display">\[
+\delta(x) = \arg\max_k \left[ P(x | C = k) \cdot P(C = k) \right]
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="lda-comme-modèle-génératif-conditionnel" class="level3">
+<h3 class="anchored" data-anchor-id="lda-comme-modèle-génératif-conditionnel">LDA comme modèle génératif conditionnel</h3>
+<section id="hypothèses-fondamentales-de-lda" class="level4">
+<h4 class="anchored" data-anchor-id="hypothèses-fondamentales-de-lda">Hypothèses fondamentales de LDA</h4>
+<p>L’Analyse Discriminante Linéaire repose sur trois hypothèses claires :</p>
+<ol type="1">
+<li><p><strong>Distribution gaussienne par classe</strong> : Chaque classe suit une distribution normale multivariée</p>
+<p><span class="math display">\[
+P(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma)
+\]</span></p></li>
+<li><p><strong>Matrice de covariance commune</strong> : Toutes les classes partagent la <strong>même</strong> matrice de covariance <span class="math inline">\(\Sigma\)</span></p></li>
+<li><p><strong>Probabilités a priori</strong> : Les classes ont des probabilités a priori <span class="math inline">\(P(C = k)\)</span> (souvent estimées par les proportions dans l’échantillon)</p></li>
+</ol>
+</section>
+<section id="formulation-explicite-du-modèle-lda" class="level4">
+<h4 class="anchored" data-anchor-id="formulation-explicite-du-modèle-lda">Formulation explicite du modèle LDA</h4>
+<p>Sous ces hypothèses, la densité de probabilité pour la classe <span class="math inline">\(k\)</span> s’écrit :</p>
+<p><span class="math display">\[
+P(x | C = k) = \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2}} \exp\left( -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) \right)
+\]</span></p>
+<p>Où <span class="math inline">\(D\)</span> est la dimension des données, <span class="math inline">\(\mu_k\)</span> est le vecteur moyen de la classe <span class="math inline">\(k\)</span>, et <span class="math inline">\(\Sigma\)</span> est la matrice de covariance commune.</p>
+<hr>
+</section>
+</section>
+<section id="de-la-modélisation-conditionnelle-à-la-fonction-discriminante-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="de-la-modélisation-conditionnelle-à-la-fonction-discriminante-linéaire">De la modélisation conditionnelle à la fonction discriminante linéaire</h3>
+<section id="dérivation-de-la-fonction-de-décision" class="level4">
+<h4 class="anchored" data-anchor-id="dérivation-de-la-fonction-de-décision">Dérivation de la fonction de décision</h4>
+<p>En appliquant la règle de décision bayésienne et en prenant le logarithme (qui préserve les maximums), nous obtenons :</p>
 <p><span class="math display">\[
 \begin{aligned}
-\phi_\theta : &amp; \quad \Omega \to y \\
-&amp; x_t \mapsto \phi_\theta(x_t) = \tilde{y}_t
+\delta(x) &amp;= \arg\max_k \left[ \ln P(x | C = k) + \ln P(C = k) \right] \\
+&amp;= \arg\max_k \left[ -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) + \ln P(C = k) + \text{constante} \right]
 \end{aligned}
 \]</span></p>
-<p><strong>Exemples :</strong><br>
-- <span class="math inline">\(\phi_\theta\)</span> est une régression logistique avec paramètres <span class="math inline">\(\theta\)</span>.<br>
-- <span class="math inline">\(\phi_\theta\)</span> est un réseau de neurones avec poids <span class="math inline">\(\theta\)</span>.<br>
-- <span class="math inline">\(\mathcal{L}_{X \times y}(\theta) = \sum_x \|\phi_\theta(x_t) - y_t\|^2_{\text{some}}\)</span>.</p>
-<hr>
+<p>En développant le terme quadratique et en éliminant les termes indépendants de <span class="math inline">\(k\)</span>, on obtient la <strong>fonction discriminante linéaire</strong> :</p>
+<p><span class="math display">\[
+\delta(x) = \arg\max_k \left[ x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k) \right]
+\]</span></p>
 </section>
-<section id="analyse-discriminante-linéaire-lda" class="level2">
-<h2 class="anchored" data-anchor-id="analyse-discriminante-linéaire-lda">Analyse Discriminante Linéaire (LDA)</h2>
-<p><strong>Problème :</strong> Étant donné des données multivariées <span class="math inline">\(X\)</span> associées à des étiquettes <span class="math inline">\(y\)</span>, nous cherchons un modèle pour ces données.</p>
-<hr>
-<section id="direction-discriminante-cas-à-2-classes" class="level3">
-<h3 class="anchored" data-anchor-id="direction-discriminante-cas-à-2-classes">Direction discriminante (cas à 2 classes)</h3>
-<p>Nous cherchons une direction <span class="math inline">\(a \in \mathbb{R}^D\)</span> telle que la projection des données sur cette direction <span class="math inline">\(\hat{X} = \text{Proj}_a(X)\)</span> présente des propriétés optimales pour la discrimination entre classes.</p>
-<hr>
-</section>
-<section id="critère-inter-classe" class="level3">
-<h3 class="anchored" data-anchor-id="critère-inter-classe">Critère inter-classe</h3>
-<p>Si les projections des classes sont bien séparées, elles peuvent être facilement discriminées.<br>
-Nous cherchons donc une direction <span class="math inline">\(a\)</span> qui maximise la discrimination inter-classe.</p>
-<p>Il est clair que <span class="math inline">\(a\)</span> doit être colinéaire à la droite <span class="math inline">\(\mu_1 - \mu_2\)</span> reliant les centres de masse des classes, car :</p>
+<section id="forme-explicite-de-la-frontière-de-décision" class="level4">
+<h4 class="anchored" data-anchor-id="forme-explicite-de-la-frontière-de-décision">Forme explicite de la frontière de décision</h4>
+<p>La fonction discriminante pour la classe <span class="math inline">\(k\)</span> peut s’écrire comme une fonction linéaire en <span class="math inline">\(x\)</span> :</p>
 <p><span class="math display">\[
-\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \frac{1}{\|a\|^2} (a^T(\mu_1 - \mu_2))^2
+g_k(x) = w_k^T x + b_k
 \]</span></p>
-<p>est maximale lorsque <span class="math inline">\(a = \lambda(\mu_1 - \mu_2)\)</span>.</p>
-<p><strong>Note :</strong> Les données originales (<span class="math inline">\(x_i \in X\)</span>) ne changent pas. Seules les données projetées (<span class="math inline">\(\hat{x}_i \in \hat{X}\)</span>) changent lorsque l’on fait varier <span class="math inline">\(a\)</span>.<br>
-Le centre de masse des données projetées est la projection du centre de masse des données originales.</p>
-<hr>
-</section>
-<section id="critère-intra-classe" class="level3">
-<h3 class="anchored" data-anchor-id="critère-intra-classe">Critère intra-classe</h3>
-<p>Nous cherchons également à minimiser la variance intra-classe des données projetées.<br>
-Le critère de Fisher maximise :</p>
-<p><span class="math display">\[
-\underset{a}{\operatorname{argmax}} \frac{\|\hat{\mu}_1 - \hat{\mu}_2\|^2}{\hat{\sigma}_1^2 + \hat{\sigma}_2^2}
-\]</span></p>
-<p>où <span class="math inline">\(\hat{\sigma}_k\)</span> est la variance normalisée de la projection de la classe <span class="math inline">\(k\)</span> :</p>
-<p><span class="math display">\[
-\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{y_k = k} (\hat{x}_k - \hat{\mu}_k)^T (\hat{x}_k - \hat{\mu}_k)
-\]</span></p>
-<hr>
-</section>
-<section id="critère-de-fisher-combinaison-des-critères" class="level3">
-<h3 class="anchored" data-anchor-id="critère-de-fisher-combinaison-des-critères">Critère de Fisher (combinaison des critères)</h3>
-<p>Le critère de Fisher combine les critères inter et intra-classe :</p>
-<p><span class="math display">\[
-\arg\max_a \mathcal{L}(a) = \arg\max_a \frac{a^\top \Sigma_b a}{a^\top \Sigma_w a}
-\]</span></p>
-<p>où <span class="math inline">\(\Sigma_b\)</span> est la matrice de covariance inter-classes et <span class="math inline">\(\Sigma_w\)</span> la matrice de covariance intra-classes.</p>
-<p>La solution est obtenue en annulant la dérivée :</p>
-<p><span class="math display">\[
-\frac{\partial \mathcal{L}(a)}{\partial a} = \frac{\Sigma_b a(a^\top \Sigma_w a) - \Sigma_w a(a^\top \Sigma_b a)}{(a^\top \Sigma_w a)^2} = 0
-\]</span></p>
-<p>Ce qui conduit au système généralisé de valeurs propres :</p>
-<p><span class="math display">\[
-\Sigma_b a = \mathcal{L}(a) \Sigma_w a
-\]</span></p>
-<p>Ainsi, <span class="math inline">\(a\)</span> est le premier vecteur propre de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (avec valeur propre <span class="math inline">\(\lambda_1 = \mathcal{L}(a)\)</span>).</p>
-<hr>
-</section>
-<section id="généralisation-à-plusieurs-classes" class="level3">
-<h3 class="anchored" data-anchor-id="généralisation-à-plusieurs-classes">Généralisation à plusieurs classes</h3>
-<p>Pour <span class="math inline">\(M\)</span> classes, on définit :</p>
+<p>Où :</p>
 <ul>
-<li>La matrice des centres centrés : <span class="math inline">\(B = [\mu_1 - \mu, \ldots, \mu_M - \mu]\)</span> (où <span class="math inline">\(\mu = \frac{1}{N} \sum_N x_i\)</span> et <span class="math inline">\(N = \sum_k N_k\)</span>).<br>
-</li>
-<li>La matrice de covariance inter-classes : <span class="math inline">\(\Sigma_b = \frac{1}{M} BB^T\)</span>.<br>
-</li>
-<li>On maximise sur <span class="math inline">\(a \in \mathbb{R}^D\)</span> :</li>
+<li><span class="math inline">\(w_k = \Sigma^{-1} \mu_k\)</span> est le vecteur de poids pour la classe <span class="math inline">\(k\)</span></li>
+<li><span class="math inline">\(b_k = -\frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k)\)</span> est le biais pour la classe <span class="math inline">\(k\)</span></li>
 </ul>
+<p>La frontière de décision entre deux classes <span class="math inline">\(k\)</span> et <span class="math inline">\(l\)</span> est alors <strong>linéaire</strong> :</p>
 <p><span class="math display">\[
-\frac{1}{M} \sum_k (\hat{\mu}_k - \hat{\mu})^T (\hat{\mu}_k - \hat{\mu}) = \frac{1}{\|a\|^2} a^T \Sigma_b a
-\]</span></p>
-<hr>
-</section>
-<section id="sous-espaces-discriminants" class="level3">
-<h3 class="anchored" data-anchor-id="sous-espaces-discriminants">Sous-espaces discriminants</h3>
-<p>Les vecteurs propres correspondant aux plus grandes valeurs propres <span class="math inline">\(\lambda_i\)</span> sont les dimensions les plus discriminantes :<br>
-<span class="math inline">\(a_1, a_2, \ldots a_p\)</span> avec <span class="math inline">\(\lambda_1 &gt; \lambda_2 &gt; \ldots &gt; \lambda_p\)</span>.</p>
-<p>Pour <span class="math inline">\(M\)</span> classes, on peut discriminer dans un sous-espace de dimension au plus <span class="math inline">\(M-1\)</span> (projections itératives).<br>
-Il n’y a donc que <span class="math inline">\(M-1\)</span> valeurs propres non nulles.</p>
-<hr>
-</section>
-<section id="cas-particulier-m-2" class="level3">
-<h3 class="anchored" data-anchor-id="cas-particulier-m-2">Cas particulier : <span class="math inline">\(M = 2\)</span></h3>
-<p>Dans ce cas :</p>
-<p><span class="math display">\[
-BB^T = (\mu_1 - \mu)(\mu_1 - \mu)^T + (\mu_2 - \mu)(\mu_2 - \mu)^T \propto (\mu_1 - \mu_2)(\mu_1 - \mu_2)^T
-\]</span></p>
-<p>Ainsi, <span class="math inline">\(BB^T a\)</span> est un vecteur dans la direction <span class="math inline">\((\mu_1 - \mu_2)\)</span>, et :</p>
-<p><span class="math display">\[
-a = \lambda \Sigma_w^{-1}(\mu_1 - \mu_2)
+\{x : g_k(x) = g_l(x)\} \quad \Rightarrow \quad (w_k - w_l)^T x + (b_k - b_l) = 0
 \]</span></p>
 <hr>
 </section>
 </section>
-<section id="exemples" class="level2">
-<h2 class="anchored" data-anchor-id="exemples">Exemples</h2>
-<p>LDA trouve le sous-espace optimal pour séparer linéairement les données selon les étiquettes <span class="math inline">\(y_i\)</span>.</p>
-<p><strong>Exemple concret :</strong> 7291 images <span class="math inline">\(16 \times 16\)</span> (8 bits) de chiffres de 0 à 9, soit <span class="math inline">\(x_i \in \mathbb{R}^{256}\)</span> et <span class="math inline">\(y_i \in [10]\)</span>.</p>
-<hr>
 </section>
-<section id="inférence-et-modélisation-conditionnelle" class="level2">
-<h2 class="anchored" data-anchor-id="inférence-et-modélisation-conditionnelle">Inférence et modélisation conditionnelle</h2>
-<section id="modélisation-gaussienne" class="level3">
-<h3 class="anchored" data-anchor-id="modélisation-gaussienne">Modélisation gaussienne</h3>
-<p>Chaque classe est modélisée par <span class="math inline">\(P(x|C = k) \sim \mathcal{N}(\mu_k, \Sigma_k)\)</span>.<br>
-On suppose un prior uniforme : <span class="math inline">\(P(C = k) = 1/M\)</span>.<br>
-L’évidence <span class="math inline">\(P(x_j)\)</span> est ignorée (car constante pour tous les <span class="math inline">\(k\)</span>).<br>
-On utilise alors le maximum de vraisemblance :</p>
-<p><span class="math display">\[
-P(x|C = k) \simeq \exp\left( -(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k) \right)
-\]</span></p>
-<hr>
-</section>
-<section id="décision-de-classification" class="level3">
-<h3 class="anchored" data-anchor-id="décision-de-classification">Décision de classification</h3>
-<p>La règle de décision est :</p>
-<p><span class="math display">\[
-\delta(x) = \arg\max_k P(x|C = k)
-\]</span></p>
-<hr>
-</section>
-</section>
-<section id="optimalité-et-limites" class="level2">
-<h2 class="anchored" data-anchor-id="optimalité-et-limites">Optimalité et limites</h2>
+<section id="avantages-et-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="avantages-et-limitations">Avantages et Limitations</h2>
+<section id="avantages-de-la-lda" class="level3">
+<h3 class="anchored" data-anchor-id="avantages-de-la-lda">Avantages de la LDA</h3>
 <ul>
-<li>LDA est optimal lorsque les <span class="math inline">\(M\)</span> classes sont chacune distribuées selon une loi gaussienne (critère de discrimination basé sur <span class="math inline">\(\Sigma_w\)</span> et <span class="math inline">\(\Sigma_b\)</span>).<br>
-</li>
-<li>LDA ne prend pas en compte les relations non linéaires entre variables (discrimination linéaire).<br>
-</li>
-<li>Pour des problèmes non linéaires, il faut utiliser des méthodes de classification non linéaires.</li>
+<li><strong>Fondements théoriques solides</strong> basés sur la statistique bayésienne</li>
+<li><strong>Solution analytique</strong> (pas d’optimisation itérative)</li>
+<li><strong>Efficace</strong> lorsque les hypothèses sont respectées</li>
+<li><strong>Interprétable</strong> : les directions discriminantes ont une signification claire</li>
+<li><strong>Double usage</strong> : réduction de dimension et classification</li>
 </ul>
-<hr>
 </section>
-<section id="résumé" class="level2">
-<h2 class="anchored" data-anchor-id="résumé">Résumé</h2>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
 <ul>
-<li>LDA est une technique supervisée.<br>
-</li>
-<li>LDA trouve les facteurs latents linéaires optimaux expliquant la discrimination (linéaire).<br>
-</li>
-<li>Le critère de Fisher combine la dispersion intra-classe et inter-classes.<br>
-</li>
-<li>LDA est résolu en trouvant les valeurs propres de <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span>.<br>
-</li>
-<li>Ces facteurs latents peuvent être utilisés pour la visualisation (en tenant compte des étiquettes).<br>
-</li>
-<li>LDA (comme classification) est un exemple de modélisation conditionnelle : chaque classe suit une loi normale.</li>
+<li><strong>Hypothèse de normalité</strong> : nécessite des données approximativement gaussiennes</li>
+<li><strong>Homoscédasticité</strong> : suppose la même covariance pour toutes les classes</li>
+<li><strong>Sensibilité aux valeurs aberrantes</strong></li>
+<li><strong>Linéarité</strong> : ne capture pas les relations non linéaires</li>
+<li><strong>Problèmes en haute dimension</strong> lorsque <span class="math inline">\(D &gt; N\)</span></li>
+</ul>
+</section>
+<section id="alternatives-et-extensions" class="level3">
+<h3 class="anchored" data-anchor-id="alternatives-et-extensions">Alternatives et Extensions</h3>
+<p><strong>QDA (Quadratic Discriminant Analysis)</strong></p>
+<p>Relâche l’hypothèse de covariance commune, permettant des frontières de décision quadratiques.</p>
+<p><strong>LDA Régularisée</strong></p>
+<p>Ajoute une régularisation pour stabiliser l’estimation de <span class="math inline">\(\Sigma^{-1}\)</span> en haute dimension.</p>
+<p><strong>LDA par Noyaux</strong></p>
+<p>Utilise des fonctions noyau pour capturer des relations non linéaires.</p>
+<p><strong>Analyse Discriminante Flexibles</strong></p>
+<p>Modélise les distributions conditionnelles par des méthodes non paramétriques.</p>
+<hr>
+</section>
+</section>
+<section id="comparaison-avec-dautres-méthodes" class="level2">
+<h2 class="anchored" data-anchor-id="comparaison-avec-dautres-méthodes">Comparaison avec d’Autres Méthodes</h2>
+<section id="lda-vs-pca" class="level3">
+<h3 class="anchored" data-anchor-id="lda-vs-pca">LDA vs PCA</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>LDA</th>
+<th>PCA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Supervision</strong></td>
+<td>Supervisée (utilise les étiquettes)</td>
+<td>Non supervisée</td>
+</tr>
+<tr class="even">
+<td><strong>Objectif</strong></td>
+<td>Maximiser la séparation entre classes</td>
+<td>Maximiser la variance totale</td>
+</tr>
+<tr class="odd">
+<td><strong>Directions</strong></td>
+<td>Directions de discrimination</td>
+<td>Directions de variance maximale</td>
+</tr>
+<tr class="even">
+<td><strong>Interprétation</strong></td>
+<td>Séparation des groupes</td>
+<td>Structure de variabilité</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lda-vs-régression-logistique" class="level3">
+<h3 class="anchored" data-anchor-id="lda-vs-régression-logistique">LDA vs Régression Logistique</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 14%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>LDA</th>
+<th>Régression Logistique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Approche</strong></td>
+<td>Modèle génératif</td>
+<td>Modèle discriminant</td>
+</tr>
+<tr class="even">
+<td><strong>Hypothèses</strong></td>
+<td>Normale avec covariance commune</td>
+<td>Aucune sur la distribution de <span class="math inline">\(x\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Stabilité</strong></td>
+<td>Plus stable avec peu de données</td>
+<td>Peut nécessiter plus de données</td>
+</tr>
+<tr class="even">
+<td><strong>Frontières</strong></td>
+<td>Toujours linéaire sous ses hypothèses</td>
+<td>Linéaire par construction</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="applications-pratiques" class="level2">
+<h2 class="anchored" data-anchor-id="applications-pratiques">Applications Pratiques</h2>
+<section id="domaines-dapplication" class="level3">
+<h3 class="anchored" data-anchor-id="domaines-dapplication">Domaines d’Application</h3>
+<p><strong>Biologie et Médecine</strong></p>
+<ul>
+<li>Classification de cellules cancéreuses</li>
+<li>Diagnostic à partir d’images médicales</li>
+<li>Analyse de données génomiques</li>
+</ul>
+<p><strong>Finance</strong></p>
+<ul>
+<li>Scoring de crédit</li>
+<li>Détection de fraude</li>
+<li>Classification de clients</li>
+</ul>
+<p><strong>Vision par Ordinateur</strong></p>
+<ul>
+<li>Reconnaissance faciale</li>
+<li>Classification d’images</li>
+<li>Reconnaissance d’écriture manuscrite</li>
+</ul>
+<p><strong>Marketing</strong></p>
+<ul>
+<li>Segmentation de clientèle</li>
+<li>Analyse de préférences</li>
+<li>Recommandation de produits</li>
+</ul>
+</section>
+<section id="bonnes-pratiques" class="level3">
+<h3 class="anchored" data-anchor-id="bonnes-pratiques">Bonnes Pratiques</h3>
+<p><strong>Validation des hypothèses</strong></p>
+<ul>
+<li>Tester la normalité des données (test de Shapiro-Wilk, QQ-plots)</li>
+<li>Vérifier l’homogénéité des covariances (test de Box)</li>
+<li>Examiner les valeurs aberrantes</li>
+</ul>
+<p><strong>Pré-traitement des données</strong></p>
+<ul>
+<li>Standardisation des variables</li>
+<li>Gestion des valeurs manquantes</li>
+<li>Équilibrage des classes si nécessaire</li>
+</ul>
+<p><strong>Validation du modèle</strong></p>
+<ul>
+<li>Validation croisée</li>
+<li>Mesures de performance adaptées (matrice de confusion, AUC, etc.)</li>
+<li>Comparaison avec des méthodes de référence</li>
 </ul>
 <hr>
 </section>
-<section id="questions-dexemple" class="level2">
-<h2 class="anchored" data-anchor-id="questions-dexemple">Questions d’exemple</h2>
-<ol type="1">
-<li>Expliquer dans le cadre de l’apprentissage supervisé : pourquoi LDA est une méthode linéaire ?<br>
-</li>
-<li>Qu’est-ce qui caractérise une direction discriminante ? Que représente <span class="math inline">\(a\)</span> ?<br>
-</li>
-<li>Quel est le critère de Fisher ?<br>
-</li>
-<li>Qu’est-ce que le critère inter-classes ? Expliquer son principe.<br>
-</li>
-<li>Comment calculer la matrice de covariance inter-classes ?<br>
-</li>
-<li>Qu’est-ce que le critère intra-classes ? Expliquer son principe.<br>
-</li>
-<li>Comment calculer la matrice de covariance intra-classes ?<br>
-</li>
-<li>Comment ces deux critères sont-ils combinés ?<br>
-</li>
-<li>Pouvez-vous justifier et expliquer la dérivation du maximum pour <span class="math inline">\(a\)</span> ?<br>
-</li>
-<li>Décrire la situation multidimensionnelle (<span class="math inline">\(D &gt; 2\)</span>).<br>
-</li>
-<li>Comment faire de l’inférence avec LDA ?<br>
-</li>
-<li>Donner un exemple de modèle conditionnel de données utilisant LDA.</li>
-</ol>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>L’Analyse Discriminante Linéaire est une méthode <strong>élégante et puissante</strong> qui repose sur des principes statistiques solides.<br>
+Son cœur réside dans l’optimisation conjointe de deux critères :</p>
+<p><strong>Critère inter-classe</strong><br>
+Maximiser la séparation entre les centres des classes, rendant les classes aussi distinctes que possible.</p>
+<p><strong>Critère intra-classe</strong><br>
+Minimiser la dispersion à l’intérieur de chaque classe, rendant chaque classe aussi cohérente que possible.</p>
+<p>La combinaison de ces deux objectifs via le <strong>critère de Fisher</strong> permet de trouver les directions optimales pour discriminer les classes tout en réduisant la dimension des données.</p>
+<p>Bien que reposant sur des hypothèses parfois restrictives, la LDA reste un outil précieux dans la boîte à outils du data scientist, particulièrement utile pour :</p>
+<ul>
+<li>L’exploration et la visualisation de données étiquetées</li>
+<li>La classification lorsque les hypothèses sont raisonnablement vérifiées</li>
+<li>La compréhension des variables discriminantes dans un problème</li>
+</ul>
+<p>Son interprétabilité et sa simplicité conceptuelle en font une excellente introduction aux méthodes de classification et de réduction de dimension supervisée.</p>
 
 
 </section>
