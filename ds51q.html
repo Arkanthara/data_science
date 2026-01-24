@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds51q – Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Data Science</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./fr/index.html">
+ <span class="dropdown-text">French</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Part I</li><li class="breadcrumb-item"><a href="./ds51.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds51q.html">Exam questions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">High-dimensional representation spaces</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">High-Dimensional Representations in Data Science</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Principal Component Analysis (PCA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Discriminant Analysis (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51q.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Educational Course: Clustering and the k-means Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gaussian Mixture Models and the EM Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exam-questions" id="toc-exam-questions" class="nav-link active" data-scroll-target="#exam-questions">Exam questions</a></li>
+  <li><a href="#relationship-between-linear-discriminant-analysis-lda-and-conditional-modeling-for-classification" id="toc-relationship-between-linear-discriminant-analysis-lda-and-conditional-modeling-for-classification" class="nav-link" data-scroll-target="#relationship-between-linear-discriminant-analysis-lda-and-conditional-modeling-for-classification">Relationship between Linear Discriminant Analysis (LDA) and Conditional Modeling for Classification</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#introduction-to-conditional-modeling-in-classification" id="toc-introduction-to-conditional-modeling-in-classification" class="nav-link" data-scroll-target="#introduction-to-conditional-modeling-in-classification">Introduction to Conditional Modeling in Classification</a></li>
+  <li><a href="#bayesian-framework-for-classification" id="toc-bayesian-framework-for-classification" class="nav-link" data-scroll-target="#bayesian-framework-for-classification">Bayesian Framework for Classification</a>
+  <ul class="collapse">
+  <li><a href="#bayes-rule-for-optimal-decision" id="toc-bayes-rule-for-optimal-decision" class="nav-link" data-scroll-target="#bayes-rule-for-optimal-decision">Bayes’ Rule for Optimal Decision</a></li>
+  </ul></li>
+  <li><a href="#lda-as-a-conditional-generative-model" id="toc-lda-as-a-conditional-generative-model" class="nav-link" data-scroll-target="#lda-as-a-conditional-generative-model">LDA as a Conditional Generative Model</a>
+  <ul class="collapse">
+  <li><a href="#fundamental-assumptions-of-lda" id="toc-fundamental-assumptions-of-lda" class="nav-link" data-scroll-target="#fundamental-assumptions-of-lda">Fundamental Assumptions of LDA</a></li>
+  <li><a href="#explicit-formulation-of-the-lda-model" id="toc-explicit-formulation-of-the-lda-model" class="nav-link" data-scroll-target="#explicit-formulation-of-the-lda-model">Explicit Formulation of the LDA Model</a></li>
+  </ul></li>
+  <li><a href="#from-conditional-modeling-to-linear-discriminant-function" id="toc-from-conditional-modeling-to-linear-discriminant-function" class="nav-link" data-scroll-target="#from-conditional-modeling-to-linear-discriminant-function">From Conditional Modeling to Linear Discriminant Function</a>
+  <ul class="collapse">
+  <li><a href="#derivation-of-the-decision-function" id="toc-derivation-of-the-decision-function" class="nav-link" data-scroll-target="#derivation-of-the-decision-function">Derivation of the Decision Function</a></li>
+  <li><a href="#explicit-form-of-the-decision-boundary" id="toc-explicit-form-of-the-decision-boundary" class="nav-link" data-scroll-target="#explicit-form-of-the-decision-boundary">Explicit Form of the Decision Boundary</a></li>
+  </ul></li>
+  <li><a href="#geometric-interpretation-and-link-with-fishers-criterion" id="toc-geometric-interpretation-and-link-with-fishers-criterion" class="nav-link" data-scroll-target="#geometric-interpretation-and-link-with-fishers-criterion">Geometric Interpretation and Link with Fisher’s Criterion</a>
+  <ul class="collapse">
+  <li><a href="#optimal-projection-for-discrimination" id="toc-optimal-projection-for-discrimination" class="nav-link" data-scroll-target="#optimal-projection-for-discrimination">Optimal Projection for Discrimination</a></li>
+  <li><a href="#equivalence-with-the-probabilistic-approach" id="toc-equivalence-with-the-probabilistic-approach" class="nav-link" data-scroll-target="#equivalence-with-the-probabilistic-approach">Equivalence with the Probabilistic Approach</a></li>
+  </ul></li>
+  <li><a href="#model-parameter-estimation" id="toc-model-parameter-estimation" class="nav-link" data-scroll-target="#model-parameter-estimation">Model Parameter Estimation</a>
+  <ul class="collapse">
+  <li><a href="#maximum-likelihood-approach" id="toc-maximum-likelihood-approach" class="nav-link" data-scroll-target="#maximum-likelihood-approach">Maximum Likelihood Approach</a></li>
+  </ul></li>
+  <li><a href="#advantages-of-the-conditional-interpretation-of-lda" id="toc-advantages-of-the-conditional-interpretation-of-lda" class="nav-link" data-scroll-target="#advantages-of-the-conditional-interpretation-of-lda">Advantages of the Conditional Interpretation of LDA</a>
+  <ul class="collapse">
+  <li><a href="#solid-probabilistic-foundations" id="toc-solid-probabilistic-foundations" class="nav-link" data-scroll-target="#solid-probabilistic-foundations">1. Solid Probabilistic Foundations</a></li>
+  <li><a href="#ability-to-handle-imbalanced-classes" id="toc-ability-to-handle-imbalanced-classes" class="nav-link" data-scroll-target="#ability-to-handle-imbalanced-classes">2. Ability to Handle Imbalanced Classes</a></li>
+  <li><a href="#extension-to-multi-class-classification" id="toc-extension-to-multi-class-classification" class="nav-link" data-scroll-target="#extension-to-multi-class-classification">3. Extension to Multi-Class Classification</a></li>
+  <li><a href="#interpretation-in-terms-of-likelihood-ratio" id="toc-interpretation-in-terms-of-likelihood-ratio" class="nav-link" data-scroll-target="#interpretation-in-terms-of-likelihood-ratio">4. Interpretation in Terms of Likelihood Ratio</a></li>
+  </ul></li>
+  <li><a href="#limitations-and-extensions" id="toc-limitations-and-extensions" class="nav-link" data-scroll-target="#limitations-and-extensions">Limitations and Extensions</a>
+  <ul class="collapse">
+  <li><a href="#restrictive-common-covariance-assumption" id="toc-restrictive-common-covariance-assumption" class="nav-link" data-scroll-target="#restrictive-common-covariance-assumption">Restrictive Common Covariance Assumption</a></li>
+  <li><a href="#modern-extensions" id="toc-modern-extensions" class="nav-link" data-scroll-target="#modern-extensions">Modern Extensions</a></li>
+  </ul></li>
+  <li><a href="#concrete-example-iris-flower-classification" id="toc-concrete-example-iris-flower-classification" class="nav-link" data-scroll-target="#concrete-example-iris-flower-classification">Concrete Example: Iris Flower Classification</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  <li><a href="#linear-discriminant-analysis-lda-comprehensive-explanation" id="toc-linear-discriminant-analysis-lda-comprehensive-explanation" class="nav-link" data-scroll-target="#linear-discriminant-analysis-lda-comprehensive-explanation">Linear Discriminant Analysis (LDA): Comprehensive Explanation</a>
+  <ul class="collapse">
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question</a></li>
+  <li><a href="#what-is-linear-discriminant-analysis" id="toc-what-is-linear-discriminant-analysis" class="nav-link" data-scroll-target="#what-is-linear-discriminant-analysis">What is Linear Discriminant Analysis?</a></li>
+  <li><a href="#fundamental-assumptions-of-lda-1" id="toc-fundamental-assumptions-of-lda-1" class="nav-link" data-scroll-target="#fundamental-assumptions-of-lda-1">Fundamental Assumptions of LDA</a>
+  <ul class="collapse">
+  <li><a href="#gaussian-distribution" id="toc-gaussian-distribution" class="nav-link" data-scroll-target="#gaussian-distribution">Gaussian Distribution</a></li>
+  <li><a href="#homoscedasticity-common-covariance" id="toc-homoscedasticity-common-covariance" class="nav-link" data-scroll-target="#homoscedasticity-common-covariance">Homoscedasticity (Common Covariance)</a></li>
+  <li><a href="#independent-observations" id="toc-independent-observations" class="nav-link" data-scroll-target="#independent-observations">Independent Observations</a></li>
+  <li><a href="#class-separability" id="toc-class-separability" class="nav-link" data-scroll-target="#class-separability">Class Separability</a></li>
+  </ul></li>
+  <li><a href="#calculation-and-methodology" id="toc-calculation-and-methodology" class="nav-link" data-scroll-target="#calculation-and-methodology">Calculation and Methodology</a>
+  <ul class="collapse">
+  <li><a href="#notations-and-definitions" id="toc-notations-and-definitions" class="nav-link" data-scroll-target="#notations-and-definitions">Notations and Definitions</a></li>
+  <li><a href="#dispersion-matrices" id="toc-dispersion-matrices" class="nav-link" data-scroll-target="#dispersion-matrices">Dispersion Matrices</a></li>
+  <li><a href="#fishers-criterion" id="toc-fishers-criterion" class="nav-link" data-scroll-target="#fishers-criterion">Fisher’s Criterion</a></li>
+  <li><a href="#optimization-solution" id="toc-optimization-solution" class="nav-link" data-scroll-target="#optimization-solution">Optimization Solution</a></li>
+  <li><a href="#detailed-calculation-steps" id="toc-detailed-calculation-steps" class="nav-link" data-scroll-target="#detailed-calculation-steps">Detailed Calculation Steps</a></li>
+  </ul></li>
+  <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results">Interpretation of Results</a>
+  <ul class="collapse">
+  <li><a href="#discriminant-dimensions" id="toc-discriminant-dimensions" class="nav-link" data-scroll-target="#discriminant-dimensions">Discriminant Dimensions</a></li>
+  <li><a href="#explained-separation-percentage" id="toc-explained-separation-percentage" class="nav-link" data-scroll-target="#explained-separation-percentage">Explained Separation Percentage</a></li>
+  <li><a href="#coefficient-significance" id="toc-coefficient-significance" class="nav-link" data-scroll-target="#coefficient-significance">Coefficient Significance</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">Visualization</a></li>
+  </ul></li>
+  <li><a href="#use-for-classification" id="toc-use-for-classification" class="nav-link" data-scroll-target="#use-for-classification">Use for Classification</a>
+  <ul class="collapse">
+  <li><a href="#probabilistic-modeling-approach" id="toc-probabilistic-modeling-approach" class="nav-link" data-scroll-target="#probabilistic-modeling-approach">Probabilistic Modeling Approach</a></li>
+  <li><a href="#probability-estimation" id="toc-probability-estimation" class="nav-link" data-scroll-target="#probability-estimation">Probability Estimation</a></li>
+  <li><a href="#linear-discriminant-functions" id="toc-linear-discriminant-functions" class="nav-link" data-scroll-target="#linear-discriminant-functions">Linear Discriminant Functions</a></li>
+  <li><a href="#decision-rule" id="toc-decision-rule" class="nav-link" data-scroll-target="#decision-rule">Decision Rule</a></li>
+  <li><a href="#decision-boundaries" id="toc-decision-boundaries" class="nav-link" data-scroll-target="#decision-boundaries">Decision Boundaries</a></li>
+  <li><a href="#classification-process-for-a-new-observation" id="toc-classification-process-for-a-new-observation" class="nav-link" data-scroll-target="#classification-process-for-a-new-observation">Classification Process for a New Observation</a></li>
+  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation">Parameter Estimation</a></li>
+  </ul></li>
+  <li><a href="#advantages-and-limitations" id="toc-advantages-and-limitations" class="nav-link" data-scroll-target="#advantages-and-limitations">Advantages and Limitations</a>
+  <ul class="collapse">
+  <li><a href="#advantages" id="toc-advantages" class="nav-link" data-scroll-target="#advantages">Advantages</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#alternatives-and-extensions" id="toc-alternatives-and-extensions" class="nav-link" data-scroll-target="#alternatives-and-extensions">Alternatives and Extensions</a></li>
+  </ul></li>
+  <li><a href="#concrete-example-iris-flower-classification-1" id="toc-concrete-example-iris-flower-classification-1" class="nav-link" data-scroll-target="#concrete-example-iris-flower-classification-1">Concrete Example: Iris Flower Classification</a>
+  <ul class="collapse">
+  <li><a href="#problem-context" id="toc-problem-context" class="nav-link" data-scroll-target="#problem-context">Problem Context</a></li>
+  <li><a href="#lda-application" id="toc-lda-application" class="nav-link" data-scroll-target="#lda-application">LDA Application</a></li>
+  </ul></li>
+  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1">Conclusion</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds51q.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Part I</li><li class="breadcrumb-item"><a href="./ds51.html">Linear Discriminant Analysis</a></li><li class="breadcrumb-item"><a href="./ds51q.html">Exam questions</a></li></ol></nav></header>
+
+
+
+
+
+<section id="exam-questions" class="level1">
+<h1>Exam questions</h1>
+</section>
+<section id="relationship-between-linear-discriminant-analysis-lda-and-conditional-modeling-for-classification" class="level1">
+<h1>Relationship between Linear Discriminant Analysis (LDA) and Conditional Modeling for Classification</h1>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Explain how the model of Linear Discriminant Analysis (LDA) relate to conditional model for classification.</p>
+</section>
+<section id="introduction-to-conditional-modeling-in-classification" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-conditional-modeling-in-classification">Introduction to Conditional Modeling in Classification</h2>
+<p>In supervised classification problems, we aim to predict the class label <span class="math inline">\(y\)</span> of an observation <span class="math inline">\(x\)</span>.<br>
+A fundamental approach involves modeling the <strong>conditional probability</strong> <span class="math inline">\(P(y|x)\)</span>, i.e., the probability that an observation <span class="math inline">\(x\)</span> belongs to a given class <span class="math inline">\(y\)</span>.</p>
+<hr>
+</section>
+<section id="bayesian-framework-for-classification" class="level2">
+<h2 class="anchored" data-anchor-id="bayesian-framework-for-classification">Bayesian Framework for Classification</h2>
+<section id="bayes-rule-for-optimal-decision" class="level3">
+<h3 class="anchored" data-anchor-id="bayes-rule-for-optimal-decision">Bayes’ Rule for Optimal Decision</h3>
+<p>According to Bayes’ theorem, the posterior probability that an observation <span class="math inline">\(x\)</span> belongs to class <span class="math inline">\(k\)</span> is:</p>
+<p><span class="math display">\[
+P(C = k | x) = \frac{P(x | C = k) \cdot P(C = k)}{P(x)}
+\]</span></p>
+<p>Where: - <span class="math inline">\(P(C = k)\)</span> is the <strong>prior probability</strong> of class <span class="math inline">\(k\)</span> - <span class="math inline">\(P(x | C = k)\)</span> is the <strong>likelihood</strong> of <span class="math inline">\(x\)</span> given class <span class="math inline">\(k\)</span> - <span class="math inline">\(P(x)\)</span> is the marginal probability of <span class="math inline">\(x\)</span> (constant for all classes)</p>
+<p>The optimal decision rule (minimizing the error rate) consists of assigning <span class="math inline">\(x\)</span> to the class <span class="math inline">\(k\)</span> that maximizes the posterior probability:</p>
+<p><span class="math display">\[
+\delta(x) = \arg\max_k P(C = k | x)
+\]</span></p>
+<p>Since <span class="math inline">\(P(x)\)</span> is constant, this rule is equivalent to:</p>
+<p><span class="math display">\[
+\delta(x) = \arg\max_k \left[ P(x | C = k) \cdot P(C = k) \right]
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="lda-as-a-conditional-generative-model" class="level2">
+<h2 class="anchored" data-anchor-id="lda-as-a-conditional-generative-model">LDA as a Conditional Generative Model</h2>
+<section id="fundamental-assumptions-of-lda" class="level3">
+<h3 class="anchored" data-anchor-id="fundamental-assumptions-of-lda">Fundamental Assumptions of LDA</h3>
+<p>Linear Discriminant Analysis is based on three clear assumptions:</p>
+<ol type="1">
+<li><p><strong>Gaussian distribution per class</strong>: Each class follows a multivariate normal distribution</p>
+<p><span class="math display">\[
+P(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma)
+\]</span></p></li>
+<li><p><strong>Common covariance matrix</strong>: All classes share the <strong>same</strong> covariance matrix <span class="math inline">\(\Sigma\)</span></p></li>
+<li><p><strong>Prior probabilities</strong>: Classes have prior probabilities <span class="math inline">\(P(C = k)\)</span> (often estimated by sample proportions)</p></li>
+</ol>
+</section>
+<section id="explicit-formulation-of-the-lda-model" class="level3">
+<h3 class="anchored" data-anchor-id="explicit-formulation-of-the-lda-model">Explicit Formulation of the LDA Model</h3>
+<p>Under these assumptions, the probability density for class <span class="math inline">\(k\)</span> is written as:</p>
+<p><span class="math display">\[
+P(x | C = k) = \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2}} \exp\left( -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) \right)
+\]</span></p>
+<p>Where <span class="math inline">\(D\)</span> is the data dimension, <span class="math inline">\(\mu_k\)</span> is the mean vector of class <span class="math inline">\(k\)</span>, and <span class="math inline">\(\Sigma\)</span> is the common covariance matrix.</p>
+<hr>
+</section>
+</section>
+<section id="from-conditional-modeling-to-linear-discriminant-function" class="level2">
+<h2 class="anchored" data-anchor-id="from-conditional-modeling-to-linear-discriminant-function">From Conditional Modeling to Linear Discriminant Function</h2>
+<section id="derivation-of-the-decision-function" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-of-the-decision-function">Derivation of the Decision Function</h3>
+<p>By applying the Bayesian decision rule and taking the logarithm (which preserves maxima), we obtain:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\delta(x) &amp;= \arg\max_k \left[ \ln P(x | C = k) + \ln P(C = k) \right] \\
+&amp;= \arg\max_k \left[ -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) + \ln P(C = k) + \text{constant} \right]
+\end{aligned}
+\]</span></p>
+<p>By expanding the quadratic term and eliminating terms independent of <span class="math inline">\(k\)</span>, we obtain the <strong>linear discriminant function</strong>:</p>
+<p><span class="math display">\[
+\delta(x) = \arg\max_k \left[ x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k) \right]
+\]</span></p>
+</section>
+<section id="explicit-form-of-the-decision-boundary" class="level3">
+<h3 class="anchored" data-anchor-id="explicit-form-of-the-decision-boundary">Explicit Form of the Decision Boundary</h3>
+<p>The discriminant function for class <span class="math inline">\(k\)</span> can be written as a linear function in <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+g_k(x) = w_k^T x + b_k
+\]</span></p>
+<p>Where: - <span class="math inline">\(w_k = \Sigma^{-1} \mu_k\)</span> is the weight vector for class <span class="math inline">\(k\)</span> - <span class="math inline">\(b_k = -\frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k)\)</span> is the bias for class <span class="math inline">\(k\)</span></p>
+<p>The decision boundary between two classes <span class="math inline">\(k\)</span> and <span class="math inline">\(l\)</span> is then <strong>linear</strong>:</p>
+<p><span class="math display">\[
+\{x : g_k(x) = g_l(x)\} \quad \Rightarrow \quad (w_k - w_l)^T x + (b_k - b_l) = 0
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="geometric-interpretation-and-link-with-fishers-criterion" class="level2">
+<h2 class="anchored" data-anchor-id="geometric-interpretation-and-link-with-fishers-criterion">Geometric Interpretation and Link with Fisher’s Criterion</h2>
+<section id="optimal-projection-for-discrimination" class="level3">
+<h3 class="anchored" data-anchor-id="optimal-projection-for-discrimination">Optimal Projection for Discrimination</h3>
+<p>LDA seeks the projection direction <span class="math inline">\(a\)</span> that maximizes the relative separation between classes.<br>
+Fisher’s criterion, which maximizes:</p>
+<p><span class="math display">\[
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+\]</span></p>
+<p>corresponds exactly to finding the direction that maximizes the ratio between: - <span class="math inline">\(\Sigma_b\)</span>: between-class dispersion (to maximize) - <span class="math inline">\(\Sigma_w\)</span>: within-class dispersion (to minimize)</p>
+</section>
+<section id="equivalence-with-the-probabilistic-approach" class="level3">
+<h3 class="anchored" data-anchor-id="equivalence-with-the-probabilistic-approach">Equivalence with the Probabilistic Approach</h3>
+<p>When the prior probabilities are equal (<span class="math inline">\(P(C = k) = 1/M\)</span>), the LDA solution via Fisher’s criterion is equivalent to the solution obtained by the Gaussian modeling approach with common covariance.</p>
+<p>The optimal direction <span class="math inline">\(a\)</span> is given by the first eigenvector of <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span>, which in the two-class case reduces to:</p>
+<p><span class="math display">\[
+a \propto \Sigma^{-1} (\mu_1 - \mu_2)
+\]</span></p>
+<p>Exactly the same expression as in the Bayesian approach!</p>
+<hr>
+</section>
+</section>
+<section id="model-parameter-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="model-parameter-estimation">Model Parameter Estimation</h2>
+<section id="maximum-likelihood-approach" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-likelihood-approach">Maximum Likelihood Approach</h3>
+<p>From a training sample <span class="math inline">\(\{(x_i, y_i)\}_{i=1}^N\)</span>, LDA parameters are naturally estimated:</p>
+<ul>
+<li><strong>Class means</strong>: <span class="math inline">\(\hat{\mu}_k = \frac{1}{N_k} \sum_{i: y_i = k} x_i\)</span></li>
+<li><strong>Common covariance matrix</strong>: <span class="math inline">\(\hat{\Sigma} = \frac{1}{N - M} \sum_{k=1}^M \sum_{i: y_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T\)</span></li>
+<li><strong>Prior probabilities</strong>: <span class="math inline">\(\hat{P}(C = k) = \frac{N_k}{N}\)</span></li>
+</ul>
+<p>These estimators are <strong>consistent</strong> and <strong>asymptotically efficient</strong> under the model assumptions.</p>
+<hr>
+</section>
+</section>
+<section id="advantages-of-the-conditional-interpretation-of-lda" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-of-the-conditional-interpretation-of-lda">Advantages of the Conditional Interpretation of LDA</h2>
+<section id="solid-probabilistic-foundations" class="level3">
+<h3 class="anchored" data-anchor-id="solid-probabilistic-foundations">1. Solid Probabilistic Foundations</h3>
+<p>Unlike a simple search for discriminant directions, LDA provides a <strong>complete generative model</strong> that allows: - Generating synthetic data for each class - Calculating well-calibrated posterior probabilities - Incorporating prior knowledge about classes</p>
+</section>
+<section id="ability-to-handle-imbalanced-classes" class="level3">
+<h3 class="anchored" data-anchor-id="ability-to-handle-imbalanced-classes">2. Ability to Handle Imbalanced Classes</h3>
+<p>By using prior probabilities <span class="math inline">\(P(C = k)\)</span>, LDA can naturally account for unequal class frequencies.</p>
+</section>
+<section id="extension-to-multi-class-classification" class="level3">
+<h3 class="anchored" data-anchor-id="extension-to-multi-class-classification">3. Extension to Multi-Class Classification</h3>
+<p>The probabilistic framework naturally extends to <span class="math inline">\(M &gt; 2\)</span> classes, whereas Fisher’s criterion requires generalizations.</p>
+</section>
+<section id="interpretation-in-terms-of-likelihood-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-in-terms-of-likelihood-ratio">4. Interpretation in Terms of Likelihood Ratio</h3>
+<p>The decision between two classes <span class="math inline">\(k\)</span> and <span class="math inline">\(l\)</span> can be expressed as:</p>
+<p><span class="math display">\[
+\log \frac{P(C = k | x)}{P(C = l | x)} = (w_k - w_l)^T x + (b_k - b_l)
+\]</span></p>
+<p>This corresponds to a <strong>likelihood ratio test</strong> with a threshold adapted to prior probabilities.</p>
+<hr>
+</section>
+</section>
+<section id="limitations-and-extensions" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-and-extensions">Limitations and Extensions</h2>
+<section id="restrictive-common-covariance-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="restrictive-common-covariance-assumption">Restrictive Common Covariance Assumption</h3>
+<p>The main limitation of LDA is the assumption that all classes share the same covariance matrix <span class="math inline">\(\Sigma\)</span>.<br>
+When this assumption is not verified, we use: - <strong>QDA (Quadratic Discriminant Analysis)</strong>: allows different covariances per class, leading to quadratic boundaries - <strong>Regularizations</strong>: regularized versions of LDA for high-dimensional data</p>
+</section>
+<section id="modern-extensions" class="level3">
+<h3 class="anchored" data-anchor-id="modern-extensions">Modern Extensions</h3>
+<ul>
+<li><strong>Flexible LDA</strong>: uses kernels to capture non-linearities</li>
+<li><strong>Sparse LDA</strong>: introduces sparsity constraints for variable selection</li>
+<li><strong>Robust LDA</strong>: versions resistant to outliers</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="concrete-example-iris-flower-classification" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-iris-flower-classification">Concrete Example: Iris Flower Classification</h2>
+<p>Consider the Iris dataset with 3 flower species.<br>
+LDA models each species by a Gaussian distribution in the feature space (petal/sepal length and width).</p>
+<p>For a new flower measurement <span class="math inline">\(x\)</span>, LDA calculates: 1. The likelihood <span class="math inline">\(P(x | \text{setosa})\)</span>, <span class="math inline">\(P(x | \text{versicolor})\)</span>, <span class="math inline">\(P(x | \text{virginica})\)</span> 2. The posterior probabilities via Bayes’ rule 3. Assigns the species with the maximum posterior probability</p>
+<p>The boundary between species appears linear in the feature space, due to the common covariance assumption.</p>
+<hr>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Linear Discriminant Analysis is <strong>fundamentally a conditional model for classification</strong> that:</p>
+<ol type="1">
+<li><strong>Explicitly models</strong> <span class="math inline">\(P(x | C = k)\)</span> as Gaussians with common covariance</li>
+<li><strong>Uses Bayes’ rule</strong> to calculate <span class="math inline">\(P(C = k | x)\)</span> and make decisions</li>
+<li><strong>Reduces to linear discriminant functions</strong> thanks to its simplifying assumptions</li>
+<li><strong>Is equivalent to Fisher’s criterion</strong> under the assumption of balanced classes</li>
+</ol>
+<p>This dual perspective - both as a probabilistic generative model and as a discriminant projection method - explains the power and enduring popularity of LDA in statistical learning.</p>
+<p>LDA perfectly illustrates how <strong>well-chosen probabilistic assumptions</strong> can lead to <strong>simple and interpretable algorithms</strong> while remaining theoretically grounded and practically effective.</p>
+<hr>
+</section>
+</section>
+<section id="linear-discriminant-analysis-lda-comprehensive-explanation" class="level1">
+<h1>Linear Discriminant Analysis (LDA): Comprehensive Explanation</h1>
+<section id="question-1" class="level2">
+<h2 class="anchored" data-anchor-id="question-1">Question</h2>
+<p>Explain the method of Linear Discriminant Analysis (LDA) including assumptions, calculation, and interpretation of the technique.</p>
+<p>How is this technique used for classification?</p>
+</section>
+<section id="what-is-linear-discriminant-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-linear-discriminant-analysis">What is Linear Discriminant Analysis?</h2>
+<p>Linear Discriminant Analysis (LDA) is a supervised statistical method that serves two main functions: <strong>classification</strong> and <strong>dimensionality reduction</strong>.</p>
+<p>It aims to find linear combinations of the original variables that best separate different predefined classes.</p>
+<hr>
+</section>
+<section id="fundamental-assumptions-of-lda-1" class="level2">
+<h2 class="anchored" data-anchor-id="fundamental-assumptions-of-lda-1">Fundamental Assumptions of LDA</h2>
+<p>For LDA to function optimally, it relies on several key assumptions:</p>
+<section id="gaussian-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-distribution">Gaussian Distribution</h3>
+<p>Each class is assumed to follow a multivariate Gaussian distribution. Formally, for each class <span class="math inline">\(k\)</span>, observations are drawn from:</p>
+<p><span class="math display">\[
+P(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma)
+\]</span></p>
+<p>where <span class="math inline">\(\mu_k\)</span> is the mean vector of class <span class="math inline">\(k\)</span> and <span class="math inline">\(\Sigma\)</span> is the covariance matrix.</p>
+</section>
+<section id="homoscedasticity-common-covariance" class="level3">
+<h3 class="anchored" data-anchor-id="homoscedasticity-common-covariance">Homoscedasticity (Common Covariance)</h3>
+<p>All classes share the same covariance matrix <span class="math inline">\(\Sigma\)</span>. This assumption is crucial as it guarantees that decision boundaries will be linear.</p>
+</section>
+<section id="independent-observations" class="level3">
+<h3 class="anchored" data-anchor-id="independent-observations">Independent Observations</h3>
+<p>Observations are sampled independently and identically distributed within each class.</p>
+</section>
+<section id="class-separability" class="level3">
+<h3 class="anchored" data-anchor-id="class-separability">Class Separability</h3>
+<p>Class centers (<span class="math inline">\(\mu_k\)</span>) must be sufficiently distinct relative to within-class dispersion.</p>
+<hr>
+</section>
+</section>
+<section id="calculation-and-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="calculation-and-methodology">Calculation and Methodology</h2>
+<section id="notations-and-definitions" class="level3">
+<h3 class="anchored" data-anchor-id="notations-and-definitions">Notations and Definitions</h3>
+<p>Consider a problem with <span class="math inline">\(K\)</span> classes:</p>
+<ul>
+<li><span class="math inline">\(N_k\)</span>: number of observations in class <span class="math inline">\(k\)</span></li>
+<li><span class="math inline">\(N\)</span>: total number of observations, with <span class="math inline">\(N = \sum_{k=1}^K N_k\)</span></li>
+<li><span class="math inline">\(\mu_k\)</span>: mean vector of class <span class="math inline">\(k\)</span> (dimension <span class="math inline">\(D\)</span>)</li>
+<li><span class="math inline">\(\mu\)</span>: global mean vector of all observations</li>
+</ul>
+</section>
+<section id="dispersion-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="dispersion-matrices">Dispersion Matrices</h3>
+<section id="within-class-scatter-matrix" class="level4">
+<h4 class="anchored" data-anchor-id="within-class-scatter-matrix">Within-Class Scatter Matrix</h4>
+<p>This matrix measures variability within each class:</p>
+<p><span class="math display">\[
+\Sigma_w = \sum_{k=1}^K \sum_{x_i \in \text{class } k} (x_i - \mu_k)(x_i - \mu_k)^T
+\]</span></p>
+</section>
+<section id="between-class-scatter-matrix" class="level4">
+<h4 class="anchored" data-anchor-id="between-class-scatter-matrix">Between-Class Scatter Matrix</h4>
+<p>This matrix measures dispersion between centers of different classes:</p>
+<p><span class="math display">\[
+\Sigma_b = \sum_{k=1}^K N_k (\mu_k - \mu)(\mu_k - \mu)^T
+\]</span></p>
+</section>
+</section>
+<section id="fishers-criterion" class="level3">
+<h3 class="anchored" data-anchor-id="fishers-criterion">Fisher’s Criterion</h3>
+<p>LDA’s objective is to find a projection vector <span class="math inline">\(a\)</span> that maximizes the relative separation between classes.<br>
+Fisher’s criterion formalizes this objective:</p>
+<p><span class="math display">\[
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+\]</span></p>
+<p>The numerator <span class="math inline">\(a^T \Sigma_b a\)</span> represents the projected between-class dispersion (to maximize), while the denominator <span class="math inline">\(a^T \Sigma_w a\)</span> represents the projected within-class dispersion (to minimize).</p>
+</section>
+<section id="optimization-solution" class="level3">
+<h3 class="anchored" data-anchor-id="optimization-solution">Optimization Solution</h3>
+<p>Maximizing <span class="math inline">\(J(a)\)</span> reduces to solving a generalized eigenvalue problem:</p>
+<p><span class="math display">\[
+\Sigma_b a = \lambda \Sigma_w a
+\]</span></p>
+<p>In practice, we compute the eigenvectors of <span class="math inline">\(\Sigma_w^{-1} \Sigma_b\)</span> (provided <span class="math inline">\(\Sigma_w\)</span> is invertible).</p>
+</section>
+<section id="detailed-calculation-steps" class="level3">
+<h3 class="anchored" data-anchor-id="detailed-calculation-steps">Detailed Calculation Steps</h3>
+<p><strong>Step 1: Calculate Descriptive Statistics</strong></p>
+<ul>
+<li>Class means: <span class="math inline">\(\hat{\mu}_k = \frac{1}{N_k} \sum_{i: y_i = k} x_i\)</span></li>
+<li>Global mean: <span class="math inline">\(\hat{\mu} = \frac{1}{N} \sum_{i=1}^N x_i\)</span></li>
+</ul>
+<p><strong>Step 2: Calculate Dispersion Matrices</strong></p>
+<ul>
+<li>Within-class matrix: <span class="math inline">\(\hat{\Sigma}_w = \sum_{k=1}^K \sum_{i: y_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T\)</span></li>
+<li>Between-class matrix: <span class="math inline">\(\hat{\Sigma}_b = \sum_{k=1}^K N_k (\hat{\mu}_k - \hat{\mu})(\hat{\mu}_k - \hat{\mu})^T\)</span></li>
+</ul>
+<p><strong>Step 3: Solve Eigenvalue Problem</strong></p>
+<ul>
+<li>Compute matrix <span class="math inline">\(\hat{\Sigma}_w^{-1} \hat{\Sigma}_b\)</span></li>
+<li>Extract eigenvectors corresponding to the largest eigenvalues</li>
+</ul>
+<p><strong>Step 4: Form Discriminant Space</strong></p>
+<ul>
+<li>Sort eigenvectors by descending eigenvalues</li>
+<li>Form projection matrix <span class="math inline">\(W = [a_1, a_2, ..., a_{K-1}]\)</span> (at most <span class="math inline">\(K-1\)</span> non-zero directions)</li>
+</ul>
+<p><strong>Step 5: Project Data</strong></p>
+<p><span class="math display">\[
+Y = XW
+\]</span></p>
+<p>where <span class="math inline">\(Y\)</span> represents the data projected into the new discriminant space.</p>
+<hr>
+</section>
+</section>
+<section id="interpretation-of-results" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation-of-results">Interpretation of Results</h2>
+<section id="discriminant-dimensions" class="level3">
+<h3 class="anchored" data-anchor-id="discriminant-dimensions">Discriminant Dimensions</h3>
+<p>Each eigenvector <span class="math inline">\(a_i\)</span> corresponds to a direction in the original space along which class separation is maximal.<br>
+The associated eigenvalue <span class="math inline">\(\lambda_i\)</span> measures the discriminant power of this direction.</p>
+</section>
+<section id="explained-separation-percentage" class="level3">
+<h3 class="anchored" data-anchor-id="explained-separation-percentage">Explained Separation Percentage</h3>
+<p>We can evaluate the relative importance of each discriminant dimension:</p>
+<p><span class="math display">\[
+\text{Proportion}_i = \frac{\lambda_i}{\sum_{j=1}^{K-1} \lambda_j} \times 100\%
+\]</span></p>
+</section>
+<section id="coefficient-significance" class="level3">
+<h3 class="anchored" data-anchor-id="coefficient-significance">Coefficient Significance</h3>
+<p>The coefficients of vector <span class="math inline">\(a_i\)</span> indicate the relative importance of each original variable in discrimination.<br>
+A high absolute coefficient means the variable strongly contributes to class separation along that direction.</p>
+</section>
+<section id="visualization" class="level3">
+<h3 class="anchored" data-anchor-id="visualization">Visualization</h3>
+<p>By projecting the data onto the first two discriminant dimensions, we obtain a 2D visualization that allows appreciating the separation between classes.</p>
+<hr>
+</section>
+</section>
+<section id="use-for-classification" class="level2">
+<h2 class="anchored" data-anchor-id="use-for-classification">Use for Classification</h2>
+<section id="probabilistic-modeling-approach" class="level3">
+<h3 class="anchored" data-anchor-id="probabilistic-modeling-approach">Probabilistic Modeling Approach</h3>
+<p>LDA can be interpreted as a generative model where each class is modeled by a normal distribution:</p>
+<p><span class="math display">\[
+P(x | C = k) = \frac{1}{(2\pi)^{D/2}|\Sigma|^{1/2}} \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma^{-1} (x - \mu_k)\right)
+\]</span></p>
+</section>
+<section id="probability-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="probability-estimation">Probability Estimation</h3>
+<section id="prior-probabilities" class="level4">
+<h4 class="anchored" data-anchor-id="prior-probabilities">Prior Probabilities</h4>
+<p>Estimated by observed proportions in the sample:</p>
+<p><span class="math display">\[
+\hat{P}(C = k) = \frac{N_k}{N}
+\]</span></p>
+</section>
+<section id="bayes-rule-for-classification" class="level4">
+<h4 class="anchored" data-anchor-id="bayes-rule-for-classification">Bayes’ Rule for Classification</h4>
+<p>The probability that an observation <span class="math inline">\(x\)</span> belongs to class <span class="math inline">\(k\)</span> is given by:</p>
+<p><span class="math display">\[
+P(C = k | x) = \frac{P(x | C = k) P(C = k)}{\sum_{l=1}^K P(x | C = l) P(C = l)}
+\]</span></p>
+</section>
+</section>
+<section id="linear-discriminant-functions" class="level3">
+<h3 class="anchored" data-anchor-id="linear-discriminant-functions">Linear Discriminant Functions</h3>
+<p>For each class <span class="math inline">\(k\)</span>, we define a linear function:</p>
+<p><span class="math display">\[
+g_k(x) = w_k^T x + b_k
+\]</span></p>
+<p>with: - <span class="math inline">\(w_k = \Sigma^{-1} \mu_k\)</span> - <span class="math inline">\(b_k = -\frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k)\)</span></p>
+</section>
+<section id="decision-rule" class="level3">
+<h3 class="anchored" data-anchor-id="decision-rule">Decision Rule</h3>
+<p>We assign <span class="math inline">\(x\)</span> to the class that maximizes the discriminant function:</p>
+<p><span class="math display">\[
+\hat{y} = \arg\max_{k} g_k(x)
+\]</span></p>
+<p>This is equivalent to choosing the class with the highest posterior probability <span class="math inline">\(P(C = k | x)\)</span>.</p>
+</section>
+<section id="decision-boundaries" class="level3">
+<h3 class="anchored" data-anchor-id="decision-boundaries">Decision Boundaries</h3>
+<p>The boundary between two classes <span class="math inline">\(k\)</span> and <span class="math inline">\(l\)</span> is linear:</p>
+<p><span class="math display">\[
+\{x : g_k(x) = g_l(x)\} \quad \Rightarrow \quad (w_k - w_l)^T x + (b_k - b_l) = 0
+\]</span></p>
+<p>This linearity is a direct consequence of the common covariance assumption.</p>
+</section>
+<section id="classification-process-for-a-new-observation" class="level3">
+<h3 class="anchored" data-anchor-id="classification-process-for-a-new-observation">Classification Process for a New Observation</h3>
+<p>To classify a new observation <span class="math inline">\(x_{\text{new}}\)</span>:</p>
+<ol type="1">
+<li><strong>Compute scores</strong>: Evaluate <span class="math inline">\(g_k(x_{\text{new}})\)</span> for each class <span class="math inline">\(k\)</span></li>
+<li><strong>Decision</strong>: Assign to the class with the highest score</li>
+<li><strong>Probabilistic option</strong>: Calculate posterior probabilities <span class="math inline">\(P(C = k | x_{\text{new}})\)</span> for a probabilistic decision</li>
+</ol>
+</section>
+<section id="parameter-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-estimation">Parameter Estimation</h3>
+<p>From a training sample <span class="math inline">\(\{(x_i, y_i)\}_{i=1}^N\)</span>:</p>
+<ul>
+<li>Class means: <span class="math inline">\(\hat{\mu}_k = \frac{1}{N_k} \sum_{i: y_i = k} x_i\)</span></li>
+<li>Common covariance: <span class="math inline">\(\hat{\Sigma} = \frac{1}{N-K} \sum_{k=1}^K \sum_{i: y_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T\)</span></li>
+<li>Prior probabilities: <span class="math inline">\(\hat{P}(C = k) = \frac{N_k}{N}\)</span></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="advantages-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-and-limitations">Advantages and Limitations</h2>
+<section id="advantages" class="level3">
+<h3 class="anchored" data-anchor-id="advantages">Advantages</h3>
+<ul>
+<li><strong>Solid theoretical foundations</strong> based on Bayesian theory and Fisher’s criterion</li>
+<li><strong>Computational efficiency</strong>: analytical solution without iterative optimization</li>
+<li><strong>Interpretability</strong>: discriminant directions have clear geometric meaning</li>
+<li><strong>Dual functionality</strong>: integrated dimensionality reduction and classification</li>
+<li><strong>Robustness</strong> to slight violations of normality</li>
+</ul>
+</section>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li><strong>Sensitivity to outliers</strong> affecting mean and covariance estimates</li>
+<li><strong>Common covariance assumption</strong> sometimes unrealistic in practice</li>
+<li><strong>Linearity</strong>: cannot capture non-linear relationships between variables</li>
+<li><strong>Normality requirement</strong>: degraded performance with strongly non-Gaussian distributions</li>
+</ul>
+</section>
+<section id="alternatives-and-extensions" class="level3">
+<h3 class="anchored" data-anchor-id="alternatives-and-extensions">Alternatives and Extensions</h3>
+<ul>
+<li><strong>QDA (Quadratic Discriminant Analysis)</strong>: relaxes common covariance assumption, giving quadratic boundaries</li>
+<li><strong>Regularized LDA</strong>: introduces regularization for high-dimensional problems</li>
+<li><strong>Flexible Discriminant Analysis</strong>: uses basis functions to capture non-linear relationships</li>
+<li><strong>Support Vector Machines (SVM)</strong>: alternative approach for linear and non-linear classification</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="concrete-example-iris-flower-classification-1" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-iris-flower-classification-1">Concrete Example: Iris Flower Classification</h2>
+<section id="problem-context" class="level3">
+<h3 class="anchored" data-anchor-id="problem-context">Problem Context</h3>
+<p>The Iris dataset contains 3 flower species with 4 morphological characteristics: - Sepal length and width - Petal length and width</p>
+</section>
+<section id="lda-application" class="level3">
+<h3 class="anchored" data-anchor-id="lda-application">LDA Application</h3>
+<p><strong>Step 1: Parameter estimation</strong><br>
+Calculate means for each species and common covariance matrix.</p>
+<p><strong>Step 2: Discriminant direction calculation</strong><br>
+Solve eigenvalue problem to obtain 2 directions (since <span class="math inline">\(K-1=2\)</span>).</p>
+<p><strong>Step 3: Projection and visualization</strong><br>
+Reduce data to 2 dimensions, revealing good separation between species.</p>
+<p><strong>Step 4: Classification</strong><br>
+Construct discriminant functions allowing classification of new flowers with high accuracy (&gt;95%).</p>
+<hr>
+</section>
+</section>
+<section id="conclusion-1" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-1">Conclusion</h2>
+<p>Linear Discriminant Analysis is an <strong>elegant and powerful</strong> method that combines several approaches:</p>
+<ul>
+<li>A <strong>geometric perspective</strong> seeking optimal projection directions</li>
+<li>A <strong>probabilistic modeling</strong> based on normal distributions</li>
+<li>An <strong>optimal Bayesian decision rule</strong> under its assumptions</li>
+</ul>
+<p>Its <strong>versatility</strong> (classification and dimensionality reduction) and <strong>high interpretability</strong> make it a valuable tool in exploratory data analysis and predictive modeling.</p>
+<p>However, its successful application depends on the reasonable fulfillment of its underlying assumptions.<br>
+When these assumptions hold, LDA provides an <strong>efficient, interpretable, and theoretically grounded</strong> solution to classification and group separation problems.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

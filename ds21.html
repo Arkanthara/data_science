@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds21 – Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Data Science</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./fr/index.html">
+ <span class="dropdown-text">French</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Part I</li><li class="breadcrumb-item"><a href="./ds21.html">High-dimensional representation spaces</a></li><li class="breadcrumb-item"><a href="./ds21.html">High-Dimensional Representations in Data Science</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">High-dimensional representation spaces</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">High-Dimensional Representations in Data Science</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Principal Component Analysis (PCA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Discriminant Analysis (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Educational Course: Clustering and the k-means Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gaussian Mixture Models and the EM Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#high-dimensional-representations-in-data-science" id="toc-high-dimensional-representations-in-data-science" class="nav-link active" data-scroll-target="#high-dimensional-representations-in-data-science">High-Dimensional Representations in Data Science</a>
+  <ul class="collapse">
+  <li><a href="#the-curse-and-blessing-of-dimensionality" id="toc-the-curse-and-blessing-of-dimensionality" class="nav-link" data-scroll-target="#the-curse-and-blessing-of-dimensionality">The Curse and Blessing of Dimensionality</a>
+  <ul class="collapse">
+  <li><a href="#introduction-to-high-dimensional-data-science" id="toc-introduction-to-high-dimensional-data-science" class="nav-link" data-scroll-target="#introduction-to-high-dimensional-data-science">Introduction to High-Dimensional Data Science</a></li>
+  </ul></li>
+  <li><a href="#what-is-data-science" id="toc-what-is-data-science" class="nav-link" data-scroll-target="#what-is-data-science">What is Data Science?</a></li>
+  <li><a href="#relationship-with-machine-learning" id="toc-relationship-with-machine-learning" class="nav-link" data-scroll-target="#relationship-with-machine-learning">Relationship with Machine Learning</a></li>
+  <li><a href="#typical-data-flow" id="toc-typical-data-flow" class="nav-link" data-scroll-target="#typical-data-flow">Typical Data Flow</a></li>
+  <li><a href="#properties-of-representation-spaces" id="toc-properties-of-representation-spaces" class="nav-link" data-scroll-target="#properties-of-representation-spaces">Properties of Representation Spaces</a></li>
+  </ul></li>
+  <li><a href="#the-curse-of-dimensionality" id="toc-the-curse-of-dimensionality" class="nav-link" data-scroll-target="#the-curse-of-dimensionality">The Curse of Dimensionality</a>
+  <ul class="collapse">
+  <li><a href="#understanding-the-phenomenon" id="toc-understanding-the-phenomenon" class="nav-link" data-scroll-target="#understanding-the-phenomenon">Understanding the Phenomenon</a></li>
+  <li><a href="#empty-sphere-and-spiky-cube" id="toc-empty-sphere-and-spiky-cube" class="nav-link" data-scroll-target="#empty-sphere-and-spiky-cube">Empty Sphere and “Spiky” Cube</a>
+  <ul class="collapse">
+  <li><a href="#the-high-dimensional-sphere-paradox" id="toc-the-high-dimensional-sphere-paradox" class="nav-link" data-scroll-target="#the-high-dimensional-sphere-paradox">The High-Dimensional Sphere Paradox</a></li>
+  <li><a href="#intuitive-interpretation" id="toc-intuitive-interpretation" class="nav-link" data-scroll-target="#intuitive-interpretation">Intuitive Interpretation</a></li>
+  </ul></li>
+  <li><a href="#volume-distribution-the-gaussian-egg" id="toc-volume-distribution-the-gaussian-egg" class="nav-link" data-scroll-target="#volume-distribution-the-gaussian-egg">Volume Distribution: The “Gaussian Egg”</a>
+  <ul class="collapse">
+  <li><a href="#gaussian-concentration-in-high-dimensions" id="toc-gaussian-concentration-in-high-dimensions" class="nav-link" data-scroll-target="#gaussian-concentration-in-high-dimensions">Gaussian Concentration in High Dimensions</a></li>
+  <li><a href="#visualizing-the-phenomenon" id="toc-visualizing-the-phenomenon" class="nav-link" data-scroll-target="#visualizing-the-phenomenon">Visualizing the Phenomenon</a></li>
+  </ul></li>
+  <li><a href="#distance-concentration" id="toc-distance-concentration" class="nav-link" data-scroll-target="#distance-concentration">Distance Concentration</a>
+  <ul class="collapse">
+  <li><a href="#beyer-et-al.s-theorem" id="toc-beyer-et-al.s-theorem" class="nav-link" data-scroll-target="#beyer-et-al.s-theorem">Beyer et al.’s Theorem</a></li>
+  <li><a href="#practical-implications" id="toc-practical-implications" class="nav-link" data-scroll-target="#practical-implications">Practical Implications</a></li>
+  </ul></li>
+  <li><a href="#quasi-orthogonality" id="toc-quasi-orthogonality" class="nav-link" data-scroll-target="#quasi-orthogonality">Quasi-Orthogonality</a>
+  <ul class="collapse">
+  <li><a href="#angle-concentration" id="toc-angle-concentration" class="nav-link" data-scroll-target="#angle-concentration">Angle Concentration</a></li>
+  <li><a href="#impact-on-the-unit-sphere" id="toc-impact-on-the-unit-sphere" class="nav-link" data-scroll-target="#impact-on-the-unit-sphere">Impact on the Unit Sphere</a></li>
+  </ul></li>
+  <li><a href="#hubness-the-hub-phenomenon" id="toc-hubness-the-hub-phenomenon" class="nav-link" data-scroll-target="#hubness-the-hub-phenomenon">Hubness: The Hub Phenomenon</a>
+  <ul class="collapse">
+  <li><a href="#definition-and-mechanism" id="toc-definition-and-mechanism" class="nav-link" data-scroll-target="#definition-and-mechanism">Definition and Mechanism</a></li>
+  <li><a href="#negative-implications" id="toc-negative-implications" class="nav-link" data-scroll-target="#negative-implications">Negative Implications</a></li>
+  </ul></li>
+  <li><a href="#concentration-inequalities" id="toc-concentration-inequalities" class="nav-link" data-scroll-target="#concentration-inequalities">Concentration Inequalities</a>
+  <ul class="collapse">
+  <li><a href="#fundamental-theoretical-tools" id="toc-fundamental-theoretical-tools" class="nav-link" data-scroll-target="#fundamental-theoretical-tools">Fundamental Theoretical Tools</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#the-blessing-of-dimensionality" id="toc-the-blessing-of-dimensionality" class="nav-link" data-scroll-target="#the-blessing-of-dimensionality">The Blessing of Dimensionality</a>
+  <ul class="collapse">
+  <li><a href="#positive-aspects-of-high-dimensions" id="toc-positive-aspects-of-high-dimensions" class="nav-link" data-scroll-target="#positive-aspects-of-high-dimensions">Positive Aspects of High Dimensions</a></li>
+  <li><a href="#laws-of-large-numbers" id="toc-laws-of-large-numbers" class="nav-link" data-scroll-target="#laws-of-large-numbers">Laws of Large Numbers</a>
+  <ul class="collapse">
+  <li><a href="#weak-law-of-large-numbers" id="toc-weak-law-of-large-numbers" class="nav-link" data-scroll-target="#weak-law-of-large-numbers">Weak Law of Large Numbers</a></li>
+  <li><a href="#important-implications" id="toc-important-implications" class="nav-link" data-scroll-target="#important-implications">Important Implications</a></li>
+  </ul></li>
+  <li><a href="#random-projections" id="toc-random-projections" class="nav-link" data-scroll-target="#random-projections">Random Projections</a>
+  <ul class="collapse">
+  <li><a href="#johnson-lindenstrauss-lemma" id="toc-johnson-lindenstrauss-lemma" class="nav-link" data-scroll-target="#johnson-lindenstrauss-lemma">Johnson-Lindenstrauss Lemma</a></li>
+  <li><a href="#practical-applications" id="toc-practical-applications" class="nav-link" data-scroll-target="#practical-applications">Practical Applications</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#importance-in-data-science" id="toc-importance-in-data-science" class="nav-link" data-scroll-target="#importance-in-data-science">Importance in Data Science</a>
+  <ul class="collapse">
+  <li><a href="#impact-on-practical-methods" id="toc-impact-on-practical-methods" class="nav-link" data-scroll-target="#impact-on-practical-methods">Impact on Practical Methods</a></li>
+  <li><a href="#sampling" id="toc-sampling" class="nav-link" data-scroll-target="#sampling">Sampling</a>
+  <ul class="collapse">
+  <li><a href="#main-challenges" id="toc-main-challenges" class="nav-link" data-scroll-target="#main-challenges">Main Challenges</a></li>
+  </ul></li>
+  <li><a href="#indexing-and-search" id="toc-indexing-and-search" class="nav-link" data-scroll-target="#indexing-and-search">Indexing and Search</a>
+  <ul class="collapse">
+  <li><a href="#problems-with-spatial-structures" id="toc-problems-with-spatial-structures" class="nav-link" data-scroll-target="#problems-with-spatial-structures">Problems with Spatial Structures</a></li>
+  </ul></li>
+  <li><a href="#should-we-abandon-data-science-in-high-dimensions" id="toc-should-we-abandon-data-science-in-high-dimensions" class="nav-link" data-scroll-target="#should-we-abandon-data-science-in-high-dimensions">Should We Abandon Data Science in High Dimensions?</a>
+  <ul class="collapse">
+  <li><a href="#why-methods-still-work" id="toc-why-methods-still-work" class="nav-link" data-scroll-target="#why-methods-still-work">Why Methods Still Work</a></li>
+  <li><a href="#strategies-to-overcome-the-curse" id="toc-strategies-to-overcome-the-curse" class="nav-link" data-scroll-target="#strategies-to-overcome-the-curse">Strategies to Overcome the Curse</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#synthesis-and-conclusions" id="toc-synthesis-and-conclusions" class="nav-link" data-scroll-target="#synthesis-and-conclusions">Synthesis and Conclusions</a>
+  <ul class="collapse">
+  <li><a href="#key-points-to-remember" id="toc-key-points-to-remember" class="nav-link" data-scroll-target="#key-points-to-remember">Key Points to Remember</a></li>
+  <li><a href="#balanced-assessment" id="toc-balanced-assessment" class="nav-link" data-scroll-target="#balanced-assessment">Balanced Assessment</a></li>
+  <li><a href="#further-questions" id="toc-further-questions" class="nav-link" data-scroll-target="#further-questions">Further Questions</a></li>
+  <li><a href="#future-perspectives" id="toc-future-perspectives" class="nav-link" data-scroll-target="#future-perspectives">Future Perspectives</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds21.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Part I</li><li class="breadcrumb-item"><a href="./ds21.html">High-dimensional representation spaces</a></li><li class="breadcrumb-item"><a href="./ds21.html">High-Dimensional Representations in Data Science</a></li></ol></nav></header>
+
+
+
+
+
+<section id="high-dimensional-representations-in-data-science" class="level1">
+<h1>High-Dimensional Representations in Data Science</h1>
+<section id="the-curse-and-blessing-of-dimensionality" class="level2">
+<h2 class="anchored" data-anchor-id="the-curse-and-blessing-of-dimensionality">The Curse and Blessing of Dimensionality</h2>
+<section id="introduction-to-high-dimensional-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-high-dimensional-data-science">Introduction to High-Dimensional Data Science</h3>
+<p>Data Science involves modeling phenomena as numerical data, understanding the geometric and statistical properties of this data, and developing tools to analyze it.</p>
+<hr>
+</section>
+</section>
+<section id="what-is-data-science" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-data-science">What is Data Science?</h2>
+<p>Data Science encompasses:</p>
+<ul>
+<li>Modeling phenomena as quantitative numerical data</li>
+<li>Understanding the geometric and statistical properties of data</li>
+<li>Analyzing the space in which this data exists</li>
+<li>Developing analytical tools with an understanding of their underlying assumptions</li>
+</ul>
+<hr>
+</section>
+<section id="relationship-with-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="relationship-with-machine-learning">Relationship with Machine Learning</h2>
+<p>Data Science and Machine Learning are closely related:</p>
+<ul>
+<li><strong>Data Science</strong>: study of representation spaces</li>
+<li><strong>Machine Learning</strong>: operations within these representation spaces</li>
+</ul>
+<p>Both fields are complementary and often synonymous in practice.</p>
+<hr>
+</section>
+<section id="typical-data-flow" class="level2">
+<h2 class="anchored" data-anchor-id="typical-data-flow">Typical Data Flow</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Sensors/Sources] --&gt; B[Raw Data]
+    B --&gt; C[Representation]
+    C --&gt; D[Data Matrix]
+
+    subgraph Examples
+        E[Camera] --&gt; F[Pixels]
+        G[Population] --&gt; H[Survey Results]
+        I[Text Documents] --&gt; J[Word Occurrences]
+    end
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="properties-of-representation-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-representation-spaces">Properties of Representation Spaces</h2>
+<p>The representation space Ω is typically a subset of ℝᴰ where D is the dimension.</p>
+<p>This space has several important properties:</p>
+<ul>
+<li>It’s a vector space that can be equipped with an inner product</li>
+<li>The inner product ⟨·,·⟩ induces a norm ||·||</li>
+<li>The norm induces a distance d(·,·)</li>
+<li>(Ω, d) forms a metric space where learning can occur</li>
+</ul>
+<p><strong>Fundamental Questions:</strong></p>
+<ul>
+<li>What happens when D increases?</li>
+<li>What impact does this have on data modeling?</li>
+<li>How does this affect learning?</li>
+</ul>
+<p>These questions lead to the concept of the <strong>curse of dimensionality</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="the-curse-of-dimensionality" class="level1">
+<h1>The Curse of Dimensionality</h1>
+<section id="understanding-the-phenomenon" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-phenomenon">Understanding the Phenomenon</h2>
+<p>In high dimensions, our geometric intuition based on 2D and 3D becomes misleading. Counterintuitive phenomena emerge.</p>
+<hr>
+</section>
+<section id="empty-sphere-and-spiky-cube" class="level2">
+<h2 class="anchored" data-anchor-id="empty-sphere-and-spiky-cube">Empty Sphere and “Spiky” Cube</h2>
+<section id="the-high-dimensional-sphere-paradox" class="level3">
+<h3 class="anchored" data-anchor-id="the-high-dimensional-sphere-paradox">The High-Dimensional Sphere Paradox</h3>
+<p>Consider a hypersphere B_D(r) of radius r centered at the origin, inscribed in a hypercube C_D(r) = [-r, r]ᴰ.</p>
+<p>The volume of the hypersphere is given by:</p>
+<p><span class="math display">\[ \text{vol}(B_D(r)) = \frac{2r^D \pi^{D/2}}{D\Gamma(D/2)} \]</span></p>
+<p>The volume of the hypercube is:</p>
+<p><span class="math display">\[ \text{vol}(C_D(r)) = (2r)^D \]</span></p>
+<p>The sphere-to-cube volume ratio decreases rapidly with D:</p>
+<p><span class="math display">\[ \text{Ratio} = \frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = \frac{\pi^{D/2}}{D 2^{D-1} \Gamma(D/2)} \]</span></p>
+<p><strong>The surprising result:</strong></p>
+<p><span class="math display">\[ \lim_{D \to \infty} \frac{\text{vol}(B_D(r))}{\text{vol}(C_D(r))} = 0 \]</span></p>
+<hr>
+</section>
+<section id="intuitive-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="intuitive-interpretation">Intuitive Interpretation</h3>
+<p>Imagine sampling points uniformly at random in the cube:</p>
+<ul>
+<li>In 2D, about 78.5% of points fall within the inscribed circle</li>
+<li>In 3D, this percentage drops to about 52.4%</li>
+<li>In 10D, it’s only 0.025%</li>
+<li>In 100D, it’s infinitesimal</li>
+</ul>
+<p><strong>Practical consequence:</strong> If you sample uniformly in a hypercube, the inscribed sphere will be essentially empty. Volume concentrates in the “corners” of the cube.</p>
+<hr>
+</section>
+</section>
+<section id="volume-distribution-the-gaussian-egg" class="level2">
+<h2 class="anchored" data-anchor-id="volume-distribution-the-gaussian-egg">Volume Distribution: The “Gaussian Egg”</h2>
+<section id="gaussian-concentration-in-high-dimensions" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-concentration-in-high-dimensions">Gaussian Concentration in High Dimensions</h3>
+<p>For a normal distribution N(μ, Σ) in D dimensions, consider the density along a radius r.</p>
+<p>If coordinates are i.i.d. random variables Xᵢ ~ N(0,1), then:</p>
+<p><span class="math display">\[ R^2 = \|X\|_2^2 = \sum_{i=1}^{D} X_i^2 \sim \chi^2(D) \]</span></p>
+<p>The expectation of R² is:</p>
+<p><span class="math display">\[ \mathbb{E}[R^2] = D \]</span></p>
+<p><strong>Important implication:</strong> Most of the probability mass concentrates on a spherical shell of radius σ√D.</p>
+<hr>
+</section>
+<section id="visualizing-the-phenomenon" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-phenomenon">Visualizing the Phenomenon</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[High-dimensional&lt;br/&gt;Gaussian distribution] --&gt; B{Characteristics}
+    B --&gt; C[Concentration on a shell]
+    B --&gt; D[Little density at center]
+    B --&gt; E[Very thin tails]
+
+    C --&gt; F[Typical radius: σ√D]
+    D --&gt; G['Empty' center]
+    E --&gt; H[Very thin tails]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="distance-concentration" class="level2">
+<h2 class="anchored" data-anchor-id="distance-concentration">Distance Concentration</h2>
+<section id="beyer-et-al.s-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="beyer-et-al.s-theorem">Beyer et al.’s Theorem</h3>
+<p>Given a dataset X ⊂ Ω, a point x and its k nearest neighbors V_Xᵏ(x). Let D_min and D_max be the distances to the nearest and farthest neighbors.</p>
+<p><strong>Theorem:</strong> If <span class="math inline">\(\lim_{D \to \infty} \text{Var} \left( \frac{d(x,y)^p}{\mathbb{E}(d(x,y)^p)} \right) = 0\)</span> for 0 &lt; p &lt; ∞, then for any ε &gt; 0:</p>
+<p><span class="math display">\[ \lim_{D \to \infty} P \left[ \frac{D_{\max} - D_{\min}}{D_{\min}} \le \varepsilon \right] = 1 \]</span></p>
+<hr>
+</section>
+<section id="practical-implications" class="level3">
+<h3 class="anchored" data-anchor-id="practical-implications">Practical Implications</h3>
+<p>This result has significant consequences:</p>
+<ol type="1">
+<li><strong>Loss of discriminative power:</strong> All neighbors appear at roughly the same distance</li>
+<li><strong>Meaningless neighborhood structures:</strong> k-NN and ε-NN structures lose their utility</li>
+<li><strong>Algorithm difficulties:</strong> Distance-based discrimination becomes nearly impossible</li>
+</ol>
+<p><strong>Concrete example:</strong> In classification, if all points are equidistant, distinguishing different classes by proximity becomes very difficult.</p>
+<hr>
+</section>
+</section>
+<section id="quasi-orthogonality" class="level2">
+<h2 class="anchored" data-anchor-id="quasi-orthogonality">Quasi-Orthogonality</h2>
+<section id="angle-concentration" class="level3">
+<h3 class="anchored" data-anchor-id="angle-concentration">Angle Concentration</h3>
+<p>In high dimensions, random vectors tend to be nearly orthogonal.</p>
+<p>For three points X, Y, Z drawn independently, the angle θ between (X-Y) and (Z-Y) satisfies:</p>
+<p><span class="math display">\[ \mathbb{E} \cos(\theta) = \frac{1}{2} \]</span></p>
+<p>This implies θ ≈ π/3 (60°).</p>
+<p><strong>Interpretation:</strong> Any random triangle in high dimension is nearly equilateral.</p>
+<hr>
+</section>
+<section id="impact-on-the-unit-sphere" class="level3">
+<h3 class="anchored" data-anchor-id="impact-on-the-unit-sphere">Impact on the Unit Sphere</h3>
+<p>For the unit sphere B_D, if X is a random point on its surface:</p>
+<ul>
+<li>If Y is sampled on the sphere: <span class="math inline">\(\mathbb{E} \cos(\theta) = \frac{1}{2}\)</span> ⇒ θ ≈ π/3</li>
+<li>If Y is sampled in the ball: <span class="math inline">\(\mathbb{E} \cos(\theta) = 0\)</span> ⇒ θ ≈ π/2</li>
+</ul>
+<p><strong>Geometric consequence:</strong> The volume of the sphere is concentrated at its equator, regardless of which direction is considered “north”.</p>
+<hr>
+</section>
+</section>
+<section id="hubness-the-hub-phenomenon" class="level2">
+<h2 class="anchored" data-anchor-id="hubness-the-hub-phenomenon">Hubness: The Hub Phenomenon</h2>
+<section id="definition-and-mechanism" class="level3">
+<h3 class="anchored" data-anchor-id="definition-and-mechanism">Definition and Mechanism</h3>
+<p>In high dimensions, some points (called “hubs”) become the nearest neighbors of a disproportionate number of other points.</p>
+<p><strong>Why this occurs:</strong></p>
+<ul>
+<li>Distance concentration makes relative distances less discriminative</li>
+<li>Some points happen to be at “average” distances from many other points</li>
+<li>These points thus frequently appear in nearest neighbor lists</li>
+</ul>
+<hr>
+</section>
+<section id="negative-implications" class="level3">
+<h3 class="anchored" data-anchor-id="negative-implications">Negative Implications</h3>
+<p>The hubness phenomenon causes several problems:</p>
+<ol type="1">
+<li><strong>Algorithm bias:</strong> Hubs dominate neighborhood search results</li>
+<li><strong>Classification problems:</strong> Hubs may appear as representatives of multiple classes</li>
+<li><strong>Interpretation difficulty:</strong> Neighborhood relationships become hard to interpret</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="concentration-inequalities" class="level2">
+<h2 class="anchored" data-anchor-id="concentration-inequalities">Concentration Inequalities</h2>
+<section id="fundamental-theoretical-tools" class="level3">
+<h3 class="anchored" data-anchor-id="fundamental-theoretical-tools">Fundamental Theoretical Tools</h3>
+<p>Concentration inequalities quantify how measures concentrate around their mean in high dimensions.</p>
+<hr>
+<section id="markovs-inequality" class="level4">
+<h4 class="anchored" data-anchor-id="markovs-inequality">Markov’s Inequality</h4>
+<p>For a non-negative random variable X:</p>
+<p><span class="math display">\[ P(X &gt; \epsilon) \le \frac{\mathbb{E}X}{\epsilon} \]</span></p>
+<p><strong>Intuition:</strong> The smaller the expectation, the less likely X is to exceed a large threshold.</p>
+<hr>
+</section>
+<section id="chebyshevs-inequality" class="level4">
+<h4 class="anchored" data-anchor-id="chebyshevs-inequality">Chebyshev’s Inequality</h4>
+<p>For a random variable with mean μ and variance σ²:</p>
+<p><span class="math display">\[ P(|X - \mu| &gt; \epsilon) \le \frac{\sigma^2}{\epsilon^2} \]</span></p>
+<p><strong>Application:</strong> In high dimensions, distances often have decreasing variance, explaining their concentration.</p>
+<hr>
+</section>
+<section id="hoeffdings-inequality" class="level4">
+<h4 class="anchored" data-anchor-id="hoeffdings-inequality">Hoeffding’s Inequality</h4>
+<p>For independent variables Xᵢ ∈ [a, b]:</p>
+<p><span class="math display">\[ P(|\bar{X} - \mu| &gt; \epsilon) \le 2e^{-2D\epsilon^2/(b-a)^2} \]</span></p>
+<p>where <span class="math inline">\(\bar{X} = \frac{1}{D} \sum_{i=1}^{D} X_i\)</span>.</p>
+<p><strong>Importance:</strong> This inequality explains the rapid convergence of averages in high dimensions.</p>
+<hr>
+</section>
+</section>
+</section>
+</section>
+<section id="the-blessing-of-dimensionality" class="level1">
+<h1>The Blessing of Dimensionality</h1>
+<section id="positive-aspects-of-high-dimensions" class="level2">
+<h2 class="anchored" data-anchor-id="positive-aspects-of-high-dimensions">Positive Aspects of High Dimensions</h2>
+<p>Counterintuitively, high dimensions also offer advantages that can be exploited.</p>
+<hr>
+</section>
+<section id="laws-of-large-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="laws-of-large-numbers">Laws of Large Numbers</h2>
+<section id="weak-law-of-large-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="weak-law-of-large-numbers">Weak Law of Large Numbers</h3>
+<p>For a set of D i.i.d. variables {Xₗ}ₗ∈[D] with E[Xₗ] = μ, for any ε &gt; 0:</p>
+<p><span class="math display">\[ \lim_{D \to \infty} P(|\overline{X} - \mu| &lt; \varepsilon) = 1 \]</span></p>
+<p>where <span class="math inline">\(\overline{X} = \frac{1}{D} \sum_{l=1}^{D} X_l\)</span>.</p>
+<hr>
+</section>
+<section id="important-implications" class="level3">
+<h3 class="anchored" data-anchor-id="important-implications">Important Implications</h3>
+<ol type="1">
+<li><strong>Guaranteed convergence:</strong> Estimators converge to their true value</li>
+<li><strong>Foundation for estimation:</strong> Solid theoretical basis for statistical estimation</li>
+<li><strong>Stability:</strong> Results become more stable with increasing dimension</li>
+</ol>
+<p><strong>Central Limit Theorem:</strong> The rate of convergence is given by:</p>
+<p><span class="math display">\[ Z_D = \frac{\sqrt{D}}{\sigma} (\overline{X} - \mu) \sim N(0, 1) \]</span></p>
+<p>if Var(Xₗ) = σ².</p>
+<hr>
+</section>
+</section>
+<section id="random-projections" class="level2">
+<h2 class="anchored" data-anchor-id="random-projections">Random Projections</h2>
+<section id="johnson-lindenstrauss-lemma" class="level3">
+<h3 class="anchored" data-anchor-id="johnson-lindenstrauss-lemma">Johnson-Lindenstrauss Lemma</h3>
+<p><strong>Statement:</strong> Given X ⊂ Ω, there exists a linear map p: ℝᴰ → ℝᵈ such that for any 0 &lt; ε &lt; 1 and for all i, j ∈ [N]:</p>
+<p><span class="math display">\[ (1 - \varepsilon) \|x_i - x_j\| \le \|p(x_i) - p(x_j)\| \le (1 + \varepsilon) \|x_i - x_j\| \]</span></p>
+<p>with:</p>
+<p><span class="math display">\[ d = O\left(\frac{\log N}{\varepsilon^2}\right) \]</span></p>
+<p><strong>Crucial point:</strong> The reduced dimension d does not depend on D!</p>
+<hr>
+</section>
+<section id="practical-applications" class="level3">
+<h3 class="anchored" data-anchor-id="practical-applications">Practical Applications</h3>
+<ol type="1">
+<li><strong>Efficient dimensionality reduction:</strong> Reduce dimension without losing too much information</li>
+<li><strong>Approximate nearest neighbor search:</strong> Locality-sensitive hashing (LSH) methods</li>
+<li><strong>Compression:</strong> More efficient storage and processing of data</li>
+</ol>
+<p><strong>Key advantage:</strong> By exploiting the quasi-orthogonality of vectors in high dimensions, we can create random bases that preserve distances.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="importance-in-data-science" class="level1">
+<h1>Importance in Data Science</h1>
+<section id="impact-on-practical-methods" class="level2">
+<h2 class="anchored" data-anchor-id="impact-on-practical-methods">Impact on Practical Methods</h2>
+<p>Understanding high-dimensional phenomena is crucial for designing effective algorithms.</p>
+<hr>
+</section>
+<section id="sampling" class="level2">
+<h2 class="anchored" data-anchor-id="sampling">Sampling</h2>
+<section id="main-challenges" class="level3">
+<h3 class="anchored" data-anchor-id="main-challenges">Main Challenges</h3>
+<ul>
+<li><strong>Data sparsity:</strong> Exponential number of samples needed to cover the space</li>
+<li><strong>Density estimation:</strong> Concentration inequalities guide estimator precision</li>
+<li><strong>High rejection rate:</strong> In methods like rejection sampling, the rejection rate approaches 100%</li>
+</ul>
+<p><strong>Consequence:</strong> Naive sampling methods become impractical in high dimensions.</p>
+<hr>
+</section>
+</section>
+<section id="indexing-and-search" class="level2">
+<h2 class="anchored" data-anchor-id="indexing-and-search">Indexing and Search</h2>
+<section id="problems-with-spatial-structures" class="level3">
+<h3 class="anchored" data-anchor-id="problems-with-spatial-structures">Problems with Spatial Structures</h3>
+<p>Spatial partitioning structures (like kd-trees) face difficulties:</p>
+<ol type="1">
+<li><strong>Structure disappearance:</strong> If all neighbors are equidistant, partitioning loses its meaning</li>
+<li><strong>Cells too large:</strong> To cover the space, cells must reach the size of the bounding sphere</li>
+<li><strong>Exhaustive search:</strong> Complexity becomes O(N) instead of O(log N)</li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[High-dimensional indexing] --&gt; B{Problems}
+    B --&gt; C[Inefficient spatial partitioning]
+    B --&gt; D[Search becoming exhaustive]
+    B --&gt; E[Hubness phenomenon]
+
+    C --&gt; F["Complexity O(N)"]
+    D --&gt; G[Poor performance]
+    E --&gt; H[Bias in results]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="should-we-abandon-data-science-in-high-dimensions" class="level2">
+<h2 class="anchored" data-anchor-id="should-we-abandon-data-science-in-high-dimensions">Should We Abandon Data Science in High Dimensions?</h2>
+<section id="why-methods-still-work" class="level3">
+<h3 class="anchored" data-anchor-id="why-methods-still-work">Why Methods Still Work</h3>
+<p>Contrary to expectations, data science methods work in practice despite the curse of dimensionality:</p>
+<ol type="1">
+<li><strong>Real data is not uniform:</strong> It occupies lower-dimensional subspaces</li>
+<li><strong>Features are correlated:</strong> The independence assumption is rarely true</li>
+<li><strong>Underlying structure:</strong> Data often lies on low-dimensional manifolds</li>
+</ol>
+<hr>
+</section>
+<section id="strategies-to-overcome-the-curse" class="level3">
+<h3 class="anchored" data-anchor-id="strategies-to-overcome-the-curse">Strategies to Overcome the Curse</h3>
+<ul>
+<li><strong>Dimensionality reduction:</strong> PCA, autoencoders, t-SNE</li>
+<li><strong>Feature selection:</strong> Identify relevant dimensions</li>
+<li><strong>Metric learning:</strong> Learn a distance adapted to the data</li>
+<li><strong>Specific methods:</strong> Designed for high dimensions (like isolation forests)</li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="synthesis-and-conclusions" class="level1">
+<h1>Synthesis and Conclusions</h1>
+<section id="key-points-to-remember" class="level2">
+<h2 class="anchored" data-anchor-id="key-points-to-remember">Key Points to Remember</h2>
+<ol type="1">
+<li><strong>Geometry changes radically:</strong> Our 2D/3D intuition doesn’t apply</li>
+<li><strong>Data becomes sparse:</strong> Exponential samples needed</li>
+<li><strong>Distances concentrate:</strong> All points appear equidistant</li>
+<li><strong>Quasi-orthogonality emerges:</strong> Random directions are nearly orthogonal</li>
+<li><strong>Hubness phenomenon appears:</strong> Some points dominate neighborhood searches</li>
+</ol>
+<hr>
+</section>
+<section id="balanced-assessment" class="level2">
+<h2 class="anchored" data-anchor-id="balanced-assessment">Balanced Assessment</h2>
+<p><strong>Curse:</strong></p>
+<ul>
+<li>Difficulties with sampling, indexing, search</li>
+<li>Loss of discriminative power</li>
+<li>Need for enormous amounts of data</li>
+</ul>
+<p><strong>Blessing:</strong></p>
+<ul>
+<li>Rapid convergence of estimators</li>
+<li>Possibility of efficient random projections</li>
+<li>Improved statistical stability</li>
+</ul>
+<hr>
+</section>
+<section id="further-questions" class="level2">
+<h2 class="anchored" data-anchor-id="further-questions">Further Questions</h2>
+<ol type="1">
+<li><p><strong>Conceptual:</strong></p>
+<ul>
+<li>What is the intrinsic dimension of a dataset?</li>
+<li>How does the curse of dimensionality affect clustering methods?</li>
+</ul></li>
+<li><p><strong>Technical:</strong></p>
+<ul>
+<li>How does the Johnson-Lindenstrauss lemma help circumvent the curse?</li>
+<li>Which methods are robust to high dimensions?</li>
+</ul></li>
+<li><p><strong>Practical:</strong></p>
+<ul>
+<li>How to detect if your data suffers from the curse of dimensionality?</li>
+<li>What strategies to adopt for very high-dimensional data?</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="future-perspectives" class="level2">
+<h2 class="anchored" data-anchor-id="future-perspectives">Future Perspectives</h2>
+<p>Research continues on:</p>
+<ul>
+<li>Non-linear dimensionality reduction methods</li>
+<li>Algorithms specialized for high dimensions</li>
+<li>Learning on low-dimensional manifolds</li>
+<li>Probabilistic approaches robust to dimension</li>
+</ul>
+<p><strong>Final lesson:</strong> High dimensionality is not a fatality, but it requires a deep understanding of the phenomena at play and appropriate methods.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ds61q – Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Data Science</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./fr/index.html">
+ <span class="dropdown-text">French</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Part I</li><li class="breadcrumb-item"><a href="./ds61.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds61q.html">Exam questions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">High-dimensional representation spaces</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">High-Dimensional Representations in Data Science</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Principal Component Analysis (PCA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Discriminant Analysis (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Educational Course: Clustering and the k-means Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gaussian Mixture Models and the EM Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61q.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exam-questions" id="toc-exam-questions" class="nav-link active" data-scroll-target="#exam-questions">Exam questions</a></li>
+  <li><a href="#the-gaussian-mixture-model-gmm-a-complete-and-intuitive-guide" id="toc-the-gaussian-mixture-model-gmm-a-complete-and-intuitive-guide" class="nav-link" data-scroll-target="#the-gaussian-mixture-model-gmm-a-complete-and-intuitive-guide">The Gaussian Mixture Model (GMM): A Complete and Intuitive Guide</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#introduction-the-fundamental-idea" id="toc-introduction-the-fundamental-idea" class="nav-link" data-scroll-target="#introduction-the-fundamental-idea">Introduction: The Fundamental Idea</a></li>
+  <li><a href="#what-is-a-gaussian-mixture-model" id="toc-what-is-a-gaussian-mixture-model" class="nav-link" data-scroll-target="#what-is-a-gaussian-mixture-model">1. What is a Gaussian Mixture Model?</a>
+  <ul class="collapse">
+  <li><a href="#simple-definition" id="toc-simple-definition" class="nav-link" data-scroll-target="#simple-definition">Simple Definition</a></li>
+  <li><a href="#mathematical-formulation" id="toc-mathematical-formulation" class="nav-link" data-scroll-target="#mathematical-formulation">Mathematical Formulation</a></li>
+  </ul></li>
+  <li><a href="#the-three-fundamental-assumptions" id="toc-the-three-fundamental-assumptions" class="nav-link" data-scroll-target="#the-three-fundamental-assumptions">2. The Three Fundamental Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#assumption-1-mixture-structure" id="toc-assumption-1-mixture-structure" class="nav-link" data-scroll-target="#assumption-1-mixture-structure">Assumption 1: Mixture Structure</a></li>
+  <li><a href="#assumption-2-gaussian-shape-of-components" id="toc-assumption-2-gaussian-shape-of-components" class="nav-link" data-scroll-target="#assumption-2-gaussian-shape-of-components">Assumption 2: Gaussian Shape of Components</a></li>
+  <li><a href="#assumption-3-conditional-independence" id="toc-assumption-3-conditional-independence" class="nav-link" data-scroll-target="#assumption-3-conditional-independence">Assumption 3: Conditional Independence</a></li>
+  </ul></li>
+  <li><a href="#the-model-parameters" id="toc-the-model-parameters" class="nav-link" data-scroll-target="#the-model-parameters">3. The Model Parameters</a>
+  <ul class="collapse">
+  <li><a href="#the-weights-pi_j-mixing-weights" id="toc-the-weights-pi_j-mixing-weights" class="nav-link" data-scroll-target="#the-weights-pi_j-mixing-weights">1. The Weights <span class="math inline">\(\pi_j\)</span> (Mixing Weights)</a></li>
+  <li><a href="#the-means-mu_j" id="toc-the-means-mu_j" class="nav-link" data-scroll-target="#the-means-mu_j">2. The Means <span class="math inline">\(\mu_j\)</span></a></li>
+  <li><a href="#the-covariance-matrices-sigma_j" id="toc-the-covariance-matrices-sigma_j" class="nav-link" data-scroll-target="#the-covariance-matrices-sigma_j">3. The Covariance Matrices <span class="math inline">\(\Sigma_j\)</span></a></li>
+  </ul></li>
+  <li><a href="#calculation-and-interpretation" id="toc-calculation-and-interpretation" class="nav-link" data-scroll-target="#calculation-and-interpretation">4. Calculation and Interpretation</a>
+  <ul class="collapse">
+  <li><a href="#how-to-calculate-the-density" id="toc-how-to-calculate-the-density" class="nav-link" data-scroll-target="#how-to-calculate-the-density">How to Calculate the Density?</a></li>
+  <li><a href="#visual-interpretation" id="toc-visual-interpretation" class="nav-link" data-scroll-target="#visual-interpretation">Visual Interpretation</a></li>
+  </ul></li>
+  <li><a href="#latent-variables-the-key-to-interpretation" id="toc-latent-variables-the-key-to-interpretation" class="nav-link" data-scroll-target="#latent-variables-the-key-to-interpretation">5. Latent Variables: The Key to Interpretation</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-of-missing-labels" id="toc-the-problem-of-missing-labels" class="nav-link" data-scroll-target="#the-problem-of-missing-labels">The Problem of Missing Labels</a></li>
+  <li><a href="#probabilistic-reformulation" id="toc-probabilistic-reformulation" class="nav-link" data-scroll-target="#probabilistic-reformulation">Probabilistic Reformulation</a></li>
+  </ul></li>
+  <li><a href="#parameter-optimization-the-em-algorithm" id="toc-parameter-optimization-the-em-algorithm" class="nav-link" data-scroll-target="#parameter-optimization-the-em-algorithm">6. Parameter Optimization: The EM Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#the-challenge" id="toc-the-challenge" class="nav-link" data-scroll-target="#the-challenge">The Challenge</a></li>
+  <li><a href="#the-solution-em-algorithm-expectation-maximization" id="toc-the-solution-em-algorithm-expectation-maximization" class="nav-link" data-scroll-target="#the-solution-em-algorithm-expectation-maximization">The Solution: EM Algorithm (Expectation-Maximization)</a></li>
+  </ul></li>
+  <li><a href="#why-does-it-work-the-intuition" id="toc-why-does-it-work-the-intuition" class="nav-link" data-scroll-target="#why-does-it-work-the-intuition">7. Why Does It Work? The Intuition</a>
+  <ul class="collapse">
+  <li><a href="#the-teacher-and-students-analogy" id="toc-the-teacher-and-students-analogy" class="nav-link" data-scroll-target="#the-teacher-and-students-analogy">The Teacher and Students Analogy</a></li>
+  <li><a href="#the-magic-of-soft-responsibilities" id="toc-the-magic-of-soft-responsibilities" class="nav-link" data-scroll-target="#the-magic-of-soft-responsibilities">The Magic of “Soft” Responsibilities</a></li>
+  </ul></li>
+  <li><a href="#concrete-step-by-step-example" id="toc-concrete-step-by-step-example" class="nav-link" data-scroll-target="#concrete-step-by-step-example">8. Concrete Step-by-Step Example</a>
+  <ul class="collapse">
+  <li><a href="#data-animal-sizes" id="toc-data-animal-sizes" class="nav-link" data-scroll-target="#data-animal-sizes">Data: Animal Sizes</a></li>
+  <li><a href="#step-by-step-with-em" id="toc-step-by-step-with-em" class="nav-link" data-scroll-target="#step-by-step-with-em">Step-by-Step with EM</a></li>
+  </ul></li>
+  <li><a href="#important-practical-aspects" id="toc-important-practical-aspects" class="nav-link" data-scroll-target="#important-practical-aspects">9. Important Practical Aspects</a>
+  <ul class="collapse">
+  <li><a href="#choosing-the-number-of-components-c" id="toc-choosing-the-number-of-components-c" class="nav-link" data-scroll-target="#choosing-the-number-of-components-c">Choosing the Number of Components (<span class="math inline">\(c\)</span>)</a></li>
+  <li><a href="#initialization-problems" id="toc-initialization-problems" class="nav-link" data-scroll-target="#initialization-problems">Initialization Problems</a></li>
+  <li><a href="#types-of-covariance-matrices" id="toc-types-of-covariance-matrices" class="nav-link" data-scroll-target="#types-of-covariance-matrices">Types of Covariance Matrices</a></li>
+  </ul></li>
+  <li><a href="#concrete-applications" id="toc-concrete-applications" class="nav-link" data-scroll-target="#concrete-applications">10. Concrete Applications</a>
+  <ul class="collapse">
+  <li><a href="#image-segmentation" id="toc-image-segmentation" class="nav-link" data-scroll-target="#image-segmentation">1. Image Segmentation</a></li>
+  <li><a href="#speech-recognition" id="toc-speech-recognition" class="nav-link" data-scroll-target="#speech-recognition">2. Speech Recognition</a></li>
+  <li><a href="#anomaly-detection" id="toc-anomaly-detection" class="nav-link" data-scroll-target="#anomaly-detection">3. Anomaly Detection</a></li>
+  <li><a href="#data-compression" id="toc-data-compression" class="nav-link" data-scroll-target="#data-compression">4. Data Compression</a></li>
+  </ul></li>
+  <li><a href="#conclusion-the-power-of-gmm" id="toc-conclusion-the-power-of-gmm" class="nav-link" data-scroll-target="#conclusion-the-power-of-gmm">Conclusion: The Power of GMM</a></li>
+  </ul></li>
+  <li><a href="#the-em-algorithm-and-the-gaussian-mixture-model-the-secret-of-responsibilities" id="toc-the-em-algorithm-and-the-gaussian-mixture-model-the-secret-of-responsibilities" class="nav-link" data-scroll-target="#the-em-algorithm-and-the-gaussian-mixture-model-the-secret-of-responsibilities">The EM Algorithm and the Gaussian Mixture Model: The Secret of Responsibilities</a>
+  <ul class="collapse">
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question</a></li>
+  <li><a href="#introduction-the-problem-of-incomplete-data" id="toc-introduction-the-problem-of-incomplete-data" class="nav-link" data-scroll-target="#introduction-the-problem-of-incomplete-data">Introduction: The Problem of Incomplete Data</a></li>
+  <li><a href="#what-is-the-em-algorithm" id="toc-what-is-the-em-algorithm" class="nav-link" data-scroll-target="#what-is-the-em-algorithm">1. What is the EM Algorithm?</a>
+  <ul class="collapse">
+  <li><a href="#simple-definition-1" id="toc-simple-definition-1" class="nav-link" data-scroll-target="#simple-definition-1">Simple Definition</a></li>
+  <li><a href="#the-fundamental-problem-solved-by-em" id="toc-the-fundamental-problem-solved-by-em" class="nav-link" data-scroll-target="#the-fundamental-problem-solved-by-em">The Fundamental Problem Solved by EM</a></li>
+  </ul></li>
+  <li><a href="#the-relationship-between-em-and-the-gaussian-mixture-model" id="toc-the-relationship-between-em-and-the-gaussian-mixture-model" class="nav-link" data-scroll-target="#the-relationship-between-em-and-the-gaussian-mixture-model">2. The Relationship Between EM and the Gaussian Mixture Model</a>
+  <ul class="collapse">
+  <li><a href="#gmm-a-perfect-case-for-em" id="toc-gmm-a-perfect-case-for-em" class="nav-link" data-scroll-target="#gmm-a-perfect-case-for-em">GMM: A Perfect Case for EM</a></li>
+  <li><a href="#the-em-gmm-synergy" id="toc-the-em-gmm-synergy" class="nav-link" data-scroll-target="#the-em-gmm-synergy">The EM-GMM Synergy</a></li>
+  </ul></li>
+  <li><a href="#the-heart-of-the-algorithm-the-concept-of-responsibility" id="toc-the-heart-of-the-algorithm-the-concept-of-responsibility" class="nav-link" data-scroll-target="#the-heart-of-the-algorithm-the-concept-of-responsibility">3. The Heart of the Algorithm: The Concept of Responsibility</a>
+  <ul class="collapse">
+  <li><a href="#intuitive-definition" id="toc-intuitive-definition" class="nav-link" data-scroll-target="#intuitive-definition">Intuitive Definition</a></li>
+  <li><a href="#mathematical-definition" id="toc-mathematical-definition" class="nav-link" data-scroll-target="#mathematical-definition">Mathematical Definition</a></li>
+  <li><a href="#essential-properties-of-responsibilities" id="toc-essential-properties-of-responsibilities" class="nav-link" data-scroll-target="#essential-properties-of-responsibilities">Essential Properties of Responsibilities</a></li>
+  </ul></li>
+  <li><a href="#how-does-the-em-algorithm-work-for-gmm" id="toc-how-does-the-em-algorithm-work-for-gmm" class="nav-link" data-scroll-target="#how-does-the-em-algorithm-work-for-gmm">4. How Does the EM Algorithm Work for GMM?</a>
+  <ul class="collapse">
+  <li><a href="#the-two-step-principle" id="toc-the-two-step-principle" class="nav-link" data-scroll-target="#the-two-step-principle">The Two-Step Principle</a></li>
+  <li><a href="#step-by-step" id="toc-step-by-step" class="nav-link" data-scroll-target="#step-by-step">Step by Step</a></li>
+  </ul></li>
+  <li><a href="#visualization-of-the-em-process" id="toc-visualization-of-the-em-process" class="nav-link" data-scroll-target="#visualization-of-the-em-process">5. Visualization of the EM Process</a>
+  <ul class="collapse">
+  <li><a href="#first-cycle" id="toc-first-cycle" class="nav-link" data-scroll-target="#first-cycle">First Cycle</a></li>
+  <li><a href="#progressive-convergence" id="toc-progressive-convergence" class="nav-link" data-scroll-target="#progressive-convergence">Progressive Convergence</a></li>
+  </ul></li>
+  <li><a href="#why-are-responsibilities-so-important" id="toc-why-are-responsibilities-so-important" class="nav-link" data-scroll-target="#why-are-responsibilities-so-important">6. Why Are Responsibilities So Important?</a>
+  <ul class="collapse">
+  <li><a href="#they-transform-a-difficult-problem-into-a-simple-one" id="toc-they-transform-a-difficult-problem-into-a-simple-one" class="nav-link" data-scroll-target="#they-transform-a-difficult-problem-into-a-simple-one">They Transform a Difficult Problem into a Simple One</a></li>
+  <li><a href="#they-enable-soft-assignment" id="toc-they-enable-soft-assignment" class="nav-link" data-scroll-target="#they-enable-soft-assignment">They Enable “Soft” Assignment</a></li>
+  </ul></li>
+  <li><a href="#concrete-example-separating-two-animal-species" id="toc-concrete-example-separating-two-animal-species" class="nav-link" data-scroll-target="#concrete-example-separating-two-animal-species">7. Concrete Example: Separating Two Animal Species</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#em-application" id="toc-em-application" class="nav-link" data-scroll-target="#em-application">EM Application</a></li>
+  <li><a href="#biological-interpretation" id="toc-biological-interpretation" class="nav-link" data-scroll-target="#biological-interpretation">Biological Interpretation</a></li>
+  </ul></li>
+  <li><a href="#the-deep-em-gmm-relationship" id="toc-the-deep-em-gmm-relationship" class="nav-link" data-scroll-target="#the-deep-em-gmm-relationship">8. The Deep EM-GMM Relationship</a>
+  <ul class="collapse">
+  <li><a href="#em-as-the-engine-of-gmm" id="toc-em-as-the-engine-of-gmm" class="nav-link" data-scroll-target="#em-as-the-engine-of-gmm">EM as the “Engine” of GMM</a></li>
+  <li><a href="#the-virtuous-cycle" id="toc-the-virtuous-cycle" class="nav-link" data-scroll-target="#the-virtuous-cycle">The Virtuous Cycle</a></li>
+  <li><a href="#difference-from-k-means" id="toc-difference-from-k-means" class="nav-link" data-scroll-target="#difference-from-k-means">Difference from K-means</a></li>
+  </ul></li>
+  <li><a href="#practical-applications-of-em-with-gmm" id="toc-practical-applications-of-em-with-gmm" class="nav-link" data-scroll-target="#practical-applications-of-em-with-gmm">9. Practical Applications of EM with GMM</a>
+  <ul class="collapse">
+  <li><a href="#speech-recognition-1" id="toc-speech-recognition-1" class="nav-link" data-scroll-target="#speech-recognition-1">1. Speech Recognition</a></li>
+  <li><a href="#image-segmentation-1" id="toc-image-segmentation-1" class="nav-link" data-scroll-target="#image-segmentation-1">2. Image Segmentation</a></li>
+  <li><a href="#fraud-detection" id="toc-fraud-detection" class="nav-link" data-scroll-target="#fraud-detection">3. Fraud Detection</a></li>
+  </ul></li>
+  <li><a href="#limitations-and-solutions" id="toc-limitations-and-solutions" class="nav-link" data-scroll-target="#limitations-and-solutions">10. Limitations and Solutions</a>
+  <ul class="collapse">
+  <li><a href="#initialization-problem" id="toc-initialization-problem" class="nav-link" data-scroll-target="#initialization-problem">Initialization Problem</a></li>
+  <li><a href="#choosing-number-of-components" id="toc-choosing-number-of-components" class="nav-link" data-scroll-target="#choosing-number-of-components">Choosing Number of Components</a></li>
+  <li><a href="#computational-complexity" id="toc-computational-complexity" class="nav-link" data-scroll-target="#computational-complexity">Computational Complexity</a></li>
+  </ul></li>
+  <li><a href="#conclusion-the-elegance-of-the-em-approach" id="toc-conclusion-the-elegance-of-the-em-approach" class="nav-link" data-scroll-target="#conclusion-the-elegance-of-the-em-approach">Conclusion: The Elegance of the EM Approach</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ds61q.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Part I</li><li class="breadcrumb-item"><a href="./ds61.html">Expectation-Maximization</a></li><li class="breadcrumb-item"><a href="./ds61q.html">Exam questions</a></li></ol></nav></header>
+
+
+
+
+
+<section id="exam-questions" class="level1">
+<h1>Exam questions</h1>
+</section>
+<section id="the-gaussian-mixture-model-gmm-a-complete-and-intuitive-guide" class="level1">
+<h1>The Gaussian Mixture Model (GMM): A Complete and Intuitive Guide</h1>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Explain the Gaussian mixture model, including the assumptions, calculation and interpretation of the model. What are its parameters ?</p>
+<p>Explain how to optimize them from some data.</p>
+</section>
+<section id="introduction-the-fundamental-idea" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-the-fundamental-idea">Introduction: The Fundamental Idea</h2>
+<p>Imagine you’re looking at a starry sky. Some stars seem to cluster into constellations, others are isolated. The <strong>Gaussian Mixture Model</strong> (GMM) is like a mathematical attempt to describe this sky: it models data as coming from several “constellations” (the Gaussian components) that overlap more or less.</p>
+</section>
+<section id="what-is-a-gaussian-mixture-model" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-gaussian-mixture-model">1. What is a Gaussian Mixture Model?</h2>
+<section id="simple-definition" class="level3">
+<h3 class="anchored" data-anchor-id="simple-definition">Simple Definition</h3>
+<p>A GMM is a <strong>probabilistic model</strong> that represents a complex data distribution as a combination (a “mixture”) of several simpler Gaussian (normal) distributions.</p>
+<p><strong>Culinary analogy</strong>: Imagine cookie dough with two types of chocolate chips (dark and white). A GMM would try to model this dough as: - 60% dough with dark chips (one Gaussian) - 40% dough with white chips (another Gaussian)</p>
+</section>
+<section id="mathematical-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-formulation">Mathematical Formulation</h3>
+<p>A GMM with <span class="math inline">\(c\)</span> components is written as:</p>
+<p><span class="math display">\[
+f(x) = \sum_{j=1}^{c} \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)
+\]</span></p>
+<p>Let’s break down each element:</p>
+<ul>
+<li><span class="math inline">\(f(x)\)</span>: The total probability density at point <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(\sum_{j=1}^{c}\)</span>: The sum over all <span class="math inline">\(c\)</span> components</li>
+<li><span class="math inline">\(\pi_j\)</span>: The weight of component <span class="math inline">\(j\)</span> (its proportion in the mixture)</li>
+<li><span class="math inline">\(\mathcal{N}(x|\mu_j, \Sigma_j)\)</span>: A Gaussian (normal) distribution</li>
+</ul>
+</section>
+</section>
+<section id="the-three-fundamental-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="the-three-fundamental-assumptions">2. The Three Fundamental Assumptions</h2>
+<section id="assumption-1-mixture-structure" class="level3">
+<h3 class="anchored" data-anchor-id="assumption-1-mixture-structure">Assumption 1: Mixture Structure</h3>
+<p>Data is generated by a two-step process: 1. <strong>Drawing a component</strong>: Randomly choose a component <span class="math inline">\(j\)</span> with probability <span class="math inline">\(\pi_j\)</span> 2. <strong>Generating a point</strong>: Generate <span class="math inline">\(x\)</span> according to the Gaussian <span class="math inline">\(\mathcal{N}(\mu_j, \Sigma_j)\)</span></p>
+<p><strong>Analogy</strong>: To choose a candy from a bag: 1. First choose the type of candy (60% chance of being red, 40% of being blue) 2. Then draw a candy of that type</p>
+</section>
+<section id="assumption-2-gaussian-shape-of-components" class="level3">
+<h3 class="anchored" data-anchor-id="assumption-2-gaussian-shape-of-components">Assumption 2: Gaussian Shape of Components</h3>
+<p>Each component follows a <strong>multivariate normal distribution</strong>:</p>
+<p><span class="math display">\[
+\mathcal{N}(x|\mu_j, \Sigma_j) = \frac{1}{(2\pi)^{D/2}|\Sigma_j|^{1/2}} \exp\left(-\frac{1}{2}(x - \mu_j)^T \Sigma_j^{-1}(x - \mu_j)\right)
+\]</span></p>
+<p>Where: * <span class="math inline">\(D\)</span> is the data dimension * <span class="math inline">\(|\Sigma_j|\)</span> is the determinant of the matrix <span class="math inline">\(\Sigma_j\)</span> * <span class="math inline">\((x - \mu_j)^T \Sigma_j^{-1}(x - \mu_j)\)</span> is the Mahalanobis distance</p>
+</section>
+<section id="assumption-3-conditional-independence" class="level3">
+<h3 class="anchored" data-anchor-id="assumption-3-conditional-independence">Assumption 3: Conditional Independence</h3>
+<p>Observations are independent of each other <strong>given</strong> the components to which they belong.</p>
+</section>
+</section>
+<section id="the-model-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="the-model-parameters">3. The Model Parameters</h2>
+<p>A GMM has <strong>three types of parameters</strong> to learn:</p>
+<section id="the-weights-pi_j-mixing-weights" class="level3">
+<h3 class="anchored" data-anchor-id="the-weights-pi_j-mixing-weights">1. The Weights <span class="math inline">\(\pi_j\)</span> (Mixing Weights)</h3>
+<ul>
+<li><strong>What they are</strong>: The proportion of each component in the mixture</li>
+<li><strong>Constraints</strong>:
+<ul>
+<li><span class="math inline">\(\sum_{j=1}^c \pi_j = 1\)</span> (the sum equals 100%)</li>
+<li><span class="math inline">\(\pi_j \geq 0\)</span> for all <span class="math inline">\(j\)</span> (no negative weights)</li>
+</ul></li>
+<li><strong>Interpretation</strong>: If <span class="math inline">\(\pi_1 = 0.6\)</span>, it means 60% of the data (in probability) come from the first component</li>
+</ul>
+</section>
+<section id="the-means-mu_j" class="level3">
+<h3 class="anchored" data-anchor-id="the-means-mu_j">2. The Means <span class="math inline">\(\mu_j\)</span></h3>
+<ul>
+<li><strong>What they are</strong>: The center of each Gaussian</li>
+<li><strong>Dimension</strong>: <span class="math inline">\(\mu_j \in \mathbb{R}^D\)</span> (a vector of <span class="math inline">\(D\)</span> values)</li>
+<li><strong>Interpretation</strong>: The “typical” point of component <span class="math inline">\(j\)</span></li>
+</ul>
+</section>
+<section id="the-covariance-matrices-sigma_j" class="level3">
+<h3 class="anchored" data-anchor-id="the-covariance-matrices-sigma_j">3. The Covariance Matrices <span class="math inline">\(\Sigma_j\)</span></h3>
+<ul>
+<li><strong>What they are</strong>: Describes the shape, orientation, and dispersion of each Gaussian</li>
+<li><strong>Properties</strong>:
+<ul>
+<li><span class="math inline">\(D \times D\)</span> matrix (square)</li>
+<li>Symmetric: <span class="math inline">\(\Sigma_j = \Sigma_j^T\)</span></li>
+<li>Positive definite (all eigenvalues &gt; 0)</li>
+</ul></li>
+<li><strong>Geometric interpretation</strong>:
+<ul>
+<li>The diagonal: variances in each direction</li>
+<li>Off-diagonal elements: covariances (correlations between dimensions)</li>
+</ul></li>
+</ul>
+<p><strong>The set of parameters</strong>: <span class="math inline">\(\theta = \{\pi_j, \mu_j, \Sigma_j\}_{j=1}^c\)</span></p>
+</section>
+</section>
+<section id="calculation-and-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="calculation-and-interpretation">4. Calculation and Interpretation</h2>
+<section id="how-to-calculate-the-density" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-calculate-the-density">How to Calculate the Density?</h3>
+<p>For a point <span class="math inline">\(x\)</span>, the density according to the GMM is:</p>
+<ol type="1">
+<li><strong>For each component <span class="math inline">\(j\)</span></strong>:
+<ul>
+<li>Calculate <span class="math inline">\(\mathcal{N}(x|\mu_j, \Sigma_j)\)</span>: the “height” of Gaussian <span class="math inline">\(j\)</span> at point <span class="math inline">\(x\)</span></li>
+<li>Multiply by <span class="math inline">\(\pi_j\)</span>: weight by the importance of the component</li>
+</ul></li>
+<li><strong>Sum over all components</strong>:
+<ul>
+<li><span class="math inline">\(f(x) = \pi_1 \times \text{height}_1 + \pi_2 \times \text{height}_2 + ... + \pi_c \times \text{height}_c\)</span></li>
+</ul></li>
+</ol>
+</section>
+<section id="visual-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="visual-interpretation">Visual Interpretation</h3>
+<p>Imagine a mountain landscape: * Each Gaussian is a mountain * <span class="math inline">\(\mu_j\)</span> is the mountain peak * <span class="math inline">\(\Sigma_j\)</span> describes how the mountain spreads (is it round? elongated?) * <span class="math inline">\(\pi_j\)</span> is the relative height of the mountain * <span class="math inline">\(f(x)\)</span> is the total altitude at position <span class="math inline">\(x\)</span></p>
+</section>
+</section>
+<section id="latent-variables-the-key-to-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="latent-variables-the-key-to-interpretation">5. Latent Variables: The Key to Interpretation</h2>
+<section id="the-problem-of-missing-labels" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem-of-missing-labels">The Problem of Missing Labels</h3>
+<p>In a real problem, <strong>we don’t know</strong> which component generated each point. This missing information is what we call <strong>latent variable</strong>.</p>
+<p>Let <span class="math inline">\(z_i\)</span> be the latent variable for point <span class="math inline">\(x_i\)</span>: * <span class="math inline">\(z_i = j\)</span> means “<span class="math inline">\(x_i\)</span> comes from component <span class="math inline">\(j\)</span>” * We don’t observe the <span class="math inline">\(z_i\)</span>, only the <span class="math inline">\(x_i\)</span></p>
+</section>
+<section id="probabilistic-reformulation" class="level3">
+<h3 class="anchored" data-anchor-id="probabilistic-reformulation">Probabilistic Reformulation</h3>
+<p>With latent variables, the model becomes:</p>
+<ul>
+<li><strong>Prior probability</strong>: <span class="math inline">\(\mathbb{P}(z = j) = \pi_j\)</span></li>
+<li><strong>Conditional probability</strong>: <span class="math inline">\(\mathbb{P}(x|z = j) = \mathcal{N}(x|\mu_j, \Sigma_j)\)</span></li>
+<li><strong>Joint probability</strong>: <span class="math inline">\(\mathbb{P}(x, z = j) = \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)\)</span></li>
+<li><strong>Marginal probability</strong> (what we observe): <span class="math inline">\(\mathbb{P}(x) = \sum_j \pi_j \mathcal{N}(x|\mu_j, \Sigma_j)\)</span></li>
+</ul>
+</section>
+</section>
+<section id="parameter-optimization-the-em-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="parameter-optimization-the-em-algorithm">6. Parameter Optimization: The EM Algorithm</h2>
+<section id="the-challenge" class="level3">
+<h3 class="anchored" data-anchor-id="the-challenge">The Challenge</h3>
+<p>We want to find the parameters <span class="math inline">\(\theta\)</span> that <strong>maximize the likelihood</strong> of the observed data:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta) = \prod_{i=1}^N f(x_i|\theta) = \prod_{i=1}^N \sum_{j=1}^{c} \pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)
+\]</span></p>
+<p>The problem is the <strong>logarithm of a sum</strong> in the log-likelihood:</p>
+<p><span class="math display">\[
+\log \mathcal{L}(\theta) = \sum_{i=1}^N \log \left( \sum_{j=1}^{c} \pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j) \right)
+\]</span></p>
+<p>Difficult to optimize directly!</p>
+</section>
+<section id="the-solution-em-algorithm-expectation-maximization" class="level3">
+<h3 class="anchored" data-anchor-id="the-solution-em-algorithm-expectation-maximization">The Solution: EM Algorithm (Expectation-Maximization)</h3>
+<p>EM solves this problem through an <strong>iterative two-step approach</strong>:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Random initialization] --&gt; B[E-step: Responsibility calculation];
+    B --&gt; C[M-step: Parameter update];
+    C --&gt; D{Convergence?};
+    D -- No --&gt; B;
+    D -- Yes --&gt; E[Optimal parameters];
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="step-0-initialization" class="level4">
+<h4 class="anchored" data-anchor-id="step-0-initialization">Step 0: Initialization</h4>
+<p>We start with initial parameters: * <span class="math inline">\(\pi_j^{(0)} = 1/c\)</span> (equal weights) * <span class="math inline">\(\mu_j^{(0)}\)</span> chosen randomly from the data * <span class="math inline">\(\Sigma_j^{(0)} = I\)</span> (identity matrix)</p>
+</section>
+<section id="e-step-expectation-responsibility-calculation" class="level4">
+<h4 class="anchored" data-anchor-id="e-step-expectation-responsibility-calculation">E-step (Expectation): Responsibility Calculation</h4>
+<p>This is the crucial step! We calculate for each point <span class="math inline">\(x_i\)</span> and each component <span class="math inline">\(j\)</span>:</p>
+<p><span class="math display">\[
+\gamma_{ij} = \mathbb{P}(z_i = j | x_i, \theta) = \frac{\pi_j \mathcal{N}(x_i|\mu_j, \Sigma_j)}{\sum_{k=1}^c \pi_k \mathcal{N}(x_i|\mu_k, \Sigma_k)}
+\]</span></p>
+<p><strong>Intuitive interpretation</strong>: <span class="math inline">\(\gamma_{ij}\)</span> answers the question: “If I see point <span class="math inline">\(x_i\)</span>, what’s the probability it came from component <span class="math inline">\(j\)</span>?”</p>
+<p><strong>Important property</strong>: <span class="math inline">\(\sum_{j=1}^c \gamma_{ij} = 1\)</span> for all <span class="math inline">\(i\)</span>. Each point is “distributed” among the components.</p>
+</section>
+<section id="m-step-maximization-parameter-update" class="level4">
+<h4 class="anchored" data-anchor-id="m-step-maximization-parameter-update">M-step (Maximization): Parameter Update</h4>
+<p>Now we use the responsibilities to update the parameters:</p>
+<ol type="1">
+<li><p><strong>New weights</strong>:</p>
+<p><span class="math display">\[
+\pi_j^{\text{new}} = \frac{1}{N} \sum_{i=1}^N \gamma_{ij}
+\]</span></p>
+<p><strong>Interpretation</strong>: The average proportion of responsibility assigned to component <span class="math inline">\(j\)</span>.</p></li>
+<li><p><strong>New means</strong>:</p>
+<p><span class="math display">\[
+\mu_j^{\text{new}} = \frac{\sum_{i=1}^N \gamma_{ij} x_i}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interpretation</strong>: The weighted average of all points, with <span class="math inline">\(\gamma_{ij}\)</span> as weights.</p></li>
+<li><p><strong>New covariances</strong>:</p>
+<p><span class="math display">\[
+\Sigma_j^{\text{new}} = \frac{\sum_{i=1}^N \gamma_{ij} (x_i - \mu_j^{\text{new}})(x_i - \mu_j^{\text{new}})^T}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interpretation</strong>: The weighted covariance around the new mean.</p></li>
+</ol>
+</section>
+<section id="iteration-until-convergence" class="level4">
+<h4 class="anchored" data-anchor-id="iteration-until-convergence">Iteration until Convergence</h4>
+<p>We repeat the E and M steps until: * Parameters change very little * Likelihood no longer improves significantly</p>
+</section>
+</section>
+</section>
+<section id="why-does-it-work-the-intuition" class="level2">
+<h2 class="anchored" data-anchor-id="why-does-it-work-the-intuition">7. Why Does It Work? The Intuition</h2>
+<section id="the-teacher-and-students-analogy" class="level3">
+<h3 class="anchored" data-anchor-id="the-teacher-and-students-analogy">The Teacher and Students Analogy</h3>
+<p>Imagine a teacher who wants to understand two groups of students in their class (the “math whizzes” and the “literary types”), but doesn’t know who belongs to which group.</p>
+<ol type="1">
+<li><p><strong>Initialization</strong>: The teacher makes an initial hypothesis about each group’s characteristics.</p></li>
+<li><p><strong>E-step</strong>: For each student, the teacher estimates the probability they’re a “math whiz” or “literary type” based on current grades.</p></li>
+<li><p><strong>M-step</strong>: The teacher redefines what a “math whiz” and “literary type” are by looking at students probably in each group.</p></li>
+<li><p><strong>Repetition</strong>: With these new definitions, they reassess probabilities, and so on.</p></li>
+</ol>
+</section>
+<section id="the-magic-of-soft-responsibilities" class="level3">
+<h3 class="anchored" data-anchor-id="the-magic-of-soft-responsibilities">The Magic of “Soft” Responsibilities</h3>
+<p>Unlike K-means which says “this student is either a math whiz or literary type”, EM says “this student might be 70% math whiz and 30% literary type”. This <strong>soft assignment</strong> allows for more nuanced modeling.</p>
+</section>
+</section>
+<section id="concrete-step-by-step-example" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-step-by-step-example">8. Concrete Step-by-Step Example</h2>
+<section id="data-animal-sizes" class="level3">
+<h3 class="anchored" data-anchor-id="data-animal-sizes">Data: Animal Sizes</h3>
+<p>Suppose we measure animals and get these sizes (in cm): [10, 12, 14, 90, 95, 100]</p>
+<p>There appear to be two groups: small animals (10-14 cm) and large animals (90-100 cm).</p>
+</section>
+<section id="step-by-step-with-em" class="level3">
+<h3 class="anchored" data-anchor-id="step-by-step-with-em">Step-by-Step with EM</h3>
+<ol type="1">
+<li><strong>Initialization</strong>:
+<ul>
+<li><span class="math inline">\(c = 2\)</span> (two components)</li>
+<li><span class="math inline">\(\pi_1 = \pi_2 = 0.5\)</span></li>
+<li><span class="math inline">\(\mu_1 = 12\)</span>, <span class="math inline">\(\mu_2 = 95\)</span> (chosen approximately)</li>
+<li><span class="math inline">\(\Sigma_1 = \Sigma_2 = 1\)</span> (unit variance)</li>
+</ul></li>
+<li><strong>First E-step</strong>:
+<ul>
+<li>For <span class="math inline">\(x = 10\)</span>: <span class="math inline">\(\gamma_{11} \approx 0.95\)</span>, <span class="math inline">\(\gamma_{12} \approx 0.05\)</span></li>
+<li>For <span class="math inline">\(x = 95\)</span>: <span class="math inline">\(\gamma_{21} \approx 0.01\)</span>, <span class="math inline">\(\gamma_{22} \approx 0.99\)</span></li>
+</ul></li>
+<li><strong>First M-step</strong>:
+<ul>
+<li><span class="math inline">\(\pi_1^{\text{new}} = (0.95+0.8+0.6+0.05+0.01+0.01)/6 \approx 0.40\)</span></li>
+<li><span class="math inline">\(\pi_2^{\text{new}} \approx 0.60\)</span></li>
+<li><span class="math inline">\(\mu_1^{\text{new}} \approx 12.5\)</span>, <span class="math inline">\(\mu_2^{\text{new}} \approx 94.5\)</span></li>
+</ul></li>
+<li><strong>Subsequent iterations</strong>: Parameters refine with each iteration.</li>
+</ol>
+</section>
+</section>
+<section id="important-practical-aspects" class="level2">
+<h2 class="anchored" data-anchor-id="important-practical-aspects">9. Important Practical Aspects</h2>
+<section id="choosing-the-number-of-components-c" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-number-of-components-c">Choosing the Number of Components (<span class="math inline">\(c\)</span>)</h3>
+<p>How to decide how many Gaussians to use?</p>
+<p><strong>Methods</strong>: 1. <strong>Bayesian Information Criterion (BIC)</strong>: Penalizes overly complex models</p>
+<p><span class="math display">\[
+   \text{BIC} = -2 \log \mathcal{L} + k \log N
+   \]</span></p>
+<p>where <span class="math inline">\(k\)</span> is the number of parameters, <span class="math inline">\(N\)</span> the number of points.</p>
+<ol start="2" type="1">
+<li><strong>Cross-validation</strong></li>
+<li><strong>Visual inspection</strong> (when possible in 2D/3D)</li>
+</ol>
+</section>
+<section id="initialization-problems" class="level3">
+<h3 class="anchored" data-anchor-id="initialization-problems">Initialization Problems</h3>
+<p>EM converges to a <strong>local optimum</strong>. Poor initialization gives poor results.</p>
+<p><strong>Solutions</strong>: * Multiple trials with different initializations * Use K-means for smart initialization * K-means++ for better dispersion of initial centers</p>
+</section>
+<section id="types-of-covariance-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-covariance-matrices">Types of Covariance Matrices</h3>
+<ol type="1">
+<li><strong>Spherical</strong>: <span class="math inline">\(\Sigma = \sigma^2 I\)</span> (all directions equal)</li>
+<li><strong>Diagonal</strong>: <span class="math inline">\(\Sigma = \text{diag}(\sigma_1^2, ..., \sigma_D^2)\)</span> (independent directions)</li>
+<li><strong>Full</strong>: <span class="math inline">\(\Sigma\)</span> complete (with correlations)</li>
+</ol>
+<p><strong>Choice</strong>: The more constrained the matrix, the fewer parameters, but the less flexible the model.</p>
+</section>
+</section>
+<section id="concrete-applications" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-applications">10. Concrete Applications</h2>
+<section id="image-segmentation" class="level3">
+<h3 class="anchored" data-anchor-id="image-segmentation">1. Image Segmentation</h3>
+<p>Separate foreground from background in a photo.</p>
+</section>
+<section id="speech-recognition" class="level3">
+<h3 class="anchored" data-anchor-id="speech-recognition">2. Speech Recognition</h3>
+<p>Model different frequency components of voice.</p>
+</section>
+<section id="anomaly-detection" class="level3">
+<h3 class="anchored" data-anchor-id="anomaly-detection">3. Anomaly Detection</h3>
+<p>Points with low density under the GMM are potentially anomalies.</p>
+</section>
+<section id="data-compression" class="level3">
+<h3 class="anchored" data-anchor-id="data-compression">4. Data Compression</h3>
+<p>Represent a complex distribution with a few Gaussians.</p>
+</section>
+</section>
+<section id="conclusion-the-power-of-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-the-power-of-gmm">Conclusion: The Power of GMM</h2>
+<p>The Gaussian Mixture Model is a remarkably flexible tool that:</p>
+<ol type="1">
+<li><strong>Models complexity</strong>: Can approximate almost any distribution</li>
+<li><strong>Provides uncertainties</strong>: Gives probabilities, not just binary decisions</li>
+<li><strong>Interprets well</strong>: Each parameter has intuitive meaning</li>
+<li><strong>Optimizes efficiently</strong>: Thanks to the EM algorithm</li>
+</ol>
+<p>The key concept to remember is that of <strong>responsibility</strong> (<span class="math inline">\(\gamma_{ij}\)</span>): it’s what transforms a difficult optimization problem into an elegant iterative procedure where each point partially participates in learning all components.</p>
+<p>As statistician George Box said: “All models are wrong, but some are useful.” The GMM is certainly one of the most useful for modeling the complexity of the real world.</p>
+<hr>
+</section>
+</section>
+<section id="the-em-algorithm-and-the-gaussian-mixture-model-the-secret-of-responsibilities" class="level1">
+<h1>The EM Algorithm and the Gaussian Mixture Model: The Secret of Responsibilities</h1>
+<section id="question-1" class="level2">
+<h2 class="anchored" data-anchor-id="question-1">Question</h2>
+<p>What is the EM algorithm and what is its relationship with the Gaussian mixture model? Explain in particular the concept of responsibility.</p>
+</section>
+<section id="introduction-the-problem-of-incomplete-data" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-the-problem-of-incomplete-data">Introduction: The Problem of Incomplete Data</h2>
+<p>Imagine you inherit several bags of mixed coins. Some coins are gold, others silver, but they’re all in the same bag. Your mission: determine the average composition of gold and silver coins <strong>without being able to physically separate them</strong>.</p>
+<p>This is exactly the type of problem solved by the <strong>EM algorithm</strong> (Expectation-Maximization), and the <strong>Gaussian Mixture Model</strong> (GMM) is its most famous application.</p>
+</section>
+<section id="what-is-the-em-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-em-algorithm">1. What is the EM Algorithm?</h2>
+<section id="simple-definition-1" class="level3">
+<h3 class="anchored" data-anchor-id="simple-definition-1">Simple Definition</h3>
+<p>The EM algorithm is an <strong>intelligent iterative method</strong> for finding optimal parameters of a statistical model when some information is missing.</p>
+<p><strong>Medical analogy</strong>: Imagine a doctor who wants to diagnose two rare diseases. The symptoms overlap, and they’re never 100% sure of the disease. The EM algorithm would be their method for:</p>
+<ol type="1">
+<li>Estimating the probability of each disease for each patient (E-step)</li>
+<li>Updating the description of diseases based on these probabilities (M-step)</li>
+<li>Repeating until diagnosis stabilizes</li>
+</ol>
+</section>
+<section id="the-fundamental-problem-solved-by-em" class="level3">
+<h3 class="anchored" data-anchor-id="the-fundamental-problem-solved-by-em">The Fundamental Problem Solved by EM</h3>
+<p>In many real problems, we have:</p>
+<ul>
+<li><strong>Observed data</strong>: What we measure</li>
+<li><strong>Missing/latent data</strong>: What we don’t see but influences observations</li>
+</ul>
+<p>The challenge: How to estimate a model when a crucial part of information is hidden?</p>
+</section>
+</section>
+<section id="the-relationship-between-em-and-the-gaussian-mixture-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-relationship-between-em-and-the-gaussian-mixture-model">2. The Relationship Between EM and the Gaussian Mixture Model</h2>
+<section id="gmm-a-perfect-case-for-em" class="level3">
+<h3 class="anchored" data-anchor-id="gmm-a-perfect-case-for-em">GMM: A Perfect Case for EM</h3>
+<p>The Gaussian Mixture Model models data as coming from several subgroups (Gaussian components). The problem: <strong>we don’t know which subgroup each point belongs to</strong>.</p>
+<p>This is exactly the situation where the EM algorithm shines!</p>
+</section>
+<section id="the-em-gmm-synergy" class="level3">
+<h3 class="anchored" data-anchor-id="the-em-gmm-synergy">The EM-GMM Synergy</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Mixed data] --&gt; B[GMM: Model with hidden components]
+    B --&gt; C[EM: Algorithm to estimate parameters]
+    C --&gt; D[Result: Discovered groups]
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-heart-of-the-algorithm-the-concept-of-responsibility" class="level2">
+<h2 class="anchored" data-anchor-id="the-heart-of-the-algorithm-the-concept-of-responsibility">3. The Heart of the Algorithm: The Concept of Responsibility</h2>
+<section id="intuitive-definition" class="level3">
+<h3 class="anchored" data-anchor-id="intuitive-definition">Intuitive Definition</h3>
+<p>The <strong>responsibility</strong> (denoted <span class="math inline">\(\gamma_{ij}\)</span>) is the <strong>probability</strong> that a data point <span class="math inline">\(x_i\)</span> was generated by component <span class="math inline">\(j\)</span> of the mixture.</p>
+<p><strong>Social analogy</strong>: Imagine a party with several conversation groups. The responsibility <span class="math inline">\(\gamma_{ij}\)</span> answers the question: “If I look at a person <span class="math inline">\(x_i\)</span>, what’s the probability they belong to conversation group <span class="math inline">\(j\)</span>?”</p>
+</section>
+<section id="mathematical-definition" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-definition">Mathematical Definition</h3>
+<p>Formally, for a GMM with parameters <span class="math inline">\(\theta = \{\pi_j, \mu_j, \Sigma_j\}\)</span>:</p>
+<p><span class="math display">\[
+\gamma_{ij} = \frac{\pi_j \cdot \mathcal{N}(x_i|\mu_j, \Sigma_j)}{\sum_{k=1}^c \pi_k \cdot \mathcal{N}(x_i|\mu_k, \Sigma_k)}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\pi_j\)</span> is the weight (importance) of component <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\mathcal{N}(x_i|\mu_j, \Sigma_j)\)</span> is the “likelihood” that <span class="math inline">\(x_i\)</span> came from component <span class="math inline">\(j\)</span></li>
+<li>The denominator ensures that <span class="math inline">\(\sum_j \gamma_{ij} = 1\)</span> (sum of probabilities equals 1)</li>
+</ul>
+</section>
+<section id="essential-properties-of-responsibilities" class="level3">
+<h3 class="anchored" data-anchor-id="essential-properties-of-responsibilities">Essential Properties of Responsibilities</h3>
+<ol type="1">
+<li><strong>Normalization</strong>: For each point <span class="math inline">\(i\)</span>, <span class="math inline">\(\sum_{j=1}^c \gamma_{ij} = 1\)</span>
+<ul>
+<li>Each point is “distributed” among all components</li>
+</ul></li>
+<li><strong>Continuity</strong>: <span class="math inline">\(\gamma_{ij} \in [0, 1]\)</span> (a true probability)
+<ul>
+<li>Unlike K-means which gives 0 or 1</li>
+</ul></li>
+<li><strong>Interpretation as weights</strong>: The closer <span class="math inline">\(\gamma_{ij}\)</span> is to 1, the more point <span class="math inline">\(i\)</span> “belongs” to component <span class="math inline">\(j\)</span></li>
+</ol>
+</section>
+</section>
+<section id="how-does-the-em-algorithm-work-for-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="how-does-the-em-algorithm-work-for-gmm">4. How Does the EM Algorithm Work for GMM?</h2>
+<section id="the-two-step-principle" class="level3">
+<h3 class="anchored" data-anchor-id="the-two-step-principle">The Two-Step Principle</h3>
+<p>The EM algorithm works like a dialogue between two experts:</p>
+<ul>
+<li><strong>The assignment expert</strong> (E-step): “Given current parameters, what are the membership probabilities?”</li>
+<li><strong>The parameter expert</strong> (M-step): “Given these probabilities, what are the best parameters?”</li>
+</ul>
+</section>
+<section id="step-by-step" class="level3">
+<h3 class="anchored" data-anchor-id="step-by-step">Step by Step</h3>
+<section id="step-0-initialization-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-0-initialization-1">Step 0: Initialization</h4>
+<p>We start with an initial parameter estimate. This is like making an initial hypothesis about the groups.</p>
+<p><strong>Common initialization strategies</strong>:</p>
+<ul>
+<li>Initialize weights uniformly: <span class="math inline">\(\pi_j^{(0)} = 1/c\)</span></li>
+<li>Choose means <span class="math inline">\(\mu_j^{(0)}\)</span> randomly from the data</li>
+<li>Initialize covariances to identity matrix: <span class="math inline">\(\Sigma_j^{(0)} = I\)</span></li>
+</ul>
+</section>
+<section id="e-step-expectation-responsibility-calculation-1" class="level4">
+<h4 class="anchored" data-anchor-id="e-step-expectation-responsibility-calculation-1">E-step (Expectation): Responsibility Calculation</h4>
+<p>This is the “Expectation” step. For each point <span class="math inline">\(x_i\)</span> and each component <span class="math inline">\(j\)</span>:</p>
+<ol type="1">
+<li><p><strong>Calculate affinity</strong>: How much does <span class="math inline">\(x_i\)</span> resemble component <span class="math inline">\(j\)</span>?</p>
+<p><span class="math display">\[
+\text{affinity} = \pi_j \times \text{height of Gaussian } j \text{ at point } x_i
+\]</span></p></li>
+<li><p><strong>Normalize</strong>: Transform these affinities into probabilities</p></li>
+</ol>
+<p><strong>Concrete example</strong>: For a point exactly between two Gaussians with equal weights:</p>
+<ul>
+<li><span class="math inline">\(\gamma_{i1} = 0.5\)</span> (50% chance of being in group 1)</li>
+<li><span class="math inline">\(\gamma_{i2} = 0.5\)</span> (50% chance of being in group 2)</li>
+</ul>
+</section>
+<section id="m-step-maximization-parameter-update-1" class="level4">
+<h4 class="anchored" data-anchor-id="m-step-maximization-parameter-update-1">M-step (Maximization): Parameter Update</h4>
+<p>Now we use responsibilities as <strong>weights</strong> to recalculate parameters:</p>
+<ol type="1">
+<li><p><strong>New means (<span class="math inline">\(\mu_j\)</span>)</strong>:</p>
+<p><span class="math display">\[
+\mu_j^{\text{new}} = \frac{\sum_{i=1}^N \gamma_{ij} \cdot x_i}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interpretation</strong>: The weighted average of all points, where each point <span class="math inline">\(x_i\)</span> is weighted by its responsibility <span class="math inline">\(\gamma_{ij}\)</span>.</p></li>
+<li><p><strong>New covariances (<span class="math inline">\(\Sigma_j\)</span>)</strong>:</p>
+<p><span class="math display">\[
+\Sigma_j^{\text{new}} = \frac{\sum_{i=1}^N \gamma_{ij} \cdot (x_i - \mu_j^{\text{new}})(x_i - \mu_j^{\text{new}})^T}{\sum_{i=1}^N \gamma_{ij}}
+\]</span></p>
+<p><strong>Interpretation</strong>: How points are dispersed around the new mean, weighted by their responsibilities.</p></li>
+<li><p><strong>New weights (<span class="math inline">\(\pi_j\)</span>)</strong>:</p>
+<p><span class="math display">\[
+\pi_j^{\text{new}} = \frac{1}{N} \sum_{i=1}^N \gamma_{ij}
+\]</span></p>
+<p><strong>Interpretation</strong>: The average proportion of responsibility assigned to component <span class="math inline">\(j\)</span>.</p></li>
+</ol>
+</section>
+<section id="iteration-until-convergence-1" class="level4">
+<h4 class="anchored" data-anchor-id="iteration-until-convergence-1">Iteration until Convergence</h4>
+<p>We repeat E → M → E → M until:</p>
+<ul>
+<li>Parameters hardly change</li>
+<li>Responsibilities stabilize</li>
+<li>Data likelihood no longer increases</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="visualization-of-the-em-process" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-of-the-em-process">5. Visualization of the EM Process</h2>
+<section id="first-cycle" class="level3">
+<h3 class="anchored" data-anchor-id="first-cycle">First Cycle</h3>
+<p>Initial state:</p>
+<ul>
+<li>2 misplaced Gaussians</li>
+<li>Blurry boundaries</li>
+</ul>
+<p>After E-step:</p>
+<ul>
+<li>Each point receives responsibilities (ex: [0.7, 0.3], [0.2, 0.8], etc.)</li>
+<li>Points at centers have more extreme responsibilities</li>
+<li>Points at boundaries have balanced responsibilities</li>
+</ul>
+<p>After M-step:</p>
+<ul>
+<li>Gaussians move toward points that “belong” to them</li>
+<li>They change shape to better fit “their” points</li>
+<li>Weights adjust according to proportion of assigned points</li>
+</ul>
+</section>
+<section id="progressive-convergence" class="level3">
+<h3 class="anchored" data-anchor-id="progressive-convergence">Progressive Convergence</h3>
+<p>At each iteration:</p>
+<ol type="1">
+<li>Responsibilities become more <strong>certain</strong> (close to 0 or 1)</li>
+<li>Gaussians <strong>separate</strong> better</li>
+<li>The model <strong>improves</strong> at explaining data</li>
+</ol>
+</section>
+</section>
+<section id="why-are-responsibilities-so-important" class="level2">
+<h2 class="anchored" data-anchor-id="why-are-responsibilities-so-important">6. Why Are Responsibilities So Important?</h2>
+<section id="they-transform-a-difficult-problem-into-a-simple-one" class="level3">
+<h3 class="anchored" data-anchor-id="they-transform-a-difficult-problem-into-a-simple-one">They Transform a Difficult Problem into a Simple One</h3>
+<p><strong>Without responsibilities</strong> (difficult problem):</p>
+<ul>
+<li>Log-likelihood: <span class="math inline">\(\sum_i \log(\sum_j ...)\)</span></li>
+<li>Impossible to optimize directly</li>
+</ul>
+<p><strong>With responsibilities</strong> (simple problem):</p>
+<ul>
+<li>We treat each point as partially belonging to all clusters</li>
+<li>Optimization becomes a weighted average</li>
+</ul>
+</section>
+<section id="they-enable-soft-assignment" class="level3">
+<h3 class="anchored" data-anchor-id="they-enable-soft-assignment">They Enable “Soft” Assignment</h3>
+<p>Unlike K-means which says “this point is IN or OUT of the cluster”, EM says “this point is X% in cluster A and Y% in cluster B”. This nuance is crucial for:</p>
+<ol type="1">
+<li><strong>Border points</strong>: A point between two clusters will have balanced responsibilities</li>
+<li><strong>Uncertainty</strong>: We know when we’re not sure</li>
+<li><strong>Robustness</strong>: Less sensitive to random initializations</li>
+</ol>
+</section>
+</section>
+<section id="concrete-example-separating-two-animal-species" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-separating-two-animal-species">7. Concrete Example: Separating Two Animal Species</h2>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>We measure animal height and weight. Visually, we see two groups but with overlap.</p>
+</section>
+<section id="em-application" class="level3">
+<h3 class="anchored" data-anchor-id="em-application">EM Application</h3>
+<p><strong>Iteration 1</strong>:</p>
+<ul>
+<li>A medium-sized animal: <span class="math inline">\(\gamma = [0.6, 0.4]\)</span> (rather group 1)</li>
+<li>Gaussians are poorly adjusted</li>
+</ul>
+<p><strong>Iteration 5</strong>:</p>
+<ul>
+<li>Same animal: <span class="math inline">\(\gamma = [0.8, 0.2]\)</span> (more confident)</li>
+<li>Gaussians have separated</li>
+</ul>
+<p><strong>Iteration 10</strong> (convergence):</p>
+<ul>
+<li>The animal: <span class="math inline">\(\gamma = [0.95, 0.05]\)</span> (very confident)</li>
+<li>Gaussians are well separated and adjusted</li>
+</ul>
+</section>
+<section id="biological-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="biological-interpretation">Biological Interpretation</h3>
+<p>Responsibilities tell us:</p>
+<ul>
+<li>Which animals are potential <strong>hybrids</strong> (balanced responsibilities)</li>
+<li>Which animals are <strong>typical representatives</strong> of their species (extreme responsibilities)</li>
+<li>Where the <strong>overlap zones</strong> between species are</li>
+</ul>
+</section>
+</section>
+<section id="the-deep-em-gmm-relationship" class="level2">
+<h2 class="anchored" data-anchor-id="the-deep-em-gmm-relationship">8. The Deep EM-GMM Relationship</h2>
+<section id="em-as-the-engine-of-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="em-as-the-engine-of-gmm">EM as the “Engine” of GMM</h3>
+<p>GMM defines <strong>the structure</strong>: “data comes from several Gaussians” The EM algorithm provides <strong>the method</strong>: “how to find these Gaussians”</p>
+</section>
+<section id="the-virtuous-cycle" class="level3">
+<h3 class="anchored" data-anchor-id="the-virtuous-cycle">The Virtuous Cycle</h3>
+<p>EM cycle:</p>
+<ol type="1">
+<li>Better parameters → More precise responsibilities</li>
+<li>More precise responsibilities → Even better parameters</li>
+<li>Repeat until perfection</li>
+</ol>
+</section>
+<section id="difference-from-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="difference-from-k-means">Difference from K-means</h3>
+<p>K-means is like EM with a <strong>binary vision</strong>:</p>
+<ul>
+<li>K-means: “This point is IN or OUT of the cluster”</li>
+<li>EM: “This point is X% in cluster A, Y% in B, …”</li>
+</ul>
+</section>
+</section>
+<section id="practical-applications-of-em-with-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="practical-applications-of-em-with-gmm">9. Practical Applications of EM with GMM</h2>
+<section id="speech-recognition-1" class="level3">
+<h3 class="anchored" data-anchor-id="speech-recognition-1">1. Speech Recognition</h3>
+<ul>
+<li>Each phoneme is modeled by a GMM</li>
+<li>EM finds parameters for each phoneme</li>
+<li>Responsibilities help identify transitions between phonemes</li>
+</ul>
+</section>
+<section id="image-segmentation-1" class="level3">
+<h3 class="anchored" data-anchor-id="image-segmentation-1">2. Image Segmentation</h3>
+<ul>
+<li>Different image regions = different components</li>
+<li>EM segments image into coherent regions</li>
+<li>Responsibilities give fuzzy boundaries (more realistic)</li>
+</ul>
+</section>
+<section id="fraud-detection" class="level3">
+<h3 class="anchored" data-anchor-id="fraud-detection">3. Fraud Detection</h3>
+<ul>
+<li>Normal behaviors = one component</li>
+<li>Abnormal behaviors = another component</li>
+<li>Responsibilities indicate degree of abnormality</li>
+</ul>
+</section>
+</section>
+<section id="limitations-and-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-and-solutions">10. Limitations and Solutions</h2>
+<section id="initialization-problem" class="level3">
+<h3 class="anchored" data-anchor-id="initialization-problem">Initialization Problem</h3>
+<p>EM converges to a <strong>local optimum</strong>. Poor initialization gives poor results.</p>
+<p><strong>Solution</strong>: Multiple trials with different initializations, or use K-means to initialize.</p>
+</section>
+<section id="choosing-number-of-components" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-number-of-components">Choosing Number of Components</h3>
+<p>EM doesn’t tell us how many components to use.</p>
+<p><strong>Solution</strong>: Use BIC criterion that penalizes overly complex models.</p>
+</section>
+<section id="computational-complexity" class="level3">
+<h3 class="anchored" data-anchor-id="computational-complexity">Computational Complexity</h3>
+<p>Calculating all responsibilities can be costly for large datasets.</p>
+<p><strong>Solution</strong>: Approximations, or mini-batch processing.</p>
+</section>
+</section>
+<section id="conclusion-the-elegance-of-the-em-approach" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-the-elegance-of-the-em-approach">Conclusion: The Elegance of the EM Approach</h2>
+<p>The EM algorithm, with its central concept of <strong>responsibility</strong>, elegantly solves a seemingly unsolvable problem: how to learn from a mixture when you can’t separate the ingredients.</p>
+<p>The beauty of this approach lies in its <strong>reflexivity</strong>:</p>
+<ol type="1">
+<li>We use parameters to estimate responsibilities</li>
+<li>We use responsibilities to improve parameters</li>
+<li>Each cycle improves both</li>
+</ol>
+<p>GMM is just one application of the EM algorithm, but it’s a particularly elegant application that shows the full power of the responsibility concept. By allowing points to partially belong to multiple clusters, EM captures the <strong>nuance</strong> and <strong>uncertainty</strong> inherent in real data.</p>
+<p>As statistician George Box said: “All models are wrong, but some are useful.” The EM-GMM duo is not only useful, but also remarkably intuitive once you understand the concept of responsibility.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
