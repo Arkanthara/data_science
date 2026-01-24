@@ -2,7 +2,8 @@ project:
   type: website
   title: "Data Science"
   output-dir: ../_site
-  resources: "*.qmd"
+  render:
+    - "ds*1*"
 
 website:
   navbar:
@@ -24,15 +25,15 @@ website:
       collapse-level: 1
       contents:
       - section: "High-dimensional representation spaces"
-        contents: "ds2*"
+        contents: "ds21*"
       - section: "Principal Component Analysis"
-        contents: "ds3*"
+        contents: "ds31*"
       - section: "Linear Discriminant Analysis"
-        contents: "ds5*"
+        contents: "ds51*"
       - section: "k-Means"
-        contents: "ds7*"
+        contents: "ds71*"
       - section: "Expectation-Maximization"
-        contents: "ds6*"
+        contents: "ds61*"
 
 
 format:
