@@ -1,3 +1,5 @@
+# Exam questions
+
 # Le Modèle de Mélange Gaussien (GMM) : Un Guide Complet et Intuitif
 
 ## Question

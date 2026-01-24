@@ -4,6 +4,7 @@ project:
   output-dir: ../_site/fr
   render:
     - "ds*1*"
+    - "dsp*.qmd"
 
 
 website:
@@ -27,24 +28,30 @@ website:
       search: true
       collapse-level: 1
       contents:
-      - section: "Espaces de Représentation en Haute Dimension"
-        contents: "ds21*"
-      - section: "Principal Component Analysis"
-        contents: "ds31*"
-      - section: "Linear Discriminant Analysis"
-        contents: "ds51*"
-      - section: "k-Means"
-        contents: "ds7*"
-      - section: "Expectation-Maximization"
-        contents: "ds6*"
+      - section: "Partie I"
+        contents:
+        - section: "Espaces de Représentation en Haute Dimension"
+          contents: "ds21*"
+        - section: "Principal Component Analysis"
+          contents: "ds31*"
+        - section: "Linear Discriminant Analysis"
+          contents: "ds51*"
+        - section: "k-Means"
+          contents: "ds71*"
+        - section: "Expectation-Maximization"
+          contents: "ds61*"
+      - section: "Partie II"
+        contents: "dsp*"
+
 
 
 
 format:
+  pdf:
+    toc: true
+    pandoc_args: ["--svg-filter=none"]
   html:
     theme:
       light: flatly
       dark: darkly
-    toc: true
-  pdf:
     toc: true

@@ -1,0 +1,677 @@
+# Exam questions
+
+# Principal Component Analysis (PCA): Method, Calculation and Interpretation
+
+## Question
+
+Explain in detail the principal component analysis (PCA) method, including the assumptions, calculation and interpretation of this technique.
+
+## Introduction and Objectives
+
+**Principal Component Analysis (PCA)** is a dimensionality reduction method that transforms a set of potentially correlated variables into a set of linearly uncorrelated variables called **principal components**.
+
+### Main Objectives
+
+* Reduce data dimensionality while preserving maximum information
+* Identify directions of greatest variance in the data
+* Decorate variables
+* Visualize multidimensional data
+
+## Fundamental Assumptions
+
+### Statistical Assumptions
+
+1. **Linearity**: Relationships between variables are linear
+   
+2. **Normal Distribution**: Data approximately follows a multivariate Gaussian distribution
+   
+   $$
+   X_i \sim \mathcal{N}(\overline{\mathbf{x}}, \Sigma)
+   $$
+
+3. **Importance of Variance**: Variance is an appropriate measure of the information contained in the data
+
+4. **Orthogonality**: Principal components are orthogonal to each other
+
+### Data Prerequisites
+
+* Data must be **centered** (zero mean)
+* Variable scales must be comparable (normalization recommended)
+* No significant missing values
+
+## Calculation of Principal Components
+
+### Step 1: Data Preparation
+
+**Centering:** Subtract the mean of each variable
+
+$$
+\mathbf{x}_i^{\text{centered}} = \mathbf{x}_i - \overline{\mathbf{x}}, \quad \text{where} \quad \overline{\mathbf{x}} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i
+$$
+
+**Normalization (optional but recommended):** Divide by the standard deviation
+
+$$
+\mathbf{x}_i^{\text{norm}} = \frac{\mathbf{x}_i^{\text{centered}}}{\sigma}, \quad \text{where} \quad \sigma = \sqrt{\frac{1}{N} \sum_{i=1}^{N} (x_i - \overline{x})^2}
+$$
+
+### Step 2: Calculation of the Covariance Matrix
+
+For $N$ observations with $D$ variables, the covariance matrix $\Sigma$ is:
+
+$$
+\Sigma = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{x}_i - \overline{\mathbf{x}})(\mathbf{x}_i - \overline{\mathbf{x}})^\top
+$$
+
+**Properties of $\Sigma$:**
+
+* Symmetric: $\Sigma = \Sigma^\top$
+* Positive semi-definite: $\mathbf{v}^\top \Sigma \mathbf{v} \geq 0$ for all $\mathbf{v}$
+* Diagonal elements: variances of variables
+* Off-diagonal elements: covariances between variables
+
+### Step 3: Eigenvalue Decomposition
+
+We seek the eigenpairs $(\lambda_d, \mathbf{u}_d)$ such that:
+
+$$
+\Sigma \mathbf{u}_d = \lambda_d \mathbf{u}_d, \quad d = 1, \dots, D
+$$
+
+**Order of eigenvalues:** $\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_D \geq 0$
+
+**Matrix of eigenvectors:** $\mathbf{U} = [\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_D]$
+
+#### Fundamental Relation: Eigenvalue = Variance
+
+##### Mathematical Demonstration
+
+**Step 1: Projected variance**
+
+Let $\mathbf{u}$ be a unit vector. The projection of an observation $\mathbf{x}_i$ onto $\mathbf{u}$ is:
+
+$$
+p_i = \mathbf{u}^\top \mathbf{x}_i
+$$
+
+**Step 2: Variance calculation**
+
+The mean of projections (for centered data) is zero:
+
+$$
+\bar{p} = \mathbf{u}^\top \bar{\mathbf{x}} = 0
+$$
+
+The variance of projections is therefore:
+
+$$
+\text{Var}(\mathbf{u}) = \frac{1}{N} \sum_{i=1}^N (p_i)^2 = \frac{1}{N} \sum_{i=1}^N (\mathbf{u}^\top \mathbf{x}_i)^2
+$$
+
+**Step 3: Matrix formulation**
+
+$$
+\text{Var}(\mathbf{u}) = \frac{1}{N} \sum_{i=1}^N \mathbf{u}^\top \mathbf{x}_i \mathbf{x}_i^\top \mathbf{u} = \mathbf{u}^\top \left( \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i \mathbf{x}_i^\top \right) \mathbf{u}
+$$
+
+But $\frac{1}{N} \sum_{i=1}^N \mathbf{x}_i \mathbf{x}_i^\top = \Sigma$
+
+So:
+
+$$
+\text{Var}(\mathbf{u}) = \mathbf{u}^\top \Sigma \mathbf{u}
+$$
+
+**Step 4: Constrained maximization**
+
+We seek $\mathbf{u}_1$ maximizing $\mathbf{u}^\top \Sigma \mathbf{u}$ under $\|\mathbf{u}\| = 1$.
+
+Lagrangian:
+
+$$
+\mathcal{L}(\mathbf{u}, \lambda) = \mathbf{u}^\top \Sigma \mathbf{u} - \lambda(\mathbf{u}^\top \mathbf{u} - 1)
+$$
+
+::: {.callout collapse="true"}
+### Concise explanation of the role of $\lambda$
+
+In PCA, we maximize $\mathbf{u}^T\Sigma\mathbf{u}$ under the constraint $\mathbf{u}^T\mathbf{u} = 1$.
+
+The $\lambda$ appears naturally when using the **method of Lagrange multipliers** to solve this constrained optimization problem.
+
+The Lagrange function is written:
+$$
+\mathcal{L}(\mathbf{u}, \lambda) = \mathbf{u}^T\Sigma\mathbf{u} - \lambda(\mathbf{u}^T\mathbf{u} - 1)
+$$
+
+The term $-\lambda(\mathbf{u}^T\mathbf{u} - 1)$ allows us to **incorporate the constraint directly into the objective function**.
+The multiplier $\lambda$ serves as a **penalty parameter** that ensures the solution respects the unit norm constraint.
+
+Thus, $\lambda$ is essentially a **mathematical artifact** that allows us to transform a constrained optimization problem into an equivalent unconstrained problem.
+:::
+
+Optimality condition:
+
+$$
+\frac{\partial \mathcal{L}}{\partial \mathbf{u}} = 2\Sigma \mathbf{u} - 2\lambda \mathbf{u} = 0
+$$
+
+That is:
+
+$$
+\Sigma \mathbf{u} = \lambda \mathbf{u}
+$$
+
+**Step 5: Interpretation**
+
+For an eigenvector $\mathbf{u}_d$ satisfying $\Sigma \mathbf{u}_d = \lambda_d \mathbf{u}_d$:
+
+$$
+\text{Var}(\mathbf{u}_d) = \mathbf{u}_d^\top \Sigma \mathbf{u}_d = \mathbf{u}_d^\top (\lambda_d \mathbf{u}_d) = \lambda_d \mathbf{u}_d^\top \mathbf{u}_d = \lambda_d
+$$
+
+Because $\mathbf{u}_d^\top \mathbf{u}_d = \|\mathbf{u}_d\|^2 = 1$.
+
+##### Conclusion
+
+**Each eigenvalue $\lambda_d$ is exactly the variance of the data projected onto the corresponding eigenvector $\mathbf{u}_d$.**
+
+#### Order of Components
+
+We order by decreasing eigenvalues:
+
+$$
+\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_D \geq 0
+$$
+
+Thus:
+
+* $\mathbf{u}_1$: direction of maximum variance
+* $\mathbf{u}_2$: orthogonal direction of remaining maximum variance
+
+### Step 4: Component Selection
+
+#### Explained Variance Criterion
+
+##### Total Variance
+
+- Represents **all the information** contained in the original data
+- This is the **reference**: 100% of available information
+
+$$
+\text{Total Variance} = \sum_{d=1}^D \lambda_d = \text{Tr}(\Sigma)
+$$
+
+##### Explained Variance
+
+- Quantifies **the information captured** by each principal component
+- Corresponds directly to the **eigenvalues** $\lambda_d$ of $\Sigma$
+- The larger $\lambda_d$, the more variance the component explains
+- The **explained variance** by component $d$ is:
+  $$
+  \text{ExplainedVar}_d = \frac{\lambda_d}{\sum_{k=1}^{D} \lambda_k}
+  $$
+
+##### Cumulative Variance
+
+- Progressive sum of explained variances component after component
+- Shows **how much information** is retained by selecting $K$ components
+- Formula: $\frac{\lambda_1 + \lambda_2 + \cdots + \lambda_k}{\text{Total variance}}$
+- Mathematically, the **cumulative explained variance** for $K$ components is:
+  $$
+  \text{CumulativeVar}_K = \frac{\sum_{d=1}^{K} \lambda_d}{\sum_{d=1}^{D} \lambda_d}
+  $$
+
+
+##### Practical Usefulness
+
+- **Choosing the number of components**: Keep enough components to explain say 80-95% of total variance
+- **Dimensionality reduction**: Keep the essential information with fewer variables
+- **Interpretation**: Understand which components carry the most information
+
+**Visual example**: If PC1 explains 60% and PC2 explains 20%, then with 2 components we capture 80% of total information.
+
+
+
+
+#### Common Selection Rules
+
+* **Elbow Method**: Observe the "elbow" in the eigenvalue plot
+* **Variance threshold**: Keep enough components to explain 70-95% of total variance
+* **Kaiser criterion**: Keep components with eigenvalue > 1 (if data normalized)
+
+### Step 5: Data Projection
+
+The projection of original data onto the first $K$ components is:
+
+$$
+\mathbf{y}_i = \mathbf{U}_K^\top (\mathbf{x}_i - \overline{\mathbf{x}})
+$$
+
+where $\mathbf{U}_K = [\mathbf{u}_1, \dots, \mathbf{u}_K]$ contains the first $K$ eigenvectors.
+
+## Interpretation of Results
+
+### Geometric Interpretation
+
+* **Principal Component 1**: Direction of greatest variance in the data
+* **Principal Component 2**: Direction of greatest variance orthogonal to the first
+* **Latent space**: New coordinate system optimized for variance
+
+### Component Loadings
+
+The elements of the eigenvectors $\mathbf{u}_d$ are the **loadings**:
+
+* **Large absolute value**: Variable strongly contributes to the component
+* **Positive/negative sign**: Indicates direction of correlation
+* **Interpretation**: Loadings allow understanding which original variables define each component
+
+### Observation Scores
+
+The coordinates $\mathbf{y}_i$ in the latent space are the **scores**:
+
+* **Relative position**: Observations with similar scores are similar in original space
+* **Visualization**: 2D/3D plot of the first two/three components
+
+### Correlation Circle
+
+For normalized data, we can represent:
+
+* **Variables**: Vectors whose length represents quality of representation
+* **Angles between vectors**: Correlations between variables
+* **Projection on axes**: Correlation with components
+
+## Applications and Uses
+
+### Dimensionality Reduction
+
+**Objective:** Go from $D$ dimensions to $K < D$ dimensions with minimal information loss
+
+**Reconstruction formula:**
+
+$$
+\tilde{\mathbf{x}}_i = \overline{\mathbf{x}} + \mathbf{U}_K \mathbf{y}_i
+$$
+
+**Reconstruction error:**
+
+$$
+\mathcal{L} = \sum_{i=1}^{N} \|\mathbf{x}_i - \tilde{\mathbf{x}}_i\|^2 = \sum_{d=K+1}^{D} \lambda_d
+$$
+
+### Multidimensional Data Visualization
+
+* **2D/3D projection** for visual exploration
+* **Cluster identification** or structure detection
+* **Detection of atypical observations** (outliers)
+
+### Denoising
+
+If noise has low variance compared to signal, PCA can separate:
+
+* **Signal**: Captured by first components
+* **Noise**: Captured by last components
+
+### Preprocessing for Other Algorithms
+
+* **Acceleration** of algorithms (fewer dimensions)
+* **Performance improvement** (elimination of collinearities)
+* **Overfitting reduction**
+
+## Limitations and Precautions
+
+### PCA Limitations
+
+1. **Linearity**: Does not capture non-linear relationships
+   
+2. **Sensitivity to outliers**: Variance is sensitive to extreme values
+
+3. **Difficult interpretation** when components are complex combinations of original variables
+
+4. **Variable scale**: Requires prior normalization
+
+5. **Non-Gaussian distribution**: Less effective for non-normal distributions
+
+### Alternatives to Consider
+
+* **Kernel PCA** for non-linear relationships
+* **t-SNE, UMAP** for non-linear visualization
+* **Autoencoders** for non-linear reduction
+* **Factor Analysis** for models with explicit noise
+
+## Step-by-Step Application Example
+
+### Step 0: Initial Data
+
+Let $\mathbf{X}$ be a data matrix of size $N \times D$
+
+### Step 1: Centering and Normalization
+
+```python
+# Pseudocode for illustration
+X_centered = X - mean(X, axis=0)
+X_normalized = X_centered / std(X_centered, axis=0)
+```
+
+### Step 2: Covariance Matrix Calculation
+
+$$
+\Sigma = \frac{1}{N} \mathbf{X}_{\text{norm}}^\top \mathbf{X}_{\text{norm}}
+$$
+
+### Step 3: Eigenvalue Decomposition
+
+Solve $\Sigma \mathbf{u}_d = \lambda_d \mathbf{u}_d$
+
+### Step 4: Eigenvalue Analysis
+
+**Explained variance table:**
+
+| Component | Eigenvalue | Explained Variance | Cumulative Variance |
+|-----------|------------|-------------------|---------------------|
+| PC1       | $\lambda_1$ | $v_1$%            | $v_1$%              |
+| PC2       | $\lambda_2$ | $v_2$%            | $v_1+v_2$%          |
+| ...       | ...         | ...               | ...                 |
+
+### Step 5: Decision on Number of Components
+
+* Eigenvalue plot (scree plot)
+* Cumulative variance threshold (ex: 80%)
+* Loadings analysis for interpretability
+
+### Step 6: Projection and Interpretation
+
+* Calculate scores $\mathbf{Y} = \mathbf{X}_{\text{norm}} \mathbf{U}_K$
+* Score visualization
+* Loadings analysis to name components
+
+## Conclusion
+
+**Principal Component Analysis** is a powerful method but with specific assumptions:
+
+* **Strong power** for linear and Gaussian data
+* **Clear geometric interpretation** (variance maximization)
+* **Efficient calculation** via eigenvalue decomposition
+* **Broad applicability** in preprocessing and visualization
+
+**Usage recommendations:**
+
+1. Always visualize data before and after PCA
+2. Check assumptions (linearity, approximate normality)
+3. Normalize variables if they are on different scales
+4. Interpret components via loadings
+5. Validate results on test data
+
+A thorough understanding of PCA provides a solid foundation for approaching more advanced methods of dimensionality reduction and data analysis.
+
+# Choosing the Number of Components in PCA
+
+## Question
+
+When performing principal component analysis (PCA), how to choose the number of eigenvectors to keep? Explain why and discuss the implications on reconstruction.
+
+## Introduction to the Selection Problem
+
+When we perform Principal Component Analysis, a crucial question arises: **how many principal components should we keep?** This choice represents a fundamental compromise between:
+
+* **Dimensionality reduction** (primary objective)
+* **Information preservation** (measured by explained variance)
+* **Reconstruction quality** of original data
+
+## Main Selection Criteria
+
+### Based on Explained Variance
+
+#### Cumulative Variance Threshold
+
+The most common method is to keep enough components to explain a predefined percentage of total variance.
+
+**Calculation:**
+
+If we have $D$ eigenvalues $\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_D$, total variance is:
+
+$$
+\text{Total Variance} = \sum_{d=1}^D \lambda_d
+$$
+
+Variance explained by the first $K$ components is:
+
+$$
+\text{Explained Variance}(K) = \sum_{d=1}^K \lambda_d
+$$
+
+Proportion of explained variance is:
+
+$$
+\text{PVE}(K) = \frac{\sum_{d=1}^K \lambda_d}{\sum_{d=1}^D \lambda_d}
+$$
+
+**Practical rule:** Choose $K$ such that $\text{PVE}(K) \geq \tau$, where $\tau$ is typically between 70% and 95%.
+
+**Advantages:**
+
+* Simple to understand and implement
+* Guarantees minimal information preservation
+* Standardized and reproducible
+
+**Disadvantages:**
+
+* Choice of threshold $\tau$ is arbitrary
+* Does not account for specific data structure
+
+### Eigenvalue Plot Analysis (Scree Plot)
+
+#### Elbow Method
+
+This visual method consists of plotting eigenvalues as a function of their order.
+
+**Procedure:**
+
+1. Plot $\lambda_d$ versus $d$ (for $d = 1, 2, \dots, D$)
+2. Identify the point where the curve forms an "elbow" (pronounced angle)
+3. Keep components before the elbow
+
+**Interpretation:**
+
+* Components before the elbow capture the main "signal"
+* Components after the elbow mainly capture "noise"
+
+**Advantages:**
+
+* Intuitive and visual method
+* Takes into account relative eigenvalue decay
+
+**Disadvantages:**
+
+* Subjective (different people may identify different elbows)
+* May be ambiguous for some eigenvalue distributions
+
+### Kaiser Rule (for Standardized Data)
+
+#### Eigenvalue > 1 Threshold
+
+When data is standardized (mean 0, variance 1), each original variable contributes 1 to total variance.
+
+**Rule:** Keep components whose eigenvalue $\lambda_d > 1$.
+
+**Justification:** A component should explain at least as much variance as a single original variable.
+
+**Limitations:**
+
+* Only applies to standardized data
+* Can be too conservative (too many components) or too lax (too few)
+
+### Method Based on Reconstruction Error
+
+#### Quadratic Error Minimization
+
+A more formal approach is to choose $K$ that minimizes reconstruction error under a constraint.
+
+**Reconstruction error:** For each observation $\mathbf{x}_i$, reconstruction using $K$ components is:
+
+$$
+\tilde{\mathbf{x}}_i = \overline{\mathbf{x}} + \sum_{d=1}^K (\mathbf{u}_d^\top (\mathbf{x}_i - \overline{\mathbf{x}})) \mathbf{u}_d
+$$
+
+Total quadratic error is:
+
+$$
+\mathcal{L}(K) = \sum_{i=1}^N \|\mathbf{x}_i - \tilde{\mathbf{x}}_i\|^2 = \sum_{d=K+1}^D \lambda_d
+$$
+
+**Important relationship:** Reconstruction error is exactly the sum of eigenvalues of excluded components.
+
+**Approach:** Choose $K$ such that $\mathcal{L}(K) \leq \epsilon$, where $\epsilon$ is an acceptable error threshold.
+
+## Implications on Reconstruction
+
+### Exact Relationship between Number of Components and Quality
+
+#### Eckart-Young Theorem
+
+This fundamental theorem states that the rank-$K$ approximation by PCA is **optimal** in the least squares sense.
+
+**Formalization:** Let $\mathbf{X}$ be the centered data matrix. Singular value decomposition (SVD) gives $\mathbf{X} = \mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top$. The rank-$K$ approximation:
+
+$$
+\mathbf{X}_K = \mathbf{U}_K \boldsymbol{\Sigma}_K \mathbf{V}_K^\top
+$$
+
+minimizes $\|\mathbf{X} - \mathbf{X}_K\|_F^2$ among all rank-$K$ matrices.
+
+**Implication:** PCA provides the best rank-$K$ approximation for centered data.
+
+### Dimension-Reconstruction Trade-off
+
+#### Extreme Cases
+
+* **$K = D$:** Perfect reconstruction
+  * $\tilde{\mathbf{x}}_i = \mathbf{x}_i$ exactly
+  * No dimensionality reduction
+  * Conservation of 100% variance
+
+* **$K = 0$:** Reconstruction by mean only
+  * $\tilde{\mathbf{x}}_i = \overline{\mathbf{x}}$
+  * Maximum error: $\mathcal{L}(0) = \sum_{d=1}^D \lambda_d$
+  * No information about individual variability
+
+#### Typical Behavior
+
+The relationship between $K$ and reconstruction quality generally follows a **law of diminishing returns**:
+
+* First components significantly improve reconstruction
+* Improvements become progressively weaker
+* Beyond a certain point, gains are negligible
+
+### Impact on Applications
+
+#### Visualization
+
+For 2D or 3D visualization:
+
+* **$K = 2$ or $3$:** Allows direct visualization
+* **Implication:** Significant information loss if first two components don't explain enough variance
+* **Solution:** Examine several component pairs if necessary
+
+#### Denoising
+
+PCA can separate signal and noise:
+
+* **Signal:** Captured by first components (high eigenvalues)
+* **Noise:** Captured by last components (low eigenvalues)
+* **Choice of $K$:** Should be sufficient to capture signal but exclude noise
+
+#### Compression
+
+For data compression:
+
+* **Compression rate:** $\frac{K}{D} \times 100\%$
+* **Distortion:** Measured by $\frac{\sum_{d=K+1}^D \lambda_d}{\sum_{d=1}^D \lambda_d} \times 100\%$
+* **Trade-off:** Compression rate vs reconstruction quality
+
+## Advanced Approaches and Considerations
+
+### Cross-Validation
+
+#### Validation Method
+
+To avoid overfitting, cross-validation can be used:
+
+1. Divide data into training and test sets
+2. Calculate PCA on training set
+3. Evaluate reconstruction error on test set
+4. Choose $K$ minimizing test error
+
+**Advantage:** More robust, especially for small samples
+
+### Information Criteria
+
+#### Akaike (AIC) and BIC Criteria
+
+For normally distributed data, information criteria can be used:
+
+* **AIC:** Balances fit quality and complexity
+* **BIC:** More strongly penalizes complexity
+
+These criteria formulate the choice of $K$ as a model selection problem.
+
+### Domain Considerations
+
+#### Domain Knowledge
+
+Sometimes external considerations guide the choice of $K$:
+
+* **Interpretability:** Limit to number of components easy to interpret
+* **Technical constraints:** Storage or processing limitations
+* **Application requirements:** Some applications require specific number of dimensions
+
+## Practical Example
+
+### Typical Scenario
+
+Suppose analysis on data with $D = 50$ variables and $N = 1000$ observations.
+
+**Eigenvalues:** $\lambda_1 = 15.2$, $\lambda_2 = 8.1$, $\lambda_3 = 4.3$, $\lambda_4 = 2.1$, $\lambda_5 = 1.8$, ... $\lambda_{50} = 0.05$
+
+**Calculations:**
+
+* Total variance: $\sum \lambda_d = 50.0$ (since standardized data)
+* PVE(1): $15.2/50.0 = 30.4\%$
+* PVE(2): $(15.2+8.1)/50.0 = 46.6\%$
+* PVE(3): $(15.2+8.1+4.3)/50.0 = 55.2\%$
+* PVE(4): $(15.2+8.1+4.3+2.1)/50.0 = 59.4\%$
+* PVE(5): $(15.2+8.1+4.3+2.1+1.8)/50.0 = 63.0\%$
+
+**Possible decisions:**
+
+1. **80% threshold:** Would require about 10 components (additional calculation needed)
+2. **Kaiser rule:** 5 components ($\lambda_5 = 1.8 > 1$, $\lambda_6 = 0.9 < 1$)
+3. **Scree plot:** Elbow likely after 3rd or 4th component
+4. **Reconstruction error < 40%:** $K$ such that $\sum_{d=K+1}^{50} \lambda_d < 20$ (40% of 50)
+
+## General Recommendations
+
+### Recommended Approach
+
+1. **Start by standardizing** data if variables have different scales
+2. **Examine scree plot** for visual intuition
+3. **Calculate cumulative explained variance** for different $K$
+4. **Consider Kaiser rule** if data is standardized
+5. **Evaluate your application's needs** in terms of compression and quality
+6. **Test robustness** by cross-validation if possible
+7. **Check interpretability** of retained components
+
+### Pitfalls to Avoid
+
+* **Too few components:** Significant information loss, poor reconstruction
+* **Too many components:** Insufficient dimensionality reduction, noise capture
+* **Ignoring context:** Optimal choice depends on final application
+* **Forgetting validation:** Risk of overfitting on small samples
+
+## Conclusion
+
+Choosing the number of components in PCA is a crucial decision that directly influences reconstruction quality and analysis usefulness. No method is universally best; an approach combining several criteria is generally recommended.
+
+**Fundamental reminder:** Reconstruction error is exactly the sum of eigenvalues of excluded components. This direct link between eigenvalues and approximation quality provides a solid theoretical basis to guide selection.
+
+In practice, this choice always represents a trade-off between simplicity (few dimensions) and fidelity (accurate reconstruction), and must be adapted to the specific objectives of the analysis.

@@ -1,0 +1,503 @@
+# Exam questions
+
+# Relationship between Linear Discriminant Analysis (LDA) and Conditional Modeling for Classification
+
+## Question
+
+Explain how the model of Linear Discriminant Analysis (LDA) relate to conditional model for classification.
+
+## Introduction to Conditional Modeling in Classification
+
+In supervised classification problems, we aim to predict the class label $y$ of an observation $x$.  
+A fundamental approach involves modeling the **conditional probability** $P(y|x)$, i.e., the probability that an observation $x$ belongs to a given class $y$.
+
+---
+
+## Bayesian Framework for Classification
+
+### Bayes' Rule for Optimal Decision
+
+According to Bayes' theorem, the posterior probability that an observation $x$ belongs to class $k$ is:
+
+$$
+P(C = k | x) = \frac{P(x | C = k) \cdot P(C = k)}{P(x)}
+$$
+
+Where:
+- $P(C = k)$ is the **prior probability** of class $k$
+- $P(x | C = k)$ is the **likelihood** of $x$ given class $k$
+- $P(x)$ is the marginal probability of $x$ (constant for all classes)
+
+The optimal decision rule (minimizing the error rate) consists of assigning $x$ to the class $k$ that maximizes the posterior probability:
+
+$$
+\delta(x) = \arg\max_k P(C = k | x)
+$$
+
+Since $P(x)$ is constant, this rule is equivalent to:
+
+$$
+\delta(x) = \arg\max_k \left[ P(x | C = k) \cdot P(C = k) \right]
+$$
+
+---
+
+## LDA as a Conditional Generative Model
+
+### Fundamental Assumptions of LDA
+
+Linear Discriminant Analysis is based on three clear assumptions:
+
+1. **Gaussian distribution per class**: Each class follows a multivariate normal distribution
+
+   $$
+   P(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma)
+   $$
+
+2. **Common covariance matrix**: All classes share the **same** covariance matrix $\Sigma$
+
+3. **Prior probabilities**: Classes have prior probabilities $P(C = k)$ (often estimated by sample proportions)
+
+### Explicit Formulation of the LDA Model
+
+Under these assumptions, the probability density for class $k$ is written as:
+
+$$
+P(x | C = k) = \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2}} \exp\left( -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) \right)
+$$
+
+Where $D$ is the data dimension, $\mu_k$ is the mean vector of class $k$, and $\Sigma$ is the common covariance matrix.
+
+---
+
+## From Conditional Modeling to Linear Discriminant Function
+
+### Derivation of the Decision Function
+
+By applying the Bayesian decision rule and taking the logarithm (which preserves maxima), we obtain:
+
+$$
+\begin{aligned}
+\delta(x) &= \arg\max_k \left[ \ln P(x | C = k) + \ln P(C = k) \right] \\
+&= \arg\max_k \left[ -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) + \ln P(C = k) + \text{constant} \right]
+\end{aligned}
+$$
+
+By expanding the quadratic term and eliminating terms independent of $k$, we obtain the **linear discriminant function**:
+
+$$
+\delta(x) = \arg\max_k \left[ x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k) \right]
+$$
+
+### Explicit Form of the Decision Boundary
+
+The discriminant function for class $k$ can be written as a linear function in $x$:
+
+$$
+g_k(x) = w_k^T x + b_k
+$$
+
+Where:
+- $w_k = \Sigma^{-1} \mu_k$ is the weight vector for class $k$
+- $b_k = -\frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k)$ is the bias for class $k$
+
+The decision boundary between two classes $k$ and $l$ is then **linear**:
+
+$$
+\{x : g_k(x) = g_l(x)\} \quad \Rightarrow \quad (w_k - w_l)^T x + (b_k - b_l) = 0
+$$
+
+---
+
+## Geometric Interpretation and Link with Fisher's Criterion
+
+### Optimal Projection for Discrimination
+
+LDA seeks the projection direction $a$ that maximizes the relative separation between classes.  
+Fisher's criterion, which maximizes:
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+corresponds exactly to finding the direction that maximizes the ratio between:
+- $\Sigma_b$: between-class dispersion (to maximize)
+- $\Sigma_w$: within-class dispersion (to minimize)
+
+### Equivalence with the Probabilistic Approach
+
+When the prior probabilities are equal ($P(C = k) = 1/M$), the LDA solution via Fisher's criterion is equivalent to the solution obtained by the Gaussian modeling approach with common covariance.
+
+The optimal direction $a$ is given by the first eigenvector of $\Sigma_w^{-1} \Sigma_b$, which in the two-class case reduces to:
+
+$$
+a \propto \Sigma^{-1} (\mu_1 - \mu_2)
+$$
+
+Exactly the same expression as in the Bayesian approach!
+
+---
+
+## Model Parameter Estimation
+
+### Maximum Likelihood Approach
+
+From a training sample $\{(x_i, y_i)\}_{i=1}^N$, LDA parameters are naturally estimated:
+
+- **Class means**: $\hat{\mu}_k = \frac{1}{N_k} \sum_{i: y_i = k} x_i$
+- **Common covariance matrix**: $\hat{\Sigma} = \frac{1}{N - M} \sum_{k=1}^M \sum_{i: y_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T$
+- **Prior probabilities**: $\hat{P}(C = k) = \frac{N_k}{N}$
+
+These estimators are **consistent** and **asymptotically efficient** under the model assumptions.
+
+---
+
+## Advantages of the Conditional Interpretation of LDA
+
+### 1. Solid Probabilistic Foundations
+Unlike a simple search for discriminant directions, LDA provides a **complete generative model** that allows:
+- Generating synthetic data for each class
+- Calculating well-calibrated posterior probabilities
+- Incorporating prior knowledge about classes
+
+### 2. Ability to Handle Imbalanced Classes
+By using prior probabilities $P(C = k)$, LDA can naturally account for unequal class frequencies.
+
+### 3. Extension to Multi-Class Classification
+The probabilistic framework naturally extends to $M > 2$ classes, whereas Fisher's criterion requires generalizations.
+
+### 4. Interpretation in Terms of Likelihood Ratio
+The decision between two classes $k$ and $l$ can be expressed as:
+
+$$
+\log \frac{P(C = k | x)}{P(C = l | x)} = (w_k - w_l)^T x + (b_k - b_l)
+$$
+
+This corresponds to a **likelihood ratio test** with a threshold adapted to prior probabilities.
+
+---
+
+## Limitations and Extensions
+
+### Restrictive Common Covariance Assumption
+The main limitation of LDA is the assumption that all classes share the same covariance matrix $\Sigma$.  
+When this assumption is not verified, we use:
+- **QDA (Quadratic Discriminant Analysis)**: allows different covariances per class, leading to quadratic boundaries
+- **Regularizations**: regularized versions of LDA for high-dimensional data
+
+### Modern Extensions
+- **Flexible LDA**: uses kernels to capture non-linearities
+- **Sparse LDA**: introduces sparsity constraints for variable selection
+- **Robust LDA**: versions resistant to outliers
+
+---
+
+## Concrete Example: Iris Flower Classification
+
+Consider the Iris dataset with 3 flower species.  
+LDA models each species by a Gaussian distribution in the feature space (petal/sepal length and width).
+
+For a new flower measurement $x$, LDA calculates:
+1. The likelihood $P(x | \text{setosa})$, $P(x | \text{versicolor})$, $P(x | \text{virginica})$
+2. The posterior probabilities via Bayes' rule
+3. Assigns the species with the maximum posterior probability
+
+The boundary between species appears linear in the feature space, due to the common covariance assumption.
+
+---
+
+## Conclusion
+
+Linear Discriminant Analysis is **fundamentally a conditional model for classification** that:
+
+1. **Explicitly models** $P(x | C = k)$ as Gaussians with common covariance
+2. **Uses Bayes' rule** to calculate $P(C = k | x)$ and make decisions
+3. **Reduces to linear discriminant functions** thanks to its simplifying assumptions
+4. **Is equivalent to Fisher's criterion** under the assumption of balanced classes
+
+This dual perspective - both as a probabilistic generative model and as a discriminant projection method - explains the power and enduring popularity of LDA in statistical learning.
+
+LDA perfectly illustrates how **well-chosen probabilistic assumptions** can lead to **simple and interpretable algorithms** while remaining theoretically grounded and practically effective.
+
+---
+
+# Linear Discriminant Analysis (LDA): Comprehensive Explanation
+
+## Question
+
+Explain the method of Linear Discriminant Analysis (LDA) including assumptions, calculation, and interpretation of the technique.
+
+How is this technique used for classification?
+
+## What is Linear Discriminant Analysis?
+
+Linear Discriminant Analysis (LDA) is a supervised statistical method that serves two main functions: **classification** and **dimensionality reduction**.  
+
+It aims to find linear combinations of the original variables that best separate different predefined classes.
+
+---
+
+## Fundamental Assumptions of LDA
+
+For LDA to function optimally, it relies on several key assumptions:
+
+### Gaussian Distribution
+Each class is assumed to follow a multivariate Gaussian distribution. Formally, for each class $k$, observations are drawn from:
+
+$$
+P(x | C = k) \sim \mathcal{N}(\mu_k, \Sigma)
+$$
+
+where $\mu_k$ is the mean vector of class $k$ and $\Sigma$ is the covariance matrix.
+
+### Homoscedasticity (Common Covariance)
+All classes share the same covariance matrix $\Sigma$. This assumption is crucial as it guarantees that decision boundaries will be linear.
+
+### Independent Observations
+Observations are sampled independently and identically distributed within each class.
+
+### Class Separability
+Class centers ($\mu_k$) must be sufficiently distinct relative to within-class dispersion.
+
+---
+
+## Calculation and Methodology
+
+### Notations and Definitions
+
+Consider a problem with $K$ classes:
+
+- $N_k$: number of observations in class $k$
+- $N$: total number of observations, with $N = \sum_{k=1}^K N_k$
+- $\mu_k$: mean vector of class $k$ (dimension $D$)
+- $\mu$: global mean vector of all observations
+
+### Dispersion Matrices
+
+#### Within-Class Scatter Matrix
+This matrix measures variability within each class:
+
+$$
+\Sigma_w = \sum_{k=1}^K \sum_{x_i \in \text{class } k} (x_i - \mu_k)(x_i - \mu_k)^T
+$$
+
+#### Between-Class Scatter Matrix
+This matrix measures dispersion between centers of different classes:
+
+$$
+\Sigma_b = \sum_{k=1}^K N_k (\mu_k - \mu)(\mu_k - \mu)^T
+$$
+
+### Fisher's Criterion
+
+LDA's objective is to find a projection vector $a$ that maximizes the relative separation between classes.  
+Fisher's criterion formalizes this objective:
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+The numerator $a^T \Sigma_b a$ represents the projected between-class dispersion (to maximize), while the denominator $a^T \Sigma_w a$ represents the projected within-class dispersion (to minimize).
+
+### Optimization Solution
+
+Maximizing $J(a)$ reduces to solving a generalized eigenvalue problem:
+
+$$
+\Sigma_b a = \lambda \Sigma_w a
+$$
+
+In practice, we compute the eigenvectors of $\Sigma_w^{-1} \Sigma_b$ (provided $\Sigma_w$ is invertible).
+
+### Detailed Calculation Steps
+
+**Step 1: Calculate Descriptive Statistics**
+
+- Class means: $\hat{\mu}_k = \frac{1}{N_k} \sum_{i: y_i = k} x_i$
+- Global mean: $\hat{\mu} = \frac{1}{N} \sum_{i=1}^N x_i$
+
+**Step 2: Calculate Dispersion Matrices**
+
+- Within-class matrix: $\hat{\Sigma}_w = \sum_{k=1}^K \sum_{i: y_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T$
+- Between-class matrix: $\hat{\Sigma}_b = \sum_{k=1}^K N_k (\hat{\mu}_k - \hat{\mu})(\hat{\mu}_k - \hat{\mu})^T$
+
+**Step 3: Solve Eigenvalue Problem**
+
+- Compute matrix $\hat{\Sigma}_w^{-1} \hat{\Sigma}_b$
+- Extract eigenvectors corresponding to the largest eigenvalues
+
+**Step 4: Form Discriminant Space**
+
+- Sort eigenvectors by descending eigenvalues
+- Form projection matrix $W = [a_1, a_2, ..., a_{K-1}]$ (at most $K-1$ non-zero directions)
+
+**Step 5: Project Data**
+
+$$
+Y = XW
+$$
+
+where $Y$ represents the data projected into the new discriminant space.
+
+---
+
+## Interpretation of Results
+
+### Discriminant Dimensions
+Each eigenvector $a_i$ corresponds to a direction in the original space along which class separation is maximal.  
+The associated eigenvalue $\lambda_i$ measures the discriminant power of this direction.
+
+### Explained Separation Percentage
+We can evaluate the relative importance of each discriminant dimension:
+
+$$
+\text{Proportion}_i = \frac{\lambda_i}{\sum_{j=1}^{K-1} \lambda_j} \times 100\%
+$$
+
+### Coefficient Significance
+The coefficients of vector $a_i$ indicate the relative importance of each original variable in discrimination.  
+A high absolute coefficient means the variable strongly contributes to class separation along that direction.
+
+### Visualization
+By projecting the data onto the first two discriminant dimensions, we obtain a 2D visualization that allows appreciating the separation between classes.
+
+---
+
+## Use for Classification
+
+### Probabilistic Modeling Approach
+
+LDA can be interpreted as a generative model where each class is modeled by a normal distribution:
+
+$$
+P(x | C = k) = \frac{1}{(2\pi)^{D/2}|\Sigma|^{1/2}} \exp\left(-\frac{1}{2}(x - \mu_k)^T \Sigma^{-1} (x - \mu_k)\right)
+$$
+
+### Probability Estimation
+
+#### Prior Probabilities
+Estimated by observed proportions in the sample:
+
+$$
+\hat{P}(C = k) = \frac{N_k}{N}
+$$
+
+#### Bayes' Rule for Classification
+The probability that an observation $x$ belongs to class $k$ is given by:
+
+$$
+P(C = k | x) = \frac{P(x | C = k) P(C = k)}{\sum_{l=1}^K P(x | C = l) P(C = l)}
+$$
+
+### Linear Discriminant Functions
+
+For each class $k$, we define a linear function:
+
+$$
+g_k(x) = w_k^T x + b_k
+$$
+
+with:
+- $w_k = \Sigma^{-1} \mu_k$
+- $b_k = -\frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k)$
+
+### Decision Rule
+
+We assign $x$ to the class that maximizes the discriminant function:
+
+$$
+\hat{y} = \arg\max_{k} g_k(x)
+$$
+
+This is equivalent to choosing the class with the highest posterior probability $P(C = k | x)$.
+
+### Decision Boundaries
+
+The boundary between two classes $k$ and $l$ is linear:
+
+$$
+\{x : g_k(x) = g_l(x)\} \quad \Rightarrow \quad (w_k - w_l)^T x + (b_k - b_l) = 0
+$$
+
+This linearity is a direct consequence of the common covariance assumption.
+
+### Classification Process for a New Observation
+
+To classify a new observation $x_{\text{new}}$:
+
+1. **Compute scores**: Evaluate $g_k(x_{\text{new}})$ for each class $k$
+2. **Decision**: Assign to the class with the highest score
+3. **Probabilistic option**: Calculate posterior probabilities $P(C = k | x_{\text{new}})$ for a probabilistic decision
+
+### Parameter Estimation
+
+From a training sample $\{(x_i, y_i)\}_{i=1}^N$:
+
+- Class means: $\hat{\mu}_k = \frac{1}{N_k} \sum_{i: y_i = k} x_i$
+- Common covariance: $\hat{\Sigma} = \frac{1}{N-K} \sum_{k=1}^K \sum_{i: y_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T$
+- Prior probabilities: $\hat{P}(C = k) = \frac{N_k}{N}$
+
+---
+
+## Advantages and Limitations
+
+### Advantages
+
+- **Solid theoretical foundations** based on Bayesian theory and Fisher's criterion
+- **Computational efficiency**: analytical solution without iterative optimization
+- **Interpretability**: discriminant directions have clear geometric meaning
+- **Dual functionality**: integrated dimensionality reduction and classification
+- **Robustness** to slight violations of normality
+
+### Limitations
+
+- **Sensitivity to outliers** affecting mean and covariance estimates
+- **Common covariance assumption** sometimes unrealistic in practice
+- **Linearity**: cannot capture non-linear relationships between variables
+- **Normality requirement**: degraded performance with strongly non-Gaussian distributions
+
+### Alternatives and Extensions
+
+- **QDA (Quadratic Discriminant Analysis)**: relaxes common covariance assumption, giving quadratic boundaries
+- **Regularized LDA**: introduces regularization for high-dimensional problems
+- **Flexible Discriminant Analysis**: uses basis functions to capture non-linear relationships
+- **Support Vector Machines (SVM)**: alternative approach for linear and non-linear classification
+
+---
+
+## Concrete Example: Iris Flower Classification
+
+### Problem Context
+
+The Iris dataset contains 3 flower species with 4 morphological characteristics:
+- Sepal length and width
+- Petal length and width
+
+### LDA Application
+
+**Step 1: Parameter estimation**  
+Calculate means for each species and common covariance matrix.
+
+**Step 2: Discriminant direction calculation**  
+Solve eigenvalue problem to obtain 2 directions (since $K-1=2$).
+
+**Step 3: Projection and visualization**  
+Reduce data to 2 dimensions, revealing good separation between species.
+
+**Step 4: Classification**  
+Construct discriminant functions allowing classification of new flowers with high accuracy (>95%).
+
+---
+
+## Conclusion
+
+Linear Discriminant Analysis is an **elegant and powerful** method that combines several approaches:
+
+- A **geometric perspective** seeking optimal projection directions
+- A **probabilistic modeling** based on normal distributions
+- An **optimal Bayesian decision rule** under its assumptions
+
+Its **versatility** (classification and dimensionality reduction) and **high interpretability** make it a valuable tool in exploratory data analysis and predictive modeling.
+
+However, its successful application depends on the reasonable fulfillment of its underlying assumptions.  
+When these assumptions hold, LDA provides an **efficient, interpretable, and theoretically grounded** solution to classification and group separation problems.

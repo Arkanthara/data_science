@@ -5,4 +5,4 @@ title: "Redirection..."
 <meta http-equiv="refresh" content="0; url=ds2s.html" />
 
 Si vous n'êtes pas redirigés automatiquement,  
-[cliquez ici pour aller au Cours](ds2s.html).
+[cliquez ici pour aller au Cours](ds21.html).

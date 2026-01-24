@@ -1,0 +1,202 @@
+# Entropie
+
+## Question
+
+Donnez la définition de l'entropie pour les variables aléatoires discrètes.
+
+Expliquez les principales propriétés de l'entropie.
+
+Expliquez l'entropie des variables aléatoires binaires.
+
+## Définition de l'entropie pour les variables aléatoires discrètes
+
+L'**entropie** est une mesure fondamentale en théorie de l'information qui quantifie l'**incertitude** ou le **manque d'information** associé à une variable aléatoire discrète.
+
+### Définition mathématique
+
+Pour une variable aléatoire discrète $X$ prenant ses valeurs dans un alphabet $\mathcal{X}$ avec une fonction de masse de probabilité (pmf) $p_X(x) = \operatorname{Pr}(X = x)$, l'entropie $H(X)$ est définie comme :
+
+$$
+H(X) = -\sum_{x \in \mathcal{X}} p_X(x) \log_2 p_X(x)
+$$
+
+**Unité** : Le logarithme est généralement en base 2, ce qui donne l'unité en **bits**. En base $e$, l'unité est le **nat**.
+
+### Interprétation intuitive
+
+- **Haute entropie** = grande incertitude, distribution "étalée"
+- **Basse entropie** = faible incertitude, distribution "concentrée"
+- **Entropie nulle** = aucune incertitude (variable déterministe)
+
+L'entropie représente le **nombre moyen minimum de bits** nécessaire pour encoder les réalisations de $X$.
+
+---
+
+## Propriétés principales de l'entropie
+
+### 1. Non-négativité
+
+$$
+H(X) \geq 0
+$$
+
+- L'égalité $H(X) = 0$ a lieu si et seulement si $X$ est **déterministe** (une seule issue a probabilité 1, les autres 0)
+- Cela signifie qu'il n'y a aucune incertitude sur $X$
+
+### 2. Borne supérieure : entropie maximale
+
+Pour un alphabet de taille $|\mathcal{X}| = M$, l'entropie est maximale lorsque la distribution est **uniforme** :
+
+$$
+H(X) \leq \log_2 M
+$$
+
+- L'égalité $H(X) = \log_2 M$ a lieu si et seulement si $p_X(x) = \frac{1}{M}$ pour tout $x \in \mathcal{X}$
+- Dans ce cas, l'incertitude est maximale : chaque issue est également probable
+
+### 3. Convexité/concavité
+
+L'entropie est une fonction **concave** de la distribution de probabilité $p_X(x)$.
+
+Cela signifie que pour deux distributions $p$ et $q$ et pour $\lambda \in [0,1]$ :
+
+$$
+H(\lambda p + (1-\lambda)q) \geq \lambda H(p) + (1-\lambda) H(q)
+$$
+
+**Interprétation** : Mélanger deux distributions augmente l'incertitude (ou la conserve).
+
+### 4. Additivité pour les variables indépendantes
+
+Si $X$ et $Y$ sont **indépendantes**, alors :
+
+$$
+H(X, Y) = H(X) + H(Y)
+$$
+
+Plus généralement, pour $N$ variables i.i.d. (indépendantes et identiquement distribuées) :
+
+$$
+H(X_1, X_2, \dots, X_N) = N \cdot H(X)
+$$
+
+### 5. Propriété de conditionnement
+
+L'entropie d'une paire de variables vérifie :
+
+$$
+H(X, Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)
+$$
+
+Où $H(Y|X)$ est l'**entropie conditionnelle**, mesurant l'incertitude sur $Y$ sachant $X$.
+
+### 6. L'entropie conditionnelle est inférieure ou égale à l'entropie non conditionnelle
+
+$$
+H(Y|X) \leq H(Y)
+$$
+
+- L'égalité a lieu si et seulement si $X$ et $Y$ sont indépendantes
+- Cela signifie que la connaissance d'une variable (même partielle) ne peut qu'**réduire** l'incertitude sur l'autre
+
+### 7. Invariance par bijection
+
+L'entropie est **invariante** par re-labeling des symboles. Seules les **probabilités** comptent, pas les valeurs elles-mêmes.
+
+---
+
+## Entropie des variables aléatoires binaires
+
+### Définition de la fonction d'entropie binaire
+
+Pour une variable aléatoire binaire $X \in \{0, 1\}$ avec :
+
+- $\operatorname{Pr}(X = 1) = p$
+- $\operatorname{Pr}(X = 0) = 1-p$
+
+L'entropie binaire, notée $H_b(p)$ ou simplement $H(p)$, est définie comme :
+
+$$
+H_b(p) = -p \log_2 p - (1-p) \log_2 (1-p)
+$$
+
+Par convention, on pose $0 \log_2 0 = 0$ (limite continue).
+
+### Propriétés de la fonction d'entropie binaire
+
+#### 1. Symétrie
+
+$$
+H_b(p) = H_b(1-p)
+$$
+
+La fonction est symétrique autour de $p = 0.5$.
+
+#### 2. Valeurs aux bornes
+
+- $H_b(0) = 0$ : si $p=0$ ou $p=1$, la variable est déterministe
+- $H_b(0.5) = 1$ : maximum, distribution uniforme sur 2 symboles
+
+#### 3. Forme en cloche
+
+La fonction $H_b(p)$ a une forme caractéristique en "cloche" :
+
+- Croissante sur $[0, 0.5]$
+- Décroissante sur $[0.5, 1]$
+- Maximum de 1 bit atteint en $p = 0.5$
+
+````{mermaid}
+graph TD
+    A[Fonction d'entropie binaire] --> B[Forme: cloche symétrique]
+    A --> C[Maximum: H(0.5) = 1 bit]
+    A --> D[Zéros: H(0) = H(1) = 0]
+    B --> E[Croissante sur [0, 0.5]]
+    B --> F[Décroissante sur [0.5, 1]]
+````
+
+### Interprétation pratique
+
+1. **Source binaire équilibrée** ($p = 0.5$) :
+   - Incertitude maximale : 1 bit par symbole
+   - Exemple : pièce équilibrée
+
+2. **Source binaire déséquilibrée** ($p \neq 0.5$) :
+   - Incertitude réduite
+   - Exemple : transmission avec bruit asymétrique
+
+3. **Source presque déterministe** ($p \approx 0$ ou $p \approx 1$) :
+   - Entropie très faible
+   - Beaucoup de redondance, bonne compressibilité
+
+### Exemple numérique
+
+| Probabilité $p$ | Entropie $H_b(p)$ | Interprétation |
+|----------------|-------------------|----------------|
+| 0.0 ou 1.0 | 0.000 bits | Aucune incertitude |
+| 0.1 ou 0.9 | 0.469 bits | Faible incertitude |
+| 0.2 ou 0.8 | 0.722 bits | Incertitude modérée |
+| 0.3 ou 0.7 | 0.881 bits | Incertitude élevée |
+| 0.4 ou 0.6 | 0.971 bits | Incertitude très élevée |
+| 0.5 | 1.000 bits | Incertitude maximale |
+
+### Applications
+
+1. **Compression de données** : L'entropie donne la limite de compression sans perte
+2. **Codage de canal** : Détermine la capacité des canaux binaires
+3. **Apprentissage automatique** : Utilisée dans les arbres de décision (gain d'information)
+4. **Cryptographie** : Mesure de l'aléa dans la génération de clés
+
+---
+
+## Résumé synthétique
+
+| Concept | Description | Formule/Exemple |
+|---------|-------------|-----------------|
+| **Définition** | Mesure de l'incertitude d'une variable aléatoire | $H(X) = -\sum p(x) \log_2 p(x)$ |
+| **Non-négativité** | Toujours positive ou nulle | $H(X) \geq 0$ |
+| **Maximum** | Atteint pour la distribution uniforme | $H(X) \leq \log_2 M$ |
+| **Concavité** | Mélanger distributions augmente entropie | $H(\lambda p + (1-\lambda)q) \geq \lambda H(p) + (1-\lambda)H(q)$ |
+| **Entropie binaire** | Cas particulier à deux issues | $H_b(p) = -p\log_2 p - (1-p)\log_2(1-p)$ |
+| **Symétrie binaire** | Même incertitude pour $p$ et $1-p$ | $H_b(p) = H_b(1-p)$ |
+
+L'entropie est donc un concept central qui quantifie l'information et l'incertitude, avec des propriétés mathématiques élégantes et des applications pratiques étendues en data science, des communications à l'apprentissage automatique.

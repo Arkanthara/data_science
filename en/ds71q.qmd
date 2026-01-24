@@ -1,0 +1,428 @@
+# Exam questions
+
+# Comprehensive Explanation of Clustering and the k-means Algorithm
+
+## Question
+
+Explain the clustering problem and describe the k-means clustering algorithm.
+In particular, discuss the function it minimizes and its relationship with a Gaussian model.
+
+## The Fundamental Problem of Clustering
+
+### The Search for Structure in Chaos
+
+Imagine you have a bag of candies of various shapes and colors, randomly mixed. Your brain naturally does this: it **groups** similar candies. Round ones with round ones, square ones with square ones, red ones with red ones.
+
+**Clustering** is exactly this capability, but for data. It's an **unsupervised** method - no one tells you how to group, you must discover the structure by yourself.
+
+### Formal Mathematical Definition
+
+Given a dataset $\mathcal{X} = \{\mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_N\}$ with $\mathbf{x}_i \in \mathbb{R}^D$, clustering seeks a partition of $\mathcal{X}$ into $K$ subsets $C_1, C_2, ..., C_K$ such that:
+
+1. **Completeness**: $\bigcup_{k=1}^K C_k = \mathcal{X}$
+2. **Exclusivity**: $C_i \cap C_j = \emptyset$ for $i \neq j$ (for hard clustering)
+3. **Cohesion**: Points in the same cluster are similar
+4. **Separation**: Points from different clusters are dissimilar
+
+---
+
+## The k-means Algorithm: A Brilliant Idea in its Simplicity
+
+### The Elected Representatives Analogy
+
+Imagine a region with several villages. To reduce travel times, we want to build $K$ administrative centers. How to place them optimally?
+
+1. **Initialization**: Place $K$ centers randomly
+2. **Assignment**: Each village chooses the nearest center
+3. **Readjustment**: Each center moves to the centroid of the villages that chose it
+4. **Iteration**: Repeat until stable
+
+This is the essence of **k-means**!
+
+```{mermaid}
+flowchart TD
+    Start[Start with K initial centers] --> Assign
+    
+    subgraph Assign [Assignment phase]
+        A1[For each point x_i]
+        A2[Find nearest center μ_k]
+        A3[Assign x_i to this cluster]
+    end
+    
+    Assign --> Update
+    
+    subgraph Update [Update phase]
+        U1[For each cluster k]
+        U2[Calculate mean of all its points]
+        U3[Move μ_k to this position]
+    end
+    
+    Update --> Check{Convergence ?}
+    Check -- No --> Assign
+    Check -- Yes --> End[Final solution obtained]
+```
+
+---
+
+## The Mathematical Heart: The Objective Function
+
+### Precise Formulation
+
+Let:
+
+- **Data**: $\mathcal{X} = \{\mathbf{x}_i\}_{i=1}^N$, $\mathbf{x}_i \in \mathbb{R}^D$
+- **Number of clusters**: $K$ (fixed a priori)
+- **Cluster centers**: $\mathbf{M} = \{\mu_k\}_{k=1}^K$, $\mu_k \in \mathbb{R}^D$
+- **Assignment variables**: $\mathbf{Z} = \{z_{ik}\}$, where $z_{ik} \in \{0, 1\}$ and $\sum_{k=1}^K z_{ik} = 1$
+
+### The Function to Minimize
+
+k-means minimizes the **sum of squared intra-cluster distances**:
+
+$$
+J(\mathbf{M}, \mathbf{Z}) = \sum_{i=1}^{N} \sum_{k=1}^{K} z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2
+$$
+
+Where $\|\cdot\|_2$ is the Euclidean norm: $\|\mathbf{x}\|_2 = \sqrt{\sum_{d=1}^D x_d^2}$
+
+### Notation Details
+
+| Term | Meaning | Dimension |
+|------|---------|-----------|
+| $z_{ik}$ | Binary variable: 1 if $\mathbf{x}_i$ ∈ cluster $k$, 0 otherwise | Scalar |
+| $\mathbf{x}_i$ | Data point $i$ | $\mathbb{R}^D$ |
+| $\mu_k$ | Center of cluster $k$ | $\mathbb{R}^D$ |
+| $\|\mathbf{x}_i - \mu_k\|_2^2$ | Squared Euclidean distance | Scalar |
+
+**Crucial observation**: For a given point $\mathbf{x}_i$, only one $z_{ik}$ equals 1 (the one of the cluster it belongs to), the others equal 0. So for each point, we only count its distance to its own cluster center.
+
+---
+
+## Optimization by Coordinate Descent
+
+### The Combinatorial Problem
+
+Minimizing $J$ simultaneously over $\mathbf{M}$ and $\mathbf{Z}$ is **NP-hard**: there are $K^N$ possible assignments!
+
+### Strategy: Alternate Optimization
+
+We use **coordinate descent**:
+
+1. **Fix $\mathbf{M}$**, optimize over $\mathbf{Z}$ (E-step)
+2. **Fix $\mathbf{Z}$**, optimize over $\mathbf{M}$ (M-step)
+3. **Repeat** until convergence
+
+### E-step: Assignment Optimization
+
+With $\mathbf{M}$ fixed, the problem becomes:
+
+For each $i = 1, ..., N$, choose $z_{ik}$ to minimize:
+
+$$
+\sum_{k=1}^K z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2
+$$
+
+Under constraint: $\sum_{k=1}^K z_{ik} = 1$, $z_{ik} \in \{0, 1\}$
+
+**Solution**: Assign $\mathbf{x}_i$ to the cluster whose center is closest!
+
+Formally:
+
+$$
+z_{ik} = 
+\begin{cases}
+1 & \text{if } k = \arg\min_{j} \|\mathbf{x}_i - \mu_j\|_2^2 \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+### M-step: Center Optimization
+
+With $\mathbf{Z}$ fixed, the problem becomes:
+
+For each $k = 1, ..., K$, find $\mu_k$ minimizing:
+
+$$
+\sum_{i=1}^N z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2
+$$
+
+#### Gradient Calculation
+
+$$
+\nabla_{\mu_k} \left( \sum_{i=1}^N z_{ik} \|\mathbf{x}_i - \mu_k\|_2^2 \right) = -2 \sum_{i=1}^N z_{ik} (\mathbf{x}_i - \mu_k)
+$$
+
+#### Optimality Condition
+
+Setting the gradient to zero:
+
+$$
+\sum_{i=1}^N z_{ik} (\mathbf{x}_i - \mu_k) = 0
+$$
+
+$$
+\Rightarrow \mu_k = \frac{\sum_{i=1}^N z_{ik} \mathbf{x}_i}{\sum_{i=1}^N z_{ik}}
+$$
+
+**Interpretation**: The optimal center is the **mean** (center of mass) of the points in the cluster.
+
+---
+
+## Proof of Convergence
+
+### Monotonic Descent
+
+Let $J^{(t)} = J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t)})$
+
+1. **E-step**: We choose $\mathbf{Z}^{(t+1)}$ optimal for fixed $\mathbf{M}^{(t)}$:
+
+   $$
+   J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t+1)}) \leq J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t)})
+   $$
+
+   (strict inequality if at least one assignment changes)
+
+2. **M-step**: We choose $\mathbf{M}^{(t+1)}$ optimal for fixed $\mathbf{Z}^{(t+1)}$:
+
+   $$
+   J(\mathbf{M}^{(t+1)}, \mathbf{Z}^{(t+1)}) \leq J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t+1)})
+   $$
+
+   (strict inequality if at least one center changes)
+
+3. **Transitivity**:
+
+   $$
+   J^{(t+1)} = J(\mathbf{M}^{(t+1)}, \mathbf{Z}^{(t+1)}) \leq J(\mathbf{M}^{(t)}, \mathbf{Z}^{(t)}) = J^{(t)}
+   $$
+
+### Consequence
+
+The sequence $\{J^{(t)}\}_{t=0}^\infty$ is **decreasing** and **bounded below** by 0, therefore it converges.
+
+**Warning**: It converges to a **local minimum**, not necessarily global!
+
+---
+
+## Deep Relationship with Gaussian Models
+
+### From the EM Algorithm to k-means
+
+To understand the connection, let's start from a **Gaussian Mixture Model** (GMM).
+
+#### Gaussian Mixture Model
+
+We assume data is generated by $K$ Gaussians:
+
+$$
+p(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x} | \mu_k, \Sigma_k)
+$$
+
+Where:
+
+- $\pi_k$ is the weight of cluster $k$ ($\pi_k \geq 0$, $\sum_k \pi_k = 1$)
+- $\mathcal{N}(\mathbf{x} | \mu_k, \Sigma_k)$ is a multivariate Gaussian
+
+#### Latent Variables
+
+Let's introduce latent variables $\mathbf{z}_i = [z_{i1}, ..., z_{iK}]$ with $z_{ik} \in \{0, 1\}$ and $\sum_k z_{ik} = 1$, indicating which cluster $\mathbf{x}_i$ belongs to.
+
+#### Complete Model
+
+The joint distribution is written:
+
+$$
+p(\mathbf{x}_i, \mathbf{z}_i) = \prod_{k=1}^K [\pi_k \mathcal{N}(\mathbf{x}_i | \mu_k, \Sigma_k)]^{z_{ik}}
+$$
+
+### The EM Algorithm for GMM
+
+EM maximizes the log-likelihood of observed data with respect to parameters $\theta = \{\pi_k, \mu_k, \Sigma_k\}$.
+
+#### E-step (Expectation)
+
+We calculate the responsibility (posterior):
+
+$$
+\gamma(z_{ik}) = \frac{\pi_k \mathcal{N}(\mathbf{x}_i | \mu_k, \Sigma_k)}{\sum_{j=1}^K \pi_j \mathcal{N}(\mathbf{x}_i | \mu_j, \Sigma_j)}
+$$
+
+This is a **soft assignment**: $\gamma(z_{ik}) \in [0, 1]$, $\sum_k \gamma(z_{ik}) = 1$.
+
+#### M-step (Maximization)
+
+We maximize the expectation of the complete log-likelihood:
+
+$$
+Q(\theta, \theta^{\text{old}}) = \sum_{i=1}^N \sum_{k=1}^K \gamma(z_{ik}) \left[ \log \pi_k + \log \mathcal{N}(\mathbf{x}_i | \mu_k, \Sigma_k) \right]
+$$
+
+The updates are:
+
+$$
+\mu_k^{\text{new}} = \frac{\sum_{i=1}^N \gamma(z_{ik}) \mathbf{x}_i}{\sum_{i=1}^N \gamma(z_{ik})}
+$$
+
+$$
+\Sigma_k^{\text{new}} = \frac{\sum_{i=1}^N \gamma(z_{ik}) (\mathbf{x}_i - \mu_k^{\text{new}})(\mathbf{x}_i - \mu_k^{\text{new}})^\top}{\sum_{i=1}^N \gamma(z_{ik})}
+$$
+
+$$
+\pi_k^{\text{new}} = \frac{\sum_{i=1}^N \gamma(z_{ik})}{N}
+$$
+
+### Transition to k-means: Simplifying Assumptions
+
+#### Assumption 1: Spherical and Equal Covariances
+
+Assume $\Sigma_k = \sigma^2 I$ for all $k$, with $\sigma^2$ fixed and identical for all clusters.
+
+The Gaussian density becomes:
+
+$$
+\mathcal{N}(\mathbf{x}_i | \mu_k, \sigma^2 I) = \frac{1}{(2\pi\sigma^2)^{D/2}} \exp\left(-\frac{\|\mathbf{x}_i - \mu_k\|^2}{2\sigma^2}\right)
+$$
+
+#### Assumption 2: Zero Variance Limit
+
+Consider the limit when $\sigma^2 \to 0$ (very "peaked" distributions).
+
+In this case, $\exp\left(-\frac{\|\mathbf{x}_i - \mu_k\|^2}{2\sigma^2}\right)$ decreases very rapidly with distance.
+
+#### Assumption 3: Equal Weights
+
+Assume $\pi_k = 1/K$ for all $k$ (equiprobable clusters a priori).
+
+### Derivation of the k-means Objective Function
+
+#### E-step in Hard Limit
+
+When $\sigma^2 \to 0$, the responsibility $\gamma(z_{ik})$ becomes:
+
+$$
+\gamma(z_{ik}) \to 
+\begin{cases}
+1 & \text{if } k = \arg\min_j \|\mathbf{x}_i - \mu_j\|^2 \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+This is exactly a **hard assignment** like in k-means!
+
+#### Simplified M-step
+
+With these assumptions, the expectation $Q$ becomes (up to an additive constant):
+
+$$
+Q(\theta, \theta^{\text{old}}) \approx -\frac{1}{2\sigma^2} \sum_{i=1}^N \sum_{k=1}^K \gamma(z_{ik}) \|\mathbf{x}_i - \mu_k\|^2 + \text{constant}
+$$
+
+Maximizing $Q$ is then equivalent to **minimizing**:
+
+$$
+\sum_{i=1}^N \sum_{k=1}^K \gamma(z_{ik}) \|\mathbf{x}_i - \mu_k\|^2
+$$
+
+With the hard assignment $\gamma(z_{ik}) = z_{ik}$, we recover exactly the function $J$ of k-means!
+
+### Summary Table: EM → k-means
+
+| Aspect | General EM for GMM | k-means (limit case) |
+|--------|-------------------|----------------------|
+| **Assignment** | Soft (probabilistic) | Hard (deterministic) |
+| **Covariances** | Arbitrary $\Sigma_k$ | $\Sigma_k = \sigma^2 I$ |
+| **Variance** | Learned from data | $\sigma^2 \to 0$ |
+| **Weights** | Learned $\pi_k$ | $\pi_k = 1/K$ |
+| **Objective function** | Log-likelihood | Sum of squared distances |
+
+```{mermaid}
+graph TD
+    A[EM Algorithm for GMM] --> B[Assumption 1: Σ_k = σ²I]
+    A --> C[Assumption 2: σ² → 0]
+    A --> D[Assumption 3: π_k = 1/K]
+    A --> E[Assumption 4: Hard assignment]
+    B --> F[k-means Algorithm]
+    C --> F
+    D --> F
+    E --> F
+```
+
+## Practical Implications of This Connection
+
+### What This Teaches Us About k-means
+
+1. **Sphericity assumption**: k-means assumes **spherical** clusters (same variance in all directions)
+
+2. **Scale sensitivity**: Since Gaussians have the same covariance, k-means is sensitive to data normalization
+
+3. **Equal variance assumption**: All clusters are assumed to have the same "spread"
+
+4. **Low overlap limit**: k-means works better when clusters are well separated
+
+### Consequences for Application
+
+- **Normalization necessary**: Always normalize data before applying k-means
+- **Cluster shape**: k-means detects elongated or complex-shaped clusters poorly
+- **Choice of K**: More difficult when clusters have very different variances
+
+---
+
+## Final Intuitive Version
+
+### The Essence in One Image
+
+```{mermaid}
+mindmap
+  root((k-means))
+    What?
+      :Unsupervised clustering
+      ::Find K groups in data
+      ::Each group = center + its points
+    How?
+      :Minimize J = Σ distances²
+      ::Alternate 2 steps
+      :::1. Assign to nearest centers
+      :::2. Recenter on means
+    Why it works?
+      :EM with strong assumptions
+      ::Spherical identical Gaussians
+      ::Hard assignment in limit
+    Pitfalls
+      :Local minima
+      :Crucial initialization
+      :Assumed spherical shape
+    Tips
+      :k-means++ for init
+      :Run multiple times
+      :Standardize data
+```
+
+### Key Takeaway
+
+**k-means is a special case of EM** where we assume each cluster is a spherical Gaussian with the same variance, and we take the limit where these Gaussians are infinitely "peaked" (low variance).
+
+This theoretical understanding explains:
+
+- **Why** k-means works so well on certain problems
+- **When** to use it (compact, spherical clusters)
+- **How** to improve it (good initialization, normalization)
+
+The genius of k-means is having **simplified to the maximum** a complex problem to obtain a fast, simple, and effective algorithm in many practical cases.
+
+---
+
+## For the More Curious: Further Reading
+
+### Possible Generalizations
+
+1. **k-medoids**: Uses an actual point as center (less sensitive to outliers)
+2. **Fuzzy C-means**: Probabilistic assignment like EM
+3. **k-means with different metrics**: Manhattan distance, cosine...
+
+### Open Challenges
+
+- **Automatic choice of K**: Elbow method, information criteria...
+- **Clusters with variable densities**: DBSCAN as alternative
+- **High dimensions**: Curse of dimensionality
+
+The beauty of k-means lies in its balance between **mathematical simplicity**, **computational efficiency**, and **intuitive interpretability** - a rare and powerful combination in data science.

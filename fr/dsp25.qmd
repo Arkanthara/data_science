@@ -1,0 +1,275 @@
+# Entropie relative
+
+## Question
+
+Expliquer l'entropie relative, ses propriétés et donner quelques exemples de son utilisation.
+
+## Introduction à l'entropie relative (Divergence de Kullback-Leibler)
+
+L'**entropie relative**, aussi appelée **divergence de Kullback-Leibler (KLD)**, est une mesure fondamentale en théorie de l'information qui quantifie la différence entre deux distributions de probabilité. Elle joue un rôle central en lien avec l'information mutuelle et l'entropie croisée.
+
+### Définition et intuition
+
+Pour deux distributions discrètes $p(x)$ et $q(x)$ définies sur le même espace $\mathcal{X}$ :
+
+$$ D_{\mathrm{KL}}(p \parallel q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} = \mathbb{E}_{p(x)}\left[\log_2 \frac{p(x)}{q(x)}\right] $$
+
+**Interprétation intuitive :** La KLD mesure le **nombre moyen de bits supplémentaires** nécessaires pour coder des échantillons provenant de la distribution $p$ lorsqu'on utilise un code optimisé pour la distribution $q$.
+
+## Propriétés fondamentales
+
+### 1. Non-négativité
+$$ D_{\mathrm{KL}}(p \parallel q) \geq 0 $$
+
+L'égalité $D_{\mathrm{KL}}(p \parallel q) = 0$ se produit si et seulement si $p = q$ presque partout.
+
+### 2. Asymétrie
+$$ D_{\mathrm{KL}}(p \parallel q) \neq D_{\mathrm{KL}}(q \parallel p) $$
+
+La KLD **n'est pas une distance métrique** car elle n'est pas symétrique et ne satisfait pas l'inégalité triangulaire.
+
+### 3. Convexité
+La KLD est convexe par rapport à chaque argument, ce qui est crucial pour les problèmes d'optimisation.
+
+### 4. Additivité pour les distributions indépendantes
+Si $p(x,y) = p_1(x)p_2(y)$ et $q(x,y) = q_1(x)q_2(y)$, alors :
+$$ D_{\mathrm{KL}}(p \parallel q) = D_{\mathrm{KL}}(p_1 \parallel q_1) + D_{\mathrm{KL}}(p_2 \parallel q_2) $$
+
+## Relations avec les autres mesures d'information
+
+### Lien avec l'entropie croisée (Cross-Entropy)
+
+**Définition de l'entropie croisée :**
+$$ H(p, q) = -\sum_{x} p(x) \log_2 q(x) = \mathbb{E}_{p(x)}[-\log_2 q(x)] $$
+
+**Relation fondamentale :**
+$$ H(p, q) = H(p) + D_{\mathrm{KL}}(p \parallel q) $$
+
+```{mermaid}
+graph TD
+    A[Entropie croisée H(p,q)] --> B[Entropie de p: H(p)]
+    A --> C[Divergence KL: D(p∥q)]
+    
+    B --> D[Incertitude intrinsèque de p]
+    C --> E[Pénalité d'utiliser le mauvais modèle]
+    
+    F[Objectif: minimiser H(p,q)] --> G{Équivalent à};
+    G --> H[Minimiser D(p∥q) car H(p) constant];
+```
+
+**Interprétation pédagogique :**
+
+- $H(p)$ : Nombre optimal de bits pour coder $p$ (avec un code parfaitement adapté)
+- $D_{\mathrm{KL}}(p \parallel q)$ : Surcharge due à l'utilisation du code de $q$ pour coder $p$
+- $H(p, q)$ : Total des bits utilisés = optimal + surcharge
+
+**Exemple concret :**
+
+Supposons qu'un étudiant doive apprendre pour un examen. Soit :
+
+- $p$ : Distribution réelle des questions (inconnue de l'étudiant)
+- $q$ : Distribution supposée par l'étudiant (basée sur ses révisions)
+- $H(p)$ : Difficulté réelle de l'examen
+- $D_{\mathrm{KL}}(p \parallel q)$ : "Surprise" de l'étudiant face aux vraies questions
+- $H(p, q)$ : Difficulté ressentie par l'étudiant
+
+### Lien avec l'information mutuelle (Mutual Information)
+
+**Rappel de l'information mutuelle :**
+$$ I(X;Y) = \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} $$
+
+**Relation fondamentale :**
+$$ I(X;Y) = D_{\mathrm{KL}}(p(x,y) \parallel p(x)p(y)) $$
+
+```{mermaid}
+graph LR
+    A[Information mutuelle I(X;Y)] --> B[Divergence KL]
+    B --> C[Entre distribution jointe p(x,y)]
+    B --> D[Et produit des marginales p(x)p(y)]
+    
+    E[Interprétation] --> F[Mesure la dépendance]
+    F --> G[Écart à l'indépendance]
+    
+    H[Si X et Y indépendants] --> I[p(x,y) = p(x)p(y)]
+    I --> J[D_KL = 0]
+    J --> K[I(X;Y) = 0]
+```
+
+**Interprétation pédagogique :**
+
+L'information mutuelle mesure "combien on apprend sur X en observant Y" (et vice-versa). C'est la divergence KL entre :
+
+- La réalité : distribution jointe $p(x,y)$ (avec dépendance potentielle)
+- L'hypothèse d'indépendance : $p(x)p(y)$ (si on pense que X et Y sont indépendants)
+
+**Exemple visuel :**
+
+![](image.png)
+
+### Le triangle de l'information : Relations complètes
+
+```{mermaid}
+graph TD
+    A[Entropie H(X)] --> B[Information mutuelle I(X;Y)]
+    A --> C[Entropie conditionnelle H(X|Y)]
+    
+    D[Entropie croisée H(p,q)] --> E[Entropie H(p)]
+    D --> F[Divergence KL D(p∥q)]
+    
+    G[Entropie jointe H(X,Y)] --> H[H(X) + H(Y|X)]
+    G --> I[H(Y) + H(X|Y)]
+    
+    B --> J[= H(X) - H(X|Y)]
+    B --> K[= H(Y) - H(Y|X)]
+    
+    L[Divergence KL] --> M[Base de l'information mutuelle]
+    L --> N[Composante de l'entropie croisée]
+```
+
+## Exemples d'utilisation en pratique
+
+### 1. Apprentissage automatique : Fonction de perte
+En classification, on utilise souvent la **perte d'entropie croisée** :
+
+**Contexte :**
+
+- $p$ : Distribution cible (one-hot encoding des labels)
+- $q$ : Distribution prédite par le modèle (softmax)
+- On minimise $H(p, q)$ pour entraîner le modèle
+
+**Pourquoi ça marche :**
+Minimiser $H(p, q)$ équivaut à minimiser $D_{\mathrm{KL}}(p \parallel q)$ car $H(p)$ est constant (les labels sont fixes).
+
+**Exemple numérique :**
+Pour une classification binaire avec vrai label = 1 :
+
+- $p = [0, 1]$ (distribution cible)
+- Si le modèle prédit $q = [0.1, 0.9]$ : $H(p, q) = -\log_2(0.9) ≈ 0.152$ bits
+- Si le modèle prédit $q = [0.4, 0.6]$ : $H(p, q) = -\log_2(0.6) ≈ 0.737$ bits
+
+### 2. Compression de données : Codes sous-optimaux
+**Scénario :** On conçoit un code pour une langue avec distribution $q$, mais on l'utilise pour une langue avec distribution $p$.
+
+**Exemple :**
+
+- Langue A ($p$) : 'e'=12.7%, 't'=9.1%, 'z'=0.07%
+- Langue B ($q$) : 'e'=10.0%, 't'=15.0%, 'z'=1.0%
+- Code optimal pour B attribue des codes courts à 't' et 'z'
+
+**Calcul :**
+$$ D_{\mathrm{KL}}(p \parallel q) = 0.127\log_2\frac{0.127}{0.10} + 0.091\log_2\frac{0.091}{0.15} + \cdots $$
+
+Cette divergence mesure l'inefficacité du code B pour la langue A.
+
+### 3. Inférence variationnelle
+**Problème :** Approximer une distribution postérieure complexe $p(z|x)$ par une distribution simple $q(z)$.
+
+**Approche :** Minimiser $D_{\mathrm{KL}}(q \parallel p)$ pour que $q$ soit proche de $p$.
+
+**Choix de direction :**
+
+- $D_{\mathrm{KL}}(q \parallel p)$ : "mode-seeking" (évite les zones où $q>0$ mais $p=0$)
+- $D_{\mathrm{KL}}(p \parallel q)$ : "mean-seeking" (couvre tous les modes de $p$)
+
+## Tableau synthétique des relations
+
+| Concept | Formule | Relation avec KLD | Interprétation |
+|---------|---------|-------------------|----------------|
+| Entropie croisée | $H(p,q) = -\sum p\log q$ | $H(p,q) = H(p) + D(p\|q)$ | Coût d'utilisation du mauvais modèle |
+| Information mutuelle | $I(X;Y) = \sum p(x,y)\log\frac{p(x,y)}{p(x)p(y)}$ | $I(X;Y) = D(p(x,y)\|p(x)p(y))$ | Dépendance entre variables |
+| Entropie conditionnelle | $H(X\|Y) = H(X,Y) - H(Y)$ | $H(X\|Y) = H(X) - I(X;Y)$ | Incertitude résiduelle |
+| Entropie jointe | $H(X,Y) = -\sum p(x,y)\log p(x,y)$ | $H(X,Y) = H(X) + H(Y) - I(X;Y)$ | Incertitude totale |
+
+## Exemple pédagogique complet : Le détective et son hypothèse
+
+**Scénario :** Un détective enquête sur une série de crimes.
+
+- **$p(x)$** : Distribution réelle des caractéristiques du vrai criminel
+  - Âge : 30-40 ans (40%), 40-50 ans (40%), autre (20%)
+  - Véhicule : Voiture (70%), Moto (30%)
+  
+- **$q(x)$** : Hypothèse du détective
+  - Âge : 20-30 ans (60%), 30-40 ans (30%), autre (10%)
+  - Véhicule : Voiture (50%), Moto (50%)
+
+**Calcul de la divergence KL :**
+
+Pour chaque caractéristique, on calcule :
+$$ D_{\mathrm{KL}}(p \parallel q) = \sum p(x) \log_2 \frac{p(x)}{q(x)} $$
+
+**Interprétation :**
+
+- Si $D_{\mathrm{KL}}$ est grande → le détective a une mauvaise hypothèse
+- Si $D_{\mathrm{KL}} = 0$ → le détective a deviné parfaitement la distribution
+
+**Lien avec l'information mutuelle :**
+
+Supposons maintenant qu'on découvre une relation entre :
+
+- $X$ : Type de crime
+- $Y$ : Véhicule utilisé
+
+L'information mutuelle $I(X;Y)$ mesure si connaître le type de crime donne de l'information sur le véhicule (et vice-versa).
+
+## Applications avancées
+
+### 1. Régularisation par divergence KL
+Dans les modèles génératifs (comme les VAEs), on utilise $D_{\mathrm{KL}}(q(z|x) \parallel p(z))$ pour contraindre la distribution latente à suivre une distribution a priori $p(z)$ (souvent gaussienne).
+
+### 2. Apprentissage par renforcement
+La divergence KL est utilisée dans des algorithmes comme TRPO et PPO pour contraindre les mises à jour de politique, empêchant les changements trop brusques.
+
+### 3. Théorie de l'information bayésienne
+Dans l'inférence bayésienne, $D_{\mathrm{KL}}(p_{\text{post}} \parallel p_{\text{prior}})$ mesure combien l'observation des données a modifié nos croyances.
+
+## Points d'attention critiques
+
+### 1. Asymétrie et choix de direction
+
+```{mermaid}
+graph TD
+    A[Choix de D(p∥q) vs D(q∥p)] --> B{Situation};
+    
+    B --> C[Priorité : éviter les zones<br>où p>0 mais q=0];
+    C --> D[Utiliser D(p∥q)<br>car D(p∥q)=∞ si q=0 et p>0];
+    
+    B --> E[Priorité : couvrir tous<br>les modes de p];
+    E --> F[Utiliser D(q∥p)<br>mode-seeking];
+    
+    B --> G[Inférence variationnelle];
+    G --> H[Utiliser D(q∥p)<br>pour approximations];
+```
+
+### 2. Sensibilité aux événements rares
+
+La KLD est très sensible aux événements de faible probabilité dans $p$ mais nuls dans $q$ :
+
+- $p(x) > 0$ mais $q(x) = 0$ → $D_{\mathrm{KL}}(p \parallel q) = \infty$
+
+### 3. Alternatives symétriques
+
+Quand la symétrie est nécessaire :
+
+- **Divergence de Jensen-Shannon** : $JS(p,q) = \frac{1}{2}D(p \parallel m) + \frac{1}{2}D(q \parallel m)$ où $m = \frac{p+q}{2}$
+- **Distance de Wasserstein** : Basée sur le transport optimal
+
+## Conclusion synthétique
+
+L'entropie relative (KLD) est le **ciment conceptuel** qui relie les principales mesures de l'information :
+
+1. **Avec l'entropie croisée** : $H(p,q) = H(p) + D(p\|q)$
+   - La KLD est la "surcharge" quand on utilise un mauvais modèle
+
+2. **Avec l'information mutuelle** : $I(X;Y) = D(p(x,y)\|p(x)p(y))$
+   - La KLD mesure l'écart à l'indépendance
+
+3. **Avec l'entropie conditionnelle** : $H(X|Y) = H(X) - I(X;Y)$
+   - La réduction d'incertitude grâce à Y
+
+**Métaphore finale :** Imaginez que vous devez deviner le contenu d'une boîte :
+- $H(p)$ : Nombre de questions nécessaires si vous connaissez la vraie distribution
+- $H(p,q)$ : Nombre de questions si vous avez une hypothèse imparfaite $q$
+- $D(p\|q)$ : Questions supplémentaires dues à votre mauvaise hypothèse
+- $I(X;Y)$ : Questions économisées en écoutant un indice Y
+
+La divergence KL quantifie ainsi le "coût de l'ignorance" - combien on paie en efficacité quand nos modèles ne correspondent pas à la réalité.

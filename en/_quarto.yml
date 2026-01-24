@@ -22,18 +22,20 @@ website:
   sidebar:
       style: "docked"
       search: true
-      collapse-level: 1
+      collapse-level: 2
       contents:
-      - section: "High-dimensional representation spaces"
-        contents: "ds21*"
-      - section: "Principal Component Analysis"
-        contents: "ds31*"
-      - section: "Linear Discriminant Analysis"
-        contents: "ds51*"
-      - section: "k-Means"
-        contents: "ds71*"
-      - section: "Expectation-Maximization"
-        contents: "ds61*"
+      - section: "Part I"
+        contents:
+        - section: "High-dimensional representation spaces"
+          contents: "ds21*"
+        - section: "Principal Component Analysis"
+          contents: "ds31*"
+        - section: "Linear Discriminant Analysis"
+          contents: "ds51*"
+        - section: "k-Means"
+          contents: "ds71*"
+        - section: "Expectation-Maximization"
+          contents: "ds61*"
 
 
 format:

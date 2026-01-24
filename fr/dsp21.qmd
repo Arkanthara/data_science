@@ -1,0 +1,180 @@
+# Chain Rules
+
+## Question
+
+Considérant plusieurs variables aléatoires, expliquez la décomposition par la règle de chaîne pour la probabilité conjointe.
+
+Donnez des exemples de différentes relations statistiques entre variables aléatoires.
+
+Expliquez la chaîne de Markov du premier et du second ordre.
+
+## Décomposition par la règle de chaîne pour la probabilité conjointe
+
+La **probabilité conjointe** de plusieurs variables aléatoires décrit la probabilité qu’elles prennent simultanément certaines valeurs. La **règle de chaîne** (ou *chain rule*) permet de décomposer cette probabilité conjointe en un produit de probabilités conditionnelles, reflétant les dépendances entre les variables.
+
+### Formulation générale
+
+Soit $N$ variables aléatoires $X_1, X_2, \dots, X_N$. La probabilité conjointe peut s’écrire :
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \cdot p(x_3 \mid x_1, x_2) \cdots p(x_N \mid x_1, x_2, \dots, x_{N-1})
+$$
+
+Ou, de manière compacte :
+
+$$
+p(x_1, x_2, \dots, x_N) = \prod_{i=1}^{N} p(x_i \mid x_1, \dots, x_{i-1})
+$$
+
+Cette décomposition est **toujours vraie** (sous réserve que les probabilités conditionnelles soient définies) et n’implique aucune hypothèse d’indépendance. Elle traduit simplement le fait que la probabilité conjointe peut être construite séquentiellement.
+
+### Exemple simple avec deux variables
+
+Pour deux variables $X_1$ et $X_2$, la règle de chaîne donne :
+
+$$
+p(x_1, x_2) = p(x_1) \cdot p(x_2 \mid x_1)
+$$
+
+Mais on peut aussi inverser l’ordre :
+
+$$
+p(x_1, x_2) = p(x_2) \cdot p(x_1 \mid x_2)
+$$
+
+Ce qui mène à la **formule de Bayes** :
+
+$$
+p(x_2 \mid x_1) = \frac{p(x_2) \cdot p(x_1 \mid x_2)}{p(x_1)}
+$$
+
+---
+
+## Exemples de différentes relations statistiques entre variables aléatoires
+
+### 1. Indépendance complète
+
+Les variables sont **indépendantes** si la réalisation de l’une n’apporte aucune information sur les autres. La probabilité conjointe se factorise alors simplement :
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2) \cdots p(x_N) = \prod_{i=1}^{N} p(x_i)
+$$
+
+**Exemple** : Lancers successifs d’une pièce équilibrée. Chaque lancer est indépendant des précédents.
+
+### 2. Indépendance conditionnelle
+
+Deux variables peuvent être indépendantes **sachant une troisième**. Par exemple, $X_1$ et $X_3$ sont conditionnellement indépendantes sachant $X_2$ si :
+
+$$
+p(x_1, x_3 \mid x_2) = p(x_1 \mid x_2) \cdot p(x_3 \mid x_2)
+$$
+
+La probabilité conjointe des trois variables devient :
+
+$$
+p(x_1, x_2, x_3) = p(x_2) \cdot p(x_1 \mid x_2) \cdot p(x_3 \mid x_2)
+$$
+
+**Exemple** : La pluie ($X_1$) et l’arrosage automatique ($X_3$) sont deux causes possibles de l’herbe mouillée ($X_2$). Sachant que l’herbe est mouillée, la pluie et l’arrosage peuvent être indépendants (si l’un s’est produit, l’autre n’est pas nécessaire).
+
+### 3. Dépendance séquentielle (modèle de Markov)
+
+Les variables forment une séquence où chaque variable ne dépend que de la précédente (ou des quelques précédentes). C’est le cas des **chaînes de Markov**, décrites plus bas.
+
+### 4. Dépendance complète (générale)
+
+Dans le cas général, chaque variable peut dépendre de toutes les précédentes, comme exprimé par la règle de chaîne complète. Cela représente la structure de dépendance la plus complexe.
+
+**Exemple** : Les pixels d’une image naturelle ont souvent des dépendances complexes entre eux, à la fois locaux et globaux.
+
+---
+
+## Chaîne de Markov du premier ordre
+
+Une **chaîne de Markov du premier ordre** suppose que chaque variable ne dépend **que de la variable immédiatement précédente**. C’est une hypothèse de “mémoire courte” qui simplifie considérablement la modélisation.
+
+### Formulation
+
+Soit une séquence de variables aléatoires $X_1, X_2, \dots, X_N$. La propriété de Markov du premier ordre s’écrit :
+
+$$
+p(x_i \mid x_{i-1}, x_{i-2}, \dots, x_1) = p(x_i \mid x_{i-1}) \quad \text{pour tout } i
+$$
+
+La probabilité conjointe se simplifie alors :
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \cdot p(x_3 \mid x_2) \cdots p(x_N \mid x_{N-1}) = p(x_1) \prod_{i=2}^{N} p(x_i \mid x_{i-1})
+$$
+
+### Interprétation et exemple
+
+- **Interprétation** : L’état futur ($X_i$) ne dépend que de l’état présent ($X_{i-1}$), pas du passé plus lointain.
+- **Exemple** : La météo d’aujourd’hui dépend surtout de celle d’hier, et moins des jours précédents. On peut modéliser les états “soleil”, “pluie”, “nuageux” comme une chaîne de Markov.
+
+````{mermaid}
+graph LR
+    X1 --> X2 --> X3 --> X4
+    style X1 fill:#f9f
+    style X2 fill:#f9f
+    style X3 fill:#f9f
+    style X4 fill:#f9f
+````
+
+*Schéma d’une chaîne de Markov du premier ordre : chaque variable ne dépend que de la précédente.*
+
+---
+
+## Chaîne de Markov du second ordre
+
+Une **chaîne de Markov du second ordre** suppose que chaque variable dépend **des deux variables précédentes**. Cela introduit une mémoire légèrement plus longue, permettant de capturer des dépendances plus complexes tout en restant plus simple qu’un modèle complet.
+
+### Formulation
+
+Pour une séquence $X_1, X_2, \dots, X_N$, la propriété de Markov du second ordre s’écrit :
+
+$$
+p(x_i \mid x_{i-1}, x_{i-2}, \dots, x_1) = p(x_i \mid x_{i-1}, x_{i-2}) \quad \text{pour tout } i \geq 3
+$$
+
+La probabilité conjointe devient :
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \cdot p(x_3 \mid x_2, x_1) \cdots p(x_N \mid x_{N-1}, x_{N-2})
+$$
+
+Soit, en notation compacte :
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \prod_{i=3}^{N} p(x_i \mid x_{i-1}, x_{i-2})
+$$
+
+### Interprétation et exemple
+
+- **Interprétation** : L’état futur ($X_i$) dépend des deux états présents ($X_{i-1}$ et $X_{i-2}$). Cela peut modéliser des phénomènes où une tendance à court terme est importante.
+- **Exemple** : Modélisation du cours d’une action en bourse, où le prix d’aujourd’hui peut dépendre des prix des deux derniers jours pour capturer une éventuelle dynamique de momentum.
+
+````{mermaid}
+graph LR
+    X1 --> X2 --> X3 --> X4
+    X1 --> X3
+    X2 --> X4
+    style X1 fill:#f9f
+    style X2 fill:#f9f
+    style X3 fill:#f9f
+    style X4 fill:#f9f
+````
+
+*Schéma d’une chaîne de Markov du second ordre : chaque variable dépend des deux précédentes.*
+
+---
+
+## Résumé des concepts clés
+
+- La **règle de chaîne** est une identité générale qui décompose la probabilité conjointe en produit de probabilités conditionnelles.
+- Les **relations statistiques** entre variables peuvent aller de l’indépendance complète à la dépendance générale, en passant par l’indépendance conditionnelle et les modèles de Markov.
+- Une **chaîne de Markov du premier ordre** suppose une dépendance uniquement à l’état immédiatement précédent, ce qui simplifie grandement la modélisation des séquences.
+- Une **chaîne de Markov du second ordre** étend cette idée en considérant les deux états précédents, offrant un compromis entre simplicité et expressivité.
+
+Ces concepts sont fondamentaux en data science pour la modélisation de séquences (séries temporelles, traitement du langage, signaux) et pour la compréhension des dépendances dans les données multivariées.

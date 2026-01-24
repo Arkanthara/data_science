@@ -1,4 +1,4 @@
-# Cours complet : Modèles de Mélange Gaussien et Algorithme EM
+# Modèles de Mélange Gaussien et Algorithme EM
 
 ## Introduction
 

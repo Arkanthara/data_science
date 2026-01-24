@@ -1,3 +1,5 @@
+# Exam questions
+
 # Explication complète du clustering et de l'algorithme k-means
 
 ## Question

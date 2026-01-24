@@ -1,0 +1,660 @@
+# Linear Discriminant Analysis (LDA)
+
+## Introduction to LDA
+
+**Linear Discriminant Analysis (LDA)** is a supervised statistical method that fulfills two main objectives:
+
+- **Dimensionality reduction** by finding the most discriminating directions
+- **Classification** through probabilistic modeling of classes
+
+Unlike Principal Component Analysis (PCA) which is unsupervised, LDA uses class labels to find directions that maximize separation between groups.
+
+---
+
+## Supervised Learning Context
+
+### Formal Definition
+
+In a supervised learning problem, we have:
+
+- Data $X \subset \Omega \subset \mathbb{R}^D$
+- Class labels $y = [M] \subset \mathbb{N}$
+
+We seek to learn a function $\phi_\theta$ that minimizes a loss $\mathcal{L}_{X \times y}(\theta)$ when predicting labels.
+
+### Examples of Supervised Methods
+
+- Logistic regression
+- Neural networks
+- Support Vector Machines (SVM)
+
+LDA distinguishes itself by its **generative** approach: it models the distribution of data within each class.
+
+---
+
+## Geometric Intuition of LDA
+
+### The Fundamental Problem
+
+Imagine points in two dimensions belonging to two classes.  
+How to find the **best line** on which to project these points to separate them as much as possible?
+
+LDA answers this question by seeking a direction that:
+
+1. **Separates class centers** (maximizes distance between means)
+2. **Brings points closer** within each class (minimizes within-class variance)
+
+---
+
+## Key Concepts: Between-Class and Within-Class Criteria
+
+#### Basic Notations
+
+For $K$ classes:
+
+- $N_k$: number of observations in class $k$
+- $\mu_k$: mean of class $k$ ($D$-dimensional vector)
+- $\mu$: global mean
+- $x_i^{(k)}$: the $i$-th observation of class $k$
+
+---
+
+### Between-Class Criterion
+
+#### Intuition
+
+The between-class criterion measures **how far apart the class centers are from each other**.  
+The more distant the class means are, the easier it will be to discriminate them.
+
+#### Mathematical Formulation
+
+**Distance between two classes (binary case):**  
+For two classes with means $\mu_1$ and $\mu_2$, the squared distance between their projections on a direction $a$ is:
+
+$$
+\|\hat{\mu}_1 - \hat{\mu}_2\|^2 = \frac{(a^T(\mu_1 - \mu_2))^2}{\|a\|^2}
+$$
+
+where $\hat{\mu}_k = \frac{a^T \mu_k}{\|a\|}$ is the projection of class $k$ mean.
+
+#### General case
+
+The matrix captures the covariance of class centers relative to the global mean.
+
+##### Normal Version (Summation)
+
+###### Weighted Formulation
+$$
+\Sigma_b = \sum_{k=1}^K N_k (\mu_k - \mu)(\mu_k - \mu)^T
+$$
+
+###### Unweighted Formulation
+$$
+\Sigma_b = \frac{1}{K} \sum_{k=1}^K (\mu_k - \mu)(\mu_k - \mu)^T
+$$
+
+---
+
+##### Matrix Version
+
+###### Weighted Formulation
+
+Let $M$ be the $D \times K$ matrix where each column $k$ is $\sqrt{N_k}(\mu_k - \mu)$:
+
+$$
+M = \begin{bmatrix}
+\sqrt{N_1}(\mu_1 - \mu) & \sqrt{N_2}(\mu_2 - \mu) & \cdots & \sqrt{N_K}(\mu_K - \mu)
+\end{bmatrix}
+$$
+
+Then:
+
+$$
+\Sigma_b = MM^T
+$$
+
+###### Unweighted Formulation
+
+Let $M'$ be the $D \times K$ matrix where each column $k$ is $(\mu_k - \mu)$:
+
+$$
+M' = \begin{bmatrix}
+(\mu_1 - \mu) & (\mu_2 - \mu) & \cdots & (\mu_K - \mu)
+\end{bmatrix}
+$$
+
+Then:
+
+$$
+\Sigma_b = \frac{1}{K} M'M'^T
+$$
+
+---
+
+##### Equivalence between Formulations
+
+###### Relation
+The two formulations give the same matrix up to a scaling factor:
+
+$$
+MM^T = \left(\sum_{k=1}^K N_k\right) \cdot \frac{1}{K} M'M'^T
+$$
+
+when $N_1 = N_2 = \cdots = N_K$ (balanced classes).
+
+###### For LDA
+
+This scaling difference does not affect the discriminant directions, only their amplitude in Fisher's criterion.
+
+#### Geometric Interpretation
+
+$\Sigma_b$ is a $D \times D$ matrix that measures:
+
+- How class centers vary around the global mean
+- The dispersion "between" different classes
+
+The quantity $a^T \Sigma_b a$ represents the **projected between-class variance** on direction $a$.
+
+#### Important Property
+
+For $K$ classes, the matrix $\Sigma_b$ has rank at most $K-1$.  
+This means there are at most $K-1$ independent directions that separate the classes.
+
+---
+
+### Within-Class Criterion
+
+#### Intuition
+
+The within-class criterion measures **how closely points within the same class are grouped**.  
+The more concentrated the points of a class are, the more homogeneous the class is and the easier to identify.
+
+#### Mathematical Formulation
+
+For each class $k$, we define its covariance matrix:
+
+$$
+\Sigma_k = \frac{1}{N_k} \sum_{i=1}^{N_k} (x_i^{(k)} - \mu_k)(x_i^{(k)} - \mu_k)^T
+$$
+
+**Total within-class dispersion matrix:**
+
+$$
+\Sigma_w = \sum_{k=1}^K \Sigma_k = \sum_{k=1}^K \sum_{i=1}^{N_k} (x_i^{(k)} - \mu_k)(x_i^{(k)} - \mu_k)^T
+$$
+
+#### Interpretation
+
+$\Sigma_w$ measures the **overall dispersion within all classes**.  
+A small value of $a^T \Sigma_w a$ indicates that the projections of points are clustered around their class mean.
+
+---
+
+### Fisher's Criterion: Combination of Both Criteria
+
+#### Principle
+
+We seek a direction $a$ that:
+
+- Maximizes between-class dispersion: $a^T \Sigma_b a$ (large)
+- Minimizes within-class dispersion: $a^T \Sigma_w a$ (small)
+
+**Fisher's criterion** combines these two objectives into a single ratio:
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+#### Ratio Interpretation
+
+$J(a)$ represents the **signal-to-noise ratio** for discrimination:
+
+- **Numerator**: "signal" = separation between classes
+- **Denominator**: "noise" = variability within classes
+
+The larger $J(a)$, the better direction $a$ is for discriminating classes.
+
+#### Optimization
+
+We seek the direction $a^*$ that maximizes $J(a)$:
+
+$$
+a^* = \arg\max_a \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+This optimization problem has an analytical solution.
+
+::: {.callout collapse="true"}
+#### Projection of Between and Within-Class Criteria
+
+When projecting onto a direction $a$ (not necessarily unit), the projected statistics include a normalization factor.
+
+---
+
+#### Projection of Centers
+
+For a direction $a$, the projection of a vector $v$ is given by:
+
+$$
+\hat{v} = \frac{a^T v}{\|a\|}
+$$
+
+The projected class means become:
+
+$$
+\hat{\mu}_k = \frac{a^T \mu_k}{\|a\|}, \quad \hat{\mu} = \frac{a^T \mu}{\|a\|}
+$$
+
+---
+
+#### Projected Between-Class Criterion
+
+The projected between-class variance is expressed as:
+
+$$
+\frac{1}{M} \sum_{k=1}^M (\hat{\mu}_k - \hat{\mu})^2 = \frac{1}{\|a\|^2} a^T \left[ \frac{1}{M} \sum_{k=1}^M (\mu_k - \mu)(\mu_k - \mu)^T \right] a
+$$
+
+Simply:
+
+$$
+\frac{1}{M} \sum_{k=1}^M (\hat{\mu}_k - \hat{\mu})^2 = \frac{1}{\|a\|^2} a^T \Sigma_b a
+$$
+
+---
+
+#### Projected Within-Class Criterion
+
+For a class $k$, the projected variance is:
+
+$$
+\hat{\sigma}_k^2 = \frac{1}{N_k} \sum_{i=1}^{N_k} (\hat{x}_i^{(k)} - \hat{\mu}_k)^2 = \frac{1}{\|a\|^2} a^T \Sigma_k a
+$$
+
+The total projected within-class variance becomes:
+
+$$
+\sum_{k=1}^M \hat{\sigma}_k^2 = \frac{1}{\|a\|^2} a^T \left( \sum_{k=1}^M \Sigma_k \right) a = \frac{1}{\|a\|^2} a^T \Sigma_w a
+$$
+
+---
+
+### Consequence for Fisher's Criterion
+
+The projected Fisher ratio is written:
+
+$$
+J(a) = \frac{\text{Projected between-class variance}}{\text{Projected within-class variance}} = \frac{\frac{1}{\|a\|^2} a^T \Sigma_b a}{\frac{1}{\|a\|^2} a^T \Sigma_w a}
+$$
+
+The factors $\frac{1}{\|a\|^2}$ cancel out:
+
+$$
+J(a) = \frac{a^T \Sigma_b a}{a^T \Sigma_w a}
+$$
+
+**Conclusion:** Fisher's criterion depends only on the **direction** of $a$, not its norm.
+
+We can therefore search for $a$ without normalization constraint, then normalize if necessary.
+:::
+
+---
+
+### Optimization Problem Solution
+
+#### Mathematical Derivation
+
+To maximize $J(a)$, we set its gradient to zero:
+
+$$
+\frac{\partial J(a)}{\partial a} = \frac{2\Sigma_b a (a^T \Sigma_w a) - 2\Sigma_w a (a^T \Sigma_b a)}{(a^T \Sigma_w a)^2} = 0
+$$
+
+Which implies:
+
+$$
+\Sigma_b a = \frac{a^T \Sigma_b a}{a^T \Sigma_w a} \Sigma_w a
+$$
+
+Noting $\lambda = \frac{a^T \Sigma_b a}{a^T \Sigma_w a} = J(a)$, we obtain:
+
+$$
+\Sigma_b a = \lambda \Sigma_w a
+$$
+
+This is a **generalized eigenvalue problem**.
+
+#### Eigenvalue Solution
+
+The solution is given by the eigenvectors of $\Sigma_w^{-1} \Sigma_b$:
+
+$$
+\Sigma_w^{-1} \Sigma_b a = \lambda a
+$$
+
+**Important properties:**
+
+- There are at most $K-1$ non-zero eigenvalues
+- The eigenvectors corresponding to the largest eigenvalues are the most discriminating directions
+- The largest eigenvalue $\lambda_1$ gives the maximum of $J(a)$
+
+#### Special Case: Two Classes
+
+For $K=2$, there is only one discriminating direction:
+
+$$
+a \propto \Sigma_w^{-1} (\mu_1 - \mu_2)
+$$
+
+This direction is proportional to the difference of means, "corrected" by the inverse covariance.
+
+---
+
+### Generalization to Multiple Dimensions
+
+#### Discriminant Subspaces
+
+For $K$ classes, we can obtain up to $K-1$ discriminating directions:
+
+- $a_1$: most discriminating direction (largest eigenvalue $\lambda_1$)
+- $a_2$: second most discriminating direction ($\lambda_2 < \lambda_1$)
+- ...
+- $a_{K-1}$: last discriminating direction
+
+#### Projection onto Discriminant Subspace
+
+The projection matrix $W = [a_1, a_2, ..., a_{K-1}]$ allows reducing data dimension from $D$ to $K-1$:
+
+$$
+Y = XW
+$$
+
+where $Y$ are the data projected into the new space.
+
+#### Eigenvalue Interpretation
+
+The eigenvalue $\lambda_i$ measures the **discriminant power** of direction $a_i$:
+
+- Large $\lambda_i$: strong separation between classes along $a_i$
+- Small $\lambda_i$: weak separation
+
+The percentage of total discrimination explained by direction $a_i$ is:
+
+$$
+\text{PVE}_i = \frac{\lambda_i}{\sum_{j=1}^{K-1} \lambda_j} \times 100\%
+$$
+
+---
+
+## Visualization of Concepts
+
+### Two-Dimensional Example
+
+Consider two classes with Gaussian distributions:
+
+```{mermaid}
+graph TD
+    A[Original 2D data] --> B{Problem}
+    B --> C[Find best<br>projection direction]
+    C --> D[Between-class criterion:<br>max distance between means]
+    C --> E[Within-class criterion:<br>min variance in each class]
+    D --> F[Combination: Fisher ratio]
+    E --> F
+    F --> G[Solution: Eigenvector of Σ_w⁻¹Σ_b]
+    G --> H[Projection to 1D]
+    H --> I[Optimal separation]
+```
+
+### Geometric Interpretation
+
+The optimal direction $a$ is the one that, when data is projected onto it, produces:
+
+- Well-separated histograms for each class
+- Distributions with little overlap
+- Maximum distance between means relative to internal variability
+
+---
+
+## Conditional modeling in supervised classification
+
+In **supervised classification** problems, the objective is to predict the class label $y$ associated with an observation $x$.
+
+A fundamental approach consists of modeling the **conditional probability** $P(y \mid x)$, i.e., the probability that an observation $x$ belongs to a given class $y$.
+
+---
+
+### Bayesian framework for classification
+
+#### Bayes rule and optimal decision
+
+Bayes' theorem allows expressing the **posterior probability** that an observation $x$ belongs to class $k$ as follows:
+
+$$
+P(C = k \mid x) = \frac{P(x \mid C = k) \cdot P(C = k)}{P(x)}
+$$
+
+**Notations:**
+
+- $P(C = k)$: **Prior probability** of class $k$.
+- $P(x \mid C = k)$: **Likelihood** of $x$ given class $k$.
+- $P(x)$: **Marginal probability** of $x$ (constant for all classes).
+
+The **optimal decision rule** (minimizing error rate) consists of assigning $x$ to the class $k$ maximizing the posterior probability:
+
+$$
+\delta(x) = \arg\max_k P(C = k \mid x)
+$$
+
+Since $P(x)$ is constant, this rule simplifies to:
+
+$$
+\delta(x) = \arg\max_k \left[ P(x \mid C = k) \cdot P(C = k) \right]
+$$
+
+---
+
+### Linear Discriminant Analysis (LDA) as a conditional generative model
+
+#### Fundamental assumptions of LDA
+
+**Linear Discriminant Analysis (LDA)** relies on three key assumptions:
+
+1. **Gaussian distribution per class**:
+
+   Each class follows a multivariate normal law:
+   $$
+   P(x \mid C = k) \sim \mathcal{N}(\mu_k, \Sigma)
+   $$
+   where $\mu_k$ is the mean vector of class $k$, and $\Sigma$ the covariance matrix.
+
+2. **Common covariance matrix**:
+
+   All classes share the **same covariance matrix** $\Sigma$.
+
+3. **Prior probabilities**:
+
+   Classes are characterized by prior probabilities $P(C = k)$, often estimated by the observed proportions in the sample.
+
+#### Explicit formulation of the LDA model
+
+Under these assumptions, the probability density for class $k$ is written:
+
+$$
+P(x \mid C = k) = \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2}} \exp\left( -\frac{1}{2} (x - \mu_k)^T \Sigma^{-1} (x - \mu_k) \right)
+$$
+
+where:
+
+- $D$: Data dimension.
+- $\mu_k$: Mean vector of class $k$.
+- $\Sigma$: Common covariance matrix.
+
+---
+
+### Derivation of the linear discriminant function
+
+#### Transition to decision function
+
+Applying the Bayesian decision rule and taking the **logarithm** (which preserves maxima), we obtain:
+
+$$
+\delta(x) = \arg\max_k \left[ \ln P(x \mid C = k) + \ln P(C = k) \right]
+$$
+
+By developing the quadratic term and eliminating constants independent of $k$, the discriminant function simplifies to:
+
+$$
+\delta(x) = \arg\max_k \left[ x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k) \right]
+$$
+
+#### Linear form of the decision boundary
+
+The discriminant function for class $k$ can be expressed as a **linear function** in $x$:
+
+$$
+g_k(x) = w_k^T x + b_k
+$$
+
+where:
+
+- $w_k = \Sigma^{-1} \mu_k$: Weight vector for class $k$.
+- $b_k = -\frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \ln P(C = k)$: Bias term.
+
+**Linear decision boundary**:
+
+The boundary between two classes $k$ and $l$ is defined by the equation:
+
+$$
+\{ x \mid g_k(x) = g_l(x) \} \quad \Rightarrow \quad (w_k - w_l)^T x + (b_k - b_l) = 0
+$$
+
+## Advantages and Limitations
+
+### Advantages of LDA
+
+- **Solid theoretical foundations** based on Bayesian statistics
+- **Analytical solution** (no iterative optimization)
+- **Efficient** when assumptions are respected
+- **Interpretable**: discriminant directions have clear meaning
+- **Dual use**: dimensionality reduction and classification
+
+### Limitations
+
+- **Normality assumption**: requires approximately Gaussian data
+- **Homoscedasticity**: assumes same covariance for all classes
+- **Sensitivity to outliers**
+- **Linearity**: does not capture non-linear relationships
+- **Problems in high dimension** when $D > N$
+
+### Alternatives and Extensions
+
+**QDA (Quadratic Discriminant Analysis)**  
+
+Relaxes the common covariance assumption, allowing quadratic decision boundaries.
+
+**Regularized LDA**  
+
+Adds regularization to stabilize the estimation of $\Sigma^{-1}$ in high dimension.
+
+**Kernel LDA** 
+
+Uses kernel functions to capture non-linear relationships.
+
+**Flexible Discriminant Analysis**  
+
+Models conditional distributions using non-parametric methods.
+
+---
+
+## Comparison with Other Methods
+
+### LDA vs PCA
+
+| Aspect | LDA | PCA |
+|--------|-----|-----|
+| **Supervision** | Supervised (uses labels) | Unsupervised |
+| **Objective** | Maximize separation between classes | Maximize total variance |
+| **Directions** | Discrimination directions | Maximum variance directions |
+| **Interpretation** | Separation of groups | Variability structure |
+
+### LDA vs Logistic Regression
+
+| Aspect | LDA | Logistic Regression |
+|--------|-----|----------------------|
+| **Approach** | Generative model | Discriminative model |
+| **Assumptions** | Normal with common covariance | None on distribution of $x$ |
+| **Stability** | More stable with few data | May require more data |
+| **Boundaries** | Always linear under its assumptions | Linear by construction |
+
+---
+
+## Practical Applications
+
+### Application Domains
+
+**Biology and Medicine**
+
+- Cancer cell classification
+- Diagnosis from medical images
+- Genomic data analysis
+
+**Finance**
+
+- Credit scoring
+- Fraud detection
+- Customer classification
+
+**Computer Vision**
+
+- Face recognition
+- Image classification
+- Handwriting recognition
+
+**Marketing**
+
+- Customer segmentation
+- Preference analysis
+- Product recommendation
+
+### Best Practices
+
+**Validation of assumptions**
+
+- Test data normality (Shapiro-Wilk test, QQ-plots)
+- Check covariance homogeneity (Box's test)
+- Examine outliers
+
+**Data preprocessing**
+
+- Variable standardization
+- Missing value management
+- Class balancing if necessary
+
+**Model validation**
+
+- Cross-validation
+- Adapted performance measures (confusion matrix, AUC, etc.)
+- Comparison with reference methods
+
+---
+
+## Conclusion
+
+Linear Discriminant Analysis is an **elegant and powerful** method based on solid statistical principles.  
+Its essence lies in the joint optimization of two criteria:
+
+**Between-class criterion**  
+Maximize separation between class centers, making classes as distinct as possible.
+
+**Within-class criterion**  
+Minimize dispersion within each class, making each class as coherent as possible.
+
+The combination of these two objectives via **Fisher's criterion** allows finding optimal directions for discriminating classes while reducing data dimensionality.
+
+Although based on sometimes restrictive assumptions, LDA remains a valuable tool in the data scientist's toolbox, particularly useful for:
+
+- Exploration and visualization of labeled data
+- Classification when assumptions are reasonably verified
+- Understanding discriminating variables in a problem
+
+Its interpretability and conceptual simplicity make it an excellent introduction to supervised classification and dimensionality reduction methods.
