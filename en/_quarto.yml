@@ -4,6 +4,7 @@ project:
   output-dir: ../_site
   render:
     - "ds*1*"
+    - "dsp2*"
 
 website:
   navbar:
