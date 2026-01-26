@@ -36,6 +36,8 @@ website:
           contents: "ds71*"
         - section: "Expectation-Maximization"
           contents: "ds61*"
+      - section: "Part II"
+        contents: "dsp2*"
 
 
 format:

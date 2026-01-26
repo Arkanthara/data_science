@@ -1,0 +1,302 @@
+# Mutual Information
+
+## Question
+
+Give the definition of mutual information.
+
+Explain the Venn diagram.
+
+Demonstrate different expressions for mutual information via entropies and relative entropy.
+
+## Definition of Mutual Information
+
+**Mutual information** is a fundamental measure in information theory that quantifies the amount of information one random variable provides about another, and vice-versa. It is a measure of the statistical dependence between two variables.
+
+### Formal Definition
+
+For two discrete random variables $X$ and $Y$ with joint distribution $p(x,y)$ and marginal distributions $p(x)$ and $p(y)$, mutual information is defined as:
+
+$$ I(X;Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} $$
+
+In expectation form:
+$$ I(X;Y) = \mathbb{E}_{p(x,y)} \left[ \log_2 \frac{p(X,Y)}{p(X)p(Y)} \right] $$
+
+For continuous variables:
+$$ I(X;Y) = \iint p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} \, dx \, dy $$
+
+## Intuitive Interpretation
+
+Mutual information answers the question: **"How much do we learn about X by observing Y (and vice-versa)?"**
+
+### Concrete Example
+
+Imagine two people communicating:
+
+- **X**: Message the first person wants to send
+- **Y**: Message the second person receives
+- **I(X;Y)**: Amount of information correctly transmitted
+
+If the channel is perfect (no noise): $I(X;Y) = H(X)$ (everything is transmitted)
+If the channel is completely noisy: $I(X;Y) = 0$ (nothing is transmitted)
+
+## The Venn Diagram: Visual Representation
+
+![](image.png)
+
+**Legend and interpretation:**
+
+- **H(X)**: Entropy of X - measures total uncertainty about X
+
+- **H(Y)**: Entropy of Y - measures total uncertainty about Y
+
+- **H(X,Y)**: Joint entropy - total uncertainty of the pair (X,Y)
+
+- **I(X;Y)**: Mutual information - information shared between X and Y
+
+- **H(X|Y)**: Conditional entropy - remaining uncertainty about X when Y is known
+
+- **H(Y|X)**: Conditional entropy - remaining uncertainty about Y when X is known
+
+### Obvious Geometric Relations
+From the diagram:
+
+1. $H(X,Y) = H(X) + H(Y) - I(X;Y)$
+   - Union = sum of circles - intersection (to avoid double counting)
+
+2. $H(X) = H(X|Y) + I(X;Y)$
+   - Circle X = exclusive part + intersection
+
+3. $H(Y) = H(Y|X) + I(X;Y)$
+   - Circle Y = exclusive part + intersection
+
+## Expressions of Mutual Information via Entropies
+
+### 1. In terms of simple and conditional entropy
+$$ I(X;Y) = H(X) - H(X|Y) $$
+
+**Interpretation:** The information that Y provides about X is the reduction in uncertainty about X when Y is known.
+
+**Proof:**
+$$
+\begin{aligned}
+I(X;Y) &= \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} \\
+&= \sum_{x,y} p(x,y) \log_2 \frac{p(x|y)}{p(x)} \quad \text{(since } p(x,y) = p(x|y)p(y)\text{)} \\
+&= \sum_{x,y} p(x,y) \log_2 p(x|y) - \sum_{x,y} p(x,y) \log_2 p(x) \\
+&= -H(X|Y) + H(X) \quad \text{(by definition of entropies)}
+\end{aligned}
+$$
+
+### 2. Symmetric expression
+$$ I(X;Y) = H(Y) - H(Y|X) $$
+
+**Interpretation:** Same as previous but symmetric - what X provides about Y.
+
+### 3. In terms of joint and marginal entropies
+$$ I(X;Y) = H(X) + H(Y) - H(X,Y) $$
+
+**Proof:**
+
+Starting from $I(X;Y) = H(X) - H(X|Y)$ and knowing that $H(X|Y) = H(X,Y) - H(Y)$, we have:
+$$ I(X;Y) = H(X) - [H(X,Y) - H(Y)] = H(X) + H(Y) - H(X,Y) $$
+
+**Interpretation:** Mutual information is what "saves" bits when coding X and Y together rather than separately.
+
+### 4. Expression with conditional entropies
+$$ I(X;Y) = H(X,Y) - H(X|Y) - H(Y|X) $$
+
+**Proof:**
+
+From $H(X,Y) = H(X) + H(Y) - I(X;Y)$, we can rearrange to get $I(X;Y) = H(X,Y) - [H(X,Y) - H(Y)] - [H(X,Y) - H(X)]$ which simplifies.
+
+## Expressions via Relative Entropy (Kullback-Leibler Divergence)
+
+### 1. Mutual information as KL divergence
+
+**Fundamental relation:**
+$$ I(X;Y) = D_{\mathrm{KL}}(p(x,y) \parallel p(x)p(y)) $$
+
+**Direct proof:**
+
+By definition of KL divergence:
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(p(x,y) \parallel p(x)p(y)) &= \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} \\
+&= I(X;Y) \quad \text{(exactly the definition of } I(X;Y)\text{)}
+\end{aligned}
+$$
+
+**Deep interpretation:** Mutual information measures **the deviation from independence**.
+
+- If X and Y are independent: $p(x,y) = p(x)p(y)$ → KL divergence = 0 → $I(X;Y) = 0$
+- If X and Y are dependent: $p(x,y) ≠ p(x)p(y)$ → KL divergence > 0 → $I(X;Y) > 0$
+
+### 2. Conditional form as expectation of KL divergences
+$$ I(X;Y) = \mathbb{E}_{p(y)} \left[ D_{\mathrm{KL}}(p(x|y) \parallel p(x)) \right] $$
+
+**Proof:**
+$$
+\begin{aligned}
+I(X;Y) &= \sum_{x,y} p(x,y) \log_2 \frac{p(x|y)}{p(x)} \quad \text{(since } \frac{p(x,y)}{p(x)p(y)} = \frac{p(x|y)}{p(x)}\text{)} \\
+&= \sum_{y} p(y) \sum_{x} p(x|y) \log_2 \frac{p(x|y)}{p(x)} \\
+&= \mathbb{E}_{p(y)} \left[ \sum_{x} p(x|y) \log_2 \frac{p(x|y)}{p(x)} \right] \\
+&= \mathbb{E}_{p(y)} \left[ D_{\mathrm{KL}}(p(x|y) \parallel p(x)) \right]
+\end{aligned}
+$$
+
+**Interpretation:** For each possible value of Y, we measure how much the conditional distribution of X given Y differs from the marginal distribution of X, then average over Y.
+
+### 3. Alternative symmetric form
+$$ I(X;Y) = \mathbb{E}_{p(x)} \left[ D_{\mathrm{KL}}(p(y|x) \parallel p(y)) \right] $$
+
+**Proof:** Similar to previous by symmetry.
+
+## Summary Table of Expressions
+
+| Expression | Formula | Interpretation |
+|------------|---------|----------------|
+| **Definition** | $\sum p(x,y) \log \frac{p(x,y)}{p(x)p(y)}$ | Deviation from independence |
+| **Via entropies** | $H(X) - H(X\|Y)$ | Reduction in uncertainty about X by Y |
+| **Symmetric** | $H(Y) - H(Y\|X)$ | Reduction in uncertainty about Y by X |
+| **Joint-marginals** | $H(X) + H(Y) - H(X,Y)$ | Bit savings in joint coding |
+| **As KL** | $D(p(x,y)\|p(x)p(y))$ | Distance to independence |
+| **Conditional** | $\mathbb{E}_{p(y)}[D(p(x\|y)\|p(x))]$ | Average of conditional divergences |
+
+## Illustrative Numerical Example
+
+### Situation: Weather forecast and ice cream sales
+
+Let:
+
+- **X**: Weather (0=Rain, 1=Sun)
+- **Y**: Ice cream sales (0=Low, 1=High)
+
+Distributions:
+
+- $p(x=0) = 0.3$, $p(x=1) = 0.7$
+- $p(y=0) = 0.4$, $p(y=1) = 0.6$
+- Joint distribution:
+
+| | Y=0 | Y=1 |
+|---|---|---|
+| **X=0** | 0.25 | 0.05 |
+| **X=1** | 0.15 | 0.55 |
+
+### Calculations:
+
+1. **Independence check**:
+   - If independent: $p(0,0) = p(x=0)p(y=0) = 0.3×0.4 = 0.12$
+   - But $p(0,0) = 0.25$ → not independent
+
+2. **Entropies**:
+   - $H(X) = -0.3\log_2(0.3) - 0.7\log_2(0.7) ≈ 0.881$ bits
+   - $H(Y) = -0.4\log_2(0.4) - 0.6\log_2(0.6) ≈ 0.971$ bits
+   - $H(X,Y) = -0.25\log_2(0.25) - 0.05\log_2(0.05) - 0.15\log_2(0.15) - 0.55\log_2(0.55) ≈ 1.548$ bits
+
+3. **Mutual information**:
+   - $I(X;Y) = H(X) + H(Y) - H(X,Y) ≈ 0.881 + 0.971 - 1.548 = 0.304$ bits
+   - $I(X;Y) = D(p(x,y)\|p(x)p(y)) = 0.25\log_2\frac{0.25}{0.12} + 0.05\log_2\frac{0.05}{0.18} + 0.15\log_2\frac{0.15}{0.28} + 0.55\log_2\frac{0.55}{0.42} ≈ 0.304$ bits
+
+**Interpretation**: Knowing the weather provides about 0.3 bits of information about ice cream sales.
+
+## Visualization of Relations
+
+```{mermaid}
+graph TD
+    A[Mutual Information I(X;Y)] --> B[Expressed via];
+    
+    B --> C[Entropy differences];
+    C --> D[I = H(X) - H(X|Y)];
+    C --> E[I = H(Y) - H(Y|X)];
+    C --> F[I = H(X) + H(Y) - H(X,Y)];
+    
+    B --> G[KL Divergence];
+    G --> H[I = D(p(x,y)∥p(x)p(y))];
+    G --> I[I = 𝔼_p(y)[D(p(x|y)∥p(x))]];
+    G --> J[I = 𝔼_p(x)[D(p(y|x)∥p(y))]];
+    
+    K[Properties] --> L[Symmetry: I(X;Y)=I(Y;X)];
+    K --> M[Non-negativity: I(X;Y) ≥ 0];
+    K --> N[Independence ⇔ I=0];
+    
+    O[Applications] --> P[Machine learning];
+    O --> Q[Neuroscience];
+    O --> R[Signal processing];
+```
+
+## Special Cases and Limits
+
+### 1. Independent Variables
+
+If $X \perp Y$, then:
+
+- $p(x,y) = p(x)p(y)$
+- $\log \frac{p(x,y)}{p(x)p(y)} = \log 1 = 0$
+- Therefore $I(X;Y) = 0$
+
+### 2. Deterministic Variables
+
+If $Y = f(X)$ (deterministic function), then:
+
+- $H(Y|X) = 0$ (knowing X, Y is certain)
+- $I(X;Y) = H(Y)$ (all information about Y comes from X)
+- But also $I(X;Y) ≤ H(X)$
+
+### 3. Relation with Correlation
+
+Mutual information is more general than correlation:
+
+- Correlation: measures linear relationships
+- Mutual information: measures any dependence (linear or nonlinear)
+
+## Practical Applications
+
+### 1. Feature Selection
+In machine learning, we choose variables $Y$ that maximize $I(X;Y)$ where $X$ is the target variable.
+
+**Example**: To predict house price ($X$), we choose among:
+
+- Area ($Y_1$)
+- Number of rooms ($Y_2$)
+- Year of construction ($Y_3$)
+
+We compute $I(X;Y_1)$, $I(X;Y_2)$, $I(X;Y_3)$ and keep the most informative ones.
+
+### 2. Representation Learning
+In autoencoders, we minimize $I(X;Z)$ where $Z$ is the latent representation, to obtain a compact representation.
+
+### 3. Neuroscience
+Measure $I(S;R)$ where $S$ is a stimulus and $R$ is the neural response, to understand what information is encoded.
+
+## Pedagogical Synthesis
+
+### The Conversation Analogy
+
+Imagine two friends talking:
+
+- **H(X)**: Everything Pierre could say
+- **H(Y)**: Everything Paul could hear
+- **I(X;Y)**: What Paul actually understands from Pierre
+- **H(X|Y)**: What Pierre says that Paul doesn't understand
+- **H(Y|X)**: What Paul hears but doesn't come from Pierre (noise)
+
+### Mnemonic Formulas
+1. **"Shared information = what we know - what we ignore"**
+   $$ I(X;Y) = H(X) - H(X|Y) $$
+
+2. **"Together we are stronger, but we share"**
+   $$ H(X,Y) = H(X) + H(Y) - I(X;Y) $$
+
+3. **"Dependence is a distance to independence"**
+   $$ I(X;Y) = D(p(x,y) \parallel p(x)p(y)) $$
+
+## Conclusion
+
+Mutual information is a central concept that unites several notions from information theory:
+
+1. **It is a measure of dependence** more powerful than correlation
+2. **It elegantly relates entropies and KL divergence**
+3. **Its visual interpretation** via Venn diagrams is intuitive
+
+The Venn diagram clearly shows how mutual information is the **intersection** of information from X and Y, while the expressions via relative entropy reveal that it fundamentally measures **the gap between the joint reality and the independence hypothesis**.
+
+This duality of perspectives makes mutual information an indispensable tool in data science, machine learning, neuroscience, and many other fields.

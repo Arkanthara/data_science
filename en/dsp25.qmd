@@ -1,0 +1,276 @@
+# Relative Entropy
+
+## Question
+
+Explain relative entropy, its properties, and give some examples of its use.
+
+## Introduction to Relative Entropy (Kullback-Leibler Divergence)
+
+**Relative entropy**, also called **Kullback-Leibler divergence (KLD)**, is a fundamental measure in information theory that quantifies the difference between two probability distributions. It plays a central role in relation to mutual information and cross-entropy.
+
+### Definition and Intuition
+
+For two discrete distributions $p(x)$ and $q(x)$ defined on the same space $\mathcal{X}$:
+
+$$ D_{\mathrm{KL}}(p \parallel q) = \sum_{x \in \mathcal{X}} p(x) \log_2 \frac{p(x)}{q(x)} = \mathbb{E}_{p(x)}\left[\log_2 \frac{p(x)}{q(x)}\right] $$
+
+**Intuitive interpretation:** KLD measures the **average number of extra bits** required to encode samples coming from distribution $p$ when using a code optimized for distribution $q$.
+
+## Fundamental Properties
+
+### 1. Non-negativity
+$$ D_{\mathrm{KL}}(p \parallel q) \geq 0 $$
+
+Equality $D_{\mathrm{KL}}(p \parallel q) = 0$ occurs if and only if $p = q$ almost everywhere.
+
+### 2. Asymmetry
+$$ D_{\mathrm{KL}}(p \parallel q) \neq D_{\mathrm{KL}}(q \parallel p) $$
+
+KLD **is not a metric distance** because it is not symmetric and does not satisfy the triangle inequality.
+
+### 3. Convexity
+KLD is convex with respect to each argument, which is crucial for optimization problems.
+
+### 4. Additivity for Independent Distributions
+If $p(x,y) = p_1(x)p_2(y)$ and $q(x,y) = q_1(x)q_2(y)$, then:
+$$ D_{\mathrm{KL}}(p \parallel q) = D_{\mathrm{KL}}(p_1 \parallel q_1) + D_{\mathrm{KL}}(p_2 \parallel q_2) $$
+
+## Relations with Other Information Measures
+
+### Link with Cross-Entropy
+
+**Definition of cross-entropy:**
+$$ H(p, q) = -\sum_{x} p(x) \log_2 q(x) = \mathbb{E}_{p(x)}[-\log_2 q(x)] $$
+
+**Fundamental relation:**
+$$ H(p, q) = H(p) + D_{\mathrm{KL}}(p \parallel q) $$
+
+```{mermaid}
+graph TD
+    A["Cross-Entropy H(p,q)"] --> B["Entropy of p: H(p)"]
+    A --> C["KL Divergence: D(p∥q)"]
+    
+    B --> D[Intrinsic uncertainty of p]
+    C --> E[Penalty for using the wrong model]
+    
+    F["Goal: minimize H(p,q)"] --> G{Equivalent to};
+    G --> H["Minimize D(p∥q) because H(p) constant"];
+```
+
+**Pedagogical interpretation:**
+
+- $H(p)$: Optimal number of bits to encode $p$ (with a perfectly adapted code)
+- $D_{\mathrm{KL}}(p \parallel q)$: Overhead due to using the code for $q$ to encode $p$
+- $H(p, q)$: Total bits used = optimal + overhead
+
+**Concrete example:**
+
+Suppose a student must study for an exam. Let:
+
+- $p$: Real distribution of questions (unknown to the student)
+- $q$: Distribution assumed by the student (based on their studying)
+- $H(p)$: Real difficulty of the exam
+- $D_{\mathrm{KL}}(p \parallel q)$: The student's "surprise" when facing the actual questions
+- $H(p, q)$: Difficulty perceived by the student
+
+### Link with Mutual Information
+
+**Recall of mutual information:**
+$$ I(X;Y) = \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} $$
+
+**Fundamental relation:**
+$$ I(X;Y) = D_{\mathrm{KL}}(p(x,y) \parallel p(x)p(y)) $$
+
+```{mermaid}
+graph LR
+    A["Mutual Information I(X;Y)"] --> B[KL Divergence]
+    B --> C["Between joint distribution p(x,y)"]
+    B --> D["And product of marginals p(x)p(y)"]
+    
+    E[Interpretation] --> F[Measures dependence]
+    F --> G[Deviation from independence]
+    
+    H[If X and Y independent] --> I["p(x,y) = p(x)p(y)"]
+    I --> J[D_KL = 0]
+    J --> K["I(X;Y) = 0"]
+```
+
+**Pedagogical interpretation:**
+
+Mutual information measures "how much we learn about X by observing Y" (and vice-versa). It is the KL divergence between:
+
+- Reality: joint distribution $p(x,y)$ (with potential dependence)
+- Independence hypothesis: $p(x)p(y)$ (if we think X and Y are independent)
+
+**Visual example:**
+
+![](image.png)
+
+### The Information Triangle: Complete Relations
+
+```{mermaid}
+graph TD
+    A["Entropy H(X)"] --> B["Mutual Information I(X;Y)"]
+    A --> C["Conditional Entropy H(X|Y)"]
+    
+    D["Cross-Entropy H(p,q)"] --> E["Entropy H(p)"]
+    D --> F["KL Divergence D(p∥q)"]
+    
+    G["Joint Entropy H(X,Y)"] --> H["H(X) + H(Y|X)"]
+    G --> I["H(Y) + H(X|Y)"]
+    
+    B --> J["= H(X) - H(X|Y)"]
+    B --> K["= H(Y) - H(Y|X)"]
+    
+    L[KL Divergence] --> M[Base of mutual information]
+    L --> N[Component of cross-entropy]
+```
+
+## Examples of Practical Use
+
+### 1. Machine Learning: Loss Function
+In classification, **cross-entropy loss** is often used:
+
+**Context:**
+
+- $p$: Target distribution (one-hot encoding of labels)
+- $q$: Distribution predicted by the model (softmax)
+- We minimize $H(p, q)$ to train the model
+
+**Why it works:**
+Minimizing $H(p, q)$ is equivalent to minimizing $D_{\mathrm{KL}}(p \parallel q)$ because $H(p)$ is constant (the labels are fixed).
+
+**Numerical example:**
+For binary classification with true label = 1:
+
+- $p = [0, 1]$ (target distribution)
+- If the model predicts $q = [0.1, 0.9]$: $H(p, q) = -\log_2(0.9) ≈ 0.152$ bits
+- If the model predicts $q = [0.4, 0.6]$: $H(p, q) = -\log_2(0.6) ≈ 0.737$ bits
+
+### 2. Data Compression: Suboptimal Codes
+**Scenario:** We design a code for a language with distribution $q$, but we use it for a language with distribution $p$.
+
+**Example:**
+
+- Language A ($p$): 'e'=12.7%, 't'=9.1%, 'z'=0.07%
+- Language B ($q$): 'e'=10.0%, 't'=15.0%, 'z'=1.0%
+- Optimal code for B assigns short codes to 't' and 'z'
+
+**Calculation:**
+$$ D_{\mathrm{KL}}(p \parallel q) = 0.127\log_2\frac{0.127}{0.10} + 0.091\log_2\frac{0.091}{0.15} + \cdots $$
+
+This divergence measures the inefficiency of code B for language A.
+
+### 3. Variational Inference
+**Problem:** Approximate a complex posterior distribution $p(z|x)$ with a simple distribution $q(z)$.
+
+**Approach:** Minimize $D_{\mathrm{KL}}(q \parallel p)$ so that $q$ is close to $p$.
+
+**Direction choice:**
+
+- $D_{\mathrm{KL}}(q \parallel p)$: "mode-seeking" (avoids areas where $q>0$ but $p=0$)
+- $D_{\mathrm{KL}}(p \parallel q)$: "mean-seeking" (covers all modes of $p$)
+
+## Summary Table of Relations
+
+| Concept | Formula | Relation with KLD | Interpretation |
+|---------|---------|-------------------|----------------|
+| Cross-Entropy | $H(p,q) = -\sum p\log q$ | $H(p,q) = H(p) + D(p\|q)$ | Cost of using the wrong model |
+| Mutual Information | $I(X;Y) = \sum p(x,y)\log\frac{p(x,y)}{p(x)p(y)}$ | $I(X;Y) = D(p(x,y)\|p(x)p(y))$ | Dependence between variables |
+| Conditional Entropy | $H(X\|Y) = H(X,Y) - H(Y)$ | $H(X\|Y) = H(X) - I(X;Y)$ | Residual uncertainty |
+| Joint Entropy | $H(X,Y) = -\sum p(x,y)\log p(x,y)$ | $H(X,Y) = H(X) + H(Y) - I(X;Y)$ | Total uncertainty |
+
+## Complete Pedagogical Example: The Detective and Their Hypothesis
+
+**Scenario:** A detective investigates a series of crimes.
+
+- **$p(x)$**: Real distribution of the true criminal's characteristics
+  - Age: 30-40 years (40%), 40-50 years (40%), other (20%)
+  - Vehicle: Car (70%), Motorcycle (30%)
+  
+- **$q(x)$**: Detective's hypothesis
+  - Age: 20-30 years (60%), 30-40 years (30%), other (10%)
+  - Vehicle: Car (50%), Motorcycle (50%)
+
+**KL Divergence calculation:**
+
+For each characteristic, we calculate:
+$$ D_{\mathrm{KL}}(p \parallel q) = \sum p(x) \log_2 \frac{p(x)}{q(x)} $$
+
+**Interpretation:**
+
+- If $D_{\mathrm{KL}}$ is large → the detective has a poor hypothesis
+- If $D_{\mathrm{KL}} = 0$ → the detective guessed the distribution perfectly
+
+**Link with mutual information:**
+
+Suppose we now discover a relationship between:
+
+- $X$: Type of crime
+- $Y$: Vehicle used
+
+The mutual information $I(X;Y)$ measures whether knowing the type of crime gives information about the vehicle (and vice-versa).
+
+## Advanced Applications
+
+### 1. Regularization via KL Divergence
+In generative models (like VAEs), we use $D_{\mathrm{KL}}(q(z|x) \parallel p(z))$ to constrain the latent distribution to follow a prior distribution $p(z)$ (often Gaussian).
+
+### 2. Reinforcement Learning
+KL divergence is used in algorithms like TRPO and PPO to constrain policy updates, preventing overly drastic changes.
+
+### 3. Bayesian Information Theory
+In Bayesian inference, $D_{\mathrm{KL}}(p_{\text{post}} \parallel p_{\text{prior}})$ measures how much observing the data has modified our beliefs.
+
+## Critical Points of Attention
+
+### 1. Asymmetry and Direction Choice
+
+```{mermaid}
+graph TD
+    A["Choice of D(p∥q) vs D(q∥p)"] --> B{Situation};
+    
+    B --> C[Priority: avoid areas<br>where p>0 but q=0];
+    C --> D["Use D(p∥q)<br>because D(p∥q)=∞ if q=0 and p>0"];
+    
+    B --> E[Priority: cover all<br>modes of p];
+    E --> F["Use D(q∥p)<br>mode-seeking"];
+    
+    B --> G[Variational inference];
+    G --> H["Use D(q∥p)<br>for approximations"];
+```
+
+### 2. Sensitivity to Rare Events
+
+KLD is very sensitive to low-probability events in $p$ that are zero in $q$:
+
+- $p(x) > 0$ but $q(x) = 0$ → $D_{\mathrm{KL}}(p \parallel q) = \infty$
+
+### 3. Symmetric Alternatives
+
+When symmetry is needed:
+
+- **Jensen-Shannon divergence**: $JS(p,q) = \frac{1}{2}D(p \parallel m) + \frac{1}{2}D(q \parallel m)$ where $m = \frac{p+q}{2}$
+- **Wasserstein distance**: Based on optimal transport
+
+## Synthetic Conclusion
+
+Relative entropy (KLD) is the **conceptual cement** that links the main information measures:
+
+1. **With cross-entropy**: $H(p,q) = H(p) + D(p\|q)$
+   - KLD is the "overhead" when using a wrong model
+
+2. **With mutual information**: $I(X;Y) = D(p(x,y)\|p(x)p(y))$
+   - KLD measures the deviation from independence
+
+3. **With conditional entropy**: $H(X|Y) = H(X) - I(X;Y)$
+   - The reduction in uncertainty thanks to Y
+
+**Final metaphor:** Imagine you have to guess the contents of a box:
+
+- $H(p)$: Number of questions needed if you know the true distribution
+- $H(p,q)$: Number of questions if you have an imperfect hypothesis $q$
+- $D(p\|q)$: Extra questions due to your poor hypothesis
+- $I(X;Y)$: Questions saved by listening to a clue Y
+
+Thus, KL divergence quantifies the "cost of ignorance" - how much we pay in efficiency when our models do not match reality.

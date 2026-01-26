@@ -1,0 +1,336 @@
+# Feature Extraction
+
+## Question
+
+Explain the 3 main concepts of feature extraction based on supervised learning, auto-encoders, and self-supervised learning.
+
+Give examples of using these features.
+
+## Introduction
+
+**Feature extraction** transforms raw data into compact, informative representations. Three main approaches exist:
+
+1. **Supervised learning**: uses labeled data
+2. **Auto-encoders**: reconstructs data through a bottleneck
+3. **Self-supervised learning**: creates its own learning tasks
+
+Each method seeks to optimize different aspects of information, related to entropy, KL divergence, and mutual information.
+
+---
+
+## 1. Supervised Learning
+
+### Principle and Link to Information Theory
+
+```{mermaid}
+flowchart TD
+    A["Data X"]
+    B["Labels Y"]
+    C[\"Feature extractor"/]
+    D["Features Z"]
+    E[/"Classifier"\]
+    F["Predictions Ŷ"]
+    
+    A --> C
+    B -.->|Supervision| E
+    C --> D
+    D --> E
+    E --> F
+    
+    style D fill:#e1f5ff
+```
+
+**Objective**: Maximize the **mutual information** between features Z and labels Y.
+
+**Intuition**: We seek to extract features that maximally reduce uncertainty about the labels. If Z contains much information about Y, then knowing Z strongly reduces the entropy of Y.
+
+### Application Domains
+
+#### Extraction (Feature Extraction)
+- **Example**: ResNet for images - convolutional layers hierarchically extract patterns (edges → textures → object parts)
+- **Theory link**: Features optimized for discrimination
+
+#### Mining (Exploration)
+- **Example**: Sentiment analysis in customer reviews
+- **Usage**: Discover recurring themes in negative comments
+- **Approach**: Supervised classification then analysis of important features
+
+#### Recognition & Classification
+- **Example**: Facial recognition for authentication
+- **Principle**: 2-ary or M-ary classification - decide between "person A" vs "person B" vs "others"
+- **Performance**: High accuracy when plenty of labeled data
+
+#### Search & Identification
+- **Example**: Image-based product search engine
+- **Mechanism**: Extracted features compared by cosine distance
+- **Advantage**: High precision thanks to discriminative learning
+
+#### Transmission & Compression
+- **Example**: Intelligent compression - keep only discriminative features
+- **Approach**: Learning compressed representations for classification
+
+#### Multimedia Security
+- **Example**: Deepfake detection
+- **Principle**: Binary classification (real/fake) based on learned features
+- **Features**: Capture generation artifacts
+
+---
+
+## 2. Auto-Encoders
+
+### Principle and Link to Information Theory
+
+```{mermaid}
+flowchart TD
+    A["Data X"]
+    B[\"Encoder"/]
+    C["Bottleneck Z"]
+    D[/"Decoder"\]
+    E["Reconstruction X̂"]
+    
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    
+    F["Minimize ||X - X̂||²"]
+    A -.-> F
+    E -.-> F
+    
+    style C fill:#fff4e1
+```
+
+**Objective**: Minimize the **KL divergence** between the data distribution and their reconstruction.
+
+**Intuition**: We seek a compressed representation Z that preserves essential information. It's a compromise between compression (small Z) and fidelity (X̂ close to X).
+
+### Application Domains
+
+#### Extraction (Feature Extraction)
+- **Example**: Non-linear dimensionality reduction
+- **Usage**: Projection of complex data to 2D/3D for visualization
+- **Advantage** vs PCA: Captures non-linear relationships
+
+#### Mining (Exploration)
+- **Example**: Community discovery in social networks
+- **Approach**: Auto-encoder on adjacency matrix
+- **Result**: Clusters corresponding to natural communities
+
+#### Recognition & Classification
+- **Example**: Medical anomaly detection
+- **Principle**: Only normal images reconstruct well
+- **Decision**: High reconstruction error → anomaly
+
+#### Search & Identification
+- **Example**: Music recommendation system
+- **Mechanism**: Similarity search in latent space Z
+- **Advantage**: Captures deep structural similarity
+
+#### Transmission & Compression
+- **Example**: Neural video codecs (e.g., BPG, VVC)
+- **Principle**: Lossy compression optimized for human perception
+- **Trade-off**: Rate-distortion - size/quality compromise
+
+#### Multimedia Security
+- **Example**: Robust watermarking
+- **Approach**: Encode watermark in bottleneck Z
+- **Robustness**: Survives transformations as long as reconstruction is faithful
+
+---
+
+## 3. Self-Supervised Learning
+
+### Principle and Link to Information Theory
+
+```{mermaid}
+flowchart TD
+    A["Data X"]
+    B["View 1<br>t₁(X)"]
+    C["View 2<br>t₂(X)"]
+    
+    D[\"Encoder"/]
+    E[\"Encoder"/]
+    
+    F["Features Z₁"]
+    G["Features Z₂"]
+    
+    H[\"Maximize similarity"/]
+    
+    A --> B
+    A --> C
+    B --> D
+    C --> E
+    D --> F
+    E --> G
+    F --> H
+    G --> H
+    
+    style F fill:#e8f5e8
+    style G fill:#e8f5e8
+```
+
+**Objective**: Maximize the **mutual information** between different views of the same data.
+
+**Intuition**: Two transformations of the same image should have similar representations. Thus we learn features invariant to transformations but discriminative between different data.
+
+### Application Domains
+
+#### Extraction (Feature Extraction)
+- **Example**: BERT models in NLP
+- **Principle**: Masked word prediction → rich contextual embeddings
+- **Usage**: Base for many NLP tasks
+
+#### Mining (Exploration)
+- **Example**: Category discovery in unlabeled dataset
+- **Approach**: Contrastive pre-training then clustering
+- **Result**: Emerging categories without human supervision
+
+#### Recognition & Classification
+- **Example**: Medical diagnosis with few labeled data
+- **Protocol**: 1) Self-supervised pre-training on all available medical images
+                2) Fine-tuning on small labeled dataset
+- **Advantage**: Drastic reduction in annotation needs
+
+#### Search & Identification
+- **Example**: Cross-modal image-text search (CLIP)
+- **Capability**: Find images from textual descriptions
+- **Usage**: Advanced visual search engines
+
+#### Transmission & Compression
+- **Example**: Semantic compression
+- **Idea**: Transmit only essential semantic information
+- **Approach**: Self-supervised pre-training to identify what is semantically important
+
+#### Multimedia Security
+- **Example**: AI-generated content detection
+- **Principle**: Generative models leave subtle fingerprints
+- **Detection**: Self-supervised features capture these patterns
+
+---
+
+## Summary Table of Theoretical Links
+
+| Method | What to optimize? | Link with information theory | Intuitive analogy |
+|--------|-------------------|------------------------------|-------------------|
+| **Supervised** | Correct label prediction | Maximize I(Z;Y) - mutual information features/labels | "Learn to distinguish" |
+| **Auto-encoders** | Faithful reconstruction | Minimize D_KL(X‖X̂) - divergence between original and reconstruction | "Learn to remember the essential" |
+| **Self-supervised** | Similarity between augmented views | Maximize I(Z₁;Z₂) - mutual information between views of same data | "Learn to recognize despite transformations" |
+
+---
+
+## Integrated Concrete Examples
+
+### Case 1: Video streaming platform
+
+**Problem**: Recommend movies to users
+
+**Hybrid solution**:
+
+1. **Self-supervised**: Pre-training on all videos (learn to recognize scenes, actions)
+2. **Supervised**: Fine-tuning on user ratings
+3. **Auto-encoders**: Compression of embeddings for fast search
+
+**Applications**:
+
+- **Mining**: Discover emerging genres (e.g., "Christmas romantic comedies")
+- **Search**: "Find movies similar to Inception"
+- **Compression**: Adaptive streaming based on bandwidth
+
+### Case 2: Online bank
+
+**Problem**: Detect fraudulent transactions
+
+**Approach**:
+
+1. **Auto-encoder**: Normal model on legitimate transactions
+2. **Detection**: Transactions with high reconstruction error = potential fraud
+3. **Supervised**: Human validation → label creation → more precise supervised model
+
+**Security**: Real-time anomaly detection
+
+---
+
+## Conclusion: Which Method to Choose?
+
+| Need | Recommended Method | Why |
+|------|-------------------|-----|
+| **Plenty of labeled data** | Supervised | Maximum performance on specific task |
+| **Compression, anomalies** | Auto-encoders | Optimized for faithful reconstruction |
+| **Few labels, lots of raw data** | Self-supervised | Exploits natural data structure |
+| **Complete system** | Combination of all three | Self-supervised pre-training → supervised fine-tuning → auto-encoder compression |
+
+**Current trend**: Self-supervised learning is becoming dominant as it exploits the abundance of unlabeled data, followed by supervised fine-tuning to adapt to specific tasks, with auto-encoders for operational efficiency.
+
+---
+
+## Comparative Table and Synthesis
+
+| Aspect | Supervised Learning | Auto-encoders | Self-Supervised Learning |
+|--------|---------------------|---------------|--------------------------|
+| **Data** | Labeled | Unlabeled | Unlabeled |
+| **Objective** | Predict Y | Reconstruct X | Learn general representations |
+| **Link with info theory** | Max $I(Z; Y)$ | Min $D_{\mathrm{KL}}$, bottleneck | Max $I(Z_1; Z_2)$, InfoNCE |
+| **Characteristics** | Task-specific | Compact, reconstructible | Generalizable, transferable |
+| **Typical applications** | Classification, regression | Compression, anomalies | Pre-training, transfer learning |
+
+### Relations with Entropy, DKL, and Mutual Information
+
+1. **Entropy $H(\cdot)$**: Measures uncertainty/information content
+
+   - In all cases, we seek representations with appropriate entropy (sufficiently informative but not too redundant)
+
+2. **KL Divergence $D_{\mathrm{KL}}(p \parallel q)$**: Measures discrepancy between distributions
+
+   - VAE: $D_{\mathrm{KL}}(q(z|x) \parallel p(z))$ regularizes latent space
+   - Domain adaptation: Distribution alignment
+   - Self-supervised: Minimize DKL between augmented views
+
+3. **Mutual Information $I(\cdot;\cdot)$**: Measures dependence
+
+   - Supervised: Maximize $I(Z; Y)$
+   - Self-supervised: Maximize $I(Z_1; Z_2)$
+   - Autoencoders: Preservation of $I(X; Z)$ under compression constraint
+
+### Synthesis Diagram of Relations
+
+```{mermaid}
+graph TD
+    A[Information Theory] --> B[Entropy H];
+    A --> C[KL Divergence];
+    A --> D[Mutual Information I];
+    
+    B --> E[Compression];
+    B --> F[Representation complexity];
+    
+    C --> G[VAE regularization];
+    C --> H[Distribution alignment];
+    
+    D --> I["Supervised: max I(Z;Y)"];
+    D --> J["Self-supervised: max I(Z₁;Z₂)"];
+    D --> K["Autoencoders: I(X;Z) preserved"];
+    
+    E --> L[Practical applications];
+    F --> L;
+    G --> L;
+    H --> L;
+    I --> L;
+    J --> L;
+    K --> L;
+    
+    L --> M[Classification];
+    L --> N[Compression];
+    L --> O[Anomaly detection];
+    L --> P[Transfer learning];
+```
+
+## Conclusion
+
+The three feature extraction paradigms offer complementary approaches with deep links to information theory:
+
+1. **Supervised learning** directly maximizes mutual information with labels, producing highly discriminative features for a specific task.
+
+2. **Auto-encoders** implement an information bottleneck with KL divergence regularization, learning compact representations that preserve essential information.
+
+3. **Self-supervised learning** maximizes mutual information between different views of the data, learning general and transferable representations.
+
+These theoretical links are not merely academic: they guide the development of more efficient architectures and explain why some methods work better than others in specific contexts. Understanding these connections allows practitioners to choose the appropriate approach for their problem and innovate by combining the strengths of each paradigm.

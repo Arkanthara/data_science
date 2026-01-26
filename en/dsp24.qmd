@@ -1,0 +1,139 @@
+# Entropy and Venn Diagrams
+
+## Question
+
+Explain the properties of entropy using examples of conditional entropy H(X|Y) and joint entropy H(X,Y).
+
+Use Venn diagrams.
+
+## Introduction to Basic Concepts
+
+Before discussing properties, let's recall the essential definitions illustrated by the following Venn diagram:
+
+![](image.png)
+
+**Legend:**
+
+- **H(X)**: Entropy of X (total uncertainty about X)
+- **H(Y)**: Entropy of Y (total uncertainty about Y)
+- **H(X,Y)**: Joint entropy (total uncertainty of the pair (X,Y))
+- **H(X|Y)**: Conditional entropy (remaining uncertainty about X when Y is known)
+- **H(Y|X)**: Conditional entropy (remaining uncertainty about Y when X is known)
+- **I(X;Y)**: Mutual information (information shared between X and Y)
+
+## Fundamental Properties Illustrated
+
+### 1. Conditioning Reduces Entropy
+**Property:** $H(X|Y) \leq H(X)$
+
+**Intuitive explanation:** Knowing Y reduces (or at worst doesn't change) the uncertainty about X.
+
+**Illustration:** In the diagram, $H(X|Y)$ is the part of circle H(X) that doesn't intersect H(Y). This region is always smaller than or equal to the entire H(X).
+
+**Extreme cases:**
+
+- If X and Y are independent: $H(X|Y) = H(X)$ (circles are disjoint)
+- If Y completely determines X: $H(X|Y) = 0$ (circles overlap completely)
+
+### 2. Joint Entropy as Union of Uncertainties
+**Property:** $H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)$
+
+**Intuitive explanation:** The total uncertainty about the pair (X,Y) equals the uncertainty about X plus the remaining uncertainty about Y once X is known (or vice versa).
+
+**Visual formula:** 
+
+- $H(X,Y)$ = entire area of both circles combined
+- $H(X) + H(Y|X)$ = complete H(X) circle + part of H(Y) not covered by X
+
+### 3. Subadditivity of Joint Entropy
+**Property:** $H(X,Y) \leq H(X) + H(Y)$
+
+**Intuitive explanation:** The total uncertainty about (X,Y) cannot exceed the sum of individual uncertainties, unless X and Y are independent (in which case it's equal).
+
+**Illustration:** The area of unification of two circles is always ≤ the sum of individual areas. Equality ($H(X,Y) = H(X) + H(Y)$) occurs when circles are disjoint (X and Y independent).
+
+### 4. Triangular Relationship Between Measures
+**Property:** $H(X,Y) = H(X) + H(Y) - I(X;Y)$
+
+**Intuitive explanation:** Joint entropy is the sum of individual entropies minus what they share in common (to avoid double-counting shared information).
+
+**Set theory analogy:** Like in set theory: |A ∪ B| = |A| + |B| - |A ∩ B|
+
+### 5. Chain of Successive Conditionings
+**Property:** $H(X|Y) \geq H(X|Y,Z)$
+
+**Intuitive explanation:** The more information we have (by conditioning on more variables), the smaller the remaining uncertainty becomes.
+
+**Extended illustration:** If we add a third circle Z to the diagram, the region corresponding to $H(X|Y,Z)$ is smaller than $H(X|Y)$.
+
+## Concrete Example with Quantitative Diagram
+
+Consider two binary variables X and Y with the following joint distribution:
+
+| X | Y | P(X,Y) |
+|---|---|--------|
+| 0 | 0 | 0.4    |
+| 0 | 1 | 0.1    |
+| 1 | 0 | 0.2    |
+| 1 | 1 | 0.3    |
+
+Let's calculate the values:
+
+- $H(X) ≈ 0.971$ bits
+- $H(Y) ≈ 0.881$ bits
+- $H(X,Y) ≈ 1.846$ bits
+- $H(X|Y) = H(X,Y) - H(Y) ≈ 0.965$ bits
+- $I(X;Y) = H(X) - H(X|Y) ≈ 0.006$ bits (weak dependence)
+
+**Observations from this example:**
+
+1. $H(X|Y) = 0.965 < H(X) = 0.971$: conditioning slightly reduces entropy
+2. $H(X,Y) = 1.846 < H(X) + H(Y) = 1.852$: slight subadditivity
+3. $I(X;Y)$ is very small: variables are almost independent
+
+## Practical Applications in Data Science
+
+### 1. Data Compression
+
+- $H(X|Y)$ represents the part of X that cannot be predicted from Y
+- In compression with side information, we only code $H(X|Y)$ instead of $H(X)$
+- Example: stereo compression where one channel can be partially predicted from the other
+
+### 2. Machine Learning
+
+- If $H(X|Y)$ is small, then Y is a good predictor of X
+- The reduction $H(X) - H(X|Y) = I(X;Y)$ measures the information that Y provides about X
+- In feature selection: we choose Y that minimizes $H(X|Y)$
+
+### 3. Signal Processing
+
+- In a communication system, $H(X|Y)$ represents the remaining uncertainty after reception
+- If the channel is noisy, $H(X|Y) > 0$: uncertainty remains
+- A perfect channel would have $H(X|Y) = 0$
+
+## Summary of Key Properties
+
+| Property | Formula | Visual Interpretation | Equality Condition |
+|-----------|---------|------------------------|---------------------|
+| Conditioning reduces | $H(X\|Y) \leq H(X)$ | Part of H(X) outside intersection | X and Y independent |
+| Joint entropy additive | $H(X,Y) = H(X) + H(Y\|X)$ | Union = first circle + exclusive part of second | Always true |
+| Subadditivity | $H(X,Y) \leq H(X) + H(Y)$ | Union ≤ sum of circles | X and Y independent |
+| Mutual information | $I(X;Y) = H(X) - H(X\|Y)$ | Intersection of circles | X and Y independent ⇒ I=0 |
+
+## Pedagogical Conclusion
+
+The properties of conditional and joint entropy can be summarized by a simple geometric intuition:
+
+- **H(X)** is a circle representing uncertainty about X
+- **H(Y)** is another circle
+- **H(X|Y)** is what remains of circle X when we remove the intersection with Y
+- **H(X,Y)** is the union of both circles
+- **I(X;Y)** is the overlapping area
+
+This visualization explains why:
+
+1. Knowing Y can only help reduce uncertainty about X (never increase it)
+2. Uncertainty about (X,Y) is at most the sum of individual uncertainties
+3. Shared information "saves" bits in joint coding
+
+These fundamental principles form the basis of data compression, machine learning, and digital communications.
