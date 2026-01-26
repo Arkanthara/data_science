@@ -1,0 +1,248 @@
+# Conditional Entropy
+
+## Question
+
+Explain joint and conditional entropy for discrete random variables.
+
+Explain the chain rule for entropy.
+
+## Introduction: Review of Entropy
+
+The **entropy** of a discrete random variable $X$, denoted $H(X)$, measures the average uncertainty associated with its outcomes. It is defined as:
+
+$$
+H(X) = -\sum_{x \in \mathcal{X}} p(x) \log_2 p(x)
+$$
+
+We will now extend this concept to multiple variables.
+
+---
+
+## Joint Entropy
+
+**Joint entropy** measures the total uncertainty associated with the simultaneous realization of multiple random variables.
+
+### Mathematical Definition
+
+For two discrete random variables $X$ and $Y$ with joint probability mass function $p(x,y)$, the joint entropy $H(X,Y)$ is defined as:
+
+$$
+H(X,Y) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x,y) \log_2 p(x,y)
+$$
+
+For $N$ variables $X_1, X_2, \dots, X_N$ with joint distribution $p(x_1, x_2, \dots, x_N)$:
+
+$$
+H(X_1, X_2, \dots, X_N) = -\sum_{x_1} \sum_{x_2} \dots \sum_{x_N} p(x_1, x_2, \dots, x_N) \log_2 p(x_1, x_2, \dots, x_N)
+$$
+
+### Interpretation
+
+- $H(X,Y)$ represents the **average number of bits** needed to optimally encode the pair $(X,Y)$.
+- This is the uncertainty associated with simultaneously knowing both variables.
+- If $X$ and $Y$ are independent, then $H(X,Y) = H(X) + H(Y)$ (see below).
+
+### Simple Example
+
+Consider two binary variables $X$ and $Y$ with the following joint distribution:
+
+| $X$ \ $Y$ | 0 | 1 |
+|-----------|---|---|
+| **0** | 0.25 | 0.25 |
+| **1** | 0.25 | 0.25 |
+
+Here, $p(x,y) = 0.25$ for all pairs. Let's compute $H(X,Y)$:
+
+$$
+H(X,Y) = -4 \times (0.25 \log_2 0.25) = -4 \times (0.25 \times (-2)) = 2 \text{ bits}
+$$
+
+Each pair requires on average 2 bits to be encoded.
+
+---
+
+## Conditional Entropy
+
+**Conditional entropy** measures the remaining uncertainty about a random variable when we know the value of another variable.
+
+### Mathematical Definition
+
+The conditional entropy of $Y$ given $X$, denoted $H(Y|X)$, is defined as:
+
+$$
+H(Y|X) = \sum_{x \in \mathcal{X}} p(x) H(Y|X=x)
+$$
+
+Where $H(Y|X=x)$ is the entropy of the conditional distribution $p(y|x)$:
+
+$$
+H(Y|X=x) = -\sum_{y \in \mathcal{Y}} p(y|x) \log_2 p(y|x)
+$$
+
+Combining both expressions, we get the more common form:
+
+$$
+H(Y|X) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x,y) \log_2 p(y|x)
+$$
+
+### Interpretation
+
+- $H(Y|X)$ is the **average uncertainty about $Y$ that remains after observing $X$**.
+- It's an expectation: we average the uncertainty about $Y$ for each possible value of $X$, weighted by the probability of $X$.
+- **Important property**: $H(Y|X) \leq H(Y)$ with equality if and only if $X$ and $Y$ are independent.
+
+### Simple Example
+
+Let's reconsider the binary variables but with a dependent distribution:
+
+| $X$ \ $Y$ | 0 | 1 |
+|-----------|---|---|
+| **0** | 0.5 | 0 |
+| **1** | 0 | 0.5 |
+
+Here, $Y$ is perfectly determined by $X$: if $X=0$ then $Y=0$, if $X=1$ then $Y=1$.
+
+Compute $H(Y|X)$:
+- For $X=0$: $p(y|0) = [1, 0]$, so $H(Y|X=0) = 0$
+- For $X=1$: $p(y|1) = [0, 1]$, so $H(Y|X=1) = 0$
+
+Thus, $H(Y|X) = p(X=0) \times 0 + p(X=1) \times 0 = 0$ bits.
+
+Knowing $X$ eliminates all uncertainty about $Y$.
+
+---
+
+## Chain Rule for Entropy
+
+The **chain rule** for entropy establishes a fundamental relationship between joint entropy and conditional entropy.
+
+### Statement
+
+For two random variables $X$ and $Y$:
+
+$$
+H(X,Y) = H(X) + H(Y|X)
+$$
+
+More generally, for $N$ variables $X_1, X_2, \dots, X_N$:
+
+$$
+H(X_1, X_2, \dots, X_N) = H(X_1) + H(X_2|X_1) + H(X_3|X_1,X_2) + \dots + H(X_N|X_1,X_2,\dots,X_{N-1})
+$$
+
+Or compactly:
+
+$$
+H(X_1, X_2, \dots, X_N) = \sum_{i=1}^N H(X_i|X_1, \dots, X_{i-1})
+$$
+
+with the convention that $H(X_1|\emptyset) = H(X_1)$.
+
+### Intuitive Proof
+
+For two variables, start from the definition of joint entropy:
+
+$$
+H(X,Y) = -\sum_{x,y} p(x,y) \log_2 p(x,y)
+$$
+
+Use the factorization $p(x,y) = p(x) \cdot p(y|x)$:
+
+$$
+\begin{aligned}
+H(X,Y) &= -\sum_{x,y} p(x,y) \log_2 [p(x) \cdot p(y|x)] \\
+&= -\sum_{x,y} p(x,y) [\log_2 p(x) + \log_2 p(y|x)] \\
+&= -\sum_{x,y} p(x,y) \log_2 p(x) - \sum_{x,y} p(x,y) \log_2 p(y|x)
+\end{aligned}
+$$
+
+The first term:
+$$
+-\sum_{x,y} p(x,y) \log_2 p(x) = -\sum_x \left[ \log_2 p(x) \sum_y p(x,y) \right] = -\sum_x p(x) \log_2 p(x) = H(X)
+$$
+
+The second term is exactly $H(Y|X)$ by definition.
+
+Thus, $H(X,Y) = H(X) + H(Y|X)$.
+
+### Interpretation
+
+The chain rule can be understood intuitively:
+
+- The total uncertainty about the pair $(X,Y)$ [= $H(X,Y)$] equals the uncertainty about $X$ [= $H(X)$] plus the remaining uncertainty about $Y$ after knowing $X$ [= $H(Y|X)$].
+- This extends to $N$ variables: the total uncertainty decomposes into uncertainty about the first variable, plus uncertainty about the second given the first, etc.
+
+### Important Consequences
+
+1. **Independence**: If $X$ and $Y$ are independent, then $p(y|x) = p(y)$, so $H(Y|X) = H(Y)$, and the rule becomes $H(X,Y) = H(X) + H(Y)$.
+
+2. **Subadditivity inequality**: Since $H(Y|X) \leq H(Y)$, we always have $H(X,Y) \leq H(X) + H(Y)$.
+
+3. **Symmetry**: The rule is symmetric: $H(X,Y) = H(Y) + H(X|Y)$.
+
+### Application Example
+
+Consider a transmission system where $X$ is the transmitted message and $Y$ is the received message (potentially noisy).
+
+- $H(X)$: uncertainty about the transmitted message
+- $H(Y|X)$: uncertainty introduced by noise (equivalent to the entropy of the noise)
+- $H(X,Y)$: total uncertainty about the transmission-reception pair
+
+The chain rule tells us that the total uncertainty is the sum of the uncertainty about transmission and the uncertainty due to noise.
+
+---
+
+## Complete Illustrative Example
+
+Consider two binary variables $X$ and $Y$ with joint distribution:
+
+| $X$ \ $Y$ | 0 | 1 | $p(x)$ |
+|-----------|---|---|--------|
+| **0** | 0.3 | 0.2 | 0.5 |
+| **1** | 0.1 | 0.4 | 0.5 |
+| $p(y)$ | 0.4 | 0.6 | 1.0 |
+
+1. **Compute $H(X)$**:
+   $$
+   H(X) = -[0.5 \log_2 0.5 + 0.5 \log_2 0.5] = 1 \text{ bit}
+   $$
+
+2. **Compute $H(Y)$**:
+   $$
+   H(Y) = -[0.4 \log_2 0.4 + 0.6 \log_2 0.6] \approx 0.971 \text{ bits}
+   $$
+
+3. **Compute $H(X,Y)$**:
+   $$
+   H(X,Y) = -[0.3 \log_2 0.3 + 0.2 \log_2 0.2 + 0.1 \log_2 0.1 + 0.4 \log_2 0.4] \approx 1.846 \text{ bits}
+   $$
+
+4. **Compute $H(Y|X)$**:
+   - For $X=0$: $p(Y|0) = [0.3/0.5 = 0.6, 0.2/0.5 = 0.4]$, $H(Y|X=0) = -[0.6 \log_2 0.6 + 0.4 \log_2 0.4] \approx 0.971$
+   - For $X=1$: $p(Y|1) = [0.1/0.5 = 0.2, 0.4/0.5 = 0.8]$, $H(Y|X=1) = -[0.2 \log_2 0.2 + 0.8 \log_2 0.8] \approx 0.722$
+   - $H(Y|X) = 0.5 \times 0.971 + 0.5 \times 0.722 \approx 0.8465$ bits
+
+5. **Verify chain rule**:
+   $$
+   H(X,Y) = H(X) + H(Y|X) \approx 1 + 0.8465 = 1.8465 \text{ bits}
+   $$
+   This matches our direct calculation (within rounding).
+
+---
+
+## Summary and Synthesis
+
+| Concept | Definition | Interpretation | Relation |
+|---------|------------|----------------|----------|
+| **Joint entropy** $H(X,Y)$ | $-\sum_{x,y} p(x,y) \log_2 p(x,y)$ | Total uncertainty about the pair $(X,Y)$ | - |
+| **Conditional entropy** $H(Y|X)$ | $-\sum_{x,y} p(x,y) \log_2 p(y|x)$ | Remaining uncertainty about $Y$ after observing $X$ | $H(Y|X) \leq H(Y)$ |
+| **Chain rule** | $H(X,Y) = H(X) + H(Y|X)$ | Decomposition of total uncertainty | Extends to N variables |
+
+### Key Points to Remember
+
+1. **Joint entropy** measures the combined uncertainty of multiple variables.
+2. **Conditional entropy** quantifies the information still hidden in one variable when another is known.
+3. **Chain rule** is a powerful tool for decomposing joint entropy into a sum of conditional entropies.
+4. These concepts are fundamental in information theory, with applications in compression, data transmission, machine learning (information gain, decision trees), and many other fields.
+
+Understanding these notions allows analyzing dependencies between variables and optimizing information processing systems.

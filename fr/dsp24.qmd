@@ -1,4 +1,10 @@
-# Question : Expliquer les propriétés de l'entropie à l'aide des exemples de l'entropie conditionnelle H(X|Y) et de l'entropie jointe H(X,Y). Utiliser des diagrammes de Venn.
+# Entropie et diagrammes de Venn
+
+## Question
+
+Expliquer les propriétés de l'entropie à l'aide des exemples de l'entropie conditionnelle H(X|Y) et de l'entropie jointe H(X,Y).
+
+Utiliser des diagrammes de Venn.
 
 ## Introduction aux concepts de base
 
@@ -12,6 +18,7 @@ Avant d'aborder les propriétés, rappelons les définitions essentielles illust
 - **H(Y)** : Entropie de Y (incertitude totale sur Y)
 - **H(X,Y)** : Entropie jointe (incertitude totale du couple (X,Y))
 - **H(X|Y)** : Entropie conditionnelle (incertitude restante sur X quand on connaît Y)
+- **H(Y|X)** : Entropie conditionnelle (incertitude restante sur Y quand on connaît X)
 - **I(X;Y)** : Information mutuelle (information partagée entre X et Y)
 
 ## Propriétés fondamentales illustrées

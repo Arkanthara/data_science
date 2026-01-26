@@ -1,0 +1,202 @@
+# Entropy
+
+## Question
+
+Give the definition of entropy for discrete random variables.
+
+Explain the main properties of entropy.
+
+Explain the entropy of binary random variables.
+
+## Definition of Entropy for Discrete Random Variables
+
+**Entropy** is a fundamental measure in information theory that quantifies the **uncertainty** or **lack of information** associated with a discrete random variable.
+
+### Mathematical Definition
+
+For a discrete random variable $X$ taking values in an alphabet $\mathcal{X}$ with a probability mass function (pmf) $p_X(x) = \operatorname{Pr}(X = x)$, the entropy $H(X)$ is defined as:
+
+$$
+H(X) = -\sum_{x \in \mathcal{X}} p_X(x) \log_2 p_X(x)
+$$
+
+**Unit**: The logarithm is generally in base 2, giving the unit in **bits**. In base $e$, the unit is **nats**.
+
+### Intuitive Interpretation
+
+- **High entropy** = high uncertainty, "spread out" distribution
+- **Low entropy** = low uncertainty, "concentrated" distribution
+- **Zero entropy** = no uncertainty (deterministic variable)
+
+Entropy represents the **minimum average number of bits** required to encode the outcomes of $X$.
+
+---
+
+## Main Properties of Entropy
+
+### 1. Non-negativity
+
+$$
+H(X) \geq 0
+$$
+
+- Equality $H(X) = 0$ occurs if and only if $X$ is **deterministic** (one outcome has probability 1, others 0)
+- This means there is no uncertainty about $X$
+
+### 2. Upper Bound: Maximum Entropy
+
+For an alphabet of size $|\mathcal{X}| = M$, entropy is maximized when the distribution is **uniform**:
+
+$$
+H(X) \leq \log_2 M
+$$
+
+- Equality $H(X) = \log_2 M$ occurs if and only if $p_X(x) = \frac{1}{M}$ for all $x \in \mathcal{X}$
+- In this case, uncertainty is maximal: every outcome is equally likely
+
+### 3. Convexity/Concavity
+
+Entropy is a **concave** function of the probability distribution $p_X(x)$.
+
+This means that for two distributions $p$ and $q$ and for $\lambda \in [0,1]$:
+
+$$
+H(\lambda p + (1-\lambda)q) \geq \lambda H(p) + (1-\lambda) H(q)
+$$
+
+**Interpretation**: Mixing two distributions increases uncertainty (or preserves it).
+
+### 4. Additivity for Independent Variables
+
+If $X$ and $Y$ are **independent**, then:
+
+$$
+H(X, Y) = H(X) + H(Y)
+$$
+
+More generally, for $N$ i.i.d. (independent and identically distributed) variables:
+
+$$
+H(X_1, X_2, \dots, X_N) = N \cdot H(X)
+$$
+
+### 5. Conditioning Property
+
+The entropy of a pair of variables satisfies:
+
+$$
+H(X, Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)
+$$
+
+Where $H(Y|X)$ is the **conditional entropy**, measuring the uncertainty of $Y$ given $X$.
+
+### 6. Conditional Entropy is Less Than or Equal to Unconditional Entropy
+
+$$
+H(Y|X) \leq H(Y)
+$$
+
+- Equality holds if and only if $X$ and $Y$ are independent
+- This means that knowing a variable (even partially) can only **reduce** the uncertainty about the other
+
+### 7. Invariance Under Bijection
+
+Entropy is **invariant** under relabeling of symbols. Only the **probabilities** matter, not the values themselves.
+
+---
+
+## Entropy of Binary Random Variables
+
+### Definition of the Binary Entropy Function
+
+For a binary random variable $X \in \{0, 1\}$ with:
+
+- $\operatorname{Pr}(X = 1) = p$
+- $\operatorname{Pr}(X = 0) = 1-p$
+
+The binary entropy, denoted $H_b(p)$ or simply $H(p)$, is defined as:
+
+$$
+H_b(p) = -p \log_2 p - (1-p) \log_2 (1-p)
+$$
+
+By convention, we set $0 \log_2 0 = 0$ (continuous limit).
+
+### Properties of the Binary Entropy Function
+
+#### 1. Symmetry
+
+$$
+H_b(p) = H_b(1-p)
+$$
+
+The function is symmetric around $p = 0.5$.
+
+#### 2. Values at Boundaries
+
+- $H_b(0) = 0$: if $p=0$ or $p=1$, the variable is deterministic
+- $H_b(0.5) = 1$: maximum, uniform distribution over 2 symbols
+
+#### 3. Bell Shape
+
+The function $H_b(p)$ has a characteristic "bell" shape:
+
+- Increasing on $[0, 0.5]$
+- Decreasing on $[0.5, 1]$
+- Maximum of 1 bit at $p = 0.5$
+
+```{mermaid}
+graph TD
+    A[Binary Entropy Function] --> B[Shape: symmetric bell]
+    A --> C[Maximum: H(0.5) = 1 bit]
+    A --> D[Zeros: H(0) = H(1) = 0]
+    B --> E[Increasing on [0, 0.5]]
+    B --> F[Decreasing on [0.5, 1]]
+```
+
+### Practical Interpretation
+
+1. **Balanced Binary Source** ($p = 0.5$):
+   - Maximum uncertainty: 1 bit per symbol
+   - Example: fair coin
+
+2. **Unbalanced Binary Source** ($p \neq 0.5$):
+   - Reduced uncertainty
+   - Example: asymmetric noise in transmission
+
+3. **Almost Deterministic Source** ($p \approx 0$ or $p \approx 1$):
+   - Very low entropy
+   - High redundancy, good compressibility
+
+### Numerical Example
+
+| Probability $p$ | Entropy $H_b(p)$ | Interpretation |
+|----------------|-------------------|----------------|
+| 0.0 or 1.0 | 0.000 bits | No uncertainty |
+| 0.1 or 0.9 | 0.469 bits | Low uncertainty |
+| 0.2 or 0.8 | 0.722 bits | Moderate uncertainty |
+| 0.3 or 0.7 | 0.881 bits | High uncertainty |
+| 0.4 or 0.6 | 0.971 bits | Very high uncertainty |
+| 0.5 | 1.000 bits | Maximum uncertainty |
+
+### Applications
+
+1. **Data Compression**: Entropy gives the lossless compression limit
+2. **Channel Coding**: Determines the capacity of binary channels
+3. **Machine Learning**: Used in decision trees (information gain)
+4. **Cryptography**: Measure of randomness in key generation
+
+---
+
+## Summary
+
+| Concept | Description | Formula/Example |
+|---------|-------------|-----------------|
+| **Definition** | Measure of uncertainty of a random variable | $H(X) = -\sum p(x) \log_2 p(x)$ |
+| **Non-negativity** | Always non-negative | $H(X) \geq 0$ |
+| **Maximum** | Achieved for uniform distribution | $H(X) \leq \log_2 M$ |
+| **Concavity** | Mixing distributions increases entropy | $H(\lambda p + (1-\lambda)q) \geq \lambda H(p) + (1-\lambda)H(q)$ |
+| **Binary Entropy** | Special case for two outcomes | $H_b(p) = -p\log_2 p - (1-p)\log_2(1-p)$ |
+| **Binary Symmetry** | Same uncertainty for $p$ and $1-p$ | $H_b(p) = H_b(1-p)$ |
+
+Entropy is thus a central concept that quantifies information and uncertainty, with elegant mathematical properties and broad practical applications in data science, from communications to machine learning.

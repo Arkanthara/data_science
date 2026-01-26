@@ -1,0 +1,336 @@
+# Extraction de caractéristiques
+
+## Question
+
+Expliquez les 3 concepts principaux d'extraction de caractéristiques basés sur l'apprentissage supervisé, l'auto-encodage et l'apprentissage auto-supervisé.
+
+Donnez des exemples d'utilisation de ces caractéristiques.
+
+## Introduction
+
+L'**extraction de caractéristiques** transforme des données brutes en représentations compactes et informatives. Trois approches principales existent :
+
+1. **Apprentissage supervisé** : utilise des données étiquetées
+2. **Auto-encodage** : reconstruit les données via un goulot d'étranglement  
+3. **Apprentissage auto-supervisé** : crée ses propres tâches d'apprentissage
+
+Chaque méthode cherche à optimiser différents aspects de l'information, liés à l'entropie, la divergence KL et l'information mutuelle.
+
+---
+
+## 1. Apprentissage Supervisé
+
+### Principe et lien avec la théorie de l'information
+
+```{mermaid}
+flowchart TD
+    A["Données X"]
+    B["Labels Y"]
+    C[\"Extracteur de features"/]
+    D["Features Z"]
+    E[/"Classifieur"\]
+    F["Prédictions Ŷ"]
+    
+    A --> C
+    B -.->|Supervision| E
+    C --> D
+    D --> E
+    E --> F
+    
+    style D fill:#e1f5ff
+```
+
+**Objectif** : Maximiser l'**information mutuelle** entre les features Z et les labels Y.
+
+**Intuition** : On cherche à extraire des caractéristiques qui réduisent au maximum l'incertitude sur les labels. Si Z contient beaucoup d'information sur Y, alors connaître Z réduit fortement l'entropie de Y.
+
+### Domaines d'application
+
+#### Extraction (Feature Extraction)
+- **Exemple** : ResNet pour images - les couches convolutives extraient hiérarchiquement des motifs (bords → textures → parties d'objets)
+- **Lien théorie** : Features optimisées pour la discrimination
+
+#### Mining (Exploration)
+- **Exemple** : Analyse de sentiments dans des reviews clients
+- **Usage** : Découvrir des thèmes récurrents dans les commentaires négatifs
+- **Approche** : Classification supervisée puis analyse des features importantes
+
+#### Recognition & Classification
+- **Exemple** : Reconnaissance faciale pour authentification
+- **Principe** : 2-ary ou M-ary classification - décider entre "personne A" vs "personne B" vs "autres"
+- **Performance** : Haute précision quand beaucoup de données étiquetées
+
+#### Search & Identification  
+- **Exemple** : Moteur de recherche de produits par image
+- **Mécanisme** : Features extraites comparées par distance cosinus
+- **Avantage** : Précision élevée grâce à l'apprentissage discriminatif
+
+#### Transmission & Compression
+- **Exemple** : Compression intelligente - ne garder que les features discriminantes
+- **Approche** : Apprentissage de représentations compressées pour classification
+
+#### Multimedia Security
+- **Exemple** : Détection de deepfakes
+- **Principe** : Classification binaire (réel/faux) basée sur des features apprises
+- **Features** : Capture des artefacts de génération
+
+---
+
+## 2. Auto-Encodage
+
+### Principe et lien avec la théorie de l'information
+
+```{mermaid}
+flowchart TD
+    A["Données X"]
+    B[\"Encodeur"/]
+    C["Bottleneck Z"]
+    D[/"Décodeur"\]
+    E["Reconstruction X̂"]
+    
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    
+    F["Minimiser ||X - X̂||²"]
+    A -.-> F
+    E -.-> F
+    
+    style C fill:#fff4e1
+```
+
+**Objectif** : Minimiser la **divergence KL** entre la distribution des données et leur reconstruction.
+
+**Intuition** : On cherche une représentation compressée Z qui préserve l'information essentielle. C'est un compromis entre compression (petit Z) et fidélité (X̂ proche de X).
+
+### Domaines d'application
+
+#### Extraction (Feature Extraction)
+- **Exemple** : Réduction de dimension non-linéaire
+- **Usage** : Projection de données complexes en 2D/3D pour visualisation
+- **Avantage** vs PCA : Capture des relations non-linéaires
+
+#### Mining (Exploration)
+- **Exemple** : Découverte de communautés dans les réseaux sociaux
+- **Approche** : Auto-encodeur sur matrice d'adjacence
+- **Résultat** : Clusters correspondant à des communautés naturelles
+
+#### Recognition & Classification
+- **Exemple** : Détection d'anomalies médicales
+- **Principe** : Seules les images normales se reconstruisent bien
+- **Décision** : Erreur de reconstruction élevée → anomalie
+
+#### Search & Identification
+- **Exemple** : Système de recommandation musicale
+- **Mécanisme** : Recherche par similarité dans l'espace latent Z
+- **Avantage** : Capture la similarité structurelle profonde
+
+#### Transmission & Compression
+- **Exemple** : Codecs vidéo neuronaux (ex: BPG, VVC)
+- **Principe** : Compression avec perte optimisée pour perception humaine
+- **Trade-off** : Taux-distorsion - compromis taille/qualité
+
+#### Multimedia Security
+- **Exemple** : Watermarking robuste
+- **Approche** : Encoder le watermark dans le bottleneck Z
+- **Robustesse** : Survit aux transformations tant que la reconstruction est fidèle
+
+---
+
+## 3. Apprentissage Auto-Supervisé
+
+### Principe et lien avec la théorie de l'information
+
+```{mermaid}
+flowchart TD
+    A["Donnée X"]
+    B["Vue 1<br>t₁(X)"]
+    C["Vue 2<br>t₂(X)"]
+    
+    D[\"Encodeur"/]
+    E[\"Encodeur"/]
+    
+    F["Features Z₁"]
+    G["Features Z₂"]
+    
+    H[\"Maximiser similarité"/]
+    
+    A --> B
+    A --> C
+    B --> D
+    C --> E
+    D --> F
+    E --> G
+    F --> H
+    G --> H
+    
+    style F fill:#e8f5e8
+    style G fill:#e8f5e8
+```
+
+**Objectif** : Maximiser l'**information mutuelle** entre différentes vues d'une même donnée.
+
+**Intuition** : Deux transformations d'une même image doivent avoir des représentations similaires. On apprend ainsi des features invariantes aux transformations mais discriminantes entre données différentes.
+
+### Domaines d'application
+
+#### Extraction (Feature Extraction)
+- **Exemple** : Modèles BERT en NLP
+- **Principe** : Prédiction de mots masqués → embeddings contextuels riches
+- **Usage** : Base pour de nombreuses tâches NLP
+
+#### Mining (Exploration)
+- **Exemple** : Découverte de catégories dans un dataset non étiqueté
+- **Approche** : Pré-entraînement contrastif puis clustering
+- **Résultat** : Catégories émergentes sans supervision humaine
+
+#### Recognition & Classification
+- **Exemple** : Diagnostic médical avec peu de données étiquetées
+- **Protocole** : 1) Pré-entraînement auto-supervisé sur toutes les images médicales disponibles
+                2) Fine-tuning sur le petit dataset étiqueté
+- **Avantage** : Réduction drastique du besoin d'annotations
+
+#### Search & Identification
+- **Exemple** : Recherche cross-modale image-texte (CLIP)
+- **Capacité** : Trouver des images à partir de descriptions textuelles
+- **Usage** : Moteurs de recherche visuels avancés
+
+#### Transmission & Compression
+- **Exemple** : Compression sémantique
+- **Idée** : Ne transmettre que l'information sémantique essentielle
+- **Approche** : Pré-entraînement auto-supervisé pour identifier ce qui est sémantiquement important
+
+#### Multimedia Security
+- **Exemple** : Détection de contenu généré par IA
+- **Principe** : Les modèles génératifs laissent des empreintes subtiles
+- **Détection** : Features auto-supervisées capturent ces patterns
+
+---
+
+## Tableau synthétique des liens théoriques
+
+| Méthode | Quoi optimiser ? | Lien avec théorie de l'information | Analogie intuitive |
+|---------|------------------|-----------------------------------|-------------------|
+| **Supervisé** | Prédiction correcte des labels | Maximiser I(Z;Y) - info mutuelle features/labels | "Apprendre à distinguer" |
+| **Auto-encodage** | Reconstruction fidèle | Minimiser D_KL(X‖X̂) - divergence entre original et reconstruction | "Apprendre à se souvenir de l'essentiel" |
+| **Auto-supervisé** | Similitude entre vues augmentées | Maximiser I(Z₁;Z₂) - info mutuelle entre vues d'une même donnée | "Apprendre à reconnaître malgré les transformations" |
+
+---
+
+## Exemples concrets intégrés
+
+### Cas 1 : Plateforme de streaming vidéo
+
+**Problème** : Recommander des films à des utilisateurs
+
+**Solution hybride** :
+
+1. **Auto-supervisé** : Pré-entraînement sur toutes les vidéos (apprendre à reconnaître des scènes, actions)
+2. **Supervisé** : Fine-tuning sur les notations des utilisateurs
+3. **Auto-encodage** : Compression des embeddings pour recherche rapide
+
+**Applications** :
+
+- **Mining** : Découvrir des genres émergents (ex: "comédies romantiques de Noël")
+- **Search** : "Trouver des films qui ressemblent à Inception"
+- **Compression** : Streaming adaptatif selon la bande passante
+
+### Cas 2 : Banque en ligne
+
+**Problème** : Détecter les transactions frauduleuses
+
+**Approche** :
+
+1. **Auto-encodage** : Modèle normal sur transactions légitimes
+2. **Détection** : Transactions avec haute erreur de reconstruction = potentielles fraudes
+3. **Supervisé** : Validation humaine → création de labels → modèle supervisé plus précis
+
+**Sécurité** : Détection en temps réel des anomalies
+
+---
+
+## Conclusion : Quelle méthode choisir ?
+
+| Besoin | Méthode recommandée | Pourquoi |
+|--------|---------------------|----------|
+| **Beaucoup de données étiquetées** | Supervisé | Performance maximale sur tâche spécifique |
+| **Compression, anomalies** | Auto-encodage | Optimisé pour reconstruction fidèle |
+| **Peu de labels, beaucoup de données brutes** | Auto-supervisé | Exploite la structure naturelle des données |
+| **Système complet** | Combinaison des trois | Pré-entraînement auto-supervisé → fine-tuning supervisé → compression auto-encodeur |
+
+**Tendance actuelle** : L'apprentissage auto-supervisé devient dominant car il exploite l'abondance de données non étiquetées, suivie d'un fine-tuning supervisé pour adapter aux tâches spécifiques, avec des auto-encodeurs pour l'efficacité opérationnelle.
+
+---
+
+## Tableau comparatif et synthèse
+
+| Aspect | Apprentissage supervisé | Auto-encodage | Apprentissage auto-supervisé |
+|--------|------------------------|----------------|------------------------------|
+| **Données** | Étiquetées | Non étiquetées | Non étiquetées |
+| **Objectif** | Prédire Y | Reconstruire X | Apprendre représentations générales |
+| **Lien avec théorie info** | Max $I(Z; Y)$ | Min $D_{\mathrm{KL}}$, bottleneck | Max $I(Z_1; Z_2)$, InfoNCE |
+| **Caractéristiques** | Spécifiques à la tâche | Compactes, reconstrucibles | Généralisables, transférables |
+| **Applications typiques** | Classification, régression | Compression, anomalies | Pré-entraînement, transfer learning |
+
+### Relations avec l'entropie, DKL et information mutuelle
+
+1. **Entropie $H(\cdot)$** : Mesure l'incertitude/le contenu informationnel
+
+   - Dans tous les cas, on cherche des représentations avec une entropie appropriée (suffisamment informative mais pas trop redondante)
+
+2. **Divergence KL $D_{\mathrm{KL}}(p \parallel q)$** : Mesure l'écart entre distributions
+
+   - VAE : $D_{\mathrm{KL}}(q(z|x) \parallel p(z))$ régularise l'espace latent
+   - Domain adaptation : Alignement de distributions
+   - Self-supervised : Minimiser DKL entre vues augmentées
+
+3. **Information mutuelle $I(\cdot;\cdot)$** : Mesure la dépendance
+
+   - Supervisé : Maximiser $I(Z; Y)$
+   - Self-supervised : Maximiser $I(Z_1; Z_2)$
+   - Autoencodeurs : Préservation de $I(X; Z)$ sous contrainte de compression
+
+### Diagramme de synthèse des relations
+
+```{mermaid}
+graph TD
+    A[Théorie de l'information] --> B[Entropie H];
+    A --> C[Divergence KL];
+    A --> D[Information mutuelle I];
+    
+    B --> E[Compression];
+    B --> F[Complexité des représentations];
+    
+    C --> G[Régularisation VAE];
+    C --> H[Alignement de distributions];
+    
+    D --> I["Supervisé: max I(Z;Y)"];
+    D --> J["Self-supervised: max I(Z₁;Z₂)"];
+    D --> K["Autoencodeurs: I(X;Z) préservée"];
+    
+    E --> L[Applications pratiques];
+    F --> L;
+    G --> L;
+    H --> L;
+    I --> L;
+    J --> L;
+    K --> L;
+    
+    L --> M[Classification];
+    L --> N[Compression];
+    L --> O[Détection d'anomalies];
+    L --> P[Transfer learning];
+```
+
+## Conclusion
+
+Les trois paradigmes d'extraction de caractéristiques offrent des approches complémentaires avec des liens profonds à la théorie de l'information :
+
+1. **L'apprentissage supervisé** maximise directement l'information mutuelle avec les étiquettes, produisant des caractéristiques hautement discriminantes pour une tâche spécifique.
+
+2. **L'auto-encodage** implémente un bottleneck informationnel avec régularisation par divergence KL, apprenant des représentations compactes qui préservent l'information essentielle.
+
+3. **L'apprentissage auto-supervisé** maximise l'information mutuelle entre différentes vues des données, apprenant des représentations générales et transférables.
+
+Ces liens théoriques ne sont pas seulement académiques : ils guident le développement d'architectures plus efficaces et expliquent pourquoi certaines méthodes fonctionnent mieux que d'autres dans des contextes spécifiques. La compréhension de ces connexions permet aux praticiens de choisir l'approche appropriée pour leur problème et d'innover en combinant les forces de chaque paradigme.

@@ -1,0 +1,343 @@
+# Entropie Croisée
+
+## Question
+
+Expliquer l'entropie croisée et donner quelques exemples de son utilisation.
+
+Montrer le lien entre l'entropie croisée et l'entropie relative.
+
+## Introduction à l'entropie croisée (Cross-Entropy)
+
+L'**entropie croisée** est une mesure fondamentale en théorie de l'information et en apprentissage automatique qui quantifie la différence entre deux distributions de probabilité. C'est particulièrement utile pour évaluer la performance des modèles de prédiction.
+
+### Définition mathématique
+
+Pour deux distributions discrètes $p(x)$ et $q(x)$ définies sur le même espace $\mathcal{X}$, l'entropie croisée est définie comme :
+
+$$ H(p, q) = -\sum_{x \in \mathcal{X}} p(x) \log_2 q(x) = \mathbb{E}_{p(x)}[-\log_2 q(x)] $$
+
+Pour des distributions continues avec densités $f(x)$ et $g(x)$ :
+
+$$ H(f, g) = -\int f(x) \log_2 g(x) \, dx $$
+
+## Interprétation intuitive
+
+L'entropie croisée mesure **le nombre moyen de bits nécessaires** pour coder des événements provenant de la distribution $p$ en utilisant un code optimisé pour la distribution $q$.
+
+### Métaphore du code postal
+Imaginez que vous devez envoyer des lettres à différentes villes :
+- **$p(x)$** : Fréquence réelle d'envoi (Paris 50%, Lyon 30%, Marseille 20%)
+- **$q(x)$** : Code que vous utilisez (optimisé pour Paris 40%, Lyon 40%, Marseille 20%)
+- **$H(p)$** : Longueur optimale du code si vous connaissiez la vraie fréquence
+- **$H(p, q)$** : Longueur réelle avec votre code imparfait
+
+```{mermaid}
+graph TD
+    A[Distribution réelle p(x)] --> B{Code conçu pour q(x)};
+    B --> C[Nombre de bits utilisé: H(p,q)];
+    C --> D[= H(p) + D(p∥q)];
+    D --> E[Bits optimaux + pénalité];
+    
+    F[Si q = p] --> G[H(p,q) = H(p)];
+    F --> H[Code parfaitement adapté];
+    
+    I[Si q ≠ p] --> J[H(p,q) > H(p)];
+    I --> K[Surcoût dû au mauvais code];
+```
+
+## Propriétés de l'entropie croisée
+
+### 1. Non-symétrie
+$$ H(p, q) \neq H(q, p) \quad \text{en général} $$
+
+Contrairement à une distance, l'entropie croisée n'est pas symétrique.
+
+### 2. Minorée par l'entropie
+$$ H(p, q) \geq H(p) $$
+
+L'égalité $H(p, q) = H(p)$ se produit si et seulement si $p = q$.
+
+### 3. Convexité par rapport à $q$
+Pour $p$ fixé, $H(p, q)$ est convexe en $q$, ce qui facilite l'optimisation.
+
+## Relation fondamentale avec l'entropie relative
+
+### Lien mathématique
+$$ H(p, q) = H(p) + D_{\mathrm{KL}}(p \parallel q) $$
+
+où :
+- $H(p)$ est l'entropie de la distribution $p$
+- $D_{\mathrm{KL}}(p \parallel q)$ est la divergence de Kullback-Leibler (entropie relative)
+
+### Interprétation détaillée
+Cette relation montre que l'entropie croisée se décompose en deux parties :
+
+1. **$H(p)$** : L'incertitude intrinsèque de la distribution réelle
+   - Minimum théorique incompressible
+   - Ne dépend que de $p$, pas de notre modèle
+
+2. **$D_{\mathrm{KL}}(p \parallel q)$** : La pénalité due au mauvais modèle
+   - Mesure combien $q$ diffère de $p$
+   - Réduisible en améliorant notre modèle
+
+```{mermaid}
+graph LR
+    A[Entropie Croisée H(p,q)] --> B[Équivalent à];
+    B --> C[H(p) + D(p∥q)];
+    
+    D[Objectif: minimiser H(p,q)] --> E{Comme H(p) est constant};
+    E --> F[Minimiser D(p∥q)];
+    F --> G[Trouver q ≈ p];
+    
+    H[En pratique] --> I[On minimise H(p,q)];
+    I --> J[Car p est inconnu];
+    J --> K[On estime p par données];
+```
+
+## Exemples concrets d'utilisation
+
+### 1. Apprentissage automatique : Classification
+
+**Scénario** : Classification d'images avec 3 classes (chat, chien, oiseau)
+
+**Données d'entraînement** :
+- Image 1 : vraie classe = "chat" → $p = [1, 0, 0]$
+- Image 2 : vraie classe = "chien" → $p = [0, 1, 0]$
+
+**Prédictions du modèle** :
+- Pour l'image 1 : $q = [0.7, 0.2, 0.1]$
+- Pour l'image 2 : $q = [0.1, 0.6, 0.3]$
+
+**Calcul de l'entropie croisée** :
+Pour l'image 1 :
+$$ H(p, q) = -[1 \times \log_2(0.7) + 0 \times \log_2(0.2) + 0 \times \log_2(0.1)] = -\log_2(0.7) \approx 0.514 \text{ bits} $$
+
+Pour l'image 2 :
+$$ H(p, q) = -[0 \times \log_2(0.1) + 1 \times \log_2(0.6) + 0 \times \log_2(0.3)] = -\log_2(0.6) \approx 0.737 \text{ bits} $$
+
+**Perte moyenne** : Moyenne sur toutes les images de l'ensemble d'entraînement.
+
+### 2. Compression de données
+
+**Scénario** : Compression d'un texte en anglais
+
+**Distribution réelle** ($p$) :
+- 'e' : 12.7%
+- 't' : 9.1%
+- 'a' : 8.2%
+- ... (autres lettres)
+
+**Modèle utilisé** ($q$) :
+- Modèle uniforme : chaque lettre = 1/26 ≈ 3.85%
+- Modèle basé sur Shakespeare : distribution spécifique
+
+**Calcul d'efficacité** :
+Avec le modèle uniforme :
+$$ H(p, q) = -\sum p(x) \log_2(1/26) = \log_2(26) \approx 4.7 \text{ bits/lettre} $$
+
+Avec un bon modèle linguistique ($q$ proche de $p$) :
+$$ H(p, q) \approx H(p) \approx 4.1 \text{ bits/lettre} $$
+
+**Gain** : 0.6 bit par lettre, soit ~18% d'économie.
+
+### 3. Évaluation de modèles de langage
+
+**Scénario** : Modèle GPT évalué sur des phrases
+
+**Méthode** : Perplexité = $2^{H(p,q)}$
+
+**Interprétation** :
+- Perplexité faible → modèle prédit bien les mots suivants
+- Perplexité élevée → modèle est incertain
+
+```{mermaid}
+graph TD
+    A[Texte de test] --> B[Calcul de H(p,q)];
+    B --> C[Perplexité = 2^H(p,q)];
+    C --> D{Mesure de qualité};
+    D --> E[Basse perplexité: bon modèle];
+    D --> F[Haute perplexité: mauvais modèle];
+    
+    G[Exemple] --> H[Modèle GPT-3];
+    H --> I[Perplexité ~20-30];
+    I --> J[Très performant];
+    
+    K[Modèle aléatoire] --> L[Perplexité = taille du vocabulaire];
+    L --> M[Très médiocre];
+```
+
+## Tableau comparatif : Entropie vs Entropie croisée vs Divergence KL
+
+| Concept | Formule | Interprétation | Propriété clé |
+|---------|---------|----------------|---------------|
+| **Entropie** $H(p)$ | $-\sum p \log p$ | Incertitude intrinsèque | Minimum théorique |
+| **Entropie croisée** $H(p,q)$ | $-\sum p \log q$ | Coût du mauvais modèle | Toujours ≥ $H(p)$ |
+| **Divergence KL** $D(p\|q)$ | $\sum p \log(p/q)$ | Pénalité du mauvais modèle | Mesure de différence |
+
+## Application pratique : Fonction de perte en deep learning
+
+### Implémentation en PyTorch
+
+```python
+import torch
+import torch.nn as nn
+
+# Données : 3 échantillons, 5 classes
+predictions = torch.tensor([[0.1, 0.2, 0.6, 0.1, 0.0],
+                            [0.8, 0.1, 0.05, 0.05, 0.0],
+                            [0.05, 0.1, 0.1, 0.15, 0.6]])
+
+true_labels = torch.tensor([2, 0, 4])  # Indices des vraies classes
+
+# Calcul de l'entropie croisée
+loss_fn = nn.CrossEntropyLoss()
+loss = loss_fn(predictions, true_labels)
+print(f"Perte d'entropie croisée: {loss.item():.4f}")
+```
+
+### Explication étape par étape
+1. Le modèle produit des logits (non normalisés)
+2. Softmax convertit en probabilités $q$
+3. Comparaison avec les labels one-hot $p$
+4. Calcul de $H(p, q)$
+5. Gradient pour ajuster les poids
+
+## Visualisation du lien entre les concepts
+
+```{mermaid}
+graph TD
+    A[Distribution réelle p] --> B[Entropie H(p)];
+    A --> C[Entropie croisée H(p,q)];
+    C --> D[Divergence KL D(p∥q)];
+    
+    B --> E[Valeur minimale];
+    D --> F[Écart à l'optimal];
+    E --> C;
+    F --> C;
+    
+    G[Objectif d'apprentissage] --> H[Minimiser H(p,q)];
+    H --> I[Équivalent à minimiser D(p∥q)];
+    I --> J[Car H(p) constant];
+    
+    K[Résultat optimal] --> L[q = p];
+    L --> M[H(p,q) = H(p)];
+    L --> N[D(p∥q) = 0];
+```
+
+## Cas particuliers importants
+
+### 1. Cas binaire (classification binaire)
+Pour $p \in \{0, 1\}$ et $q \in [0, 1]$ :
+
+$$ H(p, q) = -[p \log_2 q + (1-p) \log_2 (1-q)] $$
+
+C'est la **perte logistique** utilisée en régression logistique.
+
+### 2. Distribution uniforme comme référence
+Si $q$ est uniforme sur $N$ classes :
+
+$$ H(p, q) = -\sum p(x) \log_2(1/N) = \log_2 N $$
+
+Tous les modèles sont comparés à cette baseline.
+
+## Pourquoi minimiser l'entropie croisée ?
+
+### 1. Justification théorique : Principe du maximum de vraisemblance
+Minimiser $H(p, q)$ équivaut à maximiser la vraisemblance des données.
+
+**Preuve** :
+Soit $p_{\text{data}}$ la distribution empirique, $q_\theta$ notre modèle :
+$$ \min_\theta H(p_{\text{data}}, q_\theta) \equiv \max_\theta \mathbb{E}_{x \sim p_{\text{data}}}[\log q_\theta(x)] $$
+
+### 2. Propriétés souhaitables
+
+- **Convexité** : Garantit des minima globaux (pour de nombreux modèles)
+- **Sensibilité aux erreurs** : Pénalise fortement les erreurs de confiance
+- **Interprétation probabiliste** : Directement liée aux probabilités
+
+## Exemple détaillé : Classification MNIST
+
+### Problème
+
+Reconnaître des chiffres manuscrits (0-9).
+
+### Données
+
+- Image 28×28 pixels
+- Label : chiffre de 0 à 9
+
+### Modèle
+
+Réseau de neurones avec sortie softmax produisant $q = [q_0, q_1, ..., q_9]$.
+
+### Calcul de la perte
+
+Pour une image de chiffre "3" ($p = [0,0,0,1,0,0,0,0,0,0]$) :
+
+- Si $q = [0,0,0,0.9,0,0,0,0,0.1,0]$ → $H(p,q) = -\log_2(0.9) ≈ 0.152$
+- Si $q = [0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.1,0.1,0]$ → $H(p,q) = -\log_2(0.2) ≈ 2.322$
+
+La première prédiction est bien meilleure.
+
+## Évolution historique et alternatives
+
+### 1. Perte des moindres carrés
+
+- Anciennement populaire en régression
+- Moins adaptée à la classification
+- Pas de lien direct avec les probabilités
+
+### 2. Avantages de l'entropie croisée
+
+- **Gradients bien comportés** : Évite les plateaux d'apprentissage
+- **Interprétation probabiliste** : Sorties sont des probabilités
+- **Théorie de l'information** : Fondements solides
+
+## Pièges et bonnes pratiques
+
+### 1. Stabilité numérique
+Le calcul direct $\log(q)$ peut être instable pour $q ≈ 0$.
+
+**Solution** : Utiliser la fonction log-sum-exp :
+$$ H(p, q) = -\sum p(x) \left[ z(x) - \log\sum \exp(z(x')) \right] $$
+où $z(x)$ sont les logits.
+
+### 2. Régularisation
+Ajouter un terme de régularisation équivaut à :
+$$ H(p, q) + \lambda R(\theta) $$
+
+Cela empêche le surapprentissage en pénalisant les modèles complexes.
+
+### 3. Données déséquilibrées
+Quand certaines classes sont rares :
+
+- **Pondération** : $H_w(p, q) = -\sum w(x) p(x) \log q(x)$
+- **Rééchantillonnage** : Ajuster la distribution d'entraînement
+
+## Synthèse pédagogique
+
+### L'analogie du jeu de devinettes
+Imaginez un jeu où vous devez deviner un animal :
+
+- **$p$** : Animal réel (ex: 80% chat, 20% chien)
+- **$q$** : Votre stratégie de devinette
+
+1. **Entropie $H(p)$** : Nombre optimal de questions si vous connaissiez la vraie distribution
+2. **Entropie croisée $H(p,q)$** : Nombre de questions avec votre stratégie
+3. **Divergence KL $D(p\|q)$** : Questions supplémentaires dues à votre mauvaise stratégie
+
+### Formule mnémotechnique
+> "Le coût total = incertitude de base + pénalité d'ignorance"
+> $$ H(p,q) = H(p) + D(p\|q) $$
+
+## Conclusion
+
+L'entropie croisée est une mesure puissante qui :
+
+1. **Évalue les modèles** : Mesure combien un modèle $q$ est adapté à des données $p$
+2. **Guide l'apprentissage** : Fonction de perte optimisable par gradient
+3. **Relie théorie et pratique** : Connecte théorie de l'information et ML
+
+**Le lien fondamental** avec l'entropie relative montre que minimiser l'entropie croisée revient à minimiser l'écart entre notre modèle et la réalité, tout en reconnaissant qu'une certaine incertitude ($H(p)$) est incompressible.
+
+Cette compréhension unifiée explique pourquoi l'entropie croisée est devenue la fonction de perte standard pour les problèmes de classification et bien d'autres tâches en intelligence artificielle.

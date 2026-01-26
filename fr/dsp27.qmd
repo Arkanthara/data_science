@@ -1,0 +1,303 @@
+# Information mutuelle
+
+## Question
+
+Donner la définition de l'information mutuelle.
+
+Expliquer le diagramme de Venn.
+
+Démontrer différentes expressions pour l'information mutuelle via les entropies et l'entropie relative.
+
+## Définition de l'information mutuelle
+
+L'**information mutuelle** est une mesure fondamentale en théorie de l'information qui quantifie la quantité d'information qu'une variable aléatoire apporte sur une autre, et vice-versa. C'est une mesure de la dépendance statistique entre deux variables.
+
+### Définition formelle
+
+Pour deux variables aléatoires discrètes $X$ et $Y$ avec distribution jointe $p(x,y)$ et distributions marginales $p(x)$ et $p(y)$, l'information mutuelle est définie comme :
+
+$$ I(X;Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} $$
+
+Sous forme d'espérance :
+$$ I(X;Y) = \mathbb{E}_{p(x,y)} \left[ \log_2 \frac{p(X,Y)}{p(X)p(Y)} \right] $$
+
+Pour des variables continues :
+$$ I(X;Y) = \iint p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} \, dx \, dy $$
+
+## Interprétation intuitive
+
+L'information mutuelle répond à la question : **"Combien apprend-on sur X en observant Y (et vice-versa) ?"**
+
+### Exemple concret
+
+Imaginez deux personnes qui communiquent :
+
+- **X** : Message que la première personne veut envoyer
+- **Y** : Message que la deuxième personne reçoit
+- **I(X;Y)** : Quantité d'information correctement transmise
+
+Si le canal est parfait (pas de bruit) : $I(X;Y) = H(X)$ (tout est transmis)
+Si le canal est complètement bruité : $I(X;Y) = 0$ (rien n'est transmis)
+
+## Le diagramme de Venn : Représentation visuelle
+
+![](image.png)
+
+**Légende et interprétation :**
+
+- **H(X)** : L'entropie de X - mesure l'incertitude totale sur X
+
+- **H(Y)** : L'entropie de Y - mesure l'incertitude totale sur Y
+
+- **H(X,Y)** : L'entropie jointe - incertitude totale du couple (X,Y)
+
+- **I(X;Y)** : L'information mutuelle - information partagée entre X et Y
+
+- **H(X|Y)** : L'entropie conditionnelle - incertitude restante sur X quand on connaît Y
+
+- **H(Y|X)** : L'entropie conditionnelle - incertitude restante sur Y quand on connaît X
+
+
+### Relations géométriques évidentes
+D'après le diagramme :
+
+1. $H(X,Y) = H(X) + H(Y) - I(X;Y)$
+   - L'union = somme des cercles - intersection (pour éviter le double comptage)
+
+2. $H(X) = H(X|Y) + I(X;Y)$
+   - Le cercle X = partie exclusive + intersection
+
+3. $H(Y) = H(Y|X) + I(X;Y)$
+   - Le cercle Y = partie exclusive + intersection
+
+## Expressions de l'information mutuelle via les entropies
+
+### 1. En termes d'entropies simple et conditionnelle
+$$ I(X;Y) = H(X) - H(X|Y) $$
+
+**Interprétation :** L'information que Y apporte sur X est la réduction d'incertitude sur X quand on connaît Y.
+
+**Démonstration :**
+$$
+\begin{aligned}
+I(X;Y) &= \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} \\
+&= \sum_{x,y} p(x,y) \log_2 \frac{p(x|y)}{p(x)} \quad \text{(car } p(x,y) = p(x|y)p(y)\text{)} \\
+&= \sum_{x,y} p(x,y) \log_2 p(x|y) - \sum_{x,y} p(x,y) \log_2 p(x) \\
+&= -H(X|Y) + H(X) \quad \text{(par définition des entropies)}
+\end{aligned}
+$$
+
+### 2. Expression symétrique
+$$ I(X;Y) = H(Y) - H(Y|X) $$
+
+**Interprétation :** Identique à la précédente mais symétrique - ce que X apporte sur Y.
+
+### 3. En termes d'entropies jointes et marginales
+$$ I(X;Y) = H(X) + H(Y) - H(X,Y) $$
+
+**Démonstration :**
+
+En partant de $I(X;Y) = H(X) - H(X|Y)$ et sachant que $H(X|Y) = H(X,Y) - H(Y)$, on a :
+$$ I(X;Y) = H(X) - [H(X,Y) - H(Y)] = H(X) + H(Y) - H(X,Y) $$
+
+**Interprétation :** L'information mutuelle est ce qui "économise" des bits quand on code X et Y ensemble plutôt que séparément.
+
+### 4. Expression avec les entropies conditionnelles
+$$ I(X;Y) = H(X,Y) - H(X|Y) - H(Y|X) $$
+
+**Démonstration :**
+
+De $H(X,Y) = H(X) + H(Y) - I(X;Y)$, on peut réarranger pour avoir $I(X;Y) = H(X,Y) - [H(X,Y) - H(Y)] - [H(X,Y) - H(X)]$ qui se simplifie.
+
+## Expressions via l'entropie relative (Divergence de Kullback-Leibler)
+
+### 1. Information mutuelle comme divergence KL
+
+**Relation fondamentale :**
+$$ I(X;Y) = D_{\mathrm{KL}}(p(x,y) \parallel p(x)p(y)) $$
+
+**Démonstration directe :**
+
+Par définition de la divergence KL :
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(p(x,y) \parallel p(x)p(y)) &= \sum_{x,y} p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)} \\
+&= I(X;Y) \quad \text{(exactement la définition de } I(X;Y)\text{)}
+\end{aligned}
+$$
+
+**Interprétation profonde :** L'information mutuelle mesure **l'écart à l'indépendance**.
+
+- Si X et Y sont indépendants : $p(x,y) = p(x)p(y)$ → divergence KL = 0 → $I(X;Y) = 0$
+- Si X et Y sont dépendants : $p(x,y) ≠ p(x)p(y)$ → divergence KL > 0 → $I(X;Y) > 0$
+
+### 2. Forme conditionnelle comme espérance de divergences KL
+$$ I(X;Y) = \mathbb{E}_{p(y)} \left[ D_{\mathrm{KL}}(p(x|y) \parallel p(x)) \right] $$
+
+**Démonstration :**
+$$
+\begin{aligned}
+I(X;Y) &= \sum_{x,y} p(x,y) \log_2 \frac{p(x|y)}{p(x)} \quad \text{(car } \frac{p(x,y)}{p(x)p(y)} = \frac{p(x|y)}{p(x)}\text{)} \\
+&= \sum_{y} p(y) \sum_{x} p(x|y) \log_2 \frac{p(x|y)}{p(x)} \\
+&= \mathbb{E}_{p(y)} \left[ \sum_{x} p(x|y) \log_2 \frac{p(x|y)}{p(x)} \right] \\
+&= \mathbb{E}_{p(y)} \left[ D_{\mathrm{KL}}(p(x|y) \parallel p(x)) \right]
+\end{aligned}
+$$
+
+**Interprétation :** Pour chaque valeur possible de Y, on mesure combien la distribution conditionnelle de X sachant Y diffère de la distribution marginale de X, puis on moyenne sur Y.
+
+### 3. Forme symétrique alternative
+$$ I(X;Y) = \mathbb{E}_{p(x)} \left[ D_{\mathrm{KL}}(p(y|x) \parallel p(y)) \right] $$
+
+**Démonstration :** Similaire à la précédente par symétrie.
+
+## Tableau synthétique des expressions
+
+| Expression | Formule | Interprétation |
+|------------|---------|----------------|
+| **Définition** | $\sum p(x,y) \log \frac{p(x,y)}{p(x)p(y)}$ | Écart à l'indépendance |
+| **Via entropies** | $H(X) - H(X\|Y)$ | Réduction d'incertitude sur X par Y |
+| **Symétrique** | $H(Y) - H(Y\|X)$ | Réduction d'incertitude sur Y par X |
+| **Joint-marginales** | $H(X) + H(Y) - H(X,Y)$ | Économie de bits en codage joint |
+| **Comme KL** | $D(p(x,y)\|p(x)p(y))$ | Distance à l'indépendance |
+| **Conditionnelle** | $\mathbb{E}_{p(y)}[D(p(x\|y)\|p(x))]$ | Moyenne des divergences conditionnelles |
+
+## Exemple numérique illustratif
+
+### Situation : Prévision météo et vente de glaces
+
+Soit :
+
+- **X** : Météo (0=Pluie, 1=Soleil)
+- **Y** : Vente de glaces (0=Faible, 1=Forte)
+
+Distributions :
+
+- $p(x=0) = 0.3$, $p(x=1) = 0.7$
+- $p(y=0) = 0.4$, $p(y=1) = 0.6$
+- Distribution jointe :
+
+| | Y=0 | Y=1 |
+|---|---|---|
+| **X=0** | 0.25 | 0.05 |
+| **X=1** | 0.15 | 0.55 |
+
+### Calculs :
+
+1. **Vérification d'indépendance** :
+   - Si indépendants : $p(0,0) = p(x=0)p(y=0) = 0.3×0.4 = 0.12$
+   - Mais $p(0,0) = 0.25$ → pas indépendants
+
+2. **Entropies** :
+   - $H(X) = -0.3\log_2(0.3) - 0.7\log_2(0.7) ≈ 0.881$ bits
+   - $H(Y) = -0.4\log_2(0.4) - 0.6\log_2(0.6) ≈ 0.971$ bits
+   - $H(X,Y) = -0.25\log_2(0.25) - 0.05\log_2(0.05) - 0.15\log_2(0.15) - 0.55\log_2(0.55) ≈ 1.548$ bits
+
+3. **Information mutuelle** :
+   - $I(X;Y) = H(X) + H(Y) - H(X,Y) ≈ 0.881 + 0.971 - 1.548 = 0.304$ bits
+   - $I(X;Y) = D(p(x,y)\|p(x)p(y)) = 0.25\log_2\frac{0.25}{0.12} + 0.05\log_2\frac{0.05}{0.18} + 0.15\log_2\frac{0.15}{0.28} + 0.55\log_2\frac{0.55}{0.42} ≈ 0.304$ bits
+
+**Interprétation** : Connaître la météo apporte environ 0.3 bit d'information sur les ventes de glaces.
+
+## Visualisation des relations
+
+```{mermaid}
+graph TD
+    A[Information Mutuelle I(X;Y)] --> B[Exprimée via];
+    
+    B --> C[Différence d'entropies];
+    C --> D[I = H(X) - H(X|Y)];
+    C --> E[I = H(Y) - H(Y|X)];
+    C --> F[I = H(X) + H(Y) - H(X,Y)];
+    
+    B --> G[Divergence KL];
+    G --> H[I = D(p(x,y)∥p(x)p(y))];
+    G --> I[I = 𝔼_p(y)[D(p(x|y)∥p(x))]];
+    G --> J[I = 𝔼_p(x)[D(p(y|x)∥p(y))]];
+    
+    K[Propriétés] --> L[Symétrie: I(X;Y)=I(Y;X)];
+    K --> M[Non-négativité: I(X;Y) ≥ 0];
+    K --> N[Indépendance ⇔ I=0];
+    
+    O[Applications] --> P[Apprentissage automatique];
+    O --> Q[Neurosciences];
+    O --> R[Traitement du signal];
+```
+
+## Cas particuliers et limites
+
+### 1. Variables indépendantes
+
+Si $X \perp Y$, alors :
+
+- $p(x,y) = p(x)p(y)$
+- $\log \frac{p(x,y)}{p(x)p(y)} = \log 1 = 0$
+- Donc $I(X;Y) = 0$
+
+### 2. Variables déterministes
+
+Si $Y = f(X)$ (fonction déterministe), alors :
+
+- $H(Y|X) = 0$ (connaissant X, Y est certain)
+- $I(X;Y) = H(Y)$ (toute l'information de Y vient de X)
+- Mais $I(X;Y) ≤ H(X)$ également
+
+### 3. Relation avec la corrélation
+
+L'information mutuelle est plus générale que la corrélation :
+
+- Corrélation : mesure les relations linéaires
+- Information mutuelle : mesure toute dépendance (linéaire ou non)
+
+## Applications pratiques
+
+### 1. Sélection de caractéristiques (Feature Selection)
+En machine learning, on choisit les variables $Y$ qui maximisent $I(X;Y)$ où $X$ est la variable cible.
+
+**Exemple** : Pour prédire le prix d'une maison ($X$), on choisit parmi :
+
+- Surface ($Y_1$)
+- Nombre de pièces ($Y_2$)
+- Année de construction ($Y_3$)
+
+On calcule $I(X;Y_1)$, $I(X;Y_2)$, $I(X;Y_3)$ et on garde les plus informatives.
+
+### 2. Apprentissage de représentations
+Dans les autoencodeurs, on minimise $I(X;Z)$ où $Z$ est la représentation latente, pour obtenir une représentation compacte.
+
+### 3. Neuroscience
+Mesurer $I(S;R)$ où $S$ est un stimulus et $R$ la réponse neuronale, pour comprendre quelles informations sont codées.
+
+## Synthèse pédagogique
+
+### L'analogie de la conversation
+
+Imaginez deux amis qui parlent :
+
+- **H(X)** : Tout ce que Pierre pourrait dire
+- **H(Y)** : Tout ce que Paul pourrait entendre
+- **I(X;Y)** : Ce que Paul comprend vraiment de Pierre
+- **H(X|Y)** : Ce que Pierre dit que Paul ne comprend pas
+- **H(Y|X)** : Ce que Paul entend mais qui ne vient pas de Pierre (bruit)
+
+### Formules mnémotechniques
+1. **"L'information partagée = ce qu'on sait - ce qu'on ignore"**
+   $$ I(X;Y) = H(X) - H(X|Y) $$
+
+2. **"Ensemble on est plus fort, mais on partage"**
+   $$ H(X,Y) = H(X) + H(Y) - I(X;Y) $$
+
+3. **"La dépendance est une distance à l'indépendance"**
+   $$ I(X;Y) = D(p(x,y) \parallel p(x)p(y)) $$
+
+## Conclusion
+
+L'information mutuelle est un concept central qui unit plusieurs notions de la théorie de l'information :
+
+1. **C'est une mesure de dépendance** plus puissante que la corrélation
+2. **Elle relie entropies et divergence KL** de manière élégante
+3. **Son interprétation visuelle** via les diagrammes de Venn est intuitive
+
+Le diagramme de Venn montre clairement comment l'information mutuelle est l'**intersection** des informations de X et Y, tandis que les expressions via l'entropie relative révèlent qu'elle mesure fondamentalement **l'écart entre la réalité jointe et l'hypothèse d'indépendance**.
+
+Cette dualité de perspectives fait de l'information mutuelle un outil indispensable en science des données, apprentissage automatique, neurosciences et bien d'autres domaines.

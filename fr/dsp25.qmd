@@ -47,14 +47,14 @@ $$ H(p, q) = H(p) + D_{\mathrm{KL}}(p \parallel q) $$
 
 ```{mermaid}
 graph TD
-    A[Entropie croisée H(p,q)] --> B[Entropie de p: H(p)]
-    A --> C[Divergence KL: D(p∥q)]
+    A["Entropie croisée H(p,q)"] --> B["Entropie de p: H(p)"]
+    A --> C["Divergence KL: D(p∥q)"]
     
     B --> D[Incertitude intrinsèque de p]
     C --> E[Pénalité d'utiliser le mauvais modèle]
     
-    F[Objectif: minimiser H(p,q)] --> G{Équivalent à};
-    G --> H[Minimiser D(p∥q) car H(p) constant];
+    F["Objectif: minimiser H(p,q)"] --> G{Équivalent à};
+    G --> H["Minimiser D(p∥q) car H(p) constant"];
 ```
 
 **Interprétation pédagogique :**
@@ -83,16 +83,16 @@ $$ I(X;Y) = D_{\mathrm{KL}}(p(x,y) \parallel p(x)p(y)) $$
 
 ```{mermaid}
 graph LR
-    A[Information mutuelle I(X;Y)] --> B[Divergence KL]
-    B --> C[Entre distribution jointe p(x,y)]
-    B --> D[Et produit des marginales p(x)p(y)]
+    A["Information mutuelle I(X;Y)"] --> B[Divergence KL]
+    B --> C["Entre distribution jointe p(x,y)"]
+    B --> D["Et produit des marginales p(x)p(y)"]
     
     E[Interprétation] --> F[Mesure la dépendance]
     F --> G[Écart à l'indépendance]
     
-    H[Si X et Y indépendants] --> I[p(x,y) = p(x)p(y)]
+    H[Si X et Y indépendants] --> I["p(x,y) = p(x)p(y)"]
     I --> J[D_KL = 0]
-    J --> K[I(X;Y) = 0]
+    J --> K["I(X;Y) = 0"]
 ```
 
 **Interprétation pédagogique :**
@@ -110,17 +110,17 @@ L'information mutuelle mesure "combien on apprend sur X en observant Y" (et vice
 
 ```{mermaid}
 graph TD
-    A[Entropie H(X)] --> B[Information mutuelle I(X;Y)]
-    A --> C[Entropie conditionnelle H(X|Y)]
+    A["Entropie H(X)"] --> B["Information mutuelle I(X;Y)"]
+    A --> C["Entropie conditionnelle H(X|Y)"]
     
-    D[Entropie croisée H(p,q)] --> E[Entropie H(p)]
-    D --> F[Divergence KL D(p∥q)]
+    D["Entropie croisée H(p,q)"] --> E["Entropie H(p)"]
+    D --> F["Divergence KL D(p∥q)"]
     
-    G[Entropie jointe H(X,Y)] --> H[H(X) + H(Y|X)]
-    G --> I[H(Y) + H(X|Y)]
+    G["Entropie jointe H(X,Y)"] --> H["H(X) + H(Y|X)"]
+    G --> I["H(Y) + H(X|Y)"]
     
-    B --> J[= H(X) - H(X|Y)]
-    B --> K[= H(Y) - H(Y|X)]
+    B --> J["= H(X) - H(X|Y)"]
+    B --> K["= H(Y) - H(Y|X)"]
     
     L[Divergence KL] --> M[Base de l'information mutuelle]
     L --> N[Composante de l'entropie croisée]
@@ -228,16 +228,16 @@ Dans l'inférence bayésienne, $D_{\mathrm{KL}}(p_{\text{post}} \parallel p_{\te
 
 ```{mermaid}
 graph TD
-    A[Choix de D(p∥q) vs D(q∥p)] --> B{Situation};
+    A["Choix de D(p∥q) vs D(q∥p)"] --> B{Situation};
     
     B --> C[Priorité : éviter les zones<br>où p>0 mais q=0];
-    C --> D[Utiliser D(p∥q)<br>car D(p∥q)=∞ si q=0 et p>0];
+    C --> D["Utiliser D(p∥q)<br>car D(p∥q)=∞ si q=0 et p>0"];
     
     B --> E[Priorité : couvrir tous<br>les modes de p];
-    E --> F[Utiliser D(q∥p)<br>mode-seeking];
+    E --> F["Utiliser D(q∥p)<br>mode-seeking"];
     
     B --> G[Inférence variationnelle];
-    G --> H[Utiliser D(q∥p)<br>pour approximations];
+    G --> H["Utiliser D(q∥p)<br>pour approximations"];
 ```
 
 ### 2. Sensibilité aux événements rares
@@ -267,6 +267,7 @@ L'entropie relative (KLD) est le **ciment conceptuel** qui relie les principales
    - La réduction d'incertitude grâce à Y
 
 **Métaphore finale :** Imaginez que vous devez deviner le contenu d'une boîte :
+
 - $H(p)$ : Nombre de questions nécessaires si vous connaissez la vraie distribution
 - $H(p,q)$ : Nombre de questions si vous avez une hypothèse imparfaite $q$
 - $D(p\|q)$ : Questions supplémentaires dues à votre mauvaise hypothèse

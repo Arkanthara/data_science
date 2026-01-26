@@ -1,0 +1,180 @@
+# Chain Rules
+
+## Question
+
+Considering multiple random variables, explain the decomposition by the chain rule for the joint probability.
+
+Give examples of different statistical relationships between random variables.
+
+Explain the first-order and second-order Markov chain.
+
+## Decomposition by the Chain Rule for Joint Probability
+
+The **joint probability** of several random variables describes the probability that they simultaneously take certain values. The **chain rule** allows decomposing this joint probability into a product of conditional probabilities, reflecting the dependencies between the variables.
+
+### General Formulation
+
+Let $N$ random variables $X_1, X_2, \dots, X_N$. The joint probability can be written as:
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \cdot p(x_3 \mid x_1, x_2) \cdots p(x_N \mid x_1, x_2, \dots, x_{N-1})
+$$
+
+Or, compactly:
+
+$$
+p(x_1, x_2, \dots, x_N) = \prod_{i=1}^{N} p(x_i \mid x_1, \dots, x_{i-1})
+$$
+
+This decomposition is **always true** (provided the conditional probabilities are defined) and does not imply any independence assumption. It simply expresses that the joint probability can be constructed sequentially.
+
+### Simple Example with Two Variables
+
+For two variables $X_1$ and $X_2$, the chain rule gives:
+
+$$
+p(x_1, x_2) = p(x_1) \cdot p(x_2 \mid x_1)
+$$
+
+But we can also reverse the order:
+
+$$
+p(x_1, x_2) = p(x_2) \cdot p(x_1 \mid x_2)
+$$
+
+Which leads to **Bayes' formula**:
+
+$$
+p(x_2 \mid x_1) = \frac{p(x_2) \cdot p(x_1 \mid x_2)}{p(x_1)}
+$$
+
+---
+
+## Examples of Different Statistical Relationships Between Random Variables
+
+### 1. Complete Independence
+
+Variables are **independent** if the realization of one provides no information about the others. The joint probability then factorizes simply:
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2) \cdots p(x_N) = \prod_{i=1}^{N} p(x_i)
+$$
+
+**Example**: Successive tosses of a fair coin. Each toss is independent of the previous ones.
+
+### 2. Conditional Independence
+
+Two variables can be independent **given a third**. For example, $X_1$ and $X_3$ are conditionally independent given $X_2$ if:
+
+$$
+p(x_1, x_3 \mid x_2) = p(x_1 \mid x_2) \cdot p(x_3 \mid x_2)
+$$
+
+The joint probability of the three variables becomes:
+
+$$
+p(x_1, x_2, x_3) = p(x_2) \cdot p(x_1 \mid x_2) \cdot p(x_3 \mid x_2)
+$$
+
+**Example**: Rain ($X_1$) and automatic watering ($X_3$) are two possible causes of wet grass ($X_2$). Given that the grass is wet, rain and watering may be independent (if one occurred, the other is not necessary).
+
+### 3. Sequential Dependence (Markov Model)
+
+Variables form a sequence where each variable depends only on the previous one (or the few previous ones). This is the case of **Markov chains**, described below.
+
+### 4. Complete Dependence (General Case)
+
+In the general case, each variable can depend on all the previous ones, as expressed by the complete chain rule. This represents the most complex dependency structure.
+
+**Example**: Pixels in a natural image often have complex dependencies between them, both local and global.
+
+---
+
+## First-Order Markov Chain
+
+A **first-order Markov chain** assumes that each variable depends **only on the immediately preceding variable**. This is a "short memory" assumption that significantly simplifies modeling.
+
+### Formulation
+
+Let a sequence of random variables $X_1, X_2, \dots, X_N$. The first-order Markov property is written as:
+
+$$
+p(x_i \mid x_{i-1}, x_{i-2}, \dots, x_1) = p(x_i \mid x_{i-1}) \quad \text{for all } i
+$$
+
+The joint probability then simplifies to:
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \cdot p(x_3 \mid x_2) \cdots p(x_N \mid x_{N-1}) = p(x_1) \prod_{i=2}^{N} p(x_i \mid x_{i-1})
+$$
+
+### Interpretation and Example
+
+- **Interpretation**: The future state ($X_i$) depends only on the present state ($X_{i-1}$), not on the more distant past.
+- **Example**: Today's weather depends mainly on yesterday's weather, and less on previous days. We can model states "sunny", "rainy", "cloudy" as a Markov chain.
+
+```{mermaid}
+graph LR
+    X1 --> X2 --> X3 --> X4
+    style X1 fill:#f9f
+    style X2 fill:#f9f
+    style X3 fill:#f9f
+    style X4 fill:#f9f
+```
+
+*Diagram of a first-order Markov chain: each variable depends only on the previous one.*
+
+---
+
+## Second-Order Markov Chain
+
+A **second-order Markov chain** assumes that each variable depends **on the two previous variables**. This introduces slightly longer memory, allowing modeling of more complex dependencies while remaining simpler than a complete model.
+
+### Formulation
+
+For a sequence $X_1, X_2, \dots, X_N$, the second-order Markov property is written as:
+
+$$
+p(x_i \mid x_{i-1}, x_{i-2}, \dots, x_1) = p(x_i \mid x_{i-1}, x_{i-2}) \quad \text{for all } i \geq 3
+$$
+
+The joint probability becomes:
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \cdot p(x_3 \mid x_2, x_1) \cdots p(x_N \mid x_{N-1}, x_{N-2})
+$$
+
+Or, in compact notation:
+
+$$
+p(x_1, x_2, \dots, x_N) = p(x_1) \cdot p(x_2 \mid x_1) \prod_{i=3}^{N} p(x_i \mid x_{i-1}, x_{i-2})
+$$
+
+### Interpretation and Example
+
+- **Interpretation**: The future state ($X_i$) depends on the two present states ($X_{i-1}$ and $X_{i-2}$). This can model phenomena where short-term trends are important.
+- **Example**: Modeling stock prices, where today's price may depend on the prices of the last two days to capture potential momentum dynamics.
+
+```{mermaid}
+graph LR
+    X1 --> X2 --> X3 --> X4
+    X1 --> X3
+    X2 --> X4
+    style X1 fill:#f9f
+    style X2 fill:#f9f
+    style X3 fill:#f9f
+    style X4 fill:#f9f
+```
+
+*Diagram of a second-order Markov chain: each variable depends on the two previous ones.*
+
+---
+
+## Summary of Key Concepts
+
+- The **chain rule** is a general identity that decomposes joint probability into a product of conditional probabilities.
+- **Statistical relationships** between variables can range from complete independence to general dependence, including conditional independence and Markov models.
+- A **first-order Markov chain** assumes dependence only on the immediately preceding state, greatly simplifying sequence modeling.
+- A **second-order Markov chain** extends this idea by considering the two previous states, offering a compromise between simplicity and expressiveness.
+
+These concepts are fundamental in data science for modeling sequences (time series, language processing, signals) and for understanding dependencies in multivariate data.
