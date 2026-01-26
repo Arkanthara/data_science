@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>dsp28 – Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Data Science</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./fr/index.html">
+ <span class="dropdown-text">French</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Part II</a></li><li class="breadcrumb-item"><a href="./dsp28.html">Characteristic Functions and Moment Generating Functions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">High-dimensional representation spaces</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">High-Dimensional Representations in Data Science</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Principal Component Analysis (PCA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Discriminant Analysis (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Educational Course: Clustering and the k-means Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gaussian Mixture Models and the EM Algorithm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain Rules</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conditional Entropy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropy and Venn Diagrams</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Relative Entropy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp26.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross Entropy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mutual Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp28.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Characteristic Functions and Moment Generating Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp29.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Feature Extraction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#characteristic-functions-and-moment-generating-functions" id="toc-characteristic-functions-and-moment-generating-functions" class="nav-link active" data-scroll-target="#characteristic-functions-and-moment-generating-functions">Characteristic Functions and Moment Generating Functions</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#introduction-to-generating-functions" id="toc-introduction-to-generating-functions" class="nav-link" data-scroll-target="#introduction-to-generating-functions">Introduction to Generating Functions</a></li>
+  <li><a href="#fundamental-definitions" id="toc-fundamental-definitions" class="nav-link" data-scroll-target="#fundamental-definitions">Fundamental Definitions</a>
+  <ul class="collapse">
+  <li><a href="#moment-generating-function-mgf" id="toc-moment-generating-function-mgf" class="nav-link" data-scroll-target="#moment-generating-function-mgf">Moment Generating Function (MGF)</a></li>
+  <li><a href="#characteristic-function" id="toc-characteristic-function" class="nav-link" data-scroll-target="#characteristic-function">Characteristic Function</a></li>
+  </ul></li>
+  <li><a href="#detailed-comparison" id="toc-detailed-comparison" class="nav-link" data-scroll-target="#detailed-comparison">Detailed Comparison</a>
+  <ul class="collapse">
+  <li><a href="#domain-of-definition" id="toc-domain-of-definition" class="nav-link" data-scroll-target="#domain-of-definition">1. Domain of Definition</a></li>
+  <li><a href="#mathematical-nature" id="toc-mathematical-nature" class="nav-link" data-scroll-target="#mathematical-nature">2. Mathematical Nature</a></li>
+  <li><a href="#relation-with-moments" id="toc-relation-with-moments" class="nav-link" data-scroll-target="#relation-with-moments">3. Relation with Moments</a></li>
+  <li><a href="#transformation-properties" id="toc-transformation-properties" class="nav-link" data-scroll-target="#transformation-properties">4. Transformation Properties</a></li>
+  <li><a href="#inversion-and-uniqueness" id="toc-inversion-and-uniqueness" class="nav-link" data-scroll-target="#inversion-and-uniqueness">5. Inversion and Uniqueness</a></li>
+  </ul></li>
+  <li><a href="#summary-comparative-table" id="toc-summary-comparative-table" class="nav-link" data-scroll-target="#summary-comparative-table">Summary Comparative Table</a></li>
+  <li><a href="#illustrative-examples" id="toc-illustrative-examples" class="nav-link" data-scroll-target="#illustrative-examples">Illustrative Examples</a>
+  <ul class="collapse">
+  <li><a href="#example-1-normal-distribution" id="toc-example-1-normal-distribution" class="nav-link" data-scroll-target="#example-1-normal-distribution">Example 1: Normal Distribution</a></li>
+  <li><a href="#example-2-cauchy-distribution" id="toc-example-2-cauchy-distribution" class="nav-link" data-scroll-target="#example-2-cauchy-distribution">Example 2: Cauchy Distribution</a></li>
+  <li><a href="#example-3-exponential-distribution" id="toc-example-3-exponential-distribution" class="nav-link" data-scroll-target="#example-3-exponential-distribution">Example 3: Exponential Distribution</a></li>
+  </ul></li>
+  <li><a href="#practical-applications" id="toc-practical-applications" class="nav-link" data-scroll-target="#practical-applications">Practical Applications</a>
+  <ul class="collapse">
+  <li><a href="#limit-theorems" id="toc-limit-theorems" class="nav-link" data-scroll-target="#limit-theorems">1. Limit Theorems</a></li>
+  <li><a href="#sum-of-independent-random-variables" id="toc-sum-of-independent-random-variables" class="nav-link" data-scroll-target="#sum-of-independent-random-variables">2. Sum of Independent Random Variables</a></li>
+  <li><a href="#distribution-identification" id="toc-distribution-identification" class="nav-link" data-scroll-target="#distribution-identification">3. Distribution Identification</a></li>
+  </ul></li>
+  <li><a href="#advantages-and-disadvantages" id="toc-advantages-and-disadvantages" class="nav-link" data-scroll-target="#advantages-and-disadvantages">Advantages and Disadvantages</a>
+  <ul class="collapse">
+  <li><a href="#advantages-of-mgf" id="toc-advantages-of-mgf" class="nav-link" data-scroll-target="#advantages-of-mgf">Advantages of MGF</a></li>
+  <li><a href="#disadvantages-of-mgf" id="toc-disadvantages-of-mgf" class="nav-link" data-scroll-target="#disadvantages-of-mgf">Disadvantages of MGF</a></li>
+  <li><a href="#advantages-of-characteristic-function" id="toc-advantages-of-characteristic-function" class="nav-link" data-scroll-target="#advantages-of-characteristic-function">Advantages of Characteristic Function</a></li>
+  <li><a href="#disadvantages-of-characteristic-function" id="toc-disadvantages-of-characteristic-function" class="nav-link" data-scroll-target="#disadvantages-of-characteristic-function">Disadvantages of Characteristic Function</a></li>
+  </ul></li>
+  <li><a href="#selection-guidelines" id="toc-selection-guidelines" class="nav-link" data-scroll-target="#selection-guidelines">Selection Guidelines</a></li>
+  <li><a href="#pedagogical-conclusion" id="toc-pedagogical-conclusion" class="nav-link" data-scroll-target="#pedagogical-conclusion">Pedagogical Conclusion</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="dsp28.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Part II</a></li><li class="breadcrumb-item"><a href="./dsp28.html">Characteristic Functions and Moment Generating Functions</a></li></ol></nav></header>
+
+
+
+
+
+<section id="characteristic-functions-and-moment-generating-functions" class="level1">
+<h1>Characteristic Functions and Moment Generating Functions</h1>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Explain the difference between the characteristic function and the moment generating function.</p>
+</section>
+<section id="introduction-to-generating-functions" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-generating-functions">Introduction to Generating Functions</h2>
+<p>Characteristic functions and moment generating functions are two fundamental mathematical tools in probability theory and statistics. They allow us to <strong>completely characterize a probability distribution</strong> and compute its moments. Despite their similarities, they present crucial differences.</p>
+</section>
+<section id="fundamental-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="fundamental-definitions">Fundamental Definitions</h2>
+<section id="moment-generating-function-mgf" class="level3">
+<h3 class="anchored" data-anchor-id="moment-generating-function-mgf">Moment Generating Function (MGF)</h3>
+<p>The <strong>moment generating function</strong> of a random variable <span class="math inline">\(X\)</span> is defined as the mathematical expectation of <span class="math inline">\(e^{tX}\)</span>:</p>
+<p><span class="math display">\[
+M_X(t) = \mathbb{E}[e^{tX}] =
+\begin{cases}
+\sum_{x} e^{tx} p_X(x) &amp; \text{(discrete case)} \\
+\int_{-\infty}^{\infty} e^{tx} f_X(x) dx &amp; \text{(continuous case)}
+\end{cases}
+\]</span></p>
+<p>where <span class="math inline">\(t\)</span> is a real number.</p>
+</section>
+<section id="characteristic-function" class="level3">
+<h3 class="anchored" data-anchor-id="characteristic-function">Characteristic Function</h3>
+<p>The <strong>characteristic function</strong> of a random variable <span class="math inline">\(X\)</span> is defined as the mathematical expectation of <span class="math inline">\(e^{itX}\)</span>:</p>
+<p><span class="math display">\[
+\phi_X(t) = \mathbb{E}[e^{itX}] =
+\begin{cases}
+\sum_{x} e^{itx} p_X(x) &amp; \text{(discrete case)} \\
+\int_{-\infty}^{\infty} e^{itx} f_X(x) dx &amp; \text{(continuous case)}
+\end{cases}
+\]</span></p>
+<p>where <span class="math inline">\(i = \sqrt{-1}\)</span> is the imaginary unit and <span class="math inline">\(t\)</span> is a real number.</p>
+</section>
+</section>
+<section id="detailed-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-comparison">Detailed Comparison</h2>
+<section id="domain-of-definition" class="level3">
+<h3 class="anchored" data-anchor-id="domain-of-definition">1. Domain of Definition</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 51%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Domain of Definition</th>
+<th>Existence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Moment Generating Function</strong></td>
+<td><span class="math inline">\(t \in \mathbb{R}\)</span></td>
+<td><strong>Not always</strong> exists. Only exists if the expectation <span class="math inline">\(\mathbb{E}[e^{tX}]\)</span> converges in a neighborhood of <span class="math inline">\(t=0\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Characteristic Function</strong></td>
+<td><span class="math inline">\(t \in \mathbb{R}\)</span></td>
+<td><strong>Always</strong> exists for any probability distribution</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Explanation</strong>: The characteristic function uses the complex exponential <span class="math inline">\(e^{itx}\)</span> which is always bounded (<span class="math inline">\(|e^{itx}| = 1\)</span>), thus guaranteeing convergence of the integral. In contrast, <span class="math inline">\(e^{tx}\)</span> can grow exponentially, which may prevent convergence.</p>
+</section>
+<section id="mathematical-nature" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-nature">2. Mathematical Nature</h3>
+<ul>
+<li><strong>MGF</strong>: Function with <strong>real values</strong> (or extended real values)</li>
+<li><strong>Characteristic Function</strong>: Function with <strong>complex values</strong></li>
+</ul>
+<p>The characteristic function can be written in polar form: <span class="math display">\[
+\phi_X(t) = |\phi_X(t)| \cdot e^{i\theta(t)}
+\]</span> where <span class="math inline">\(|\phi_X(t)|\)</span> is the modulus and <span class="math inline">\(\theta(t)\)</span> is the argument.</p>
+</section>
+<section id="relation-with-moments" class="level3">
+<h3 class="anchored" data-anchor-id="relation-with-moments">3. Relation with Moments</h3>
+<section id="for-mgf" class="level4">
+<h4 class="anchored" data-anchor-id="for-mgf">For MGF</h4>
+<p>If the MGF exists in a neighborhood of <span class="math inline">\(t=0\)</span>, then moments can be obtained by differentiation:</p>
+<p><span class="math display">\[
+\mathbb{E}[X^n] = \left. \frac{d^n}{dt^n} M_X(t) \right|_{t=0}
+\]</span></p>
+</section>
+<section id="for-the-characteristic-function" class="level4">
+<h4 class="anchored" data-anchor-id="for-the-characteristic-function">For the characteristic function</h4>
+<p>Moments can also be obtained from the characteristic function (if they exist):</p>
+<p><span class="math display">\[
+\mathbb{E}[X^n] = \left. \frac{1}{i^n} \frac{d^n}{dt^n} \phi_X(t) \right|_{t=0}
+\]</span></p>
+<p>where <span class="math inline">\(i^n\)</span> accounts for the imaginary part.</p>
+</section>
+</section>
+<section id="transformation-properties" class="level3">
+<h3 class="anchored" data-anchor-id="transformation-properties">4. Transformation Properties</h3>
+<p>Both functions have similar properties regarding linear transformations:</p>
+<p>For <span class="math inline">\(Y = aX + b\)</span>:</p>
+<ul>
+<li><strong>MGF</strong>: <span class="math inline">\(M_Y(t) = e^{bt} M_X(at)\)</span></li>
+<li><strong>Characteristic Function</strong>: <span class="math inline">\(\phi_Y(t) = e^{ibt} \phi_X(at)\)</span></li>
+</ul>
+</section>
+<section id="inversion-and-uniqueness" class="level3">
+<h3 class="anchored" data-anchor-id="inversion-and-uniqueness">5. Inversion and Uniqueness</h3>
+<p>Both functions <strong>uniquely</strong> characterize the distribution:</p>
+<ul>
+<li>If two random variables have the same MGF in a neighborhood of <span class="math inline">\(t=0\)</span>, then they have the same distribution</li>
+<li>If two random variables have the same characteristic function for all <span class="math inline">\(t\)</span>, then they have the same distribution</li>
+</ul>
+<p>However, the <strong>inversion formula</strong> is simpler for the characteristic function:</p>
+<p>For a continuous distribution: <span class="math display">\[
+f_X(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-itx} \phi_X(t) dt
+\]</span></p>
+<p>There is no equally simple inversion formula for the MGF.</p>
+</section>
+</section>
+<section id="summary-comparative-table" class="level2">
+<h2 class="anchored" data-anchor-id="summary-comparative-table">Summary Comparative Table</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 50%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Moment Generating Function (MGF)</th>
+<th>Characteristic Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Definition</strong></td>
+<td><span class="math inline">\(\mathbb{E}[e^{tX}]\)</span></td>
+<td><span class="math inline">\(\mathbb{E}[e^{itX}]\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Domain</strong></td>
+<td>Real <span class="math inline">\(t \in \mathbb{R}\)</span></td>
+<td>Real <span class="math inline">\(t \in \mathbb{R}\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Existence</strong></td>
+<td>Conditional (requires convergence)</td>
+<td><strong>Always</strong> guaranteed</td>
+</tr>
+<tr class="even">
+<td><strong>Values</strong></td>
+<td>Real</td>
+<td>Complex</td>
+</tr>
+<tr class="odd">
+<td><strong>Moment Calculation</strong></td>
+<td><span class="math inline">\(\mathbb{E}[X^n] = M_X^{(n)}(0)\)</span></td>
+<td><span class="math inline">\(\mathbb{E}[X^n] = \frac{\phi_X^{(n)}(0)}{i^n}\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Inversion Formula</strong></td>
+<td>Complex (inverse Laplace transform)</td>
+<td>Simple (inverse Fourier transform)</td>
+</tr>
+<tr class="odd">
+<td><strong>Main Applications</strong></td>
+<td>Moment calculation, theoretical proofs</td>
+<td>Limit theorems, stochastic processes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="illustrative-examples" class="level2">
+<h2 class="anchored" data-anchor-id="illustrative-examples">Illustrative Examples</h2>
+<section id="example-1-normal-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-normal-distribution">Example 1: Normal Distribution</h3>
+<p>For <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span>:</p>
+<p><strong>MGF</strong>: <span class="math display">\[
+M_X(t) = \exp\left(\mu t + \frac{\sigma^2 t^2}{2}\right) \quad \text{for all } t \in \mathbb{R}
+\]</span></p>
+<p><strong>Characteristic Function</strong>: <span class="math display">\[
+\phi_X(t) = \exp\left(i\mu t - \frac{\sigma^2 t^2}{2}\right)
+\]</span></p>
+<p>Note the similarity: the characteristic function is essentially the MGF with <span class="math inline">\(t\)</span> replaced by <span class="math inline">\(it\)</span>.</p>
+</section>
+<section id="example-2-cauchy-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-cauchy-distribution">Example 2: Cauchy Distribution</h3>
+<p>The Cauchy distribution is interesting because it <strong>has no MGF</strong> but has a well-defined characteristic function.</p>
+<p>For the standard Cauchy distribution:</p>
+<p><strong>MGF</strong>: Does not exist for <span class="math inline">\(t \neq 0\)</span> (because <span class="math inline">\(\mathbb{E}[e^{tX}]\)</span> diverges)</p>
+<p><strong>Characteristic Function</strong>: <span class="math display">\[
+\phi_X(t) = e^{-|t|}
+\]</span></p>
+<p>This shows the crucial advantage of the characteristic function: it exists even for distributions without moments (or without moments of all orders).</p>
+</section>
+<section id="example-3-exponential-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="example-3-exponential-distribution">Example 3: Exponential Distribution</h3>
+<p>For <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span> with density <span class="math inline">\(f_X(x) = \lambda e^{-\lambda x}\)</span> for <span class="math inline">\(x \geq 0\)</span>:</p>
+<p><strong>MGF</strong>: <span class="math display">\[
+M_X(t) = \frac{\lambda}{\lambda - t} \quad \text{for } t &lt; \lambda
+\]</span></p>
+<p><strong>Characteristic Function</strong>: <span class="math display">\[
+\phi_X(t) = \frac{\lambda}{\lambda - it}
+\]</span></p>
+</section>
+</section>
+<section id="practical-applications" class="level2">
+<h2 class="anchored" data-anchor-id="practical-applications">Practical Applications</h2>
+<section id="limit-theorems" class="level3">
+<h3 class="anchored" data-anchor-id="limit-theorems">1. Limit Theorems</h3>
+<p>The <strong>characteristic function</strong> is essential for proving the central limit theorem. The standard proof uses:</p>
+<ol type="1">
+<li>The characteristic function of the normalized sum</li>
+<li>The Taylor expansion of <span class="math inline">\(\phi_X(t)\)</span></li>
+<li>Convergence to the characteristic function of the normal law</li>
+</ol>
+<p>The MGF is less used because it does not always exist for normalized sums.</p>
+</section>
+<section id="sum-of-independent-random-variables" class="level3">
+<h3 class="anchored" data-anchor-id="sum-of-independent-random-variables">2. Sum of Independent Random Variables</h3>
+<p>For independent variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>:</p>
+<ul>
+<li><strong>MGF</strong>: <span class="math inline">\(M_{X+Y}(t) = M_X(t) \cdot M_Y(t)\)</span></li>
+<li><strong>Characteristic Function</strong>: <span class="math inline">\(\phi_{X+Y}(t) = \phi_X(t) \cdot \phi_Y(t)\)</span></li>
+</ul>
+<p>This multiplicative property simplifies the study of sums.</p>
+</section>
+<section id="distribution-identification" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-identification">3. Distribution Identification</h3>
+<p>If we recognize the form of an MGF or characteristic function, we can identify the corresponding distribution.</p>
+<p><strong>Example</strong>: If <span class="math inline">\(\phi_X(t) = (1 - it/\lambda)^{-\alpha}\)</span>, then <span class="math inline">\(X\)</span> follows a Gamma distribution with parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\lambda\)</span>.</p>
+</section>
+</section>
+<section id="advantages-and-disadvantages" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-and-disadvantages">Advantages and Disadvantages</h2>
+<section id="advantages-of-mgf" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-mgf">Advantages of MGF</h3>
+<ol type="1">
+<li><strong>More intuitive</strong> for moment calculations</li>
+<li><strong>Easier to manipulate</strong> for distributions having moments of all orders</li>
+<li><strong>Direct relation</strong> with moments without imaginary factors</li>
+</ol>
+</section>
+<section id="disadvantages-of-mgf" class="level3">
+<h3 class="anchored" data-anchor-id="disadvantages-of-mgf">Disadvantages of MGF</h3>
+<ol type="1">
+<li><strong>Does not always exist</strong> (convergence problem)</li>
+<li><strong>Limited domain</strong> even when it exists</li>
+<li><strong>Complex inversion formula</strong></li>
+</ol>
+</section>
+<section id="advantages-of-characteristic-function" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-characteristic-function">Advantages of Characteristic Function</h3>
+<ol type="1">
+<li><strong>Always exists</strong> for any distribution</li>
+<li><strong>Links with Fourier analysis</strong> (powerful tools)</li>
+<li><strong>Simple inversion formula</strong></li>
+<li><strong>Ideal for limit theorems</strong></li>
+</ol>
+</section>
+<section id="disadvantages-of-characteristic-function" class="level3">
+<h3 class="anchored" data-anchor-id="disadvantages-of-characteristic-function">Disadvantages of Characteristic Function</h3>
+<ol type="1">
+<li><strong>Complex numbers</strong> less intuitive</li>
+<li><strong>Moment calculation</strong> more cumbersome (<span class="math inline">\(i^n\)</span> factors)</li>
+</ol>
+</section>
+</section>
+<section id="selection-guidelines" class="level2">
+<h2 class="anchored" data-anchor-id="selection-guidelines">Selection Guidelines</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Recommended Choice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Moment calculation for distributions with all moments</td>
+<td>MGF (simpler)</td>
+</tr>
+<tr class="even">
+<td>Study of distributions without certain moments</td>
+<td>Characteristic Function</td>
+</tr>
+<tr class="odd">
+<td>Proofs of limit theorems</td>
+<td>Characteristic Function</td>
+</tr>
+<tr class="even">
+<td>Analysis of sums of independent variables</td>
+<td>Both work</td>
+</tr>
+<tr class="odd">
+<td>Heavy-tailed distributions (Cauchy, Pareto)</td>
+<td>Characteristic Function</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pedagogical-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="pedagogical-conclusion">Pedagogical Conclusion</h2>
+<p>Imagine both functions as <strong>“identity cards”</strong> of a probability distribution:</p>
+<ul>
+<li>The <strong>MGF</strong> is like an identity card with practical information (the moments), but it’s not always available</li>
+<li>The <strong>characteristic function</strong> is like a universal identity card that always exists, but sometimes requires a decoder (complex numbers)</li>
+</ul>
+<p><strong>Metaphor</strong>: If the probability distribution were a musical function, the MGF would be the score written in real notes, while the characteristic function would be the same score written in complex notes, capable of representing additional nuances.</p>
+<p>In practice, statisticians and probabilists use both tools, choosing the one most suited to the specific problem. The characteristic function is generally considered more powerful and general, while the MGF is more practical when it exists.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

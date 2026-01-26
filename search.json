@@ -1,5 +1,489 @@
 [
   {
+    "objectID": "dsp29.html",
+    "href": "dsp29.html",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "Explain the 3 main concepts of feature extraction based on supervised learning, auto-encoders, and self-supervised learning.\nGive examples of using these features.\n\n\n\nFeature extraction transforms raw data into compact, informative representations. Three main approaches exist:\n\nSupervised learning: uses labeled data\nAuto-encoders: reconstructs data through a bottleneck\nSelf-supervised learning: creates its own learning tasks\n\nEach method seeks to optimize different aspects of information, related to entropy, KL divergence, and mutual information.\n\n\n\n\n\n\n\n\n\n\n\nflowchart TD\n    A[\"Data X\"]\n    B[\"Labels Y\"]\n    C[\\\"Feature extractor\"/]\n    D[\"Features Z\"]\n    E[/\"Classifier\"\\]\n    F[\"Predictions Ŷ\"]\n    \n    A --&gt; C\n    B -.-&gt;|Supervision| E\n    C --&gt; D\n    D --&gt; E\n    E --&gt; F\n    \n    style D fill:#e1f5ff\n\n\n\n\n\n\nObjective: Maximize the mutual information between features Z and labels Y.\nIntuition: We seek to extract features that maximally reduce uncertainty about the labels. If Z contains much information about Y, then knowing Z strongly reduces the entropy of Y.\n\n\n\n\n\n\nExample: ResNet for images - convolutional layers hierarchically extract patterns (edges → textures → object parts)\nTheory link: Features optimized for discrimination\n\n\n\n\n\nExample: Sentiment analysis in customer reviews\nUsage: Discover recurring themes in negative comments\nApproach: Supervised classification then analysis of important features\n\n\n\n\n\nExample: Facial recognition for authentication\nPrinciple: 2-ary or M-ary classification - decide between “person A” vs “person B” vs “others”\nPerformance: High accuracy when plenty of labeled data\n\n\n\n\n\nExample: Image-based product search engine\nMechanism: Extracted features compared by cosine distance\nAdvantage: High precision thanks to discriminative learning\n\n\n\n\n\nExample: Intelligent compression - keep only discriminative features\nApproach: Learning compressed representations for classification\n\n\n\n\n\nExample: Deepfake detection\nPrinciple: Binary classification (real/fake) based on learned features\nFeatures: Capture generation artifacts\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TD\n    A[\"Data X\"]\n    B[\\\"Encoder\"/]\n    C[\"Bottleneck Z\"]\n    D[/\"Decoder\"\\]\n    E[\"Reconstruction X̂\"]\n    \n    A --&gt; B\n    B --&gt; C\n    C --&gt; D\n    D --&gt; E\n    \n    F[\"Minimize ||X - X̂||²\"]\n    A -.-&gt; F\n    E -.-&gt; F\n    \n    style C fill:#fff4e1\n\n\n\n\n\n\nObjective: Minimize the KL divergence between the data distribution and their reconstruction.\nIntuition: We seek a compressed representation Z that preserves essential information. It’s a compromise between compression (small Z) and fidelity (X̂ close to X).\n\n\n\n\n\n\nExample: Non-linear dimensionality reduction\nUsage: Projection of complex data to 2D/3D for visualization\nAdvantage vs PCA: Captures non-linear relationships\n\n\n\n\n\nExample: Community discovery in social networks\nApproach: Auto-encoder on adjacency matrix\nResult: Clusters corresponding to natural communities\n\n\n\n\n\nExample: Medical anomaly detection\nPrinciple: Only normal images reconstruct well\nDecision: High reconstruction error → anomaly\n\n\n\n\n\nExample: Music recommendation system\nMechanism: Similarity search in latent space Z\nAdvantage: Captures deep structural similarity\n\n\n\n\n\nExample: Neural video codecs (e.g., BPG, VVC)\nPrinciple: Lossy compression optimized for human perception\nTrade-off: Rate-distortion - size/quality compromise\n\n\n\n\n\nExample: Robust watermarking\nApproach: Encode watermark in bottleneck Z\nRobustness: Survives transformations as long as reconstruction is faithful\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TD\n    A[\"Data X\"]\n    B[\"View 1&lt;br&gt;t₁(X)\"]\n    C[\"View 2&lt;br&gt;t₂(X)\"]\n    \n    D[\\\"Encoder\"/]\n    E[\\\"Encoder\"/]\n    \n    F[\"Features Z₁\"]\n    G[\"Features Z₂\"]\n    \n    H[\\\"Maximize similarity\"/]\n    \n    A --&gt; B\n    A --&gt; C\n    B --&gt; D\n    C --&gt; E\n    D --&gt; F\n    E --&gt; G\n    F --&gt; H\n    G --&gt; H\n    \n    style F fill:#e8f5e8\n    style G fill:#e8f5e8\n\n\n\n\n\n\nObjective: Maximize the mutual information between different views of the same data.\nIntuition: Two transformations of the same image should have similar representations. Thus we learn features invariant to transformations but discriminative between different data.\n\n\n\n\n\n\nExample: BERT models in NLP\nPrinciple: Masked word prediction → rich contextual embeddings\nUsage: Base for many NLP tasks\n\n\n\n\n\nExample: Category discovery in unlabeled dataset\nApproach: Contrastive pre-training then clustering\nResult: Emerging categories without human supervision\n\n\n\n\n\nExample: Medical diagnosis with few labeled data\nProtocol: 1) Self-supervised pre-training on all available medical images 2) Fine-tuning on small labeled dataset\nAdvantage: Drastic reduction in annotation needs\n\n\n\n\n\nExample: Cross-modal image-text search (CLIP)\nCapability: Find images from textual descriptions\nUsage: Advanced visual search engines\n\n\n\n\n\nExample: Semantic compression\nIdea: Transmit only essential semantic information\nApproach: Self-supervised pre-training to identify what is semantically important\n\n\n\n\n\nExample: AI-generated content detection\nPrinciple: Generative models leave subtle fingerprints\nDetection: Self-supervised features capture these patterns\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMethod\nWhat to optimize?\nLink with information theory\nIntuitive analogy\n\n\n\n\nSupervised\nCorrect label prediction\nMaximize I(Z;Y) - mutual information features/labels\n“Learn to distinguish”\n\n\nAuto-encoders\nFaithful reconstruction\nMinimize D_KL(X‖X̂) - divergence between original and reconstruction\n“Learn to remember the essential”\n\n\nSelf-supervised\nSimilarity between augmented views\nMaximize I(Z₁;Z₂) - mutual information between views of same data\n“Learn to recognize despite transformations”\n\n\n\n\n\n\n\n\n\nProblem: Recommend movies to users\nHybrid solution:\n\nSelf-supervised: Pre-training on all videos (learn to recognize scenes, actions)\nSupervised: Fine-tuning on user ratings\nAuto-encoders: Compression of embeddings for fast search\n\nApplications:\n\nMining: Discover emerging genres (e.g., “Christmas romantic comedies”)\nSearch: “Find movies similar to Inception”\nCompression: Adaptive streaming based on bandwidth\n\n\n\n\nProblem: Detect fraudulent transactions\nApproach:\n\nAuto-encoder: Normal model on legitimate transactions\nDetection: Transactions with high reconstruction error = potential fraud\nSupervised: Human validation → label creation → more precise supervised model\n\nSecurity: Real-time anomaly detection\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeed\nRecommended Method\nWhy\n\n\n\n\nPlenty of labeled data\nSupervised\nMaximum performance on specific task\n\n\nCompression, anomalies\nAuto-encoders\nOptimized for faithful reconstruction\n\n\nFew labels, lots of raw data\nSelf-supervised\nExploits natural data structure\n\n\nComplete system\nCombination of all three\nSelf-supervised pre-training → supervised fine-tuning → auto-encoder compression\n\n\n\nCurrent trend: Self-supervised learning is becoming dominant as it exploits the abundance of unlabeled data, followed by supervised fine-tuning to adapt to specific tasks, with auto-encoders for operational efficiency.\n\n\n\n\n\n\n\n\n\n\n\n\n\nAspect\nSupervised Learning\nAuto-encoders\nSelf-Supervised Learning\n\n\n\n\nData\nLabeled\nUnlabeled\nUnlabeled\n\n\nObjective\nPredict Y\nReconstruct X\nLearn general representations\n\n\nLink with info theory\nMax \\(I(Z; Y)\\)\nMin \\(D_{\\mathrm{KL}}\\), bottleneck\nMax \\(I(Z_1; Z_2)\\), InfoNCE\n\n\nCharacteristics\nTask-specific\nCompact, reconstructible\nGeneralizable, transferable\n\n\nTypical applications\nClassification, regression\nCompression, anomalies\nPre-training, transfer learning\n\n\n\n\n\n\nEntropy \\(H(\\cdot)\\): Measures uncertainty/information content\n\nIn all cases, we seek representations with appropriate entropy (sufficiently informative but not too redundant)\n\nKL Divergence \\(D_{\\mathrm{KL}}(p \\parallel q)\\): Measures discrepancy between distributions\n\nVAE: \\(D_{\\mathrm{KL}}(q(z|x) \\parallel p(z))\\) regularizes latent space\nDomain adaptation: Distribution alignment\nSelf-supervised: Minimize DKL between augmented views\n\nMutual Information \\(I(\\cdot;\\cdot)\\): Measures dependence\n\nSupervised: Maximize \\(I(Z; Y)\\)\nSelf-supervised: Maximize \\(I(Z_1; Z_2)\\)\nAutoencoders: Preservation of \\(I(X; Z)\\) under compression constraint\n\n\n\n\n\n\n\n\n\n\ngraph TD\n    A[Information Theory] --&gt; B[Entropy H];\n    A --&gt; C[KL Divergence];\n    A --&gt; D[Mutual Information I];\n    \n    B --&gt; E[Compression];\n    B --&gt; F[Representation complexity];\n    \n    C --&gt; G[VAE regularization];\n    C --&gt; H[Distribution alignment];\n    \n    D --&gt; I[\"Supervised: max I(Z;Y)\"];\n    D --&gt; J[\"Self-supervised: max I(Z₁;Z₂)\"];\n    D --&gt; K[\"Autoencoders: I(X;Z) preserved\"];\n    \n    E --&gt; L[Practical applications];\n    F --&gt; L;\n    G --&gt; L;\n    H --&gt; L;\n    I --&gt; L;\n    J --&gt; L;\n    K --&gt; L;\n    \n    L --&gt; M[Classification];\n    L --&gt; N[Compression];\n    L --&gt; O[Anomaly detection];\n    L --&gt; P[Transfer learning];\n\n\n\n\n\n\n\n\n\n\nThe three feature extraction paradigms offer complementary approaches with deep links to information theory:\n\nSupervised learning directly maximizes mutual information with labels, producing highly discriminative features for a specific task.\nAuto-encoders implement an information bottleneck with KL divergence regularization, learning compact representations that preserve essential information.\nSelf-supervised learning maximizes mutual information between different views of the data, learning general and transferable representations.\n\nThese theoretical links are not merely academic: they guide the development of more efficient architectures and explain why some methods work better than others in specific contexts. Understanding these connections allows practitioners to choose the appropriate approach for their problem and innovate by combining the strengths of each paradigm.",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#question",
+    "href": "dsp29.html#question",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "Explain the 3 main concepts of feature extraction based on supervised learning, auto-encoders, and self-supervised learning.\nGive examples of using these features.",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#introduction",
+    "href": "dsp29.html#introduction",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "Feature extraction transforms raw data into compact, informative representations. Three main approaches exist:\n\nSupervised learning: uses labeled data\nAuto-encoders: reconstructs data through a bottleneck\nSelf-supervised learning: creates its own learning tasks\n\nEach method seeks to optimize different aspects of information, related to entropy, KL divergence, and mutual information.",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#supervised-learning",
+    "href": "dsp29.html#supervised-learning",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "flowchart TD\n    A[\"Data X\"]\n    B[\"Labels Y\"]\n    C[\\\"Feature extractor\"/]\n    D[\"Features Z\"]\n    E[/\"Classifier\"\\]\n    F[\"Predictions Ŷ\"]\n    \n    A --&gt; C\n    B -.-&gt;|Supervision| E\n    C --&gt; D\n    D --&gt; E\n    E --&gt; F\n    \n    style D fill:#e1f5ff\n\n\n\n\n\n\nObjective: Maximize the mutual information between features Z and labels Y.\nIntuition: We seek to extract features that maximally reduce uncertainty about the labels. If Z contains much information about Y, then knowing Z strongly reduces the entropy of Y.\n\n\n\n\n\n\nExample: ResNet for images - convolutional layers hierarchically extract patterns (edges → textures → object parts)\nTheory link: Features optimized for discrimination\n\n\n\n\n\nExample: Sentiment analysis in customer reviews\nUsage: Discover recurring themes in negative comments\nApproach: Supervised classification then analysis of important features\n\n\n\n\n\nExample: Facial recognition for authentication\nPrinciple: 2-ary or M-ary classification - decide between “person A” vs “person B” vs “others”\nPerformance: High accuracy when plenty of labeled data\n\n\n\n\n\nExample: Image-based product search engine\nMechanism: Extracted features compared by cosine distance\nAdvantage: High precision thanks to discriminative learning\n\n\n\n\n\nExample: Intelligent compression - keep only discriminative features\nApproach: Learning compressed representations for classification\n\n\n\n\n\nExample: Deepfake detection\nPrinciple: Binary classification (real/fake) based on learned features\nFeatures: Capture generation artifacts",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#auto-encoders",
+    "href": "dsp29.html#auto-encoders",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "flowchart TD\n    A[\"Data X\"]\n    B[\\\"Encoder\"/]\n    C[\"Bottleneck Z\"]\n    D[/\"Decoder\"\\]\n    E[\"Reconstruction X̂\"]\n    \n    A --&gt; B\n    B --&gt; C\n    C --&gt; D\n    D --&gt; E\n    \n    F[\"Minimize ||X - X̂||²\"]\n    A -.-&gt; F\n    E -.-&gt; F\n    \n    style C fill:#fff4e1\n\n\n\n\n\n\nObjective: Minimize the KL divergence between the data distribution and their reconstruction.\nIntuition: We seek a compressed representation Z that preserves essential information. It’s a compromise between compression (small Z) and fidelity (X̂ close to X).\n\n\n\n\n\n\nExample: Non-linear dimensionality reduction\nUsage: Projection of complex data to 2D/3D for visualization\nAdvantage vs PCA: Captures non-linear relationships\n\n\n\n\n\nExample: Community discovery in social networks\nApproach: Auto-encoder on adjacency matrix\nResult: Clusters corresponding to natural communities\n\n\n\n\n\nExample: Medical anomaly detection\nPrinciple: Only normal images reconstruct well\nDecision: High reconstruction error → anomaly\n\n\n\n\n\nExample: Music recommendation system\nMechanism: Similarity search in latent space Z\nAdvantage: Captures deep structural similarity\n\n\n\n\n\nExample: Neural video codecs (e.g., BPG, VVC)\nPrinciple: Lossy compression optimized for human perception\nTrade-off: Rate-distortion - size/quality compromise\n\n\n\n\n\nExample: Robust watermarking\nApproach: Encode watermark in bottleneck Z\nRobustness: Survives transformations as long as reconstruction is faithful",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#self-supervised-learning",
+    "href": "dsp29.html#self-supervised-learning",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "flowchart TD\n    A[\"Data X\"]\n    B[\"View 1&lt;br&gt;t₁(X)\"]\n    C[\"View 2&lt;br&gt;t₂(X)\"]\n    \n    D[\\\"Encoder\"/]\n    E[\\\"Encoder\"/]\n    \n    F[\"Features Z₁\"]\n    G[\"Features Z₂\"]\n    \n    H[\\\"Maximize similarity\"/]\n    \n    A --&gt; B\n    A --&gt; C\n    B --&gt; D\n    C --&gt; E\n    D --&gt; F\n    E --&gt; G\n    F --&gt; H\n    G --&gt; H\n    \n    style F fill:#e8f5e8\n    style G fill:#e8f5e8\n\n\n\n\n\n\nObjective: Maximize the mutual information between different views of the same data.\nIntuition: Two transformations of the same image should have similar representations. Thus we learn features invariant to transformations but discriminative between different data.\n\n\n\n\n\n\nExample: BERT models in NLP\nPrinciple: Masked word prediction → rich contextual embeddings\nUsage: Base for many NLP tasks\n\n\n\n\n\nExample: Category discovery in unlabeled dataset\nApproach: Contrastive pre-training then clustering\nResult: Emerging categories without human supervision\n\n\n\n\n\nExample: Medical diagnosis with few labeled data\nProtocol: 1) Self-supervised pre-training on all available medical images 2) Fine-tuning on small labeled dataset\nAdvantage: Drastic reduction in annotation needs\n\n\n\n\n\nExample: Cross-modal image-text search (CLIP)\nCapability: Find images from textual descriptions\nUsage: Advanced visual search engines\n\n\n\n\n\nExample: Semantic compression\nIdea: Transmit only essential semantic information\nApproach: Self-supervised pre-training to identify what is semantically important\n\n\n\n\n\nExample: AI-generated content detection\nPrinciple: Generative models leave subtle fingerprints\nDetection: Self-supervised features capture these patterns",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#summary-table-of-theoretical-links",
+    "href": "dsp29.html#summary-table-of-theoretical-links",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "Method\nWhat to optimize?\nLink with information theory\nIntuitive analogy\n\n\n\n\nSupervised\nCorrect label prediction\nMaximize I(Z;Y) - mutual information features/labels\n“Learn to distinguish”\n\n\nAuto-encoders\nFaithful reconstruction\nMinimize D_KL(X‖X̂) - divergence between original and reconstruction\n“Learn to remember the essential”\n\n\nSelf-supervised\nSimilarity between augmented views\nMaximize I(Z₁;Z₂) - mutual information between views of same data\n“Learn to recognize despite transformations”",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#integrated-concrete-examples",
+    "href": "dsp29.html#integrated-concrete-examples",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "Problem: Recommend movies to users\nHybrid solution:\n\nSelf-supervised: Pre-training on all videos (learn to recognize scenes, actions)\nSupervised: Fine-tuning on user ratings\nAuto-encoders: Compression of embeddings for fast search\n\nApplications:\n\nMining: Discover emerging genres (e.g., “Christmas romantic comedies”)\nSearch: “Find movies similar to Inception”\nCompression: Adaptive streaming based on bandwidth\n\n\n\n\nProblem: Detect fraudulent transactions\nApproach:\n\nAuto-encoder: Normal model on legitimate transactions\nDetection: Transactions with high reconstruction error = potential fraud\nSupervised: Human validation → label creation → more precise supervised model\n\nSecurity: Real-time anomaly detection",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#conclusion-which-method-to-choose",
+    "href": "dsp29.html#conclusion-which-method-to-choose",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "Need\nRecommended Method\nWhy\n\n\n\n\nPlenty of labeled data\nSupervised\nMaximum performance on specific task\n\n\nCompression, anomalies\nAuto-encoders\nOptimized for faithful reconstruction\n\n\nFew labels, lots of raw data\nSelf-supervised\nExploits natural data structure\n\n\nComplete system\nCombination of all three\nSelf-supervised pre-training → supervised fine-tuning → auto-encoder compression\n\n\n\nCurrent trend: Self-supervised learning is becoming dominant as it exploits the abundance of unlabeled data, followed by supervised fine-tuning to adapt to specific tasks, with auto-encoders for operational efficiency.",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#comparative-table-and-synthesis",
+    "href": "dsp29.html#comparative-table-and-synthesis",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "Aspect\nSupervised Learning\nAuto-encoders\nSelf-Supervised Learning\n\n\n\n\nData\nLabeled\nUnlabeled\nUnlabeled\n\n\nObjective\nPredict Y\nReconstruct X\nLearn general representations\n\n\nLink with info theory\nMax \\(I(Z; Y)\\)\nMin \\(D_{\\mathrm{KL}}\\), bottleneck\nMax \\(I(Z_1; Z_2)\\), InfoNCE\n\n\nCharacteristics\nTask-specific\nCompact, reconstructible\nGeneralizable, transferable\n\n\nTypical applications\nClassification, regression\nCompression, anomalies\nPre-training, transfer learning\n\n\n\n\n\n\nEntropy \\(H(\\cdot)\\): Measures uncertainty/information content\n\nIn all cases, we seek representations with appropriate entropy (sufficiently informative but not too redundant)\n\nKL Divergence \\(D_{\\mathrm{KL}}(p \\parallel q)\\): Measures discrepancy between distributions\n\nVAE: \\(D_{\\mathrm{KL}}(q(z|x) \\parallel p(z))\\) regularizes latent space\nDomain adaptation: Distribution alignment\nSelf-supervised: Minimize DKL between augmented views\n\nMutual Information \\(I(\\cdot;\\cdot)\\): Measures dependence\n\nSupervised: Maximize \\(I(Z; Y)\\)\nSelf-supervised: Maximize \\(I(Z_1; Z_2)\\)\nAutoencoders: Preservation of \\(I(X; Z)\\) under compression constraint\n\n\n\n\n\n\n\n\n\n\ngraph TD\n    A[Information Theory] --&gt; B[Entropy H];\n    A --&gt; C[KL Divergence];\n    A --&gt; D[Mutual Information I];\n    \n    B --&gt; E[Compression];\n    B --&gt; F[Representation complexity];\n    \n    C --&gt; G[VAE regularization];\n    C --&gt; H[Distribution alignment];\n    \n    D --&gt; I[\"Supervised: max I(Z;Y)\"];\n    D --&gt; J[\"Self-supervised: max I(Z₁;Z₂)\"];\n    D --&gt; K[\"Autoencoders: I(X;Z) preserved\"];\n    \n    E --&gt; L[Practical applications];\n    F --&gt; L;\n    G --&gt; L;\n    H --&gt; L;\n    I --&gt; L;\n    J --&gt; L;\n    K --&gt; L;\n    \n    L --&gt; M[Classification];\n    L --&gt; N[Compression];\n    L --&gt; O[Anomaly detection];\n    L --&gt; P[Transfer learning];",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp29.html#conclusion",
+    "href": "dsp29.html#conclusion",
+    "title": "Feature Extraction",
+    "section": "",
+    "text": "The three feature extraction paradigms offer complementary approaches with deep links to information theory:\n\nSupervised learning directly maximizes mutual information with labels, producing highly discriminative features for a specific task.\nAuto-encoders implement an information bottleneck with KL divergence regularization, learning compact representations that preserve essential information.\nSelf-supervised learning maximizes mutual information between different views of the data, learning general and transferable representations.\n\nThese theoretical links are not merely academic: they guide the development of more efficient architectures and explain why some methods work better than others in specific contexts. Understanding these connections allows practitioners to choose the appropriate approach for their problem and innovate by combining the strengths of each paradigm.",
+    "crumbs": [
+      "Part II",
+      "Feature Extraction"
+    ]
+  },
+  {
+    "objectID": "dsp27.html",
+    "href": "dsp27.html",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Give the definition of mutual information.\nExplain the Venn diagram.\nDemonstrate different expressions for mutual information via entropies and relative entropy.\n\n\n\nMutual information is a fundamental measure in information theory that quantifies the amount of information one random variable provides about another, and vice-versa. It is a measure of the statistical dependence between two variables.\n\n\nFor two discrete random variables \\(X\\) and \\(Y\\) with joint distribution \\(p(x,y)\\) and marginal distributions \\(p(x)\\) and \\(p(y)\\), mutual information is defined as:\n\\[ I(X;Y) = \\sum_{x \\in \\mathcal{X}} \\sum_{y \\in \\mathcal{Y}} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\]\nIn expectation form: \\[ I(X;Y) = \\mathbb{E}_{p(x,y)} \\left[ \\log_2 \\frac{p(X,Y)}{p(X)p(Y)} \\right] \\]\nFor continuous variables: \\[ I(X;Y) = \\iint p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\, dx \\, dy \\]\n\n\n\n\nMutual information answers the question: “How much do we learn about X by observing Y (and vice-versa)?”\n\n\nImagine two people communicating:\n\nX: Message the first person wants to send\nY: Message the second person receives\nI(X;Y): Amount of information correctly transmitted\n\nIf the channel is perfect (no noise): \\(I(X;Y) = H(X)\\) (everything is transmitted) If the channel is completely noisy: \\(I(X;Y) = 0\\) (nothing is transmitted)\n\n\n\n\n\nLegend and interpretation:\n\nH(X): Entropy of X - measures total uncertainty about X\nH(Y): Entropy of Y - measures total uncertainty about Y\nH(X,Y): Joint entropy - total uncertainty of the pair (X,Y)\nI(X;Y): Mutual information - information shared between X and Y\nH(X|Y): Conditional entropy - remaining uncertainty about X when Y is known\nH(Y|X): Conditional entropy - remaining uncertainty about Y when X is known\n\n\n\nFrom the diagram:\n\n\\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\)\n\nUnion = sum of circles - intersection (to avoid double counting)\n\n\\(H(X) = H(X|Y) + I(X;Y)\\)\n\nCircle X = exclusive part + intersection\n\n\\(H(Y) = H(Y|X) + I(X;Y)\\)\n\nCircle Y = exclusive part + intersection\n\n\n\n\n\n\n\n\n\\[ I(X;Y) = H(X) - H(X|Y) \\]\nInterpretation: The information that Y provides about X is the reduction in uncertainty about X when Y is known.\nProof: \\[\n\\begin{aligned}\nI(X;Y) &= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\\\\n&= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x|y)}{p(x)} \\quad \\text{(since } p(x,y) = p(x|y)p(y)\\text{)} \\\\\n&= \\sum_{x,y} p(x,y) \\log_2 p(x|y) - \\sum_{x,y} p(x,y) \\log_2 p(x) \\\\\n&= -H(X|Y) + H(X) \\quad \\text{(by definition of entropies)}\n\\end{aligned}\n\\]\n\n\n\n\\[ I(X;Y) = H(Y) - H(Y|X) \\]\nInterpretation: Same as previous but symmetric - what X provides about Y.\n\n\n\n\\[ I(X;Y) = H(X) + H(Y) - H(X,Y) \\]\nProof:\nStarting from \\(I(X;Y) = H(X) - H(X|Y)\\) and knowing that \\(H(X|Y) = H(X,Y) - H(Y)\\), we have: \\[ I(X;Y) = H(X) - [H(X,Y) - H(Y)] = H(X) + H(Y) - H(X,Y) \\]\nInterpretation: Mutual information is what “saves” bits when coding X and Y together rather than separately.\n\n\n\n\\[ I(X;Y) = H(X,Y) - H(X|Y) - H(Y|X) \\]\nProof:\nFrom \\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\), we can rearrange to get \\(I(X;Y) = H(X,Y) - [H(X,Y) - H(Y)] - [H(X,Y) - H(X)]\\) which simplifies.\n\n\n\n\n\n\nFundamental relation: \\[ I(X;Y) = D_{\\mathrm{KL}}(p(x,y) \\parallel p(x)p(y)) \\]\nDirect proof:\nBy definition of KL divergence: \\[\n\\begin{aligned}\nD_{\\mathrm{KL}}(p(x,y) \\parallel p(x)p(y)) &= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\\\\n&= I(X;Y) \\quad \\text{(exactly the definition of } I(X;Y)\\text{)}\n\\end{aligned}\n\\]\nDeep interpretation: Mutual information measures the deviation from independence.\n\nIf X and Y are independent: \\(p(x,y) = p(x)p(y)\\) → KL divergence = 0 → \\(I(X;Y) = 0\\)\nIf X and Y are dependent: \\(p(x,y) ≠ p(x)p(y)\\) → KL divergence &gt; 0 → \\(I(X;Y) &gt; 0\\)\n\n\n\n\n\\[ I(X;Y) = \\mathbb{E}_{p(y)} \\left[ D_{\\mathrm{KL}}(p(x|y) \\parallel p(x)) \\right] \\]\nProof: \\[\n\\begin{aligned}\nI(X;Y) &= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x|y)}{p(x)} \\quad \\text{(since } \\frac{p(x,y)}{p(x)p(y)} = \\frac{p(x|y)}{p(x)}\\text{)} \\\\\n&= \\sum_{y} p(y) \\sum_{x} p(x|y) \\log_2 \\frac{p(x|y)}{p(x)} \\\\\n&= \\mathbb{E}_{p(y)} \\left[ \\sum_{x} p(x|y) \\log_2 \\frac{p(x|y)}{p(x)} \\right] \\\\\n&= \\mathbb{E}_{p(y)} \\left[ D_{\\mathrm{KL}}(p(x|y) \\parallel p(x)) \\right]\n\\end{aligned}\n\\]\nInterpretation: For each possible value of Y, we measure how much the conditional distribution of X given Y differs from the marginal distribution of X, then average over Y.\n\n\n\n\\[ I(X;Y) = \\mathbb{E}_{p(x)} \\left[ D_{\\mathrm{KL}}(p(y|x) \\parallel p(y)) \\right] \\]\nProof: Similar to previous by symmetry.\n\n\n\n\n\n\n\n\n\n\n\n\nExpression\nFormula\nInterpretation\n\n\n\n\nDefinition\n\\(\\sum p(x,y) \\log \\frac{p(x,y)}{p(x)p(y)}\\)\nDeviation from independence\n\n\nVia entropies\n\\(H(X) - H(X\\|Y)\\)\nReduction in uncertainty about X by Y\n\n\nSymmetric\n\\(H(Y) - H(Y\\|X)\\)\nReduction in uncertainty about Y by X\n\n\nJoint-marginals\n\\(H(X) + H(Y) - H(X,Y)\\)\nBit savings in joint coding\n\n\nAs KL\n\\(D(p(x,y)\\|p(x)p(y))\\)\nDistance to independence\n\n\nConditional\n\\(\\mathbb{E}_{p(y)}[D(p(x\\|y)\\|p(x))]\\)\nAverage of conditional divergences\n\n\n\n\n\n\n\n\nLet:\n\nX: Weather (0=Rain, 1=Sun)\nY: Ice cream sales (0=Low, 1=High)\n\nDistributions:\n\n\\(p(x=0) = 0.3\\), \\(p(x=1) = 0.7\\)\n\\(p(y=0) = 0.4\\), \\(p(y=1) = 0.6\\)\nJoint distribution:\n\n\n\n\n\nY=0\nY=1\n\n\n\n\nX=0\n0.25\n0.05\n\n\nX=1\n0.15\n0.55\n\n\n\n\n\n\n\nIndependence check:\n\nIf independent: \\(p(0,0) = p(x=0)p(y=0) = 0.3×0.4 = 0.12\\)\nBut \\(p(0,0) = 0.25\\) → not independent\n\nEntropies:\n\n\\(H(X) = -0.3\\log_2(0.3) - 0.7\\log_2(0.7) ≈ 0.881\\) bits\n\\(H(Y) = -0.4\\log_2(0.4) - 0.6\\log_2(0.6) ≈ 0.971\\) bits\n\\(H(X,Y) = -0.25\\log_2(0.25) - 0.05\\log_2(0.05) - 0.15\\log_2(0.15) - 0.55\\log_2(0.55) ≈ 1.548\\) bits\n\nMutual information:\n\n\\(I(X;Y) = H(X) + H(Y) - H(X,Y) ≈ 0.881 + 0.971 - 1.548 = 0.304\\) bits\n\\(I(X;Y) = D(p(x,y)\\|p(x)p(y)) = 0.25\\log_2\\frac{0.25}{0.12} + 0.05\\log_2\\frac{0.05}{0.18} + 0.15\\log_2\\frac{0.15}{0.28} + 0.55\\log_2\\frac{0.55}{0.42} ≈ 0.304\\) bits\n\n\nInterpretation: Knowing the weather provides about 0.3 bits of information about ice cream sales.\n\n\n\n\n\n\n\n\n\ngraph TD\n    A[Mutual Information I(X;Y)] --&gt; B[Expressed via];\n    \n    B --&gt; C[Entropy differences];\n    C --&gt; D[I = H(X) - H(X|Y)];\n    C --&gt; E[I = H(Y) - H(Y|X)];\n    C --&gt; F[I = H(X) + H(Y) - H(X,Y)];\n    \n    B --&gt; G[KL Divergence];\n    G --&gt; H[I = D(p(x,y)∥p(x)p(y))];\n    G --&gt; I[I = 𝔼_p(y)[D(p(x|y)∥p(x))]];\n    G --&gt; J[I = 𝔼_p(x)[D(p(y|x)∥p(y))]];\n    \n    K[Properties] --&gt; L[Symmetry: I(X;Y)=I(Y;X)];\n    K --&gt; M[Non-negativity: I(X;Y) ≥ 0];\n    K --&gt; N[Independence ⇔ I=0];\n    \n    O[Applications] --&gt; P[Machine learning];\n    O --&gt; Q[Neuroscience];\n    O --&gt; R[Signal processing];\n\n\n\n\n\n\n\n\n\n\n\nIf \\(X \\perp Y\\), then:\n\n\\(p(x,y) = p(x)p(y)\\)\n\\(\\log \\frac{p(x,y)}{p(x)p(y)} = \\log 1 = 0\\)\nTherefore \\(I(X;Y) = 0\\)\n\n\n\n\nIf \\(Y = f(X)\\) (deterministic function), then:\n\n\\(H(Y|X) = 0\\) (knowing X, Y is certain)\n\\(I(X;Y) = H(Y)\\) (all information about Y comes from X)\nBut also \\(I(X;Y) ≤ H(X)\\)\n\n\n\n\nMutual information is more general than correlation:\n\nCorrelation: measures linear relationships\nMutual information: measures any dependence (linear or nonlinear)\n\n\n\n\n\n\n\nIn machine learning, we choose variables \\(Y\\) that maximize \\(I(X;Y)\\) where \\(X\\) is the target variable.\nExample: To predict house price (\\(X\\)), we choose among:\n\nArea (\\(Y_1\\))\nNumber of rooms (\\(Y_2\\))\nYear of construction (\\(Y_3\\))\n\nWe compute \\(I(X;Y_1)\\), \\(I(X;Y_2)\\), \\(I(X;Y_3)\\) and keep the most informative ones.\n\n\n\nIn autoencoders, we minimize \\(I(X;Z)\\) where \\(Z\\) is the latent representation, to obtain a compact representation.\n\n\n\nMeasure \\(I(S;R)\\) where \\(S\\) is a stimulus and \\(R\\) is the neural response, to understand what information is encoded.\n\n\n\n\n\n\nImagine two friends talking:\n\nH(X): Everything Pierre could say\nH(Y): Everything Paul could hear\nI(X;Y): What Paul actually understands from Pierre\nH(X|Y): What Pierre says that Paul doesn’t understand\nH(Y|X): What Paul hears but doesn’t come from Pierre (noise)\n\n\n\n\n\n“Shared information = what we know - what we ignore” \\[ I(X;Y) = H(X) - H(X|Y) \\]\n“Together we are stronger, but we share” \\[ H(X,Y) = H(X) + H(Y) - I(X;Y) \\]\n“Dependence is a distance to independence” \\[ I(X;Y) = D(p(x,y) \\parallel p(x)p(y)) \\]\n\n\n\n\n\nMutual information is a central concept that unites several notions from information theory:\n\nIt is a measure of dependence more powerful than correlation\nIt elegantly relates entropies and KL divergence\nIts visual interpretation via Venn diagrams is intuitive\n\nThe Venn diagram clearly shows how mutual information is the intersection of information from X and Y, while the expressions via relative entropy reveal that it fundamentally measures the gap between the joint reality and the independence hypothesis.\nThis duality of perspectives makes mutual information an indispensable tool in data science, machine learning, neuroscience, and many other fields.",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#question",
+    "href": "dsp27.html#question",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Give the definition of mutual information.\nExplain the Venn diagram.\nDemonstrate different expressions for mutual information via entropies and relative entropy.",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#definition-of-mutual-information",
+    "href": "dsp27.html#definition-of-mutual-information",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Mutual information is a fundamental measure in information theory that quantifies the amount of information one random variable provides about another, and vice-versa. It is a measure of the statistical dependence between two variables.\n\n\nFor two discrete random variables \\(X\\) and \\(Y\\) with joint distribution \\(p(x,y)\\) and marginal distributions \\(p(x)\\) and \\(p(y)\\), mutual information is defined as:\n\\[ I(X;Y) = \\sum_{x \\in \\mathcal{X}} \\sum_{y \\in \\mathcal{Y}} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\]\nIn expectation form: \\[ I(X;Y) = \\mathbb{E}_{p(x,y)} \\left[ \\log_2 \\frac{p(X,Y)}{p(X)p(Y)} \\right] \\]\nFor continuous variables: \\[ I(X;Y) = \\iint p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\, dx \\, dy \\]",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#intuitive-interpretation",
+    "href": "dsp27.html#intuitive-interpretation",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Mutual information answers the question: “How much do we learn about X by observing Y (and vice-versa)?”\n\n\nImagine two people communicating:\n\nX: Message the first person wants to send\nY: Message the second person receives\nI(X;Y): Amount of information correctly transmitted\n\nIf the channel is perfect (no noise): \\(I(X;Y) = H(X)\\) (everything is transmitted) If the channel is completely noisy: \\(I(X;Y) = 0\\) (nothing is transmitted)",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#the-venn-diagram-visual-representation",
+    "href": "dsp27.html#the-venn-diagram-visual-representation",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Legend and interpretation:\n\nH(X): Entropy of X - measures total uncertainty about X\nH(Y): Entropy of Y - measures total uncertainty about Y\nH(X,Y): Joint entropy - total uncertainty of the pair (X,Y)\nI(X;Y): Mutual information - information shared between X and Y\nH(X|Y): Conditional entropy - remaining uncertainty about X when Y is known\nH(Y|X): Conditional entropy - remaining uncertainty about Y when X is known\n\n\n\nFrom the diagram:\n\n\\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\)\n\nUnion = sum of circles - intersection (to avoid double counting)\n\n\\(H(X) = H(X|Y) + I(X;Y)\\)\n\nCircle X = exclusive part + intersection\n\n\\(H(Y) = H(Y|X) + I(X;Y)\\)\n\nCircle Y = exclusive part + intersection",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#expressions-of-mutual-information-via-entropies",
+    "href": "dsp27.html#expressions-of-mutual-information-via-entropies",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "\\[ I(X;Y) = H(X) - H(X|Y) \\]\nInterpretation: The information that Y provides about X is the reduction in uncertainty about X when Y is known.\nProof: \\[\n\\begin{aligned}\nI(X;Y) &= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\\\\n&= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x|y)}{p(x)} \\quad \\text{(since } p(x,y) = p(x|y)p(y)\\text{)} \\\\\n&= \\sum_{x,y} p(x,y) \\log_2 p(x|y) - \\sum_{x,y} p(x,y) \\log_2 p(x) \\\\\n&= -H(X|Y) + H(X) \\quad \\text{(by definition of entropies)}\n\\end{aligned}\n\\]\n\n\n\n\\[ I(X;Y) = H(Y) - H(Y|X) \\]\nInterpretation: Same as previous but symmetric - what X provides about Y.\n\n\n\n\\[ I(X;Y) = H(X) + H(Y) - H(X,Y) \\]\nProof:\nStarting from \\(I(X;Y) = H(X) - H(X|Y)\\) and knowing that \\(H(X|Y) = H(X,Y) - H(Y)\\), we have: \\[ I(X;Y) = H(X) - [H(X,Y) - H(Y)] = H(X) + H(Y) - H(X,Y) \\]\nInterpretation: Mutual information is what “saves” bits when coding X and Y together rather than separately.\n\n\n\n\\[ I(X;Y) = H(X,Y) - H(X|Y) - H(Y|X) \\]\nProof:\nFrom \\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\), we can rearrange to get \\(I(X;Y) = H(X,Y) - [H(X,Y) - H(Y)] - [H(X,Y) - H(X)]\\) which simplifies.",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#expressions-via-relative-entropy-kullback-leibler-divergence",
+    "href": "dsp27.html#expressions-via-relative-entropy-kullback-leibler-divergence",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Fundamental relation: \\[ I(X;Y) = D_{\\mathrm{KL}}(p(x,y) \\parallel p(x)p(y)) \\]\nDirect proof:\nBy definition of KL divergence: \\[\n\\begin{aligned}\nD_{\\mathrm{KL}}(p(x,y) \\parallel p(x)p(y)) &= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\\\\n&= I(X;Y) \\quad \\text{(exactly the definition of } I(X;Y)\\text{)}\n\\end{aligned}\n\\]\nDeep interpretation: Mutual information measures the deviation from independence.\n\nIf X and Y are independent: \\(p(x,y) = p(x)p(y)\\) → KL divergence = 0 → \\(I(X;Y) = 0\\)\nIf X and Y are dependent: \\(p(x,y) ≠ p(x)p(y)\\) → KL divergence &gt; 0 → \\(I(X;Y) &gt; 0\\)\n\n\n\n\n\\[ I(X;Y) = \\mathbb{E}_{p(y)} \\left[ D_{\\mathrm{KL}}(p(x|y) \\parallel p(x)) \\right] \\]\nProof: \\[\n\\begin{aligned}\nI(X;Y) &= \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x|y)}{p(x)} \\quad \\text{(since } \\frac{p(x,y)}{p(x)p(y)} = \\frac{p(x|y)}{p(x)}\\text{)} \\\\\n&= \\sum_{y} p(y) \\sum_{x} p(x|y) \\log_2 \\frac{p(x|y)}{p(x)} \\\\\n&= \\mathbb{E}_{p(y)} \\left[ \\sum_{x} p(x|y) \\log_2 \\frac{p(x|y)}{p(x)} \\right] \\\\\n&= \\mathbb{E}_{p(y)} \\left[ D_{\\mathrm{KL}}(p(x|y) \\parallel p(x)) \\right]\n\\end{aligned}\n\\]\nInterpretation: For each possible value of Y, we measure how much the conditional distribution of X given Y differs from the marginal distribution of X, then average over Y.\n\n\n\n\\[ I(X;Y) = \\mathbb{E}_{p(x)} \\left[ D_{\\mathrm{KL}}(p(y|x) \\parallel p(y)) \\right] \\]\nProof: Similar to previous by symmetry.",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#summary-table-of-expressions",
+    "href": "dsp27.html#summary-table-of-expressions",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Expression\nFormula\nInterpretation\n\n\n\n\nDefinition\n\\(\\sum p(x,y) \\log \\frac{p(x,y)}{p(x)p(y)}\\)\nDeviation from independence\n\n\nVia entropies\n\\(H(X) - H(X\\|Y)\\)\nReduction in uncertainty about X by Y\n\n\nSymmetric\n\\(H(Y) - H(Y\\|X)\\)\nReduction in uncertainty about Y by X\n\n\nJoint-marginals\n\\(H(X) + H(Y) - H(X,Y)\\)\nBit savings in joint coding\n\n\nAs KL\n\\(D(p(x,y)\\|p(x)p(y))\\)\nDistance to independence\n\n\nConditional\n\\(\\mathbb{E}_{p(y)}[D(p(x\\|y)\\|p(x))]\\)\nAverage of conditional divergences",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#illustrative-numerical-example",
+    "href": "dsp27.html#illustrative-numerical-example",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Let:\n\nX: Weather (0=Rain, 1=Sun)\nY: Ice cream sales (0=Low, 1=High)\n\nDistributions:\n\n\\(p(x=0) = 0.3\\), \\(p(x=1) = 0.7\\)\n\\(p(y=0) = 0.4\\), \\(p(y=1) = 0.6\\)\nJoint distribution:\n\n\n\n\n\nY=0\nY=1\n\n\n\n\nX=0\n0.25\n0.05\n\n\nX=1\n0.15\n0.55\n\n\n\n\n\n\n\nIndependence check:\n\nIf independent: \\(p(0,0) = p(x=0)p(y=0) = 0.3×0.4 = 0.12\\)\nBut \\(p(0,0) = 0.25\\) → not independent\n\nEntropies:\n\n\\(H(X) = -0.3\\log_2(0.3) - 0.7\\log_2(0.7) ≈ 0.881\\) bits\n\\(H(Y) = -0.4\\log_2(0.4) - 0.6\\log_2(0.6) ≈ 0.971\\) bits\n\\(H(X,Y) = -0.25\\log_2(0.25) - 0.05\\log_2(0.05) - 0.15\\log_2(0.15) - 0.55\\log_2(0.55) ≈ 1.548\\) bits\n\nMutual information:\n\n\\(I(X;Y) = H(X) + H(Y) - H(X,Y) ≈ 0.881 + 0.971 - 1.548 = 0.304\\) bits\n\\(I(X;Y) = D(p(x,y)\\|p(x)p(y)) = 0.25\\log_2\\frac{0.25}{0.12} + 0.05\\log_2\\frac{0.05}{0.18} + 0.15\\log_2\\frac{0.15}{0.28} + 0.55\\log_2\\frac{0.55}{0.42} ≈ 0.304\\) bits\n\n\nInterpretation: Knowing the weather provides about 0.3 bits of information about ice cream sales.",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#visualization-of-relations",
+    "href": "dsp27.html#visualization-of-relations",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "graph TD\n    A[Mutual Information I(X;Y)] --&gt; B[Expressed via];\n    \n    B --&gt; C[Entropy differences];\n    C --&gt; D[I = H(X) - H(X|Y)];\n    C --&gt; E[I = H(Y) - H(Y|X)];\n    C --&gt; F[I = H(X) + H(Y) - H(X,Y)];\n    \n    B --&gt; G[KL Divergence];\n    G --&gt; H[I = D(p(x,y)∥p(x)p(y))];\n    G --&gt; I[I = 𝔼_p(y)[D(p(x|y)∥p(x))]];\n    G --&gt; J[I = 𝔼_p(x)[D(p(y|x)∥p(y))]];\n    \n    K[Properties] --&gt; L[Symmetry: I(X;Y)=I(Y;X)];\n    K --&gt; M[Non-negativity: I(X;Y) ≥ 0];\n    K --&gt; N[Independence ⇔ I=0];\n    \n    O[Applications] --&gt; P[Machine learning];\n    O --&gt; Q[Neuroscience];\n    O --&gt; R[Signal processing];",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#special-cases-and-limits",
+    "href": "dsp27.html#special-cases-and-limits",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "If \\(X \\perp Y\\), then:\n\n\\(p(x,y) = p(x)p(y)\\)\n\\(\\log \\frac{p(x,y)}{p(x)p(y)} = \\log 1 = 0\\)\nTherefore \\(I(X;Y) = 0\\)\n\n\n\n\nIf \\(Y = f(X)\\) (deterministic function), then:\n\n\\(H(Y|X) = 0\\) (knowing X, Y is certain)\n\\(I(X;Y) = H(Y)\\) (all information about Y comes from X)\nBut also \\(I(X;Y) ≤ H(X)\\)\n\n\n\n\nMutual information is more general than correlation:\n\nCorrelation: measures linear relationships\nMutual information: measures any dependence (linear or nonlinear)",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#practical-applications",
+    "href": "dsp27.html#practical-applications",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "In machine learning, we choose variables \\(Y\\) that maximize \\(I(X;Y)\\) where \\(X\\) is the target variable.\nExample: To predict house price (\\(X\\)), we choose among:\n\nArea (\\(Y_1\\))\nNumber of rooms (\\(Y_2\\))\nYear of construction (\\(Y_3\\))\n\nWe compute \\(I(X;Y_1)\\), \\(I(X;Y_2)\\), \\(I(X;Y_3)\\) and keep the most informative ones.\n\n\n\nIn autoencoders, we minimize \\(I(X;Z)\\) where \\(Z\\) is the latent representation, to obtain a compact representation.\n\n\n\nMeasure \\(I(S;R)\\) where \\(S\\) is a stimulus and \\(R\\) is the neural response, to understand what information is encoded.",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#pedagogical-synthesis",
+    "href": "dsp27.html#pedagogical-synthesis",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Imagine two friends talking:\n\nH(X): Everything Pierre could say\nH(Y): Everything Paul could hear\nI(X;Y): What Paul actually understands from Pierre\nH(X|Y): What Pierre says that Paul doesn’t understand\nH(Y|X): What Paul hears but doesn’t come from Pierre (noise)\n\n\n\n\n\n“Shared information = what we know - what we ignore” \\[ I(X;Y) = H(X) - H(X|Y) \\]\n“Together we are stronger, but we share” \\[ H(X,Y) = H(X) + H(Y) - I(X;Y) \\]\n“Dependence is a distance to independence” \\[ I(X;Y) = D(p(x,y) \\parallel p(x)p(y)) \\]",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp27.html#conclusion",
+    "href": "dsp27.html#conclusion",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Mutual information is a central concept that unites several notions from information theory:\n\nIt is a measure of dependence more powerful than correlation\nIt elegantly relates entropies and KL divergence\nIts visual interpretation via Venn diagrams is intuitive\n\nThe Venn diagram clearly shows how mutual information is the intersection of information from X and Y, while the expressions via relative entropy reveal that it fundamentally measures the gap between the joint reality and the independence hypothesis.\nThis duality of perspectives makes mutual information an indispensable tool in data science, machine learning, neuroscience, and many other fields.",
+    "crumbs": [
+      "Part II",
+      "Mutual Information"
+    ]
+  },
+  {
+    "objectID": "dsp25.html",
+    "href": "dsp25.html",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "Explain relative entropy, its properties, and give some examples of its use.\n\n\n\nRelative entropy, also called Kullback-Leibler divergence (KLD), is a fundamental measure in information theory that quantifies the difference between two probability distributions. It plays a central role in relation to mutual information and cross-entropy.\n\n\nFor two discrete distributions \\(p(x)\\) and \\(q(x)\\) defined on the same space \\(\\mathcal{X}\\):\n\\[ D_{\\mathrm{KL}}(p \\parallel q) = \\sum_{x \\in \\mathcal{X}} p(x) \\log_2 \\frac{p(x)}{q(x)} = \\mathbb{E}_{p(x)}\\left[\\log_2 \\frac{p(x)}{q(x)}\\right] \\]\nIntuitive interpretation: KLD measures the average number of extra bits required to encode samples coming from distribution \\(p\\) when using a code optimized for distribution \\(q\\).\n\n\n\n\n\n\n\\[ D_{\\mathrm{KL}}(p \\parallel q) \\geq 0 \\]\nEquality \\(D_{\\mathrm{KL}}(p \\parallel q) = 0\\) occurs if and only if \\(p = q\\) almost everywhere.\n\n\n\n\\[ D_{\\mathrm{KL}}(p \\parallel q) \\neq D_{\\mathrm{KL}}(q \\parallel p) \\]\nKLD is not a metric distance because it is not symmetric and does not satisfy the triangle inequality.\n\n\n\nKLD is convex with respect to each argument, which is crucial for optimization problems.\n\n\n\nIf \\(p(x,y) = p_1(x)p_2(y)\\) and \\(q(x,y) = q_1(x)q_2(y)\\), then: \\[ D_{\\mathrm{KL}}(p \\parallel q) = D_{\\mathrm{KL}}(p_1 \\parallel q_1) + D_{\\mathrm{KL}}(p_2 \\parallel q_2) \\]\n\n\n\n\n\n\nDefinition of cross-entropy: \\[ H(p, q) = -\\sum_{x} p(x) \\log_2 q(x) = \\mathbb{E}_{p(x)}[-\\log_2 q(x)] \\]\nFundamental relation: \\[ H(p, q) = H(p) + D_{\\mathrm{KL}}(p \\parallel q) \\]\n\n\n\n\n\ngraph TD\n    A[\"Cross-Entropy H(p,q)\"] --&gt; B[\"Entropy of p: H(p)\"]\n    A --&gt; C[\"KL Divergence: D(p∥q)\"]\n    \n    B --&gt; D[Intrinsic uncertainty of p]\n    C --&gt; E[Penalty for using the wrong model]\n    \n    F[\"Goal: minimize H(p,q)\"] --&gt; G{Equivalent to};\n    G --&gt; H[\"Minimize D(p∥q) because H(p) constant\"];\n\n\n\n\n\n\nPedagogical interpretation:\n\n\\(H(p)\\): Optimal number of bits to encode \\(p\\) (with a perfectly adapted code)\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): Overhead due to using the code for \\(q\\) to encode \\(p\\)\n\\(H(p, q)\\): Total bits used = optimal + overhead\n\nConcrete example:\nSuppose a student must study for an exam. Let:\n\n\\(p\\): Real distribution of questions (unknown to the student)\n\\(q\\): Distribution assumed by the student (based on their studying)\n\\(H(p)\\): Real difficulty of the exam\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): The student’s “surprise” when facing the actual questions\n\\(H(p, q)\\): Difficulty perceived by the student\n\n\n\n\nRecall of mutual information: \\[ I(X;Y) = \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\]\nFundamental relation: \\[ I(X;Y) = D_{\\mathrm{KL}}(p(x,y) \\parallel p(x)p(y)) \\]\n\n\n\n\n\ngraph LR\n    A[\"Mutual Information I(X;Y)\"] --&gt; B[KL Divergence]\n    B --&gt; C[\"Between joint distribution p(x,y)\"]\n    B --&gt; D[\"And product of marginals p(x)p(y)\"]\n    \n    E[Interpretation] --&gt; F[Measures dependence]\n    F --&gt; G[Deviation from independence]\n    \n    H[If X and Y independent] --&gt; I[\"p(x,y) = p(x)p(y)\"]\n    I --&gt; J[D_KL = 0]\n    J --&gt; K[\"I(X;Y) = 0\"]\n\n\n\n\n\n\nPedagogical interpretation:\nMutual information measures “how much we learn about X by observing Y” (and vice-versa). It is the KL divergence between:\n\nReality: joint distribution \\(p(x,y)\\) (with potential dependence)\nIndependence hypothesis: \\(p(x)p(y)\\) (if we think X and Y are independent)\n\nVisual example:\n\n\n\n\n\n\n\n\n\ngraph TD\n    A[\"Entropy H(X)\"] --&gt; B[\"Mutual Information I(X;Y)\"]\n    A --&gt; C[\"Conditional Entropy H(X|Y)\"]\n    \n    D[\"Cross-Entropy H(p,q)\"] --&gt; E[\"Entropy H(p)\"]\n    D --&gt; F[\"KL Divergence D(p∥q)\"]\n    \n    G[\"Joint Entropy H(X,Y)\"] --&gt; H[\"H(X) + H(Y|X)\"]\n    G --&gt; I[\"H(Y) + H(X|Y)\"]\n    \n    B --&gt; J[\"= H(X) - H(X|Y)\"]\n    B --&gt; K[\"= H(Y) - H(Y|X)\"]\n    \n    L[KL Divergence] --&gt; M[Base of mutual information]\n    L --&gt; N[Component of cross-entropy]\n\n\n\n\n\n\n\n\n\n\n\n\nIn classification, cross-entropy loss is often used:\nContext:\n\n\\(p\\): Target distribution (one-hot encoding of labels)\n\\(q\\): Distribution predicted by the model (softmax)\nWe minimize \\(H(p, q)\\) to train the model\n\nWhy it works: Minimizing \\(H(p, q)\\) is equivalent to minimizing \\(D_{\\mathrm{KL}}(p \\parallel q)\\) because \\(H(p)\\) is constant (the labels are fixed).\nNumerical example: For binary classification with true label = 1:\n\n\\(p = [0, 1]\\) (target distribution)\nIf the model predicts \\(q = [0.1, 0.9]\\): \\(H(p, q) = -\\log_2(0.9) ≈ 0.152\\) bits\nIf the model predicts \\(q = [0.4, 0.6]\\): \\(H(p, q) = -\\log_2(0.6) ≈ 0.737\\) bits\n\n\n\n\nScenario: We design a code for a language with distribution \\(q\\), but we use it for a language with distribution \\(p\\).\nExample:\n\nLanguage A (\\(p\\)): ‘e’=12.7%, ‘t’=9.1%, ‘z’=0.07%\nLanguage B (\\(q\\)): ‘e’=10.0%, ‘t’=15.0%, ‘z’=1.0%\nOptimal code for B assigns short codes to ‘t’ and ‘z’\n\nCalculation: \\[ D_{\\mathrm{KL}}(p \\parallel q) = 0.127\\log_2\\frac{0.127}{0.10} + 0.091\\log_2\\frac{0.091}{0.15} + \\cdots \\]\nThis divergence measures the inefficiency of code B for language A.\n\n\n\nProblem: Approximate a complex posterior distribution \\(p(z|x)\\) with a simple distribution \\(q(z)\\).\nApproach: Minimize \\(D_{\\mathrm{KL}}(q \\parallel p)\\) so that \\(q\\) is close to \\(p\\).\nDirection choice:\n\n\\(D_{\\mathrm{KL}}(q \\parallel p)\\): “mode-seeking” (avoids areas where \\(q&gt;0\\) but \\(p=0\\))\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): “mean-seeking” (covers all modes of \\(p\\))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConcept\nFormula\nRelation with KLD\nInterpretation\n\n\n\n\nCross-Entropy\n\\(H(p,q) = -\\sum p\\log q\\)\n\\(H(p,q) = H(p) + D(p\\|q)\\)\nCost of using the wrong model\n\n\nMutual Information\n\\(I(X;Y) = \\sum p(x,y)\\log\\frac{p(x,y)}{p(x)p(y)}\\)\n\\(I(X;Y) = D(p(x,y)\\|p(x)p(y))\\)\nDependence between variables\n\n\nConditional Entropy\n\\(H(X\\|Y) = H(X,Y) - H(Y)\\)\n\\(H(X\\|Y) = H(X) - I(X;Y)\\)\nResidual uncertainty\n\n\nJoint Entropy\n\\(H(X,Y) = -\\sum p(x,y)\\log p(x,y)\\)\n\\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\)\nTotal uncertainty\n\n\n\n\n\n\nScenario: A detective investigates a series of crimes.\n\n\\(p(x)\\): Real distribution of the true criminal’s characteristics\n\nAge: 30-40 years (40%), 40-50 years (40%), other (20%)\nVehicle: Car (70%), Motorcycle (30%)\n\n\\(q(x)\\): Detective’s hypothesis\n\nAge: 20-30 years (60%), 30-40 years (30%), other (10%)\nVehicle: Car (50%), Motorcycle (50%)\n\n\nKL Divergence calculation:\nFor each characteristic, we calculate: \\[ D_{\\mathrm{KL}}(p \\parallel q) = \\sum p(x) \\log_2 \\frac{p(x)}{q(x)} \\]\nInterpretation:\n\nIf \\(D_{\\mathrm{KL}}\\) is large → the detective has a poor hypothesis\nIf \\(D_{\\mathrm{KL}} = 0\\) → the detective guessed the distribution perfectly\n\nLink with mutual information:\nSuppose we now discover a relationship between:\n\n\\(X\\): Type of crime\n\\(Y\\): Vehicle used\n\nThe mutual information \\(I(X;Y)\\) measures whether knowing the type of crime gives information about the vehicle (and vice-versa).\n\n\n\n\n\nIn generative models (like VAEs), we use \\(D_{\\mathrm{KL}}(q(z|x) \\parallel p(z))\\) to constrain the latent distribution to follow a prior distribution \\(p(z)\\) (often Gaussian).\n\n\n\nKL divergence is used in algorithms like TRPO and PPO to constrain policy updates, preventing overly drastic changes.\n\n\n\nIn Bayesian inference, \\(D_{\\mathrm{KL}}(p_{\\text{post}} \\parallel p_{\\text{prior}})\\) measures how much observing the data has modified our beliefs.\n\n\n\n\n\n\n\n\n\n\n\ngraph TD\n    A[\"Choice of D(p∥q) vs D(q∥p)\"] --&gt; B{Situation};\n    \n    B --&gt; C[Priority: avoid areas&lt;br&gt;where p&gt;0 but q=0];\n    C --&gt; D[\"Use D(p∥q)&lt;br&gt;because D(p∥q)=∞ if q=0 and p&gt;0\"];\n    \n    B --&gt; E[Priority: cover all&lt;br&gt;modes of p];\n    E --&gt; F[\"Use D(q∥p)&lt;br&gt;mode-seeking\"];\n    \n    B --&gt; G[Variational inference];\n    G --&gt; H[\"Use D(q∥p)&lt;br&gt;for approximations\"];\n\n\n\n\n\n\n\n\n\nKLD is very sensitive to low-probability events in \\(p\\) that are zero in \\(q\\):\n\n\\(p(x) &gt; 0\\) but \\(q(x) = 0\\) → \\(D_{\\mathrm{KL}}(p \\parallel q) = \\infty\\)\n\n\n\n\nWhen symmetry is needed:\n\nJensen-Shannon divergence: \\(JS(p,q) = \\frac{1}{2}D(p \\parallel m) + \\frac{1}{2}D(q \\parallel m)\\) where \\(m = \\frac{p+q}{2}\\)\nWasserstein distance: Based on optimal transport\n\n\n\n\n\nRelative entropy (KLD) is the conceptual cement that links the main information measures:\n\nWith cross-entropy: \\(H(p,q) = H(p) + D(p\\|q)\\)\n\nKLD is the “overhead” when using a wrong model\n\nWith mutual information: \\(I(X;Y) = D(p(x,y)\\|p(x)p(y))\\)\n\nKLD measures the deviation from independence\n\nWith conditional entropy: \\(H(X|Y) = H(X) - I(X;Y)\\)\n\nThe reduction in uncertainty thanks to Y\n\n\nFinal metaphor: Imagine you have to guess the contents of a box:\n\n\\(H(p)\\): Number of questions needed if you know the true distribution\n\\(H(p,q)\\): Number of questions if you have an imperfect hypothesis \\(q\\)\n\\(D(p\\|q)\\): Extra questions due to your poor hypothesis\n\\(I(X;Y)\\): Questions saved by listening to a clue Y\n\nThus, KL divergence quantifies the “cost of ignorance” - how much we pay in efficiency when our models do not match reality.",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#question",
+    "href": "dsp25.html#question",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "Explain relative entropy, its properties, and give some examples of its use.",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#introduction-to-relative-entropy-kullback-leibler-divergence",
+    "href": "dsp25.html#introduction-to-relative-entropy-kullback-leibler-divergence",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "Relative entropy, also called Kullback-Leibler divergence (KLD), is a fundamental measure in information theory that quantifies the difference between two probability distributions. It plays a central role in relation to mutual information and cross-entropy.\n\n\nFor two discrete distributions \\(p(x)\\) and \\(q(x)\\) defined on the same space \\(\\mathcal{X}\\):\n\\[ D_{\\mathrm{KL}}(p \\parallel q) = \\sum_{x \\in \\mathcal{X}} p(x) \\log_2 \\frac{p(x)}{q(x)} = \\mathbb{E}_{p(x)}\\left[\\log_2 \\frac{p(x)}{q(x)}\\right] \\]\nIntuitive interpretation: KLD measures the average number of extra bits required to encode samples coming from distribution \\(p\\) when using a code optimized for distribution \\(q\\).",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#fundamental-properties",
+    "href": "dsp25.html#fundamental-properties",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "\\[ D_{\\mathrm{KL}}(p \\parallel q) \\geq 0 \\]\nEquality \\(D_{\\mathrm{KL}}(p \\parallel q) = 0\\) occurs if and only if \\(p = q\\) almost everywhere.\n\n\n\n\\[ D_{\\mathrm{KL}}(p \\parallel q) \\neq D_{\\mathrm{KL}}(q \\parallel p) \\]\nKLD is not a metric distance because it is not symmetric and does not satisfy the triangle inequality.\n\n\n\nKLD is convex with respect to each argument, which is crucial for optimization problems.\n\n\n\nIf \\(p(x,y) = p_1(x)p_2(y)\\) and \\(q(x,y) = q_1(x)q_2(y)\\), then: \\[ D_{\\mathrm{KL}}(p \\parallel q) = D_{\\mathrm{KL}}(p_1 \\parallel q_1) + D_{\\mathrm{KL}}(p_2 \\parallel q_2) \\]",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#relations-with-other-information-measures",
+    "href": "dsp25.html#relations-with-other-information-measures",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "Definition of cross-entropy: \\[ H(p, q) = -\\sum_{x} p(x) \\log_2 q(x) = \\mathbb{E}_{p(x)}[-\\log_2 q(x)] \\]\nFundamental relation: \\[ H(p, q) = H(p) + D_{\\mathrm{KL}}(p \\parallel q) \\]\n\n\n\n\n\ngraph TD\n    A[\"Cross-Entropy H(p,q)\"] --&gt; B[\"Entropy of p: H(p)\"]\n    A --&gt; C[\"KL Divergence: D(p∥q)\"]\n    \n    B --&gt; D[Intrinsic uncertainty of p]\n    C --&gt; E[Penalty for using the wrong model]\n    \n    F[\"Goal: minimize H(p,q)\"] --&gt; G{Equivalent to};\n    G --&gt; H[\"Minimize D(p∥q) because H(p) constant\"];\n\n\n\n\n\n\nPedagogical interpretation:\n\n\\(H(p)\\): Optimal number of bits to encode \\(p\\) (with a perfectly adapted code)\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): Overhead due to using the code for \\(q\\) to encode \\(p\\)\n\\(H(p, q)\\): Total bits used = optimal + overhead\n\nConcrete example:\nSuppose a student must study for an exam. Let:\n\n\\(p\\): Real distribution of questions (unknown to the student)\n\\(q\\): Distribution assumed by the student (based on their studying)\n\\(H(p)\\): Real difficulty of the exam\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): The student’s “surprise” when facing the actual questions\n\\(H(p, q)\\): Difficulty perceived by the student\n\n\n\n\nRecall of mutual information: \\[ I(X;Y) = \\sum_{x,y} p(x,y) \\log_2 \\frac{p(x,y)}{p(x)p(y)} \\]\nFundamental relation: \\[ I(X;Y) = D_{\\mathrm{KL}}(p(x,y) \\parallel p(x)p(y)) \\]\n\n\n\n\n\ngraph LR\n    A[\"Mutual Information I(X;Y)\"] --&gt; B[KL Divergence]\n    B --&gt; C[\"Between joint distribution p(x,y)\"]\n    B --&gt; D[\"And product of marginals p(x)p(y)\"]\n    \n    E[Interpretation] --&gt; F[Measures dependence]\n    F --&gt; G[Deviation from independence]\n    \n    H[If X and Y independent] --&gt; I[\"p(x,y) = p(x)p(y)\"]\n    I --&gt; J[D_KL = 0]\n    J --&gt; K[\"I(X;Y) = 0\"]\n\n\n\n\n\n\nPedagogical interpretation:\nMutual information measures “how much we learn about X by observing Y” (and vice-versa). It is the KL divergence between:\n\nReality: joint distribution \\(p(x,y)\\) (with potential dependence)\nIndependence hypothesis: \\(p(x)p(y)\\) (if we think X and Y are independent)\n\nVisual example:\n\n\n\n\n\n\n\n\n\ngraph TD\n    A[\"Entropy H(X)\"] --&gt; B[\"Mutual Information I(X;Y)\"]\n    A --&gt; C[\"Conditional Entropy H(X|Y)\"]\n    \n    D[\"Cross-Entropy H(p,q)\"] --&gt; E[\"Entropy H(p)\"]\n    D --&gt; F[\"KL Divergence D(p∥q)\"]\n    \n    G[\"Joint Entropy H(X,Y)\"] --&gt; H[\"H(X) + H(Y|X)\"]\n    G --&gt; I[\"H(Y) + H(X|Y)\"]\n    \n    B --&gt; J[\"= H(X) - H(X|Y)\"]\n    B --&gt; K[\"= H(Y) - H(Y|X)\"]\n    \n    L[KL Divergence] --&gt; M[Base of mutual information]\n    L --&gt; N[Component of cross-entropy]",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#examples-of-practical-use",
+    "href": "dsp25.html#examples-of-practical-use",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "In classification, cross-entropy loss is often used:\nContext:\n\n\\(p\\): Target distribution (one-hot encoding of labels)\n\\(q\\): Distribution predicted by the model (softmax)\nWe minimize \\(H(p, q)\\) to train the model\n\nWhy it works: Minimizing \\(H(p, q)\\) is equivalent to minimizing \\(D_{\\mathrm{KL}}(p \\parallel q)\\) because \\(H(p)\\) is constant (the labels are fixed).\nNumerical example: For binary classification with true label = 1:\n\n\\(p = [0, 1]\\) (target distribution)\nIf the model predicts \\(q = [0.1, 0.9]\\): \\(H(p, q) = -\\log_2(0.9) ≈ 0.152\\) bits\nIf the model predicts \\(q = [0.4, 0.6]\\): \\(H(p, q) = -\\log_2(0.6) ≈ 0.737\\) bits\n\n\n\n\nScenario: We design a code for a language with distribution \\(q\\), but we use it for a language with distribution \\(p\\).\nExample:\n\nLanguage A (\\(p\\)): ‘e’=12.7%, ‘t’=9.1%, ‘z’=0.07%\nLanguage B (\\(q\\)): ‘e’=10.0%, ‘t’=15.0%, ‘z’=1.0%\nOptimal code for B assigns short codes to ‘t’ and ‘z’\n\nCalculation: \\[ D_{\\mathrm{KL}}(p \\parallel q) = 0.127\\log_2\\frac{0.127}{0.10} + 0.091\\log_2\\frac{0.091}{0.15} + \\cdots \\]\nThis divergence measures the inefficiency of code B for language A.\n\n\n\nProblem: Approximate a complex posterior distribution \\(p(z|x)\\) with a simple distribution \\(q(z)\\).\nApproach: Minimize \\(D_{\\mathrm{KL}}(q \\parallel p)\\) so that \\(q\\) is close to \\(p\\).\nDirection choice:\n\n\\(D_{\\mathrm{KL}}(q \\parallel p)\\): “mode-seeking” (avoids areas where \\(q&gt;0\\) but \\(p=0\\))\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): “mean-seeking” (covers all modes of \\(p\\))",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#summary-table-of-relations",
+    "href": "dsp25.html#summary-table-of-relations",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "Concept\nFormula\nRelation with KLD\nInterpretation\n\n\n\n\nCross-Entropy\n\\(H(p,q) = -\\sum p\\log q\\)\n\\(H(p,q) = H(p) + D(p\\|q)\\)\nCost of using the wrong model\n\n\nMutual Information\n\\(I(X;Y) = \\sum p(x,y)\\log\\frac{p(x,y)}{p(x)p(y)}\\)\n\\(I(X;Y) = D(p(x,y)\\|p(x)p(y))\\)\nDependence between variables\n\n\nConditional Entropy\n\\(H(X\\|Y) = H(X,Y) - H(Y)\\)\n\\(H(X\\|Y) = H(X) - I(X;Y)\\)\nResidual uncertainty\n\n\nJoint Entropy\n\\(H(X,Y) = -\\sum p(x,y)\\log p(x,y)\\)\n\\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\)\nTotal uncertainty",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#complete-pedagogical-example-the-detective-and-their-hypothesis",
+    "href": "dsp25.html#complete-pedagogical-example-the-detective-and-their-hypothesis",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "Scenario: A detective investigates a series of crimes.\n\n\\(p(x)\\): Real distribution of the true criminal’s characteristics\n\nAge: 30-40 years (40%), 40-50 years (40%), other (20%)\nVehicle: Car (70%), Motorcycle (30%)\n\n\\(q(x)\\): Detective’s hypothesis\n\nAge: 20-30 years (60%), 30-40 years (30%), other (10%)\nVehicle: Car (50%), Motorcycle (50%)\n\n\nKL Divergence calculation:\nFor each characteristic, we calculate: \\[ D_{\\mathrm{KL}}(p \\parallel q) = \\sum p(x) \\log_2 \\frac{p(x)}{q(x)} \\]\nInterpretation:\n\nIf \\(D_{\\mathrm{KL}}\\) is large → the detective has a poor hypothesis\nIf \\(D_{\\mathrm{KL}} = 0\\) → the detective guessed the distribution perfectly\n\nLink with mutual information:\nSuppose we now discover a relationship between:\n\n\\(X\\): Type of crime\n\\(Y\\): Vehicle used\n\nThe mutual information \\(I(X;Y)\\) measures whether knowing the type of crime gives information about the vehicle (and vice-versa).",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#advanced-applications",
+    "href": "dsp25.html#advanced-applications",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "In generative models (like VAEs), we use \\(D_{\\mathrm{KL}}(q(z|x) \\parallel p(z))\\) to constrain the latent distribution to follow a prior distribution \\(p(z)\\) (often Gaussian).\n\n\n\nKL divergence is used in algorithms like TRPO and PPO to constrain policy updates, preventing overly drastic changes.\n\n\n\nIn Bayesian inference, \\(D_{\\mathrm{KL}}(p_{\\text{post}} \\parallel p_{\\text{prior}})\\) measures how much observing the data has modified our beliefs.",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#critical-points-of-attention",
+    "href": "dsp25.html#critical-points-of-attention",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "graph TD\n    A[\"Choice of D(p∥q) vs D(q∥p)\"] --&gt; B{Situation};\n    \n    B --&gt; C[Priority: avoid areas&lt;br&gt;where p&gt;0 but q=0];\n    C --&gt; D[\"Use D(p∥q)&lt;br&gt;because D(p∥q)=∞ if q=0 and p&gt;0\"];\n    \n    B --&gt; E[Priority: cover all&lt;br&gt;modes of p];\n    E --&gt; F[\"Use D(q∥p)&lt;br&gt;mode-seeking\"];\n    \n    B --&gt; G[Variational inference];\n    G --&gt; H[\"Use D(q∥p)&lt;br&gt;for approximations\"];\n\n\n\n\n\n\n\n\n\nKLD is very sensitive to low-probability events in \\(p\\) that are zero in \\(q\\):\n\n\\(p(x) &gt; 0\\) but \\(q(x) = 0\\) → \\(D_{\\mathrm{KL}}(p \\parallel q) = \\infty\\)\n\n\n\n\nWhen symmetry is needed:\n\nJensen-Shannon divergence: \\(JS(p,q) = \\frac{1}{2}D(p \\parallel m) + \\frac{1}{2}D(q \\parallel m)\\) where \\(m = \\frac{p+q}{2}\\)\nWasserstein distance: Based on optimal transport",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp25.html#synthetic-conclusion",
+    "href": "dsp25.html#synthetic-conclusion",
+    "title": "Relative Entropy",
+    "section": "",
+    "text": "Relative entropy (KLD) is the conceptual cement that links the main information measures:\n\nWith cross-entropy: \\(H(p,q) = H(p) + D(p\\|q)\\)\n\nKLD is the “overhead” when using a wrong model\n\nWith mutual information: \\(I(X;Y) = D(p(x,y)\\|p(x)p(y))\\)\n\nKLD measures the deviation from independence\n\nWith conditional entropy: \\(H(X|Y) = H(X) - I(X;Y)\\)\n\nThe reduction in uncertainty thanks to Y\n\n\nFinal metaphor: Imagine you have to guess the contents of a box:\n\n\\(H(p)\\): Number of questions needed if you know the true distribution\n\\(H(p,q)\\): Number of questions if you have an imperfect hypothesis \\(q\\)\n\\(D(p\\|q)\\): Extra questions due to your poor hypothesis\n\\(I(X;Y)\\): Questions saved by listening to a clue Y\n\nThus, KL divergence quantifies the “cost of ignorance” - how much we pay in efficiency when our models do not match reality.",
+    "crumbs": [
+      "Part II",
+      "Relative Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html",
+    "href": "dsp23.html",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "Explain joint and conditional entropy for discrete random variables.\nExplain the chain rule for entropy.\n\n\n\nThe entropy of a discrete random variable \\(X\\), denoted \\(H(X)\\), measures the average uncertainty associated with its outcomes. It is defined as:\n\\[\nH(X) = -\\sum_{x \\in \\mathcal{X}} p(x) \\log_2 p(x)\n\\]\nWe will now extend this concept to multiple variables.\n\n\n\n\nJoint entropy measures the total uncertainty associated with the simultaneous realization of multiple random variables.\n\n\nFor two discrete random variables \\(X\\) and \\(Y\\) with joint probability mass function \\(p(x,y)\\), the joint entropy \\(H(X,Y)\\) is defined as:\n\\[\nH(X,Y) = -\\sum_{x \\in \\mathcal{X}} \\sum_{y \\in \\mathcal{Y}} p(x,y) \\log_2 p(x,y)\n\\]\nFor \\(N\\) variables \\(X_1, X_2, \\dots, X_N\\) with joint distribution \\(p(x_1, x_2, \\dots, x_N)\\):\n\\[\nH(X_1, X_2, \\dots, X_N) = -\\sum_{x_1} \\sum_{x_2} \\dots \\sum_{x_N} p(x_1, x_2, \\dots, x_N) \\log_2 p(x_1, x_2, \\dots, x_N)\n\\]\n\n\n\n\n\\(H(X,Y)\\) represents the average number of bits needed to optimally encode the pair \\((X,Y)\\).\nThis is the uncertainty associated with simultaneously knowing both variables.\nIf \\(X\\) and \\(Y\\) are independent, then \\(H(X,Y) = H(X) + H(Y)\\) (see below).\n\n\n\n\nConsider two binary variables \\(X\\) and \\(Y\\) with the following joint distribution:\n\n\n\n\\(X\\)  \\(Y\\)\n0\n1\n\n\n\n\n0\n0.25\n0.25\n\n\n1\n0.25\n0.25\n\n\n\nHere, \\(p(x,y) = 0.25\\) for all pairs. Let’s compute \\(H(X,Y)\\):\n\\[\nH(X,Y) = -4 \\times (0.25 \\log_2 0.25) = -4 \\times (0.25 \\times (-2)) = 2 \\text{ bits}\n\\]\nEach pair requires on average 2 bits to be encoded.\n\n\n\n\n\nConditional entropy measures the remaining uncertainty about a random variable when we know the value of another variable.\n\n\nThe conditional entropy of \\(Y\\) given \\(X\\), denoted \\(H(Y|X)\\), is defined as:\n\\[\nH(Y|X) = \\sum_{x \\in \\mathcal{X}} p(x) H(Y|X=x)\n\\]\nWhere \\(H(Y|X=x)\\) is the entropy of the conditional distribution \\(p(y|x)\\):\n\\[\nH(Y|X=x) = -\\sum_{y \\in \\mathcal{Y}} p(y|x) \\log_2 p(y|x)\n\\]\nCombining both expressions, we get the more common form:\n\\[\nH(Y|X) = -\\sum_{x \\in \\mathcal{X}} \\sum_{y \\in \\mathcal{Y}} p(x,y) \\log_2 p(y|x)\n\\]\n\n\n\n\n\\(H(Y|X)\\) is the average uncertainty about \\(Y\\) that remains after observing \\(X\\).\nIt’s an expectation: we average the uncertainty about \\(Y\\) for each possible value of \\(X\\), weighted by the probability of \\(X\\).\nImportant property: \\(H(Y|X) \\leq H(Y)\\) with equality if and only if \\(X\\) and \\(Y\\) are independent.\n\n\n\n\nLet’s reconsider the binary variables but with a dependent distribution:\n\n\n\n\\(X\\)  \\(Y\\)\n0\n1\n\n\n\n\n0\n0.5\n0\n\n\n1\n0\n0.5\n\n\n\nHere, \\(Y\\) is perfectly determined by \\(X\\): if \\(X=0\\) then \\(Y=0\\), if \\(X=1\\) then \\(Y=1\\).\nCompute \\(H(Y|X)\\): - For \\(X=0\\): \\(p(y|0) = [1, 0]\\), so \\(H(Y|X=0) = 0\\) - For \\(X=1\\): \\(p(y|1) = [0, 1]\\), so \\(H(Y|X=1) = 0\\)\nThus, \\(H(Y|X) = p(X=0) \\times 0 + p(X=1) \\times 0 = 0\\) bits.\nKnowing \\(X\\) eliminates all uncertainty about \\(Y\\).\n\n\n\n\n\nThe chain rule for entropy establishes a fundamental relationship between joint entropy and conditional entropy.\n\n\nFor two random variables \\(X\\) and \\(Y\\):\n\\[\nH(X,Y) = H(X) + H(Y|X)\n\\]\nMore generally, for \\(N\\) variables \\(X_1, X_2, \\dots, X_N\\):\n\\[\nH(X_1, X_2, \\dots, X_N) = H(X_1) + H(X_2|X_1) + H(X_3|X_1,X_2) + \\dots + H(X_N|X_1,X_2,\\dots,X_{N-1})\n\\]\nOr compactly:\n\\[\nH(X_1, X_2, \\dots, X_N) = \\sum_{i=1}^N H(X_i|X_1, \\dots, X_{i-1})\n\\]\nwith the convention that \\(H(X_1|\\emptyset) = H(X_1)\\).\n\n\n\nFor two variables, start from the definition of joint entropy:\n\\[\nH(X,Y) = -\\sum_{x,y} p(x,y) \\log_2 p(x,y)\n\\]\nUse the factorization \\(p(x,y) = p(x) \\cdot p(y|x)\\):\n\\[\n\\begin{aligned}\nH(X,Y) &= -\\sum_{x,y} p(x,y) \\log_2 [p(x) \\cdot p(y|x)] \\\\\n&= -\\sum_{x,y} p(x,y) [\\log_2 p(x) + \\log_2 p(y|x)] \\\\\n&= -\\sum_{x,y} p(x,y) \\log_2 p(x) - \\sum_{x,y} p(x,y) \\log_2 p(y|x)\n\\end{aligned}\n\\]\nThe first term: \\[\n-\\sum_{x,y} p(x,y) \\log_2 p(x) = -\\sum_x \\left[ \\log_2 p(x) \\sum_y p(x,y) \\right] = -\\sum_x p(x) \\log_2 p(x) = H(X)\n\\]\nThe second term is exactly \\(H(Y|X)\\) by definition.\nThus, \\(H(X,Y) = H(X) + H(Y|X)\\).\n\n\n\nThe chain rule can be understood intuitively:\n\nThe total uncertainty about the pair \\((X,Y)\\) [= \\(H(X,Y)\\)] equals the uncertainty about \\(X\\) [= \\(H(X)\\)] plus the remaining uncertainty about \\(Y\\) after knowing \\(X\\) [= \\(H(Y|X)\\)].\nThis extends to \\(N\\) variables: the total uncertainty decomposes into uncertainty about the first variable, plus uncertainty about the second given the first, etc.\n\n\n\n\n\nIndependence: If \\(X\\) and \\(Y\\) are independent, then \\(p(y|x) = p(y)\\), so \\(H(Y|X) = H(Y)\\), and the rule becomes \\(H(X,Y) = H(X) + H(Y)\\).\nSubadditivity inequality: Since \\(H(Y|X) \\leq H(Y)\\), we always have \\(H(X,Y) \\leq H(X) + H(Y)\\).\nSymmetry: The rule is symmetric: \\(H(X,Y) = H(Y) + H(X|Y)\\).\n\n\n\n\nConsider a transmission system where \\(X\\) is the transmitted message and \\(Y\\) is the received message (potentially noisy).\n\n\\(H(X)\\): uncertainty about the transmitted message\n\\(H(Y|X)\\): uncertainty introduced by noise (equivalent to the entropy of the noise)\n\\(H(X,Y)\\): total uncertainty about the transmission-reception pair\n\nThe chain rule tells us that the total uncertainty is the sum of the uncertainty about transmission and the uncertainty due to noise.\n\n\n\n\n\nConsider two binary variables \\(X\\) and \\(Y\\) with joint distribution:\n\n\n\n\\(X\\)  \\(Y\\)\n0\n1\n\\(p(x)\\)\n\n\n\n\n0\n0.3\n0.2\n0.5\n\n\n1\n0.1\n0.4\n0.5\n\n\n\\(p(y)\\)\n0.4\n0.6\n1.0\n\n\n\n\nCompute \\(H(X)\\): \\[\nH(X) = -[0.5 \\log_2 0.5 + 0.5 \\log_2 0.5] = 1 \\text{ bit}\n\\]\nCompute \\(H(Y)\\): \\[\nH(Y) = -[0.4 \\log_2 0.4 + 0.6 \\log_2 0.6] \\approx 0.971 \\text{ bits}\n\\]\nCompute \\(H(X,Y)\\): \\[\nH(X,Y) = -[0.3 \\log_2 0.3 + 0.2 \\log_2 0.2 + 0.1 \\log_2 0.1 + 0.4 \\log_2 0.4] \\approx 1.846 \\text{ bits}\n\\]\nCompute \\(H(Y|X)\\):\n\nFor \\(X=0\\): \\(p(Y|0) = [0.3/0.5 = 0.6, 0.2/0.5 = 0.4]\\), \\(H(Y|X=0) = -[0.6 \\log_2 0.6 + 0.4 \\log_2 0.4] \\approx 0.971\\)\nFor \\(X=1\\): \\(p(Y|1) = [0.1/0.5 = 0.2, 0.4/0.5 = 0.8]\\), \\(H(Y|X=1) = -[0.2 \\log_2 0.2 + 0.8 \\log_2 0.8] \\approx 0.722\\)\n\\(H(Y|X) = 0.5 \\times 0.971 + 0.5 \\times 0.722 \\approx 0.8465\\) bits\n\nVerify chain rule: \\[\nH(X,Y) = H(X) + H(Y|X) \\approx 1 + 0.8465 = 1.8465 \\text{ bits}\n\\] This matches our direct calculation (within rounding).\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConcept\nDefinition\nInterpretation\nRelation\n\n\n\n\nJoint entropy \\(H(X,Y)\\)\n\\(-\\sum_{x,y} p(x,y) \\log_2 p(x,y)\\)\nTotal uncertainty about the pair \\((X,Y)\\)\n-\n\n\nConditional entropy \\(H(Y|X)\\)\n\\(-\\sum_{x,y} p(x,y) \\log_2 p(y|x)\\)\nRemaining uncertainty about \\(Y\\) after observing \\(X\\)\n\\(H(Y|X) \\leq H(Y)\\)\n\n\nChain rule\n\\(H(X,Y) = H(X) + H(Y|X)\\)\nDecomposition of total uncertainty\nExtends to N variables\n\n\n\n\n\n\nJoint entropy measures the combined uncertainty of multiple variables.\nConditional entropy quantifies the information still hidden in one variable when another is known.\nChain rule is a powerful tool for decomposing joint entropy into a sum of conditional entropies.\nThese concepts are fundamental in information theory, with applications in compression, data transmission, machine learning (information gain, decision trees), and many other fields.\n\nUnderstanding these notions allows analyzing dependencies between variables and optimizing information processing systems.",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html#question",
+    "href": "dsp23.html#question",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "Explain joint and conditional entropy for discrete random variables.\nExplain the chain rule for entropy.",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html#introduction-review-of-entropy",
+    "href": "dsp23.html#introduction-review-of-entropy",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "The entropy of a discrete random variable \\(X\\), denoted \\(H(X)\\), measures the average uncertainty associated with its outcomes. It is defined as:\n\\[\nH(X) = -\\sum_{x \\in \\mathcal{X}} p(x) \\log_2 p(x)\n\\]\nWe will now extend this concept to multiple variables.",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html#joint-entropy",
+    "href": "dsp23.html#joint-entropy",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "Joint entropy measures the total uncertainty associated with the simultaneous realization of multiple random variables.\n\n\nFor two discrete random variables \\(X\\) and \\(Y\\) with joint probability mass function \\(p(x,y)\\), the joint entropy \\(H(X,Y)\\) is defined as:\n\\[\nH(X,Y) = -\\sum_{x \\in \\mathcal{X}} \\sum_{y \\in \\mathcal{Y}} p(x,y) \\log_2 p(x,y)\n\\]\nFor \\(N\\) variables \\(X_1, X_2, \\dots, X_N\\) with joint distribution \\(p(x_1, x_2, \\dots, x_N)\\):\n\\[\nH(X_1, X_2, \\dots, X_N) = -\\sum_{x_1} \\sum_{x_2} \\dots \\sum_{x_N} p(x_1, x_2, \\dots, x_N) \\log_2 p(x_1, x_2, \\dots, x_N)\n\\]\n\n\n\n\n\\(H(X,Y)\\) represents the average number of bits needed to optimally encode the pair \\((X,Y)\\).\nThis is the uncertainty associated with simultaneously knowing both variables.\nIf \\(X\\) and \\(Y\\) are independent, then \\(H(X,Y) = H(X) + H(Y)\\) (see below).\n\n\n\n\nConsider two binary variables \\(X\\) and \\(Y\\) with the following joint distribution:\n\n\n\n\\(X\\)  \\(Y\\)\n0\n1\n\n\n\n\n0\n0.25\n0.25\n\n\n1\n0.25\n0.25\n\n\n\nHere, \\(p(x,y) = 0.25\\) for all pairs. Let’s compute \\(H(X,Y)\\):\n\\[\nH(X,Y) = -4 \\times (0.25 \\log_2 0.25) = -4 \\times (0.25 \\times (-2)) = 2 \\text{ bits}\n\\]\nEach pair requires on average 2 bits to be encoded.",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html#conditional-entropy-1",
+    "href": "dsp23.html#conditional-entropy-1",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "Conditional entropy measures the remaining uncertainty about a random variable when we know the value of another variable.\n\n\nThe conditional entropy of \\(Y\\) given \\(X\\), denoted \\(H(Y|X)\\), is defined as:\n\\[\nH(Y|X) = \\sum_{x \\in \\mathcal{X}} p(x) H(Y|X=x)\n\\]\nWhere \\(H(Y|X=x)\\) is the entropy of the conditional distribution \\(p(y|x)\\):\n\\[\nH(Y|X=x) = -\\sum_{y \\in \\mathcal{Y}} p(y|x) \\log_2 p(y|x)\n\\]\nCombining both expressions, we get the more common form:\n\\[\nH(Y|X) = -\\sum_{x \\in \\mathcal{X}} \\sum_{y \\in \\mathcal{Y}} p(x,y) \\log_2 p(y|x)\n\\]\n\n\n\n\n\\(H(Y|X)\\) is the average uncertainty about \\(Y\\) that remains after observing \\(X\\).\nIt’s an expectation: we average the uncertainty about \\(Y\\) for each possible value of \\(X\\), weighted by the probability of \\(X\\).\nImportant property: \\(H(Y|X) \\leq H(Y)\\) with equality if and only if \\(X\\) and \\(Y\\) are independent.\n\n\n\n\nLet’s reconsider the binary variables but with a dependent distribution:\n\n\n\n\\(X\\)  \\(Y\\)\n0\n1\n\n\n\n\n0\n0.5\n0\n\n\n1\n0\n0.5\n\n\n\nHere, \\(Y\\) is perfectly determined by \\(X\\): if \\(X=0\\) then \\(Y=0\\), if \\(X=1\\) then \\(Y=1\\).\nCompute \\(H(Y|X)\\): - For \\(X=0\\): \\(p(y|0) = [1, 0]\\), so \\(H(Y|X=0) = 0\\) - For \\(X=1\\): \\(p(y|1) = [0, 1]\\), so \\(H(Y|X=1) = 0\\)\nThus, \\(H(Y|X) = p(X=0) \\times 0 + p(X=1) \\times 0 = 0\\) bits.\nKnowing \\(X\\) eliminates all uncertainty about \\(Y\\).",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html#chain-rule-for-entropy",
+    "href": "dsp23.html#chain-rule-for-entropy",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "The chain rule for entropy establishes a fundamental relationship between joint entropy and conditional entropy.\n\n\nFor two random variables \\(X\\) and \\(Y\\):\n\\[\nH(X,Y) = H(X) + H(Y|X)\n\\]\nMore generally, for \\(N\\) variables \\(X_1, X_2, \\dots, X_N\\):\n\\[\nH(X_1, X_2, \\dots, X_N) = H(X_1) + H(X_2|X_1) + H(X_3|X_1,X_2) + \\dots + H(X_N|X_1,X_2,\\dots,X_{N-1})\n\\]\nOr compactly:\n\\[\nH(X_1, X_2, \\dots, X_N) = \\sum_{i=1}^N H(X_i|X_1, \\dots, X_{i-1})\n\\]\nwith the convention that \\(H(X_1|\\emptyset) = H(X_1)\\).\n\n\n\nFor two variables, start from the definition of joint entropy:\n\\[\nH(X,Y) = -\\sum_{x,y} p(x,y) \\log_2 p(x,y)\n\\]\nUse the factorization \\(p(x,y) = p(x) \\cdot p(y|x)\\):\n\\[\n\\begin{aligned}\nH(X,Y) &= -\\sum_{x,y} p(x,y) \\log_2 [p(x) \\cdot p(y|x)] \\\\\n&= -\\sum_{x,y} p(x,y) [\\log_2 p(x) + \\log_2 p(y|x)] \\\\\n&= -\\sum_{x,y} p(x,y) \\log_2 p(x) - \\sum_{x,y} p(x,y) \\log_2 p(y|x)\n\\end{aligned}\n\\]\nThe first term: \\[\n-\\sum_{x,y} p(x,y) \\log_2 p(x) = -\\sum_x \\left[ \\log_2 p(x) \\sum_y p(x,y) \\right] = -\\sum_x p(x) \\log_2 p(x) = H(X)\n\\]\nThe second term is exactly \\(H(Y|X)\\) by definition.\nThus, \\(H(X,Y) = H(X) + H(Y|X)\\).\n\n\n\nThe chain rule can be understood intuitively:\n\nThe total uncertainty about the pair \\((X,Y)\\) [= \\(H(X,Y)\\)] equals the uncertainty about \\(X\\) [= \\(H(X)\\)] plus the remaining uncertainty about \\(Y\\) after knowing \\(X\\) [= \\(H(Y|X)\\)].\nThis extends to \\(N\\) variables: the total uncertainty decomposes into uncertainty about the first variable, plus uncertainty about the second given the first, etc.\n\n\n\n\n\nIndependence: If \\(X\\) and \\(Y\\) are independent, then \\(p(y|x) = p(y)\\), so \\(H(Y|X) = H(Y)\\), and the rule becomes \\(H(X,Y) = H(X) + H(Y)\\).\nSubadditivity inequality: Since \\(H(Y|X) \\leq H(Y)\\), we always have \\(H(X,Y) \\leq H(X) + H(Y)\\).\nSymmetry: The rule is symmetric: \\(H(X,Y) = H(Y) + H(X|Y)\\).\n\n\n\n\nConsider a transmission system where \\(X\\) is the transmitted message and \\(Y\\) is the received message (potentially noisy).\n\n\\(H(X)\\): uncertainty about the transmitted message\n\\(H(Y|X)\\): uncertainty introduced by noise (equivalent to the entropy of the noise)\n\\(H(X,Y)\\): total uncertainty about the transmission-reception pair\n\nThe chain rule tells us that the total uncertainty is the sum of the uncertainty about transmission and the uncertainty due to noise.",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html#complete-illustrative-example",
+    "href": "dsp23.html#complete-illustrative-example",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "Consider two binary variables \\(X\\) and \\(Y\\) with joint distribution:\n\n\n\n\\(X\\)  \\(Y\\)\n0\n1\n\\(p(x)\\)\n\n\n\n\n0\n0.3\n0.2\n0.5\n\n\n1\n0.1\n0.4\n0.5\n\n\n\\(p(y)\\)\n0.4\n0.6\n1.0\n\n\n\n\nCompute \\(H(X)\\): \\[\nH(X) = -[0.5 \\log_2 0.5 + 0.5 \\log_2 0.5] = 1 \\text{ bit}\n\\]\nCompute \\(H(Y)\\): \\[\nH(Y) = -[0.4 \\log_2 0.4 + 0.6 \\log_2 0.6] \\approx 0.971 \\text{ bits}\n\\]\nCompute \\(H(X,Y)\\): \\[\nH(X,Y) = -[0.3 \\log_2 0.3 + 0.2 \\log_2 0.2 + 0.1 \\log_2 0.1 + 0.4 \\log_2 0.4] \\approx 1.846 \\text{ bits}\n\\]\nCompute \\(H(Y|X)\\):\n\nFor \\(X=0\\): \\(p(Y|0) = [0.3/0.5 = 0.6, 0.2/0.5 = 0.4]\\), \\(H(Y|X=0) = -[0.6 \\log_2 0.6 + 0.4 \\log_2 0.4] \\approx 0.971\\)\nFor \\(X=1\\): \\(p(Y|1) = [0.1/0.5 = 0.2, 0.4/0.5 = 0.8]\\), \\(H(Y|X=1) = -[0.2 \\log_2 0.2 + 0.8 \\log_2 0.8] \\approx 0.722\\)\n\\(H(Y|X) = 0.5 \\times 0.971 + 0.5 \\times 0.722 \\approx 0.8465\\) bits\n\nVerify chain rule: \\[\nH(X,Y) = H(X) + H(Y|X) \\approx 1 + 0.8465 = 1.8465 \\text{ bits}\n\\] This matches our direct calculation (within rounding).",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp23.html#summary-and-synthesis",
+    "href": "dsp23.html#summary-and-synthesis",
+    "title": "Conditional Entropy",
+    "section": "",
+    "text": "Concept\nDefinition\nInterpretation\nRelation\n\n\n\n\nJoint entropy \\(H(X,Y)\\)\n\\(-\\sum_{x,y} p(x,y) \\log_2 p(x,y)\\)\nTotal uncertainty about the pair \\((X,Y)\\)\n-\n\n\nConditional entropy \\(H(Y|X)\\)\n\\(-\\sum_{x,y} p(x,y) \\log_2 p(y|x)\\)\nRemaining uncertainty about \\(Y\\) after observing \\(X\\)\n\\(H(Y|X) \\leq H(Y)\\)\n\n\nChain rule\n\\(H(X,Y) = H(X) + H(Y|X)\\)\nDecomposition of total uncertainty\nExtends to N variables\n\n\n\n\n\n\nJoint entropy measures the combined uncertainty of multiple variables.\nConditional entropy quantifies the information still hidden in one variable when another is known.\nChain rule is a powerful tool for decomposing joint entropy into a sum of conditional entropies.\nThese concepts are fundamental in information theory, with applications in compression, data transmission, machine learning (information gain, decision trees), and many other fields.\n\nUnderstanding these notions allows analyzing dependencies between variables and optimizing information processing systems.",
+    "crumbs": [
+      "Part II",
+      "Conditional Entropy"
+    ]
+  },
+  {
     "objectID": "dsp21.html",
     "href": "dsp21.html",
     "title": "Chain Rules",
@@ -2254,5 +2738,467 @@
     "title": "Intuition",
     "section": "",
     "text": "K-means is like a Swiss Army knife for clustering: simple, fast, useful in many situations. But like any simple tool, you need to know its limitations. The key is to always: 1. Prepare your data (clean, standardize) 2. Choose K intelligently (elbow method, silhouette) 3. Initialize properly (k-means++) 4. Validate the results (visualization, scores)\nIn summary: K-means is your first tool for exploring the structure of unlabeled data. Not the most sophisticated, but often the most practical to start with."
+  },
+  {
+    "objectID": "dsp22.html",
+    "href": "dsp22.html",
+    "title": "Entropy",
+    "section": "",
+    "text": "Give the definition of entropy for discrete random variables.\nExplain the main properties of entropy.\nExplain the entropy of binary random variables.\n\n\n\nEntropy is a fundamental measure in information theory that quantifies the uncertainty or lack of information associated with a discrete random variable.\n\n\nFor a discrete random variable \\(X\\) taking values in an alphabet \\(\\mathcal{X}\\) with a probability mass function (pmf) \\(p_X(x) = \\operatorname{Pr}(X = x)\\), the entropy \\(H(X)\\) is defined as:\n\\[\nH(X) = -\\sum_{x \\in \\mathcal{X}} p_X(x) \\log_2 p_X(x)\n\\]\nUnit: The logarithm is generally in base 2, giving the unit in bits. In base \\(e\\), the unit is nats.\n\n\n\n\nHigh entropy = high uncertainty, “spread out” distribution\nLow entropy = low uncertainty, “concentrated” distribution\nZero entropy = no uncertainty (deterministic variable)\n\nEntropy represents the minimum average number of bits required to encode the outcomes of \\(X\\).\n\n\n\n\n\n\n\n\\[\nH(X) \\geq 0\n\\]\n\nEquality \\(H(X) = 0\\) occurs if and only if \\(X\\) is deterministic (one outcome has probability 1, others 0)\nThis means there is no uncertainty about \\(X\\)\n\n\n\n\nFor an alphabet of size \\(|\\mathcal{X}| = M\\), entropy is maximized when the distribution is uniform:\n\\[\nH(X) \\leq \\log_2 M\n\\]\n\nEquality \\(H(X) = \\log_2 M\\) occurs if and only if \\(p_X(x) = \\frac{1}{M}\\) for all \\(x \\in \\mathcal{X}\\)\nIn this case, uncertainty is maximal: every outcome is equally likely\n\n\n\n\nEntropy is a concave function of the probability distribution \\(p_X(x)\\).\nThis means that for two distributions \\(p\\) and \\(q\\) and for \\(\\lambda \\in [0,1]\\):\n\\[\nH(\\lambda p + (1-\\lambda)q) \\geq \\lambda H(p) + (1-\\lambda) H(q)\n\\]\nInterpretation: Mixing two distributions increases uncertainty (or preserves it).\n\n\n\nIf \\(X\\) and \\(Y\\) are independent, then:\n\\[\nH(X, Y) = H(X) + H(Y)\n\\]\nMore generally, for \\(N\\) i.i.d. (independent and identically distributed) variables:\n\\[\nH(X_1, X_2, \\dots, X_N) = N \\cdot H(X)\n\\]\n\n\n\nThe entropy of a pair of variables satisfies:\n\\[\nH(X, Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)\n\\]\nWhere \\(H(Y|X)\\) is the conditional entropy, measuring the uncertainty of \\(Y\\) given \\(X\\).\n\n\n\n\\[\nH(Y|X) \\leq H(Y)\n\\]\n\nEquality holds if and only if \\(X\\) and \\(Y\\) are independent\nThis means that knowing a variable (even partially) can only reduce the uncertainty about the other\n\n\n\n\nEntropy is invariant under relabeling of symbols. Only the probabilities matter, not the values themselves.\n\n\n\n\n\n\n\nFor a binary random variable \\(X \\in \\{0, 1\\}\\) with:\n\n\\(\\operatorname{Pr}(X = 1) = p\\)\n\\(\\operatorname{Pr}(X = 0) = 1-p\\)\n\nThe binary entropy, denoted \\(H_b(p)\\) or simply \\(H(p)\\), is defined as:\n\\[\nH_b(p) = -p \\log_2 p - (1-p) \\log_2 (1-p)\n\\]\nBy convention, we set \\(0 \\log_2 0 = 0\\) (continuous limit).\n\n\n\n\n\n\\[\nH_b(p) = H_b(1-p)\n\\]\nThe function is symmetric around \\(p = 0.5\\).\n\n\n\n\n\\(H_b(0) = 0\\): if \\(p=0\\) or \\(p=1\\), the variable is deterministic\n\\(H_b(0.5) = 1\\): maximum, uniform distribution over 2 symbols\n\n\n\n\nThe function \\(H_b(p)\\) has a characteristic “bell” shape:\n\nIncreasing on \\([0, 0.5]\\)\nDecreasing on \\([0.5, 1]\\)\nMaximum of 1 bit at \\(p = 0.5\\)\n\n\n\n\n\n\ngraph TD\n    A[Binary Entropy Function] --&gt; B[Shape: symmetric bell]\n    A --&gt; C[Maximum: H(0.5) = 1 bit]\n    A --&gt; D[Zeros: H(0) = H(1) = 0]\n    B --&gt; E[Increasing on [0, 0.5]]\n    B --&gt; F[Decreasing on [0.5, 1]]\n\n\n\n\n\n\n\n\n\n\n\nBalanced Binary Source (\\(p = 0.5\\)):\n\nMaximum uncertainty: 1 bit per symbol\nExample: fair coin\n\nUnbalanced Binary Source (\\(p \\neq 0.5\\)):\n\nReduced uncertainty\nExample: asymmetric noise in transmission\n\nAlmost Deterministic Source (\\(p \\approx 0\\) or \\(p \\approx 1\\)):\n\nVery low entropy\nHigh redundancy, good compressibility\n\n\n\n\n\n\n\n\nProbability \\(p\\)\nEntropy \\(H_b(p)\\)\nInterpretation\n\n\n\n\n0.0 or 1.0\n0.000 bits\nNo uncertainty\n\n\n0.1 or 0.9\n0.469 bits\nLow uncertainty\n\n\n0.2 or 0.8\n0.722 bits\nModerate uncertainty\n\n\n0.3 or 0.7\n0.881 bits\nHigh uncertainty\n\n\n0.4 or 0.6\n0.971 bits\nVery high uncertainty\n\n\n0.5\n1.000 bits\nMaximum uncertainty\n\n\n\n\n\n\n\nData Compression: Entropy gives the lossless compression limit\nChannel Coding: Determines the capacity of binary channels\nMachine Learning: Used in decision trees (information gain)\nCryptography: Measure of randomness in key generation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConcept\nDescription\nFormula/Example\n\n\n\n\nDefinition\nMeasure of uncertainty of a random variable\n\\(H(X) = -\\sum p(x) \\log_2 p(x)\\)\n\n\nNon-negativity\nAlways non-negative\n\\(H(X) \\geq 0\\)\n\n\nMaximum\nAchieved for uniform distribution\n\\(H(X) \\leq \\log_2 M\\)\n\n\nConcavity\nMixing distributions increases entropy\n\\(H(\\lambda p + (1-\\lambda)q) \\geq \\lambda H(p) + (1-\\lambda)H(q)\\)\n\n\nBinary Entropy\nSpecial case for two outcomes\n\\(H_b(p) = -p\\log_2 p - (1-p)\\log_2(1-p)\\)\n\n\nBinary Symmetry\nSame uncertainty for \\(p\\) and \\(1-p\\)\n\\(H_b(p) = H_b(1-p)\\)\n\n\n\nEntropy is thus a central concept that quantifies information and uncertainty, with elegant mathematical properties and broad practical applications in data science, from communications to machine learning.",
+    "crumbs": [
+      "Part II",
+      "Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp22.html#question",
+    "href": "dsp22.html#question",
+    "title": "Entropy",
+    "section": "",
+    "text": "Give the definition of entropy for discrete random variables.\nExplain the main properties of entropy.\nExplain the entropy of binary random variables.",
+    "crumbs": [
+      "Part II",
+      "Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp22.html#definition-of-entropy-for-discrete-random-variables",
+    "href": "dsp22.html#definition-of-entropy-for-discrete-random-variables",
+    "title": "Entropy",
+    "section": "",
+    "text": "Entropy is a fundamental measure in information theory that quantifies the uncertainty or lack of information associated with a discrete random variable.\n\n\nFor a discrete random variable \\(X\\) taking values in an alphabet \\(\\mathcal{X}\\) with a probability mass function (pmf) \\(p_X(x) = \\operatorname{Pr}(X = x)\\), the entropy \\(H(X)\\) is defined as:\n\\[\nH(X) = -\\sum_{x \\in \\mathcal{X}} p_X(x) \\log_2 p_X(x)\n\\]\nUnit: The logarithm is generally in base 2, giving the unit in bits. In base \\(e\\), the unit is nats.\n\n\n\n\nHigh entropy = high uncertainty, “spread out” distribution\nLow entropy = low uncertainty, “concentrated” distribution\nZero entropy = no uncertainty (deterministic variable)\n\nEntropy represents the minimum average number of bits required to encode the outcomes of \\(X\\).",
+    "crumbs": [
+      "Part II",
+      "Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp22.html#main-properties-of-entropy",
+    "href": "dsp22.html#main-properties-of-entropy",
+    "title": "Entropy",
+    "section": "",
+    "text": "\\[\nH(X) \\geq 0\n\\]\n\nEquality \\(H(X) = 0\\) occurs if and only if \\(X\\) is deterministic (one outcome has probability 1, others 0)\nThis means there is no uncertainty about \\(X\\)\n\n\n\n\nFor an alphabet of size \\(|\\mathcal{X}| = M\\), entropy is maximized when the distribution is uniform:\n\\[\nH(X) \\leq \\log_2 M\n\\]\n\nEquality \\(H(X) = \\log_2 M\\) occurs if and only if \\(p_X(x) = \\frac{1}{M}\\) for all \\(x \\in \\mathcal{X}\\)\nIn this case, uncertainty is maximal: every outcome is equally likely\n\n\n\n\nEntropy is a concave function of the probability distribution \\(p_X(x)\\).\nThis means that for two distributions \\(p\\) and \\(q\\) and for \\(\\lambda \\in [0,1]\\):\n\\[\nH(\\lambda p + (1-\\lambda)q) \\geq \\lambda H(p) + (1-\\lambda) H(q)\n\\]\nInterpretation: Mixing two distributions increases uncertainty (or preserves it).\n\n\n\nIf \\(X\\) and \\(Y\\) are independent, then:\n\\[\nH(X, Y) = H(X) + H(Y)\n\\]\nMore generally, for \\(N\\) i.i.d. (independent and identically distributed) variables:\n\\[\nH(X_1, X_2, \\dots, X_N) = N \\cdot H(X)\n\\]\n\n\n\nThe entropy of a pair of variables satisfies:\n\\[\nH(X, Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)\n\\]\nWhere \\(H(Y|X)\\) is the conditional entropy, measuring the uncertainty of \\(Y\\) given \\(X\\).\n\n\n\n\\[\nH(Y|X) \\leq H(Y)\n\\]\n\nEquality holds if and only if \\(X\\) and \\(Y\\) are independent\nThis means that knowing a variable (even partially) can only reduce the uncertainty about the other\n\n\n\n\nEntropy is invariant under relabeling of symbols. Only the probabilities matter, not the values themselves.",
+    "crumbs": [
+      "Part II",
+      "Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp22.html#entropy-of-binary-random-variables",
+    "href": "dsp22.html#entropy-of-binary-random-variables",
+    "title": "Entropy",
+    "section": "",
+    "text": "For a binary random variable \\(X \\in \\{0, 1\\}\\) with:\n\n\\(\\operatorname{Pr}(X = 1) = p\\)\n\\(\\operatorname{Pr}(X = 0) = 1-p\\)\n\nThe binary entropy, denoted \\(H_b(p)\\) or simply \\(H(p)\\), is defined as:\n\\[\nH_b(p) = -p \\log_2 p - (1-p) \\log_2 (1-p)\n\\]\nBy convention, we set \\(0 \\log_2 0 = 0\\) (continuous limit).\n\n\n\n\n\n\\[\nH_b(p) = H_b(1-p)\n\\]\nThe function is symmetric around \\(p = 0.5\\).\n\n\n\n\n\\(H_b(0) = 0\\): if \\(p=0\\) or \\(p=1\\), the variable is deterministic\n\\(H_b(0.5) = 1\\): maximum, uniform distribution over 2 symbols\n\n\n\n\nThe function \\(H_b(p)\\) has a characteristic “bell” shape:\n\nIncreasing on \\([0, 0.5]\\)\nDecreasing on \\([0.5, 1]\\)\nMaximum of 1 bit at \\(p = 0.5\\)\n\n\n\n\n\n\ngraph TD\n    A[Binary Entropy Function] --&gt; B[Shape: symmetric bell]\n    A --&gt; C[Maximum: H(0.5) = 1 bit]\n    A --&gt; D[Zeros: H(0) = H(1) = 0]\n    B --&gt; E[Increasing on [0, 0.5]]\n    B --&gt; F[Decreasing on [0.5, 1]]\n\n\n\n\n\n\n\n\n\n\n\nBalanced Binary Source (\\(p = 0.5\\)):\n\nMaximum uncertainty: 1 bit per symbol\nExample: fair coin\n\nUnbalanced Binary Source (\\(p \\neq 0.5\\)):\n\nReduced uncertainty\nExample: asymmetric noise in transmission\n\nAlmost Deterministic Source (\\(p \\approx 0\\) or \\(p \\approx 1\\)):\n\nVery low entropy\nHigh redundancy, good compressibility\n\n\n\n\n\n\n\n\nProbability \\(p\\)\nEntropy \\(H_b(p)\\)\nInterpretation\n\n\n\n\n0.0 or 1.0\n0.000 bits\nNo uncertainty\n\n\n0.1 or 0.9\n0.469 bits\nLow uncertainty\n\n\n0.2 or 0.8\n0.722 bits\nModerate uncertainty\n\n\n0.3 or 0.7\n0.881 bits\nHigh uncertainty\n\n\n0.4 or 0.6\n0.971 bits\nVery high uncertainty\n\n\n0.5\n1.000 bits\nMaximum uncertainty\n\n\n\n\n\n\n\nData Compression: Entropy gives the lossless compression limit\nChannel Coding: Determines the capacity of binary channels\nMachine Learning: Used in decision trees (information gain)\nCryptography: Measure of randomness in key generation",
+    "crumbs": [
+      "Part II",
+      "Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp22.html#summary",
+    "href": "dsp22.html#summary",
+    "title": "Entropy",
+    "section": "",
+    "text": "Concept\nDescription\nFormula/Example\n\n\n\n\nDefinition\nMeasure of uncertainty of a random variable\n\\(H(X) = -\\sum p(x) \\log_2 p(x)\\)\n\n\nNon-negativity\nAlways non-negative\n\\(H(X) \\geq 0\\)\n\n\nMaximum\nAchieved for uniform distribution\n\\(H(X) \\leq \\log_2 M\\)\n\n\nConcavity\nMixing distributions increases entropy\n\\(H(\\lambda p + (1-\\lambda)q) \\geq \\lambda H(p) + (1-\\lambda)H(q)\\)\n\n\nBinary Entropy\nSpecial case for two outcomes\n\\(H_b(p) = -p\\log_2 p - (1-p)\\log_2(1-p)\\)\n\n\nBinary Symmetry\nSame uncertainty for \\(p\\) and \\(1-p\\)\n\\(H_b(p) = H_b(1-p)\\)\n\n\n\nEntropy is thus a central concept that quantifies information and uncertainty, with elegant mathematical properties and broad practical applications in data science, from communications to machine learning.",
+    "crumbs": [
+      "Part II",
+      "Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp24.html",
+    "href": "dsp24.html",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "Explain the properties of entropy using examples of conditional entropy H(X|Y) and joint entropy H(X,Y).\nUse Venn diagrams.\n\n\n\nBefore discussing properties, let’s recall the essential definitions illustrated by the following Venn diagram:\n\nLegend:\n\nH(X): Entropy of X (total uncertainty about X)\nH(Y): Entropy of Y (total uncertainty about Y)\nH(X,Y): Joint entropy (total uncertainty of the pair (X,Y))\nH(X|Y): Conditional entropy (remaining uncertainty about X when Y is known)\nH(Y|X): Conditional entropy (remaining uncertainty about Y when X is known)\nI(X;Y): Mutual information (information shared between X and Y)\n\n\n\n\n\n\nProperty: \\(H(X|Y) \\leq H(X)\\)\nIntuitive explanation: Knowing Y reduces (or at worst doesn’t change) the uncertainty about X.\nIllustration: In the diagram, \\(H(X|Y)\\) is the part of circle H(X) that doesn’t intersect H(Y). This region is always smaller than or equal to the entire H(X).\nExtreme cases:\n\nIf X and Y are independent: \\(H(X|Y) = H(X)\\) (circles are disjoint)\nIf Y completely determines X: \\(H(X|Y) = 0\\) (circles overlap completely)\n\n\n\n\nProperty: \\(H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)\\)\nIntuitive explanation: The total uncertainty about the pair (X,Y) equals the uncertainty about X plus the remaining uncertainty about Y once X is known (or vice versa).\nVisual formula:\n\n\\(H(X,Y)\\) = entire area of both circles combined\n\\(H(X) + H(Y|X)\\) = complete H(X) circle + part of H(Y) not covered by X\n\n\n\n\nProperty: \\(H(X,Y) \\leq H(X) + H(Y)\\)\nIntuitive explanation: The total uncertainty about (X,Y) cannot exceed the sum of individual uncertainties, unless X and Y are independent (in which case it’s equal).\nIllustration: The area of unification of two circles is always ≤ the sum of individual areas. Equality (\\(H(X,Y) = H(X) + H(Y)\\)) occurs when circles are disjoint (X and Y independent).\n\n\n\nProperty: \\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\)\nIntuitive explanation: Joint entropy is the sum of individual entropies minus what they share in common (to avoid double-counting shared information).\nSet theory analogy: Like in set theory: |A ∪ B| = |A| + |B| - |A ∩ B|\n\n\n\nProperty: \\(H(X|Y) \\geq H(X|Y,Z)\\)\nIntuitive explanation: The more information we have (by conditioning on more variables), the smaller the remaining uncertainty becomes.\nExtended illustration: If we add a third circle Z to the diagram, the region corresponding to \\(H(X|Y,Z)\\) is smaller than \\(H(X|Y)\\).\n\n\n\n\nConsider two binary variables X and Y with the following joint distribution:\n\n\n\nX\nY\nP(X,Y)\n\n\n\n\n0\n0\n0.4\n\n\n0\n1\n0.1\n\n\n1\n0\n0.2\n\n\n1\n1\n0.3\n\n\n\nLet’s calculate the values:\n\n\\(H(X) ≈ 0.971\\) bits\n\\(H(Y) ≈ 0.881\\) bits\n\\(H(X,Y) ≈ 1.846\\) bits\n\\(H(X|Y) = H(X,Y) - H(Y) ≈ 0.965\\) bits\n\\(I(X;Y) = H(X) - H(X|Y) ≈ 0.006\\) bits (weak dependence)\n\nObservations from this example:\n\n\\(H(X|Y) = 0.965 &lt; H(X) = 0.971\\): conditioning slightly reduces entropy\n\\(H(X,Y) = 1.846 &lt; H(X) + H(Y) = 1.852\\): slight subadditivity\n\\(I(X;Y)\\) is very small: variables are almost independent\n\n\n\n\n\n\n\n\\(H(X|Y)\\) represents the part of X that cannot be predicted from Y\nIn compression with side information, we only code \\(H(X|Y)\\) instead of \\(H(X)\\)\nExample: stereo compression where one channel can be partially predicted from the other\n\n\n\n\n\nIf \\(H(X|Y)\\) is small, then Y is a good predictor of X\nThe reduction \\(H(X) - H(X|Y) = I(X;Y)\\) measures the information that Y provides about X\nIn feature selection: we choose Y that minimizes \\(H(X|Y)\\)\n\n\n\n\n\nIn a communication system, \\(H(X|Y)\\) represents the remaining uncertainty after reception\nIf the channel is noisy, \\(H(X|Y) &gt; 0\\): uncertainty remains\nA perfect channel would have \\(H(X|Y) = 0\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProperty\nFormula\nVisual Interpretation\nEquality Condition\n\n\n\n\nConditioning reduces\n\\(H(X\\|Y) \\leq H(X)\\)\nPart of H(X) outside intersection\nX and Y independent\n\n\nJoint entropy additive\n\\(H(X,Y) = H(X) + H(Y\\|X)\\)\nUnion = first circle + exclusive part of second\nAlways true\n\n\nSubadditivity\n\\(H(X,Y) \\leq H(X) + H(Y)\\)\nUnion ≤ sum of circles\nX and Y independent\n\n\nMutual information\n\\(I(X;Y) = H(X) - H(X\\|Y)\\)\nIntersection of circles\nX and Y independent ⇒ I=0\n\n\n\n\n\n\nThe properties of conditional and joint entropy can be summarized by a simple geometric intuition:\n\nH(X) is a circle representing uncertainty about X\nH(Y) is another circle\nH(X|Y) is what remains of circle X when we remove the intersection with Y\nH(X,Y) is the union of both circles\nI(X;Y) is the overlapping area\n\nThis visualization explains why:\n\nKnowing Y can only help reduce uncertainty about X (never increase it)\nUncertainty about (X,Y) is at most the sum of individual uncertainties\nShared information “saves” bits in joint coding\n\nThese fundamental principles form the basis of data compression, machine learning, and digital communications.",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp24.html#question",
+    "href": "dsp24.html#question",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "Explain the properties of entropy using examples of conditional entropy H(X|Y) and joint entropy H(X,Y).\nUse Venn diagrams.",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp24.html#introduction-to-basic-concepts",
+    "href": "dsp24.html#introduction-to-basic-concepts",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "Before discussing properties, let’s recall the essential definitions illustrated by the following Venn diagram:\n\nLegend:\n\nH(X): Entropy of X (total uncertainty about X)\nH(Y): Entropy of Y (total uncertainty about Y)\nH(X,Y): Joint entropy (total uncertainty of the pair (X,Y))\nH(X|Y): Conditional entropy (remaining uncertainty about X when Y is known)\nH(Y|X): Conditional entropy (remaining uncertainty about Y when X is known)\nI(X;Y): Mutual information (information shared between X and Y)",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp24.html#fundamental-properties-illustrated",
+    "href": "dsp24.html#fundamental-properties-illustrated",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "Property: \\(H(X|Y) \\leq H(X)\\)\nIntuitive explanation: Knowing Y reduces (or at worst doesn’t change) the uncertainty about X.\nIllustration: In the diagram, \\(H(X|Y)\\) is the part of circle H(X) that doesn’t intersect H(Y). This region is always smaller than or equal to the entire H(X).\nExtreme cases:\n\nIf X and Y are independent: \\(H(X|Y) = H(X)\\) (circles are disjoint)\nIf Y completely determines X: \\(H(X|Y) = 0\\) (circles overlap completely)\n\n\n\n\nProperty: \\(H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)\\)\nIntuitive explanation: The total uncertainty about the pair (X,Y) equals the uncertainty about X plus the remaining uncertainty about Y once X is known (or vice versa).\nVisual formula:\n\n\\(H(X,Y)\\) = entire area of both circles combined\n\\(H(X) + H(Y|X)\\) = complete H(X) circle + part of H(Y) not covered by X\n\n\n\n\nProperty: \\(H(X,Y) \\leq H(X) + H(Y)\\)\nIntuitive explanation: The total uncertainty about (X,Y) cannot exceed the sum of individual uncertainties, unless X and Y are independent (in which case it’s equal).\nIllustration: The area of unification of two circles is always ≤ the sum of individual areas. Equality (\\(H(X,Y) = H(X) + H(Y)\\)) occurs when circles are disjoint (X and Y independent).\n\n\n\nProperty: \\(H(X,Y) = H(X) + H(Y) - I(X;Y)\\)\nIntuitive explanation: Joint entropy is the sum of individual entropies minus what they share in common (to avoid double-counting shared information).\nSet theory analogy: Like in set theory: |A ∪ B| = |A| + |B| - |A ∩ B|\n\n\n\nProperty: \\(H(X|Y) \\geq H(X|Y,Z)\\)\nIntuitive explanation: The more information we have (by conditioning on more variables), the smaller the remaining uncertainty becomes.\nExtended illustration: If we add a third circle Z to the diagram, the region corresponding to \\(H(X|Y,Z)\\) is smaller than \\(H(X|Y)\\).",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp24.html#concrete-example-with-quantitative-diagram",
+    "href": "dsp24.html#concrete-example-with-quantitative-diagram",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "Consider two binary variables X and Y with the following joint distribution:\n\n\n\nX\nY\nP(X,Y)\n\n\n\n\n0\n0\n0.4\n\n\n0\n1\n0.1\n\n\n1\n0\n0.2\n\n\n1\n1\n0.3\n\n\n\nLet’s calculate the values:\n\n\\(H(X) ≈ 0.971\\) bits\n\\(H(Y) ≈ 0.881\\) bits\n\\(H(X,Y) ≈ 1.846\\) bits\n\\(H(X|Y) = H(X,Y) - H(Y) ≈ 0.965\\) bits\n\\(I(X;Y) = H(X) - H(X|Y) ≈ 0.006\\) bits (weak dependence)\n\nObservations from this example:\n\n\\(H(X|Y) = 0.965 &lt; H(X) = 0.971\\): conditioning slightly reduces entropy\n\\(H(X,Y) = 1.846 &lt; H(X) + H(Y) = 1.852\\): slight subadditivity\n\\(I(X;Y)\\) is very small: variables are almost independent",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp24.html#practical-applications-in-data-science",
+    "href": "dsp24.html#practical-applications-in-data-science",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "\\(H(X|Y)\\) represents the part of X that cannot be predicted from Y\nIn compression with side information, we only code \\(H(X|Y)\\) instead of \\(H(X)\\)\nExample: stereo compression where one channel can be partially predicted from the other\n\n\n\n\n\nIf \\(H(X|Y)\\) is small, then Y is a good predictor of X\nThe reduction \\(H(X) - H(X|Y) = I(X;Y)\\) measures the information that Y provides about X\nIn feature selection: we choose Y that minimizes \\(H(X|Y)\\)\n\n\n\n\n\nIn a communication system, \\(H(X|Y)\\) represents the remaining uncertainty after reception\nIf the channel is noisy, \\(H(X|Y) &gt; 0\\): uncertainty remains\nA perfect channel would have \\(H(X|Y) = 0\\)",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp24.html#summary-of-key-properties",
+    "href": "dsp24.html#summary-of-key-properties",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "Property\nFormula\nVisual Interpretation\nEquality Condition\n\n\n\n\nConditioning reduces\n\\(H(X\\|Y) \\leq H(X)\\)\nPart of H(X) outside intersection\nX and Y independent\n\n\nJoint entropy additive\n\\(H(X,Y) = H(X) + H(Y\\|X)\\)\nUnion = first circle + exclusive part of second\nAlways true\n\n\nSubadditivity\n\\(H(X,Y) \\leq H(X) + H(Y)\\)\nUnion ≤ sum of circles\nX and Y independent\n\n\nMutual information\n\\(I(X;Y) = H(X) - H(X\\|Y)\\)\nIntersection of circles\nX and Y independent ⇒ I=0",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp24.html#pedagogical-conclusion",
+    "href": "dsp24.html#pedagogical-conclusion",
+    "title": "Entropy and Venn Diagrams",
+    "section": "",
+    "text": "The properties of conditional and joint entropy can be summarized by a simple geometric intuition:\n\nH(X) is a circle representing uncertainty about X\nH(Y) is another circle\nH(X|Y) is what remains of circle X when we remove the intersection with Y\nH(X,Y) is the union of both circles\nI(X;Y) is the overlapping area\n\nThis visualization explains why:\n\nKnowing Y can only help reduce uncertainty about X (never increase it)\nUncertainty about (X,Y) is at most the sum of individual uncertainties\nShared information “saves” bits in joint coding\n\nThese fundamental principles form the basis of data compression, machine learning, and digital communications.",
+    "crumbs": [
+      "Part II",
+      "Entropy and Venn Diagrams"
+    ]
+  },
+  {
+    "objectID": "dsp26.html",
+    "href": "dsp26.html",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Explain cross entropy and give some examples of its use.\nShow the link between cross entropy and relative entropy.\n\n\n\nCross-entropy is a fundamental measure in information theory and machine learning that quantifies the difference between two probability distributions. It’s particularly useful for evaluating the performance of prediction models.\n\n\nFor two discrete distributions \\(p(x)\\) and \\(q(x)\\) defined on the same space \\(\\mathcal{X}\\), cross-entropy is defined as:\n\\[ H(p, q) = -\\sum_{x \\in \\mathcal{X}} p(x) \\log_2 q(x) = \\mathbb{E}_{p(x)}[-\\log_2 q(x)] \\]\nFor continuous distributions with densities \\(f(x)\\) and \\(g(x)\\):\n\\[ H(f, g) = -\\int f(x) \\log_2 g(x)  dx \\]\n\n\n\n\nCross-entropy measures the average number of bits needed to encode events from distribution \\(p\\) using a code optimized for distribution \\(q\\).\n\n\nImagine you need to send letters to different cities: - \\(p(x)\\): Actual sending frequency (Paris 50%, Lyon 30%, Marseille 20%) - \\(q(x)\\): Code you use (optimized for Paris 40%, Lyon 40%, Marseille 20%) - \\(H(p)\\): Optimal code length if you knew the true frequency - \\(H(p, q)\\): Actual length with your imperfect code\ngraph TD\n    A[True distribution p(x)] --&gt; B{Code designed for q(x)};\n    B --&gt; C[Number of bits used: H(p,q)];\n    C --&gt; D[= H(p) + D(p∥q)];\n    D --&gt; E[Optimal bits + penalty];\n    \n    F[If q = p] --&gt; G[H(p,q) = H(p)];\n    F --&gt; H[Perfectly adapted code];\n    \n    I[If q ≠ p] --&gt; J[H(p,q) &gt; H(p)];\n    I --&gt; K[Extra cost due to wrong code];\n\n\n\n\n\n\n\\[ H(p, q) \\neq H(q, p) \\quad \\text{in general} \\]\nUnlike a distance, cross-entropy is not symmetric.\n\n\n\n\\[ H(p, q) \\geq H(p) \\]\nEquality \\(H(p, q) = H(p)\\) occurs if and only if \\(p = q\\).\n\n\n\nFor fixed \\(p\\), \\(H(p, q)\\) is convex in \\(q\\), which facilitates optimization.\n\n\n\n\n\n\n\\[ H(p, q) = H(p) + D_{\\mathrm{KL}}(p \\parallel q) \\]\nwhere: - \\(H(p)\\) is the entropy of distribution \\(p\\) - \\(D_{\\mathrm{KL}}(p \\parallel q)\\) is the Kullback-Leibler divergence (relative entropy)\n\n\n\nThis relationship shows that cross-entropy decomposes into two parts:\n\n\\(H(p)\\): The intrinsic uncertainty of the true distribution\n\nTheoretical minimum that cannot be compressed\nDepends only on \\(p\\), not on our model\n\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): The penalty due to the wrong model\n\nMeasures how much \\(q\\) differs from \\(p\\)\nReducible by improving our model\n\n\ngraph LR\n    A[Cross Entropy H(p,q)] --&gt; B[Equivalent to];\n    B --&gt; C[H(p) + D(p∥q)];\n    \n    D[Objective: minimize H(p,q)] --&gt; E{Since H(p) is constant};\n    E --&gt; F[Minimize D(p∥q)];\n    F --&gt; G[Find q ≈ p];\n    \n    H[In practice] --&gt; I[We minimize H(p,q)];\n    I --&gt; J[Because p is unknown];\n    J --&gt; K[We estimate p from data];\n\n\n\n\n\n\nScenario: Image classification with 3 classes (cat, dog, bird)\nTraining data: - Image 1: true class = “cat” → \\(p = [1, 0, 0]\\) - Image 2: true class = “dog” → \\(p = [0, 1, 0]\\)\nModel predictions: - For image 1: \\(q = [0.7, 0.2, 0.1]\\) - For image 2: \\(q = [0.1, 0.6, 0.3]\\)\nCross-entropy calculation: For image 1: \\[ H(p, q) = -[1 \\times \\log_2(0.7) + 0 \\times \\log_2(0.2) + 0 \\times \\log_2(0.1)] = -\\log_2(0.7) \\approx 0.514 \\text{ bits} \\]\nFor image 2: \\[ H(p, q) = -[0 \\times \\log_2(0.1) + 1 \\times \\log_2(0.6) + 0 \\times \\log_2(0.3)] = -\\log_2(0.6) \\approx 0.737 \\text{ bits} \\]\nAverage loss: Average over all images in the training set.\n\n\n\nScenario: Compression of English text\nReal distribution (\\(p\\)): - ‘e’ : 12.7% - ‘t’ : 9.1% - ‘a’ : 8.2% - … (other letters)\nModel used (\\(q\\)): - Uniform model: each letter = 1/26 ≈ 3.85% - Shakespeare-based model: specific distribution\nEfficiency calculation: With uniform model: \\[ H(p, q) = -\\sum p(x) \\log_2(1/26) = \\log_2(26) \\approx 4.7 \\text{ bits/letter} \\]\nWith a good linguistic model (\\(q\\) close to \\(p\\)): \\[ H(p, q) \\approx H(p) \\approx 4.1 \\text{ bits/letter} \\]\nGain: 0.6 bits per letter, about 18% savings.\n\n\n\nScenario: GPT model evaluated on sentences\nMethod: Perplexity = \\(2^{H(p,q)}\\)\nInterpretation: - Low perplexity → model predicts next words well - High perplexity → model is uncertain\ngraph TD\n    A[Test text] --&gt; B[Compute H(p,q)];\n    B --&gt; C[Perplexity = 2^H(p,q)];\n    C --&gt; D{Quality measure};\n    D --&gt; E[Low perplexity: good model];\n    D --&gt; F[High perplexity: poor model];\n    \n    G[Example] --&gt; H[GPT-3 model];\n    H --&gt; I[Perplexity ~20-30];\n    I --&gt; J[Very performant];\n    \n    K[Random model] --&gt; L[Perplexity = vocabulary size];\n    L --&gt; M[Very poor];\n\n\n\n\n\n\n\n\n\n\n\n\n\nConcept\nFormula\nInterpretation\nKey Property\n\n\n\n\nEntropy \\(H(p)\\)\n\\(-\\sum p \\log p\\)\nIntrinsic uncertainty\nTheoretical minimum\n\n\nCross-entropy \\(H(p,q)\\)\n\\(-\\sum p \\log q\\)\nCost of wrong model\nAlways ≥ \\(H(p)\\)\n\n\nKL Divergence \\(D(p\\|q)\\)\n\\(\\sum p \\log(p/q)\\)\nWrong model penalty\nDifference measure\n\n\n\n\n\n\n\n\nimport torch\nimport torch.nn as nn\n\n# Data: 3 samples, 5 classes\npredictions = torch.tensor([[0.1, 0.2, 0.6, 0.1, 0.0],\n                            [0.8, 0.1, 0.05, 0.05, 0.0],\n                            [0.05, 0.1, 0.1, 0.15, 0.6]])\n\ntrue_labels = torch.tensor([2, 0, 4])  # Indices of true classes\n\n# Cross-entropy calculation\nloss_fn = nn.CrossEntropyLoss()\nloss = loss_fn(predictions, true_labels)\nprint(f\"Cross-entropy loss: {loss.item():.4f}\")\n\n\n\n\nModel produces logits (unnormalized)\nSoftmax converts to probabilities \\(q\\)\nComparison with one-hot labels \\(p\\)\nCalculation of \\(H(p, q)\\)\nGradient to adjust weights\n\n\n\n\n\ngraph TD\n    A[True distribution p] --&gt; B[Entropy H(p)];\n    A --&gt; C[Cross-entropy H(p,q)];\n    C --&gt; D[KL Divergence D(p∥q)];\n    \n    B --&gt; E[Minimum value];\n    D --&gt; F[Deviation from optimal];\n    E --&gt; C;\n    F --&gt; C;\n    \n    G[Learning objective] --&gt; H[Minimize H(p,q)];\n    H --&gt; I[Equivalent to minimizing D(p∥q)];\n    I --&gt; J[Since H(p) constant];\n    \n    K[Optimal result] --&gt; L[q = p];\n    L --&gt; M[H(p,q) = H(p)];\n    L --&gt; N[D(p∥q) = 0];\n\n\n\n\n\nFor \\(p \\in \\{0, 1\\}\\) and \\(q \\in [0, 1]\\):\n\\[ H(p, q) = -[p \\log_2 q + (1-p) \\log_2 (1-q)] \\]\nThis is the logistic loss used in logistic regression.\n\n\n\nIf \\(q\\) is uniform over \\(N\\) classes:\n\\[ H(p, q) = -\\sum p(x) \\log_2(1/N) = \\log_2 N \\]\nAll models are compared to this baseline.\n\n\n\n\n\n\nMinimizing \\(H(p, q)\\) is equivalent to maximizing the likelihood of the data.\nProof: Let \\(p_{\\text{data}}\\) be the empirical distribution, \\(q_\\theta\\) our model: \\[ \\min_\\theta H(p_{\\text{data}}, q_\\theta) \\equiv \\max_\\theta \\mathbb{E}_{x \\sim p_{\\text{data}}}[\\log q_\\theta(x)] \\]\n\n\n\n\nConvexity: Guarantees global minima (for many models)\nError Sensitivity: Strongly penalizes confidence errors\nProbabilistic Interpretation: Directly related to probabilities\n\n\n\n\n\n\n\nRecognize handwritten digits (0-9).\n\n\n\n\n28×28 pixel images\nLabel: digit from 0 to 9\n\n\n\n\nNeural network with softmax output producing \\(q = [q_0, q_1, ..., q_9]\\).\n\n\n\nFor an image of digit “3” (\\(p = [0,0,0,1,0,0,0,0,0,0]\\)):\n\nIf \\(q = [0,0,0,0.9,0,0,0,0,0.1,0]\\) → \\(H(p,q) = -\\log_2(0.9) ≈ 0.152\\)\nIf \\(q = [0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.1,0.1,0]\\) → \\(H(p,q) = -\\log_2(0.2) ≈ 2.322\\)\n\nThe first prediction is much better.\n\n\n\n\n\n\n\nPreviously popular in regression\nLess suitable for classification\nNo direct link to probabilities\n\n\n\n\n\nWell-behaved Gradients: Avoids learning plateaus\nProbabilistic Interpretation: Outputs are probabilities\nInformation Theory: Solid foundations\n\n\n\n\n\n\n\nDirect calculation \\(\\log(q)\\) can be unstable for \\(q ≈ 0\\).\nSolution: Use log-sum-exp function: \\[ H(p, q) = -\\sum p(x) \\left[ z(x) - \\log\\sum \\exp(z(x')) \\right] \\] where \\(z(x)\\) are logits.\n\n\n\nAdding a regularization term amounts to: \\[ H(p, q) + \\lambda R(\\theta) \\]\nThis prevents overfitting by penalizing complex models.\n\n\n\nWhen some classes are rare:\n\nWeighting: \\(H_w(p, q) = -\\sum w(x) p(x) \\log q(x)\\)\nResampling: Adjust training distribution\n\n\n\n\n\n\n\nImagine a game where you must guess an animal:\n\n\\(p\\): Real animal (e.g., 80% cat, 20% dog)\n\\(q\\): Your guessing strategy\n\n\nEntropy \\(H(p)\\): Optimal number of questions if you knew the true distribution\nCross-entropy \\(H(p,q)\\): Number of questions with your strategy\nKL Divergence \\(D(p\\|q)\\): Extra questions due to your poor strategy\n\n\n\n\n\n“Total cost = base uncertainty + ignorance penalty” \\[ H(p,q) = H(p) + D(p\\|q) \\]\n\n\n\n\n\nCross-entropy is a powerful measure that:\n\nEvaluates Models: Measures how well a model \\(q\\) fits data \\(p\\)\nGuides Learning: Optimizable loss function via gradient\nConnects Theory and Practice: Links information theory and ML\n\nThe fundamental link with relative entropy shows that minimizing cross-entropy amounts to minimizing the gap between our model and reality, while acknowledging that some uncertainty (\\(H(p)\\)) is incompressible.\nThis unified understanding explains why cross-entropy has become the standard loss function for classification problems and many other tasks in artificial intelligence.",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#question",
+    "href": "dsp26.html#question",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Explain cross entropy and give some examples of its use.\nShow the link between cross entropy and relative entropy.",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#introduction-to-cross-entropy",
+    "href": "dsp26.html#introduction-to-cross-entropy",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Cross-entropy is a fundamental measure in information theory and machine learning that quantifies the difference between two probability distributions. It’s particularly useful for evaluating the performance of prediction models.\n\n\nFor two discrete distributions \\(p(x)\\) and \\(q(x)\\) defined on the same space \\(\\mathcal{X}\\), cross-entropy is defined as:\n\\[ H(p, q) = -\\sum_{x \\in \\mathcal{X}} p(x) \\log_2 q(x) = \\mathbb{E}_{p(x)}[-\\log_2 q(x)] \\]\nFor continuous distributions with densities \\(f(x)\\) and \\(g(x)\\):\n\\[ H(f, g) = -\\int f(x) \\log_2 g(x)  dx \\]",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#intuitive-interpretation",
+    "href": "dsp26.html#intuitive-interpretation",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Cross-entropy measures the average number of bits needed to encode events from distribution \\(p\\) using a code optimized for distribution \\(q\\).\n\n\nImagine you need to send letters to different cities: - \\(p(x)\\): Actual sending frequency (Paris 50%, Lyon 30%, Marseille 20%) - \\(q(x)\\): Code you use (optimized for Paris 40%, Lyon 40%, Marseille 20%) - \\(H(p)\\): Optimal code length if you knew the true frequency - \\(H(p, q)\\): Actual length with your imperfect code\ngraph TD\n    A[True distribution p(x)] --&gt; B{Code designed for q(x)};\n    B --&gt; C[Number of bits used: H(p,q)];\n    C --&gt; D[= H(p) + D(p∥q)];\n    D --&gt; E[Optimal bits + penalty];\n    \n    F[If q = p] --&gt; G[H(p,q) = H(p)];\n    F --&gt; H[Perfectly adapted code];\n    \n    I[If q ≠ p] --&gt; J[H(p,q) &gt; H(p)];\n    I --&gt; K[Extra cost due to wrong code];",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#cross-entropy-properties",
+    "href": "dsp26.html#cross-entropy-properties",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "\\[ H(p, q) \\neq H(q, p) \\quad \\text{in general} \\]\nUnlike a distance, cross-entropy is not symmetric.\n\n\n\n\\[ H(p, q) \\geq H(p) \\]\nEquality \\(H(p, q) = H(p)\\) occurs if and only if \\(p = q\\).\n\n\n\nFor fixed \\(p\\), \\(H(p, q)\\) is convex in \\(q\\), which facilitates optimization.",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#fundamental-relationship-with-relative-entropy",
+    "href": "dsp26.html#fundamental-relationship-with-relative-entropy",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "\\[ H(p, q) = H(p) + D_{\\mathrm{KL}}(p \\parallel q) \\]\nwhere: - \\(H(p)\\) is the entropy of distribution \\(p\\) - \\(D_{\\mathrm{KL}}(p \\parallel q)\\) is the Kullback-Leibler divergence (relative entropy)\n\n\n\nThis relationship shows that cross-entropy decomposes into two parts:\n\n\\(H(p)\\): The intrinsic uncertainty of the true distribution\n\nTheoretical minimum that cannot be compressed\nDepends only on \\(p\\), not on our model\n\n\\(D_{\\mathrm{KL}}(p \\parallel q)\\): The penalty due to the wrong model\n\nMeasures how much \\(q\\) differs from \\(p\\)\nReducible by improving our model\n\n\ngraph LR\n    A[Cross Entropy H(p,q)] --&gt; B[Equivalent to];\n    B --&gt; C[H(p) + D(p∥q)];\n    \n    D[Objective: minimize H(p,q)] --&gt; E{Since H(p) is constant};\n    E --&gt; F[Minimize D(p∥q)];\n    F --&gt; G[Find q ≈ p];\n    \n    H[In practice] --&gt; I[We minimize H(p,q)];\n    I --&gt; J[Because p is unknown];\n    J --&gt; K[We estimate p from data];",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#concrete-examples-of-use",
+    "href": "dsp26.html#concrete-examples-of-use",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Scenario: Image classification with 3 classes (cat, dog, bird)\nTraining data: - Image 1: true class = “cat” → \\(p = [1, 0, 0]\\) - Image 2: true class = “dog” → \\(p = [0, 1, 0]\\)\nModel predictions: - For image 1: \\(q = [0.7, 0.2, 0.1]\\) - For image 2: \\(q = [0.1, 0.6, 0.3]\\)\nCross-entropy calculation: For image 1: \\[ H(p, q) = -[1 \\times \\log_2(0.7) + 0 \\times \\log_2(0.2) + 0 \\times \\log_2(0.1)] = -\\log_2(0.7) \\approx 0.514 \\text{ bits} \\]\nFor image 2: \\[ H(p, q) = -[0 \\times \\log_2(0.1) + 1 \\times \\log_2(0.6) + 0 \\times \\log_2(0.3)] = -\\log_2(0.6) \\approx 0.737 \\text{ bits} \\]\nAverage loss: Average over all images in the training set.\n\n\n\nScenario: Compression of English text\nReal distribution (\\(p\\)): - ‘e’ : 12.7% - ‘t’ : 9.1% - ‘a’ : 8.2% - … (other letters)\nModel used (\\(q\\)): - Uniform model: each letter = 1/26 ≈ 3.85% - Shakespeare-based model: specific distribution\nEfficiency calculation: With uniform model: \\[ H(p, q) = -\\sum p(x) \\log_2(1/26) = \\log_2(26) \\approx 4.7 \\text{ bits/letter} \\]\nWith a good linguistic model (\\(q\\) close to \\(p\\)): \\[ H(p, q) \\approx H(p) \\approx 4.1 \\text{ bits/letter} \\]\nGain: 0.6 bits per letter, about 18% savings.\n\n\n\nScenario: GPT model evaluated on sentences\nMethod: Perplexity = \\(2^{H(p,q)}\\)\nInterpretation: - Low perplexity → model predicts next words well - High perplexity → model is uncertain\ngraph TD\n    A[Test text] --&gt; B[Compute H(p,q)];\n    B --&gt; C[Perplexity = 2^H(p,q)];\n    C --&gt; D{Quality measure};\n    D --&gt; E[Low perplexity: good model];\n    D --&gt; F[High perplexity: poor model];\n    \n    G[Example] --&gt; H[GPT-3 model];\n    H --&gt; I[Perplexity ~20-30];\n    I --&gt; J[Very performant];\n    \n    K[Random model] --&gt; L[Perplexity = vocabulary size];\n    L --&gt; M[Very poor];",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#comparative-table-entropy-vs-cross-entropy-vs-kl-divergence",
+    "href": "dsp26.html#comparative-table-entropy-vs-cross-entropy-vs-kl-divergence",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Concept\nFormula\nInterpretation\nKey Property\n\n\n\n\nEntropy \\(H(p)\\)\n\\(-\\sum p \\log p\\)\nIntrinsic uncertainty\nTheoretical minimum\n\n\nCross-entropy \\(H(p,q)\\)\n\\(-\\sum p \\log q\\)\nCost of wrong model\nAlways ≥ \\(H(p)\\)\n\n\nKL Divergence \\(D(p\\|q)\\)\n\\(\\sum p \\log(p/q)\\)\nWrong model penalty\nDifference measure",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#practical-application-loss-function-in-deep-learning",
+    "href": "dsp26.html#practical-application-loss-function-in-deep-learning",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "import torch\nimport torch.nn as nn\n\n# Data: 3 samples, 5 classes\npredictions = torch.tensor([[0.1, 0.2, 0.6, 0.1, 0.0],\n                            [0.8, 0.1, 0.05, 0.05, 0.0],\n                            [0.05, 0.1, 0.1, 0.15, 0.6]])\n\ntrue_labels = torch.tensor([2, 0, 4])  # Indices of true classes\n\n# Cross-entropy calculation\nloss_fn = nn.CrossEntropyLoss()\nloss = loss_fn(predictions, true_labels)\nprint(f\"Cross-entropy loss: {loss.item():.4f}\")\n\n\n\n\nModel produces logits (unnormalized)\nSoftmax converts to probabilities \\(q\\)\nComparison with one-hot labels \\(p\\)\nCalculation of \\(H(p, q)\\)\nGradient to adjust weights",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#visualization-of-concept-relationships",
+    "href": "dsp26.html#visualization-of-concept-relationships",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "graph TD\n    A[True distribution p] --&gt; B[Entropy H(p)];\n    A --&gt; C[Cross-entropy H(p,q)];\n    C --&gt; D[KL Divergence D(p∥q)];\n    \n    B --&gt; E[Minimum value];\n    D --&gt; F[Deviation from optimal];\n    E --&gt; C;\n    F --&gt; C;\n    \n    G[Learning objective] --&gt; H[Minimize H(p,q)];\n    H --&gt; I[Equivalent to minimizing D(p∥q)];\n    I --&gt; J[Since H(p) constant];\n    \n    K[Optimal result] --&gt; L[q = p];\n    L --&gt; M[H(p,q) = H(p)];\n    L --&gt; N[D(p∥q) = 0];",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#important-special-cases",
+    "href": "dsp26.html#important-special-cases",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "For \\(p \\in \\{0, 1\\}\\) and \\(q \\in [0, 1]\\):\n\\[ H(p, q) = -[p \\log_2 q + (1-p) \\log_2 (1-q)] \\]\nThis is the logistic loss used in logistic regression.\n\n\n\nIf \\(q\\) is uniform over \\(N\\) classes:\n\\[ H(p, q) = -\\sum p(x) \\log_2(1/N) = \\log_2 N \\]\nAll models are compared to this baseline.",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#why-minimize-cross-entropy",
+    "href": "dsp26.html#why-minimize-cross-entropy",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Minimizing \\(H(p, q)\\) is equivalent to maximizing the likelihood of the data.\nProof: Let \\(p_{\\text{data}}\\) be the empirical distribution, \\(q_\\theta\\) our model: \\[ \\min_\\theta H(p_{\\text{data}}, q_\\theta) \\equiv \\max_\\theta \\mathbb{E}_{x \\sim p_{\\text{data}}}[\\log q_\\theta(x)] \\]\n\n\n\n\nConvexity: Guarantees global minima (for many models)\nError Sensitivity: Strongly penalizes confidence errors\nProbabilistic Interpretation: Directly related to probabilities",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#detailed-example-mnist-classification",
+    "href": "dsp26.html#detailed-example-mnist-classification",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Recognize handwritten digits (0-9).\n\n\n\n\n28×28 pixel images\nLabel: digit from 0 to 9\n\n\n\n\nNeural network with softmax output producing \\(q = [q_0, q_1, ..., q_9]\\).\n\n\n\nFor an image of digit “3” (\\(p = [0,0,0,1,0,0,0,0,0,0]\\)):\n\nIf \\(q = [0,0,0,0.9,0,0,0,0,0.1,0]\\) → \\(H(p,q) = -\\log_2(0.9) ≈ 0.152\\)\nIf \\(q = [0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.1,0.1,0]\\) → \\(H(p,q) = -\\log_2(0.2) ≈ 2.322\\)\n\nThe first prediction is much better.",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#historical-evolution-and-alternatives",
+    "href": "dsp26.html#historical-evolution-and-alternatives",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Previously popular in regression\nLess suitable for classification\nNo direct link to probabilities\n\n\n\n\n\nWell-behaved Gradients: Avoids learning plateaus\nProbabilistic Interpretation: Outputs are probabilities\nInformation Theory: Solid foundations",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#pitfalls-and-best-practices",
+    "href": "dsp26.html#pitfalls-and-best-practices",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Direct calculation \\(\\log(q)\\) can be unstable for \\(q ≈ 0\\).\nSolution: Use log-sum-exp function: \\[ H(p, q) = -\\sum p(x) \\left[ z(x) - \\log\\sum \\exp(z(x')) \\right] \\] where \\(z(x)\\) are logits.\n\n\n\nAdding a regularization term amounts to: \\[ H(p, q) + \\lambda R(\\theta) \\]\nThis prevents overfitting by penalizing complex models.\n\n\n\nWhen some classes are rare:\n\nWeighting: \\(H_w(p, q) = -\\sum w(x) p(x) \\log q(x)\\)\nResampling: Adjust training distribution",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#pedagogical-summary",
+    "href": "dsp26.html#pedagogical-summary",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Imagine a game where you must guess an animal:\n\n\\(p\\): Real animal (e.g., 80% cat, 20% dog)\n\\(q\\): Your guessing strategy\n\n\nEntropy \\(H(p)\\): Optimal number of questions if you knew the true distribution\nCross-entropy \\(H(p,q)\\): Number of questions with your strategy\nKL Divergence \\(D(p\\|q)\\): Extra questions due to your poor strategy\n\n\n\n\n\n“Total cost = base uncertainty + ignorance penalty” \\[ H(p,q) = H(p) + D(p\\|q) \\]",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp26.html#conclusion",
+    "href": "dsp26.html#conclusion",
+    "title": "Cross Entropy",
+    "section": "",
+    "text": "Cross-entropy is a powerful measure that:\n\nEvaluates Models: Measures how well a model \\(q\\) fits data \\(p\\)\nGuides Learning: Optimizable loss function via gradient\nConnects Theory and Practice: Links information theory and ML\n\nThe fundamental link with relative entropy shows that minimizing cross-entropy amounts to minimizing the gap between our model and reality, while acknowledging that some uncertainty (\\(H(p)\\)) is incompressible.\nThis unified understanding explains why cross-entropy has become the standard loss function for classification problems and many other tasks in artificial intelligence.",
+    "crumbs": [
+      "Part II",
+      "Cross Entropy"
+    ]
+  },
+  {
+    "objectID": "dsp28.html",
+    "href": "dsp28.html",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "Explain the difference between the characteristic function and the moment generating function.\n\n\n\nCharacteristic functions and moment generating functions are two fundamental mathematical tools in probability theory and statistics. They allow us to completely characterize a probability distribution and compute its moments. Despite their similarities, they present crucial differences.\n\n\n\n\n\nThe moment generating function of a random variable \\(X\\) is defined as the mathematical expectation of \\(e^{tX}\\):\n\\[\nM_X(t) = \\mathbb{E}[e^{tX}] =\n\\begin{cases}\n\\sum_{x} e^{tx} p_X(x) & \\text{(discrete case)} \\\\\n\\int_{-\\infty}^{\\infty} e^{tx} f_X(x) dx & \\text{(continuous case)}\n\\end{cases}\n\\]\nwhere \\(t\\) is a real number.\n\n\n\nThe characteristic function of a random variable \\(X\\) is defined as the mathematical expectation of \\(e^{itX}\\):\n\\[\n\\phi_X(t) = \\mathbb{E}[e^{itX}] =\n\\begin{cases}\n\\sum_{x} e^{itx} p_X(x) & \\text{(discrete case)} \\\\\n\\int_{-\\infty}^{\\infty} e^{itx} f_X(x) dx & \\text{(continuous case)}\n\\end{cases}\n\\]\nwhere \\(i = \\sqrt{-1}\\) is the imaginary unit and \\(t\\) is a real number.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunction\nDomain of Definition\nExistence\n\n\n\n\nMoment Generating Function\n\\(t \\in \\mathbb{R}\\)\nNot always exists. Only exists if the expectation \\(\\mathbb{E}[e^{tX}]\\) converges in a neighborhood of \\(t=0\\)\n\n\nCharacteristic Function\n\\(t \\in \\mathbb{R}\\)\nAlways exists for any probability distribution\n\n\n\nExplanation: The characteristic function uses the complex exponential \\(e^{itx}\\) which is always bounded (\\(|e^{itx}| = 1\\)), thus guaranteeing convergence of the integral. In contrast, \\(e^{tx}\\) can grow exponentially, which may prevent convergence.\n\n\n\n\nMGF: Function with real values (or extended real values)\nCharacteristic Function: Function with complex values\n\nThe characteristic function can be written in polar form: \\[\n\\phi_X(t) = |\\phi_X(t)| \\cdot e^{i\\theta(t)}\n\\] where \\(|\\phi_X(t)|\\) is the modulus and \\(\\theta(t)\\) is the argument.\n\n\n\n\n\nIf the MGF exists in a neighborhood of \\(t=0\\), then moments can be obtained by differentiation:\n\\[\n\\mathbb{E}[X^n] = \\left. \\frac{d^n}{dt^n} M_X(t) \\right|_{t=0}\n\\]\n\n\n\nMoments can also be obtained from the characteristic function (if they exist):\n\\[\n\\mathbb{E}[X^n] = \\left. \\frac{1}{i^n} \\frac{d^n}{dt^n} \\phi_X(t) \\right|_{t=0}\n\\]\nwhere \\(i^n\\) accounts for the imaginary part.\n\n\n\n\nBoth functions have similar properties regarding linear transformations:\nFor \\(Y = aX + b\\):\n\nMGF: \\(M_Y(t) = e^{bt} M_X(at)\\)\nCharacteristic Function: \\(\\phi_Y(t) = e^{ibt} \\phi_X(at)\\)\n\n\n\n\nBoth functions uniquely characterize the distribution:\n\nIf two random variables have the same MGF in a neighborhood of \\(t=0\\), then they have the same distribution\nIf two random variables have the same characteristic function for all \\(t\\), then they have the same distribution\n\nHowever, the inversion formula is simpler for the characteristic function:\nFor a continuous distribution: \\[\nf_X(x) = \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} e^{-itx} \\phi_X(t) dt\n\\]\nThere is no equally simple inversion formula for the MGF.\n\n\n\n\n\n\n\n\n\n\n\n\nAspect\nMoment Generating Function (MGF)\nCharacteristic Function\n\n\n\n\nDefinition\n\\(\\mathbb{E}[e^{tX}]\\)\n\\(\\mathbb{E}[e^{itX}]\\)\n\n\nDomain\nReal \\(t \\in \\mathbb{R}\\)\nReal \\(t \\in \\mathbb{R}\\)\n\n\nExistence\nConditional (requires convergence)\nAlways guaranteed\n\n\nValues\nReal\nComplex\n\n\nMoment Calculation\n\\(\\mathbb{E}[X^n] = M_X^{(n)}(0)\\)\n\\(\\mathbb{E}[X^n] = \\frac{\\phi_X^{(n)}(0)}{i^n}\\)\n\n\nInversion Formula\nComplex (inverse Laplace transform)\nSimple (inverse Fourier transform)\n\n\nMain Applications\nMoment calculation, theoretical proofs\nLimit theorems, stochastic processes\n\n\n\n\n\n\n\n\nFor \\(X \\sim \\mathcal{N}(\\mu, \\sigma^2)\\):\nMGF: \\[\nM_X(t) = \\exp\\left(\\mu t + \\frac{\\sigma^2 t^2}{2}\\right) \\quad \\text{for all } t \\in \\mathbb{R}\n\\]\nCharacteristic Function: \\[\n\\phi_X(t) = \\exp\\left(i\\mu t - \\frac{\\sigma^2 t^2}{2}\\right)\n\\]\nNote the similarity: the characteristic function is essentially the MGF with \\(t\\) replaced by \\(it\\).\n\n\n\nThe Cauchy distribution is interesting because it has no MGF but has a well-defined characteristic function.\nFor the standard Cauchy distribution:\nMGF: Does not exist for \\(t \\neq 0\\) (because \\(\\mathbb{E}[e^{tX}]\\) diverges)\nCharacteristic Function: \\[\n\\phi_X(t) = e^{-|t|}\n\\]\nThis shows the crucial advantage of the characteristic function: it exists even for distributions without moments (or without moments of all orders).\n\n\n\nFor \\(X \\sim \\text{Exp}(\\lambda)\\) with density \\(f_X(x) = \\lambda e^{-\\lambda x}\\) for \\(x \\geq 0\\):\nMGF: \\[\nM_X(t) = \\frac{\\lambda}{\\lambda - t} \\quad \\text{for } t &lt; \\lambda\n\\]\nCharacteristic Function: \\[\n\\phi_X(t) = \\frac{\\lambda}{\\lambda - it}\n\\]\n\n\n\n\n\n\nThe characteristic function is essential for proving the central limit theorem. The standard proof uses:\n\nThe characteristic function of the normalized sum\nThe Taylor expansion of \\(\\phi_X(t)\\)\nConvergence to the characteristic function of the normal law\n\nThe MGF is less used because it does not always exist for normalized sums.\n\n\n\nFor independent variables \\(X\\) and \\(Y\\):\n\nMGF: \\(M_{X+Y}(t) = M_X(t) \\cdot M_Y(t)\\)\nCharacteristic Function: \\(\\phi_{X+Y}(t) = \\phi_X(t) \\cdot \\phi_Y(t)\\)\n\nThis multiplicative property simplifies the study of sums.\n\n\n\nIf we recognize the form of an MGF or characteristic function, we can identify the corresponding distribution.\nExample: If \\(\\phi_X(t) = (1 - it/\\lambda)^{-\\alpha}\\), then \\(X\\) follows a Gamma distribution with parameters \\(\\alpha\\) and \\(\\lambda\\).\n\n\n\n\n\n\n\nMore intuitive for moment calculations\nEasier to manipulate for distributions having moments of all orders\nDirect relation with moments without imaginary factors\n\n\n\n\n\nDoes not always exist (convergence problem)\nLimited domain even when it exists\nComplex inversion formula\n\n\n\n\n\nAlways exists for any distribution\nLinks with Fourier analysis (powerful tools)\nSimple inversion formula\nIdeal for limit theorems\n\n\n\n\n\nComplex numbers less intuitive\nMoment calculation more cumbersome (\\(i^n\\) factors)\n\n\n\n\n\n\n\n\n\n\n\n\nSituation\nRecommended Choice\n\n\n\n\nMoment calculation for distributions with all moments\nMGF (simpler)\n\n\nStudy of distributions without certain moments\nCharacteristic Function\n\n\nProofs of limit theorems\nCharacteristic Function\n\n\nAnalysis of sums of independent variables\nBoth work\n\n\nHeavy-tailed distributions (Cauchy, Pareto)\nCharacteristic Function\n\n\n\n\n\n\nImagine both functions as “identity cards” of a probability distribution:\n\nThe MGF is like an identity card with practical information (the moments), but it’s not always available\nThe characteristic function is like a universal identity card that always exists, but sometimes requires a decoder (complex numbers)\n\nMetaphor: If the probability distribution were a musical function, the MGF would be the score written in real notes, while the characteristic function would be the same score written in complex notes, capable of representing additional nuances.\nIn practice, statisticians and probabilists use both tools, choosing the one most suited to the specific problem. The characteristic function is generally considered more powerful and general, while the MGF is more practical when it exists.",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#question",
+    "href": "dsp28.html#question",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "Explain the difference between the characteristic function and the moment generating function.",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#introduction-to-generating-functions",
+    "href": "dsp28.html#introduction-to-generating-functions",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "Characteristic functions and moment generating functions are two fundamental mathematical tools in probability theory and statistics. They allow us to completely characterize a probability distribution and compute its moments. Despite their similarities, they present crucial differences.",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#fundamental-definitions",
+    "href": "dsp28.html#fundamental-definitions",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "The moment generating function of a random variable \\(X\\) is defined as the mathematical expectation of \\(e^{tX}\\):\n\\[\nM_X(t) = \\mathbb{E}[e^{tX}] =\n\\begin{cases}\n\\sum_{x} e^{tx} p_X(x) & \\text{(discrete case)} \\\\\n\\int_{-\\infty}^{\\infty} e^{tx} f_X(x) dx & \\text{(continuous case)}\n\\end{cases}\n\\]\nwhere \\(t\\) is a real number.\n\n\n\nThe characteristic function of a random variable \\(X\\) is defined as the mathematical expectation of \\(e^{itX}\\):\n\\[\n\\phi_X(t) = \\mathbb{E}[e^{itX}] =\n\\begin{cases}\n\\sum_{x} e^{itx} p_X(x) & \\text{(discrete case)} \\\\\n\\int_{-\\infty}^{\\infty} e^{itx} f_X(x) dx & \\text{(continuous case)}\n\\end{cases}\n\\]\nwhere \\(i = \\sqrt{-1}\\) is the imaginary unit and \\(t\\) is a real number.",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#detailed-comparison",
+    "href": "dsp28.html#detailed-comparison",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "Function\nDomain of Definition\nExistence\n\n\n\n\nMoment Generating Function\n\\(t \\in \\mathbb{R}\\)\nNot always exists. Only exists if the expectation \\(\\mathbb{E}[e^{tX}]\\) converges in a neighborhood of \\(t=0\\)\n\n\nCharacteristic Function\n\\(t \\in \\mathbb{R}\\)\nAlways exists for any probability distribution\n\n\n\nExplanation: The characteristic function uses the complex exponential \\(e^{itx}\\) which is always bounded (\\(|e^{itx}| = 1\\)), thus guaranteeing convergence of the integral. In contrast, \\(e^{tx}\\) can grow exponentially, which may prevent convergence.\n\n\n\n\nMGF: Function with real values (or extended real values)\nCharacteristic Function: Function with complex values\n\nThe characteristic function can be written in polar form: \\[\n\\phi_X(t) = |\\phi_X(t)| \\cdot e^{i\\theta(t)}\n\\] where \\(|\\phi_X(t)|\\) is the modulus and \\(\\theta(t)\\) is the argument.\n\n\n\n\n\nIf the MGF exists in a neighborhood of \\(t=0\\), then moments can be obtained by differentiation:\n\\[\n\\mathbb{E}[X^n] = \\left. \\frac{d^n}{dt^n} M_X(t) \\right|_{t=0}\n\\]\n\n\n\nMoments can also be obtained from the characteristic function (if they exist):\n\\[\n\\mathbb{E}[X^n] = \\left. \\frac{1}{i^n} \\frac{d^n}{dt^n} \\phi_X(t) \\right|_{t=0}\n\\]\nwhere \\(i^n\\) accounts for the imaginary part.\n\n\n\n\nBoth functions have similar properties regarding linear transformations:\nFor \\(Y = aX + b\\):\n\nMGF: \\(M_Y(t) = e^{bt} M_X(at)\\)\nCharacteristic Function: \\(\\phi_Y(t) = e^{ibt} \\phi_X(at)\\)\n\n\n\n\nBoth functions uniquely characterize the distribution:\n\nIf two random variables have the same MGF in a neighborhood of \\(t=0\\), then they have the same distribution\nIf two random variables have the same characteristic function for all \\(t\\), then they have the same distribution\n\nHowever, the inversion formula is simpler for the characteristic function:\nFor a continuous distribution: \\[\nf_X(x) = \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} e^{-itx} \\phi_X(t) dt\n\\]\nThere is no equally simple inversion formula for the MGF.",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#summary-comparative-table",
+    "href": "dsp28.html#summary-comparative-table",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "Aspect\nMoment Generating Function (MGF)\nCharacteristic Function\n\n\n\n\nDefinition\n\\(\\mathbb{E}[e^{tX}]\\)\n\\(\\mathbb{E}[e^{itX}]\\)\n\n\nDomain\nReal \\(t \\in \\mathbb{R}\\)\nReal \\(t \\in \\mathbb{R}\\)\n\n\nExistence\nConditional (requires convergence)\nAlways guaranteed\n\n\nValues\nReal\nComplex\n\n\nMoment Calculation\n\\(\\mathbb{E}[X^n] = M_X^{(n)}(0)\\)\n\\(\\mathbb{E}[X^n] = \\frac{\\phi_X^{(n)}(0)}{i^n}\\)\n\n\nInversion Formula\nComplex (inverse Laplace transform)\nSimple (inverse Fourier transform)\n\n\nMain Applications\nMoment calculation, theoretical proofs\nLimit theorems, stochastic processes",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#illustrative-examples",
+    "href": "dsp28.html#illustrative-examples",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "For \\(X \\sim \\mathcal{N}(\\mu, \\sigma^2)\\):\nMGF: \\[\nM_X(t) = \\exp\\left(\\mu t + \\frac{\\sigma^2 t^2}{2}\\right) \\quad \\text{for all } t \\in \\mathbb{R}\n\\]\nCharacteristic Function: \\[\n\\phi_X(t) = \\exp\\left(i\\mu t - \\frac{\\sigma^2 t^2}{2}\\right)\n\\]\nNote the similarity: the characteristic function is essentially the MGF with \\(t\\) replaced by \\(it\\).\n\n\n\nThe Cauchy distribution is interesting because it has no MGF but has a well-defined characteristic function.\nFor the standard Cauchy distribution:\nMGF: Does not exist for \\(t \\neq 0\\) (because \\(\\mathbb{E}[e^{tX}]\\) diverges)\nCharacteristic Function: \\[\n\\phi_X(t) = e^{-|t|}\n\\]\nThis shows the crucial advantage of the characteristic function: it exists even for distributions without moments (or without moments of all orders).\n\n\n\nFor \\(X \\sim \\text{Exp}(\\lambda)\\) with density \\(f_X(x) = \\lambda e^{-\\lambda x}\\) for \\(x \\geq 0\\):\nMGF: \\[\nM_X(t) = \\frac{\\lambda}{\\lambda - t} \\quad \\text{for } t &lt; \\lambda\n\\]\nCharacteristic Function: \\[\n\\phi_X(t) = \\frac{\\lambda}{\\lambda - it}\n\\]",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#practical-applications",
+    "href": "dsp28.html#practical-applications",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "The characteristic function is essential for proving the central limit theorem. The standard proof uses:\n\nThe characteristic function of the normalized sum\nThe Taylor expansion of \\(\\phi_X(t)\\)\nConvergence to the characteristic function of the normal law\n\nThe MGF is less used because it does not always exist for normalized sums.\n\n\n\nFor independent variables \\(X\\) and \\(Y\\):\n\nMGF: \\(M_{X+Y}(t) = M_X(t) \\cdot M_Y(t)\\)\nCharacteristic Function: \\(\\phi_{X+Y}(t) = \\phi_X(t) \\cdot \\phi_Y(t)\\)\n\nThis multiplicative property simplifies the study of sums.\n\n\n\nIf we recognize the form of an MGF or characteristic function, we can identify the corresponding distribution.\nExample: If \\(\\phi_X(t) = (1 - it/\\lambda)^{-\\alpha}\\), then \\(X\\) follows a Gamma distribution with parameters \\(\\alpha\\) and \\(\\lambda\\).",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#advantages-and-disadvantages",
+    "href": "dsp28.html#advantages-and-disadvantages",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "More intuitive for moment calculations\nEasier to manipulate for distributions having moments of all orders\nDirect relation with moments without imaginary factors\n\n\n\n\n\nDoes not always exist (convergence problem)\nLimited domain even when it exists\nComplex inversion formula\n\n\n\n\n\nAlways exists for any distribution\nLinks with Fourier analysis (powerful tools)\nSimple inversion formula\nIdeal for limit theorems\n\n\n\n\n\nComplex numbers less intuitive\nMoment calculation more cumbersome (\\(i^n\\) factors)",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#selection-guidelines",
+    "href": "dsp28.html#selection-guidelines",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "Situation\nRecommended Choice\n\n\n\n\nMoment calculation for distributions with all moments\nMGF (simpler)\n\n\nStudy of distributions without certain moments\nCharacteristic Function\n\n\nProofs of limit theorems\nCharacteristic Function\n\n\nAnalysis of sums of independent variables\nBoth work\n\n\nHeavy-tailed distributions (Cauchy, Pareto)\nCharacteristic Function",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
+  },
+  {
+    "objectID": "dsp28.html#pedagogical-conclusion",
+    "href": "dsp28.html#pedagogical-conclusion",
+    "title": "Characteristic Functions and Moment Generating Functions",
+    "section": "",
+    "text": "Imagine both functions as “identity cards” of a probability distribution:\n\nThe MGF is like an identity card with practical information (the moments), but it’s not always available\nThe characteristic function is like a universal identity card that always exists, but sometimes requires a decoder (complex numbers)\n\nMetaphor: If the probability distribution were a musical function, the MGF would be the score written in real notes, while the characteristic function would be the same score written in complex notes, capable of representing additional nuances.\nIn practice, statisticians and probabilists use both tools, choosing the one most suited to the specific problem. The characteristic function is generally considered more powerful and general, while the MGF is more practical when it exists.",
+    "crumbs": [
+      "Part II",
+      "Characteristic Functions and Moment Generating Functions"
+    ]
   }
 ]
