@@ -492,13 +492,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dsp24.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Question : Expliquer les propriétés de l’entropie à l’aide des exemples de l’entropie conditionnelle H(X|Y) et de l’entropie jointe H(X,Y). Utiliser des diagrammes de Venn.</span></a>
+ <span class="menu-text">Entropie et diagrammes de Venn</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dsp25.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Entropie relative</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp26.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie Croisée</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information mutuelle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp28.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fonctions caractéristiques et génératrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp29.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction de caractéristiques</span></a>
   </div>
 </li>
       </ul>
@@ -614,14 +638,14 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph TD
-    A[Entropie croisée H(p,q)] --&gt; B[Entropie de p: H(p)]
-    A --&gt; C[Divergence KL: D(p∥q)]
+    A["Entropie croisée H(p,q)"] --&gt; B["Entropie de p: H(p)"]
+    A --&gt; C["Divergence KL: D(p∥q)"]
     
     B --&gt; D[Incertitude intrinsèque de p]
     C --&gt; E[Pénalité d'utiliser le mauvais modèle]
     
-    F[Objectif: minimiser H(p,q)] --&gt; G{Équivalent à};
-    G --&gt; H[Minimiser D(p∥q) car H(p) constant];
+    F["Objectif: minimiser H(p,q)"] --&gt; G{Équivalent à};
+    G --&gt; H["Minimiser D(p∥q) car H(p) constant"];
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -654,16 +678,16 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph LR
-    A[Information mutuelle I(X;Y)] --&gt; B[Divergence KL]
-    B --&gt; C[Entre distribution jointe p(x,y)]
-    B --&gt; D[Et produit des marginales p(x)p(y)]
+    A["Information mutuelle I(X;Y)"] --&gt; B[Divergence KL]
+    B --&gt; C["Entre distribution jointe p(x,y)"]
+    B --&gt; D["Et produit des marginales p(x)p(y)"]
     
     E[Interprétation] --&gt; F[Mesure la dépendance]
     F --&gt; G[Écart à l'indépendance]
     
-    H[Si X et Y indépendants] --&gt; I[p(x,y) = p(x)p(y)]
+    H[Si X et Y indépendants] --&gt; I["p(x,y) = p(x)p(y)"]
     I --&gt; J[D_KL = 0]
-    J --&gt; K[I(X;Y) = 0]
+    J --&gt; K["I(X;Y) = 0"]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -687,17 +711,17 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph TD
-    A[Entropie H(X)] --&gt; B[Information mutuelle I(X;Y)]
-    A --&gt; C[Entropie conditionnelle H(X|Y)]
+    A["Entropie H(X)"] --&gt; B["Information mutuelle I(X;Y)"]
+    A --&gt; C["Entropie conditionnelle H(X|Y)"]
     
-    D[Entropie croisée H(p,q)] --&gt; E[Entropie H(p)]
-    D --&gt; F[Divergence KL D(p∥q)]
+    D["Entropie croisée H(p,q)"] --&gt; E["Entropie H(p)"]
+    D --&gt; F["Divergence KL D(p∥q)"]
     
-    G[Entropie jointe H(X,Y)] --&gt; H[H(X) + H(Y|X)]
-    G --&gt; I[H(Y) + H(X|Y)]
+    G["Entropie jointe H(X,Y)"] --&gt; H["H(X) + H(Y|X)"]
+    G --&gt; I["H(Y) + H(X|Y)"]
     
-    B --&gt; J[= H(X) - H(X|Y)]
-    B --&gt; K[= H(Y) - H(Y|X)]
+    B --&gt; J["= H(X) - H(X|Y)"]
+    B --&gt; K["= H(Y) - H(Y|X)"]
     
     L[Divergence KL] --&gt; M[Base de l'information mutuelle]
     L --&gt; N[Composante de l'entropie croisée]
@@ -851,16 +875,16 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph TD
-    A[Choix de D(p∥q) vs D(q∥p)] --&gt; B{Situation};
+    A["Choix de D(p∥q) vs D(q∥p)"] --&gt; B{Situation};
     
     B --&gt; C[Priorité : éviter les zones&lt;br&gt;où p&gt;0 mais q=0];
-    C --&gt; D[Utiliser D(p∥q)&lt;br&gt;car D(p∥q)=∞ si q=0 et p&gt;0];
+    C --&gt; D["Utiliser D(p∥q)&lt;br&gt;car D(p∥q)=∞ si q=0 et p&gt;0"];
     
     B --&gt; E[Priorité : couvrir tous&lt;br&gt;les modes de p];
-    E --&gt; F[Utiliser D(q∥p)&lt;br&gt;mode-seeking];
+    E --&gt; F["Utiliser D(q∥p)&lt;br&gt;mode-seeking"];
     
     B --&gt; G[Inférence variationnelle];
-    G --&gt; H[Utiliser D(q∥p)&lt;br&gt;pour approximations];
+    G --&gt; H["Utiliser D(q∥p)&lt;br&gt;pour approximations"];
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -901,7 +925,13 @@ window.Quarto = {
 <li>La réduction d’incertitude grâce à Y</li>
 </ul></li>
 </ol>
-<p><strong>Métaphore finale :</strong> Imaginez que vous devez deviner le contenu d’une boîte : - <span class="math inline">\(H(p)\)</span> : Nombre de questions nécessaires si vous connaissez la vraie distribution - <span class="math inline">\(H(p,q)\)</span> : Nombre de questions si vous avez une hypothèse imparfaite <span class="math inline">\(q\)</span> - <span class="math inline">\(D(p\|q)\)</span> : Questions supplémentaires dues à votre mauvaise hypothèse - <span class="math inline">\(I(X;Y)\)</span> : Questions économisées en écoutant un indice Y</p>
+<p><strong>Métaphore finale :</strong> Imaginez que vous devez deviner le contenu d’une boîte :</p>
+<ul>
+<li><span class="math inline">\(H(p)\)</span> : Nombre de questions nécessaires si vous connaissez la vraie distribution</li>
+<li><span class="math inline">\(H(p,q)\)</span> : Nombre de questions si vous avez une hypothèse imparfaite <span class="math inline">\(q\)</span></li>
+<li><span class="math inline">\(D(p\|q)\)</span> : Questions supplémentaires dues à votre mauvaise hypothèse</li>
+<li><span class="math inline">\(I(X;Y)\)</span> : Questions économisées en écoutant un indice Y</li>
+</ul>
 <p>La divergence KL quantifie ainsi le “coût de l’ignorance” - combien on paie en efficacité quand nos modèles ne correspondent pas à la réalité.</p>
 
 

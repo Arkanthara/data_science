@@ -313,7 +313,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp24.html">Question : Expliquer les propriétés de l’entropie à l’aide des exemples de l’entropie conditionnelle H(X|Y) et de l’entropie jointe H(X,Y). Utiliser des diagrammes de Venn.</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp24.html">Entropie et diagrammes de Venn</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -489,13 +489,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dsp24.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Question : Expliquer les propriétés de l’entropie à l’aide des exemples de l’entropie conditionnelle H(X|Y) et de l’entropie jointe H(X,Y). Utiliser des diagrammes de Venn.</span></a>
+ <span class="menu-text">Entropie et diagrammes de Venn</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dsp25.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Entropie relative</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp26.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie Croisée</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information mutuelle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp28.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fonctions caractéristiques et génératrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp29.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction de caractéristiques</span></a>
   </div>
 </li>
       </ul>
@@ -510,8 +534,9 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#question-expliquer-les-propriétés-de-lentropie-à-laide-des-exemples-de-lentropie-conditionnelle-hxy-et-de-lentropie-jointe-hxy.-utiliser-des-diagrammes-de-venn." id="toc-question-expliquer-les-propriétés-de-lentropie-à-laide-des-exemples-de-lentropie-conditionnelle-hxy-et-de-lentropie-jointe-hxy.-utiliser-des-diagrammes-de-venn." class="nav-link active" data-scroll-target="#question-expliquer-les-propriétés-de-lentropie-à-laide-des-exemples-de-lentropie-conditionnelle-hxy-et-de-lentropie-jointe-hxy.-utiliser-des-diagrammes-de-venn.">Question : Expliquer les propriétés de l’entropie à l’aide des exemples de l’entropie conditionnelle H(X|Y) et de l’entropie jointe H(X,Y). Utiliser des diagrammes de Venn.</a>
+  <li><a href="#entropie-et-diagrammes-de-venn" id="toc-entropie-et-diagrammes-de-venn" class="nav-link active" data-scroll-target="#entropie-et-diagrammes-de-venn">Entropie et diagrammes de Venn</a>
   <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
   <li><a href="#introduction-aux-concepts-de-base" id="toc-introduction-aux-concepts-de-base" class="nav-link" data-scroll-target="#introduction-aux-concepts-de-base">Introduction aux concepts de base</a></li>
   <li><a href="#propriétés-fondamentales-illustrées" id="toc-propriétés-fondamentales-illustrées" class="nav-link" data-scroll-target="#propriétés-fondamentales-illustrées">Propriétés fondamentales illustrées</a>
   <ul class="collapse">
@@ -535,14 +560,19 @@ window.Quarto = {
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="dsp24.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp24.html">Question : Expliquer les propriétés de l’entropie à l’aide des exemples de l’entropie conditionnelle H(X|Y) et de l’entropie jointe H(X,Y). Utiliser des diagrammes de Venn.</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp24.html">Entropie et diagrammes de Venn</a></li></ol></nav></header>
 
 
 
 
 
-<section id="question-expliquer-les-propriétés-de-lentropie-à-laide-des-exemples-de-lentropie-conditionnelle-hxy-et-de-lentropie-jointe-hxy.-utiliser-des-diagrammes-de-venn." class="level1">
-<h1>Question : Expliquer les propriétés de l’entropie à l’aide des exemples de l’entropie conditionnelle H(X|Y) et de l’entropie jointe H(X,Y). Utiliser des diagrammes de Venn.</h1>
+<section id="entropie-et-diagrammes-de-venn" class="level1">
+<h1>Entropie et diagrammes de Venn</h1>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Expliquer les propriétés de l’entropie à l’aide des exemples de l’entropie conditionnelle H(X|Y) et de l’entropie jointe H(X,Y).</p>
+<p>Utiliser des diagrammes de Venn.</p>
+</section>
 <section id="introduction-aux-concepts-de-base" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-aux-concepts-de-base">Introduction aux concepts de base</h2>
 <p>Avant d’aborder les propriétés, rappelons les définitions essentielles illustrées par le diagramme de Venn suivant :</p>
@@ -553,6 +583,7 @@ window.Quarto = {
 <li><strong>H(Y)</strong> : Entropie de Y (incertitude totale sur Y)</li>
 <li><strong>H(X,Y)</strong> : Entropie jointe (incertitude totale du couple (X,Y))</li>
 <li><strong>H(X|Y)</strong> : Entropie conditionnelle (incertitude restante sur X quand on connaît Y)</li>
+<li><strong>H(Y|X)</strong> : Entropie conditionnelle (incertitude restante sur Y quand on connaît X)</li>
 <li><strong>I(X;Y)</strong> : Information mutuelle (information partagée entre X et Y)</li>
 </ul>
 </section>

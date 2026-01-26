@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>dsp29 – ISS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ISS</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./../index.html">
+ <span class="dropdown-text">Anglais</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Français</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp29.html">Extraction de caractéristiques</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Représentations en Haute Dimension en Data Science</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours : Analyse en Composantes Principales (PCA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours : Analyse Discriminante Linéaire (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours pédagogique : Clustering et algorithme k-means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modèles de Mélange Gaussien et Algorithme EM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain Rules</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie Conditionnelle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie et diagrammes de Venn</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie relative</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp26.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie Croisée</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information mutuelle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp28.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fonctions caractéristiques et génératrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp29.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Extraction de caractéristiques</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#extraction-de-caractéristiques" id="toc-extraction-de-caractéristiques" class="nav-link active" data-scroll-target="#extraction-de-caractéristiques">Extraction de caractéristiques</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#apprentissage-supervisé" id="toc-apprentissage-supervisé" class="nav-link" data-scroll-target="#apprentissage-supervisé">1. Apprentissage Supervisé</a>
+  <ul class="collapse">
+  <li><a href="#principe-et-lien-avec-la-théorie-de-linformation" id="toc-principe-et-lien-avec-la-théorie-de-linformation" class="nav-link" data-scroll-target="#principe-et-lien-avec-la-théorie-de-linformation">Principe et lien avec la théorie de l’information</a></li>
+  <li><a href="#domaines-dapplication" id="toc-domaines-dapplication" class="nav-link" data-scroll-target="#domaines-dapplication">Domaines d’application</a></li>
+  </ul></li>
+  <li><a href="#auto-encodage" id="toc-auto-encodage" class="nav-link" data-scroll-target="#auto-encodage">2. Auto-Encodage</a>
+  <ul class="collapse">
+  <li><a href="#principe-et-lien-avec-la-théorie-de-linformation-1" id="toc-principe-et-lien-avec-la-théorie-de-linformation-1" class="nav-link" data-scroll-target="#principe-et-lien-avec-la-théorie-de-linformation-1">Principe et lien avec la théorie de l’information</a></li>
+  <li><a href="#domaines-dapplication-1" id="toc-domaines-dapplication-1" class="nav-link" data-scroll-target="#domaines-dapplication-1">Domaines d’application</a></li>
+  </ul></li>
+  <li><a href="#apprentissage-auto-supervisé" id="toc-apprentissage-auto-supervisé" class="nav-link" data-scroll-target="#apprentissage-auto-supervisé">3. Apprentissage Auto-Supervisé</a>
+  <ul class="collapse">
+  <li><a href="#principe-et-lien-avec-la-théorie-de-linformation-2" id="toc-principe-et-lien-avec-la-théorie-de-linformation-2" class="nav-link" data-scroll-target="#principe-et-lien-avec-la-théorie-de-linformation-2">Principe et lien avec la théorie de l’information</a></li>
+  <li><a href="#domaines-dapplication-2" id="toc-domaines-dapplication-2" class="nav-link" data-scroll-target="#domaines-dapplication-2">Domaines d’application</a></li>
+  </ul></li>
+  <li><a href="#tableau-synthétique-des-liens-théoriques" id="toc-tableau-synthétique-des-liens-théoriques" class="nav-link" data-scroll-target="#tableau-synthétique-des-liens-théoriques">Tableau synthétique des liens théoriques</a></li>
+  <li><a href="#exemples-concrets-intégrés" id="toc-exemples-concrets-intégrés" class="nav-link" data-scroll-target="#exemples-concrets-intégrés">Exemples concrets intégrés</a>
+  <ul class="collapse">
+  <li><a href="#cas-1-plateforme-de-streaming-vidéo" id="toc-cas-1-plateforme-de-streaming-vidéo" class="nav-link" data-scroll-target="#cas-1-plateforme-de-streaming-vidéo">Cas 1 : Plateforme de streaming vidéo</a></li>
+  <li><a href="#cas-2-banque-en-ligne" id="toc-cas-2-banque-en-ligne" class="nav-link" data-scroll-target="#cas-2-banque-en-ligne">Cas 2 : Banque en ligne</a></li>
+  </ul></li>
+  <li><a href="#conclusion-quelle-méthode-choisir" id="toc-conclusion-quelle-méthode-choisir" class="nav-link" data-scroll-target="#conclusion-quelle-méthode-choisir">Conclusion : Quelle méthode choisir ?</a></li>
+  <li><a href="#tableau-comparatif-et-synthèse" id="toc-tableau-comparatif-et-synthèse" class="nav-link" data-scroll-target="#tableau-comparatif-et-synthèse">Tableau comparatif et synthèse</a>
+  <ul class="collapse">
+  <li><a href="#relations-avec-lentropie-dkl-et-information-mutuelle" id="toc-relations-avec-lentropie-dkl-et-information-mutuelle" class="nav-link" data-scroll-target="#relations-avec-lentropie-dkl-et-information-mutuelle">Relations avec l’entropie, DKL et information mutuelle</a></li>
+  <li><a href="#diagramme-de-synthèse-des-relations" id="toc-diagramme-de-synthèse-des-relations" class="nav-link" data-scroll-target="#diagramme-de-synthèse-des-relations">Diagramme de synthèse des relations</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="dsp29.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp29.html">Extraction de caractéristiques</a></li></ol></nav></header>
+
+
+
+
+
+<section id="extraction-de-caractéristiques" class="level1">
+<h1>Extraction de caractéristiques</h1>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Expliquez les 3 concepts principaux d’extraction de caractéristiques basés sur l’apprentissage supervisé, l’auto-encodage et l’apprentissage auto-supervisé.</p>
+<p>Donnez des exemples d’utilisation de ces caractéristiques.</p>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>L’<strong>extraction de caractéristiques</strong> transforme des données brutes en représentations compactes et informatives. Trois approches principales existent :</p>
+<ol type="1">
+<li><strong>Apprentissage supervisé</strong> : utilise des données étiquetées</li>
+<li><strong>Auto-encodage</strong> : reconstruit les données via un goulot d’étranglement<br>
+</li>
+<li><strong>Apprentissage auto-supervisé</strong> : crée ses propres tâches d’apprentissage</li>
+</ol>
+<p>Chaque méthode cherche à optimiser différents aspects de l’information, liés à l’entropie, la divergence KL et l’information mutuelle.</p>
+<hr>
+</section>
+<section id="apprentissage-supervisé" class="level2">
+<h2 class="anchored" data-anchor-id="apprentissage-supervisé">1. Apprentissage Supervisé</h2>
+<section id="principe-et-lien-avec-la-théorie-de-linformation" class="level3">
+<h3 class="anchored" data-anchor-id="principe-et-lien-avec-la-théorie-de-linformation">Principe et lien avec la théorie de l’information</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Données X"]
+    B["Labels Y"]
+    C[\"Extracteur de features"/]
+    D["Features Z"]
+    E[/"Classifieur"\]
+    F["Prédictions Ŷ"]
+    
+    A --&gt; C
+    B -.-&gt;|Supervision| E
+    C --&gt; D
+    D --&gt; E
+    E --&gt; F
+    
+    style D fill:#e1f5ff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Objectif</strong> : Maximiser l’<strong>information mutuelle</strong> entre les features Z et les labels Y.</p>
+<p><strong>Intuition</strong> : On cherche à extraire des caractéristiques qui réduisent au maximum l’incertitude sur les labels. Si Z contient beaucoup d’information sur Y, alors connaître Z réduit fortement l’entropie de Y.</p>
+</section>
+<section id="domaines-dapplication" class="level3">
+<h3 class="anchored" data-anchor-id="domaines-dapplication">Domaines d’application</h3>
+<section id="extraction-feature-extraction" class="level4">
+<h4 class="anchored" data-anchor-id="extraction-feature-extraction">Extraction (Feature Extraction)</h4>
+<ul>
+<li><strong>Exemple</strong> : ResNet pour images - les couches convolutives extraient hiérarchiquement des motifs (bords → textures → parties d’objets)</li>
+<li><strong>Lien théorie</strong> : Features optimisées pour la discrimination</li>
+</ul>
+</section>
+<section id="mining-exploration" class="level4">
+<h4 class="anchored" data-anchor-id="mining-exploration">Mining (Exploration)</h4>
+<ul>
+<li><strong>Exemple</strong> : Analyse de sentiments dans des reviews clients</li>
+<li><strong>Usage</strong> : Découvrir des thèmes récurrents dans les commentaires négatifs</li>
+<li><strong>Approche</strong> : Classification supervisée puis analyse des features importantes</li>
+</ul>
+</section>
+<section id="recognition-classification" class="level4">
+<h4 class="anchored" data-anchor-id="recognition-classification">Recognition &amp; Classification</h4>
+<ul>
+<li><strong>Exemple</strong> : Reconnaissance faciale pour authentification</li>
+<li><strong>Principe</strong> : 2-ary ou M-ary classification - décider entre “personne A” vs “personne B” vs “autres”</li>
+<li><strong>Performance</strong> : Haute précision quand beaucoup de données étiquetées</li>
+</ul>
+</section>
+<section id="search-identification" class="level4">
+<h4 class="anchored" data-anchor-id="search-identification">Search &amp; Identification</h4>
+<ul>
+<li><strong>Exemple</strong> : Moteur de recherche de produits par image</li>
+<li><strong>Mécanisme</strong> : Features extraites comparées par distance cosinus</li>
+<li><strong>Avantage</strong> : Précision élevée grâce à l’apprentissage discriminatif</li>
+</ul>
+</section>
+<section id="transmission-compression" class="level4">
+<h4 class="anchored" data-anchor-id="transmission-compression">Transmission &amp; Compression</h4>
+<ul>
+<li><strong>Exemple</strong> : Compression intelligente - ne garder que les features discriminantes</li>
+<li><strong>Approche</strong> : Apprentissage de représentations compressées pour classification</li>
+</ul>
+</section>
+<section id="multimedia-security" class="level4">
+<h4 class="anchored" data-anchor-id="multimedia-security">Multimedia Security</h4>
+<ul>
+<li><strong>Exemple</strong> : Détection de deepfakes</li>
+<li><strong>Principe</strong> : Classification binaire (réel/faux) basée sur des features apprises</li>
+<li><strong>Features</strong> : Capture des artefacts de génération</li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="auto-encodage" class="level2">
+<h2 class="anchored" data-anchor-id="auto-encodage">2. Auto-Encodage</h2>
+<section id="principe-et-lien-avec-la-théorie-de-linformation-1" class="level3">
+<h3 class="anchored" data-anchor-id="principe-et-lien-avec-la-théorie-de-linformation-1">Principe et lien avec la théorie de l’information</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Données X"]
+    B[\"Encodeur"/]
+    C["Bottleneck Z"]
+    D[/"Décodeur"\]
+    E["Reconstruction X̂"]
+    
+    A --&gt; B
+    B --&gt; C
+    C --&gt; D
+    D --&gt; E
+    
+    F["Minimiser ||X - X̂||²"]
+    A -.-&gt; F
+    E -.-&gt; F
+    
+    style C fill:#fff4e1
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Objectif</strong> : Minimiser la <strong>divergence KL</strong> entre la distribution des données et leur reconstruction.</p>
+<p><strong>Intuition</strong> : On cherche une représentation compressée Z qui préserve l’information essentielle. C’est un compromis entre compression (petit Z) et fidélité (X̂ proche de X).</p>
+</section>
+<section id="domaines-dapplication-1" class="level3">
+<h3 class="anchored" data-anchor-id="domaines-dapplication-1">Domaines d’application</h3>
+<section id="extraction-feature-extraction-1" class="level4">
+<h4 class="anchored" data-anchor-id="extraction-feature-extraction-1">Extraction (Feature Extraction)</h4>
+<ul>
+<li><strong>Exemple</strong> : Réduction de dimension non-linéaire</li>
+<li><strong>Usage</strong> : Projection de données complexes en 2D/3D pour visualisation</li>
+<li><strong>Avantage</strong> vs PCA : Capture des relations non-linéaires</li>
+</ul>
+</section>
+<section id="mining-exploration-1" class="level4">
+<h4 class="anchored" data-anchor-id="mining-exploration-1">Mining (Exploration)</h4>
+<ul>
+<li><strong>Exemple</strong> : Découverte de communautés dans les réseaux sociaux</li>
+<li><strong>Approche</strong> : Auto-encodeur sur matrice d’adjacence</li>
+<li><strong>Résultat</strong> : Clusters correspondant à des communautés naturelles</li>
+</ul>
+</section>
+<section id="recognition-classification-1" class="level4">
+<h4 class="anchored" data-anchor-id="recognition-classification-1">Recognition &amp; Classification</h4>
+<ul>
+<li><strong>Exemple</strong> : Détection d’anomalies médicales</li>
+<li><strong>Principe</strong> : Seules les images normales se reconstruisent bien</li>
+<li><strong>Décision</strong> : Erreur de reconstruction élevée → anomalie</li>
+</ul>
+</section>
+<section id="search-identification-1" class="level4">
+<h4 class="anchored" data-anchor-id="search-identification-1">Search &amp; Identification</h4>
+<ul>
+<li><strong>Exemple</strong> : Système de recommandation musicale</li>
+<li><strong>Mécanisme</strong> : Recherche par similarité dans l’espace latent Z</li>
+<li><strong>Avantage</strong> : Capture la similarité structurelle profonde</li>
+</ul>
+</section>
+<section id="transmission-compression-1" class="level4">
+<h4 class="anchored" data-anchor-id="transmission-compression-1">Transmission &amp; Compression</h4>
+<ul>
+<li><strong>Exemple</strong> : Codecs vidéo neuronaux (ex: BPG, VVC)</li>
+<li><strong>Principe</strong> : Compression avec perte optimisée pour perception humaine</li>
+<li><strong>Trade-off</strong> : Taux-distorsion - compromis taille/qualité</li>
+</ul>
+</section>
+<section id="multimedia-security-1" class="level4">
+<h4 class="anchored" data-anchor-id="multimedia-security-1">Multimedia Security</h4>
+<ul>
+<li><strong>Exemple</strong> : Watermarking robuste</li>
+<li><strong>Approche</strong> : Encoder le watermark dans le bottleneck Z</li>
+<li><strong>Robustesse</strong> : Survit aux transformations tant que la reconstruction est fidèle</li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="apprentissage-auto-supervisé" class="level2">
+<h2 class="anchored" data-anchor-id="apprentissage-auto-supervisé">3. Apprentissage Auto-Supervisé</h2>
+<section id="principe-et-lien-avec-la-théorie-de-linformation-2" class="level3">
+<h3 class="anchored" data-anchor-id="principe-et-lien-avec-la-théorie-de-linformation-2">Principe et lien avec la théorie de l’information</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Donnée X"]
+    B["Vue 1&lt;br&gt;t₁(X)"]
+    C["Vue 2&lt;br&gt;t₂(X)"]
+    
+    D[\"Encodeur"/]
+    E[\"Encodeur"/]
+    
+    F["Features Z₁"]
+    G["Features Z₂"]
+    
+    H[\"Maximiser similarité"/]
+    
+    A --&gt; B
+    A --&gt; C
+    B --&gt; D
+    C --&gt; E
+    D --&gt; F
+    E --&gt; G
+    F --&gt; H
+    G --&gt; H
+    
+    style F fill:#e8f5e8
+    style G fill:#e8f5e8
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Objectif</strong> : Maximiser l’<strong>information mutuelle</strong> entre différentes vues d’une même donnée.</p>
+<p><strong>Intuition</strong> : Deux transformations d’une même image doivent avoir des représentations similaires. On apprend ainsi des features invariantes aux transformations mais discriminantes entre données différentes.</p>
+</section>
+<section id="domaines-dapplication-2" class="level3">
+<h3 class="anchored" data-anchor-id="domaines-dapplication-2">Domaines d’application</h3>
+<section id="extraction-feature-extraction-2" class="level4">
+<h4 class="anchored" data-anchor-id="extraction-feature-extraction-2">Extraction (Feature Extraction)</h4>
+<ul>
+<li><strong>Exemple</strong> : Modèles BERT en NLP</li>
+<li><strong>Principe</strong> : Prédiction de mots masqués → embeddings contextuels riches</li>
+<li><strong>Usage</strong> : Base pour de nombreuses tâches NLP</li>
+</ul>
+</section>
+<section id="mining-exploration-2" class="level4">
+<h4 class="anchored" data-anchor-id="mining-exploration-2">Mining (Exploration)</h4>
+<ul>
+<li><strong>Exemple</strong> : Découverte de catégories dans un dataset non étiqueté</li>
+<li><strong>Approche</strong> : Pré-entraînement contrastif puis clustering</li>
+<li><strong>Résultat</strong> : Catégories émergentes sans supervision humaine</li>
+</ul>
+</section>
+<section id="recognition-classification-2" class="level4">
+<h4 class="anchored" data-anchor-id="recognition-classification-2">Recognition &amp; Classification</h4>
+<ul>
+<li><strong>Exemple</strong> : Diagnostic médical avec peu de données étiquetées</li>
+<li><strong>Protocole</strong> : 1) Pré-entraînement auto-supervisé sur toutes les images médicales disponibles 2) Fine-tuning sur le petit dataset étiqueté</li>
+<li><strong>Avantage</strong> : Réduction drastique du besoin d’annotations</li>
+</ul>
+</section>
+<section id="search-identification-2" class="level4">
+<h4 class="anchored" data-anchor-id="search-identification-2">Search &amp; Identification</h4>
+<ul>
+<li><strong>Exemple</strong> : Recherche cross-modale image-texte (CLIP)</li>
+<li><strong>Capacité</strong> : Trouver des images à partir de descriptions textuelles</li>
+<li><strong>Usage</strong> : Moteurs de recherche visuels avancés</li>
+</ul>
+</section>
+<section id="transmission-compression-2" class="level4">
+<h4 class="anchored" data-anchor-id="transmission-compression-2">Transmission &amp; Compression</h4>
+<ul>
+<li><strong>Exemple</strong> : Compression sémantique</li>
+<li><strong>Idée</strong> : Ne transmettre que l’information sémantique essentielle</li>
+<li><strong>Approche</strong> : Pré-entraînement auto-supervisé pour identifier ce qui est sémantiquement important</li>
+</ul>
+</section>
+<section id="multimedia-security-2" class="level4">
+<h4 class="anchored" data-anchor-id="multimedia-security-2">Multimedia Security</h4>
+<ul>
+<li><strong>Exemple</strong> : Détection de contenu généré par IA</li>
+<li><strong>Principe</strong> : Les modèles génératifs laissent des empreintes subtiles</li>
+<li><strong>Détection</strong> : Features auto-supervisées capturent ces patterns</li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="tableau-synthétique-des-liens-théoriques" class="level2">
+<h2 class="anchored" data-anchor-id="tableau-synthétique-des-liens-théoriques">Tableau synthétique des liens théoriques</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 22%">
+<col style="width: 43%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Méthode</th>
+<th>Quoi optimiser ?</th>
+<th>Lien avec théorie de l’information</th>
+<th>Analogie intuitive</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Supervisé</strong></td>
+<td>Prédiction correcte des labels</td>
+<td>Maximiser I(Z;Y) - info mutuelle features/labels</td>
+<td>“Apprendre à distinguer”</td>
+</tr>
+<tr class="even">
+<td><strong>Auto-encodage</strong></td>
+<td>Reconstruction fidèle</td>
+<td>Minimiser D_KL(X‖X̂) - divergence entre original et reconstruction</td>
+<td>“Apprendre à se souvenir de l’essentiel”</td>
+</tr>
+<tr class="odd">
+<td><strong>Auto-supervisé</strong></td>
+<td>Similitude entre vues augmentées</td>
+<td>Maximiser I(Z₁;Z₂) - info mutuelle entre vues d’une même donnée</td>
+<td>“Apprendre à reconnaître malgré les transformations”</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="exemples-concrets-intégrés" class="level2">
+<h2 class="anchored" data-anchor-id="exemples-concrets-intégrés">Exemples concrets intégrés</h2>
+<section id="cas-1-plateforme-de-streaming-vidéo" class="level3">
+<h3 class="anchored" data-anchor-id="cas-1-plateforme-de-streaming-vidéo">Cas 1 : Plateforme de streaming vidéo</h3>
+<p><strong>Problème</strong> : Recommander des films à des utilisateurs</p>
+<p><strong>Solution hybride</strong> :</p>
+<ol type="1">
+<li><strong>Auto-supervisé</strong> : Pré-entraînement sur toutes les vidéos (apprendre à reconnaître des scènes, actions)</li>
+<li><strong>Supervisé</strong> : Fine-tuning sur les notations des utilisateurs</li>
+<li><strong>Auto-encodage</strong> : Compression des embeddings pour recherche rapide</li>
+</ol>
+<p><strong>Applications</strong> :</p>
+<ul>
+<li><strong>Mining</strong> : Découvrir des genres émergents (ex: “comédies romantiques de Noël”)</li>
+<li><strong>Search</strong> : “Trouver des films qui ressemblent à Inception”</li>
+<li><strong>Compression</strong> : Streaming adaptatif selon la bande passante</li>
+</ul>
+</section>
+<section id="cas-2-banque-en-ligne" class="level3">
+<h3 class="anchored" data-anchor-id="cas-2-banque-en-ligne">Cas 2 : Banque en ligne</h3>
+<p><strong>Problème</strong> : Détecter les transactions frauduleuses</p>
+<p><strong>Approche</strong> :</p>
+<ol type="1">
+<li><strong>Auto-encodage</strong> : Modèle normal sur transactions légitimes</li>
+<li><strong>Détection</strong> : Transactions avec haute erreur de reconstruction = potentielles fraudes</li>
+<li><strong>Supervisé</strong> : Validation humaine → création de labels → modèle supervisé plus précis</li>
+</ol>
+<p><strong>Sécurité</strong> : Détection en temps réel des anomalies</p>
+<hr>
+</section>
+</section>
+<section id="conclusion-quelle-méthode-choisir" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-quelle-méthode-choisir">Conclusion : Quelle méthode choisir ?</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 53%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Besoin</th>
+<th>Méthode recommandée</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Beaucoup de données étiquetées</strong></td>
+<td>Supervisé</td>
+<td>Performance maximale sur tâche spécifique</td>
+</tr>
+<tr class="even">
+<td><strong>Compression, anomalies</strong></td>
+<td>Auto-encodage</td>
+<td>Optimisé pour reconstruction fidèle</td>
+</tr>
+<tr class="odd">
+<td><strong>Peu de labels, beaucoup de données brutes</strong></td>
+<td>Auto-supervisé</td>
+<td>Exploite la structure naturelle des données</td>
+</tr>
+<tr class="even">
+<td><strong>Système complet</strong></td>
+<td>Combinaison des trois</td>
+<td>Pré-entraînement auto-supervisé → fine-tuning supervisé → compression auto-encodeur</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tendance actuelle</strong> : L’apprentissage auto-supervisé devient dominant car il exploite l’abondance de données non étiquetées, suivie d’un fine-tuning supervisé pour adapter aux tâches spécifiques, avec des auto-encodeurs pour l’efficacité opérationnelle.</p>
+<hr>
+</section>
+<section id="tableau-comparatif-et-synthèse" class="level2">
+<h2 class="anchored" data-anchor-id="tableau-comparatif-et-synthèse">Tableau comparatif et synthèse</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Apprentissage supervisé</th>
+<th>Auto-encodage</th>
+<th>Apprentissage auto-supervisé</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Données</strong></td>
+<td>Étiquetées</td>
+<td>Non étiquetées</td>
+<td>Non étiquetées</td>
+</tr>
+<tr class="even">
+<td><strong>Objectif</strong></td>
+<td>Prédire Y</td>
+<td>Reconstruire X</td>
+<td>Apprendre représentations générales</td>
+</tr>
+<tr class="odd">
+<td><strong>Lien avec théorie info</strong></td>
+<td>Max <span class="math inline">\(I(Z; Y)\)</span></td>
+<td>Min <span class="math inline">\(D_{\mathrm{KL}}\)</span>, bottleneck</td>
+<td>Max <span class="math inline">\(I(Z_1; Z_2)\)</span>, InfoNCE</td>
+</tr>
+<tr class="even">
+<td><strong>Caractéristiques</strong></td>
+<td>Spécifiques à la tâche</td>
+<td>Compactes, reconstrucibles</td>
+<td>Généralisables, transférables</td>
+</tr>
+<tr class="odd">
+<td><strong>Applications typiques</strong></td>
+<td>Classification, régression</td>
+<td>Compression, anomalies</td>
+<td>Pré-entraînement, transfer learning</td>
+</tr>
+</tbody>
+</table>
+<section id="relations-avec-lentropie-dkl-et-information-mutuelle" class="level3">
+<h3 class="anchored" data-anchor-id="relations-avec-lentropie-dkl-et-information-mutuelle">Relations avec l’entropie, DKL et information mutuelle</h3>
+<ol type="1">
+<li><p><strong>Entropie <span class="math inline">\(H(\cdot)\)</span></strong> : Mesure l’incertitude/le contenu informationnel</p>
+<ul>
+<li>Dans tous les cas, on cherche des représentations avec une entropie appropriée (suffisamment informative mais pas trop redondante)</li>
+</ul></li>
+<li><p><strong>Divergence KL <span class="math inline">\(D_{\mathrm{KL}}(p \parallel q)\)</span></strong> : Mesure l’écart entre distributions</p>
+<ul>
+<li>VAE : <span class="math inline">\(D_{\mathrm{KL}}(q(z|x) \parallel p(z))\)</span> régularise l’espace latent</li>
+<li>Domain adaptation : Alignement de distributions</li>
+<li>Self-supervised : Minimiser DKL entre vues augmentées</li>
+</ul></li>
+<li><p><strong>Information mutuelle <span class="math inline">\(I(\cdot;\cdot)\)</span></strong> : Mesure la dépendance</p>
+<ul>
+<li>Supervisé : Maximiser <span class="math inline">\(I(Z; Y)\)</span></li>
+<li>Self-supervised : Maximiser <span class="math inline">\(I(Z_1; Z_2)\)</span></li>
+<li>Autoencodeurs : Préservation de <span class="math inline">\(I(X; Z)\)</span> sous contrainte de compression</li>
+</ul></li>
+</ol>
+</section>
+<section id="diagramme-de-synthèse-des-relations" class="level3">
+<h3 class="anchored" data-anchor-id="diagramme-de-synthèse-des-relations">Diagramme de synthèse des relations</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Théorie de l'information] --&gt; B[Entropie H];
+    A --&gt; C[Divergence KL];
+    A --&gt; D[Information mutuelle I];
+    
+    B --&gt; E[Compression];
+    B --&gt; F[Complexité des représentations];
+    
+    C --&gt; G[Régularisation VAE];
+    C --&gt; H[Alignement de distributions];
+    
+    D --&gt; I["Supervisé: max I(Z;Y)"];
+    D --&gt; J["Self-supervised: max I(Z₁;Z₂)"];
+    D --&gt; K["Autoencodeurs: I(X;Z) préservée"];
+    
+    E --&gt; L[Applications pratiques];
+    F --&gt; L;
+    G --&gt; L;
+    H --&gt; L;
+    I --&gt; L;
+    J --&gt; L;
+    K --&gt; L;
+    
+    L --&gt; M[Classification];
+    L --&gt; N[Compression];
+    L --&gt; O[Détection d'anomalies];
+    L --&gt; P[Transfer learning];
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Les trois paradigmes d’extraction de caractéristiques offrent des approches complémentaires avec des liens profonds à la théorie de l’information :</p>
+<ol type="1">
+<li><p><strong>L’apprentissage supervisé</strong> maximise directement l’information mutuelle avec les étiquettes, produisant des caractéristiques hautement discriminantes pour une tâche spécifique.</p></li>
+<li><p><strong>L’auto-encodage</strong> implémente un bottleneck informationnel avec régularisation par divergence KL, apprenant des représentations compactes qui préservent l’information essentielle.</p></li>
+<li><p><strong>L’apprentissage auto-supervisé</strong> maximise l’information mutuelle entre différentes vues des données, apprenant des représentations générales et transférables.</p></li>
+</ol>
+<p>Ces liens théoriques ne sont pas seulement académiques : ils guident le développement d’architectures plus efficaces et expliquent pourquoi certaines méthodes fonctionnent mieux que d’autres dans des contextes spécifiques. La compréhension de ces connexions permet aux praticiens de choisir l’approche appropriée pour leur problème et d’innover en combinant les forces de chaque paradigme.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

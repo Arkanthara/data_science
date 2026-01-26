@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>dsp26 – ISS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9ee82e006983bafa07c9ac29a901142c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-96c1bb8b336142dcc39f931773fab1b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ISS</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-langage" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img">
+</i> 
+ <span class="menu-text">Langage</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-langage">    
+        <li>
+    <a class="dropdown-item" href="./../index.html">
+ <span class="dropdown-text">Anglais</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Français</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp26.html">Entropie Croisée</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Espaces de Représentation en Haute Dimension</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Représentations en Haute Dimension en Data Science</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds21q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Principal Component Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours : Analyse en Composantes Principales (PCA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds31q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Linear Discriminant Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours : Analyse Discriminante Linéaire (LDA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds51q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam question</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">k-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cours pédagogique : Clustering et algorithme k-means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds71q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Expectation-Maximization</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modèles de Mélange Gaussien et Algorithme EM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds61q.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exam questions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain Rules</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie Conditionnelle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie et diagrammes de Venn</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropie relative</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp26.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Entropie Croisée</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Information mutuelle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp28.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fonctions caractéristiques et génératrices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dsp29.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction de caractéristiques</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#entropie-croisée" id="toc-entropie-croisée" class="nav-link active" data-scroll-target="#entropie-croisée">Entropie Croisée</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#introduction-à-lentropie-croisée-cross-entropy" id="toc-introduction-à-lentropie-croisée-cross-entropy" class="nav-link" data-scroll-target="#introduction-à-lentropie-croisée-cross-entropy">Introduction à l’entropie croisée (Cross-Entropy)</a>
+  <ul class="collapse">
+  <li><a href="#définition-mathématique" id="toc-définition-mathématique" class="nav-link" data-scroll-target="#définition-mathématique">Définition mathématique</a></li>
+  </ul></li>
+  <li><a href="#interprétation-intuitive" id="toc-interprétation-intuitive" class="nav-link" data-scroll-target="#interprétation-intuitive">Interprétation intuitive</a>
+  <ul class="collapse">
+  <li><a href="#métaphore-du-code-postal" id="toc-métaphore-du-code-postal" class="nav-link" data-scroll-target="#métaphore-du-code-postal">Métaphore du code postal</a></li>
+  </ul></li>
+  <li><a href="#propriétés-de-lentropie-croisée" id="toc-propriétés-de-lentropie-croisée" class="nav-link" data-scroll-target="#propriétés-de-lentropie-croisée">Propriétés de l’entropie croisée</a>
+  <ul class="collapse">
+  <li><a href="#non-symétrie" id="toc-non-symétrie" class="nav-link" data-scroll-target="#non-symétrie">1. Non-symétrie</a></li>
+  <li><a href="#minorée-par-lentropie" id="toc-minorée-par-lentropie" class="nav-link" data-scroll-target="#minorée-par-lentropie">2. Minorée par l’entropie</a></li>
+  <li><a href="#convexité-par-rapport-à-q" id="toc-convexité-par-rapport-à-q" class="nav-link" data-scroll-target="#convexité-par-rapport-à-q">3. Convexité par rapport à <span class="math inline">\(q\)</span></a></li>
+  </ul></li>
+  <li><a href="#relation-fondamentale-avec-lentropie-relative" id="toc-relation-fondamentale-avec-lentropie-relative" class="nav-link" data-scroll-target="#relation-fondamentale-avec-lentropie-relative">Relation fondamentale avec l’entropie relative</a>
+  <ul class="collapse">
+  <li><a href="#lien-mathématique" id="toc-lien-mathématique" class="nav-link" data-scroll-target="#lien-mathématique">Lien mathématique</a></li>
+  <li><a href="#interprétation-détaillée" id="toc-interprétation-détaillée" class="nav-link" data-scroll-target="#interprétation-détaillée">Interprétation détaillée</a></li>
+  </ul></li>
+  <li><a href="#exemples-concrets-dutilisation" id="toc-exemples-concrets-dutilisation" class="nav-link" data-scroll-target="#exemples-concrets-dutilisation">Exemples concrets d’utilisation</a>
+  <ul class="collapse">
+  <li><a href="#apprentissage-automatique-classification" id="toc-apprentissage-automatique-classification" class="nav-link" data-scroll-target="#apprentissage-automatique-classification">1. Apprentissage automatique : Classification</a></li>
+  <li><a href="#compression-de-données" id="toc-compression-de-données" class="nav-link" data-scroll-target="#compression-de-données">2. Compression de données</a></li>
+  <li><a href="#évaluation-de-modèles-de-langage" id="toc-évaluation-de-modèles-de-langage" class="nav-link" data-scroll-target="#évaluation-de-modèles-de-langage">3. Évaluation de modèles de langage</a></li>
+  </ul></li>
+  <li><a href="#tableau-comparatif-entropie-vs-entropie-croisée-vs-divergence-kl" id="toc-tableau-comparatif-entropie-vs-entropie-croisée-vs-divergence-kl" class="nav-link" data-scroll-target="#tableau-comparatif-entropie-vs-entropie-croisée-vs-divergence-kl">Tableau comparatif : Entropie vs Entropie croisée vs Divergence KL</a></li>
+  <li><a href="#application-pratique-fonction-de-perte-en-deep-learning" id="toc-application-pratique-fonction-de-perte-en-deep-learning" class="nav-link" data-scroll-target="#application-pratique-fonction-de-perte-en-deep-learning">Application pratique : Fonction de perte en deep learning</a>
+  <ul class="collapse">
+  <li><a href="#implémentation-en-pytorch" id="toc-implémentation-en-pytorch" class="nav-link" data-scroll-target="#implémentation-en-pytorch">Implémentation en PyTorch</a></li>
+  <li><a href="#explication-étape-par-étape" id="toc-explication-étape-par-étape" class="nav-link" data-scroll-target="#explication-étape-par-étape">Explication étape par étape</a></li>
+  </ul></li>
+  <li><a href="#visualisation-du-lien-entre-les-concepts" id="toc-visualisation-du-lien-entre-les-concepts" class="nav-link" data-scroll-target="#visualisation-du-lien-entre-les-concepts">Visualisation du lien entre les concepts</a></li>
+  <li><a href="#cas-particuliers-importants" id="toc-cas-particuliers-importants" class="nav-link" data-scroll-target="#cas-particuliers-importants">Cas particuliers importants</a>
+  <ul class="collapse">
+  <li><a href="#cas-binaire-classification-binaire" id="toc-cas-binaire-classification-binaire" class="nav-link" data-scroll-target="#cas-binaire-classification-binaire">1. Cas binaire (classification binaire)</a></li>
+  <li><a href="#distribution-uniforme-comme-référence" id="toc-distribution-uniforme-comme-référence" class="nav-link" data-scroll-target="#distribution-uniforme-comme-référence">2. Distribution uniforme comme référence</a></li>
+  </ul></li>
+  <li><a href="#pourquoi-minimiser-lentropie-croisée" id="toc-pourquoi-minimiser-lentropie-croisée" class="nav-link" data-scroll-target="#pourquoi-minimiser-lentropie-croisée">Pourquoi minimiser l’entropie croisée ?</a>
+  <ul class="collapse">
+  <li><a href="#justification-théorique-principe-du-maximum-de-vraisemblance" id="toc-justification-théorique-principe-du-maximum-de-vraisemblance" class="nav-link" data-scroll-target="#justification-théorique-principe-du-maximum-de-vraisemblance">1. Justification théorique : Principe du maximum de vraisemblance</a></li>
+  <li><a href="#propriétés-souhaitables" id="toc-propriétés-souhaitables" class="nav-link" data-scroll-target="#propriétés-souhaitables">2. Propriétés souhaitables</a></li>
+  </ul></li>
+  <li><a href="#exemple-détaillé-classification-mnist" id="toc-exemple-détaillé-classification-mnist" class="nav-link" data-scroll-target="#exemple-détaillé-classification-mnist">Exemple détaillé : Classification MNIST</a>
+  <ul class="collapse">
+  <li><a href="#problème" id="toc-problème" class="nav-link" data-scroll-target="#problème">Problème</a></li>
+  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
+  <li><a href="#modèle" id="toc-modèle" class="nav-link" data-scroll-target="#modèle">Modèle</a></li>
+  <li><a href="#calcul-de-la-perte" id="toc-calcul-de-la-perte" class="nav-link" data-scroll-target="#calcul-de-la-perte">Calcul de la perte</a></li>
+  </ul></li>
+  <li><a href="#évolution-historique-et-alternatives" id="toc-évolution-historique-et-alternatives" class="nav-link" data-scroll-target="#évolution-historique-et-alternatives">Évolution historique et alternatives</a>
+  <ul class="collapse">
+  <li><a href="#perte-des-moindres-carrés" id="toc-perte-des-moindres-carrés" class="nav-link" data-scroll-target="#perte-des-moindres-carrés">1. Perte des moindres carrés</a></li>
+  <li><a href="#avantages-de-lentropie-croisée" id="toc-avantages-de-lentropie-croisée" class="nav-link" data-scroll-target="#avantages-de-lentropie-croisée">2. Avantages de l’entropie croisée</a></li>
+  </ul></li>
+  <li><a href="#pièges-et-bonnes-pratiques" id="toc-pièges-et-bonnes-pratiques" class="nav-link" data-scroll-target="#pièges-et-bonnes-pratiques">Pièges et bonnes pratiques</a>
+  <ul class="collapse">
+  <li><a href="#stabilité-numérique" id="toc-stabilité-numérique" class="nav-link" data-scroll-target="#stabilité-numérique">1. Stabilité numérique</a></li>
+  <li><a href="#régularisation" id="toc-régularisation" class="nav-link" data-scroll-target="#régularisation">2. Régularisation</a></li>
+  <li><a href="#données-déséquilibrées" id="toc-données-déséquilibrées" class="nav-link" data-scroll-target="#données-déséquilibrées">3. Données déséquilibrées</a></li>
+  </ul></li>
+  <li><a href="#synthèse-pédagogique" id="toc-synthèse-pédagogique" class="nav-link" data-scroll-target="#synthèse-pédagogique">Synthèse pédagogique</a>
+  <ul class="collapse">
+  <li><a href="#lanalogie-du-jeu-de-devinettes" id="toc-lanalogie-du-jeu-de-devinettes" class="nav-link" data-scroll-target="#lanalogie-du-jeu-de-devinettes">L’analogie du jeu de devinettes</a></li>
+  <li><a href="#formule-mnémotechnique" id="toc-formule-mnémotechnique" class="nav-link" data-scroll-target="#formule-mnémotechnique">Formule mnémotechnique</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="dsp26.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dsp21.html">Partie II</a></li><li class="breadcrumb-item"><a href="./dsp26.html">Entropie Croisée</a></li></ol></nav></header>
+
+
+
+
+
+<section id="entropie-croisée" class="level1">
+<h1>Entropie Croisée</h1>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Expliquer l’entropie croisée et donner quelques exemples de son utilisation.</p>
+<p>Montrer le lien entre l’entropie croisée et l’entropie relative.</p>
+</section>
+<section id="introduction-à-lentropie-croisée-cross-entropy" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-à-lentropie-croisée-cross-entropy">Introduction à l’entropie croisée (Cross-Entropy)</h2>
+<p>L’<strong>entropie croisée</strong> est une mesure fondamentale en théorie de l’information et en apprentissage automatique qui quantifie la différence entre deux distributions de probabilité. C’est particulièrement utile pour évaluer la performance des modèles de prédiction.</p>
+<section id="définition-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="définition-mathématique">Définition mathématique</h3>
+<p>Pour deux distributions discrètes <span class="math inline">\(p(x)\)</span> et <span class="math inline">\(q(x)\)</span> définies sur le même espace <span class="math inline">\(\mathcal{X}\)</span>, l’entropie croisée est définie comme :</p>
+<p><span class="math display">\[ H(p, q) = -\sum_{x \in \mathcal{X}} p(x) \log_2 q(x) = \mathbb{E}_{p(x)}[-\log_2 q(x)] \]</span></p>
+<p>Pour des distributions continues avec densités <span class="math inline">\(f(x)\)</span> et <span class="math inline">\(g(x)\)</span> :</p>
+<p><span class="math display">\[ H(f, g) = -\int f(x) \log_2 g(x) \, dx \]</span></p>
+</section>
+</section>
+<section id="interprétation-intuitive" class="level2">
+<h2 class="anchored" data-anchor-id="interprétation-intuitive">Interprétation intuitive</h2>
+<p>L’entropie croisée mesure <strong>le nombre moyen de bits nécessaires</strong> pour coder des événements provenant de la distribution <span class="math inline">\(p\)</span> en utilisant un code optimisé pour la distribution <span class="math inline">\(q\)</span>.</p>
+<section id="métaphore-du-code-postal" class="level3">
+<h3 class="anchored" data-anchor-id="métaphore-du-code-postal">Métaphore du code postal</h3>
+<p>Imaginez que vous devez envoyer des lettres à différentes villes : - <strong><span class="math inline">\(p(x)\)</span></strong> : Fréquence réelle d’envoi (Paris 50%, Lyon 30%, Marseille 20%) - <strong><span class="math inline">\(q(x)\)</span></strong> : Code que vous utilisez (optimisé pour Paris 40%, Lyon 40%, Marseille 20%) - <strong><span class="math inline">\(H(p)\)</span></strong> : Longueur optimale du code si vous connaissiez la vraie fréquence - <strong><span class="math inline">\(H(p, q)\)</span></strong> : Longueur réelle avec votre code imparfait</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Distribution réelle p(x)] --&gt; B{Code conçu pour q(x)};
+    B --&gt; C[Nombre de bits utilisé: H(p,q)];
+    C --&gt; D[= H(p) + D(p∥q)];
+    D --&gt; E[Bits optimaux + pénalité];
+    
+    F[Si q = p] --&gt; G[H(p,q) = H(p)];
+    F --&gt; H[Code parfaitement adapté];
+    
+    I[Si q ≠ p] --&gt; J[H(p,q) &gt; H(p)];
+    I --&gt; K[Surcoût dû au mauvais code];
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="propriétés-de-lentropie-croisée" class="level2">
+<h2 class="anchored" data-anchor-id="propriétés-de-lentropie-croisée">Propriétés de l’entropie croisée</h2>
+<section id="non-symétrie" class="level3">
+<h3 class="anchored" data-anchor-id="non-symétrie">1. Non-symétrie</h3>
+<p><span class="math display">\[ H(p, q) \neq H(q, p) \quad \text{en général} \]</span></p>
+<p>Contrairement à une distance, l’entropie croisée n’est pas symétrique.</p>
+</section>
+<section id="minorée-par-lentropie" class="level3">
+<h3 class="anchored" data-anchor-id="minorée-par-lentropie">2. Minorée par l’entropie</h3>
+<p><span class="math display">\[ H(p, q) \geq H(p) \]</span></p>
+<p>L’égalité <span class="math inline">\(H(p, q) = H(p)\)</span> se produit si et seulement si <span class="math inline">\(p = q\)</span>.</p>
+</section>
+<section id="convexité-par-rapport-à-q" class="level3">
+<h3 class="anchored" data-anchor-id="convexité-par-rapport-à-q">3. Convexité par rapport à <span class="math inline">\(q\)</span></h3>
+<p>Pour <span class="math inline">\(p\)</span> fixé, <span class="math inline">\(H(p, q)\)</span> est convexe en <span class="math inline">\(q\)</span>, ce qui facilite l’optimisation.</p>
+</section>
+</section>
+<section id="relation-fondamentale-avec-lentropie-relative" class="level2">
+<h2 class="anchored" data-anchor-id="relation-fondamentale-avec-lentropie-relative">Relation fondamentale avec l’entropie relative</h2>
+<section id="lien-mathématique" class="level3">
+<h3 class="anchored" data-anchor-id="lien-mathématique">Lien mathématique</h3>
+<p><span class="math display">\[ H(p, q) = H(p) + D_{\mathrm{KL}}(p \parallel q) \]</span></p>
+<p>où : - <span class="math inline">\(H(p)\)</span> est l’entropie de la distribution <span class="math inline">\(p\)</span> - <span class="math inline">\(D_{\mathrm{KL}}(p \parallel q)\)</span> est la divergence de Kullback-Leibler (entropie relative)</p>
+</section>
+<section id="interprétation-détaillée" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation-détaillée">Interprétation détaillée</h3>
+<p>Cette relation montre que l’entropie croisée se décompose en deux parties :</p>
+<ol type="1">
+<li><strong><span class="math inline">\(H(p)\)</span></strong> : L’incertitude intrinsèque de la distribution réelle
+<ul>
+<li>Minimum théorique incompressible</li>
+<li>Ne dépend que de <span class="math inline">\(p\)</span>, pas de notre modèle</li>
+</ul></li>
+<li><strong><span class="math inline">\(D_{\mathrm{KL}}(p \parallel q)\)</span></strong> : La pénalité due au mauvais modèle
+<ul>
+<li>Mesure combien <span class="math inline">\(q\)</span> diffère de <span class="math inline">\(p\)</span></li>
+<li>Réduisible en améliorant notre modèle</li>
+</ul></li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    A[Entropie Croisée H(p,q)] --&gt; B[Équivalent à];
+    B --&gt; C[H(p) + D(p∥q)];
+    
+    D[Objectif: minimiser H(p,q)] --&gt; E{Comme H(p) est constant};
+    E --&gt; F[Minimiser D(p∥q)];
+    F --&gt; G[Trouver q ≈ p];
+    
+    H[En pratique] --&gt; I[On minimise H(p,q)];
+    I --&gt; J[Car p est inconnu];
+    J --&gt; K[On estime p par données];
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exemples-concrets-dutilisation" class="level2">
+<h2 class="anchored" data-anchor-id="exemples-concrets-dutilisation">Exemples concrets d’utilisation</h2>
+<section id="apprentissage-automatique-classification" class="level3">
+<h3 class="anchored" data-anchor-id="apprentissage-automatique-classification">1. Apprentissage automatique : Classification</h3>
+<p><strong>Scénario</strong> : Classification d’images avec 3 classes (chat, chien, oiseau)</p>
+<p><strong>Données d’entraînement</strong> : - Image 1 : vraie classe = “chat” → <span class="math inline">\(p = [1, 0, 0]\)</span> - Image 2 : vraie classe = “chien” → <span class="math inline">\(p = [0, 1, 0]\)</span></p>
+<p><strong>Prédictions du modèle</strong> : - Pour l’image 1 : <span class="math inline">\(q = [0.7, 0.2, 0.1]\)</span> - Pour l’image 2 : <span class="math inline">\(q = [0.1, 0.6, 0.3]\)</span></p>
+<p><strong>Calcul de l’entropie croisée</strong> : Pour l’image 1 : <span class="math display">\[ H(p, q) = -[1 \times \log_2(0.7) + 0 \times \log_2(0.2) + 0 \times \log_2(0.1)] = -\log_2(0.7) \approx 0.514 \text{ bits} \]</span></p>
+<p>Pour l’image 2 : <span class="math display">\[ H(p, q) = -[0 \times \log_2(0.1) + 1 \times \log_2(0.6) + 0 \times \log_2(0.3)] = -\log_2(0.6) \approx 0.737 \text{ bits} \]</span></p>
+<p><strong>Perte moyenne</strong> : Moyenne sur toutes les images de l’ensemble d’entraînement.</p>
+</section>
+<section id="compression-de-données" class="level3">
+<h3 class="anchored" data-anchor-id="compression-de-données">2. Compression de données</h3>
+<p><strong>Scénario</strong> : Compression d’un texte en anglais</p>
+<p><strong>Distribution réelle</strong> (<span class="math inline">\(p\)</span>) : - ‘e’ : 12.7% - ‘t’ : 9.1% - ‘a’ : 8.2% - … (autres lettres)</p>
+<p><strong>Modèle utilisé</strong> (<span class="math inline">\(q\)</span>) : - Modèle uniforme : chaque lettre = 1/26 ≈ 3.85% - Modèle basé sur Shakespeare : distribution spécifique</p>
+<p><strong>Calcul d’efficacité</strong> : Avec le modèle uniforme : <span class="math display">\[ H(p, q) = -\sum p(x) \log_2(1/26) = \log_2(26) \approx 4.7 \text{ bits/lettre} \]</span></p>
+<p>Avec un bon modèle linguistique (<span class="math inline">\(q\)</span> proche de <span class="math inline">\(p\)</span>) : <span class="math display">\[ H(p, q) \approx H(p) \approx 4.1 \text{ bits/lettre} \]</span></p>
+<p><strong>Gain</strong> : 0.6 bit par lettre, soit ~18% d’économie.</p>
+</section>
+<section id="évaluation-de-modèles-de-langage" class="level3">
+<h3 class="anchored" data-anchor-id="évaluation-de-modèles-de-langage">3. Évaluation de modèles de langage</h3>
+<p><strong>Scénario</strong> : Modèle GPT évalué sur des phrases</p>
+<p><strong>Méthode</strong> : Perplexité = <span class="math inline">\(2^{H(p,q)}\)</span></p>
+<p><strong>Interprétation</strong> : - Perplexité faible → modèle prédit bien les mots suivants - Perplexité élevée → modèle est incertain</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Texte de test] --&gt; B[Calcul de H(p,q)];
+    B --&gt; C[Perplexité = 2^H(p,q)];
+    C --&gt; D{Mesure de qualité};
+    D --&gt; E[Basse perplexité: bon modèle];
+    D --&gt; F[Haute perplexité: mauvais modèle];
+    
+    G[Exemple] --&gt; H[Modèle GPT-3];
+    H --&gt; I[Perplexité ~20-30];
+    I --&gt; J[Très performant];
+    
+    K[Modèle aléatoire] --&gt; L[Perplexité = taille du vocabulaire];
+    L --&gt; M[Très médiocre];
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tableau-comparatif-entropie-vs-entropie-croisée-vs-divergence-kl" class="level2">
+<h2 class="anchored" data-anchor-id="tableau-comparatif-entropie-vs-entropie-croisée-vs-divergence-kl">Tableau comparatif : Entropie vs Entropie croisée vs Divergence KL</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 32%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concept</th>
+<th>Formule</th>
+<th>Interprétation</th>
+<th>Propriété clé</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Entropie</strong> <span class="math inline">\(H(p)\)</span></td>
+<td><span class="math inline">\(-\sum p \log p\)</span></td>
+<td>Incertitude intrinsèque</td>
+<td>Minimum théorique</td>
+</tr>
+<tr class="even">
+<td><strong>Entropie croisée</strong> <span class="math inline">\(H(p,q)\)</span></td>
+<td><span class="math inline">\(-\sum p \log q\)</span></td>
+<td>Coût du mauvais modèle</td>
+<td>Toujours ≥ <span class="math inline">\(H(p)\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Divergence KL</strong> <span class="math inline">\(D(p\|q)\)</span></td>
+<td><span class="math inline">\(\sum p \log(p/q)\)</span></td>
+<td>Pénalité du mauvais modèle</td>
+<td>Mesure de différence</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="application-pratique-fonction-de-perte-en-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="application-pratique-fonction-de-perte-en-deep-learning">Application pratique : Fonction de perte en deep learning</h2>
+<section id="implémentation-en-pytorch" class="level3">
+<h3 class="anchored" data-anchor-id="implémentation-en-pytorch">Implémentation en PyTorch</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Données : 3 échantillons, 5 classes</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> torch.tensor([[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.0</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                            [<span class="fl">0.8</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.0</span>],</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                            [<span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.6</span>]])</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> torch.tensor([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">4</span>])  <span class="co"># Indices des vraies classes</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul de l'entropie croisée</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> loss_fn(predictions, true_labels)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Perte d'entropie croisée: </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="explication-étape-par-étape" class="level3">
+<h3 class="anchored" data-anchor-id="explication-étape-par-étape">Explication étape par étape</h3>
+<ol type="1">
+<li>Le modèle produit des logits (non normalisés)</li>
+<li>Softmax convertit en probabilités <span class="math inline">\(q\)</span></li>
+<li>Comparaison avec les labels one-hot <span class="math inline">\(p\)</span></li>
+<li>Calcul de <span class="math inline">\(H(p, q)\)</span></li>
+<li>Gradient pour ajuster les poids</li>
+</ol>
+</section>
+</section>
+<section id="visualisation-du-lien-entre-les-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="visualisation-du-lien-entre-les-concepts">Visualisation du lien entre les concepts</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Distribution réelle p] --&gt; B[Entropie H(p)];
+    A --&gt; C[Entropie croisée H(p,q)];
+    C --&gt; D[Divergence KL D(p∥q)];
+    
+    B --&gt; E[Valeur minimale];
+    D --&gt; F[Écart à l'optimal];
+    E --&gt; C;
+    F --&gt; C;
+    
+    G[Objectif d'apprentissage] --&gt; H[Minimiser H(p,q)];
+    H --&gt; I[Équivalent à minimiser D(p∥q)];
+    I --&gt; J[Car H(p) constant];
+    
+    K[Résultat optimal] --&gt; L[q = p];
+    L --&gt; M[H(p,q) = H(p)];
+    L --&gt; N[D(p∥q) = 0];
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="cas-particuliers-importants" class="level2">
+<h2 class="anchored" data-anchor-id="cas-particuliers-importants">Cas particuliers importants</h2>
+<section id="cas-binaire-classification-binaire" class="level3">
+<h3 class="anchored" data-anchor-id="cas-binaire-classification-binaire">1. Cas binaire (classification binaire)</h3>
+<p>Pour <span class="math inline">\(p \in \{0, 1\}\)</span> et <span class="math inline">\(q \in [0, 1]\)</span> :</p>
+<p><span class="math display">\[ H(p, q) = -[p \log_2 q + (1-p) \log_2 (1-q)] \]</span></p>
+<p>C’est la <strong>perte logistique</strong> utilisée en régression logistique.</p>
+</section>
+<section id="distribution-uniforme-comme-référence" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-uniforme-comme-référence">2. Distribution uniforme comme référence</h3>
+<p>Si <span class="math inline">\(q\)</span> est uniforme sur <span class="math inline">\(N\)</span> classes :</p>
+<p><span class="math display">\[ H(p, q) = -\sum p(x) \log_2(1/N) = \log_2 N \]</span></p>
+<p>Tous les modèles sont comparés à cette baseline.</p>
+</section>
+</section>
+<section id="pourquoi-minimiser-lentropie-croisée" class="level2">
+<h2 class="anchored" data-anchor-id="pourquoi-minimiser-lentropie-croisée">Pourquoi minimiser l’entropie croisée ?</h2>
+<section id="justification-théorique-principe-du-maximum-de-vraisemblance" class="level3">
+<h3 class="anchored" data-anchor-id="justification-théorique-principe-du-maximum-de-vraisemblance">1. Justification théorique : Principe du maximum de vraisemblance</h3>
+<p>Minimiser <span class="math inline">\(H(p, q)\)</span> équivaut à maximiser la vraisemblance des données.</p>
+<p><strong>Preuve</strong> : Soit <span class="math inline">\(p_{\text{data}}\)</span> la distribution empirique, <span class="math inline">\(q_\theta\)</span> notre modèle : <span class="math display">\[ \min_\theta H(p_{\text{data}}, q_\theta) \equiv \max_\theta \mathbb{E}_{x \sim p_{\text{data}}}[\log q_\theta(x)] \]</span></p>
+</section>
+<section id="propriétés-souhaitables" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-souhaitables">2. Propriétés souhaitables</h3>
+<ul>
+<li><strong>Convexité</strong> : Garantit des minima globaux (pour de nombreux modèles)</li>
+<li><strong>Sensibilité aux erreurs</strong> : Pénalise fortement les erreurs de confiance</li>
+<li><strong>Interprétation probabiliste</strong> : Directement liée aux probabilités</li>
+</ul>
+</section>
+</section>
+<section id="exemple-détaillé-classification-mnist" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-détaillé-classification-mnist">Exemple détaillé : Classification MNIST</h2>
+<section id="problème" class="level3">
+<h3 class="anchored" data-anchor-id="problème">Problème</h3>
+<p>Reconnaître des chiffres manuscrits (0-9).</p>
+</section>
+<section id="données" class="level3">
+<h3 class="anchored" data-anchor-id="données">Données</h3>
+<ul>
+<li>Image 28×28 pixels</li>
+<li>Label : chiffre de 0 à 9</li>
+</ul>
+</section>
+<section id="modèle" class="level3">
+<h3 class="anchored" data-anchor-id="modèle">Modèle</h3>
+<p>Réseau de neurones avec sortie softmax produisant <span class="math inline">\(q = [q_0, q_1, ..., q_9]\)</span>.</p>
+</section>
+<section id="calcul-de-la-perte" class="level3">
+<h3 class="anchored" data-anchor-id="calcul-de-la-perte">Calcul de la perte</h3>
+<p>Pour une image de chiffre “3” (<span class="math inline">\(p = [0,0,0,1,0,0,0,0,0,0]\)</span>) :</p>
+<ul>
+<li>Si <span class="math inline">\(q = [0,0,0,0.9,0,0,0,0,0.1,0]\)</span> → <span class="math inline">\(H(p,q) = -\log_2(0.9) ≈ 0.152\)</span></li>
+<li>Si <span class="math inline">\(q = [0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.1,0.1,0]\)</span> → <span class="math inline">\(H(p,q) = -\log_2(0.2) ≈ 2.322\)</span></li>
+</ul>
+<p>La première prédiction est bien meilleure.</p>
+</section>
+</section>
+<section id="évolution-historique-et-alternatives" class="level2">
+<h2 class="anchored" data-anchor-id="évolution-historique-et-alternatives">Évolution historique et alternatives</h2>
+<section id="perte-des-moindres-carrés" class="level3">
+<h3 class="anchored" data-anchor-id="perte-des-moindres-carrés">1. Perte des moindres carrés</h3>
+<ul>
+<li>Anciennement populaire en régression</li>
+<li>Moins adaptée à la classification</li>
+<li>Pas de lien direct avec les probabilités</li>
+</ul>
+</section>
+<section id="avantages-de-lentropie-croisée" class="level3">
+<h3 class="anchored" data-anchor-id="avantages-de-lentropie-croisée">2. Avantages de l’entropie croisée</h3>
+<ul>
+<li><strong>Gradients bien comportés</strong> : Évite les plateaux d’apprentissage</li>
+<li><strong>Interprétation probabiliste</strong> : Sorties sont des probabilités</li>
+<li><strong>Théorie de l’information</strong> : Fondements solides</li>
+</ul>
+</section>
+</section>
+<section id="pièges-et-bonnes-pratiques" class="level2">
+<h2 class="anchored" data-anchor-id="pièges-et-bonnes-pratiques">Pièges et bonnes pratiques</h2>
+<section id="stabilité-numérique" class="level3">
+<h3 class="anchored" data-anchor-id="stabilité-numérique">1. Stabilité numérique</h3>
+<p>Le calcul direct <span class="math inline">\(\log(q)\)</span> peut être instable pour <span class="math inline">\(q ≈ 0\)</span>.</p>
+<p><strong>Solution</strong> : Utiliser la fonction log-sum-exp : <span class="math display">\[ H(p, q) = -\sum p(x) \left[ z(x) - \log\sum \exp(z(x')) \right] \]</span> où <span class="math inline">\(z(x)\)</span> sont les logits.</p>
+</section>
+<section id="régularisation" class="level3">
+<h3 class="anchored" data-anchor-id="régularisation">2. Régularisation</h3>
+<p>Ajouter un terme de régularisation équivaut à : <span class="math display">\[ H(p, q) + \lambda R(\theta) \]</span></p>
+<p>Cela empêche le surapprentissage en pénalisant les modèles complexes.</p>
+</section>
+<section id="données-déséquilibrées" class="level3">
+<h3 class="anchored" data-anchor-id="données-déséquilibrées">3. Données déséquilibrées</h3>
+<p>Quand certaines classes sont rares :</p>
+<ul>
+<li><strong>Pondération</strong> : <span class="math inline">\(H_w(p, q) = -\sum w(x) p(x) \log q(x)\)</span></li>
+<li><strong>Rééchantillonnage</strong> : Ajuster la distribution d’entraînement</li>
+</ul>
+</section>
+</section>
+<section id="synthèse-pédagogique" class="level2">
+<h2 class="anchored" data-anchor-id="synthèse-pédagogique">Synthèse pédagogique</h2>
+<section id="lanalogie-du-jeu-de-devinettes" class="level3">
+<h3 class="anchored" data-anchor-id="lanalogie-du-jeu-de-devinettes">L’analogie du jeu de devinettes</h3>
+<p>Imaginez un jeu où vous devez deviner un animal :</p>
+<ul>
+<li><strong><span class="math inline">\(p\)</span></strong> : Animal réel (ex: 80% chat, 20% chien)</li>
+<li><strong><span class="math inline">\(q\)</span></strong> : Votre stratégie de devinette</li>
+</ul>
+<ol type="1">
+<li><strong>Entropie <span class="math inline">\(H(p)\)</span></strong> : Nombre optimal de questions si vous connaissiez la vraie distribution</li>
+<li><strong>Entropie croisée <span class="math inline">\(H(p,q)\)</span></strong> : Nombre de questions avec votre stratégie</li>
+<li><strong>Divergence KL <span class="math inline">\(D(p\|q)\)</span></strong> : Questions supplémentaires dues à votre mauvaise stratégie</li>
+</ol>
+</section>
+<section id="formule-mnémotechnique" class="level3">
+<h3 class="anchored" data-anchor-id="formule-mnémotechnique">Formule mnémotechnique</h3>
+<blockquote class="blockquote">
+<p>“Le coût total = incertitude de base + pénalité d’ignorance” <span class="math display">\[ H(p,q) = H(p) + D(p\|q) \]</span></p>
+</blockquote>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>L’entropie croisée est une mesure puissante qui :</p>
+<ol type="1">
+<li><strong>Évalue les modèles</strong> : Mesure combien un modèle <span class="math inline">\(q\)</span> est adapté à des données <span class="math inline">\(p\)</span></li>
+<li><strong>Guide l’apprentissage</strong> : Fonction de perte optimisable par gradient</li>
+<li><strong>Relie théorie et pratique</strong> : Connecte théorie de l’information et ML</li>
+</ol>
+<p><strong>Le lien fondamental</strong> avec l’entropie relative montre que minimiser l’entropie croisée revient à minimiser l’écart entre notre modèle et la réalité, tout en reconnaissant qu’une certaine incertitude (<span class="math inline">\(H(p)\)</span>) est incompressible.</p>
+<p>Cette compréhension unifiée explique pourquoi l’entropie croisée est devenue la fonction de perte standard pour les problèmes de classification et bien d’autres tâches en intelligence artificielle.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
